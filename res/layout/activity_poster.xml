@@ -1,0 +1,199 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PosterActivity" >
+
+    <ViewFlipper
+        android:id="@+id/VFPoster"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:id="@+id/poster01"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/poster01" >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/poster02"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/poster02" >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/poster03"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/poster03" >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/poster04"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/poster04" >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/poster05"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/poster05" >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/poster06"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/poster06" >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/poster07"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/poster07" >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/poster08"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/poster08" >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/poster09"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/poster09" >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/poster10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/poster10" >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/poster11"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/poster11" >
+
+            <ImageView
+                android:id="@+id/imageViewStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/ico"
+                android:src="@drawable/button_start" />
+
+        </RelativeLayout>
+    </ViewFlipper>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutPointers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:contentDescription="@string/ico"
+            android:src="@drawable/ico_pointer_on" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:contentDescription="@string/ico"
+            android:src="@drawable/ico_pointer_off" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:contentDescription="@string/ico"
+            android:src="@drawable/ico_pointer_off" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:contentDescription="@string/ico"
+            android:src="@drawable/ico_pointer_off" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:contentDescription="@string/ico"
+            android:src="@drawable/ico_pointer_off" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:contentDescription="@string/ico"
+            android:src="@drawable/ico_pointer_off" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:contentDescription="@string/ico"
+            android:src="@drawable/ico_pointer_off" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:contentDescription="@string/ico"
+            android:src="@drawable/ico_pointer_off" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:contentDescription="@string/ico"
+            android:src="@drawable/ico_pointer_off" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:contentDescription="@string/ico"
+            android:src="@drawable/ico_pointer_off" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:contentDescription="@string/ico"
+            android:src="@drawable/ico_pointer_off" />
+    </LinearLayout>
+
+</RelativeLayout>

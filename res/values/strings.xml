@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="tag_view_holder" type="id"></item>
+    <item name="tag_id" type="id"></item>
+    <item name="tag_type" type="id"></item>
+    <item name="tag_boolean" type="id"></item>
+    <item name="tag_path" type="id"></item>
+    <item name="tag_int" type="id"></item>
+    <item name="tag_string" type="id"></item>
+    <item name="tag_state" type="id"></item>
+
+    <string-array name="array_voice_file_option">
+        <item>删除</item>
+        <item>播放</item>
+    </string-array>
+    <string-array name="array_long_menu_plan">
+        <item>删除</item>
+    </string-array>
+    <string-array name="array_field_type">
+        <item>教育/培训/院校</item>
+        <item>计算机软件</item>
+        <item>互联网/电子商务</item>
+        <item>娱乐/休闲/体育</item>
+        <item>影视/媒体/艺术/文化传播</item>
+        <item>金融/投资/证券</item>
+        <item>酒店/旅游</item>
+        <item>银行/保险</item>
+        <item>公关/市场推广/会展</item>
+        <item>房地产开发</item>
+        <item>贸易/进出口</item>
+        <item>广告</item>
+        <item>餐饮业</item>
+        <item>快速消费品（食品、饮料、化妆品）</item>
+        <item>电子技术/半导体/集成电路</item>
+        <item>服装/纺织/皮革</item>
+        <item>专业服务（咨询、人力资源、财会）</item>
+        <item>制药/生物工程</item>
+        <item>建筑/建材/工程</item>
+        <item>文字媒体/出版</item>
+        <item>机械/设备/重工</item>
+        <item>印刷/包装/造纸</item>
+        <item>采掘业/冶炼</item>
+        <item>法律</item>
+        <item>石油/化工/矿产/地质</item>
+        <item>环保</item>
+        <item>交通/运输/物流</item>
+        <item>批发/零售</item>
+        <item>学术/科研</item>
+        <item>汽车及零配件</item>
+        <item>生活服务/家政</item>
+        <item>政府/公共事业</item>
+        <item>中介服务</item>
+        <item>仪器仪表/工业自动化</item>
+        <item>电力/水利</item>
+        <item>计算机硬件/计算机服务（系统、数据服务、维修）</item>
+        <item>通信/电信运营、增值服务、网络游戏</item>
+        <item>会计/审计</item>
+        <item>家具/家电/工艺品/玩具/珠宝</item>
+        <item>办公用品及设备</item>
+        <item>医疗/护理/卫生/医疗设备/器械</item>
+        <item>家具/室内设计/装潢</item>
+        <item>物业管理/商业中心</item>
+        <item>检测/认证</item>
+        <item>美容/保健</item>
+        <item>航空/航天</item>
+        <item>原材料和加工</item>
+        <item>非盈利机构</item>
+        <item>多元化业务集团公司</item>
+        <item>外包服务</item>
+        <item>奢侈品/收藏品</item>
+        <item>新能源</item>
+        <item>其他行业</item>
+    </string-array>
+    <string-array name="array_level_type">
+        <item>初识倬家</item>
+        <item>突破一段</item>
+        <item>突破二段</item>
+        <item>突破三段</item>
+        <item>融达一段</item>
+        <item>融达二段</item>
+        <item>坤行一段</item>
+        <item>坤行二段</item>
+        <item>超越</item>
+        <item>归元</item>
+    </string-array>
+    <string-array name="array_zenghui_type">
+        <item>倬学智慧</item>
+        <item>领导执行</item>
+        <item>企业文化</item>
+        <item>市场营销</item>
+        <item>薪酬设计</item>
+        <item>绩效考评</item>
+        <item>组织机制</item>
+        <item>人才招聘</item>
+        <item>财务管理</item>
+        <item>心灵成长</item>
+        <item>风云人物</item>
+        <item>客户服务</item>
+        <item>品牌成长</item>
+        <item>育才体系</item>
+        <item>战略规划</item>
+    </string-array>
+    <string-array name="array_res_type">
+        <item>所有资源</item>
+        <item>融资项目</item>
+        <item>人才引聘</item>
+        <item>业务合作</item>
+        <item>投资理财</item>
+        <item>商业活动</item>
+        <item>产品服务</item>
+    </string-array>
+    <string-array name="array_sign_type">
+        <item>白羊座</item>
+        <item>金牛座</item>
+        <item>双子座</item>
+        <item>巨蟹座</item>
+        <item>狮子座</item>
+        <item>处女座</item>
+        <item>天秤座</item>
+        <item>天蝎座</item>
+        <item>射手座</item>
+        <item>摩羯座</item>
+        <item>水瓶座</item>
+        <item>双鱼座</item>
+    </string-array>
+    <string-array name="array_hobby">
+        <item>阅读</item>
+        <item>品茶</item>
+        <item>香道</item>
+        <item>高尔夫</item>
+        <item>足球</item>
+        <item>篮球</item>
+        <item>太极拳</item>
+        <item>散打</item>
+        <item>健身</item>
+        <item>跑步</item>
+        <item>旅游</item>
+        <item>骑马</item>
+        <item>射击</item>
+        <item>音乐</item>
+        <item>电影</item>
+        <item>登山</item>
+        <item>钓鱼</item>
+        <item>炒股</item>
+        <item>美食</item>
+        <item>葡萄酒</item>
+        <item>瑜伽</item>
+        <item>游泳</item>
+        <item>摄影</item>
+        <item>古玩收藏</item>
+        <item>字画收藏</item>
+        <item>玉石收藏</item>
+        <item>水晶</item>
+        <item>蜜蜡</item>
+        <item>书法</item>
+        <item>绘画</item>
+        <item>越野</item>
+        <item>航海</item>
+        <item>飞行</item>
+        <item>京剧</item>
+    </string-array>
+
+    <string name="type_board0">分享</string>
+    <string name="type_board1">活动</string>
+    <string name="type_board0_type">0</string>
+    <string name="type_board1_type">1</string>
+    <string name="type_gong">提供</string>
+    <string name="type_xu">需求</string>
+    <string name="type_gong_type">offer</string>
+    <string name="type_xu_type">demand</string>
+    <string name="type_board_type">broadcast</string>
+    <string name="type_daily_type">daily</string>
+    <string name="tab_item1">倬家人</string>
+    <string name="tab_item2">活动</string>
+    <string name="tab_item3">精进</string>
+    <string name="tab_item4">消息</string>
+    <string name="tab_item5">我的</string>
+    <string name="group_type_1">倬家圈子</string>
+    <string name="group_type_2">我的同城家人</string>
+    <string name="group_type_3">我的同行家人</string>
+    <string name="group_type_4">我的同修家人</string>
+    <string name="group_type_5">资源供需</string>
+    <string name="group_type_6">最热圈子</string>
+    <string name="group_type_7">最新圈子</string>
+    <string name="group_type_8">俱乐部</string>
+    <string name="group_type_9">兴趣爱好</string>
+    <string name="group_type_10">其他</string>
+    <string name="error0">网络连接失败</string>
+    <string name="error1">获取图片失败</string>
+    <string name="error2">请确认已经插入SD卡</string>
+    <string name="error3">建立通讯录索引失败</string>
+    <string name="error4">文件不存在</string>
+    <string name="error5">发送失败</string>
+    <string name="error6">正在录音中，请停止录音后删除</string>
+    <string name="error7">正在播放中，请停止播放后删除</string>
+    <string name="error8">删除失败</string>
+    <string name="error9">开始录音失败</string>
+    <string name="error10">定位失败</string>
+    <string name="error11">已达选择上限</string>
+    <string name="error12">正在加载数据，请稍候</string>
+    <string name="error13">旧密码输入错误</string>
+    <string name="error14">请输入新密码</string>
+    <string name="error15">请在此输入新密码</string>
+    <string name="error16">两次输入密码不一致</string>
+    <string name="error17">发送失败，请检测网络</string>
+    <string name="error18">对不起，您现在搜索的内容还不存在</string>
+    <string name="error19">请输入您的电话</string>
+    <string name="error20">请输入您的地址</string>
+    <string name="error21">请输入您朋友的电话</string>
+    <string name="error22">请输入您朋友的地址</string>
+    <string name="error23">您的倬家币不足</string>
+    <string name="error24">已超过数量限制</string>
+    <string name="info0">选择图片</string>
+    <string name="info1">显示更多</string>
+    <string name="info2">收起内容</string>
+    <string name="info3">条新消息</string>
+    <string name="info4">消息通知</string>
+    <string name="info5">发来</string>
+    <string name="info6">条消息</string>
+    <string name="info7">发送中</string>
+    <string name="info8">没有网络连接，是否需要打开</string>
+    <string name="info9">取消发送该文件？</string>
+    <string name="info10">发送成功</string>
+    <string name="info11">网络连接中，请稍候再试</string>
+    <string name="info12">删除成功</string>
+    <string name="info13">您确定退出圈子吗？</string>
+    <string name="info14">帐号不能为空</string>
+    <string name="info15">密码不能为空</string>
+    <string name="info16">请选择广播类型</string>
+    <string name="info17">好的标题是成功的开始</string>
+    <string name="info18">详细资源描述</string>
+    <string name="info19">添加关键词标签 以方便检索,用；隔开</string>
+    <string name="info20">获取位置. . .</string>
+    <string name="info21">添加照片</string>
+    <string name="info22">请输入标题</string>
+    <string name="info23">请选择广播类型</string>
+    <string name="info24">请输入描述</string>
+    <string name="info25">请输入圈子名称</string>
+    <string name="info26">请输入圈子简介</string>
+    <string name="info27">确定不保存就离开吗？</string>
+    <string name="info28">我的故事 我的传记</string>
+    <string name="info29">请选择供需类型</string>
+    <string name="info30">最多可上传N张形象照</string>
+    <string name="info31">请输入行业</string>
+    <string name="info32">以下信息只作为匹配推荐使用,不会展示给其他用户</string>
+    <string name="info33">是否准备或正在创业：</string>
+    <string name="info34">是否准备或正在工作：</string>
+    <string name="info35">请输入公司名称</string>
+    <string name="info36">请输入职务名称</string>
+    <string name="info37">真实完善个人资料，让你更容易获得机会</string>
+    <string name="info38">请输入手机号码</string>
+    <string name="info39">对我的联系人公开手机</string>
+    <string name="info40">请输入邮箱号</string>
+    <string name="info41">对我的联系人公开邮箱</string>
+    <string name="info42">对我的联系人公开生日</string>
+    <string name="info43">请输入现居住城市</string>
+    <string name="info44">请输入经常来往的城市</string>
+    <string name="info45">请输入我的家乡</string>
+    <string name="info46">请选择您的爱好</string>
+    <string name="info47">请输入您的客户</string>
+    <string name="info48">请描述您的梦想，让我们一起来实现它</string>
+    <string name="info49">请描述什么是您坚守的做人原则</string>
+    <string name="info50">请输入产品名称</string>
+    <string name="info51">产品描述</string>
+    <string name="info52">您的产品能为客户带来什么好处，您的产品都适合哪些客户</string>
+    <string name="info53">请输入我的网站</string>
+    <string name="info54">我经常去的城市</string>
+    <string name="info55">例如：北京 上海 广州 深圳</string>
+    <string name="info56">我的星级</string>
+    <string name="info57">请输入旧密码</string>
+    <string name="info58">至少六位</string>
+    <string name="info59">请重复一次密码</string>
+    <string name="info60">修改成功</string>
+    <string name="info61">当前正在录音，是否停止？</string>
+    <string name="info62">发布成功</string>
+    <string name="info63">提示</string>
+    <string name="info64">正在发送中</string>
+    <string name="info65">请输入评论内容</string>
+    <string name="info66">创建成功</string>
+    <string name="info67">更新成功</string>
+    <string name="info68">再点一次离开</string>
+    <string name="info69">确定不提交就离开吗？</string>
+    <string name="info70">请输入</string>
+    <string name="info71">亲爱的家人，这是我们的家，让我们一起完善它，请将您的建议反馈给我们。</string>
+    <string name="info72">请描述您的产品或服务，让家人更加清晰您所能提供的价值</string>
+    <string name="info73">亲爱的家人，为了保证您的信息安全，请立即更换密码</string>
+    <string name="info74">亲爱的家人，感谢您的用心和认真，为了安全和保障您的利益，我们的家人服务使者将会在2个工作日之内与您联系，以确认信息。祝您每天都有好心情，拥有平和、宁静、和谐的生命状态。</string>
+    <string name="info75">亲爱的家人，欢迎您使用倬家币商品兑换功能，您现在拥有的倬家币是*****元，兑换此商品后，将会变成****元。请您认真填写以下内容，以便于我们为您提供更好的服务。</string>
+    <string name="info76">请输入您的其他爱好</string>
+    <string name="info77">说两句</string>
+    <string name="info78">复制成功</string>
+    <string name="info79">正在加载内容</string>
+    <string name="info80">文件已复制到</string>
+    <string name="info81">复制文件失败</string>
+    <string name="info82">个联系人</string>
+    <string name="label_move_cancel">拖到此处取消</string>
+    <string name="label_release_cancel">松开手指,取消发送</string>
+    <string name="label_press">按住说话</string>
+    <string name="label_release">松开结束</string>
+    <string name="label_null">发送内容不能为空</string>
+    <string name="label_loading">加载中. . .</string>
+    <string name="label_load_fail">加载失败</string>
+    <string name="label_no_data">没有更多内容</string>
+    <string name="label_no_data2">没有相关内容</string>
+    <string name="label_show_more">显示更多</string>
+    <string name="label_refresh">下拉刷新</string>
+    <string name="label_refresh_time">上次更新：未知</string>
+    <string name="label_searchHint">可搜索人名/公司/职位/行业等关键词</string>
+    <string name="label_searchUserHint">可按人名搜索</string>
+    <string name="label_searchGroupHint">可搜索圈名字/圈号码等</string>
+    <string name="label_author_header">头像</string>
+    <string name="label_select_th">请选择行业</string>
+    <string name="label_field">行业</string>
+    <string name="label_lwcities">来往城市</string>
+    <string name="label_more">更多</string>
+    <string name="label_option">操作</string>
+    <string name="label_filter">资源筛选</string>
+    <string name="label_zf">同时转发分享</string>
+    <string name="label_qzhm">圈号码：</string>
+    <string name="label_qzjj">圈子简介</string>
+    <string name="label_qztp">圈子图片</string>
+    <string name="label_qzmc">圈子名称</string>
+    <string name="label_qzmchint">给你的圈子取个名</string>
+    <string name="label_qzsx">圈子属性</string>
+    <string name="label_addmanager">添加管理员</string>
+    <string name="label_qzql">圈聊</string>
+    <string name="label_qzgb">广播</string>
+    <string name="label_msg">圈聊消息提醒</string>
+    <string name="label_qzgx">最新更新时间：</string>
+    <string name="label_qzcy">成员数：</string>
+    <string name="label_qzcj">创建者</string>
+    <string name="label_qzgl">管理员</string>
+    <string name="label_qzqz">圈主</string>
+    <string name="label_qt">其他</string>
+    <string name="label_qzcreate">创建</string>
+    <string name="label_qzupdate">更新圈子</string>
+    <string name="label_view2">查看资源</string>
+    <string name="label_view1">查看全部</string>
+    <string name="label_time">时间：</string>
+    <string name="label_zero_time">00:00</string>
+    <string name="label_place">地点：</string>
+    <string name="label_find">寻找</string>
+    <string name="label_back">返回</string>
+    <string name="label_level">等级</string>
+    <string name="label_publish">发布</string>
+    <string name="label_gongxu">供需</string>
+    <string name="label_zenghui">增慧</string>
+    <string name="label_send">发送</string>
+    <string name="label_sended">发送了</string>
+    <string name="label_sendedcard">的名片</string>
+    <string name="label_sendedcardtome">的名片给我</string>
+    <string name="label_sendedcardtohe">的名片给</string>
+    <string name="label_sendedcardtoall">的名片给大家</string>
+    <string name="label_chat">对话</string>
+    <string name="label_rule">活动规则</string>
+    <string name="label_exchange">申请兑换</string>
+    <string name="label_login">登录</string>
+    <string name="label_save">保存</string>
+    <string name="label_submit">提交</string>
+    <string name="label_comfirmpub">确定发布</string>
+    <string name="label_pub2">发表</string>
+    <string name="label_filter2">筛选</string>
+    <string name="label_card">名片</string>
+    <string name="label_create">创建</string>
+    <string name="label_newcreate">新建</string>
+    <string name="label_emotion">表情</string>
+    <string name="label_captrue">拍照</string>
+    <string name="label_photo">照片</string>
+    <string name="label_search">搜索</string>
+    <string name="label_lisklist">通讯录</string>
+    <string name="label_view_big">查看大图</string>
+    <string name="label_header_refresh_down">下拉刷新</string>
+    <string name="label_header_refresh_last_update">正在加载</string>
+    <string name="label_footer_more">加载更多</string>
+    <string name="label_footer_loading">正在加载</string>
+    <string name="label_last_update">上次更新：</string>
+    <string name="label_header_refresh_up">松开刷新</string>
+    <string name="label_uid">个人帐号</string>
+    <string name="label_password">密码</string>
+    <string name="label_apply">申请加入</string>
+    <string name="label_cancel">取消</string>
+    <string name="label_exit">退出圈</string>
+    <string name="label_edit">编辑</string>
+    <string name="label_del">删除</string>
+    <string name="label_delsel">删除选中</string>
+    <string name="label_delall">删除全部</string>
+    <string name="label_capture">拍照</string>
+    <string name="label_select">从手机相册选择</string>
+    <string name="label_view_more">查看更多</string>
+    <string name="label_recommand">推荐给朋友</string>
+    <string name="label_sendmsg">发消息</string>
+    <string name="label_relatesetting">关系设置</string>
+    <string name="label_cancelCollect">取消收藏成功</string>
+    <string name="label_collectSuccess">收藏成功</string>
+    <string name="label_recommandSuccess">推荐成功</string>
+    <string name="label_followsendcard">关注成功，是否递送名片</string>
+    <string name="label_followsuccess">关注成功</string>
+    <string name="label_applysuccess">已申请，请耐心等待对方审核</string>
+    <string name="label_sendcardsuccess">递送名片成功</string>
+    <string name="label_exitSuccess">退出成功</string>
+    <string name="label_zanSuccess">赞成功</string>
+    <string name="label_success">操作成功</string>
+    <string name="label_lastbirth">最近生日的人</string>
+    <string name="label_run">闰</string>
+    <string name="label_month">月</string>
+    <string name="label_year">年</string>
+    <string name="label_day">日</string>
+    <string name="label_today">今天</string>
+    <string name="label_dateinfo">天后 过</string>
+    <string name="label_ageinfo">岁生日</string>
+    <string name="label_manage">管理</string>
+    <string name="label_edit_chatmsg">编辑聊天记录</string>
+    <string name="label_viewcard">查看名片</string>
+    <string name="label_follow">关注</string>
+    <string name="label_viewCard">查看名片</string>
+    <string name="label_unfollow">取消关注</string>
+    <string name="label_cardsend">递送名片</string>
+    <string name="label_fan">粉丝</string>
+    <string name="label_teacher">倬学导师</string>
+    <string name="label_alluser">所有家人</string>
+    <string name="label_followgroups">关注圈子</string>
+    <string name="label_report">举报</string>
+    <string name="label_black">加入黑名单</string>
+    <string name="label_unblack">拉出黑名单</string>
+    <string name="label_cardname">名片交换记录</string>
+    <string name="label_groupchat">圈聊消息</string>
+    <string name="label_sysmsg">系统消息</string>
+    <string name="label_cmtmsg">评论推荐消息</string>
+    <string name="label_cloudvoice">云录音</string>
+    <string name="label_isopen">对方已公开联系方式</string>
+    <string name="label_mytext">你的留言：</string>
+    <string name="label_hetext">他/她的留言：</string>
+    <string name="label_hello">打招呼</string>
+    <string name="label_tomy">向你</string>
+    <string name="label_tohe">你已向</string>
+    <string name="label_sendcard">递送名片请求加为好友</string>
+    <string name="label_acceptmycard">已把你加为好友</string>
+    <string name="label_accepthecard">你已把</string>
+    <string name="label_acceptcard">加为好友</string>
+    <string name="label_accept">接受</string>
+    <string name="label_refuse">拒绝</string>
+    <string name="label_joingroup">进入圈</string>
+    <string name="label_sysacceptcreate">系统通过了您创建</string>
+    <string name="label_sysrefusecreate">系统拒绝了您创建</string>
+    <string name="label_sysacceptjoin">系统通过了您申请加入</string>
+    <string name="label_sysrefusejoin">系统拒绝了您申请加入</string>
+    <string name="label_acceptjoin">您接受了</string>
+    <string name="label_refusejoin">您拒绝了</string>
+    <string name="label_invenjoin">邀请您加入</string>
+    <string name="label_followed">您关注了</string>
+    <string name="label_rcmd">推荐了</string>
+    <string name="label_applyjoin">申请加入</string>
+    <string name="label_join">加入</string>
+    <string name="label_joinreq">圈的请求</string>
+    <string name="label_joininven">圈的邀请</string>
+    <string name="label_quan">圈</string>
+    <string name="label_gong">共</string>
+    <string name="label_zhang">张</string>
+    <string name="label_myfri">我的好友</string>
+    <string name="label_collectCancel">取消收藏</string>
+    <string name="label_collect">收藏</string>
+    <string name="label_sendrecommand">发送给好友</string>
+    <string name="label_colon">:</string>
+    <string name="label_editcard">编辑名片</string>
+    <string name="label_title">倬家人介绍</string>
+    <string name="label_content">北京中和黄埔文化发展有限公司是一家专注人类素质教育提升的智业机构。本着通过智慧传播，影响身边每一个人，帮助更多人提升生命的品质，成就健康、快乐、幸福的人生的使命，用智慧创造价值的企业精神。致力于为个人及企业竞争力的提升，提供智力解决方案. . . </string>
+    <string name="label_me">我</string>
+    <string name="label_myfan">我的粉丝</string>
+    <string name="label_myfollow">我的关注</string>
+    <string name="label_quans">的圈</string>
+    <string name="label_servantname">倬家小秘书</string>
+    <string name="label_aboutus">关于我们</string>
+    <string name="label_new_record">新录音 </string>
+    <string name="label_new_name">为你的录音取个名吧 </string>
+    <string name="label_zym">座右铭</string>
+    <string name="label_dream">梦想</string>
+    <string name="label_customer">客户</string>
+    <string name="label_hobby">爱好</string>
+    <string name="label_good">赞</string>
+    <string name="label_share">分享</string>
+    <string name="label_good2">赞一下</string>
+    <string name="label_copy">复制</string>
+    <string name="label_cmt">评论</string>
+    <string name="label_forward">转发</string>
+    <string name="label_forward_success">转发成功</string>
+    <string name="label_myphone">我的联系电话：</string>
+    <string name="label_friphone">朋友的联系电话：</string>
+    <string name="label_myaddress">我的收货地址：</string>
+    <string name="label_friaddress">朋友的收货地址：</string>
+    <string name="label_teacher_intro">导师介绍</string>
+    <string name="label_teacher_lession">主讲课程</string>
+    <string name="label_teacher_type">授课风格</string>
+    <string name="label_teacher_prop">价值主张</string>
+    <string name="label_teacher_quot">导师语录</string>
+    <string name="label_teacher_dream">导师梦想</string>
+    <string name="label_money">倬币：</string>
+    <string name="label_viewmoney">参考价：</string>
+    <string name="label_rest">您还可以使用的倬币为：</string>
+    <string name="label_yuan">元</string>
+    <string name="label_goods_detail">商品详情</string>
+    <string name="label_ownuse">我要自己使用</string>
+    <string name="label_friuse">我要送给朋友</string>
+    <string name="label_record">我要录音</string>
+    <string name="label_origin">原文</string>
+    <string name="label_addone">+1</string>
+    <string name="mp_hy">行业:</string>
+    <string name="mp_gszw">公司职位:</string>
+    <string name="mp_mygs">我的公司:</string>
+    <string name="mp_myzw">我的职位:</string>
+    <string name="mp_name">姓名:</string>
+    <string name="mp_sex">性别:</string>
+    <string name="mp_images">形象:</string>
+    <string name="mp_addtime">成为家人的时间:</string>
+    <string name="mp_ismarry">是否已婚:</string>
+    <string name="mp_qy">区域:</string>
+    <string name="mp_jx">家乡:</string>
+    <string name="mp_lw">来往:</string>
+    <string name="mp_position">位置:</string>
+    <string name="mp_place">所在城市:</string>
+    <string name="mp_othertowns">来往城市:</string>
+    <string name="mp_hometown">我的家乡:</string>
+    <string name="mp_sr">生日:</string>
+    <string name="mp_mysr">我的生日</string>
+    <string name="mp_yalsr">阳历生日:</string>
+    <string name="mp_yilsr">阴历生日:</string>
+    <string name="mp_gong">供:</string>
+    <string name="mp_xu">需:</string>
+    <string name="mp_cp">产品</string>
+    <string name="mp_mycp">我的产品:</string>
+    <string name="mp_cp2">产品:</string>
+    <string name="mp_xj">星级:</string>
+    <string name="mp_mygong">我的资源:</string>
+    <string name="mp_myxu">我的需求:</string>
+    <string name="mp_cpjz">产品价值:</string>
+    <string name="mp_cpmc">产品名称:</string>
+    <string name="mp_cpms">产品描述:</string>
+    <string name="mp_wz">网站:</string>
+    <string name="mp_wdwz">我的网站:</string>
+    <string name="mp_zym">座右铭:</string>
+    <string name="mp_ah">爱好:</string>
+    <string name="mp_wdmx">梦想:</string>
+    <string name="mp_mx">梦想:</string>
+    <string name="mp_wdkh">客户:</string>
+    <string name="mp_kh">客户:</string>
+    <string name="mp_wdjr">家人</string>
+    <string name="mp_qz">圈子</string>
+    <string name="mp_cz">成长</string>
+    <string name="mp_sjh">手机号:</string>
+    <string name="mp_mysj">我的手机:</string>
+    <string name="mp_yx">邮箱:</string>
+    <string name="mp_myyx">我的邮箱:</string>
+    <string name="mp_gongxu">资源供需</string>
+    <string name="mp_man">先生</string>
+    <string name="mp_woman">女士</string>
+    <string name="mp_male">男</string>
+    <string name="mp_female">女</string>
+    <string name="mp_unknow">未知</string>
+    <string name="mp_has">有</string>
+    <string name="mp_imgasall">张形象照</string>
+    <string name="p_jiaren_active_fans">粉丝:</string>
+    <string name="p_jiaren_active_jifen">积分:</string>
+    <string name="p_jiaren_active_blog">日志:</string>
+    <string name="menu_del">删除</string>
+    <string name="menu_zf">转发</string>
+    <string name="my_plan">我的计划</string>
+    <string name="my_goods_exchange">商品兑换</string>
+    <string name="my_collect">我的收藏</string>
+    <string name="my_record">录音备忘</string>
+    <string name="my_position">我的位置</string>
+    <string name="my_advice">我的建议</string>
+    <string name="my_aboutus">关于我们</string>
+    <string name="my_servant">联系客服</string>
+    <string name="my_lastestvisit">最近来访</string>
+    <string name="my_syssetting">系统设定</string>
+    <string name="my_new">NEW</string>
+    <string name="my_alertsetting">提醒设置</string>
+    <string name="my_clearmsg">清空聊天记录</string>
+    <string name="my_clearmsgalert">确定要清空本地聊天记录吗？</string>
+    <string name="my_passwordmanage">密码管理</string>
+    <string name="my_logout">切换用户</string>
+    <string name="my_oldpwd">旧密码</string>
+    <string name="my_newpwd">新密码</string>
+    <string name="my_renewpwd">重复密码</string>
+    <string name="title_activity_poster"></string>
+    <string name="title_activity_login">登录</string>
+    <string name="title_activity_main">倬家人首页</string>
+    <string name="title_activity_tab_container">倬家人</string>
+    <string name="title_activity_find">寻找</string>
+    <string name="title_activity_group_type3">我的同行家人</string>
+    <string name="title_activity_group_type2">我的同城家人</string>
+    <string name="title_activity_group_type4">我的同修家人</string>
+    <string name="title_activity_msg_list">消息</string>
+    <string name="title_activity_zhuojiaquan">倬家圈子</string>
+    <string name="title_activity_gong_xu">发现资源供需</string>
+    <string name="title_activity_link_list">通讯录</string>
+    <string name="title_activity_group_type">倬家圈子</string>
+    <string name="title_activity_jiaren_zenghui">家人增慧</string>
+    <string name="title_activity_zenghui_list"></string>
+    <string name="title_activity_cmt">评论</string>
+    <string name="title_activity_zhuojiaquan_detail">圈子详情</string>
+    <string name="title_activity_jiaren_active">家人活动</string>
+    <string name="title_activity_detail">详情</string>
+    <string name="title_activity_zhuojiaquan_detail_added">倬家圈详情</string>
+    <string name="title_activity_tab_zhuojiaquan">倬家圈</string>
+    <string name="title_activity_publish_board">发布广播</string>
+    <string name="title_activity_group_info">圈子</string>
+    <string name="title_activity_create_quan">创建圈子</string>
+    <string name="title_activity_quan_update">更新资料</string>
+    <string name="title_activity_user_select">选择</string>
+    <string name="title_activity_quan_mng">选择</string>
+    <string name="title_activity_group_users">圈人脉</string>
+    <string name="title_activity_chat"></string>
+    <string name="title_activity_card_list">交换名片记录</string>
+    <string name="title_activity_birth_users">最近过生日的人</string>
+    <string name="title_activity_group_chat_list">圈聊消息</string>
+    <string name="title_activity_sys_msg_list">系统消息</string>
+    <string name="title_activity_recommand_cmt">评论推荐消息</string>
+    <string name="title_activity_publish_active">发布活动</string>
+    <string name="title_activity_publish_gong_xu">发布供需</string>
+    <string name="title_activity_user_home">我的成长</string>
+    <string name="title_activity_zenghui">增慧</string>
+    <string name="title_activity_active_photo">活动详情</string>
+    <string name="title_activity_user_card"></string>
+    <string name="title_activity_card_add_user_image">名片编辑</string>
+    <string name="title_activity_card_add_user_fields">名片编辑</string>
+    <string name="title_activity_card_add_user_work">名片编辑</string>
+    <string name="title_activity_card_add_user_phone">名片编辑</string>
+    <string name="title_activity_card_add_user_email">名片编辑</string>
+    <string name="title_activity_card_add_user_birth">生日生肖</string>
+    <string name="title_activity_card_add_user_city">名片编辑</string>
+    <string name="title_activity_card_add_user_hobby">爱好</string>
+    <string name="title_activity_card_add_user_customer">名片编辑</string>
+    <string name="title_activity_card_add_user_motto">名片编辑</string>
+    <string name="title_activity_card_add_user_drame">名片编辑</string>
+    <string name="title_activity_card_add_user_product">名片编辑</string>
+    <string name="title_activity_card_add_user_url">名片编辑</string>
+    <string name="title_activity_card_add_user_city_more">名片编辑</string>
+    <string name="title_activity_card_add_user_star">名片编辑</string>
+    <string name="title_activity_card_add_user_name">名片编辑</string>
+    <string name="title_activity_card_add_user_resource">名片编辑</string>
+    <string name="title_activity_card_edit">名片编辑</string>
+    <string name="title_activity_my_home">我的</string>
+    <string name="title_activity_my_plan">我的计划</string>
+    <string name="title_activity_my_plan_create">新建我的计划</string>
+    <string name="title_activity_my_advice">我的建议</string>
+    <string name="title_activity_info"></string>
+    <string name="title_activity_my_about_us_list">关于我们</string>
+    <string name="title_activity_my_lastest_visit">最近浏览过我的人</string>
+    <string name="title_activity_my_setting">系统设置</string>
+    <string name="title_activity_my_change_pwd">系统设置</string>
+    <string name="title_activity_my_record">我的录音</string>
+    <string name="title_activity_my_location">我的位置</string>
+    <string name="title_activity_my_plan_detail">计划详情</string>
+    <string name="title_activity_my_collect_list">我的收藏</string>
+    <string name="title_activity_products"></string>
+    <string name="title_activity_user_list">我的家人</string>
+    <string name="title_activity_fan_follow"></string>
+    <string name="title_activity_list_view"></string>
+    <string name="title_activity_photo_view"></string>
+    <string name="title_activity_quan_list_more"></string>
+    <string name="title_activity_quan_list_detail"></string>
+    <string name="title_activity_user_city">来往城市</string>
+    <string name="title_activity_teacher_list">倬学导师</string>
+    <string name="title_activity_receiver_info">收货信息</string>
+    <string name="title_activity_teacher_detail"></string>
+    <string name="title_activity_teacher_info"></string>
+    <string name="title_activity_my_about_us"></string>
+    <string name="title_activity_goods_exchange">商品兑换</string>
+    <string name="title_activity_goods_detail">商品详情</string>
+    <string name="title_activity_user_all">所有家人</string>
+    <string name="title_activity_rule">活动规则</string>
+    <string name="title_activity_record_list">语音</string>
+    <string name="title_activity_record_user">语音</string>
+    <string name="title_activity_photo_view_new"></string>
+    <string name="title_activity_photo_single"></string>
+    <string name="title_activity_normal_list"></string>
+    <string name="title_activity_tag_list"></string>
+    <string name="title_activity_up_level">精进</string>
+    <string name="title_activity_uplevel_detail">精进</string>
+    <string name="title_activity_cmt_list">评论</string>
+    <string name="title_activity_msg_share">分享</string>
+    <string name="ico">ico</string>
+    <string name="hint"></string>
+    <string name="voice">语音</string>
+    <string name="image">照片</string>
+    <string name="app_name">倬家人</string>
+    <string name="action_settings">设置</string>
+    <string name="OK">确定</string>
+    <string name="EXIT">退出</string>
+    <string name="FAILED">失败</string>
+    <string name="CANCEL">取消</string>
+    <string name="COPY">复制</string>
+    <string name="FULLIMAGE">放大</string>
+    <string name="RESEND">重发</string>
+    <string name="SAVE">保存</string>
+    <string name="PLAY">播放</string>
+    <string name="FOLLOW">关注</string>
+    <string name="DELETE">删除</string>
+    <string name="YES">是</string>
+    <string name="NO">否</string>
+    <string name="OPEN">打开</string>
+    <string name="CLOSE">关闭</string>
+    <string name="radio_wifi">打开wifi</string>
+    <string name="radio_moile">打开2G/3G网</string>
+    <string name="message_exchange_card">发送了一个名片消息</string>
+    <string name="message_sys_message">发送了一个系统消息</string>
+    <string name="message_voice">发送了一个语音消息</string>
+    <string name="message_cloudvoice">发送了一个云录音</string>
+    <string name="message_photo">发送了一张照片</string>
+
+</resources>
