@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="12dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="22dp"
+    android:paddingTop="12dp" >
+
+    <RelativeLayout
+        android:layout_width="70dp"
+        android:layout_height="52dp" >
+
+        <ImageView
+            android:id="@+id/imageViewPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/ico"
+            android:scaleType="centerCrop" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp" >
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:drawablePadding="5dp"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textViewDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/imageViewDetail"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="#6f6f6f" />
+
+        <ImageView
+            android:id="@+id/imageViewDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ico_arrow_gray"
+            android:contentDescription="@string/ico" />
+
+    </RelativeLayout>
+
+</LinearLayout>

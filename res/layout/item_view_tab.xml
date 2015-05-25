@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="64dp"
+    android:layout_marginLeft="-3dp"
+    android:layout_marginRight="-3dp"
+    android:layout_weight="1"
+    android:background="@drawable/indicator_tab_bg"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/tabicon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/ico" />
+
+    <TextView
+        android:id="@+id/tabtitle"
+        style="?android:attr/tabWidgetStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tabicon"
+        android:layout_centerHorizontal="true"
+        android:textColor="#d9d9d9" />
+
+    <TextView
+        android:id="@+id/textViewNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tabicon"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="4dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/bg_msg_new"
+        android:gravity="center_horizontal"
+        android:textColor="#ffffff"
+        
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_button_container" >
+
+        <Button
+            android:id="@+id/buttonAuthorGongXuZan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/button_option_good"
+            android:minHeight="20dp" />
+
+        <Button
+            android:id="@+id/buttonAuthorGongXuCmt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/buttonAuthorGongXuZan"
+            android:layout_marginTop="7dp"
+            android:layout_toRightOf="@+id/buttonAuthorGongXuZan"
+            android:background="@drawable/button_option_cmt"
+            android:minHeight="20dp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/ico"
+        android:src="@drawable/ico_add_gray"
+        android:visibility="invisible" />
+
+</LinearLayout>

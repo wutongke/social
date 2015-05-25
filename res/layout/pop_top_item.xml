@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="5dp"
+    android:paddingTop="8dp" >
+    
+    <TextView
+        android:id="@+id/groupItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:drawablePadding="5dp"
+        android:textColor="#ffffffff"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/imageViewTick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/ico"
+        android:paddingTop="3dp"
+        android:src="@drawable/ico_tick"
+        android:visibility="gone" />
+
+</RelativeLayout>
