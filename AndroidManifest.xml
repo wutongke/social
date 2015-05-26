@@ -1,7 +1,10 @@
+
+
+
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cpstudio.zhuojiaren"
-    android:versionCode="22"
+    android:versionCode="18"
     android:versionName="1.1.7" >
 
     <supports-screens
@@ -659,8 +662,6 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-        
-        <!--ImService找不到在哪儿  -->
         <service
             android:name="com.cpstudio.zhuojiaren.service.ImService"
             android:exported="false" >
@@ -676,3 +677,4 @@
     </application>
 
 </manifest>
+

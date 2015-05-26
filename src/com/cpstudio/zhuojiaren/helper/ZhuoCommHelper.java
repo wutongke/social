@@ -1,3 +1,14 @@
+
+
+
+
+
+
+
+
+
+
+
 package com.cpstudio.zhuojiaren.helper;
 
 import java.util.HashMap;
@@ -9,9 +20,9 @@ import com.cpstudio.zhuojiaren.R;
 
 public class ZhuoCommHelper {
 	private final static String SERVER_PREFIX = "http://";
-	private final static String SERVER_IP = "121.199.26.19";//"115.29.145.63";//  "zjr.ci77.com";//
+	private final static String SERVER_IP = "115.29.145.63";//"115.29.145.63";//  "zjr.ci77.com";//
 															
-	private final static String SERVER_PORT = ":8888";
+	private final static String SERVER_PORT = ":80";
 	private final static String SERVER_APP = "/ZhuoFamily";
 	public final static String SERVER = SERVER_PREFIX + SERVER_IP + SERVER_PORT
 			+ SERVER_APP;
