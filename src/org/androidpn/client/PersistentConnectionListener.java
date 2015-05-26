@@ -1,3 +1,24 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
  * Copyright (C) 2010 Moduad Co., Ltd.
  *
@@ -18,7 +39,6 @@ package org.androidpn.client;
 import org.jivesoftware.smack.ConnectionListener;
 
 import android.util.Log;
-
 
 /** 
  * A listener class for monitoring connection closing and reconnection events.

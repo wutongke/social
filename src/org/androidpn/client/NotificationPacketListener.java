@@ -1,3 +1,28 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
  * Copyright (C) 2010 Moduad Co., Ltd.
  *
@@ -23,7 +48,7 @@ import android.util.Log;
 
 /** 
  * This class notifies the receiver of incoming notifcation packets asynchronously.  
- *
+ * 收到服务器推送消息的回调接口
  * @author Sehwan Noh (devnoh@gmail.com)
  */
 public class NotificationPacketListener implements PacketListener {

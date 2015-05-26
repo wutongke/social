@@ -1,3 +1,31 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
  * Copyright (C) 2010 Moduad Co., Ltd.
  *
@@ -26,7 +54,8 @@ import android.util.Log;
 
 /** 
  * This class is to manage the notificatin service and to load the configuration.
- *
+ *在InitActivity被getInstance，完成读取配置文件raw/androidpn.properties中的XMPP通信服务器相关信息并保存到sharedPrefs中
+ *之后通过startService来启动后台服务NotificationService
  * @author Sehwan Noh (devnoh@gmail.com)
  */
 public final class ServiceManager {
@@ -69,7 +98,7 @@ public final class ServiceManager {
         Log.i(LOGTAG, "apiKey=" + apiKey);
         Log.i(LOGTAG, "xmppHost=" + xmppHost);
         Log.i(LOGTAG, "xmppPort=" + xmppPort);
-
+//将服务器相关信息保存到sharedPrefs
         sharedPrefs = context.getSharedPreferences(
                 Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         Editor editor = sharedPrefs.edit();
@@ -99,7 +128,10 @@ public final class ServiceManager {
         Intent intent = NotificationService.getIntent();
         context.stopService(intent);
     }
-
+/**
+ * 加载配置文件中的XMPP服务器IP，端口和apiKey
+ * @return
+ */
     private Properties loadProperties() {
         Properties props = new Properties();
         try {

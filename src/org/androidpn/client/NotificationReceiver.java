@@ -1,3 +1,54 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
  * Copyright (C) 2010 Moduad Co., Ltd.
  *
@@ -49,7 +100,7 @@ import android.util.Log;
 /**
  * Broadcast receiver that handles push notification messages from the server.
  * This should be registered as receiver in AndroidManifest.xml.
- * 
+ *用于对广播的notification消息的处理
  * @author Sehwan Noh (devnoh@gmail.com)
  */
 public final class NotificationReceiver extends BroadcastReceiver {
@@ -105,18 +156,23 @@ public final class NotificationReceiver extends BroadcastReceiver {
 							context);
 
 					String message = "";
+//dealXX这一步只是将消息保存到数据库中并设置未读标志，之后发送HTTP消息告诉服务器客户端已经缓存此未读消息
+					//名片消息
 					if (cards != null && cards.size() > 0) {
 						message = dealCardMg(context, cardMsgFacade, cards);
 						hasNew = true;
 					}
+					//系统消息
 					if (sysMsgs != null && sysMsgs.size() > 0) {
 						message = dealSysMg(context, sysMsgFacade, sysMsgs);
 						hasNew = true;
 					}
+					//评论消息
 					if (cmtRcmds != null && cmtRcmds.size() > 0) {
 						message = dealCmtMg(context, cmtRcmdFacade, cmtRcmds);
 						hasNew = true;
 					}
+					//圈子聊天消息
 					if (quanChatMsgs != null && quanChatMsgs.size() > 0) {
 						message = dealQuanMsg(context, imQuanFacade,
 								quanChatMsgs);
@@ -124,17 +180,20 @@ public final class NotificationReceiver extends BroadcastReceiver {
 							hasNew = true;
 						}
 					}
+					//个人聊天消息
 					if (chatMsgs != null && chatMsgs.size() > 0) {
 						message = dealChatMsg(context, imChatFacade, chatMsgs);
 						if (!message.equals("")) {
 							hasNew = true;
 						}
 					}
+					//聊天记录的消息
 					if (recordChatMsgs != null && recordChatMsgs.size() > 0) {
 						dealRecordChatMsg(context, recordChatFacade,
 								recordChatMsgs);
 					}
 					if (hasNew) {
+	//这一步读取未读消息并提示到UI
 						showMsg(context, message);
 					}
 				} catch (Exception e) {
@@ -156,6 +215,7 @@ public final class NotificationReceiver extends BroadcastReceiver {
 		List<CardMsgVO> unreadCards = cardMsgFacade.getUnread();
 		List<ImMsgVO> unreadChatMsgs = imChatFacade.getUnread();
 		List<ImQuanVO> unreadQuanChatMsgs = imQuanFacade.getUnread();
+//云录音消息
 		List<ImMsgVO> unreadReocrdChatMsgs = recordChatFacade.getUnread();
 		List<SysMsgVO> unreadSysMsgs = sysMsgFacade.getUnread();
 		List<CmtRcmdVO> unreadCmtRcmds = cmtRcmdFacade.getUnread();
@@ -168,7 +228,7 @@ public final class NotificationReceiver extends BroadcastReceiver {
 		String content = context.getString(R.string.info5) + all
 				+ context.getString(R.string.info6);
 		int alluser = 0;
-		if (all > 0) {
+		if (all > 0) {//所有推送消息的数目
 			Intent chatIntent = new Intent("com.cpstudio.chatlist");
 			context.sendBroadcast(chatIntent);
 		}
@@ -185,12 +245,12 @@ public final class NotificationReceiver extends BroadcastReceiver {
 				title = context.getString(R.string.label_cardname);
 			} else if (all == unreadChatMsgs.size()) {
 				for (ImMsgVO item : unreadChatMsgs) {
-					if (intentId == null) {
+					if (intentId == null) {//只有一个人的消息，则显示姓名
 						type = TabContainerActivity.MSG_IM;
 						title = item.getSender().getUsername();
 						intentId = item.getSender().getUserid();
 					} else if (!title.equals(item.getSender().getUsername())) {
-						type = TabContainerActivity.MSG_LIST;
+						type = TabContainerActivity.MSG_LIST;//多个人的消息则显示“倬家人”
 						title = context.getString(R.string.app_name);
 						intentId = null;
 						break;
@@ -219,9 +279,9 @@ public final class NotificationReceiver extends BroadcastReceiver {
 				type = TabContainerActivity.MSG_CLOUD;
 				title = context.getString(R.string.label_cloudvoice);
 			}
-			if (all == 1) {
+			if (all == 1) {//只有某一类型的消息
 				content = message;
-			} else if (type == TabContainerActivity.MSG_LIST) {
+			} else if (type == TabContainerActivity.MSG_LIST) {//多种类型的消息
 				alluser = unreadCards.size() > 0 ? alluser + 1 : alluser;
 				alluser = unreadChatMsgs.size() > 0 ? alluser + 1 : alluser;
 				alluser = unreadQuanChatMsgs.size() > 0 ? alluser + 1 : alluser;
@@ -232,6 +292,7 @@ public final class NotificationReceiver extends BroadcastReceiver {
 				content = alluser + context.getString(R.string.info82)
 						+ content;
 			}
+//是否需要推送
 			if (ResHelper.getInstance(context).isMsgList()) {
 				return;
 			}
@@ -239,7 +300,7 @@ public final class NotificationReceiver extends BroadcastReceiver {
 			notifier.notify(title, content, message, type, intentId);
 		}
 	}
-
+//每接收到一个推送消息都会HTTP告诉服务器
 	private String dealCardMg(Context context, CardMsgFacade cardMsgFacade,
 			List<CardMsgVO> cards) {
 		String message = "";
@@ -251,6 +312,7 @@ public final class NotificationReceiver extends BroadcastReceiver {
 				ids.add(item.getId());
 			}
 			if (!exist) {
+				
 				message = item.getSender().getUsername()
 						+ context.getString(R.string.message_exchange_card);
 				exist = true;
@@ -321,6 +383,7 @@ public final class NotificationReceiver extends BroadcastReceiver {
 			ZhuoConnHelper connHelper = ZhuoConnHelper.getInstance(context);
 			connHelper.msgRead(null, 0, null, msgid, "comment_msg", true, null,
 					null);
+//评论消息还进行了广播到评论Activity，使得其可以实时更新
 			Intent intent = new Intent("com.cpstudio.rcmdcmt");
 			context.sendBroadcast(intent);
 		}

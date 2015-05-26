@@ -1,3 +1,41 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 package com.cpstudio.zhuojiaren;
 
 import java.util.HashMap;
@@ -36,8 +74,10 @@ public class InitActivity extends Activity {
 	}
 
 	private void init() {
+		//单人聊
 		ImChatFacade imChatFacade = new ImChatFacade(getApplicationContext());
 		imChatFacade.updateSendState();
+		//群聊
 		ImQuanFacade imQuanFacade = new ImQuanFacade(getApplicationContext());
 		imQuanFacade.updateSendState();
 		start();
@@ -68,6 +108,7 @@ public class InitActivity extends Activity {
 				goActivity(LoginActivity.class);
 			}
 		}
+
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -83,6 +124,7 @@ public class InitActivity extends Activity {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.PUB_INFO:
+//登陆是否成功
 				if (JsonHandler.checkResult((String) msg.obj)) {
 					startService();
 					goActivity(TabContainerActivity.class);
@@ -90,6 +132,7 @@ public class InitActivity extends Activity {
 					goActivity(LoginActivity.class);
 				}
 				break;
+//登陆成功后会启动聊天后台服务(NotificationService)以接收推送消息
 			case MsgTagVO.START_SEND:
 				ServiceManager serviceManager = new ServiceManager(
 						getApplicationContext());

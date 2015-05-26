@@ -1,3 +1,26 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
  * Copyright (C) 2010 Moduad Co., Ltd.
  *
@@ -21,11 +44,11 @@ import java.util.UUID;
 import java.util.concurrent.Future;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
-import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
 import org.jivesoftware.smack.ConnectionListener;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
 import org.jivesoftware.smack.filter.AndFilter;
 import org.jivesoftware.smack.filter.PacketFilter;
 import org.jivesoftware.smack.filter.PacketIDFilter;
@@ -35,6 +58,8 @@ import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Registration;
 import org.jivesoftware.smack.provider.ProviderManager;
 
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -43,12 +68,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.model.MsgTagVO;
-
 /**
+ * 用xmpp来实现android的push功能，感觉有点大材小用了，xmpp本身是一种即时通信协议。
  * This class is to manage the XMPP connection between client and server.
- * 
+ * 主要用于保持XMPP连接与服务器通信，注册了检测connection变化的监听器
  * @author Sehwan Noh (devnoh@gmail.com)
  */
 public class XmppManager {
@@ -99,7 +122,7 @@ public class XmppManager {
 		xmppPort = sharedPrefs.getInt(Constants.XMPP_PORT, 5222);
 		username = sharedPrefs.getString(Constants.XMPP_USERNAME, "");
 		password = sharedPrefs.getString(Constants.XMPP_PASSWORD, "");
-
+//断线重连的回调接口
 		connectionListener = new PersistentConnectionListener(this);
 		notificationPacketListener = new NotificationPacketListener(this);
 
@@ -300,7 +323,9 @@ public class XmppManager {
 				ConnectionConfiguration connConfig = new ConnectionConfiguration(
 						xmppHost, xmppPort);
 				connConfig.setSecurityMode(SecurityMode.required);
+//这个属性默认值是true，设置时得需要与服务器那边统一，如果不一致，就算用户注册成功后，登录时也会返回 server-unavailable(503)错误
 				connConfig.setSASLAuthenticationEnabled(false);
+				
 				connConfig.setCompressionEnabled(false);
 
 				XMPPConnection connection = new XMPPConnection(connConfig);
@@ -309,7 +334,7 @@ public class XmppManager {
 				try {
 					connection.connect();
 					Log.i(LOGTAG, "XMPP connected successfully");
-
+//// 消息过滤器？？？设置后消息都转化为NotificationIQ对象   Private Data Storage
 					ProviderManager.getInstance().addIQProvider("notification",
 							"androidpn:iq:notification",
 							new NotificationIQProvider());
@@ -326,7 +351,7 @@ public class XmppManager {
 			}
 		}
 	}
-
+//RegisterTask注册到底是为了什么？？？
 	/**
 	 * A runnable task to register a new user onto the server.
 	 */
@@ -352,7 +377,7 @@ public class XmppManager {
 						IQ.class));
 
 				PacketListener packetListener = new PacketListener() {
-
+//注册到底是干嘛？什么时候会执行processPacket这个回调函数？
 					public void processPacket(Packet packet) {
 						Log.d("RegisterTask.PacketListener",
 								"processPacket().....");
@@ -376,6 +401,7 @@ public class XmppManager {
 								Log.d(LOGTAG, "password=" + newPassword);
 
 								Editor editor = sharedPrefs.edit();
+//获得XMPP聊天的用户名和密码,比较重要，与登陆有关
 								editor.putString(Constants.XMPP_USERNAME,
 										newUsername);
 								editor.putString(Constants.XMPP_PASSWORD,
@@ -392,6 +418,7 @@ public class XmppManager {
 				registration.addAttribute("username", newUsername);
 				registration.addAttribute("password", newPassword);
 				connection.sendPacket(registration);
+//注册成功要去获得登录名(昵称)，居然是去走HTTP
 				sendHandler();
 			} else {
 				Log.i(LOGTAG, "Account registered already");
@@ -423,7 +450,7 @@ public class XmppManager {
 							xmppManager.getUsername(),
 							xmppManager.getPassword(), XMPP_RESOURCE_NAME);
 					Log.d(LOGTAG, "Loggedn in successfully");
-
+//登陆成功后设置XMPP连接变化的回调接口，保证长连接
 					if (xmppManager.getConnectionListener() != null) {
 						xmppManager.getConnection().addConnectionListener(
 								xmppManager.getConnectionListener());
@@ -433,6 +460,7 @@ public class XmppManager {
 							NotificationIQ.class);
 					PacketListener packetListener = xmppManager
 							.getNotificationPacketListener();
+//设置XMPP接收到服务器推送消息的回调接口，实现服务器推送消息的功能
 					connection.addPacketListener(packetListener, packetFilter);
 
 					xmppManager.runTask();
@@ -477,7 +505,7 @@ public class XmppManager {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case MsgTagVO.UPDATE: {
+			case MsgTagVO.UPDATE: {//告知前端去通过HTTP获得昵称
 				ZhuoConnHelper connHelper = ZhuoConnHelper.getInstance(context);
 				connHelper.androidName(null, 0, null, username, true, null,
 						null);

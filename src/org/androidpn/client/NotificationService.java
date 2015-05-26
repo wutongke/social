@@ -1,3 +1,41 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
  * Copyright (C) 2010 Moduad Co., Ltd.
  *
@@ -36,7 +74,8 @@ import android.util.Log;
  * Service that continues to run in background and respond to the push
  * notification events from the server. This should be registered as service in
  * AndroidManifest.xml.
- * 
+ * 该服务注册各种接收器notificationReceiver，connectivityReceiver以及各种监听接口
+ * 该服务启动后在一个单线程的线程池中执行相关与XMPP服务器的操作，创建XMPPManage对象对XMPP相关通信进行处理
  * @author Sehwan Noh (devnoh@gmail.com)
  */
 public class NotificationService extends Service {
@@ -54,6 +93,7 @@ public class NotificationService extends Service {
 
 	private PhoneStateListener phoneStateListener;
 
+	//线程池
 	private ExecutorService executorService;
 
 	private TaskSubmitter taskSubmitter;
@@ -87,10 +127,10 @@ public class NotificationService extends Service {
 		editor.commit();
 		if (deviceId == null || deviceId.trim().length() == 0
 				|| deviceId.matches("0+")) {
-			if (sharedPrefs.contains("EMULATOR_DEVICE_ID")) {
+			if (sharedPrefs.contains("EMULATOR_DEVICE_ID")) {//在虚拟机上运行，deviceId设置为空
 				deviceId = sharedPrefs.getString(Constants.EMULATOR_DEVICE_ID,
 						"");
-			} else {
+			} else {//生成随机设备ID
 				deviceId = (new StringBuilder("EMU")).append(
 						(new Random(System.currentTimeMillis())).nextLong())
 						.toString();
@@ -102,6 +142,7 @@ public class NotificationService extends Service {
 
 		xmppManager = new XmppManager(this);
 
+//在一个独立的线程池中执行连接操作
 		taskSubmitter.submit(new Runnable() {
 			public void run() {
 				NotificationService.this.start();
@@ -187,6 +228,9 @@ public class NotificationService extends Service {
 		});
 	}
 
+	/**
+	 * 重要，注意注册了哪些广播，应该与接收到的服务器推送的消息有很大关系
+	 */
 	private void registerNotificationReceiver() {
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Constants.ACTION_SHOW_NOTIFICATION);
