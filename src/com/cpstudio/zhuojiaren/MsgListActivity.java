@@ -346,20 +346,31 @@ public class MsgListActivity extends Activity implements OnItemClickListener {
 	private void loadChatData() {
 		try {
 			Map<String, ImMsgVO> map = new HashMap<String, ImMsgVO>();
+			//未读消息数目
 			Map<String, Integer> map2 = new HashMap<String, Integer>();
+//可能得猜测。group by 返回的是该组中最后插入的一条元素，默认按时间顺序插入的，所以此处能选出最新的消息，但感觉不太严谨			
+//一下的两个查询能保证保存的是接收到的每个人的最新消息么？	“addtime desc”		
+			
+			//别人发送的消息,group by senderid
+			//
 			ArrayList<ImMsgVO> list1 = mFacade.getAllByCondition(
 					"senderid <> ?", new String[] { myid }, "senderid",
 					"addtime desc", mSearchKey.trim());
+			//我发送的消息
 			ArrayList<ImMsgVO> list2 = mFacade.getAllByCondition(
 					"receiverid <> ?", new String[] { myid }, "receiverid",
 					"addtime desc", mSearchKey.trim());
+			
+			
+	
+//list1中保存的是接收到的每个人的最新消息么？
 			for (ImMsgVO msg : list1) {
 				map.put(msg.getSender().getUserid(), msg);
 			}
 			for (ImMsgVO msg : list2) {
 				if (map.get(msg.getReceiver().getUserid()) == null) {
 					map.put(msg.getReceiver().getUserid(), msg);
-				} else {
+				} else {//既有发送的也有接收的，选择最新的一条
 					String time1 = map.get(msg.getReceiver().getUserid())
 							.getAddtime();
 					String time2 = msg.getAddtime();
@@ -372,14 +383,15 @@ public class MsgListActivity extends Activity implements OnItemClickListener {
 			list2.clear();
 			for (String userid : map.keySet()) {
 				int unreadCount = mFacade.getUnreadById(userid).size();
-				if (unreadCount > 0) {
+				if (unreadCount > 0) {//list1保存接收到的每个人的未读消息的最后一条
 					list1.add(map.get(userid));
 					map2.put(userid, unreadCount);
 				} else {
-					list2.add(map.get(userid));
+					list2.add(map.get(userid));//list2保存已读消息的最后一条
 					map2.put(userid, 0);
 				}
 			}
+			//按接收到的时间降序排序
 			Collections.sort(list1, new ImMsgComparator());
 			Collections.sort(list2, new ImMsgComparator());
 			mList.clear();

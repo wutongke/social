@@ -1,54 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
  * Copyright (C) 2010 Moduad Co., Ltd.
  *
@@ -204,7 +154,11 @@ public final class NotificationReceiver extends BroadcastReceiver {
 
 		}
 	}
-
+/**
+ * 通知notification通知UI界面收到推送消息：聊天消息，系统消息等
+ * @param context
+ * @param message
+ */
 	private void showMsg(Context context, String message) {
 		CardMsgFacade cardMsgFacade = new CardMsgFacade(context);
 		ImChatFacade imChatFacade = new ImChatFacade(context);
@@ -292,7 +246,7 @@ public final class NotificationReceiver extends BroadcastReceiver {
 				content = alluser + context.getString(R.string.info82)
 						+ content;
 			}
-//是否需要推送
+//消息列表Activity页面是否打开
 			if (ResHelper.getInstance(context).isMsgList()) {
 				return;
 			}
@@ -497,7 +451,7 @@ public final class NotificationReceiver extends BroadcastReceiver {
 			}
 			String msgTemp = "";
 			if (item.getFile() != null && !item.getFile().equals("")) {
-				item.setIsread("3");
+				item.setIsread("3");// 0 未读 1已读 2失败 3接受中 4发送中
 			}
 			if (imChatFacade.saveOrUpdate(item) > 0) {
 				if (item.getFile() != null && !item.getFile().equals("")) {
@@ -653,6 +607,7 @@ public final class NotificationReceiver extends BroadcastReceiver {
 				facade.update(item);
 				String userid = item.getSender().getUserid();
 				if (userid.equals(ResHelper.getInstance(context).getChatuser())) {
+					//正在与改用户聊天
 					Intent chatIntent = new Intent("com.cpstudio.userchat."
 							+ userid);
 					context.sendBroadcast(chatIntent);

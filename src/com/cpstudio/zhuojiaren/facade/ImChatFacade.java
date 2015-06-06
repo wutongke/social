@@ -57,7 +57,7 @@ public class ImChatFacade {
 			for (int i = 0; i < whereSections.length; i++) {
 				sections[i] = whereSections[i];
 			}
-			sections[whereSections.length] = "3";
+			sections[whereSections.length] = "3";//接收中的数据
 			cursor = dbHelper.query(SQL_TABLE, COLUMNS, where, sections,
 					groupby, null, orderby);
 		} else {
