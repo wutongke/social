@@ -179,10 +179,10 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case MsgTagVO.DATA_LOAD: {
+			case MsgTagVO.DATA_LOAD: { //加载数据（本地或网络），本地数据返回一个list,网络数据返回一个json
 				ArrayList<ZhuoInfoVO> list = new ArrayList<ZhuoInfoVO>();
 				boolean loadState = false;
-				if (msg.obj instanceof ArrayList) {
+				if (msg.obj instanceof ArrayList) {//加载的本地数据
 					list = (ArrayList<ZhuoInfoVO>) msg.obj;
 				} else {
 					if (msg.obj != null && !msg.obj.equals("")) {
@@ -270,7 +270,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			startActivity(i);
 		}
 	}
-
+	//refresh刷新加载的新的数据没有写数据库
 	@Override
 	public void onRefresh() {
 		String params = ZhuoCommHelper.getUrlMsgList();
@@ -314,14 +314,14 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	private void loadData() {
 		String url = ZhuoCommHelper.getUrlUserInfo() + "?uid="
 				+ ResHelper.getInstance(getApplicationContext()).getUserid();
-
-		// lz??
-		mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
+	
+    //加载刷新个人信息		mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
 		if (mPullDownView.startLoadData()) {
 			mList.clear();
 			mAdapter.notifyDataSetChanged();
 			if (CommonUtil.getNetworkState(getApplicationContext()) == 2
 					&& (mSearchKey == null || mSearchKey.equals(""))) {
+				//获取本地数据
 				ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
 				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
 				msg.obj = list;

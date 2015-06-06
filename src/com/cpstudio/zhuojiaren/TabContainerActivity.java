@@ -91,6 +91,11 @@ public class TabContainerActivity extends TabActivity implements
 		tab.setOnTabChangedListener(this);
 	}
 
+/**
+ * 底部显示的布局：倬家人、活动、精进、消息等，还包括隐藏的用于显示未读消息数目的tv
+ * @param index
+ * @return
+ */
 	private View getTabItemView(int index) {
 		LayoutInflater layoutInflater = LayoutInflater.from(this);
 		View view = layoutInflater.inflate(R.layout.item_view_tab, null);
@@ -137,6 +142,7 @@ public class TabContainerActivity extends TabActivity implements
 				} else {
 					numTV.setText(String.valueOf("0"));
 					numTV.setVisibility(View.GONE);
+			//清楚通知栏消息
 					Notifier notifier = new Notifier(getApplicationContext());
 					notifier.clearNotify();
 				}

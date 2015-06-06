@@ -24,7 +24,12 @@ public class PhotoPagerAdapter extends PagerAdapter {
 	private LoadImage mLoadImage = new LoadImage();
 	private ArrayList<String> mPics = new ArrayList<String>();
 	private View mProcessBar;
-
+/**
+ * 
+ * @param pics
+ * @param processbar
+ * @param type 是网络图片还是本地图片
+ */
 	public PhotoPagerAdapter(ArrayList<String> pics, View processbar,
 			String type) {
 		this.mPics = pics;

@@ -21,8 +21,14 @@ public class ResHelper {
 	private String SDPATH;
 	private Context mContext;
 	private float times = 1;
+	/**
+	 * 当前正在聊天的对象
+	 */
 	private String chatuser = null;
 	private boolean isMsgList = false;
+	/**
+	 * 当前正在圈聊的圈子
+	 */
 	private String chatgroup = null;
 	/**
 	 * 是否前台运行

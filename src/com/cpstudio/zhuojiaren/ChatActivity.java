@@ -110,7 +110,7 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 			findViewById(R.id.buttonManage).setVisibility(View.VISIBLE);
 			if (user != null) {
 				title.setText(user.getUsername());
-			} else {
+			} else {//获得聊天用户的信息
 				title.setText(userid);
 				mConnHelper.getFromServer(ZhuoCommHelper.getUrlUserInfo()
 						+ "?uid=" + userid, mUIHandler, MsgTagVO.DATA_OTHER);
@@ -166,6 +166,7 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 		if (null == msgReceiver) {
 			msgReceiver = new MsgReceiver();
 		}
+		//只接受指定用户的消息广播
 		IntentFilter filter = new IntentFilter("com.cpstudio.userchat."
 				+ userid);
 		registerReceiver(msgReceiver, filter);
@@ -208,7 +209,7 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case MsgTagVO.DATA_OTHER: {
+			case MsgTagVO.DATA_OTHER: {//获得聊天对象得信息
 				if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler jsonHandler = new JsonHandler((String) msg.obj);
 					UserVO user = jsonHandler.parseUser();
@@ -218,7 +219,7 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 				}
 				break;
 			}
-			case MsgTagVO.DATA_MORE: {
+			case MsgTagVO.DATA_MORE: {//添加自己发送的消息到消息列表，尚未发送成功
 				if (msg.obj != null && msg.obj instanceof ImMsgVO) {
 					ImMsgVO immsg = (ImMsgVO) msg.obj;
 					checkShow(immsg);
@@ -228,7 +229,7 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 				}
 				break;
 			}
-			case MsgTagVO.PUB_INFO: {
+			case MsgTagVO.PUB_INFO: {//消息发送成功
 				Bundle bundle = msg.getData();
 				String id = bundle.getString("data");
 				ImMsgVO immsg = mFacade.getById(id);
@@ -262,7 +263,7 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 				mListView.setSelection(mList.size() - 1);
 				break;
 			}
-			case MsgTagVO.ADD_BACK: {
+			case MsgTagVO.ADD_BACK: {//拉入黑名单
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					if (toBlack.equals("0")) {
@@ -277,7 +278,7 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 				}
 				break;
 			}
-			case MsgTagVO.MSG_FOWARD: {
+			case MsgTagVO.MSG_FOWARD: {//关注
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					if (tofollow.equals("0")) {
@@ -292,7 +293,7 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 				}
 				break;
 			}
-			case MsgTagVO.MSG_RCMDUSER: {
+			case MsgTagVO.MSG_RCMDUSER: {//操作是否成功
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					CommonUtil.displayToast(getApplicationContext(),
@@ -303,7 +304,9 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 			}
 		}
 	};
-
+/**
+ * 初始化时加载指定数量的聊天记录
+ */
 	private void loadChatData() {
 		ArrayList<ImMsgVO> list = mFacade
 				.getAllByCondition("senderid = ? or receiverid = ?",
@@ -323,7 +326,9 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 			mFacade.updateReadState(userid);
 		}
 	}
-
+/**
+ * 加载更多聊天记录
+ */
 	private void loadChatBeforeData() {
 		mListView.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
 		boolean loadState = false;
@@ -349,15 +354,18 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 		}
 		mPullDownView.RefreshComplete(loadState);
 	}
-
+/**
+ * 加载推送过来的新的聊天记录
+ */
 	private void loadChatAfterData() {
+		//"limit 10"????
 		ArrayList<ImMsgVO> list = mFacade.getAllByCondition(
 				"senderid = ? and isread = ?", new String[] { userid, "0" },
 				null, "addtime desc limit 10");
 		ArrayList<ImMsgVO> listTemp = new ArrayList<ImMsgVO>();
 		for (ImMsgVO msg : list) {
 			if (msg.getType().equals("voice") || msg.getType().equals("image")) {
-				if (msg.getSavepath() == null || msg.getSavepath().equals("")) {
+				if (msg.getSavepath() == null || msg.getSavepath().equals("")) {//未下载完。。。
 					continue;
 				}
 			}
@@ -395,7 +403,7 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 			}
 		}
 	}
-
+//检查设置是否显示时间
 	private void checkShow(ImMsgVO msg) {
 		if (msg != null) {
 			if (mList.size() > 1) {
@@ -408,7 +416,10 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 			}
 		}
 	}
-
+/**
+ * 添加自己发送的消息到消息列表
+ * @param immsg
+ */
 	private void addChatAfterData(ImMsgVO immsg) {
 		Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
 		msg.obj = immsg;
