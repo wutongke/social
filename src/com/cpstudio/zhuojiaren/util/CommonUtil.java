@@ -167,7 +167,13 @@ public class CommonUtil {
 	public static void displayToast(Context context, int resid) {
 		Toast.makeText(context, resid, Toast.LENGTH_SHORT).show();
 	}
-
+/**
+ * 网络判断 0已连接
+ * 1正在连接
+ * 2未联网及其他
+ * @param context
+ * @return
+ */
 	public static int getNetworkState(Context context) {
 		ConnectivityManager conMan = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);

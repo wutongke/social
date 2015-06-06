@@ -106,6 +106,9 @@ public class TabContainerActivity extends TabActivity implements
 		return view;
 	}
 
+	/**
+	 * 消息处理
+	 */
 	@SuppressLint("HandlerLeak")
 	private Handler msgHandler = new Handler() {
 		@Override
@@ -159,6 +162,9 @@ public class TabContainerActivity extends TabActivity implements
 		super.setDefaultTab(tag);
 	}
 
+	/**
+	 * 注册广播接收器
+	 */
 	@Override
 	protected void onResume() {
 		updateMsg();
@@ -237,6 +243,9 @@ public class TabContainerActivity extends TabActivity implements
 		return true;
 	}
 
+	/***
+	 * 退出应用
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);

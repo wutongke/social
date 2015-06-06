@@ -14,7 +14,11 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.ImageView;
-
+/**
+ * 图片下载类
+ * @author lef
+ * 使用了线程池、内存缓存、采用了同步下载，只有所有下载完成后，才能添加任务
+ */
 public class LoadImage {
 	private ExecutorService executorService;
 	private ImageMemoryCache memoryCache;

@@ -26,7 +26,12 @@ import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+/**
+ * 倬家人adapter
+ * 
+ * @author lef
+ *
+ */
 public class ZhuoUserListAdapter extends BaseAdapter {
 	private List<ZhuoInfoVO> mList = null;
 	private LayoutInflater inflater = null;
