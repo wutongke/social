@@ -709,4 +709,12 @@
     <string name="message_cloudvoice">发送了一个云录音</string>
     <string name="message_photo">发送了一张照片</string>
 
+    <!-- lef -->
+    <string name="froget_password">忘记密码</string>
+    <string name="company_name">北京倬脉网络科技有限公司版权所有</string>
+    <string name="company_copyright">Copyright© 1996&#8211;2014 hzhp Corporation All Rights Reserved</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_new_password">NewPasswordActivity</string>
+
 </resources>

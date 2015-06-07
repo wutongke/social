@@ -12,8 +12,8 @@
         android:smallScreens="true" />
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="10" />
+        android:minSdkVersion="15"
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -670,8 +670,17 @@
         </service>
 
         <receiver android:name="com.cpstudio.zhuojiaren.broadcastreceiver.ContentPoller" />
-
+        <!--  -->
+        <activity android:name="com.cpstudio.zhuojiaren.ui.ForgetPasswordActivity" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.BaseActivity"
+            android:label="@string/title_activity_base" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.NewPasswordActivity"
+            android:label="@string/title_activity_new_password" >
+        </activity>
     </application>
 
 </manifest>
-

@@ -8,6 +8,7 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.ui.ForgetPasswordActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.R;
@@ -38,6 +39,7 @@ public class LoginActivity extends Activity {
 	private EditText mPwdView;
 	private ZhuoConnHelper connHelper = null;
 	private PopupWindows pwh = null;
+	private TextView mFrogetPasswordView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +56,19 @@ public class LoginActivity extends Activity {
 		mUidView = (EditText) findViewById(R.id.uid);
 		mUidView.setText(mUid);
 		mPwdView = (EditText) findViewById(R.id.password);
+		mFrogetPasswordView = (TextView)findViewById(R.id.froget_password);
 		initClick();
 	}
 
 	private void initClick() {
+		mFrogetPasswordView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent(LoginActivity.this,ForgetPasswordActivity.class));
+			}
+		});
 		findViewById(R.id.rootLayout).setOnClickListener(new OnClickListener() {
 
 			@Override

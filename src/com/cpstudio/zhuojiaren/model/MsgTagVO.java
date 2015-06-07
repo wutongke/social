@@ -51,5 +51,11 @@ public class MsgTagVO {
 	public static final int CAPTRUE_CAMER = 27;
 	public static final int CAMERA_REQUEST = 28;
 	public static final int ADD_USER = 29;
+	/**
+	 * 获取验证码和提交验证码
+	 */
+	public static final int GET_VERIFICATIONCODE = 1;
+	public static final int SUBMIT_VERIFICATIONCODE = 2;
+	
 	
 }

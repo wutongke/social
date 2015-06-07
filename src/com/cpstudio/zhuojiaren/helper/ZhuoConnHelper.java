@@ -30,6 +30,7 @@ public class ZhuoConnHelper {
 	private static ZhuoConnHelper instance;
 	private String userid = null;
 	private String password = null;
+	//标识每一次请求，请求开始后不重复请求
 	private Set<String> mStartedTag = new HashSet<String>();
 
 	private void init(Context context) {
@@ -526,6 +527,24 @@ public class ZhuoConnHelper {
 				handlerTag, activity, "login", cancelable, cancel, data);
 	}
 
+	/**
+	 * 获取验证码
+	 * 
+	 * @param code
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelalbe
+	 * @return
+	 */
+	public boolean getVerificationcode(String code, Handler handler,
+			int handlerTag, Activity activity, boolean cancelalbe) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("verificationcode", code));
+		return doPost(nameValuePairs, "", handler, handlerTag, activity, "",
+				cancelalbe, null, null);
+	}
+
 	public boolean modifyPwd(String password, String newpassword,
 			Handler handler, int handlerTag, Activity activity,
 			boolean cancelable, OnCancelListener cancel, String data) {
@@ -771,4 +790,5 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("password", password));
 		return nameValuePairs;
 	}
+
 }
