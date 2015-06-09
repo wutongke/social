@@ -43,6 +43,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <!-- 
         <activity
             android:name="com.cpstudio.zhuojiaren.InitActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -55,6 +56,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+         -->
+         <activity
+            android:name="com.cpstudui.zhuojiaren.lz.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
         <activity
             android:name="com.cpstudio.zhuojiaren.PosterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -671,6 +687,16 @@
 
         <receiver android:name="com.cpstudio.zhuojiaren.broadcastreceiver.ContentPoller" />
 
+        
+        <!-- lzlz -->
+        
+        <activity
+            android:name="com.cpstudui.zhuojiaren.lz.FindActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_msg_share"
+            android:screenOrientation="portrait" >
+        </activity>
+        
     </application>
 
 </manifest>

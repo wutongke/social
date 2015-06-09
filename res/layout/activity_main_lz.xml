@@ -1,0 +1,85 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f9f9f9"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/userNameShowParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_title" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/buttonPlus"
+            android:layout_toRightOf="@+id/buttonSearch" >
+
+            <EditText
+                android:id="@+id/search_input"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/searchbg"
+                android:hint="@string/label_main_searchHint"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="35dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:focusable="false"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/search_search"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:padding="10dp"
+                android:src="@drawable/searcher_new_search_icon" />
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/buttonPlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/button_top_bg_menu"
+            android:text="@string/label_plus"
+            android:textColor="#ffffff"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/buttonSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/button_top_bg_menu"
+            android:text="@string/label_main_find"
+            android:textColor="#ffffff"
+            android:textSize="14sp" />
+    </RelativeLayout>
+      
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <com.cpstudio.zhuojiaren.widget.PullDownView
+            android:id="@+id/main_pull_down_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f9f9f9" />
+    </LinearLayout>
+
+</LinearLayout>

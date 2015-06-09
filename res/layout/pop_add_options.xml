@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dlg_bg"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/buttonPubActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/button_option_good"
+        android:minHeight="20dp" />
+
+    <Button
+        android:id="@+id/buttonInviteFriends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/button_option_cmt"
+        android:minHeight="20dp" />
+
+</LinearLayout>

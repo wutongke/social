@@ -1,6 +1,29 @@
-package com.cpstudio.zhuojiaren;
+package com.cpstudui.zhuojiaren.lz;
 
 import java.util.ArrayList;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+
+import com.cpstudio.zhuojiaren.JiarenActiveActivity;
+import com.cpstudio.zhuojiaren.MsgCmtActivity;
+import com.cpstudio.zhuojiaren.MsgDetailActivity;
+import com.cpstudio.zhuojiaren.PublishActiveActivity;
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.UserSelectActivity;
 import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter;
 import com.cpstudio.zhuojiaren.facade.InfoFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
@@ -15,38 +38,29 @@ import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
+import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-import com.cpstudio.zhuojiaren.R;
+import com.external.viewpagerindicator.PageIndicator;
 
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView.OnEditorActionListener;
-
-public class MainActivity extends Activity implements OnPullDownListener,
+public class SearchMainActivity extends Activity implements OnPullDownListener,
 		OnItemClickListener {
+	private float times = 2;
+	private PopupWindows phw = null;
+	private ViewPager bannerViewPager, catsViewPager;
+	private PageIndicator bannerIndicator, catsIndicator;
+
+	private ArrayList<BeanBanner> bannerListData;
+	private ArrayList<BeanBanner> hotListData;
+	private ArrayList<BeanCats> catsListData;
+	private ArrayList<BeanNotice> noticesListData;
+
+	private ArrayList<ImageView> hotImages;
+	private Bee_PageAdapter bannerPageAdapter;
+	private Cats_PageAdapter catPageAdapter;
+
+	AutoTextView antoText;
+
 	private ListView mListView;
 	private ZhuoUserListAdapter mAdapter;
 	private PullDownView mPullDownView;
@@ -57,90 +71,140 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	private ZhuoConnHelper mConnHelper = null;
 	private InfoFacade infoFacade = null;
 	private int mPage = 1;
+	boolean isContinue = true;
+	LoadImage imageLoader = new LoadImage(3);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_search_lz);
+
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		infoFacade = new InfoFacade(getApplicationContext(),
 				InfoFacade.NEWSLIST);
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
-		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
+		mPullDownView = (PullDownView) findViewById(R.id.main_pull_down_view);
+		// /lz
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
-				R.layout.listview_header5);
+				R.layout.main_header);
+
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
-		mAdapter = new ZhuoUserListAdapter(MainActivity.this, mList);
+		mAdapter = new ZhuoUserListAdapter(SearchMainActivity.this, mList);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
+
+		initHeadView();
+
 		initClick();
 		loadData();
-		loadAd();
+
+		times = DeviceInfoUtil.getDeviceCsd(SearchMainActivity.this);
+		// loadAd();
+	}
+
+	// »ñÈ¡ÆÁÄ»¿í¶È
+	public int getDisplayMetricsWidth() {
+		int i = getWindowManager().getDefaultDisplay().getWidth();
+		int j = getWindowManager().getDefaultDisplay().getHeight();
+		return Math.min(i, j);
+	}
+
+	private void initHeadView() {
+
+		catsViewPager = (ViewPager) findViewById(R.id.cats_viewpager);
+		// catsViewPager.setLayoutParams(params);
+		catsListData = new ArrayList<BeanCats>();
+
+		for (int i = 0; i < 14; i++) {
+			BeanCats item = new BeanCats();
+			item.setPicId(R.drawable.newmsg);
+			catsListData.add(item);
+		}
+
+		DisplayMetrics metric = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metric);
+		int width = metric.widthPixels; // ÆÁÄ»¿í¶È£¨ÏñËØ£©
+		int height = metric.heightPixels; // ÆÁÄ»¸ß¶È£¨ÏñËØ£©
+
+		catPageAdapter = new Cats_PageAdapter(SearchMainActivity.this, catsListData,
+				width, height);
+		catsViewPager.setAdapter(catPageAdapter);
+		catsViewPager.setCurrentItem(0);
+		catsIndicator = (PageIndicator) findViewById(R.id.cats_indicator);
+		catsIndicator.setViewPager(catsViewPager);
+
+		antoText = (AutoTextView) findViewById(R.id.at_notices);
+		noticesListData = new ArrayList<BeanNotice>();
+		for (int i = 0; i < 4; i++) {
+			BeanNotice item = new BeanNotice();
+			item.setContent("mseeage:" + i);
+			noticesListData.add(item);
+		}
+
+		antoText.setList(noticesListData);
+
+		// antoText.updateUI();
+
+		// antoText.stopAutoText();
+
+		addAd();
 	}
 
 	private void initClick() {
-		findViewById(R.id.buttonSearchUser).setOnClickListener(
+		findViewById(R.id.buttonSearch).setOnClickListener(
 				new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
-						Intent i = new Intent(MainActivity.this,
-								FindActivity.class);
+						Intent i = new Intent(SearchMainActivity.this,
+								com.cpstudui.zhuojiaren.lz.FindActivity.class);
 						startActivity(i);
 					}
 				});
-		final EditText searchView = (EditText) findViewById(R.id.editTextSearch);
-		final View delSearch = findViewById(R.id.imageViewDelSearch);
-		searchView.setOnEditorActionListener(new OnEditorActionListener() {
+		final EditText searchView = (EditText) findViewById(R.id.search_input);
 
-			@Override
-			public boolean onEditorAction(TextView v, int actionId,
-					KeyEvent event) {
-				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-					mSearchKey = v.getText().toString();
-					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-					imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-					loadData();
-				}
-				return false;
-			}
-		});
-		searchView.addTextChangedListener(new TextWatcher() {
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				if (searchView.getText().toString().equals("")) {
-					delSearch.setVisibility(View.GONE);
-				} else {
-					delSearch.setVisibility(View.VISIBLE);
-				}
-			}
-		});
-
-		delSearch.setOnClickListener(new OnClickListener() {
+		searchView.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				searchView.setText("");
-				if (mSearchKey != null && !mSearchKey.equals("")) {
-					mSearchKey = "";
-					loadData();
-				}
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		findViewById(R.id.buttonPlus).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if(phw==null) 
+					phw=new PopupWindows(SearchMainActivity.this);
+				
+				OnClickListener pubListener = new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Intent i = new Intent(SearchMainActivity.this,
+								PublishActiveActivity.class);
+//						i.putExtra("filePath", filePath);
+						startActivity(i);
+					}
+				};
+				OnClickListener inviteListener = new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Intent i = new Intent(SearchMainActivity.this,
+								UserSelectActivity.class);
+						ArrayList<String> tempids = new ArrayList<String>(1);
+						tempids.add(uid);
+						i.putStringArrayListExtra("otherids", tempids);
+						startActivity(i);
+					}
+				};
+				phw.showAddOptionsPop(v, times, pubListener, inviteListener);
 			}
 		});
 	}
@@ -228,7 +292,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 							getApplicationContext());
 					AdVO ad = nljh.parseAd();
 					if (ad != null) {
-						addAd(ad.getFile(), ad.getLink());
+						// addAd(ad.getFile(), ad.getLink());
 					}
 				}
 				break;
@@ -246,6 +310,11 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				}
 				break;
 			}
+			case MsgTagVO.FLIP:
+				bannerViewPager.setCurrentItem((bannerViewPager
+						.getCurrentItem() + 1) % bannerPageAdapter.getCount());
+
+				break;
 			}
 		}
 
@@ -255,7 +324,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		if (id != -1) {
-			Intent i = new Intent(MainActivity.this, MsgDetailActivity.class);
+			Intent i = new Intent(SearchMainActivity.this, MsgDetailActivity.class);
 			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
 			startActivity(i);
 		}
@@ -341,28 +410,64 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_OTHER);
 	}
 
-	private void addAd(String url, final String link) {
-		int height = (int) (75 * DeviceInfoUtil
-				.getDeviceCsd(getApplicationContext()));
-		LayoutParams rllp = new LayoutParams(LayoutParams.MATCH_PARENT, height);
-		LoadImage loadImage = new LoadImage();
-		ImageView iv = new ImageView(MainActivity.this);
-		iv.setScaleType(ScaleType.FIT_XY);
-		iv.setLayoutParams(rllp);
-		RelativeLayout rl = (RelativeLayout) findViewById(R.id.relativeLayoutAds);
-		rl.addView(iv);
-		iv.setTag(url);
-		loadImage.addTask(url, iv);
-		rl.setOnClickListener(new OnClickListener() {
+	private void addAd() {
+		// int height = (int) (75 * DeviceInfoUtil
+		// .getDeviceCsd(getApplicationContext()));
 
+		bannerViewPager = (ViewPager) findViewById(R.id.banner_viewpager);
+
+		// LayoutParams params=new LayoutParams(LayoutParams.MATCH_PARENT,
+		// height);
+		// bannerViewPager.setLayoutParams(params);
+
+		bannerListData = new ArrayList<BeanBanner>();
+
+		for (int i = 0; i < 5; i++) {
+
+			BeanBanner item = new BeanBanner();
+			item.setPicUrl("http://pic.nipic.com/2008-05-07/20085722191339_2.jpg");
+			bannerListData.add(item);
+		}
+
+		bannerPageAdapter = new Bee_PageAdapter(SearchMainActivity.this,
+				bannerListData);
+		bannerViewPager.setAdapter(bannerPageAdapter);
+		bannerViewPager.setCurrentItem(0);
+		bannerIndicator = (PageIndicator) findViewById(R.id.indicator);
+		bannerIndicator.setViewPager(bannerViewPager);
+		new Thread(new Runnable() {
 			@Override
-			public void onClick(View v) {
-				Uri uri = Uri.parse(link);
-				Intent it = new Intent(Intent.ACTION_VIEW, uri);
-				startActivity(it);
+			public void run() {
+				while (true) {
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if (isContinue) {
+						mUIHandler.sendEmptyMessage(MsgTagVO.FLIP);
+					}
+				}
 			}
-		});
-		loadImage.doTask();
+		}).start();
+
+		hotImages = new ArrayList<ImageView>();
+		hotListData = new ArrayList<BeanBanner>();
+		hotImages.add((ImageView) findViewById(R.id.ivHot1));
+		hotImages.add((ImageView) findViewById(R.id.ivHot2));
+		hotImages.add((ImageView) findViewById(R.id.ivHot3));
+		for (int i = 0; i < 3; i++) {
+			BeanBanner item = new BeanBanner();
+			item.setPicUrl("http://img2.imgtn.bdimg.com/it/u=834958572,3645145128&fm=21&gp=0.jpg");
+			hotListData.add(item);
+		}
+		for (int i = 0; i < 3; i++) {
+			String url = hotListData.get(i).getPicUrl();
+			hotImages.get(i).setTag(url);
+			imageLoader.addTask(url, hotImages.get(i));
+		}
+		imageLoader.doTask();
 	}
 
 }

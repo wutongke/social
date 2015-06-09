@@ -41,4 +41,6 @@ public class MsgTagVO {
 	public static final int CAMERA_REQUEST = 28;
 	public static final int ADD_USER = 29;
 	
+	//lz
+	public static final int FLIP = 99;
 }
