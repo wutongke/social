@@ -67,6 +67,9 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				InfoFacade.NEWSLIST);
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
+		/**
+		 * 下拉刷新头view
+		 */
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.listview_header5);
 		mPullDownView.setOnPullDownListener(this);
@@ -145,6 +148,13 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		});
 	}
 
+	/**
+	 * 
+	 * @param list
+	 * @param refresh
+	 * @param append
+	 *            是否添加到后边
+	 */
 	private void updateItemList(ArrayList<ZhuoInfoVO> list, boolean refresh,
 			boolean append) {
 		if (!list.isEmpty()) {
@@ -305,9 +315,6 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	private void loadData() {
 		String url = ZhuoCommHelper.getUrlUserInfo() + "?uid="
 				+ ResHelper.getInstance(getApplicationContext()).getUserid();
-
-		// 加载刷新个人信息
-		mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
 		if (mPullDownView.startLoadData()) {
 			mList.clear();
 			mAdapter.notifyDataSetChanged();
@@ -336,6 +343,9 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		}
 	}
 
+	/**
+	 * 获取通知
+	 */
 	private void loadAd() {
 		String params = ZhuoCommHelper.getUrlZhuoNotice();
 		mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_OTHER);
@@ -357,6 +367,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 			@Override
 			public void onClick(View v) {
+				//打开链接
 				Uri uri = Uri.parse(link);
 				Intent it = new Intent(Intent.ACTION_VIEW, uri);
 				startActivity(it);

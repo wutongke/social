@@ -20,6 +20,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -59,11 +61,13 @@ public class PopupWindows {
 	private PopupWindow popupWindowBottom;
 	private PopupWindow popupWindowOptions;
 	private PopupWindow fullScreenPopupWindow;
+	private PopupWindow breakQaunziPopupWindow;
 	private View view;
 	private View viewOptions;
 	private View viewTip;
 	private View viewDlg;
 	private View viewBottom;
+	private View viewBreakQuanzi;
 	private View fullScreenView;
 	private View viewDlgOne;
 
@@ -123,10 +127,15 @@ public class PopupWindows {
 												.readPictureDegree(mResHelper
 														.getCaptruePath());
 										filePath = newThumbImage(
-												ImageRectUtil
-												.rotaingBitmap(degree, ImageRectUtil.revitionImageSize(
-														mResHelper.getCaptruePath(), 640,
-														960)), filePath);
+												ImageRectUtil.rotaingBitmap(
+														degree,
+														ImageRectUtil
+																.revitionImageSize(
+																		mResHelper
+																				.getCaptruePath(),
+																		640,
+																		960)),
+												filePath);
 									}
 								}
 							} else {
@@ -139,13 +148,14 @@ public class PopupWindows {
 							filePath = mResHelper.getCaptruePath();
 						} else {
 							int degree = ImageRectUtil
-										.readPictureDegree(mResHelper
-												.getCaptruePath());
+									.readPictureDegree(mResHelper
+											.getCaptruePath());
 							filePath = newThumbImage(
-									ImageRectUtil
-									.rotaingBitmap(degree, ImageRectUtil.revitionImageSize(
-											mResHelper.getCaptruePath(), 640,
-											960)), filePath);
+									ImageRectUtil.rotaingBitmap(
+											degree,
+											ImageRectUtil.revitionImageSize(
+													mResHelper.getCaptruePath(),
+													640, 960)), filePath);
 						}
 					}
 				}
@@ -192,6 +202,7 @@ public class PopupWindows {
 		return filePath;
 	}
 
+	// 选择图片
 	public PopupWindow showPop(View parent) {
 		if (null != parent) {
 			InputMethodManager imm = (InputMethodManager) mActivity
@@ -250,6 +261,74 @@ public class PopupWindows {
 		return showBottomPop(parent, onClickListeners, info, 20, tag);
 	}
 
+	public PopupWindow showBreakQuanzi(int tag,View parent,int layoutId,int margin,OnClickListener breakBtnListener){
+		if (null != parent) {
+			InputMethodManager imm = (InputMethodManager) mActivity
+					.getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(parent.getWindowToken(), 0);
+		}
+		if (null == breakQaunziPopupWindow ||(Integer)viewBreakQuanzi.getTag()!=tag) {
+			LayoutInflater layoutInflater = (LayoutInflater) mActivity
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			viewBreakQuanzi= layoutInflater
+					.inflate(layoutId, null);
+			viewBreakQuanzi.setTag(tag);
+			breakQaunziPopupWindow = new PopupWindow(viewBreakQuanzi,
+					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+			
+			//隐藏解散圈子
+			viewBreakQuanzi.findViewById(R.id.fql_close).setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					breakQaunziPopupWindow.dismiss();
+				}
+			});
+			final TextView breakReason = (TextView)viewBreakQuanzi.findViewById(R.id.fql_break_reason);
+			final Button breakBtn = (Button)viewBreakQuanzi.findViewById(R.id.fql_break_btn);
+			//确定按钮
+			breakReason.addTextChangedListener(new TextWatcher() {
+				
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					// TODO Auto-generated method stub
+					if(!breakReason.getText().toString().isEmpty()){
+						breakBtn.setEnabled(true);
+					}else{
+						breakBtn.setEnabled(false);
+					}
+				}
+				
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count,
+						int after) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void afterTextChanged(Editable s) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			breakBtn.setOnClickListener(breakBtnListener);
+		}
+		setPopupWindowParams(breakQaunziPopupWindow);
+		breakQaunziPopupWindow.showAtLocation(parent, Gravity.CENTER_HORIZONTAL, 0, margin);
+		return breakQaunziPopupWindow;
+	}
+	/**
+	 * 底部窗口，可以有多个button
+	 * 
+	 * @param parent
+	 * @param onClickListeners
+	 * @param info
+	 * @param margin
+	 * @param tag
+	 * @return
+	 */
 	public PopupWindow showBottomPop(View parent,
 			OnClickListener[] onClickListeners, String[] info, int margin,
 			String tag) {
@@ -318,6 +397,17 @@ public class PopupWindows {
 		return popupWindowBottom;
 	}
 
+	/**
+	 * 底部推荐等
+	 * 
+	 * @param parent
+	 * @param zanClickListener
+	 * @param cmtClickListener
+	 * @param recommandClickListener
+	 * @param collectClickListener
+	 * @param isCollect
+	 * @return
+	 */
 	public PopupWindow showBottomOption(View parent,
 			final OnClickListener zanClickListener,
 			final OnClickListener cmtClickListener,

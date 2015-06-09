@@ -1,9 +1,17 @@
 package com.cpstudio.zhuojiaren.model;
 
 public class MsgTagVO {
-
+	/**
+	 * 初次加载首页数据
+	 */
 	public static final int DATA_LOAD = 0;
+	/**
+	 * 刷新
+	 */
 	public static final int DATA_REFRESH = 1;
+	/**
+	 * 加载更多
+	 */
 	public static final int DATA_MORE = 2;
 	public static final int DATA_OTHER = 3;
 	
@@ -22,6 +30,9 @@ public class MsgTagVO {
 	public static final int REFUSE_RCMD = 19;
 
 	public static final int PUB_INFO = 5;
+	/**
+	 * 接受到新消息
+	 */
 	public static final int START_SEND = 21;
 	
 	public static final int UPDATE_LOCAL = 6;	
@@ -40,6 +51,12 @@ public class MsgTagVO {
 	public static final int CAPTRUE_CAMER = 27;
 	public static final int CAMERA_REQUEST = 28;
 	public static final int ADD_USER = 29;
+	/**
+	 * 获取验证码和提交验证码
+	 */
+	public static final int GET_VERIFICATIONCODE = 1;
+	public static final int SUBMIT_VERIFICATIONCODE = 2;
+	
 	
 	//lz
 	public static final int FLIP = 99;

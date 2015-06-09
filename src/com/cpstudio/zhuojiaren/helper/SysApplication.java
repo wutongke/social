@@ -8,7 +8,11 @@ import org.androidpn.client.ServiceManager;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-
+/***
+ * activityջ
+ * @author lef
+ *
+ */
 public class SysApplication extends Application{
 	private List<Activity> activities = new LinkedList<Activity>();
 	private static SysApplication instance;

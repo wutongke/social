@@ -12,8 +12,8 @@
         android:smallScreens="true" />
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="10" />
+        android:minSdkVersion="15"
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -55,6 +55,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
         </activity>
         
          -->
@@ -686,7 +687,32 @@
         </service>
 
         <receiver android:name="com.cpstudio.zhuojiaren.broadcastreceiver.ContentPoller" />
-
+        <!--  -->
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.ForgetPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.BaseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.NewPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.BaseFragmentActivity"
+            android:label="@string/title_activity_base_fragment" >
+        </activity>
         
         <!-- lzlz -->
         
@@ -700,4 +726,3 @@
     </application>
 
 </manifest>
-

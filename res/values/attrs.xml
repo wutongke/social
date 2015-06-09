@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GifMoviewView">
+        <attr name="gif" format="reference" />
+        <attr name="paused" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="CustomTheme">
+        <attr name="gifMoviewViewStyle" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="TabButton">
+        <attr name="buttonBackground" format="reference|color" />
+        <attr name="dividerSize" format="dimension" />
+        <attr name="sliderSize" format="dimension" />
+        <attr name="bottomLineSize" format="dimension" />
+        <attr name="dividerColor" format="color" />
+        <attr name="sliderColor" format="color" />
+        <attr name="bottomLineColor" format="color" />
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+    </declare-styleable>
+</resources>

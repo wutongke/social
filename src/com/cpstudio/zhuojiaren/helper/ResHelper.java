@@ -10,6 +10,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 
+/**
+ * 工具类，preferenceUtil相关操作，
+ */
 public class ResHelper {
 	private static ResHelper instance;
 	private String userid = null;
@@ -27,6 +30,9 @@ public class ResHelper {
 	 * 当前正在圈聊的圈子
 	 */
 	private String chatgroup = null;
+	/**
+	 * 是否前台运行
+	 */
 	private boolean isAppShow = false;
 
 	public final static String FILTER_TYPE = "filterType";
@@ -91,7 +97,7 @@ public class ResHelper {
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -219,6 +225,11 @@ public class ResHelper {
 		return mPu.getPreference(PASSWORD, "");
 	}
 
+	/**
+	 * 登录状态 0未登录1已登录
+	 * 
+	 * @return
+	 */
 	public int getLoginState() {
 		return mPu.getPreference(LOGIN_STATE, 0);
 	}

@@ -1,512 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 package com.cpstudio.zhuojiaren.helper;
 
 import java.util.ArrayList;
@@ -529,10 +20,17 @@ import android.os.Message;
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper;
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper.FinishCallback;
 
+/**
+ * 网络相关
+ * 
+ * @author lef
+ * 
+ */
 public class ZhuoConnHelper {
 	private static ZhuoConnHelper instance;
 	private String userid = null;
 	private String password = null;
+	//标识每一次请求，请求开始后不重复请求
 	private Set<String> mStartedTag = new HashSet<String>();
 
 	private void init(Context context) {
@@ -1016,7 +514,8 @@ public class ZhuoConnHelper {
 				handler, handlerTag, activity, "androidName", cancelable,
 				cancel, data);
 	}
-//登陆
+
+	// 登陆
 	public boolean login(String userid, String password, Handler handler,
 			int handlerTag, Activity activity, boolean cancelable,
 			OnCancelListener cancel, String data) {
@@ -1026,6 +525,24 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("from", "android"));
 		return doPost(nameValuePairs, ZhuoCommHelper.getUrlLogin(), handler,
 				handlerTag, activity, "login", cancelable, cancel, data);
+	}
+
+	/**
+	 * 获取验证码
+	 * 
+	 * @param code
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelalbe
+	 * @return
+	 */
+	public boolean getVerificationcode(String code, Handler handler,
+			int handlerTag, Activity activity, boolean cancelalbe) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("verificationcode", code));
+		return doPost(nameValuePairs, "", handler, handlerTag, activity, "",
+				cancelalbe, null, null);
 	}
 
 	public boolean modifyPwd(String password, String newpassword,
@@ -1074,6 +591,21 @@ public class ZhuoConnHelper {
 				handler, handlerTag, activity, null, cancelable, cancel, data);
 	}
 
+	/**
+	 * 
+	 * @param nameValuePairs
+	 *            参数
+	 * @param url
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param tag
+	 * @param cancelable
+	 *            是否可取消
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
 	private boolean doPost(List<NameValuePair> nameValuePairs, String url,
 			Handler handler, int handlerTag, Activity activity, String tag,
 			boolean cancelable, OnCancelListener cancel, String data) {
@@ -1258,4 +790,5 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("password", password));
 		return nameValuePairs;
 	}
+
 }

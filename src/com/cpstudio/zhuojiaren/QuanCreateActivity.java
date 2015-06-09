@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -31,10 +35,33 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-public class QuanCreateActivity extends Activity {
-
+/**
+ * 创建圈子和修改圈子
+ * 
+ * @author lef
+ * 
+ */
+public class QuanCreateActivity extends BaseActivity {
+	@InjectView(R.id.QuanType)
+	TextView quanTypeView;
+	@InjectView(R.id.QuanLocation)
+	TextView quanLocationView;
+	@InjectView(R.id.add_quanzi_right)
+	RadioGroup addQuanRight;
+	@InjectView(R.id.add_quanzi_right1)
+	RadioGroup addQuanRight1;
+	@InjectView(R.id.add_quanzi_right2)
+	RadioGroup addQuanRight2;
+	@InjectView(R.id.visite_quanzi_right)
+	RadioGroup QuanRight;
+	@InjectView(R.id.visite_quanzi_right1)
+	RadioGroup visiteQuanRight1;
+	@InjectView(R.id.visite_quanzi_right2)
+	RadioGroup visiteQuanRight2;
 	private PopupWindows pwh = null;
+	// 管理员头像
 	private ImageSelectHelper mIsh = null;
+	// 圈子图片
 	private ImageSelectHelper mIsh2 = null;
 	private ArrayList<String> mSelectlist = new ArrayList<String>();
 	private ZhuoConnHelper mConnHelper = null;
@@ -46,6 +73,13 @@ public class QuanCreateActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_quan_create);
+
+		ButterKnife.inject(this);
+
+		initTitle();
+		title.setText(R.string.title_activity_create_quan);
+		function.setText(R.string.finish);
+
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		Intent i = getIntent();
 		groupid = i.getStringExtra("groupid");
@@ -60,19 +94,13 @@ public class QuanCreateActivity extends Activity {
 		pwh = new PopupWindows(QuanCreateActivity.this);
 		mIsh = ImageSelectHelper.getIntance(QuanCreateActivity.this,
 				R.id.linearLayoutManagerContainer);
+
 		mIsh2 = ImageSelectHelper.getIntance(QuanCreateActivity.this,
 				R.id.linearLayoutPicContainer);
 		initClick();
 	}
 
 	private void initClick() {
-		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				QuanCreateActivity.this.finish();
-			}
-		});
 		findViewById(R.id.buttonCreateQuan).setOnClickListener(
 				new OnClickListener() {
 					@Override
@@ -80,6 +108,15 @@ public class QuanCreateActivity extends Activity {
 						createOrUpdateGroup();
 					}
 				});
+		function.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				createOrUpdateGroup();
+			}
+		});
+		// 展示管理员
 		mIsh.getmAddButton().setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -93,11 +130,13 @@ public class QuanCreateActivity extends Activity {
 				startActivityForResult(i, MsgTagVO.ADD_USER);
 			}
 		});
+		// 圈子图片
 		mIsh2.getmAddButton().setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				mIsh2.initParams();
 				pwh.showPop(findViewById(R.id.rootLayout));
+
 			}
 		});
 	}
@@ -211,6 +250,7 @@ public class QuanCreateActivity extends Activity {
 		}
 	};
 
+	// 创建或更新圈子按钮
 	private void createOrUpdateGroup() {
 		EditText editTextTitle = (EditText) findViewById(R.id.editTextQuanTitle);
 		EditText introTextTitle = (EditText) findViewById(R.id.editTextQuanIntro);

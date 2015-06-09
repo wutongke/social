@@ -47,7 +47,12 @@ public class QuanListActivity extends Activity {
 		loadData();
 		initClick();
 	}
-
+	//数据加载完成后初始化界面
+	/**
+	 * 加载时每类圈子（我的圈子，热门圈子，最新圈子...)是一个item，全部add到R.id.linearLayoutQuanContainer中，
+	 * 添加完成后，异步下载圈子图片
+	 * @param list
+	 */
 	private void initQuan(ArrayList<ZhuoQuanVO> list) {
 		if (!list.isEmpty()) {
 			LayoutInflater inflater = LayoutInflater
@@ -129,6 +134,7 @@ public class QuanListActivity extends Activity {
 							.findViewById(R.id.linearLayoutContainer2);
 				}
 			}
+			
 			mLoadImage.doTask();
 		} else {
 			TextView nodata = (TextView) findViewById(R.id.textViewNoData);
@@ -172,6 +178,7 @@ public class QuanListActivity extends Activity {
 		findViewById(R.id.progressLoading).setVisibility(View.VISIBLE);
 		findViewById(R.id.textViewLoading).setVisibility(View.VISIBLE);
 		findViewById(R.id.textViewNoData).setVisibility(View.GONE);
+		//如果未联网，从数据库中去
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
 			ArrayList<ZhuoQuanVO> list = mFacade.getAll();
 			Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
