@@ -6,35 +6,7 @@
     android:orientation="vertical"
     tools:context=".QuanCreateActivity" >
 
-    <RelativeLayout
-        android:id="@+id/userNameShowParent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_title" >
-
-        <TextView
-            android:id="@+id/userNameShow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="@string/title_activity_create_quan"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/buttonBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
-            android:background="@drawable/button_top_bg_back"
-            android:text="@string/label_back"
-            android:paddingLeft="7dp"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
-    </RelativeLayout>
+    <include layout="@layout/title_activity" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -51,33 +23,24 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical" >
+                android:layout_height="60dp"
+                android:background="@color/graywhitem"
+                android:orientation="horizontal" >
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/linearLayoutPicContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_qzmc" />
-
-                <EditText
-                    android:id="@+id/editTextQuanTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center_vertical"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_corners"
-                    android:ems="10"
-                    android:hint="@string/label_qzmchint"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingTop="10dp"
-                    android:singleLine="true"
-                    android:textSize="14sp" />
-
+                    android:background="@color/white"
+                    android:orientation="vertical" >
+                </LinearLayout>
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_qztp" />
             </LinearLayout>
 
             <ImageView
@@ -89,22 +52,108 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="vertical" >
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal" >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_qztp" />
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/label_qzmc" />
 
-                <LinearLayout
-                    android:id="@+id/linearLayoutPicContainer"
+                <EditText
+                    android:id="@+id/editTextQuanTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_corners"
-                    android:orientation="vertical" >
-                </LinearLayout>
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/white"
+                    android:ems="10"
+                    android:hint="@string/label_qzmchint"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="10dp"
+                    android:singleLine="true"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/ico"
+                android:src="@drawable/bg_border3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/label_qzlb" />
+
+                <TextView
+                    android:id="@+id/QuanType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/white"
+                    android:ems="10"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="10dp"
+                    android:singleLine="true"
+                    android:text="@string/label_qzcty"
+                    android:textColor="@color/graywhite"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/ico"
+                android:src="@drawable/bg_border3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/label_qzlc" />
+
+                <TextView
+                    android:id="@+id/QuanLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/white"
+                    android:ems="10"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="10dp"
+                    android:singleLine="true"
+                    android:text="@string/label_qzlcd"
+                    android:textColor="@color/graywhite"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <ImageView
@@ -149,11 +198,69 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/ico"
                 android:src="@drawable/bg_border3" />
-
+			<TextView 
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:background="@color/graywhitem"
+			    android:gravity="center"
+			    android:textSize="@dimen/basic_text"
+			    android:text="@string/add_quanzi_right"
+			    />
+			<RadioGroup 
+			    android:id="@+id/add_quanzi_right"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="60dp"
+			    >
+			    <RadioButton 
+			        android:id="@+id/add_quanzi_right1"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/add_quanzi_right_1"
+			        android:textSize="@dimen/second_basic_text"
+			        />
+			    <RadioButton 
+			        android:id="@+id/add_quanzi_right2"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/add_quanzi_right_2"
+			        android:textSize="@dimen/second_basic_text"
+			        />
+			</RadioGroup>
+			<TextView 
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:background="@color/graywhitem"
+			    android:gravity="center"
+			    android:textSize="@dimen/basic_text"
+			    android:text="@string/visite_quanzi_right"
+			    />
+			<RadioGroup 
+			    android:id="@+id/visite_quanzi_right"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="60dp"
+			    >
+			    <RadioButton 
+			        android:id="@+id/visite_quanzi_right1"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/add_quanzi_right_1"
+			        android:textSize="@dimen/second_basic_text"
+			        />
+			    <RadioButton 
+			        android:id="@+id/visite_quanzi_right2"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/add_quanzi_right_2"
+			        android:textSize="@dimen/second_basic_text"
+			        />
+			</RadioGroup>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:visibility="gone"
                 android:orientation="vertical" >
 
                 <TextView
@@ -191,7 +298,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/group_type_10" />
-
                 </RadioGroup>
             </LinearLayout>
 
@@ -240,7 +346,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:layout_marginTop="15dp" >
+                android:layout_marginTop="15dp" 
+                android:visibility="gone"
+                >
 
                 <Button
                     android:id="@+id/buttonCreateQuan"

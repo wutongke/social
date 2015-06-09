@@ -105,6 +105,7 @@ public class QuanDetailActivity extends Activity {
 							Button buttonMsgState = (Button) findViewById(R.id.buttonMsgState);
 							String alertState = detail.getAlert();
 							buttonMsgState.setTag(alertState);
+							//是否圈聊消息提醒
 							if (alertState.equals("1")) {
 								buttonMsgState
 										.setBackgroundResource(R.drawable.button_switch_on);

@@ -54,6 +54,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.PosterActivity"
@@ -671,15 +672,30 @@
 
         <receiver android:name="com.cpstudio.zhuojiaren.broadcastreceiver.ContentPoller" />
         <!--  -->
-        <activity android:name="com.cpstudio.zhuojiaren.ui.ForgetPasswordActivity" >
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.ForgetPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.BaseActivity"
-            android:label="@string/title_activity_base" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.NewPasswordActivity"
-            android:label="@string/title_activity_new_password" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.BaseFragmentActivity"
+            android:label="@string/title_activity_base_fragment" >
         </activity>
     </application>
 

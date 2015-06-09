@@ -33,8 +33,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:background="@drawable/button_top_bg_back"
-            android:text="@string/label_back"
             android:paddingLeft="7dp"
+            android:text="@string/label_back"
             android:textColor="#ffffff"
             android:textSize="14sp" />
 
@@ -50,7 +50,6 @@
             android:textColor="#ffffff"
             android:textSize="14sp"
             android:visibility="gone" />
-
     </RelativeLayout>
 
     <ScrollView
@@ -107,8 +106,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
-                        android:textSize="20sp"
-                         />
+                        android:textSize="20sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -185,7 +183,6 @@
                         android:lineSpacingExtra="3dp"
                         android:textColor="#6a6a6a"
                         android:textSize="14sp" />
-
                 </RelativeLayout>
             </LinearLayout>
 
@@ -247,7 +244,7 @@
                 android:contentDescription="@string/ico"
                 android:src="@drawable/bg_border3"
                 android:visibility="gone" />
-            
+
             <RelativeLayout
                 android:id="@+id/relativeLayoutMsg"
                 android:layout_width="match_parent"
@@ -271,7 +268,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:background="@drawable/button_switch_off" />
-
             </RelativeLayout>
 
             <ImageView
@@ -346,7 +342,6 @@
                     android:contentDescription="@string/ico"
                     android:src="@drawable/ico_arrow_org"
                     android:visibility="gone" />
-
             </RelativeLayout>
 
             <ImageView
@@ -444,7 +439,7 @@
                     android:text="@string/label_recommand"
                     android:textColor="#ffffff"
                     android:visibility="gone" />
-                
+
                 <Button
                     android:id="@+id/buttonApply"
                     android:layout_width="wrap_content"
@@ -453,11 +448,11 @@
                     android:background="@drawable/button_bg_green"
                     android:text="@string/label_apply"
                     android:textColor="#ffffff"
-                    android:visibility="gone"  />
-
+                    android:visibility="gone" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
+    <!-- 底部菜单栏 -->
 
     <LinearLayout
         android:id="@+id/linearLayoutGroupTab"
@@ -499,7 +494,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/indicator_tab_ico_cy" />
-
     </LinearLayout>
 
 </RelativeLayout>

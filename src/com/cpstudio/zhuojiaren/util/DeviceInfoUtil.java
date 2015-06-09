@@ -6,10 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.model.GeoVO;
-import com.utils.CommunicationUtil;
-
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -35,6 +31,10 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 import android.webkit.WebView;
+
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.model.GeoVO;
+import com.utils.CommunicationUtil;
 
 public class DeviceInfoUtil {
 	private static String networkOperatorName;

@@ -1,17 +1,15 @@
 package com.cpstudio.zhuojiaren;
 
-import butterknife.InjectView;
-
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-
 import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-public class BaseActivity extends Activity {
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+
+public class BaseFragmentActivity extends FragmentActivity {
+
 	protected ZhuoConnHelper connHelper = null;
 	protected TextView title;
 	protected TextView function;
@@ -31,8 +29,10 @@ public class BaseActivity extends Activity {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						BaseActivity.this.finish();
+						BaseFragmentActivity.this.finish();
 					}
 				});
 	}
+
+
 }

@@ -1,6 +1,8 @@
 package com.cpstudio.zhuojiaren;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -31,7 +33,7 @@ public class FindActivity extends Activity {
 					@Override
 					public void onClick(View v) {
 						Intent i = new Intent(FindActivity.this,
-								QuanListActivity.class);
+								ZhuoQuanActivity.class);
 						startActivity(i);
 					}
 				});

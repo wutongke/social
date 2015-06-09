@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuanVO {
+	//»¶◊”¿‡–Õ
+	public final static  String QUANZITYPE = "quanzitype";
+	public final static  int QUANZIMY = 6;
+	public final static  int QUANZIRECOMMEND = 2;
+	public final static  int QUANZIQUERY = 3;
+	
+	
 	private String groupid;
 	private String gname;
 	private String gheader;

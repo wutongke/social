@@ -11,17 +11,27 @@
 	    android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/backspace"
-        android:text="返回"
+        android:text="@string/label_back"
         android:textColor="#ffffff"
-        android:textSize="20sp"
+        android:textSize="20dp"
 	    />
     <TextView
         android:id="@+id/activity_title"
         android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#ffffff"
-        android:textSize="20sp" />
+        android:textSize="20dp" />
+    <TextView 
+        android:id="@+id/activity_function"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="#ffffff"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:gravity="center_vertical"
+        />
 
 </RelativeLayout>

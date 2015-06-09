@@ -27,10 +27,6 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
 
-import com.ant.liao.GifView;
-import com.cpstudio.zhuojiaren.R;
-import com.utils.CipherUtil;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -49,6 +45,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import com.ant.liao.GifView;
+import com.cpstudio.zhuojiaren.R;
+import com.utils.CipherUtil;
 
 public class CommonUtil {
 
