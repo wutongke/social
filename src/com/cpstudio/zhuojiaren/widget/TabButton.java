@@ -49,6 +49,8 @@ public class TabButton extends HorizontalScrollView {
 	private Paint sliderPaint; // 滑块的画�?
 	private Paint bottomPaint; // 底部线条的画�?
 	private Paint dividerPaint; // 分割线的画笔
+	private Paint mButtonBackgroundPaint; // 分割线的画笔
+	private Paint mSelectButtonBackgroundPaint; // 分割线的画笔
 
 	private float dividerSize; // 分割线高�?
 	private float bottomLineSize; // 底部线高�?
@@ -102,6 +104,13 @@ public class TabButton extends HorizontalScrollView {
 			float pianyi = (layoutHeight - dividerSize) / 2;
 			canvas.drawRect(view.getLeft() - 1f, pianyi, view.getLeft(),
 					layoutHeight - pianyi, dividerPaint);
+			if(i==pageSelect){
+				canvas.drawRect((float)view.getLeft(), 0f, (float)view.getRight(),
+						(float)(layoutHeight - sliderSize), mSelectButtonBackgroundPaint);
+			}else{
+				canvas.drawRect((float)view.getLeft(), 0f, (float)view.getRight(),
+						(float)(layoutHeight - sliderSize), mButtonBackgroundPaint);
+			}
 			// width = view.getWidth();
 		}
 		// 绘制滑块
@@ -115,10 +124,10 @@ public class TabButton extends HorizontalScrollView {
 	private void init(Context context, AttributeSet attrs) {
 		TypedArray tArray = context.obtainStyledAttributes(attrs,
 				R.styleable.TabButton);
-		mButtonBackground = tArray.getResourceId(
-				R.styleable.TabButton_buttonBackground, R.color.graywhitem);
-		mSelectButtonBackground = tArray.getResourceId(
-				R.styleable.TabButton_buttonSelectBackground, R.color.white);
+		mButtonBackground = tArray.getColor(
+				R.styleable.TabButton_buttonBackground, 0xfff2f2f2);
+		mSelectButtonBackground = tArray.getColor(
+				R.styleable.TabButton_buttonSelectBackground, 0xffffffff);
 
 		int bottomLineColor = tArray.getColor(
 				R.styleable.TabButton_bottomLineColor, DEF_LINE_COLOR);
@@ -188,6 +197,17 @@ public class TabButton extends HorizontalScrollView {
 		bottomPaint.setAntiAlias(true);
 		bottomPaint.setStyle(Style.FILL);
 		bottomPaint.setColor(bottomLineColor);
+		
+		mButtonBackgroundPaint = new Paint();
+		mButtonBackgroundPaint.setAntiAlias(true);
+		mButtonBackgroundPaint.setStyle(Style.FILL);
+		mButtonBackgroundPaint.setColor(mButtonBackground);
+		
+		mSelectButtonBackgroundPaint = new Paint();
+		mSelectButtonBackgroundPaint.setAntiAlias(true);
+		mSelectButtonBackgroundPaint.setStyle(Style.FILL);
+		mSelectButtonBackgroundPaint.setColor(mSelectButtonBackground);
+		
 
 	}
 
@@ -228,10 +248,10 @@ public class TabButton extends HorizontalScrollView {
 		//第一个tab的颜色
 		if (position == 0) {
 			tv.setTextColor(mSelectTextColor);
-			tv.setBackgroundResource(mSelectButtonBackground);
+//			tv.setBackgroundResource(mSelectButtonBackground);
 		} else {
 			tv.setTextColor(mTextColor);
-			tv.setBackgroundResource(mButtonBackground);
+//			tv.setBackgroundResource(mButtonBackground);
 		}
 		
 		tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
@@ -305,13 +325,13 @@ public class TabButton extends HorizontalScrollView {
 			if (i == Index) {
 				TextView view = (TextView) mLinearLayout.getChildAt(i);
 				view.setTextColor(mSelectTextColor);
-				view.setBackgroundResource(mSelectButtonBackground);
+//				view.setBackgroundResource(mSelectButtonBackground);
 //				view.setBackgroundColor(Color.WHITE);
 			} else {
 				TextView view = (TextView) mLinearLayout.getChildAt(i);
 				view.setTextColor(mTextColor);
 				//必须是setBackgroundResource
-				view.setBackgroundResource(mButtonBackground);
+//				view.setBackgroundResource(mButtonBackground);
 			}
 		}
 	}

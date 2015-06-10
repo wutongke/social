@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="TabButton">
-        <attr name="buttonBackground" format="reference|color" />
-        <attr name="buttonSelectBackground" format="reference|color" />
+        <attr name="buttonBackground" format="color" />
+        <attr name="buttonSelectBackground" format="color" />
         <attr name="dividerSize" format="dimension" />
         <attr name="sliderSize" format="dimension" />
         <attr name="bottomLineSize" format="dimension" />
