@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/graywhitem"
+    android:orientation="vertical"
+    tools:context=".QuanziFilterActivity" >
+	<include layout="@layout/title_activity"/>"
+    <LinearLayout
+        android:id="@+id/according_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_weight="1"
+            android:text="@string/accordingto_type" />
+
+        <TextView
+            android:id="@+id/type_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:drawablePadding="5dp"
+            android:textColor="@color/graywhite"
+            android:drawableRight="@drawable/ico_arrow_gray"
+            android:text="@string/all" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/according_locate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_weight="1"
+            android:text="@string/accordingto_locate" />
+
+        <TextView
+            android:id="@+id/locate_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/ico_arrow_gray"
+            android:textColor="@color/graywhite"
+            android:text="@string/all" />
+    </LinearLayout>
+	<Button 
+	    android:id="@+id/filter_ok_btn"
+	    android:layout_width="match_parent"
+	    android:layout_marginLeft="30dp"
+	    android:layout_marginTop="30dp"
+	    android:layout_marginRight="30dp"
+	    android:layout_height="wrap_content"
+	    android:padding="10dp"
+	    android:layout_gravity="center_horizontal"
+	    android:text="@string/OK"
+	    android:background="@color/yellow"
+	    />
+</LinearLayout>

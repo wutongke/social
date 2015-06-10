@@ -43,7 +43,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <!-- 
         <activity
             android:name="com.cpstudio.zhuojiaren.InitActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -55,23 +54,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            
         </activity>
-        
-         -->
-         <activity
+        <activity
             android:name="com.cpstudui.zhuojiaren.lz.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        
         <activity
             android:name="com.cpstudio.zhuojiaren.PosterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -707,22 +697,24 @@
             android:name="com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
-            
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.BaseFragmentActivity"
             android:label="@string/title_activity_base_fragment" >
         </activity>
-        
+
         <!-- lzlz -->
-        
+
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.FindActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_msg_share"
             android:screenOrientation="portrait" >
         </activity>
-        
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.QuanziFilterActivity"
+            android:label="@string/title_activity_quanzi_filter" >
+        </activity>
     </application>
 
 </manifest>

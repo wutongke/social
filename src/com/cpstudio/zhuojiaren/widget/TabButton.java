@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.os.Parcel;
@@ -24,7 +25,7 @@ import com.cpstudio.zhuojiaren.R;
 
 public class TabButton extends HorizontalScrollView {
 
-	private static final int DEF_LINE_COLOR = 0x66ffffff;
+	private static final int DEF_LINE_COLOR = 0x6600000;
 	private static final int DEF_SLIDER_COLOR = R.color.black;
 	private static final int DEF_TEXT_COLOR = R.color.graywhite;
 	private static final int DEF_TAB_PADDING = 5;
@@ -40,8 +41,10 @@ public class TabButton extends HorizontalScrollView {
 	private ViewPager mViewPager;
 
 	private int mButtonBackground; // 按钮背景
+	private int mSelectButtonBackground; // 选中按钮背景
 	private float mTextSize; // 字体大小
 	private int mTextColor; // 字体颜色
+	private int mSelectTextColor; // 字体颜色
 
 	private Paint sliderPaint; // 滑块的画�?
 	private Paint bottomPaint; // 底部线条的画�?
@@ -103,7 +106,7 @@ public class TabButton extends HorizontalScrollView {
 		}
 		// 绘制滑块
 		canvas.drawRect(scrollOffset, layoutHeight - sliderSize, scrollOffset
-				+ sliderWidth, layoutHeight, sliderPaint);
+				+ sliderWidth, layoutHeight , sliderPaint);
 		// 绘制底线
 		canvas.drawRect(0, layoutHeight - bottomLineSize, layoutWidth,
 				layoutHeight, bottomPaint);
@@ -113,14 +116,16 @@ public class TabButton extends HorizontalScrollView {
 		TypedArray tArray = context.obtainStyledAttributes(attrs,
 				R.styleable.TabButton);
 		mButtonBackground = tArray.getResourceId(
-				R.styleable.TabButton_buttonBackground, R.color.white);
+				R.styleable.TabButton_buttonBackground, R.color.graywhitem);
+		mSelectButtonBackground = tArray.getResourceId(
+				R.styleable.TabButton_buttonSelectBackground, R.color.white);
 
 		int bottomLineColor = tArray.getColor(
 				R.styleable.TabButton_bottomLineColor, DEF_LINE_COLOR);
 		int dividerColor = tArray.getColor(R.styleable.TabButton_dividerColor,
 				DEF_LINE_COLOR);
-		int sliderColor = R.color.graywhitem;
-
+		int sliderColor = tArray.getColor(R.styleable.TabButton_sliderColor,
+				R.color.graywhitem);
 		float defBottonLineSize = TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, DEF_BOTTON_LINE_SIZE,
 				getResources().getDisplayMetrics());
@@ -148,6 +153,8 @@ public class TabButton extends HorizontalScrollView {
 				defTextSize);
 		mTextColor = tArray.getColor(R.styleable.TabButton_textColor,
 				DEF_TEXT_COLOR);
+		mSelectTextColor = tArray.getColor(R.styleable.TabButton_slecttextColor,
+				DEF_TEXT_COLOR);
 		tArray.recycle();
 
 		if (isInEditMode()) {
@@ -170,7 +177,7 @@ public class TabButton extends HorizontalScrollView {
 		sliderPaint = new Paint();
 		sliderPaint.setAntiAlias(true);
 		sliderPaint.setStyle(Style.FILL);
-		sliderPaint.setColor(context.getResources().getColor(R.color.black));
+		sliderPaint.setColor(sliderColor);
 
 		dividerPaint = new Paint();
 		dividerPaint.setAntiAlias(true);
@@ -202,12 +209,13 @@ public class TabButton extends HorizontalScrollView {
 		}
 	}
 
+	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	public View newTextTab(CharSequence text, int position) {
 		TextView tv = new TextView(getContext());
 		LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.MATCH_PARENT, 0.3f);
+				LinearLayout.LayoutParams.MATCH_PARENT, 1f);
 		tv.setLayoutParams(lParams);
 		WindowManager wm = (WindowManager) mContext
 				.getSystemService(Context.WINDOW_SERVICE);
@@ -216,13 +224,16 @@ public class TabButton extends HorizontalScrollView {
 		tv.setWidth(width / childCount);
 		tv.setGravity(Gravity.CENTER);
 		tv.setPadding(tabPadding, 0, tabPadding, 0);
-		tv.setBackgroundResource(mButtonBackground);
 		tv.setOnClickListener(buttonOnClick);
+		//第一个tab的颜色
 		if (position == 0) {
-			tv.setTextColor(0xFF000000);
+			tv.setTextColor(mSelectTextColor);
+			tv.setBackgroundResource(mSelectButtonBackground);
 		} else {
 			tv.setTextColor(mTextColor);
+			tv.setBackgroundResource(mButtonBackground);
 		}
+		
 		tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
 		tv.setSingleLine();
 		tv.setText(text);
@@ -251,6 +262,9 @@ public class TabButton extends HorizontalScrollView {
 
 			public void onPageSelected(int arg0) {
 				pageSelect = arg0;
+				setTabBackgroundByIndex(pageSelect);
+				//写在后边，否则会被覆盖
+				drawUnderLine(pageSelect, 0);
 				if(pageChangeListener!=null)
 					pageChangeListener.onPageSelected(arg0);
 			}
@@ -264,9 +278,9 @@ public class TabButton extends HorizontalScrollView {
 
 			@SuppressLint("ResourceAsColor")
 			public void onPageScrollStateChanged(int state) {
-				if (state == ViewPager.SCROLL_STATE_IDLE)
-					drawUnderLine(pageSelect, 0);
-				setTabBackgroundByIndex(pageSelect);
+//				if (state == ViewPager.SCROLL_STATE_IDLE)
+//					drawUnderLine(pageSelect, 0);
+//				setTabBackgroundByIndex(pageSelect);
 				if(pageChangeListener!=null)
 					pageChangeListener.onPageScrollStateChanged(state);
 			}
@@ -290,10 +304,14 @@ public class TabButton extends HorizontalScrollView {
 		for (int i = 0; i < mLinearLayout.getChildCount(); i++) {
 			if (i == Index) {
 				TextView view = (TextView) mLinearLayout.getChildAt(i);
-				view.setTextColor(0xFF000000);
+				view.setTextColor(mSelectTextColor);
+				view.setBackgroundResource(mSelectButtonBackground);
+//				view.setBackgroundColor(Color.WHITE);
 			} else {
 				TextView view = (TextView) mLinearLayout.getChildAt(i);
 				view.setTextColor(mTextColor);
+				//必须是setBackgroundResource
+				view.setBackgroundResource(mButtonBackground);
 			}
 		}
 	}

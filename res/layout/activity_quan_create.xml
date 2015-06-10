@@ -3,6 +3,7 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".QuanCreateActivity" >
 
@@ -23,9 +24,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:background="@color/graywhitem"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
 
                 <LinearLayout
                     android:id="@+id/linearLayoutPicContainer"
@@ -36,10 +39,11 @@
                     android:background="@color/white"
                     android:orientation="vertical" >
                 </LinearLayout>
+
                 <TextView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:text="@string/label_qztp" />
             </LinearLayout>
 
@@ -56,12 +60,15 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
+                android:background="@color/white"
                 android:orientation="horizontal" >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:text="@string/label_qzmc" />
 
                 <EditText
@@ -93,6 +100,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
+                android:background="@color/white"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -131,6 +139,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
+                android:background="@color/white"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -198,70 +207,73 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/ico"
                 android:src="@drawable/bg_border3" />
-			<TextView 
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:background="@color/graywhitem"
-			    android:gravity="center"
-			    android:textSize="@dimen/basic_text"
-			    android:text="@string/add_quanzi_right"
-			    />
-			<RadioGroup 
-			    android:id="@+id/add_quanzi_right"
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:layout_marginLeft="60dp"
-			    >
-			    <RadioButton 
-			        android:id="@+id/add_quanzi_right1"
-			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content"
-			        android:text="@string/add_quanzi_right_1"
-			        android:textSize="@dimen/second_basic_text"
-			        />
-			    <RadioButton 
-			        android:id="@+id/add_quanzi_right2"
-			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content"
-			        android:text="@string/add_quanzi_right_2"
-			        android:textSize="@dimen/second_basic_text"
-			        />
-			</RadioGroup>
-			<TextView 
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:background="@color/graywhitem"
-			    android:gravity="center"
-			    android:textSize="@dimen/basic_text"
-			    android:text="@string/visite_quanzi_right"
-			    />
-			<RadioGroup 
-			    android:id="@+id/visite_quanzi_right"
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:layout_marginLeft="60dp"
-			    >
-			    <RadioButton 
-			        android:id="@+id/visite_quanzi_right1"
-			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content"
-			        android:text="@string/add_quanzi_right_1"
-			        android:textSize="@dimen/second_basic_text"
-			        />
-			    <RadioButton 
-			        android:id="@+id/visite_quanzi_right2"
-			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content"
-			        android:text="@string/add_quanzi_right_2"
-			        android:textSize="@dimen/second_basic_text"
-			        />
-			</RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/graywhitem"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/add_quanzi_right"
+                android:textSize="@dimen/basic_text" />
+
+            <RadioGroup
+                android:id="@+id/add_quanzi_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp" >
+
+                <RadioButton
+                    android:id="@+id/add_quanzi_right1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_quanzi_right_1"
+                    android:textSize="@dimen/second_basic_text" />
+
+                <RadioButton
+                    android:id="@+id/add_quanzi_right2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_quanzi_right_2"
+                    android:textSize="@dimen/second_basic_text" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/graywhitem"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/visite_quanzi_right"
+                android:textSize="@dimen/basic_text" />
+
+            <RadioGroup
+                android:id="@+id/visite_quanzi_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp" >
+
+                <RadioButton
+                    android:id="@+id/visite_quanzi_right1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_quanzi_right_1"
+                    android:textSize="@dimen/second_basic_text" />
+
+                <RadioButton
+                    android:id="@+id/visite_quanzi_right2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_quanzi_right_2"
+                    android:textSize="@dimen/second_basic_text" />
+            </RadioGroup>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:visibility="gone"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:visibility="gone" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -346,9 +358,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:layout_marginTop="15dp" 
-                android:visibility="gone"
-                >
+                android:layout_marginTop="15dp"
+                android:visibility="gone" >
 
                 <Button
                     android:id="@+id/buttonCreateQuan"

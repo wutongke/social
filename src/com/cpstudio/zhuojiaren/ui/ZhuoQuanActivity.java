@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -93,8 +95,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 				case 1:
 					break;
 				case 2:
-					((QuanziFra)(fragments.get(2))).setManager();
-					
+					ZhuoQuanActivity.this.startActivityForResult(new Intent(mContext,QuanziFilterActivity.class), 1);
 					break;
 				case 3:
 					((QuanziFra)(fragments.get(0))).offManager();
@@ -105,11 +106,6 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 			}
 		});
 	}
-	protected void onPause() {
-		super.onPause();
-		viewPager.setCurrentItem(0,false);
-		tabButton.setTabBackgroundByIndex(0);
-	};
 	
 	PagerAdapter getPagerAdapter() {
 		 fragments = new ArrayList<Fragment>();
@@ -163,6 +159,17 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 			function.setText("");
 			function.setTag(3);
 			break;
+		}
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult( requestCode,  resultCode,  data);
+		//ɸѡ
+		if(requestCode==1){
+			if(resultCode==RESULT_OK){
+				
+			}
 		}
 	}
 }

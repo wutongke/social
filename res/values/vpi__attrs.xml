@@ -25,11 +25,6 @@
     <declare-styleable name="CustomTheme">
         <attr name="gifMoviewViewStyle" format="reference" />
     </declare-styleable>
-    
-    
-    
-    
-    
     <declare-styleable name="ViewPagerIndicator">
 
         <!-- Style of the circle indicator. -->

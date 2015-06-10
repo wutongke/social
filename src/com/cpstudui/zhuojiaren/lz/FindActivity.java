@@ -29,6 +29,7 @@ import com.cpstudio.zhuojiaren.helper.BaiduLocationHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
 
 public class FindActivity extends Activity {
 	private String mLocation = "";
@@ -42,7 +43,7 @@ public class FindActivity extends Activity {
 			R.drawable.button_gongxu, R.drawable.button_gongxu,
 			R.drawable.button_gongxu, R.drawable.button_gongxu,
 			R.drawable.button_gongxu };
-	Class[] classArrays = { QuanListActivity.class, MsgResourceActivity.class,
+	Class[] classArrays = { ZhuoQuanActivity.class, MsgResourceActivity.class,
 			MsgResourceActivity.class,// 众筹
 			UserSameActivity.class,// 同城
 			FieldSelectUserActivity.class,// 同行

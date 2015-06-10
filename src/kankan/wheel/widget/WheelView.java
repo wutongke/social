@@ -470,7 +470,7 @@ public class WheelView extends View {
 			bottomShadow = new GradientDrawable(Orientation.BOTTOM_TOP,
 					SHADOWS_COLORS);
 		}
-		setBackgroundResource(R.drawable.bg_weel);
+		setBackgroundResource(R.color.white);
 	}
 
 	/**
