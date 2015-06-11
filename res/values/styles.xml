@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -79,5 +79,16 @@
     </style>
     
     <style name="Widget.GifMoviewView" parent="@android:style/Widget"></style>
-
+	<style name="margin">
+	    <item name="android:paddingLeft">10dp</item>
+	    <item name="android:paddingRight">10dp</item>
+	</style>
+	<style name="basic_text">
+	    <item name="android:textColor">@color/graywhite</item>
+	    <item name="android:textSize">20dp</item>
+	</style>
+	<style name="anim_popup_dir">
+        <item name="android:windowEnterAnimation">@anim/slide_in</item>
+        <item name="android:windowExitAnimation">@anim/slide_out</item>
+    </style>
 </resources>

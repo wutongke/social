@@ -1,0 +1,231 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EditEventActivity" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                style="@style/basic_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/graywhitem"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:text="@string/event_name" />
+
+            <EditText
+                android:id="@+id/aee_event_name"
+                style="@style/basic_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/graywhitem"
+                android:hint="@string/event_name_hint"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" />
+
+            <include layout="@layout/bg_image" />
+
+            <TextView
+                style="@style/basic_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:text="@string/event_name" />
+
+            <EditText
+                android:id="@+id/aee_event_des"
+                style="@style/basic_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="@string/event_de_hint"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" />
+
+            <include layout="@layout/bg_image" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="20dp" >
+
+                <GridView
+                    android:id="@+id/aee_image_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:gravity="center"
+                    android:horizontalSpacing="5dip"
+                    android:listSelector="@android:color/transparent"
+                    android:numColumns="3"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="5dip"
+                    android:visibility="gone" >
+                </GridView>
+
+                <TextView
+                    android:id="@+id/aee_add_image"
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/bg_head_add"
+                    android:gravity="center_vertical"
+                    android:text="@string/image_des" />
+            </LinearLayout>
+
+            <include layout="@layout/bg_image" />
+
+            <LinearLayout
+                android:id="@+id/aee_start_time_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp" >
+
+                <TextView
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ico_my_on"
+                    android:drawablePadding="5dp"
+                    android:text="@string/start_time" />
+
+                <TextView
+                    android:id="@+id/aee_start_time"
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <include layout="@layout/bg_image" />
+
+            <LinearLayout
+                android:id="@+id/aee_end_time_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp" >
+
+                <TextView
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ico_my_on"
+                    android:drawablePadding="5dp"
+                    android:text="@string/end_time" />
+
+                <TextView
+                    android:id="@+id/aee_end_time"
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <include layout="@layout/bg_image" />
+
+            <LinearLayout
+                android:id="@+id/aee_event_locate_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp" >
+
+                <TextView
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ico_my_on"
+                    android:drawablePadding="5dp"
+                    android:text="@string/event_locate" />
+
+                <TextView
+                    android:id="@+id/aee_event_locate"
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <include layout="@layout/bg_image" />
+
+            <LinearLayout
+                android:id="@+id/aee_event_locate_more_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp" >
+
+                <TextView
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ico_my_on"
+                    android:drawablePadding="5dp"
+                    android:text="@string/event_locate_more" />
+
+                <TextView
+                    android:id="@+id/aee_event_locate_more"
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <include layout="@layout/bg_image" />
+
+            <LinearLayout
+                android:id="@+id/aee_people_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal" >
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/aee_add_contact_people"
+                style="@style/basic_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="@string/add_contact" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

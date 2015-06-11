@@ -14,6 +14,7 @@ import com.cpstudio.zhuojiaren.model.CardMsgVO;
 import com.cpstudio.zhuojiaren.model.CmtRcmdVO;
 import com.cpstudio.zhuojiaren.model.ContactVO;
 import com.cpstudio.zhuojiaren.model.DownloadVO;
+import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.GeoVO;
 import com.cpstudio.zhuojiaren.model.CmtVO;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
@@ -191,6 +192,19 @@ public class JsonHandler {
 			e.printStackTrace();
 		}
 		return quanVO;
+	}
+	/**
+	 * 解析活动详情
+	 */
+	public EventVO parseEvent() {
+		EventVO eventVO = null;
+		try {
+			Gson gson = new Gson();
+			eventVO = gson.fromJson(jsonData, EventVO.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return eventVO;
 	}
 
 	public UserVO parseUser() {

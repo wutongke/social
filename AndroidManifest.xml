@@ -713,7 +713,23 @@
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.QuanziFilterActivity"
-            android:label="@string/title_activity_quanzi_filter" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.EventDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.EditEventActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.widget.PicChooseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
     </application>
 
