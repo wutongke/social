@@ -770,6 +770,7 @@
     <string name="event_locate_more">标记活动详细地址: </string>
     <string name="add_contact">添加联系人</string>
     <string name="public_event">发布活动</string>
+    <string name="choose_place">选择活动地点</string>
 
     <!-- lz -->
     <string name="label_main_find">发现</string>

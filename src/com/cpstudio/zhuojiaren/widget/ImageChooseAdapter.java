@@ -1,5 +1,6 @@
 package com.cpstudio.zhuojiaren.widget;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ImageChooseAdapter extends CommonAdapter<String>
 	/**
 	 * 用户选择的图片，存储为图片的完整路径
 	 */
-	public static List<String> mSelectedImage = new LinkedList<String>();
+	public static List<String> mSelectedImage = new ArrayList<String>();
 
 	/**
 	 * 文件夹路径

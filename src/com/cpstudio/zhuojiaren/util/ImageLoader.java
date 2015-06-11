@@ -242,6 +242,7 @@ public class ImageLoader
 				mSemaphore.acquire();
 		} catch (InterruptedException e)
 		{
+			Log.i("DEBUH", "mPoolThreadHander");
 		}
 		mTasks.add(runnable);
 		mPoolThreadHander.sendEmptyMessage(0x110);

@@ -75,9 +75,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="0张"
-            
-            android:textColor="@color/black" />
+            android:textColor="@color/green" />
     </RelativeLayout>
 
 </RelativeLayout>

@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".EditEventActivity" >
-
+	<include layout="@layout/title_activity"
+	    />"
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -50,7 +51,7 @@
                 android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:paddingTop="20dp"
-                android:text="@string/event_name" />
+                android:text="@string/event_des" />
 
             <EditText
                 android:id="@+id/aee_event_des"
@@ -72,10 +73,10 @@
                 android:orientation="vertical"
                 android:padding="20dp" >
 
-                <GridView
+                <com.cpstudio.zhuojiaren.widget.MyGridView
                     android:id="@+id/aee_image_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:cacheColorHint="@android:color/transparent"
                     android:gravity="center"
                     android:horizontalSpacing="5dip"
@@ -83,8 +84,10 @@
                     android:numColumns="3"
                     android:stretchMode="columnWidth"
                     android:verticalSpacing="5dip"
-                    android:visibility="gone" >
-                </GridView>
+                    android:scrollbars="none"
+                    android:layout_marginBottom="10dp"
+                     >
+                </com.cpstudio.zhuojiaren.widget.MyGridView>
 
                 <TextView
                     android:id="@+id/aee_add_image"
@@ -214,8 +217,7 @@
                 android:id="@+id/aee_people_contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:orientation="horizontal" >
+                android:orientation="vertical" >
             </LinearLayout>
 
             <Button

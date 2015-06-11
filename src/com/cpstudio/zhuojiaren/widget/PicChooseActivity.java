@@ -35,8 +35,7 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.widget.ImageChooseAdapter.ImageChooserCount;
 import com.cpstudio.zhuojiaren.widget.ListImageDirPopupWindow.OnImageDirSelected;
 
-public class PicChooseActivity extends Activity implements OnImageDirSelected
-{
+public class PicChooseActivity extends Activity implements OnImageDirSelected {
 	private ProgressDialog mProgressDialog;
 
 	/**
@@ -75,10 +74,8 @@ public class PicChooseActivity extends Activity implements OnImageDirSelected
 
 	private ListImageDirPopupWindow mListImageDirPopupWindow;
 
-	private Handler mHandler = new Handler()
-	{
-		public void handleMessage(android.os.Message msg)
-		{
+	private Handler mHandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
 			mProgressDialog.dismiss();
 			// 为View绑定数据
 			data2View();
@@ -90,10 +87,8 @@ public class PicChooseActivity extends Activity implements OnImageDirSelected
 	/**
 	 * 为View绑定数据
 	 */
-	private void data2View()
-	{
-		if (mImgDir == null)
-		{
+	private void data2View() {
+		if (mImgDir == null) {
 			Toast.makeText(getApplicationContext(), "相册中没有图片哎",
 					Toast.LENGTH_SHORT).show();
 			return;
@@ -104,17 +99,18 @@ public class PicChooseActivity extends Activity implements OnImageDirSelected
 		 * 可以看到文件夹的路径和图片的路径分开保存，极大的减少了内存的消耗；
 		 */
 		mAdapter = new ImageChooseAdapter(getApplicationContext(), mImgs,
-				R.layout.grid_item, mImgDir.getAbsolutePath(),imageCount);
+				R.layout.grid_item, mImgDir.getAbsolutePath(), imageCount);
 		mGirdView.setAdapter(mAdapter);
-		
-		mImageCount.setText(mAdapter.mSelectedImage.size()+"/"+imageCount+"张");
-		
+
+		mImageCount.setText(ImageChooseAdapter.mSelectedImage.size() + "/"
+				+ imageCount + "张");
+
 		mAdapter.setImageCount(new ImageChooserCount() {
-			
+
 			@Override
 			public void imageChoose(int count) {
 				// TODO Auto-generated method stub
-				mImageCount.setText(count+"/"+imageCount+"张");
+				mImageCount.setText(count + "/" + imageCount + "张");
 			}
 		});
 	};
@@ -122,19 +118,16 @@ public class PicChooseActivity extends Activity implements OnImageDirSelected
 	/**
 	 * 初始化展示文件夹的popupWindw
 	 */
-	private void initListDirPopupWindw()
-	{
+	private void initListDirPopupWindw() {
 		mListImageDirPopupWindow = new ListImageDirPopupWindow(
 				LayoutParams.MATCH_PARENT, (int) (mScreenHeight * 0.7),
 				mImageFloders, LayoutInflater.from(getApplicationContext())
 						.inflate(R.layout.list_dir, null));
 
-		mListImageDirPopupWindow.setOnDismissListener(new OnDismissListener()
-		{
+		mListImageDirPopupWindow.setOnDismissListener(new OnDismissListener() {
 
 			@Override
-			public void onDismiss()
-			{
+			public void onDismiss() {
 				// 设置背景颜色变暗
 				WindowManager.LayoutParams lp = getWindow().getAttributes();
 				lp.alpha = 1.0f;
@@ -146,17 +139,16 @@ public class PicChooseActivity extends Activity implements OnImageDirSelected
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image_loader);
-		
+
 		DisplayMetrics outMetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
 		mScreenHeight = outMetrics.heightPixels;
 
 		imageCount = getIntent().getIntExtra("IMAGECOUNT", 1);
-		
+
 		initView();
 		getImages();
 		initEvent();
@@ -166,22 +158,18 @@ public class PicChooseActivity extends Activity implements OnImageDirSelected
 	/**
 	 * 利用ContentProvider扫描手机中的图片，此方法在运行在子线程中 完成图片的扫描，最终获得jpg最多的那个文件夹
 	 */
-	private void getImages()
-	{
+	private void getImages() {
 		if (!Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED))
-		{
+				Environment.MEDIA_MOUNTED)) {
 			Toast.makeText(this, "暂无外部存储", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		// 显示进度条
 		mProgressDialog = ProgressDialog.show(this, null, "正在加载...");
 
-		new Thread(new Runnable()
-		{
+		new Thread(new Runnable() {
 			@Override
-			public void run()
-			{
+			public void run() {
 
 				String firstImage = null;
 
@@ -197,8 +185,7 @@ public class PicChooseActivity extends Activity implements OnImageDirSelected
 						MediaStore.Images.Media.DATE_MODIFIED);
 
 				Log.e("TAG", mCursor.getCount() + "");
-				while (mCursor.moveToNext())
-				{
+				while (mCursor.moveToNext()) {
 					// 获取图片的路径
 					String path = mCursor.getString(mCursor
 							.getColumnIndex(MediaStore.Images.Media.DATA));
@@ -214,23 +201,20 @@ public class PicChooseActivity extends Activity implements OnImageDirSelected
 					String dirPath = parentFile.getAbsolutePath();
 					ImageFloder imageFloder = null;
 					// 利用一个HashSet防止多次扫描同一个文件夹（不加这个判断，图片多起来还是相当恐怖的~~）
-					if (mDirPaths.contains(dirPath))
-					{
+					if (mDirPaths.contains(dirPath)) {
 						continue;
-					} else
-					{
+					} else {
 						mDirPaths.add(dirPath);
 						// 初始化imageFloder
 						imageFloder = new ImageFloder();
 						imageFloder.setDir(dirPath);
 						imageFloder.setFirstImagePath(path);
 					}
-					if(parentFile.list()==null)continue;
-					int picSize = parentFile.list(new FilenameFilter()
-					{
+					if (parentFile.list() == null)
+						continue;
+					int picSize = parentFile.list(new FilenameFilter() {
 						@Override
-						public boolean accept(File dir, String filename)
-						{
+						public boolean accept(File dir, String filename) {
 							if (filename.endsWith(".jpg")
 									|| filename.endsWith(".png")
 									|| filename.endsWith(".jpeg"))
@@ -243,8 +227,7 @@ public class PicChooseActivity extends Activity implements OnImageDirSelected
 					imageFloder.setCount(picSize);
 					mImageFloders.add(imageFloder);
 
-					if (picSize > mPicsSize)
-					{
+					if (picSize > mPicsSize) {
 						mPicsSize = picSize;
 						mImgDir = parentFile;
 					}
@@ -265,8 +248,7 @@ public class PicChooseActivity extends Activity implements OnImageDirSelected
 	/**
 	 * 初始化View
 	 */
-	private void initView()
-	{
+	private void initView() {
 		mGirdView = (GridView) findViewById(R.id.id_gridView);
 		mChooseDir = (TextView) findViewById(R.id.id_choose_dir);
 		mImageCount = (TextView) findViewById(R.id.id_total_count);
@@ -275,16 +257,13 @@ public class PicChooseActivity extends Activity implements OnImageDirSelected
 
 	}
 
-	private void initEvent()
-	{
+	private void initEvent() {
 		/**
 		 * 为底部的布局设置点击事件，弹出popupWindow
 		 */
-		mBottomLy.setOnClickListener(new OnClickListener()
-		{
+		mBottomLy.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v)
-			{
+			public void onClick(View v) {
 				mListImageDirPopupWindow
 						.setAnimationStyle(R.style.anim_popup_dir);
 				mListImageDirPopupWindow.showAsDropDown(mBottomLy, 0, 0);
@@ -296,19 +275,20 @@ public class PicChooseActivity extends Activity implements OnImageDirSelected
 			}
 		});
 		findViewById(R.id.goback).setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent();
-				
-				intent.putStringArrayListExtra("data", (ArrayList<String>) mAdapter.mSelectedImage);
-				PicChooseActivity.this.setResult(RESULT_OK,intent);
+
+				intent.putStringArrayListExtra("data",
+						(ArrayList<String>) mAdapter.mSelectedImage);
+				PicChooseActivity.this.setResult(RESULT_OK, intent);
 				PicChooseActivity.this.finish();
 			}
 		});
 		findViewById(R.id.aml_goback).setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -318,15 +298,12 @@ public class PicChooseActivity extends Activity implements OnImageDirSelected
 	}
 
 	@Override
-	public void selected(ImageFloder floder)
-	{
+	public void selected(ImageFloder floder) {
 
 		mImgDir = new File(floder.getDir());
-		mImgs = Arrays.asList(mImgDir.list(new FilenameFilter()
-		{
+		mImgs = Arrays.asList(mImgDir.list(new FilenameFilter() {
 			@Override
-			public boolean accept(File dir, String filename)
-			{
+			public boolean accept(File dir, String filename) {
 				if (filename.endsWith(".jpg") || filename.endsWith(".png")
 						|| filename.endsWith(".jpeg"))
 					return true;
@@ -337,19 +314,29 @@ public class PicChooseActivity extends Activity implements OnImageDirSelected
 		 * 可以看到文件夹的路径和图片的路径分开保存，极大的减少了内存的消耗；
 		 */
 		mAdapter = new ImageChooseAdapter(getApplicationContext(), mImgs,
-				R.layout.grid_item, mImgDir.getAbsolutePath(),imageCount);
+				R.layout.grid_item, mImgDir.getAbsolutePath(), imageCount);
 		mGirdView.setAdapter(mAdapter);
+		mAdapter.setImageCount(new ImageChooserCount() {
+
+			@Override
+			public void imageChoose(int count) {
+				// TODO Auto-generated method stub
+				mImageCount.setText(count + "/" + imageCount + "张");
+			}
+		});
 		// mAdapter.notifyDataSetChanged();
-		mImageCount.setText(floder.getCount() + "张");
+		mImageCount.setText(ImageChooseAdapter.mSelectedImage.size() + "/"
+				+ imageCount + "张");
 		mChooseDir.setText(floder.getName());
 		mListImageDirPopupWindow.dismiss();
 
 	}
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
 		if (event.getAction() == KeyEvent.ACTION_DOWN
-				 && KeyEvent.KEYCODE_BACK == keyCode){
+				&& KeyEvent.KEYCODE_BACK == keyCode) {
 			this.finish();
 		}
 		return super.onKeyDown(keyCode, event);
