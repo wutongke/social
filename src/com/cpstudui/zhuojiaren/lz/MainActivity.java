@@ -12,17 +12,13 @@ import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
-
 import android.view.WindowManager;
-
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.cpstudio.zhuojiaren.JiarenActiveActivity;
-import com.cpstudio.zhuojiaren.MsgCmtActivity;
 import com.cpstudio.zhuojiaren.MsgDetailActivity;
 import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;

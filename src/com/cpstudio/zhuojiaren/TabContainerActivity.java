@@ -55,7 +55,7 @@ public class TabContainerActivity extends TabActivity implements
 	private MsgReceiver msgReceiver = null;
 
 	@SuppressWarnings("rawtypes")
-	private Class[] mTabClassArray = { MainActivity.class,
+	private Class[] mTabClassArray = {  com.cpstudui.zhuojiaren.lz.MainActivity.class,
 			JiarenActiveActivity.class, UplevelActivity.class,
 			MsgListActivity.class, MyHomeActivity.class };
 	private int[] mImageResourceArray = { R.drawable.indicator_tab_ico_zhuo,

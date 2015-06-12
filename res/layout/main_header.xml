@@ -79,7 +79,7 @@
     <FrameLayout
         android:id="@+id/main_banner"
         android:layout_width="match_parent"
-        android:layout_height="120dp" >
+        android:layout_height="149dp">"
 
         <android.support.v4.view.ViewPager
             android:id="@+id/banner_viewpager"
@@ -104,7 +104,7 @@
     <RelativeLayout
         android:id="@+id/main_cats"
         android:layout_width="match_parent"
-        android:layout_height="149dp">
+        android:layout_height="160dp">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/cats_viewpager"

@@ -19,11 +19,11 @@ public class AutoTextView extends TextSwitcher implements
 		ViewSwitcher.ViewFactory {
 	private float mHeight;
 	private Context mContext;
-	// mInUp,mOutUp分离构成向下翻页的进出动画
+	// mInUp,mOutUp鍒嗙鏋勬垚鍚戜笅缈婚〉鐨勮繘鍑哄姩鐢�
 	private Rotate3dAnimation mInUp;
 	private Rotate3dAnimation mOutUp;
 
-	// mInDown,mOutDown分离构成向下翻页的进出动画
+	// mInDown,mOutDown鍒嗙鏋勬垚鍚戜笅缈婚〉鐨勮繘鍑哄姩鐢�
 	private Rotate3dAnimation mInDown;
 	private Rotate3dAnimation mOutDown;
 	//
@@ -52,9 +52,9 @@ public class AutoTextView extends TextSwitcher implements
 		mOutUp = createAnim(0, 90, false, true);
 		mInDown = createAnim(90, 0, true, false);
 		mOutDown = createAnim(0, -90, false, false);
-		// TextSwitcher重要用于文件切换，比如 从文字A 切换到 文字 B，
-		// setInAnimation()后，A将执行inAnimation，
-		// setOutAnimation()后，B将执行OutAnimation
+		// TextSwitcher閲嶈鐢ㄤ簬鏂囦欢鍒囨崲锛屾瘮濡�浠庢枃瀛桝 鍒囨崲鍒�鏂囧瓧 B锛�
+		// setInAnimation()鍚庯紝A灏嗘墽琛宨nAnimation锛�
+		// setOutAnimation()鍚庯紝B灏嗘墽琛孫utAnimation
 		setInAnimation(mInUp);
 		setOutAnimation(mOutUp);
 	}
@@ -69,7 +69,7 @@ public class AutoTextView extends TextSwitcher implements
 		return rotation;
 	}
 
-	// 这里返回的TextView，就是我们看到的View
+	// 杩欓噷杩斿洖鐨凾extView锛屽氨鏄垜浠湅鍒扮殑View
 	@Override
 	public View makeView() {
 		// TODO Auto-generated method stub
@@ -81,7 +81,7 @@ public class AutoTextView extends TextSwitcher implements
 		return t;
 	}
 
-	// 定义动作，向下滚动翻页
+	// 瀹氫箟鍔ㄤ綔锛屽悜涓嬫粴鍔ㄧ炕椤�
 	public void previous() {
 		if (getInAnimation() != mInDown) {
 			setInAnimation(mInDown);
@@ -91,7 +91,7 @@ public class AutoTextView extends TextSwitcher implements
 		}
 	}
 
-	// 定义动作，向上滚动翻页
+	// 瀹氫箟鍔ㄤ綔锛屽悜涓婃粴鍔ㄧ炕椤�
 	public void next() {
 		if (getInAnimation() != mInUp) {
 			setInAnimation(mInUp);
@@ -155,16 +155,16 @@ public class AutoTextView extends TextSwitcher implements
 	}
 	public void updateUI(){
 		AutoTextView.this.setText(getList().get(index).getContent());
-		invalidate(); // 更新视图
-//		if(updateThread == null )
-//			updateThread = new Thread(new updateThread());
-//		updateThread.start();
+		invalidate(); // 鏇存柊瑙嗗浘
+		if(updateThread == null )
+			updateThread = new Thread(new updateThread());
+		updateThread.start();
 	}
 	public void stopAutoText(){
 		stopFlag = true;
 	}
 	class updateThread implements Runnable {
-		long time = 2000; // 开始 的时间，不能为零，否则前面几句歌词没有显示出来
+		long time = 2000; // 寮� 鐨勬椂闂达紝涓嶈兘涓洪浂锛屽惁鍒欏墠闈㈠嚑鍙ユ瓕璇嶆病鏈夋樉绀哄嚭鏉�
 		int i=0;
 		public void run() {
 			while (!stopFlag) {
@@ -188,7 +188,7 @@ public class AutoTextView extends TextSwitcher implements
 	Runnable mUpdateResults = new Runnable() {
 		public void run() {
 			AutoTextView.this.setText(getList().get(index).getContent());
-			invalidate(); // 更新视图
+			invalidate(); // 鏇存柊瑙嗗浘
 		}
 	};
 	public long updateIndex(int index) {	
