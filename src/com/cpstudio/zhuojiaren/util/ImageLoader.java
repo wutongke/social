@@ -51,14 +51,18 @@ public class ImageLoader
 	private Handler mHandler;
 
 	/**
-	 * 引入一个值为1的信号量，防止mPoolThreadHander未初始化完成
+	 * 引入一个值为1的信号量，防止mPoolThreadHander未初始化完成,创建之前获取，创建完成之后释放
+	 * 
+	 * 修改了，有可能被其他线程提前获取，但是mPoolThreadHander还未初始化完成
 	 */
 	private volatile Semaphore mSemaphore = new Semaphore(1);
+	private volatile int init = 0;
 
 	/**
 	 * 引入一个值为1的信号量，由于线程池内部也有一个阻塞线程，防止加入任务的速度过快，使LIFO效果不明显
 	 */
 	private volatile Semaphore mPoolSemaphore;
+	
 
 	private static ImageLoader mInstance;
 
@@ -133,6 +137,7 @@ public class ImageLoader
 				};
 				// 释放一个信号量
 				mSemaphore.release();
+				init = 1;
 				Looper.loop();
 			}
 		};
@@ -165,6 +170,9 @@ public class ImageLoader
 	 */
 	public void loadImage(final String path, final ImageView imageView)
 	{
+		//防止未初始化
+		if(init<1)
+			return;
 		// set tag
 		imageView.setTag(path);
 		// UI线程
@@ -238,14 +246,15 @@ public class ImageLoader
 		try
 		{
 			// 请求信号量，防止mPoolThreadHander为null
-			if (mPoolThreadHander == null)
+			if (mPoolThreadHander == null){
 				mSemaphore.acquire();
+			}
 		} catch (InterruptedException e)
 		{
-			Log.i("DEBUH", "mPoolThreadHander");
+			Log.i("DEBUG", "mPoolThreadHander");
 		}
-		mTasks.add(runnable);
 		mPoolThreadHander.sendEmptyMessage(0x110);
+		mTasks.add(runnable);
 	}
 
 	/**

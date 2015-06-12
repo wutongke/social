@@ -11,15 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ViewHolder
-{
+public class ViewHolder {
 	private final SparseArray<View> mViews;
 	private int mPosition;
 	private View mConvertView;
 
 	private ViewHolder(Context context, ViewGroup parent, int layoutId,
-			int position)
-	{
+			int position) {
 		this.mPosition = position;
 		this.mViews = new SparseArray<View>();
 		mConvertView = LayoutInflater.from(context).inflate(layoutId, parent,
@@ -29,7 +27,7 @@ public class ViewHolder
 	}
 
 	/**
-	 * 拿到�?��ViewHolder对象
+	 * 拿到�?��ViewHolder对象
 	 * 
 	 * @param context
 	 * @param convertView
@@ -39,17 +37,14 @@ public class ViewHolder
 	 * @return
 	 */
 	public static ViewHolder get(Context context, View convertView,
-			ViewGroup parent, int layoutId, int position)
-	{
-		if (convertView == null)
-		{
+			ViewGroup parent, int layoutId, int position) {
+		if (convertView == null) {
 			return new ViewHolder(context, parent, layoutId, position);
 		}
 		return (ViewHolder) convertView.getTag();
 	}
 
-	public View getConvertView()
-	{
+	public View getConvertView() {
 		return mConvertView;
 	}
 
@@ -59,11 +54,9 @@ public class ViewHolder
 	 * @param viewId
 	 * @return
 	 */
-	public <T extends View> T getView(int viewId)
-	{
+	public <T extends View> T getView(int viewId) {
 		View view = mViews.get(viewId);
-		if (view == null)
-		{
+		if (view == null) {
 			view = mConvertView.findViewById(viewId);
 			mViews.put(viewId, view);
 		}
@@ -71,14 +64,13 @@ public class ViewHolder
 	}
 
 	/**
-	 * 为TextView设置字符�?
+	 * 为TextView设置字符�?
 	 * 
 	 * @param viewId
 	 * @param text
 	 * @return
 	 */
-	public ViewHolder setText(int viewId, String text)
-	{
+	public ViewHolder setText(int viewId, String text) {
 		TextView view = getView(viewId);
 		view.setText(text);
 		return this;
@@ -91,8 +83,7 @@ public class ViewHolder
 	 * @param drawableId
 	 * @return
 	 */
-	public ViewHolder setImageResource(int viewId, int drawableId)
-	{
+	public ViewHolder setImageResource(int viewId, int drawableId) {
 		ImageView view = getView(viewId);
 		view.setImageResource(drawableId);
 
@@ -106,8 +97,7 @@ public class ViewHolder
 	 * @param drawableId
 	 * @return
 	 */
-	public ViewHolder setImageBitmap(int viewId, Bitmap bm)
-	{
+	public ViewHolder setImageBitmap(int viewId, Bitmap bm) {
 		ImageView view = getView(viewId);
 		view.setImageBitmap(bm);
 		return this;
@@ -120,15 +110,14 @@ public class ViewHolder
 	 * @param drawableId
 	 * @return
 	 */
-	public ViewHolder setImageByUrl(int viewId, String url)
-	{
-		ImageLoader.getInstance(3, Type.LIFO).loadImage(url,
-				(ImageView) getView(viewId));
+	public ViewHolder setImageByUrl(int viewId, String url) {
+		//先创建，后使用
+		ImageLoader il = ImageLoader.getInstance(3, Type.LIFO);
+		il.loadImage(url, (ImageView) getView(viewId));
 		return this;
 	}
 
-	public int getPosition()
-	{
+	public int getPosition() {
 		return mPosition;
 	}
 

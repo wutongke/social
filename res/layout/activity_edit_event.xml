@@ -76,7 +76,7 @@
                 <com.cpstudio.zhuojiaren.widget.MyGridView
                     android:id="@+id/aee_image_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:cacheColorHint="@android:color/transparent"
                     android:gravity="center"
                     android:horizontalSpacing="5dip"
