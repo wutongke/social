@@ -10,7 +10,12 @@ public class QuanVO {
 	public final static  int QUANZIRECOMMEND = 2;
 	public final static  int QUANZIQUERY = 3;
 	
-	
+	//圈子主页列表类型
+	public final static  String QUANZIMAINTYPE = "quanzitype";
+	public final static  int QUANZITOPIC = 7;
+	public final static  int QUANZIEVENT = 8;
+	public final static  int QUANZIMEMBER = 9;
+
 	private String groupid;
 	private String gname;
 	private String gheader;

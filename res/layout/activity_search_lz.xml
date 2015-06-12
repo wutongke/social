@@ -102,19 +102,19 @@
                     android:id="@+id/hotContainer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:background="#ffffff"
+                    android:gravity="center"
                     android:orientation="vertical" >
 
                     <!-- 加入热门推荐内容 -->
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/historyLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#f9f9f9"
-                android:orientation="vertical" >
+                android:layout_height="match_parent" >
 
                 <TextView
                     android:id="@+id/tvHist"
@@ -123,20 +123,26 @@
                     android:text="@string/label_history"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
-                <LinearLayout
-                    android:id="@+id/historyContainer"
+                <TextView
+                    android:id="@+id/tvDeleteHistory"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#ffffff"
-                    android:orientation="vertical" >
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center_horizontal"
+                    android:text="@string/delete_history"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
-                    <!-- 加入搜索历史内容 -->
-                </LinearLayout>
-            </LinearLayout>
+                <ListView
+                    android:id="@+id/lvHostory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/tvDeleteHistory"
+                    android:layout_below="@+id/tvHist" />
+            </RelativeLayout>
         </LinearLayout>
 
         <com.cpstudio.zhuojiaren.widget.PullDownView
-            android:id="@+id/main_pull_down_view"
+            android:id="@+id/search_pull_down_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#f9f9f9" />

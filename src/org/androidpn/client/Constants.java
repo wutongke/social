@@ -70,4 +70,6 @@ public class Constants {
 
     public static final String ACTION_NOTIFICATION_CLEARED = "org.androidpn.client.NOTIFICATION_CLEARED";
 
+    //lz
+    public static final String SEARCH_HISTORY = "search_history";
 }

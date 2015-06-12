@@ -42,9 +42,8 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
-import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
 
-public class QuanziFra extends Fragment {
+public class QuanziActiveFra extends Fragment {
 	@InjectView(R.id.fql_list)
 	ListView mListView;
 	@InjectView(R.id.fql_my_layout)
@@ -105,7 +104,7 @@ public class QuanziFra extends Fragment {
 				// TODO Auto-generated method stub
 				if (position != -1) {
 					String groupid = (String) view.getTag(R.id.tag_id);
-					Intent i = new Intent(mContext, ZhuoQuanMainActivity.class);
+					Intent i = new Intent(mContext, QuanDetailActivity.class);
 					i.putExtra("groupid", groupid);
 					startActivity(i);
 				}

@@ -1,0 +1,90 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_activity" />
+
+    <include layout="@layout/activity_quan_main_info" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.cpstudio.zhuojiaren.widget.TabButton
+            android:id="@+id/azq_tab"
+            android:layout_width="match_parent"
+            android:layout_height="42dp" >
+        </com.cpstudio.zhuojiaren.widget.TabButton>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/azq_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" 
+            android:layout_below="@+id/azq_tab"
+            android:layout_above="@+id/lt_menue" >
+        </android.support.v4.view.ViewPager>
+
+        <LinearLayout
+            android:id="@+id/lt_menue"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#03fff3"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/lt_chengyuan_menue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#03fff3"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/ivPubTopic"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/label_author_header"
+                    android:src="@drawable/default_grouphead" />
+
+                <ImageView
+                    android:id="@+id/ivPubActivity"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/label_author_header"
+                    android:src="@drawable/default_grouphead" />
+
+                <ImageView
+                    android:id="@+id/ivQuanChat"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/label_author_header"
+                    android:src="@drawable/default_grouphead" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lt_youke_menue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#03fff3"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/ivJoinQuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:contentDescription="@string/label_author_header"
+                    android:src="@drawable/default_grouphead" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

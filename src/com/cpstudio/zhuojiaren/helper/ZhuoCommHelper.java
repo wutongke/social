@@ -19,6 +19,9 @@ import android.content.Context;
 import com.cpstudio.zhuojiaren.R;
 
 public class ZhuoCommHelper {
+	
+	
+	
 	private final static String SERVER_PREFIX = "http://";
 	private final static String SERVER_IP = "115.29.145.63";//"115.29.145.63";//  "zjr.ci77.com";//
 															
@@ -26,6 +29,10 @@ public class ZhuoCommHelper {
 	private final static String SERVER_APP = "/ZhuoFamily";
 	public final static String SERVER = SERVER_PREFIX + SERVER_IP + SERVER_PORT
 			+ SERVER_APP;
+	
+	//lz
+		private final static String SERVICE_HOT_WORDS = "/hot_words";
+	
 	private final static String SERVICE_LOGIN = "/login";
 	private final static String SERVICE_MODIFYPWD = "/modifypwd";
 	private final static String SERVICE_MSGLIST = "/msglist";
@@ -407,6 +414,13 @@ public class ZhuoCommHelper {
 		return SERVER + SERVICE_ANDROIDNAME;
 	}
 
+	
+	//lz
+	public static String getHotWords() {
+		return SERVER + SERVICE_HOT_WORDS;
+	}
+	
+	
 	public static String getYearFromTime(String time) {
 		try {
 			time = time.trim();

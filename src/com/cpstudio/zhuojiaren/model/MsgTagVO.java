@@ -60,4 +60,5 @@ public class MsgTagVO {
 	
 	//lz
 	public static final int FLIP = 99;
+	public static final int HOT_WORD = 100;
 }
