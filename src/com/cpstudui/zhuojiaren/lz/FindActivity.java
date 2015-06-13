@@ -25,10 +25,12 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.TeacherListActivity;
 import com.cpstudio.zhuojiaren.UserAllActivity;
 import com.cpstudio.zhuojiaren.UserSameActivity;
+import com.cpstudio.zhuojiaren.adapter.CrowdFundingAdapter;
 import com.cpstudio.zhuojiaren.helper.BaiduLocationHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.ui.CrowdFundingActivity;
 //<<<<<<< HEAD
 //=======
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
@@ -51,7 +53,7 @@ public class FindActivity extends Activity {
 
 	Class[] classArrays = { ZhuoQuanActivity.class, MsgResourceActivity.class,
 
-			MsgResourceActivity.class,// 众筹
+			CrowdFundingActivity.class,// 众筹
 			UserSameActivity.class,// 同城
 			FieldSelectUserActivity.class,// 同行
 			UserSameActivity.class,// 附件

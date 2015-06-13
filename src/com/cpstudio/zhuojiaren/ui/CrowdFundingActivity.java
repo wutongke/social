@@ -13,6 +13,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.BaseFragmentActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
+import com.cpstudio.zhuojiaren.fragment.CrowdFundingFragment;
 import com.cpstudio.zhuojiaren.fragment.QuanziCreateFra;
 import com.cpstudio.zhuojiaren.fragment.QuanziFra;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
@@ -48,21 +49,21 @@ public class CrowdFundingActivity extends BaseFragmentActivity {
 		String quanRecommendTitle = getString(R.string.quanzi_recommend);
 		String quanCreateTitle = getString(R.string.quanzi_create);
 
-		Fragment quanMyFragment = addBundle(new QuanziFra(), QuanVO.QUANZIMY);
-		fragments.add(quanMyFragment);
-		titles.add(quanMyTitle);
+//		Fragment quanMyFragment = addBundle(new CrowdFundingFragment(), QuanVO.QUANZIMY);
+//		fragments.add(quanMyFragment);
+//		titles.add(quanMyTitle);
 
-		Fragment quanQueryFragment = addBundle(new QuanziFra(),
+		Fragment quanQueryFragment = addBundle(new CrowdFundingFragment(),
 				CrowdFundingVO.CROWDFUNDINGMY);
 		fragments.add(quanQueryFragment);
 		titles.add(quanQueryTitle);
 
-		Fragment quanRecommendFragment = addBundle(new QuanziFra(),
+		Fragment quanRecommendFragment = addBundle(new CrowdFundingFragment(),
 				CrowdFundingVO.CROWDFUNDINGQUERY);
 		fragments.add(quanRecommendFragment);
 		titles.add(quanRecommendTitle);
-		Fragment quanCreateFragment = addBundle(new QuanziCreateFra(),
-				CrowdFundingVO.CROWDFUNDINGCREATE);
+		Fragment quanCreateFragment = addBundle(new CrowdFundingFragment(),
+				CrowdFundingVO.CROWDFUNDINGQUERY);
 		fragments.add(quanCreateFragment);
 		titles.add(quanCreateTitle);
 		return new ActivePagerAdapter(getSupportFragmentManager(), fragments,
