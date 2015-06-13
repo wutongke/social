@@ -24,8 +24,11 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseFragmentActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.adapter.ActiveListAdapter;
 import com.cpstudio.zhuojiaren.facade.QuanFacade;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
+import com.cpstudio.zhuojiaren.fragment.QuanziActiveFra;
+import com.cpstudio.zhuojiaren.fragment.QuanziMemberFra;
 import com.cpstudio.zhuojiaren.fragment.QuanziTopicFra;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
@@ -53,7 +56,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	ImageView ivGroupHeader;
 	@InjectView(R.id.textViewName)
 	TextView tvName;
-	@InjectView(R.id.textViewMember)
+	@InjectView(R.id.textViewCy)
 	TextView tvMemNum;
 	@InjectView(R.id.textViewTopic)
 	TextView tvTopicNum;
@@ -75,6 +78,11 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	private boolean isfollow = false;// 是否已经加入该圈子
 	private QuanFacade mFacade = null;
 	private ArrayList<String> tempids = new ArrayList<String>();
+
+	// 用于在fragment中获得groupid
+	public String getGroupid() {
+		return groupid;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +106,9 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		pwh = new PopupWindows(ZhuoQuanMainActivity.this);
 		loadData();
 		initOnClick();
+		
+//圈子数据在之前版本是所有的数据都在一个请求“getUrlGroupDetail”中，新版本在主界面只获得成员数，话题数等基本信息，
+//之后的圈话题，圈活动，圈成员在单独的请求中获得。是否需要分页？
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -349,7 +360,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 				if (phw == null)
 					phw = new PopupWindows(ZhuoQuanMainActivity.this);
 
-				OnClickListener pubListener = new OnClickListener() {
+				OnClickListener briefListener = new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
@@ -359,6 +370,20 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						// startActivity(i);
 					}
 				};
+				
+				OnClickListener shareListener = new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// Intent i = new Intent(MainActivity.this,
+						// UserSelectActivity.class);
+						// ArrayList<String> tempids = new ArrayList<String>(1);
+						// tempids.add(uid);
+						// i.putStringArrayListExtra("otherids", tempids);
+						// startActivity(i);
+					}
+				};
+				
 				OnClickListener inviteListener = new OnClickListener() {
 
 					@Override
@@ -372,7 +397,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 					}
 				};
 				// 需要另外设置菜单选项布局及响应事件
-				phw.showAddOptionsPop(v, 2, pubListener, inviteListener);
+				phw.showQuanOptionsMenue(v, 2, briefListener,shareListener, inviteListener);
 			}
 		});
 	}
@@ -394,11 +419,13 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		fragments.add(quanTopic);
 		titles.add(quanTopicTitle);
 
-		Fragment quanEvent = addBundle(new QuanziTopicFra(), QuanVO.QUANZIEVENT);
+		Fragment quanEvent = addBundle(new QuanziActiveFra(),
+				QuanVO.QUANZIEVENT);
 		fragments.add(quanEvent);
 		titles.add(quanEventTitle);
 
-		Fragment quanMember =addBundle(new QuanziTopicFra(),QuanVO.QUANZIMEMBER);
+		Fragment quanMember = addBundle(new QuanziMemberFra(),
+				QuanVO.QUANZIMEMBER);
 		fragments.add(quanMember);
 		titles.add(quanMemberTitle);
 		return new ActivePagerAdapter(getSupportFragmentManager(), fragments,

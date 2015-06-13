@@ -789,10 +789,17 @@
     <string name="label_history">历史搜索</string>
     <string name="delete_history">清空历史记录</string>
     <string name="title_activity_zhuojiaquan_main">圈子主页</string>
+    
+    <string name="label_quan_brief">圈子简介</string>
+     <string name="label_invite_friends">邀请好友</string>
     <string name="label_qzht">话数：</string>
     <string name="quanzi_topic">圈话题</string>
     <string name="quanzi_event">圈活动</string>
     <string name="quanzi_member">圈成员</string>
+    
+    
+    
+    
     <string name="title_activity_quanzi_filter">QuanziFilterActivity</string>
     <string name="title_activity_event_detail">EventDetailActivity</string>
     <string name="title_activity_edit_event">EditEventActivity</string>

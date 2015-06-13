@@ -397,6 +397,27 @@ public class JsonHandler {
 		return list;
 	}
 
+	//lz解析活动列表
+	public ArrayList<EventVO> parseEventInfoList() {
+		ArrayList<EventVO> list = new ArrayList<EventVO>();
+		try {
+			Type listType = new TypeToken<LinkedList<EventVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<EventVO> li = gson.fromJson(jsonData, listType);
+				for (Iterator<EventVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					EventVO item = (EventVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	public ArrayList<GoodsVO> parseGoodsList() {
 		ArrayList<GoodsVO> list = new ArrayList<GoodsVO>();
 		try {

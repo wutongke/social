@@ -1160,6 +1160,71 @@ public class PopupWindows {
 		return popupWindowOptions;
 	}
 
+	@SuppressWarnings("deprecation")
+	public PopupWindow showQuanOptionsMenue(View parent, float times,
+			final OnClickListener brief, final OnClickListener share,final OnClickListener invite) {
+		if (null != parent) {
+			InputMethodManager imm = (InputMethodManager) mActivity
+					.getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(parent.getWindowToken(), 0);
+		}
+		if (null == popupWindowOptions) {
+			LayoutInflater layoutInflater = (LayoutInflater) mActivity
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			viewOptions = layoutInflater.inflate(R.layout.pop_quan_main_menu, null);
+			popupWindowOptions = new PopupWindow(viewOptions,
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		}
+		viewOptions.findViewById(R.id.buttonBrief)
+				.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						if (null != popupWindowOptions) {
+							popupWindowOptions.dismiss();
+						}
+						if (brief != null) {
+							brief.onClick(v);
+						}
+					}
+				});
+		viewOptions.findViewById(R.id.buttonShare)
+				.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						if (null != popupWindowOptions) {
+							popupWindowOptions.dismiss();
+						}
+						if (share != null) {
+							share.onClick(v);
+						}
+					}
+				});
+		viewOptions.findViewById(R.id.buttonInviteFriends)
+		.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (null != popupWindowOptions) {
+					popupWindowOptions.dismiss();
+				}
+				if (invite != null) {
+					invite.onClick(v);
+				}
+			}
+		});
+		popupWindowOptions.setFocusable(false);
+		popupWindowOptions.setOutsideTouchable(true);
+		popupWindowOptions.setAnimationStyle(R.style.AnimBottomScaleRM);
+		popupWindowOptions.setBackgroundDrawable(new BitmapDrawable());
+		int[] location = new int[2];
+		parent.getLocationOnScreen(location);
+		popupWindowOptions.showAtLocation(parent, Gravity.NO_GRAVITY,
+				(int) (location[0] + times * 8),
+				(int) (location[1] + times * 35));
+		return popupWindowOptions;
+	}
 	
 	@SuppressWarnings("deprecation")
 	public PopupWindow showCmtOptionsPop(View parent, float times,
