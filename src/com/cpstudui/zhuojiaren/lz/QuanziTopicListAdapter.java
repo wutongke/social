@@ -44,7 +44,7 @@ import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.utils.ImageRectUtil;
 
 /**
- * 倬家人adapter
+ * 鍊浜篴dapter
  * 
  * @author lef
  * 
@@ -177,7 +177,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		});
 		mLoadImage.addTask(headUrl, holder.headIV);
 		mLoadImage.doTask();
-//注意原来版本中的“活动”列表也中的"+"有两个，分别代表对转发内容的处理（点赞和评论），以及对本消息的处理
+//娉ㄦ剰鍘熸潵鐗堟湰涓殑鈥滄椿鍔ㄢ�鍒楄〃涔熶腑鐨�+"鏈変袱涓紝鍒嗗埆浠ｈ〃瀵硅浆鍙戝唴瀹圭殑澶勭悊锛堢偣璧炲拰璇勮锛夛紝浠ュ強瀵规湰娑堟伅鐨勫鐞�
 		holder.optionIV.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -197,7 +197,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 							Intent i = new Intent(mContext, MsgCmtActivity.class);
 							i.putExtra("msgid", msgid);
 							i.putExtra("parentid", msgid);
-							//此处应在Fragment对应的Activity中处理
+							//姝ゅ搴斿湪Fragment瀵瑰簲鐨凙ctivity涓鐞�
 							((Activity)mContext).startActivityForResult(i, MsgTagVO.MSG_CMT);
 						}
 					};

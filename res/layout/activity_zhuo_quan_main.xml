@@ -22,67 +22,79 @@
             android:id="@+id/azq_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center" 
+            android:layout_above="@+id/lt_menue"
             android:layout_below="@+id/azq_tab"
-            android:layout_above="@+id/lt_menue" >
+            android:layout_gravity="center" >
         </android.support.v4.view.ViewPager>
 
         <LinearLayout
             android:id="@+id/lt_menue"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
             android:background="#03fff3"
             android:gravity="center"
-            android:layout_alignParentBottom="true"
             android:orientation="horizontal" >
 
             <LinearLayout
                 android:id="@+id/lt_chengyuan_menue"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#03fff3"
                 android:gravity="center"
+                android:background="#03fff3"
                 android:orientation="horizontal" >
 
-                <ImageView
-                    android:id="@+id/ivPubTopic"
-                    android:layout_width="0dp"
-                    android:layout_height="36dp"
+                <Button
+                    android:id="@+id/btnPubTopic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:contentDescription="@string/label_author_header"
-                    android:src="@drawable/default_grouphead" />
+                    android:background="#00000000"
+                    android:drawableLeft="@drawable/ico_alert"
+                    android:minHeight="20dp"
+                    android:text="@string/label_pub_topic"
+                    android:textColor="@color/white" />
 
-                <ImageView
-                    android:id="@+id/ivPubActivity"
-                    android:layout_width="0dp"
-                    android:layout_height="36dp"
+                <Button
+                    android:id="@+id/btnPubActive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:contentDescription="@string/label_author_header"
-                    android:src="@drawable/default_grouphead" />
+                    android:background="#00000000"
+                    android:drawableLeft="@drawable/ico_alert"
+                    android:minHeight="20dp"
+                    android:text="@string/label_pub_active"
+                    android:textColor="@color/white" />
 
-                <ImageView
-                    android:id="@+id/ivQuanChat"
-                    android:layout_width="0dp"
-                    android:layout_height="36dp"
+                <Button
+                    android:id="@+id/btnQuanChat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:contentDescription="@string/label_author_header"
-                    android:src="@drawable/default_grouphead" />
+                    android:background="#00000000"
+                    android:drawableLeft="@drawable/ico_alert"
+                    android:minHeight="20dp"
+                    android:text="@string/label_qzql"
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/lt_youke_menue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:background="#03fff3"
-                android:gravity="center_horizontal"
                 android:orientation="horizontal" >
 
-                <ImageView
-                    android:id="@+id/ivJoinQuan"
+                <Button
+                    android:id="@+id/btnJoinQuan"
                     android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:contentDescription="@string/label_author_header"
-                    android:src="@drawable/default_grouphead" />
+                    android:layout_height="wrap_content"
+                    android:background="#00000000"
+                    android:drawableLeft="@drawable/ico_alert"
+                    android:minHeight="20dp"
+                    android:text="@string/label_join_quan"
+                    android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

@@ -4,30 +4,40 @@
     android:layout_height="wrap_content"
     android:background="@drawable/dlg_bg"
     android:gravity="center"
+    android:padding="3dp"
     android:orientation="vertical" >
 
     <Button
-        android:id="@+id/buttonPubActivity"
+        android:id="@+id/buttonBrief"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
         android:background="#00000000"
         android:drawableLeft="@drawable/ico_alert"
         android:minHeight="20dp"
-        android:text="@string/label_main_pubactive"
+        android:text="@string/label_quan_brief"
         android:textColor="@color/white" />
 
-    <!-- android:background="@drawable/button_option_cmt" -->
+    <Button
+        android:id="@+id/buttonShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:background="#00000000"
+        android:drawableLeft="@drawable/ico_alert"
+        android:minHeight="20dp"
+        android:text="@string/label_share"
+        android:textColor="@color/white" />
 
     <Button
         android:id="@+id/buttonInviteFriends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="13dp"
         android:background="#00000000"
         android:drawableLeft="@drawable/ico_alert"
         android:minHeight="20dp"
-        android:text="@string/label_invite_friends"
+         android:text="@string/label_invite_friends"
         android:textColor="@color/white" />
 
 </LinearLayout>

@@ -108,30 +108,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/viewGroupInfo" >
 
-        <LinearLayout
+        <com.cpstudui.zhuojiaren.lz.AutoTextView
+            android:id="@+id/at_notices"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/searcher_new_search_icon" >
-            </ImageView>
-
-            <com.cpstudui.zhuojiaren.lz.AutoTextView
-                android:id="@+id/at_notices"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:layout_centerInParent="true" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/ico_search" >
+            android:layout_toLeftOf="@+id/at_notices"
+            android:src="@drawable/searcher_new_search_icon" >
         </ImageView>
     </RelativeLayout>
 

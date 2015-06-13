@@ -25,21 +25,23 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
+import com.cpstudui.zhuojiaren.lz.QuanMemberListAdapter;
 import com.cpstudui.zhuojiaren.lz.QuanziTopicListAdapter;
 import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
 
-public class QuanziTopicFra extends Fragment {
+public class QuanziMemberFra extends Fragment {
 	@InjectView(R.id.fqtl_list)
 	ListView mListView;
 
-	private QuanziTopicListAdapter mAdapter;
+	private QuanMemberListAdapter mAdapter;
 	// private ArrayList<UserVO> mList = new ArrayList<UserVO>();
-	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
+	private ArrayList<UserVO> mList = new ArrayList<UserVO>();
 	// 需要改
 	// private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
 	private ZhuoConnHelper mConnHelper = null;
@@ -49,11 +51,11 @@ public class QuanziTopicFra extends Fragment {
 	private Context mContext;
 	private String mLastId = null;
 	// private PopupWindows pupWindow;
-
+	String groupId=null;
 	// 主View
 	View layout;
 	private String uid = null;
-    String groupId=null;
+
 	public interface functionListener {
 		//
 		public void onTypeChange(int type);
@@ -81,7 +83,7 @@ public class QuanziTopicFra extends Fragment {
 		// if (mType == QuanVO.QUANZIACTIVE)
 		// mAdapter = new ActiveListAdapter(getActivity(), activeList);
 		// else if (mType == QuanVO.QUANZITOPIC)
-		mAdapter = new QuanziTopicListAdapter(getActivity(), mList);
+		mAdapter = new QuanMemberListAdapter(getActivity(), mList);
 		// else
 		// mAdapter = new QuanMemberListAdapter(getActivity(), memberList);
 
@@ -106,9 +108,16 @@ public class QuanziTopicFra extends Fragment {
 
 		});
 		
+		
+	//测试，先不用	
+//		loadData();
+		
+		for (int i = 0; i < 8; i++)
+			mList.add(new UserVO());
+		mAdapter.notifyDataSetChanged();
+		
 		groupId=((ZhuoQuanMainActivity)getActivity()).getGroupid();
 		
-		loadData();
 		return layout;
 	}
 
@@ -117,7 +126,10 @@ public class QuanziTopicFra extends Fragment {
 			if (data != null && !data.equals("")) {
 				JsonHandler nljh = new JsonHandler(data, getActivity()
 						.getApplicationContext());
-				ArrayList<ZhuoInfoVO> list = nljh.parseZhuoInfoList();
+				
+				
+				
+				ArrayList<UserVO> list = nljh.parseTUserList();
 				if (!list.isEmpty()) {
 					mListViewFooter.hasData();
 					if (!append) {
@@ -126,7 +138,7 @@ public class QuanziTopicFra extends Fragment {
 					mList.addAll(list);
 					mAdapter.notifyDataSetChanged();
 					if (mList.size() > 0) {
-						mLastId = mList.get(mList.size() - 1).getMsgid();
+						mLastId = mList.get(mList.size() - 1).getUserid();
 					}
 					mPage++;
 				} else {
@@ -157,6 +169,7 @@ public class QuanziTopicFra extends Fragment {
 				if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getActivity().getApplicationContext());
+					
 					UserVO user = nljh.parseUser();
 					if (null != user) {
 						UserFacade facade = new UserFacade(getActivity()
@@ -172,27 +185,16 @@ public class QuanziTopicFra extends Fragment {
 
 	private void loadData() {
 
-		String url = ZhuoCommHelper.getUrlUserInfo()
-				+ "?uid="
-				+ ResHelper.getInstance(getActivity().getApplicationContext())
-						.getUserid();
-
-		// 加载刷新个人信息
-		mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
+		
+//		// 加载刷新个人信息
+//		mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
 
 		if (mListViewFooter.startLoading()) {
 			mList.clear();
 			mAdapter.notifyDataSetChanged();
 			mPage = 1;
-			String params = ZhuoCommHelper.getUrlMsgList();
-			params += "?pageflag=" + "0";
-			params += "&reqnum=" + "10";
-			params += "&lastid=" + "0";
-			params += "&type=" + "0";
-
-			params += "&gongxutype=" + "0";
-			params += "&from=" + "0";
-			params += "&uid=" + uid;
+			String params = ZhuoCommHelper.getUrlGroupDetail() + "?groupid="
+					+ groupId;
 			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD);
 		}
 	}
