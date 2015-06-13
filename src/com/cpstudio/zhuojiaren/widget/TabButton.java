@@ -338,7 +338,7 @@ public class TabButton extends HorizontalScrollView {
 
 	private void drawUnderLine(int index, float scroll) {
 		int itemWidth = mLinearLayout.getChildAt(index).getWidth();
-		// 滑块的长度�?ratio
+		// 滑块的长度radio
 		int add = 0;
 		if (index < tabSize - 1) {
 			add = mLinearLayout.getChildAt(index + 1).getWidth() - itemWidth;

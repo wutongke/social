@@ -725,20 +725,21 @@
             android:name="com.cpstudio.zhuojiaren.ui.EditEventActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
-            
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.widget.PicChooseActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        
+        <activity
+            android:name="com.cpstudio.zhuojiaren.CrowdFundingActivity"
+            android:label="@string/title_activity_crowd_funding" >
+        </activity>
     </application>
 
 </manifest>
