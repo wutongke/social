@@ -1,15 +1,13 @@
 package com.cpstudio.zhuojiaren;
 
-import butterknife.InjectView;
+import javax.swing.text.View;
 
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
-import android.view.View;
+import android.os.Bundle;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 
 public class BaseActivity extends Activity {
 	protected ZhuoConnHelper connHelper = null;
@@ -23,16 +21,16 @@ public class BaseActivity extends Activity {
 	}
 
 	protected void initTitle() {
-		title=(TextView)findViewById(R.id.activity_title);
-		function = (TextView)findViewById(R.id.activity_function);
+		title = (TextView) findViewById(R.id.activity_title);
+		function = (TextView) findViewById(R.id.activity_function);
 		findViewById(R.id.activity_back).setOnClickListener(
 				new OnClickListener() {
-
 					@Override
-					public void onClick(View v) {
+					public void onClick(android.view.View v) {
 						// TODO Auto-generated method stub
 						BaseActivity.this.finish();
 					}
+
 				});
 	}
 }

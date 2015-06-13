@@ -203,7 +203,8 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-android:name="com.cpstudio.zhuojiaren.ui.QuanCreateActivity"            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:name="com.cpstudio.zhuojiaren.ui.QuanCreateActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_create_quan"
             android:screenOrientation="portrait" >
         </activity>
@@ -736,17 +737,20 @@ android:name="com.cpstudio.zhuojiaren.ui.QuanCreateActivity"            android:
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-             android:name="com.cpstudio.zhuojiaren.ui.CrowdFundingActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.CrowdFundingActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >        </activity>
-<activity
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
             android:name="com.cpstudio.zhuojiaren.ui.CrowdFundingListActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.PublishCrowdFundingActivity"
-            android:label="@string/title_activity_publish_crowd_funding" >
-        </activity>    </application>
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+    </application>
 
 </manifest>
