@@ -23,7 +23,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseFragmentActivity;
+import com.cpstudio.zhuojiaren.QuanDetailActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.UserSelectActivity;
 import com.cpstudio.zhuojiaren.adapter.ActiveListAdapter;
 import com.cpstudio.zhuojiaren.facade.QuanFacade;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
@@ -36,6 +38,8 @@ import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.ui.EditEventActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.TabButton;
@@ -64,6 +68,18 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	View ltMember;// 成员操作菜单
 	@InjectView(R.id.lt_youke_menue)
 	View ltYouke;// 非成员操作菜单
+
+	@InjectView(R.id.btnPubActive)
+	Button btnPubActive;// 非成员操作菜单
+
+	@InjectView(R.id.btnPubTopic)
+	Button btnPubTopic;// 非成员操作菜单
+	@InjectView(R.id.btnJoinQuan)
+	Button btnJoinQuan;// 非成员操作菜单
+
+	@InjectView(R.id.btnQuanChat)
+	Button btnQuanChat;
+	private final static int USER_SELECT = 0;
 	private Context mContext;
 	// 四个fragment 方便通信
 	List<Fragment> fragments;
@@ -106,9 +122,9 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		pwh = new PopupWindows(ZhuoQuanMainActivity.this);
 		loadData();
 		initOnClick();
-		
-//圈子数据在之前版本是所有的数据都在一个请求“getUrlGroupDetail”中，新版本在主界面只获得成员数，话题数等基本信息，
-//之后的圈话题，圈活动，圈成员在单独的请求中获得。是否需要分页？
+
+		// 圈子数据在之前版本是所有的数据都在一个请求“getUrlGroupDetail”中，新版本在主界面只获得成员数，话题数等基本信息，
+		// 之后的圈话题，圈活动，圈成员在单独的请求中获得。是否需要分页？
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -194,71 +210,76 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 							isfollow = false;
 						}
 						changeType(isfollow);
-						// UserVO founder = detail.getFounder();
-						// if (founder != null) {
-						// String createrUrl = founder.getUheader();
-						// final String createrId = detail.getFounder()
-						// .getUserid();
-						// tempids.add(createrId);
-						// ImageView cjIV = (ImageView)
-						// findViewById(R.id.imageViewCj);
-						// cjIV.setTag(createrUrl);
-						// mLoadImage.addTask(createrUrl, cjIV);
-						// cjIV.setOnClickListener(new OnClickListener() {
-						// @Override
-						// public void onClick(View v) {
-						// Intent i = new Intent(
-						// QuanDetailActivity.this,
-						// UserCardActivity.class);
-						// i.putExtra("userid", createrId);
-						// startActivity(i);
-						// }
-						// });
-						// }
-						// List<UserVO> managers = detail.getManagers();
-						// int num = managers.size();
-						// ((TextView)
-						// findViewById(R.id.textViewGl)).setText(num
-						// + "");
-						// LinearLayout ll = (LinearLayout)
-						// findViewById(R.id.linearLayoutGl);
-						// int height = ll.getLayoutParams().height;
-						// LayoutParams llp = new LayoutParams(height, height);
-						// llp.rightMargin = 5;
-						// RelativeLayout.LayoutParams rlp = new
-						// RelativeLayout.LayoutParams(
-						// LayoutParams.MATCH_PARENT,
-						// LayoutParams.MATCH_PARENT);
-						// for (int i = 0; i < num; i++) {
-						// String managerUrl = managers.get(i).getUheader();
-						// final String managerId = managers.get(i)
-						// .getUserid();
-						// tempids.add(managerId);
-						// RelativeLayout rl = new RelativeLayout(
-						// QuanDetailActivity.this);
-						// rl.setLayoutParams(llp);
-						// ImageView iv = new ImageView(
-						// QuanDetailActivity.this);
-						// iv.setLayoutParams(rlp);
-						// rl.addView(iv);
-						// ll.addView(rl);
-						// iv.setTag(managerUrl);
-						// mLoadImage.addTask(managerUrl, iv);
-						// iv.setOnClickListener(new OnClickListener() {
-						// @Override
-						// public void onClick(View v) {
-						// Intent i = new Intent(
-						// QuanDetailActivity.this,
-						// UserCardActivity.class);
-						// i.putExtra("userid", managerId);
-						// startActivity(i);
-						// }
-						// });
-						// }
-						// mLoadImage.doTask();
+						UserVO founder = detail.getFounder();
+						if (founder != null) {
+							String createrUrl = founder.getUheader();
+							final String createrId = detail.getFounder()
+									.getUserid();
+							tempids.add(createrId);
+							// ImageView cjIV = (ImageView)
+							// findViewById(R.id.imageViewCj);
+							// cjIV.setTag(createrUrl);
+							// mLoadImage.addTask(createrUrl, cjIV);
+							// cjIV.setOnClickListener(new OnClickListener() {
+							// @Override
+							// public void onClick(View v) {
+							// Intent i = new Intent(
+							// QuanDetailActivity.this,
+							// UserCardActivity.class);
+							// i.putExtra("userid", createrId);
+							// startActivity(i);
+							// }
+							// });
+							// }
+							List<UserVO> managers = detail.getManagers();
+							int num = managers.size();
+							// ((TextView)
+							// findViewById(R.id.textViewGl)).setText(num
+							// + "");
+							// LinearLayout ll = (LinearLayout)
+							// findViewById(R.id.linearLayoutGl);
+							// int height = ll.getLayoutParams().height;
+							// LayoutParams llp = new LayoutParams(height,
+							// height);
+							// llp.rightMargin = 5;
+							// RelativeLayout.LayoutParams rlp = new
+							// RelativeLayout.LayoutParams(
+							// LayoutParams.MATCH_PARENT,
+							// LayoutParams.MATCH_PARENT);
+							for (int i = 0; i < num; i++) {
+								// String managerUrl =
+								// managers.get(i).getUheader();
+								final String managerId = managers.get(i)
+										.getUserid();
+								tempids.add(managerId);
+								// RelativeLayout rl = new RelativeLayout(
+								// QuanDetailActivity.this);
+								// rl.setLayoutParams(llp);
+								// ImageView iv = new ImageView(
+								// QuanDetailActivity.this);
+								// iv.setLayoutParams(rlp);
+								// rl.addView(iv);
+								// ll.addView(rl);
+								// iv.setTag(managerUrl);
+								// mLoadImage.addTask(managerUrl, iv);
+								// iv.setOnClickListener(new OnClickListener() {
+								// @Override
+								// public void onClick(View v) {
+								// Intent i = new Intent(
+								// QuanDetailActivity.this,
+								// UserCardActivity.class);
+								// i.putExtra("userid", managerId);
+								// startActivity(i);
+								// }
+								// });
+								// }
+								// mLoadImage.doTask();
+							}
+						}
 					}
 				}
 				break;
+
 			}
 			case MsgTagVO.PUB_INFO: {
 				if (JsonHandler.checkResult((String) msg.obj,
@@ -364,40 +385,73 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 
 					@Override
 					public void onClick(View v) {
-						// Intent i = new Intent(ZhuoQuanMainActivity.this,
-						// PublishActiveActivity.class);
-						// // i.putExtra("filePath", filePath);
-						// startActivity(i);
+						Intent i = new Intent(ZhuoQuanMainActivity.this,
+								QuanBriefActivity.class);
+						i.putExtra("groupid", groupid);
+						startActivity(i);
 					}
 				};
-				
+
 				OnClickListener shareListener = new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
-						// Intent i = new Intent(MainActivity.this,
-						// UserSelectActivity.class);
-						// ArrayList<String> tempids = new ArrayList<String>(1);
-						// tempids.add(uid);
-						// i.putStringArrayListExtra("otherids", tempids);
-						// startActivity(i);
+						// 通过第三方软件分享，QQ，微信等
 					}
 				};
-				
+
 				OnClickListener inviteListener = new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
-						// Intent i = new Intent(MainActivity.this,
-						// UserSelectActivity.class);
-						// ArrayList<String> tempids = new ArrayList<String>(1);
-						// tempids.add(uid);
-						// i.putStringArrayListExtra("otherids", tempids);
-						// startActivity(i);
+						Intent i = new Intent(ZhuoQuanMainActivity.this,
+								UserSelectActivity.class);
+						i.putStringArrayListExtra("otherids", tempids);
+						startActivityForResult(i, USER_SELECT);
 					}
 				};
 				// 需要另外设置菜单选项布局及响应事件
-				phw.showQuanOptionsMenue(v, 2, briefListener,shareListener, inviteListener);
+				phw.showQuanOptionsMenue(v, 2, briefListener, shareListener,
+						inviteListener);
+			}
+		});
+		btnPubTopic.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		btnPubActive.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(ZhuoQuanMainActivity.this,
+						EditEventActivity.class);
+				startActivity(i);
+			}
+		});
+		btnQuanChat.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				// 进入圈聊界面
+				// Intent i = new Intent(ZhuoQuanMainActivity.this,
+				// EditEventActivity.class);
+				// startActivity(i);
+			}
+		});
+		btnJoinQuan.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				mConnHelper.followGroup(groupid, "1", mUIHandler,
+						MsgTagVO.FOLLOW_QUAN, null, true, null, null);
+
 			}
 		});
 	}

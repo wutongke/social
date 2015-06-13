@@ -18,6 +18,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.MsgDetailActivity;
 import com.cpstudio.zhuojiaren.PublishActiveActivity;
@@ -148,10 +149,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 		antoText.setList(noticesListData);
 
-
-		 antoText.updateUI();
-
-
+		antoText.updateUI();
 
 		// antoText.stopAutoText();
 
@@ -197,11 +195,8 @@ public class MainActivity extends Activity implements OnPullDownListener,
 					public void onClick(View v) {
 						Intent i = new Intent(MainActivity.this,
 								PublishActiveActivity.class);
-
 						// i.putExtra("filePath", filePath);
-
-//						i.putExtra("filePath", filePath);
-
+						// i.putExtra("filePath", filePath);
 						startActivity(i);
 					}
 				};
@@ -209,12 +204,14 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 					@Override
 					public void onClick(View v) {
-						Intent i = new Intent(MainActivity.this,
-								UserSelectActivity.class);
-						ArrayList<String> tempids = new ArrayList<String>(1);
-						tempids.add(uid);
-						i.putStringArrayListExtra("otherids", tempids);
-						startActivity(i);
+						Toast.makeText(MainActivity.this, "完善中...", 2000).show();
+						// 此处应该是以微信等其他第三方方式邀请朋友
+						// Intent i = new Intent(MainActivity.this,
+						// UserSelectActivity.class);
+						// ArrayList<String> tempids = new ArrayList<String>(1);
+						// tempids.add(uid);
+						// i.putStringArrayListExtra("otherids", tempids);
+						// startActivity(i);
 					}
 				};
 				phw.showAddOptionsPop(v, times, pubListener, inviteListener);

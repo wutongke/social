@@ -1113,6 +1113,14 @@ public class PopupWindows {
 		return popupWindowOptions;
 	}
 
+	/**
+	 * 主页右上角“+”弹出选择菜单：发布、邀请好友(邀请下载该APP)
+	 * @param parent
+	 * @param times
+	 * @param pub
+	 * @param invite
+	 * @return
+	 */
 	@SuppressWarnings("deprecation")
 	public PopupWindow showAddOptionsPop(View parent, float times,
 			final OnClickListener pub, final OnClickListener invite) {
@@ -1167,6 +1175,15 @@ public class PopupWindows {
 		return popupWindowOptions;
 	}
 
+	/**
+	 * 圈子详情右上角点击菜单：圈子简介、分享、邀请好友(邀请加入圈子)
+	 * @param parent
+	 * @param times
+	 * @param brief
+	 * @param share
+	 * @param invite
+	 * @return
+	 */
 	@SuppressWarnings("deprecation")
 	public PopupWindow showQuanOptionsMenue(View parent, float times,
 			final OnClickListener brief, final OnClickListener share,

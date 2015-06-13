@@ -3,6 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/dlg_bg"
+    android:gravity="center"
     android:orientation="vertical" >
 
     <Button
@@ -10,15 +11,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
-        android:background="@drawable/button_option_good"
-        android:minHeight="20dp" />
+        android:background="#00000000"
+        android:drawableLeft="@drawable/ico_alert"
+        android:minHeight="20dp"
+        android:text="@string/label_main_pubactive"
+        android:textColor="@color/white" />
+
+    <!-- android:background="@drawable/button_option_cmt" -->
 
     <Button
         android:id="@+id/buttonInviteFriends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
-        android:background="@drawable/button_option_cmt"
-        android:minHeight="20dp" />
+        android:background="#00000000"
+        android:drawableLeft="@drawable/ico_alert"
+        android:minHeight="20dp"
+        android:text="@string/label_invite_friends"
+        android:textColor="@color/white" />
 
 </LinearLayout>

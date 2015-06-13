@@ -37,9 +37,6 @@ public class Cats_PageAdapter extends PagerAdapter {
 	public ArrayList<View> mListView = new ArrayList<View>();
 
 	public Cats_PageAdapter(Context context, List<BeanCats> mListData,int w,int h) {
-
-		
-		
 		pages = (int) Math.ceil(mListData.size() / 8.0);
 
 		int cellWidth=(w-5*5)/4;
@@ -75,7 +72,6 @@ public class Cats_PageAdapter extends PagerAdapter {
 					iv = new ImageView(context);
 					iv.setImageResource(mListData.get(base + k).getPicId());
 					iv.setOnClickListener(new OnClickListener() {
-
 						@Override
 						public void onClick(View v) {
 							// TODO Auto-generated method stub
