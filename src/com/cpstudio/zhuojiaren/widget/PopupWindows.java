@@ -261,64 +261,71 @@ public class PopupWindows {
 		return showBottomPop(parent, onClickListeners, info, 20, tag);
 	}
 
-	public PopupWindow showBreakQuanzi(int tag,View parent,int layoutId,int margin,OnClickListener breakBtnListener){
+	public PopupWindow showBreakQuanzi(int tag, View parent, int layoutId,
+			int margin, OnClickListener breakBtnListener) {
 		if (null != parent) {
 			InputMethodManager imm = (InputMethodManager) mActivity
 					.getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(parent.getWindowToken(), 0);
 		}
-		if (null == breakQaunziPopupWindow ||(Integer)viewBreakQuanzi.getTag()!=tag) {
+		if (null == breakQaunziPopupWindow
+				|| (Integer) viewBreakQuanzi.getTag() != tag) {
 			LayoutInflater layoutInflater = (LayoutInflater) mActivity
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			viewBreakQuanzi= layoutInflater
-					.inflate(layoutId, null);
+			viewBreakQuanzi = layoutInflater.inflate(layoutId, null);
 			viewBreakQuanzi.setTag(tag);
 			breakQaunziPopupWindow = new PopupWindow(viewBreakQuanzi,
 					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-			
-			//隐藏解散圈子
-			viewBreakQuanzi.findViewById(R.id.fql_close).setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					breakQaunziPopupWindow.dismiss();
-				}
-			});
-			final TextView breakReason = (TextView)viewBreakQuanzi.findViewById(R.id.fql_break_reason);
-			final Button breakBtn = (Button)viewBreakQuanzi.findViewById(R.id.fql_break_btn);
-			//确定按钮
+
+			// 隐藏解散圈子
+			viewBreakQuanzi.findViewById(R.id.fql_close).setOnClickListener(
+					new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							breakQaunziPopupWindow.dismiss();
+						}
+					});
+			final TextView breakReason = (TextView) viewBreakQuanzi
+					.findViewById(R.id.fql_break_reason);
+			final Button breakBtn = (Button) viewBreakQuanzi
+					.findViewById(R.id.fql_break_btn);
+			// 确定按钮
 			breakReason.addTextChangedListener(new TextWatcher() {
-				
+
 				@Override
-				public void onTextChanged(CharSequence s, int start, int before, int count) {
+				public void onTextChanged(CharSequence s, int start,
+						int before, int count) {
 					// TODO Auto-generated method stub
-					if(!breakReason.getText().toString().isEmpty()){
+					if (!breakReason.getText().toString().isEmpty()) {
 						breakBtn.setEnabled(true);
-					}else{
+					} else {
 						breakBtn.setEnabled(false);
 					}
 				}
-				
+
 				@Override
-				public void beforeTextChanged(CharSequence s, int start, int count,
-						int after) {
+				public void beforeTextChanged(CharSequence s, int start,
+						int count, int after) {
 					// TODO Auto-generated method stub
-					
+
 				}
-				
+
 				@Override
 				public void afterTextChanged(Editable s) {
 					// TODO Auto-generated method stub
-					
+
 				}
 			});
 			breakBtn.setOnClickListener(breakBtnListener);
 		}
 		setPopupWindowParams(breakQaunziPopupWindow);
-		breakQaunziPopupWindow.showAtLocation(parent, Gravity.CENTER_HORIZONTAL, 0, margin);
+		breakQaunziPopupWindow.showAtLocation(parent,
+				Gravity.CENTER_HORIZONTAL, 0, margin);
 		return breakQaunziPopupWindow;
 	}
+
 	/**
 	 * 底部窗口，可以有多个button
 	 * 
@@ -1106,7 +1113,6 @@ public class PopupWindows {
 		return popupWindowOptions;
 	}
 
-	
 	@SuppressWarnings("deprecation")
 	public PopupWindow showAddOptionsPop(View parent, float times,
 			final OnClickListener pub, final OnClickListener invite) {
@@ -1118,12 +1124,13 @@ public class PopupWindows {
 		if (null == popupWindowOptions) {
 			LayoutInflater layoutInflater = (LayoutInflater) mActivity
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			viewOptions = layoutInflater.inflate(R.layout.pop_add_options, null);
+			viewOptions = layoutInflater
+					.inflate(R.layout.pop_add_options, null);
 			popupWindowOptions = new PopupWindow(viewOptions,
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		}
-		viewOptions.findViewById(R.id.buttonPubActivity)
-				.setOnClickListener(new OnClickListener() {
+		viewOptions.findViewById(R.id.buttonPubActivity).setOnClickListener(
+				new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
@@ -1135,8 +1142,8 @@ public class PopupWindows {
 						}
 					}
 				});
-		viewOptions.findViewById(R.id.buttonInviteFriends)
-				.setOnClickListener(new OnClickListener() {
+		viewOptions.findViewById(R.id.buttonInviteFriends).setOnClickListener(
+				new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
@@ -1162,7 +1169,8 @@ public class PopupWindows {
 
 	@SuppressWarnings("deprecation")
 	public PopupWindow showQuanOptionsMenue(View parent, float times,
-			final OnClickListener brief, final OnClickListener share,final OnClickListener invite) {
+			final OnClickListener brief, final OnClickListener share,
+			final OnClickListener invite) {
 		if (null != parent) {
 			InputMethodManager imm = (InputMethodManager) mActivity
 					.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -1171,12 +1179,13 @@ public class PopupWindows {
 		if (null == popupWindowOptions) {
 			LayoutInflater layoutInflater = (LayoutInflater) mActivity
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			viewOptions = layoutInflater.inflate(R.layout.pop_quan_main_menu, null);
+			viewOptions = layoutInflater.inflate(R.layout.pop_quan_main_menu,
+					null);
 			popupWindowOptions = new PopupWindow(viewOptions,
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		}
-		viewOptions.findViewById(R.id.buttonBrief)
-				.setOnClickListener(new OnClickListener() {
+		viewOptions.findViewById(R.id.buttonBrief).setOnClickListener(
+				new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
@@ -1188,8 +1197,8 @@ public class PopupWindows {
 						}
 					}
 				});
-		viewOptions.findViewById(R.id.buttonShare)
-				.setOnClickListener(new OnClickListener() {
+		viewOptions.findViewById(R.id.buttonShare).setOnClickListener(
+				new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
@@ -1201,19 +1210,19 @@ public class PopupWindows {
 						}
 					}
 				});
-		viewOptions.findViewById(R.id.buttonInviteFriends)
-		.setOnClickListener(new OnClickListener() {
+		viewOptions.findViewById(R.id.buttonInviteFriends).setOnClickListener(
+				new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				if (null != popupWindowOptions) {
-					popupWindowOptions.dismiss();
-				}
-				if (invite != null) {
-					invite.onClick(v);
-				}
-			}
-		});
+					@Override
+					public void onClick(View v) {
+						if (null != popupWindowOptions) {
+							popupWindowOptions.dismiss();
+						}
+						if (invite != null) {
+							invite.onClick(v);
+						}
+					}
+				});
 		popupWindowOptions.setFocusable(false);
 		popupWindowOptions.setOutsideTouchable(true);
 		popupWindowOptions.setAnimationStyle(R.style.AnimBottomScaleRM);
@@ -1225,7 +1234,7 @@ public class PopupWindows {
 				(int) (location[1] + times * 35));
 		return popupWindowOptions;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public PopupWindow showCmtOptionsPop(View parent, float times,
 			final OnClickListener good, final OnClickListener cmt,
