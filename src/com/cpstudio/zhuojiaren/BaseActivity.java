@@ -1,7 +1,5 @@
 package com.cpstudio.zhuojiaren;
 
-import javax.swing.text.View;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View.OnClickListener;
