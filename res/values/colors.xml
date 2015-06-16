@@ -3,7 +3,7 @@
     <color name="white">#FFFFFF</color>
 	<color name="black">#000000</color>
 	<color name="gray">#808080</color>
-	<color name="graywhitem">#f2f2f2</color>
+	<color name="graywhitem">#d8d7d0</color>
 	<color name="red">#FF0000</color>
 	<color name="gold">#FFD700</color>
 	<color name="yellow">#FFFF00</color>
@@ -17,5 +17,5 @@
 	<color name="grayslate">#708090</color>
 	<color name="lightblue">#0083FF</color>
 	<color name="lightgreen">#9ACD32</color>
-	
+	<color name="transparent">#00000000</color>
 </resources>

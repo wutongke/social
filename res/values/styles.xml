@@ -87,6 +87,10 @@
 	    <item name="android:textColor">@color/graywhite</item>
 	    <item name="android:textSize">20dp</item>
 	</style>
+	<style name="basic_second_text">
+	    <item name="android:textColor">@color/graywhite</item>
+	    <item name="android:textSize">15dp</item>
+	</style>
 	<style name="anim_popup_dir">
         <item name="android:windowEnterAnimation">@anim/slide_in</item>
         <item name="android:windowExitAnimation">@anim/slide_out</item>

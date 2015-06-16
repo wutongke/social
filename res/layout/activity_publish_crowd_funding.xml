@@ -1,0 +1,276 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_publish_crowd_funding"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_activity" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="10dp"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/graywhitem"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
+
+                <LinearLayout
+                    android:id="@+id/apcf_linearLayoutPicContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:orientation="vertical" >
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/choose_image" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/ico"
+                android:src="@drawable/bg_border3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:text="@string/project_name" />
+
+                <EditText
+                    android:id="@+id/apcd_edit_funding_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:ems="10"
+                    android:hint="@string/label_qzmchint2"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="10dp"
+                    android:singleLine="true"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/ico"
+                android:src="@drawable/bg_border3" />
+
+            <TextView
+                android:id="@+id/apcf_project_des"
+                style="@style/basic_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/des"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:gravity="top"
+                android:id="@+id/apcf_des_edit"
+                style="@style/basic_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:layout_margin="20dp"
+                android:textSize="18dp" >
+            </EditText>
+
+            <include layout="@layout/bg_image" />
+
+            <LinearLayout
+                android:id="@+id/apcf_image_text_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:padding="20dp" >
+            </LinearLayout>
+
+            <include layout="@layout/bg_image" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/apcf_add_image"
+                    style="@style/basic_text"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/add_image" />
+
+                <Button
+                    android:id="@+id/apcf_add_text"
+                    style="@style/basic_text"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="@string/add_words" />
+            </LinearLayout>
+
+            <include
+                android:layout_marginBottom="10dp"
+                layout="@layout/bg_image" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:text="@string/support" />
+
+                <EditText
+                    android:id="@+id/apcf_support_zhuobi"
+                    android:layout_width="wrap_content"
+                    android:minWidth="52dp"
+                    android:layout_height="50dp"
+                    android:inputType="number"
+                    android:numeric="integer"
+                    android:textSize="18dp" />
+
+                <TextView
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/zhuo_bi" />
+
+                <EditText
+                    android:id="@+id/apcf_support_rmb"
+                    android:layout_width="wrap_content"
+                    android:minWidth="52dp"
+                    android:layout_height="50dp"
+                    android:inputType="number"
+                    android:numeric="integer"
+                    android:textSize="18dp" />
+
+                <TextView
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yuan" />
+            </LinearLayout>
+
+            <include
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                layout="@layout/bg_image" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    style="@style/basic_text"
+                    android:text="@string/aim_price" >
+                </TextView>
+                <EditText 
+                    android:id="@+id/apcf_aim_price_zhuo"
+                    android:layout_width="wrap_content"
+                    android:minWidth="200dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:textSize="18dp"
+                    />
+                 <TextView
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/zhuo_bi" />
+            </LinearLayout>
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                >
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/basic_text"
+                    android:text="或"
+                    android:layout_marginRight="20dp"
+                    />
+                <EditText 
+                    android:id="@+id/apcf_aim_price_rmb"
+                    android:layout_width="wrap_content"
+                    android:minWidth="200dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:gravity="bottom"
+                    android:textSize="18dp"
+                    />
+                 <TextView
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yuan" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

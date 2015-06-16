@@ -101,7 +101,8 @@ public class PullDownView extends LinearLayout implements OnScrollOverListener {
 
 		mListView = new ScrollOverListView(context, header);
 		mListView.setOnScrollOverListener(this);
-		mListView.setCacheColorHint(0);
+		mListView.setCacheColorHint(0x00000000);
+		mListView.setSelector(R.color.transparent);
 		mListView.setDivider(getContext().getResources().getDrawable(
 				R.drawable.bg_border3));
 		mListView.setHeaderDividersEnabled(false);

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+	<include  layout="@layout/head_pull_all">
+	</include>
     <com.cpstudio.zhuojiaren.widget.MyGridView
         android:id="@+id/hcd_gridview"
         android:layout_width="match_parent"

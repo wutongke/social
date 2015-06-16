@@ -1,4 +1,4 @@
-package com.cpstudio.zhuojiaren;
+package com.cpstudio.zhuojiaren.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +25,14 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.cpstudio.zhuojiaren.BaseActivity;
+import com.cpstudio.zhuojiaren.QuanMngActivity;
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.array;
+import com.cpstudio.zhuojiaren.R.drawable;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
+import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
@@ -79,13 +87,13 @@ public class QuanCreateActivity extends BaseActivity {
 
 		ButterKnife.inject(this);
 		mContext=this;
+		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		//»¶◊”¿‡–Õ
 		quanziType = getResources().getStringArray(R.array.quanzi_type);
 		initTitle();
 		title.setText(R.string.title_activity_create_quan);
 		function.setText(R.string.finish);
 
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		Intent i = getIntent();
 		groupid = i.getStringExtra("groupid");
 		if (null != groupid && !groupid.equals("")) {

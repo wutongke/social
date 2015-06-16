@@ -56,7 +56,11 @@ public class MsgTagVO {
 	 */
 	public static final int GET_VERIFICATIONCODE = 1;
 	public static final int SUBMIT_VERIFICATIONCODE = 2;
-	
+	/**
+	 * ÖÚ³ï
+	 */
+	public static final int INIT = 200;
+	public static final int SCROLLVIEW = 201;
 	
 	//lz
 	public static final int FLIP = 99;

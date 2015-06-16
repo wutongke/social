@@ -241,6 +241,7 @@ public class TabButton extends HorizontalScrollView {
 				.getSystemService(Context.WINDOW_SERVICE);
 
 		int width = wm.getDefaultDisplay().getWidth();
+		tv.setTag(position);
 		tv.setWidth(width / childCount);
 		tv.setGravity(Gravity.CENTER);
 		tv.setPadding(tabPadding, 0, tabPadding, 0);
@@ -272,8 +273,8 @@ public class TabButton extends HorizontalScrollView {
 	}
 
 	public void setTab(String... strings) {
-		for (String text : strings) {
-			addTab(newTextTab(text, 1), strings.length);
+		for (int i=0;i<strings.length;i++) {
+			addTab(newTextTab(strings[i], i), strings.length);
 		}
 	}
 
@@ -363,7 +364,8 @@ public class TabButton extends HorizontalScrollView {
 		public void onClick(View v) {
 			if (onClickListener != null) {
 				onClickListener.tabsButtonOnClick(v.getId(), v);
-			} else if (mViewPager != null) {
+			}
+			else if (mViewPager != null) {
 				mViewPager.setCurrentItem(v.getId());
 			}
 		}

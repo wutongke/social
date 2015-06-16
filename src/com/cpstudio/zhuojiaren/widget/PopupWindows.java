@@ -203,6 +203,9 @@ public class PopupWindows {
 	}
 
 	// Ñ¡ÔñÍ¼Æ¬
+	/**
+	 * parent£º¸¸ÈÝÆ÷
+	 */
 	public PopupWindow showPop(View parent) {
 		if (null != parent) {
 			InputMethodManager imm = (InputMethodManager) mActivity

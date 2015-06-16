@@ -324,6 +324,7 @@
     <string name="label_qzlc">所在地区</string>
     <string name="label_qzmc">圈子名称</string>
     <string name="label_qzmchint">给你的圈子取个名</string>
+    <string name="label_qzmchint2">给你的项目取个名</string>
     <string name="label_qzcty">选择圈子属于哪一个类别</string>
     <string name="label_qzlcd">选择主要活动所在地</string>
     <string name="label_qzsx">圈子属性</string>
@@ -778,7 +779,30 @@
     <string name="crowdfunding_create">发起项目</string>
     <string name="crowdfunding_price_label">起</string>
     <string name="crowdfunding_price_label2">￥</string>
-    <string name="crowdfunding_finish_rate">完成率</string>
+    <string name="crowdfunding_finish_rate">完成</string>
+    <string name="choose_image">选一张头像图片</string>
+    <string name="project_name">项目名称</string>
+    <string name="des">描述</string>
+    <string name="project_name_hind">给我的项目起个名字</string>
+    <string name="support">支持</string>
+    <string name="zhuo_bi">倬家币</string>
+    <string name="yuan">元</string>
+    <string name="aim_price">目标筹资金额</string>
+    <string name="add_image">添加图片</string>
+    <string name="add_words">添加文字</string>
+    <string name="new_crowdfunding_project">新建倬币项目</string>
+    <string name="finish_rate">达成率</string>
+    <string name="finish_day">距离结束</string>
+    <string name="alread_have">已筹资</string>
+    <string name="aim">目标</string>
+    <string name="like">喜欢</string>
+    <string name="pay_back">回报</string>
+    <string name="progress">进展</string>
+    <string name="create_people">发起人</string>
+    <string name="crowdfungding_detail">众筹项目详情</string>
+    <string name="support_atonce">立即支持</string>
+    
+    
 
     <!-- lz -->
     <string name="label_main_find">发现</string>
@@ -800,15 +824,7 @@
     <string name="title_activity_edit_event">EditEventActivity</string>
     <string name="title_activity_crowd_funding">CrowdFundingActivity</string>
     <string name="title_activity_quan_brief">圈子简介</string>
-    <string name="label_gonggao">圈公告</string>
-    <string name="label_class">圈分类</string>
-    <string name="label_local">圈地域</string>
-    <string name="label_brief">圈简介</string>
-    <string name="label_pub_topic">发话题</string>
-    <string name="label_pub_active">发活动</string>
-    <string name="label_join_quan">加入圈子</string>
-    <string name="label_quit_quan">退出圈子</string>
-    <string name="title_activity_topic_detail">话题详情</string>
+<string name="title_activity_topic_detail">话题详情</string>
     <string name="label_nocomment_tip">此话题还没有人发表评论，我来说两句。</string>
     <string name="label_nowno">暂不</string>
     <string name="title_topic_tip">你需要加入圈子才可进行点赞或评论操作，现在加入吗？</string>
@@ -817,5 +833,7 @@
 	<string name="text_pub_topic_hint">+请输入话题内容</string>
 	<string name="title_pub_topic">发布话题</string>
 	<string name="image_des2">上传照片，9张以内</string>
-	
+
+  <string name="title_activity_crowd_funding_detail">CrowdFundingDetailActivity</string>
+
 </resources>
