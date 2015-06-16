@@ -70,5 +70,4 @@
             android:textColor="#a8a7a7"
             android:textSize="14sp" />
     </LinearLayout>
-
 </RelativeLayout>

@@ -3,6 +3,8 @@ package com.cpstudio.zhuojiaren.model;
 public class CrowdFundingVO {
 	// 众筹类型
 	public static String CROWDFUNDINGTYPE = "crowdfunding";
+	public static String CROWDFUNDINGID = "crowdfundingid";
+	//众筹 的各种类型
 	public static int CROWDFUNDINGMY = 1;
 	public static int CROWDFUNDINGCREATE = 2;
 	public static int CROWDFUNDINGQUERY = 3;
@@ -13,9 +15,17 @@ public class CrowdFundingVO {
 	public static int CROWDFUNDINGAGRICULTURE = 8;
 	public static int CROWDFUNDINGCRAFT = 9;
 	
-	public static String[] typeStr = {"","我发起","我投资","","科技","出版","娱乐","艺术","农业","工艺"};
+	//handler 消息类型
 	
+	
+	public static String[] typeStr = {"","我发起","我投资","科技","出版","娱乐","艺术","农业","工艺"};
+	/**
+	 * id
+	 */
 	private String fundingId;
+	/**
+	 * 名字
+	 */
 	private String name;
 	/**
 	 * 起步价
@@ -33,7 +43,17 @@ public class CrowdFundingVO {
 	 * 类型：是否是我发起的、我投资的
 	 */
 	private String type;
-	private String isfinish;
+	/**
+	 * 完成状态
+	 */
+	private String state;
+	/**
+	 * 是否完成
+	 */
+	private String isFinish;
+	/**
+	 * 总共多少天
+	 */
 	private String totalDay;
 	/**
 	 * 还有多少天完成
@@ -47,9 +67,22 @@ public class CrowdFundingVO {
 	 * 目标
 	 */
 	private String moneyAim;
+	/**
+	 * 喜欢数量
+	 */
 	private String likeCount;
+	/**
+	 * 支持数量
+	 */
 	private String supportCount;
+	/**
+	 * 发起人
+	 */
 	private UserVO boss;
+	/**
+	 * 项目描述
+	 */
+	private String des;
 	public static String getCrowdfundingtype() {
 		return CROWDFUNDINGTYPE;
 	}
@@ -110,17 +143,23 @@ public class CrowdFundingVO {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getIsfinish() {
-		return isfinish;
-	}
-	public void setIsfinish(String isfinish) {
-		this.isfinish = isfinish;
-	}
 	public String getTotalDay() {
 		return totalDay;
 	}
 	public void setTotalDay(String totalDay) {
 		this.totalDay = totalDay;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getIsFinish() {
+		return isFinish;
+	}
+	public void setIsFinish(String isFinish) {
+		this.isFinish = isFinish;
 	}
 	public String getEndDay() {
 		return endDay;
@@ -130,6 +169,12 @@ public class CrowdFundingVO {
 	}
 	public String getMoneyGet() {
 		return moneyGet;
+	}
+	public String getDes() {
+		return des;
+	}
+	public void setDes(String des) {
+		this.des = des;
 	}
 	public void setMoneyGet(String moneyGet) {
 		this.moneyGet = moneyGet;

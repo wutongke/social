@@ -2,8 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CrowdFundingListActivity" >
-	<include layout="@layout/title_activity"/>"
+    android:orientation="vertical"
+    >
+	<include layout="@layout/title_activity"
+	    />
     <com.cpstudio.zhuojiaren.widget.PullDownView
         android:id="@+id/acfl_pull_down_view"
         android:layout_width="match_parent"

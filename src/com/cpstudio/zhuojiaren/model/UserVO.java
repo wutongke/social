@@ -7,9 +7,15 @@ public class UserVO {
 	private String userid;
 	private String userpwd;
 	private String username;
+	/**
+	 * 头像地址
+	 */
 	private String uheader;
 	private String sex;
 	private String company;
+	/**
+	 * 职位
+	 */
 	private String post;
 	private String industry;
 	private String city;

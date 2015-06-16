@@ -46,6 +46,7 @@ public class CrowdFundingFragment extends Fragment{
 		type = getArguments().getInt(CrowdFundingVO.CROWDFUNDINGTYPE,1);
 		ButterKnife.inject(this,view);
 		initPullDownView();
+		loadData();
 		return view;
 	}
 	private void initPullDownView() {
@@ -56,13 +57,13 @@ public class CrowdFundingFragment extends Fragment{
 			@Override
 			public void onRefresh() {
 				// TODO Auto-generated method stub
-				
+				loadData();
 			}
 			
 			@Override
 			public void onMore() {
 				// TODO Auto-generated method stub
-				
+				loadData();
 			}
 		});
 		pullDownView.setShowHeader();
@@ -102,5 +103,19 @@ public class CrowdFundingFragment extends Fragment{
 				startActivity(intent);
 			}
 		});
+	}
+	private void loadData() {
+		// TODO Auto-generated method stub
+		//test
+		CrowdFundingVO test = new CrowdFundingVO();
+		test.setFundingId("123");
+		test.setName("asdf");
+		test.setMinPrice("5");
+		test.setMoneyGet("8000");
+		pullDownView.finishLoadData(true);
+		pullDownView.hasData();
+		mListDatas.add(test);
+		
+		mAdapter.notifyDataSetChanged();
 	}
 }

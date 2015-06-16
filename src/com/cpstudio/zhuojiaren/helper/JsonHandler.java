@@ -88,7 +88,7 @@ public class JsonHandler {
 	public static boolean checkResult(String str) {
 		if (null != str && !str.equals("")) {
 			String code = parseResult(str).getCode();
-			if (code.equals("10000")) {
+			if (code!=null&&code.equals("10000")) {
 				return true;
 			}
 		}
@@ -110,7 +110,7 @@ public class JsonHandler {
 		if (null != str && !str.equals("")) {
 			ResultVO result = parseResult(str);
 			String code = result.getCode();
-			if (code.equals("10000")) {
+			if (null != code&&code.equals("10000")) {
 				return true;
 			} else {
 				CommonUtil.displayToast(context, result.getMsg());

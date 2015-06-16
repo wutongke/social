@@ -38,7 +38,7 @@ public class CrowdFundingAdapter extends CommonAdapter<CrowdFundingVO>{
 		mLoadImage.addTask(item.getImageUrl(), image);
 		name.setText(item.getName());
 		price.setText(mContext.getResources().getString(R.string.crowdfunding_price_label2)+item.getMinPrice());
-		finishRate.setText(mContext.getResources().getString(R.string.crowdfunding_finish_rate)+item);
+		finishRate.setText(mContext.getResources().getString(R.string.crowdfunding_finish_rate)+item.getMoneyGet());
 	}
 
 }

@@ -87,13 +87,13 @@ public class QuanCreateActivity extends BaseActivity {
 
 		ButterKnife.inject(this);
 		mContext=this;
+		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		//»¶◊”¿‡–Õ
 		quanziType = getResources().getStringArray(R.array.quanzi_type);
 		initTitle();
 		title.setText(R.string.title_activity_create_quan);
 		function.setText(R.string.finish);
 
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		Intent i = getIntent();
 		groupid = i.getStringExtra("groupid");
 		if (null != groupid && !groupid.equals("")) {
