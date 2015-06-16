@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -23,6 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseFragmentActivity;
+import com.cpstudio.zhuojiaren.MsgCmtActivity;
 import com.cpstudio.zhuojiaren.QuanDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.UserSelectActivity;
@@ -420,7 +422,9 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-
+				Intent i = new Intent(ZhuoQuanMainActivity.this,
+						PubTopicActicvity.class);
+				startActivity(i);
 			}
 		});
 		btnPubActive.setOnClickListener(new OnClickListener() {
@@ -527,4 +531,5 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			ltYouke.setVisibility(View.VISIBLE);
 		}
 	}
+			
 }

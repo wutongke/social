@@ -3,7 +3,9 @@ package com.cpstudio.zhuojiaren.fragment;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,9 +18,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.cpstudio.zhuojiaren.JiarenActiveActivity;
+import com.cpstudio.zhuojiaren.MsgCmtActivity;
+import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -31,6 +37,7 @@ import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudui.zhuojiaren.lz.QuanziTopicListAdapter;
+import com.cpstudui.zhuojiaren.lz.TopicDetailActivity;
 import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
 
 public class QuanziTopicFra extends Fragment {
@@ -53,7 +60,8 @@ public class QuanziTopicFra extends Fragment {
 	// 主View
 	View layout;
 	private String uid = null;
-    String groupId=null;
+	String groupId = null;
+
 	public interface functionListener {
 		//
 		public void onTypeChange(int type);
@@ -81,7 +89,7 @@ public class QuanziTopicFra extends Fragment {
 		// if (mType == QuanVO.QUANZIACTIVE)
 		// mAdapter = new ActiveListAdapter(getActivity(), activeList);
 		// else if (mType == QuanVO.QUANZITOPIC)
-		mAdapter = new QuanziTopicListAdapter(getActivity(), mList);
+		mAdapter = new QuanziTopicListAdapter(this, mList);
 		// else
 		// mAdapter = new QuanMemberListAdapter(getActivity(), memberList);
 
@@ -94,20 +102,17 @@ public class QuanziTopicFra extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
-				// if (mType == QuanVO.QUANZIACTIVE) {
-				//
-				// } else if (mType == QuanVO.QUANZITOPIC) {
-				//
-				// } else {
-				//
-				// }
+				// 跳到话题详情页，话题详情内容用活动内容测试通过
+				Intent i = new Intent();
+				i.setClass(getActivity(), TopicDetailActivity.class);
+				i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
+				startActivity(i);
 			}
 
 		});
-		
-		groupId=((ZhuoQuanMainActivity)getActivity()).getGroupid();
-		
+
+		groupId = ((ZhuoQuanMainActivity) getActivity()).getGroupid();
+		mAdapter.setGroupId(groupId);
 		loadData();
 		return layout;
 	}
@@ -137,7 +142,7 @@ public class QuanziTopicFra extends Fragment {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
 		@Override
@@ -145,6 +150,8 @@ public class QuanziTopicFra extends Fragment {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
 				mListViewFooter.finishLoading();
+				//通过返回数据判断是否属于该圈子，然后就行设置，暂时假定属于
+				mAdapter.setIsFollow(false);
 				updateItemList((String) msg.obj, true, false);
 				break;
 			}
@@ -171,7 +178,7 @@ public class QuanziTopicFra extends Fragment {
 	};
 
 	private void loadData() {
-
+//重要：：：：此处请求的返回结果中还应包含“我”是否在这个圈子之中的标志
 		String url = ZhuoCommHelper.getUrlUserInfo()
 				+ "?uid="
 				+ ResHelper.getInstance(getActivity().getApplicationContext())
@@ -195,6 +202,21 @@ public class QuanziTopicFra extends Fragment {
 			params += "&uid=" + uid;
 			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD);
 		}
+
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		if (resultCode == Activity.RESULT_OK) {
+			// if (requestCode == MsgTagVO.MSG_CMT) {
+//			String forward = data.getStringExtra("forward");
+//			String msgid = data.getStringExtra("msgid");
+//			String outterid = data.getStringExtra("outterid");
+			Toast.makeText(mContext, "评论成功！", 2000).show();
+			}
+		
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	private void loadMore() {
