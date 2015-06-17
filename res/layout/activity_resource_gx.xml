@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.cpstudio.zhuojiaren">
+	<include layout="@layout/title_activity"/>
+    <com.cpstudio.zhuojiaren.widget.TabButton
+        android:id="@+id/azq_tab"
+        android:layout_width="match_parent"
+         android:layout_height="42dp" 
+         app:textColor="@color/black"
+         app:slecttextColor="@color/graywhite"
+         app:sliderColor="@color/white"
+         app:sliderSize="0dp"
+         >
+    </com.cpstudio.zhuojiaren.widget.TabButton>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/azq_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" >
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

@@ -4,10 +4,12 @@
     android:layout_height="match_parent"
     tools:context="com.cpstudio.zhuojiaren.QuanBriefActivity" >
 
-    <include layout="@layout/title_activity" />
+    <include  android:id="@+id/quan_bar_title" 
+        layout="@layout/title_activity" />
 
     <include
         android:id="@+id/quan_info_title"
+        android:layout_below="@id/quan_bar_title" 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/activity_quan_main_info" />

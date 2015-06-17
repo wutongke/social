@@ -17,6 +17,7 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
+import com.cpstudui.zhuojiaren.lz.TopicDetailActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -279,7 +280,11 @@ public class JiarenActiveActivity extends Activity implements
 			// }
 			// }
 			// if (!iszenghui) {
-			i.setClass(JiarenActiveActivity.this, MsgDetailActivity.class);
+
+//lz暂时该为话题详情，测试用
+//			i.setClass(JiarenActiveActivity.this, MsgDetailActivity.class);
+			i.setClass(JiarenActiveActivity.this, TopicDetailActivity.class);
+//lz
 			// }
 			// }
 			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));

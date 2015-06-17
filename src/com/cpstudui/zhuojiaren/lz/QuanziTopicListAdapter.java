@@ -10,9 +10,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +44,7 @@ import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.utils.ImageRectUtil;
 
 /**
- * 鍊浜篴dapter
+ * 閸婎剙顔嶆禍绡磀apter
  * 
  * @author lef
  * 
@@ -57,16 +57,34 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 	private int width = 720;
 	private float times = 2;
 	private ZhuoConnHelper mConnHelper = null;
-	private PopupWindows phw = null;
-	String msgid="11";
-	public QuanziTopicListAdapter(Activity context, ArrayList<ZhuoInfoVO> list) {
-		this.mContext = context;
+	private PopupWindows phw = null, phwChild;
+	String msgid = "11";
+	Fragment fragment;
+	String groupId;
+	boolean isFollow = false;// 标志个人是否属于该圈子
+
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
+	public QuanziTopicListAdapter(Fragment fragment, ArrayList<ZhuoInfoVO> list) {
+		this.mContext = fragment.getActivity();
+		this.fragment = fragment;
 		this.mList = list;
-		this.inflater = LayoutInflater.from(context);
-		this.width = DeviceInfoUtil.getDeviceCsw(context);
-		this.times = DeviceInfoUtil.getDeviceCsd(context);
-		this.mConnHelper = ZhuoConnHelper.getInstance(context);
-		this.phw = new PopupWindows(context);
+		this.inflater = LayoutInflater.from(mContext);
+		this.width = DeviceInfoUtil.getDeviceCsw(mContext);
+		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
+		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
+		this.phw = new PopupWindows((Activity) mContext);
+
+	}
+
+	public void setIsFollow(boolean flag) {
+		isFollow = flag;
 	}
 
 	@Override
@@ -101,7 +119,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
 		}
 		ZhuoInfoVO item = mList.get(position);
-		msgid=item.getMsgid();
+		msgid = item.getMsgid();
 		UserVO user = item.getUser();
 		final String userid = user.getUserid();
 		String company = user.getCompany();
@@ -177,34 +195,66 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		});
 		mLoadImage.addTask(headUrl, holder.headIV);
 		mLoadImage.doTask();
-//娉ㄦ剰鍘熸潵鐗堟湰涓殑鈥滄椿鍔ㄢ�鍒楄〃涔熶腑鐨�+"鏈変袱涓紝鍒嗗埆浠ｈ〃瀵硅浆鍙戝唴瀹圭殑澶勭悊锛堢偣璧炲拰璇勮锛夛紝浠ュ強瀵规湰娑堟伅鐨勫鐞�
+		// 濞夈劍鍓伴崢鐔告降閻楀牊婀版稉顓犳畱閳ユ粍妞块崝銊拷閸掓銆冩稊鐔惰厬閻拷+"閺堝琚辨稉顏庣礉閸掑棗鍩嗘禒锝堛�鐎电娴嗛崣鎴濆敶鐎瑰湱娈戞径鍕倞閿涘牏鍋ｇ挧鐐叉嫲鐠囧嫯顔戦敍澶涚礉娴犮儱寮风�瑙勬拱濞戝牊浼呴惃鍕槱閻烇拷
 		holder.optionIV.setOnClickListener(new OnClickListener() {
 
-				@Override
-				public void onClick(View view) {
+			@Override
+			public void onClick(View view) {
+
+				if (!isFollow) {
+
+					OnClickListener applyTojoinListener = new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							Intent i = new Intent(mContext,
+									ApplyToJoinQuanActicvity.class);
+							i.putExtra("groupid", msgid);
+
+							fragment.startActivity(i);
+							// mConnHelper.goodMsg(msgid, mHandler,
+							// MsgTagVO.MSG_LIKE,
+							// null, true, null, msgid);
+						}
+					};
+					OnClickListener noListener = new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							//
+						}
+					};
+
+					phw.showPopDlg(view, R.string.label_apply,
+							R.string.label_nowno, applyTojoinListener,
+							noListener, R.string.title_topic_tip);
+				} else {
 					OnClickListener zanListener = new OnClickListener() {
 
 						@Override
 						public void onClick(View v) {
-							mConnHelper.goodMsg(msgid, mHandler, MsgTagVO.MSG_LIKE,
-									null, true, null, msgid);
+							mConnHelper.goodMsg(msgid, mHandler,
+									MsgTagVO.MSG_LIKE, null, true, null, msgid);
 						}
 					};
 					OnClickListener cmtListener = new OnClickListener() {
 
 						@Override
 						public void onClick(View v) {
-							Intent i = new Intent(mContext, MsgCmtActivity.class);
+
+							Intent i = new Intent(mContext,
+									MsgCmtActivity.class);
 							i.putExtra("msgid", msgid);
 							i.putExtra("parentid", msgid);
-							//姝ゅ搴斿湪Fragment瀵瑰簲鐨凙ctivity涓鐞�
-							((Activity)mContext).startActivityForResult(i, MsgTagVO.MSG_CMT);
+							// ((Activity)
+							// mContext).startActivityForResult(i,MsgTagVO.MSG_CMT);
+							fragment.startActivityForResult(i,
+									Activity.RESULT_FIRST_USER);
 						}
 					};
 					phw.showOptionsPop(view, times, zanListener, cmtListener);
 				}
-			});
-		
+			}
+		});
+
 		holder.tl.removeAllViews();
 		final List<PicVO> picsinner = item.getPic();
 		RelativeLayout.LayoutParams layoutParams = holder.rlp;
@@ -244,11 +294,12 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 				});
 				tr.addView(rl);
 			}
-		
+
 		}
 
 		return convertView;
 	}
+
 	@SuppressLint("HandlerLeak")
 	private Handler mHandler = new Handler() {
 		@Override
@@ -258,42 +309,43 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 				if (JsonHandler.checkResult((String) msg.obj, mContext)) {
 					CommonUtil
 							.displayToast(mContext, R.string.label_zanSuccess);
-//					Bundle bundle = msg.getData();
-//					String id = bundle.getString("data");
-//					for (ZhuoInfoVO item : mList) {
-//						if (id != null) {
-//							if (id.equals(item.getMsgid())) {
-//								item.setGoodnum((Integer.valueOf(item
-//										.getGoodnum()) + 1) + "");
-//							} else if (item.getOrigin() != null
-//									&& id.equals(item.getOrigin().getMsgid())) {
-//								item.getOrigin().setGoodnum(
-//										(Integer.valueOf(item.getOrigin()
-//												.getGoodnum()) + 1) + "");
-//							}
-//						}
-//					}
-//					notifyDataSetChanged();
+					// Bundle bundle = msg.getData();
+					// String id = bundle.getString("data");
+					// for (ZhuoInfoVO item : mList) {
+					// if (id != null) {
+					// if (id.equals(item.getMsgid())) {
+					// item.setGoodnum((Integer.valueOf(item
+					// .getGoodnum()) + 1) + "");
+					// } else if (item.getOrigin() != null
+					// && id.equals(item.getOrigin().getMsgid())) {
+					// item.getOrigin().setGoodnum(
+					// (Integer.valueOf(item.getOrigin()
+					// .getGoodnum()) + 1) + "");
+					// }
+					// }
+					// }
+					// notifyDataSetChanged();
 				}
 				break;
 			}
 			case MsgTagVO.MSG_DEL: {
 				if (JsonHandler.checkResult((String) msg.obj, mContext)) {
 					CommonUtil.displayToast(mContext, R.string.info12);
-//					Bundle bundle = msg.getData();
-//					String id = bundle.getString("data");
-//					for (ZhuoInfoVO item : mList) {
-//						if (id != null && id.equals(item.getMsgid())) {
-//							mList.remove(item);
-//							break;
-//						}
-//					}
-//					notifyDataSetChanged();
+					// Bundle bundle = msg.getData();
+					// String id = bundle.getString("data");
+					// for (ZhuoInfoVO item : mList) {
+					// if (id != null && id.equals(item.getMsgid())) {
+					// mList.remove(item);
+					// break;
+					// }
+					// }
+					// notifyDataSetChanged();
 				}
 			}
 			}
 		}
 	};
+
 	static class ViewHolder {
 		TextView nameTV;
 		TextView timeTV;

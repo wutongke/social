@@ -755,6 +755,20 @@
             android:name="com.cpstudio.zhuojiaren.ui.CrowdFundingDetailActivity"
             android:label="@string/title_activity_crowd_funding_detail" >
         </activity>
-    </application>
+
+ <activity
+            android:name="com.cpstudui.zhuojiaren.lz.TopicDetailActivity"
+            android:label="@string/title_activity_topic_detail" >
+        </activity>
+        <activity
+            android:name="com.cpstudui.zhuojiaren.lz.ApplyToJoinQuanActicvity"
+            android:label="@string/title_active_join_quan" >
+        </activity>
+        <activity
+            android:name="com.cpstudui.zhuojiaren.lz.PubTopiccticvity"
+            android:label="@string/title_pub_topic" >
+        </activity>
+
+</application>
 
 </manifest>

@@ -66,7 +66,8 @@ public class MsgCmtListAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
 		}
 		if (position == 0) {
-			holder.icoCmt.setVisibility(View.VISIBLE);
+//			holder.icoCmt.setVisibility(View.VISIBLE);
+			holder.icoCmt.setVisibility(View.GONE);
 		}else{
 			holder.icoCmt.setVisibility(View.GONE);
 		}
