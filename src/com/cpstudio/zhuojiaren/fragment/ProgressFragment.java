@@ -9,36 +9,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.AbsListView.OnScrollListener;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.adapter.CommentAdapter;
-import com.cpstudio.zhuojiaren.model.CommentVO;
+import com.cpstudio.zhuojiaren.adapter.ProgressAdapter;
+import com.cpstudio.zhuojiaren.model.ProgressVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.widget.OverScrollableScrollView.OverScrollController;
 
-public class CommentFragment extends Fragment implements OverScrollController{
-	
+public class ProgressFragment extends Fragment implements OverScrollController{
+
 	@InjectView(R.id.payback_listview)
 	ListView mListView;
+	
 	View view;
-	CommentAdapter mAdapter;
-	ArrayList<CommentVO> mDataList = new ArrayList<CommentVO>();
+	ProgressAdapter mAdapter;
+	ArrayList<ProgressVO> mDataList = new ArrayList<ProgressVO>();
 	private Context mContext;
 	private boolean mCanScrollUp = false;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		view = inflater.inflate(R.layout.fragment_payback, null);
+		view = inflater.inflate(R.layout.fragment_progress, null);
 		ButterKnife.inject(this, view);
 		mContext = getActivity();
-		mAdapter = new CommentAdapter(mContext, mDataList,
-				R.layout.item_comment);
+		mAdapter = new ProgressAdapter(mContext, mDataList,
+				R.layout.item_progress);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnScrollListener(new OnScrollListener() {
             @Override
@@ -71,16 +72,14 @@ public class CommentFragment extends Fragment implements OverScrollController{
 	private void loadData() {
 		// TODO Auto-generated method stub
 		// test
-		CommentVO test = new CommentVO();
+		ProgressVO test = new ProgressVO();
 		test.setContent("写的不错，加油");
-		test.setIsPraise("1");
 		test.setTime("刚刚");
 		UserVO user = new UserVO();
 		user.setUsername("张来才");
 		user.setPost("php董事");
 		user.setCompany("php902大集团");
 		test.setUser(user);
-		test.setReplyUser(user);
 		mDataList.add(test);
 		mDataList.add(test);
 		mDataList.add(test);

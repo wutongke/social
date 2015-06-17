@@ -801,7 +801,9 @@
     <string name="create_people">发起人</string>
     <string name="crowdfungding_detail">众筹项目详情</string>
     <string name="support_atonce">立即支持</string>
-    
+    <string name="reply">回复</string>
+    <string name="praise">点赞</string>
+    <string name="somedes">这里记录了发起人的一些成果，快来看看</string>
     
 
     <!-- lz -->

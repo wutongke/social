@@ -1,13 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/acfd_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical" >
 
-    <include layout="@layout/title_activity" />
+    <include 
+        layout="@layout/title_activity" />
 
-    <com.cpstudio.zhuojiaren.widget.PagerScrollView
+    <com.cpstudio.zhuojiaren.widget.OverScrollableScrollView
         android:id="@+id/acfd_scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,6 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
+                    android:padding="3dp"
                     android:background="@color/orange" />
 
                 <TextView
@@ -284,6 +287,7 @@
                 android:id="@+id/acfd_boss_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:gravity="center"
@@ -336,10 +340,10 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/acfd_viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center" >
             </android.support.v4.view.ViewPager>
         </LinearLayout>
-    </com.cpstudio.zhuojiaren.widget.PagerScrollView>
+    </com.cpstudio.zhuojiaren.widget.OverScrollableScrollView>
 
 </LinearLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@color/graywhitem" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ico_pointer_blue" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/ip_people_name"
+                style="@style/basic_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张来才"
+                android:textColor="@color/green" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/basic_second_text"
+                android:text="@string/create_people"/>
+        </LinearLayout>
+        <TextView 
+            android:id="@+id/ip_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/basic_text"
+            android:textColor="@color/black"
+            android:text="php大神呀"
+            android:layout_marginBottom="10dp"
+            />
+        <include layout="@layout/bg_image"/>"
+    </LinearLayout>
+
+</LinearLayout>

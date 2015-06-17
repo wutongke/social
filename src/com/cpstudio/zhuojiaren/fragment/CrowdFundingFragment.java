@@ -19,6 +19,7 @@ import com.cpstudio.zhuojiaren.adapter.CrowdFundingAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.ImageRadioButton;
+import com.cpstudio.zhuojiaren.ui.CrowdFundingDetailActivity;
 import com.cpstudio.zhuojiaren.ui.CrowdFundingListActivity;
 import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
@@ -71,6 +72,17 @@ public class CrowdFundingFragment extends Fragment{
 		mListView = pullDownView.getListView();
 		mAdapter = new CrowdFundingAdapter(getActivity(), mListDatas, R.layout.item_crowdfunding);
 		mListView.setAdapter(mAdapter);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(CrowdFundingFragment.this.getActivity(),CrowdFundingDetailActivity.class);
+				intent.putExtra(CrowdFundingVO.CROWDFUNDINGID,mListDatas.get(position-1).getFundingId());
+				startActivity(intent);
+			}
+		});
 		MyGridView gridView = (MyGridView) view.findViewById(R.id.hcd_gridview);
 		final ArrayList<ImageRadioButton> list = new ArrayList<ImageRadioButton>();
 		if(type==CrowdFundingVO.CROWDFUNDINGMY){
