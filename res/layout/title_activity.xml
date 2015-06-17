@@ -3,35 +3,47 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/black"
-    android:paddingBottom="3dp"
-     >
+    android:paddingBottom="3dp" >
 
-	<TextView 
-	    android:id="@+id/activity_back"
-	    android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/activity_back"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/backspace"
         android:text="@string/label_back"
         android:textColor="#ffffff"
-        android:textSize="20dp"
-	    />
+        android:textSize="20dp" />
+
     <TextView
         android:id="@+id/activity_title"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/activity_function2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@+id/activity_function"
+        android:gravity="center_vertical"
+        android:text="sadas"
         android:textColor="#ffffff"
         android:textSize="20dp" />
-    <TextView 
+
+    <TextView
         android:id="@+id/activity_function"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:textColor="#ffffff"
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
         android:gravity="center_vertical"
-        />
+        android:text="hsh"
+        android:textColor="#ffffff"
+        android:textSize="20dp" />
 
 </RelativeLayout>

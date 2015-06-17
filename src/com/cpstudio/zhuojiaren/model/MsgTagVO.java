@@ -65,4 +65,10 @@ public class MsgTagVO {
 	//lz
 	public static final int FLIP = 99;
 	public static final int HOT_WORD = 100;
+	
+	//lz供需，数据
+	//供需 的各种类型
+		public static int RESOURCE_FIND = 1;//寻找资源
+		public static int NEED_FIND = 2;//发现需求
+		public static int PUB_NEED_RESOURCE = 3;//供需发布
 }

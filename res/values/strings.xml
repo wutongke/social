@@ -801,7 +801,7 @@
     <string name="create_people">发起人</string>
     <string name="crowdfungding_detail">众筹项目详情</string>
     <string name="support_atonce">立即支持</string>
-    
+
     <!-- lz -->
     <string name="label_main_find">发现</string>
     <string name="label_main_searchHint">可搜索人名/公司/职务等关键词</string>
@@ -822,18 +822,16 @@
     <string name="title_activity_edit_event">EditEventActivity</string>
     <string name="title_activity_crowd_funding">CrowdFundingActivity</string>
     <string name="title_activity_quan_brief">圈子简介</string>
-<string name="title_activity_topic_detail">话题详情</string>
+    <string name="title_activity_topic_detail">话题详情</string>
     <string name="label_nocomment_tip">此话题还没有人发表评论，我来说两句。</string>
     <string name="label_nowno">暂不</string>
     <string name="title_topic_tip">你需要加入圈子才可进行点赞或评论操作，现在加入吗？</string>
     <string name="title_active_join_quan">申请加入圈子</string>
-	<string name="text_apply_hoin_hint">+请描述加入圈子的理由，静候群主审核</string>
-	<string name="text_pub_topic_hint">+请输入话题内容</string>
-	<string name="title_pub_topic">发布话题</string>
-	<string name="image_des2">上传照片，9张以内</string>
-
-  <string name="title_activity_crowd_funding_detail">CrowdFundingDetailActivity</string>
-
+    <string name="text_apply_hoin_hint">+请描述加入圈子的理由，静候群主审核</string>
+    <string name="text_pub_topic_hint">+请输入话题内容</string>
+    <string name="title_pub_topic">发布话题</string>
+    <string name="image_des2">上传照片，9张以内</string>
+    <string name="title_activity_crowd_funding_detail">CrowdFundingDetailActivity</string>
     <string name="label_gonggao">圈公告</string>
     <string name="label_class">圈分类</string>
     <string name="label_local">圈地域</string>
@@ -842,4 +840,16 @@
     <string name="label_pub_active">发活动</string>
     <string name="label_join_quan">加入圈子</string>
     <string name="label_quit_quan">退出圈子</string>
+    <string name="label_gxsearchHint">请输入商机名称</string>
+    <string name="title_find_need">发现需求</string>
+    <string name="title_search_resource">需找资源</string>
+    <string name="title_pub_gx">供需发布</string>
+    <string name="title_gx_filter">供需筛选</string>
+    <string name="text_choose_location">选择区域：</string>
+    <string name="accordingto_xuqiu">选择需求:</string>
+    <string name="choose_type">选择类型:</string>
+    <string name="accordingto_resource">选择资源:</string>
+    <string name="title_pub_gxxq">发布供需信息</string>
+    <string name="title_activity_gong_xu_detail">供需详情</string>
+
 </resources>
