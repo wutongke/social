@@ -5,7 +5,7 @@ package com.cpstudio.zhuojiaren.model;
  *
  */
 public class CommentVO {
-
+	public static String praise = "1";
 	private String id;
 	private UserVO user;
 	private UserVO replyUser;

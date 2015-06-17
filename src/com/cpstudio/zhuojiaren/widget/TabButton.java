@@ -219,6 +219,8 @@ public class TabButton extends HorizontalScrollView {
 	}
 
 	public void setViewPager(ViewPager vp) {
+		if(vp==null)
+			return;
 		this.mViewPager = vp;
 		vp.setOnPageChangeListener(getOnPageChangeListener());
 		PagerAdapter pagerAdapter = vp.getAdapter();
@@ -273,6 +275,7 @@ public class TabButton extends HorizontalScrollView {
 	}
 
 	public void setTab(String... strings) {
+		childCount=strings.length;
 		for (int i=0;i<strings.length;i++) {
 			addTab(newTextTab(strings[i], i), strings.length);
 		}
@@ -336,7 +339,18 @@ public class TabButton extends HorizontalScrollView {
 			}
 		}
 	}
-
+	/**
+	 * 清除tab
+	 */
+	public void clearTab(){
+		tabSize=0;
+		mLinearLayout.removeAllViews();
+	}
+	/**
+	 * 
+	 * @param index
+	 * @param scroll
+	 */
 	private void drawUnderLine(int index, float scroll) {
 		int itemWidth = mLinearLayout.getChildAt(index).getWidth();
 		// 滑块的长度radio

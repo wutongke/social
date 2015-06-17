@@ -3,12 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <ListView
+    <TextView 
+        android:background="@color/graywhitem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        style="@style/basic_text"
+        android:drawableLeft="@drawable/ico_collect"
+        android:text="@string/somedes"
+        />
+     <ListView
         android:id="@+id/payback_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:cacheColorHint="#00000000"
         android:listSelector="#00000000"
         ></ListView>
-
 </LinearLayout>

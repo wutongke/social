@@ -1,17 +1,13 @@
 package com.cpstudio.zhuojiaren.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -21,18 +17,19 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseFragmentActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
-import com.cpstudio.zhuojiaren.fragment.CrowdFundingFragment;
+import com.cpstudio.zhuojiaren.fragment.CommentFragment;
+import com.cpstudio.zhuojiaren.fragment.MyPagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.PaybackFragment;
-import com.cpstudio.zhuojiaren.fragment.PaybackFragment.ViewPagerHeight;
+import com.cpstudio.zhuojiaren.fragment.ProgressFragment;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
-import com.cpstudio.zhuojiaren.widget.PagerScrollView;
+import com.cpstudio.zhuojiaren.util.ImageLoader;
+import com.cpstudio.zhuojiaren.widget.OverScrollableScrollView;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
 import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
-import com.cpstudio.zhuojiaren.widget.TabButton.TabsButtonOnClickListener;
 
 public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 	@InjectView(R.id.acfd_state)
@@ -70,9 +67,13 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 	@InjectView(R.id.acfd_tab)
 	TabButton tab;
 	@InjectView(R.id.acfd_scrollview)
-	PagerScrollView scorllView;
-	//滚动到顶部
-	private Runnable scrollToTop;
+	OverScrollableScrollView scorllView;
+	// tab
+	private View mRoot;
+	private MyPagerAdapter mAdapter;
+	private LoadImage mLoadImage = new LoadImage();
+	String[] tabTitles;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,49 +81,91 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 		ButterKnife.inject(this);
 		initTitle();
 		title.setText(R.string.crowdfungding_detail);
-		initOnclick();
+
+		// 初始化tab
+		tabTitles = new String[3];
+		tabTitles[0] = getString(R.string.pay_back);
+		tabTitles[1] = getString(R.string.progress);
+		tabTitles[2] = getString(R.string.label_cmt);
+		tab.setTab(tabTitles);
+
+		final View root = findViewById(R.id.acfd_root);
+		ViewTreeObserver vto2 = root.getViewTreeObserver();
+		vto2.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+			@Override
+			public void onGlobalLayout() {
+				root.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+				int height = root.getHeight();
+				init();
+			}
+		});
+
+		mRoot = root;
 		loadData();
+
 	}
 
-	private void initOnclick() {
-		// TODO Auto-generated method stub
-		scrollToTop = new Runnable() {
-			
+	/**
+	 * 计算高度
+	 */
+	private void init() {
+		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewPager
+				.getLayoutParams();
+		params.height = mRoot.getHeight() - tab.getHeight() - 50;
+		viewPager.setLayoutParams(params);
+		mAdapter = new MyPagerAdapter(getSupportFragmentManager(), tabTitles);
+		viewPager.setAdapter(mAdapter);
+		tab.clearTab();
+		tab.setViewPager(viewPager);
+		//第一个可用
+		PaybackFragment fragment = (PaybackFragment) mAdapter
+				.getItem(0);
+		scorllView.setController(fragment);
+		tab.setPageChangeListener(new PageChangeListener() {
+
+			@Override
+			public void onPageSelected(int arg0) {
+				// TODO Auto-generated method stub
+
+				switch (arg0) {
+				case 0:
+					PaybackFragment fragment = (PaybackFragment) mAdapter
+							.getItem(arg0);
+					scorllView.setController(fragment);
+					break;
+				case 1:
+					CommentFragment fragment1 = (CommentFragment) mAdapter
+							.getItem(arg0);
+					scorllView.setController(fragment1);
+					break;
+				case 2:
+
+					ProgressFragment fragment2 = (ProgressFragment) mAdapter
+							.getItem(arg0);
+					scorllView.setController(fragment2);
+					break;
+				}
+			}
+
+			@Override
+			public void onPageScrolled(int index, float arg1, int scroll) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int state) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		// 数据加载完成后，滚动到顶部
+		uiHandler.post(new Runnable() {
+
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				scorllView.scrollTo(0, 0);
-			}
-		};
-		viewPager.setAdapter(getPagerAdapter());
-		tab.setViewPager(viewPager);
-		//设置点击监听,主要是让scroll滚动到顶部
-		tab.setTabsButtonOnClickListener(new TabsButtonOnClickListener() {
-			
-			@Override
-			public void tabsButtonOnClick(int id, View v) {
-				// TODO Auto-generated method stub
-				uiHandler.post(scrollToTop);
-				viewPager.setCurrentItem(v.getId());
-			}
-		});
-		tab.setPageChangeListener(new PageChangeListener() {
-			
-			@Override
-			public void onPageSelected(int arg0) {
-				// TODO Auto-generated method stub
-			}
-			
-			@Override
-			public void onPageScrolled(int index, float arg1, int scroll) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onPageScrollStateChanged(int state) {
-				// TODO Auto-generated method stub
-				uiHandler.post(scrollToTop);
 			}
 		});
 	}
@@ -134,14 +177,15 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 		msg.what = MsgTagVO.INIT;
 		CrowdFundingVO result = new CrowdFundingVO();
 		result.setState("进行中");
-		result.setName("ceshi");
-		result.setDes("asdf;lasjkdgl;aksdj;");
+		result.setName("三星S6钢铁侠定制版");
+		result.setDes("参与1元抢三星S6的用户请注意：① 请登录京东众筹【三星S6钢铁侠限量版】项目页面参与活动。②每日得奖的用户名单都会在H5的“S6拼抢榜”内显示。③每日10点到次日10点为榜单统计时间，活动暂时锁定。次日中午12:00在活动H5页面的“S6拼抢榜”公布最终获奖名单！");
 		result.setMoneyAim("10000");
 		result.setMoneyGet("8000");
 		result.setEndDay("49");
 		result.setLikeCount("20");
 		result.setSupportCount("50");
 		UserVO user = new UserVO();
+		user.setUheader("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2222979786,259610352&fm=116&gp=0.jpg");
 		user.setUsername("jack");
 		user.setPost("aa");
 		user.setCompany("BUPT");
@@ -160,6 +204,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 				state.setText(result.getState());
 				name.setText(result.getName());
 				des.setText(result.getDes());
+				
 				// 完成率
 				int aim = Integer.parseInt(result.getMoneyAim());
 				int get = Integer.parseInt(result.getMoneyGet());
@@ -175,98 +220,11 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 				peopleName.setText(result.getBoss().getUsername());
 				peopleCompany.setText(result.getBoss().getCompany());
 				peoplePostion.setText(result.getBoss().getPost());
+				mLoadImage.addTask(result.getBoss().getUheader(), peopleImage);
+				mLoadImage.doTask();
 			}
 		}
 	};
-
-	PagerAdapter getPagerAdapter() {
-
-		ArrayList<Fragment> fragments = new ArrayList<Fragment>();
-		List<CharSequence> titles = new ArrayList<CharSequence>();
-		String payBack = getString(R.string.pay_back);
-		String progress = getString(R.string.progress);
-		String comment = getString(R.string.label_cmt);
-
-		Fragment payBackFragment = addBundle(new PaybackFragment(),
-				CrowdFundingVO.CROWDFUNDINGMY);
-		fragments.add(payBackFragment);
-		titles.add(payBack);
-		((PaybackFragment) payBackFragment)
-				.setViewPagerHeight(new ViewPagerHeight() {
-
-					@Override
-					public void onHeightChange(int height) {
-						// TODO Auto-generated method stub
-						ViewGroup.LayoutParams lp = viewPager.getLayoutParams();
-						lp.height = height;
-						viewPager.setLayoutParams(lp);
-						uiHandler.post(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO Auto-generated method stub
-								scorllView.scrollTo(0, 0);
-							}
-						});
-					}
-				});
-
-		Fragment quanCreateFragment = addBundle(new PaybackFragment(),
-				CrowdFundingVO.CROWDFUNDINGQUERY);
-		fragments.add(quanCreateFragment);
-		titles.add(comment);
-		((PaybackFragment) quanCreateFragment)
-				.setViewPagerHeight(new ViewPagerHeight() {
-
-					@Override
-					public void onHeightChange(int height) {
-						// TODO Auto-generated method stub
-						ViewGroup.LayoutParams lp = viewPager.getLayoutParams();
-						lp.height = height;
-						viewPager.setLayoutParams(lp);
-						uiHandler.post(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO Auto-generated method stub
-								scorllView.scrollTo(0, 0);
-							}
-						});
-					}
-				});
-		Fragment quanRecommendFragment = addBundle(new PaybackFragment(),
-				CrowdFundingVO.CROWDFUNDINGQUERY);
-		fragments.add(quanRecommendFragment);
-		titles.add(progress);
-		((PaybackFragment) quanRecommendFragment)
-				.setViewPagerHeight(new ViewPagerHeight() {
-
-					@Override
-					public void onHeightChange(int height) {
-						// TODO Auto-generated method stub
-						ViewGroup.LayoutParams lp = viewPager.getLayoutParams();
-						lp.height = height;
-						viewPager.setLayoutParams(lp);
-						uiHandler.post(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO Auto-generated method stub
-								scorllView.scrollTo(0, 0);
-							}
-						});
-					}
-				});
-		return new ActivePagerAdapter(getSupportFragmentManager(), fragments,
-				titles);
-	}
-
-	protected Fragment addBundle(Fragment fragment, int catlog) {
-		Bundle bundle = new Bundle();
-		bundle.putInt(CrowdFundingVO.CROWDFUNDINGTYPE, catlog);
-		fragment.setArguments(bundle);
-		return fragment;
-	}
 
 	// 设置view 的weight
 	private void setWeight(View view, float weight) {
