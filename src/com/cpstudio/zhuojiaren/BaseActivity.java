@@ -10,7 +10,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 public class BaseActivity extends Activity {
 	protected ZhuoConnHelper connHelper = null;
 	protected TextView title;
-	protected TextView function;
+	protected TextView function,function2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,7 @@ public class BaseActivity extends Activity {
 	protected void initTitle() {
 		title = (TextView) findViewById(R.id.activity_title);
 		function = (TextView) findViewById(R.id.activity_function);
+		function2 = (TextView) findViewById(R.id.activity_function2);
 		findViewById(R.id.activity_back).setOnClickListener(
 				new OnClickListener() {
 					@Override

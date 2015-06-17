@@ -1,29 +1,36 @@
 package com.cpstudio.zhuojiaren;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 import com.cpstudio.zhuojiaren.helper.BaiduLocationHelper;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
-import com.cpstudio.zhuojiaren.widget.PopupWindows.WheelOKClick;
+import com.cpstudio.zhuojiaren.widget.TwoLeverChooseDialog;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.EditText;
-import android.widget.TextView;
-
-public class PublishResourceActivity extends Activity {
-
+public class PublishResourceActivity extends BaseActivity {
+	@InjectView(R.id.btnAddContactPeople)
+	Button btnAddContacts;
+	@InjectView(R.id.linearLayoutContacts)
+	LinearLayout contactsContainer;//用于添加联系人的layout
 	private PopupWindows pwh = null;
 	private ImageSelectHelper mIsh = null;
 	private String mType = "demand";
@@ -31,11 +38,15 @@ public class PublishResourceActivity extends Activity {
 	private String mLocation = "";
 	private ZhuoConnHelper mConnHelper = null;
 	private BaiduLocationHelper locationHelper = null;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_publish_gong_xu);
+		setContentView(R.layout.activity_publish_gong_xu_new);
+		
+		ButterKnife.inject(this);
+		initTitle();
+		title.setText(R.string.title_pub_gxxq);
+		
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		pwh = new PopupWindows(PublishResourceActivity.this);
 		mIsh = ImageSelectHelper.getIntance(PublishResourceActivity.this,
@@ -70,64 +81,116 @@ public class PublishResourceActivity extends Activity {
 	}
 
 	private void initClick() {
-		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				pwh.showPopDlg(findViewById(R.id.rootLayout),
-						new OnClickListener() {
-
-							@Override
-							public void onClick(View v) {
-								PublishResourceActivity.this.finish();
-							}
-						}, null, R.string.info69);
-			}
-		});
-		findViewById(R.id.buttonSubmit).setOnClickListener(
-				new OnClickListener() {
+//		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				pwh.showPopDlg(findViewById(R.id.rootLayout),
+//						new OnClickListener() {
+//
+//							@Override
+//							public void onClick(View v) {
+//								PublishResourceActivity.this.finish();
+//							}
+//						}, null, R.string.info69);
+//			}
+//		});
+		function.setText(R.string.label_publish);
+		function.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						publish();
 					}
 				});
+		btnAddContacts.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				//添加联系人
+//				contactsContainer
+			}
+		});
+//		findViewById(R.id.buttonSubmit).setOnClickListener(
+//				new OnClickListener() {
+//					@Override
+//					public void onClick(View v) {
+//						publish();
+//					}
+//				});
 
 		findViewById(R.id.relativeLayoutchoiceType).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						String[] type1 = new String[] {
-								getString(R.string.type_gong),
-								getString(R.string.type_xu) };
-						String[] temp = getResources().getStringArray(
-								R.array.array_res_type);
-						String[] type2 = new String[temp.length - 1];
-						for (int i = 1; i < temp.length; i++) {
-							type2[i - 1] = temp[i];
-						}
-						pwh.showWheelPop(
-								findViewById(R.id.imageViewchoiceType), type1,
-								type2, new WheelOKClick() {
+						
+						int type1=R.array.share_gx;
+						int[] type2 = {R.array.share_resource_items,R.array.share_need_items};
+						final TwoLeverChooseDialog typeChoose = new TwoLeverChooseDialog(
+								PublishResourceActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,"分享资源","商业资源",type1,type2);
+						typeChoose.setButton(DialogInterface.BUTTON_POSITIVE, "确定",
+								new DialogInterface.OnClickListener() {
 
 									@Override
-									public String onClick(String[] selected,
-											int[] selectedId) {
+									public void onClick(DialogInterface dialog,
+											int which) {
+										// TODO Auto-generated method stub
+										String content=typeChoose.getSelectedContent().getText().toString();
+										String array[]=content.split(" ");
+										mType =array[0];
+										mCategory = array[1];
+										
 										((TextView) findViewById(R.id.editTextchoiceType))
-												.setText(selected[0]
-														+ selected[1]);
-										mType = ZhuoCommHelper
-												.transferMsgStringToType(
-														selected[0],
-														PublishResourceActivity.this);
-										mCategory = ZhuoCommHelper
-												.transferMsgStringToCategory(
-														selected[1],
-														PublishResourceActivity.this);
-										return null;
+										.setText(content);
 									}
 								});
+						typeChoose.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										// TODO Auto-generated method stub
+
+									}
+								});
+						typeChoose.setTitle("选择类型");
+						typeChoose.show();
 					}
 				});
+						
+//						String[] type1 = new String[] {
+//								getString(R.string.share_resources),
+//								getString(R.string.share_need) };
+//						String[] temp = getResources().getStringArray(
+//								R.array.share_resource_items);
+//						String[] type2 = new String[temp.length - 1];
+//						for (int i = 1; i < temp.length; i++) {
+//							type2[i - 1] = temp[i];
+//						}
+//						pwh.showWheelPop(
+//								findViewById(R.id.imageViewchoiceType), type1,
+//								type2, new WheelOKClick() {
+//
+//									@Override
+//									public String onClick(String[] selected,
+//											int[] selectedId) {
+//										((TextView) findViewById(R.id.editTextchoiceType))
+//												.setText(selected[0]
+//														+ selected[1]);
+//										mType = ZhuoCommHelper
+//												.transferMsgStringToType(
+//														selected[0],
+//														PublishResourceActivity.this);
+//										mCategory = ZhuoCommHelper
+//												.transferMsgStringToCategory(
+//														selected[1],
+//														PublishResourceActivity.this);
+//										return null;
+//									}
+//								});
+//					}
+//				});
 		mIsh.getmAddButton().setOnClickListener(new OnClickListener() {
 
 			@Override

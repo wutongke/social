@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+	<include  layout="@layout/head_pull_all">
+	</include>
+    <com.cpstudio.zhuojiaren.widget.MyGridView
+        android:id="@+id/hcd_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:cacheColorHint="@android:color/transparent"
+        android:listSelector="@android:color/transparent"
+        android:gravity="center"
+        android:horizontalSpacing="5dip"
+        android:numColumns="3"
+        android:scrollbars="none"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dip" >
+    </com.cpstudio.zhuojiaren.widget.MyGridView>
+    <RelativeLayout
+        android:id="@+id/head_searchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_search" >
+
+        <EditText
+            android:id="@+id/editTextSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/bg_search3"
+            android:ems="10"
+            android:hint="@string/label_gxsearchHint"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="40dp"
+            android:paddingRight="50dp"
+            android:singleLine="true"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/imageViewSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editTextSearch"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@string/ico"
+            android:src="@drawable/ico_search" />
+
+        <ImageView
+            android:id="@+id/imageViewDelSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:contentDescription="@string/ico"
+            android:src="@drawable/ico_close_gray"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</LinearLayout>

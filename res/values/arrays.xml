@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array 
-        name="quanzi_type"
-        >
-        <item >全部</item>
-        <item >资源整合圈</item>
-        <item >金融投资圈</item>
-        <item >兴趣爱好圈</item>
-        <item >精进成长圈</item>
-        <item >同城家人圈</item>
-        <item >公益活动圈</item>
+
+    <string-array name="quanzi_type">
+        <item>全部</item>
+        <item>资源整合圈</item>
+        <item>金融投资圈</item>
+        <item>兴趣爱好圈</item>
+        <item>精进成长圈</item>
+        <item>同城家人圈</item>
+        <item>公益活动圈</item>
     </string-array>
-     <!-- 含个省、自治区、直辖市、特别行政区 -->
+    <!-- 含个省、自治区、直辖市、特别行政区 -->
     <string-array name="province_item">
         <item>北京</item>
         <item>天津</item>
@@ -47,7 +46,7 @@
         <!--
         <item>香港</item>
         <item>澳门</item>
-        <item>台湾</item>
+        <item>台湾</item>
         -->
     </string-array>
 
@@ -466,4 +465,87 @@
     <string-array name="taiwan_province_item">
         <item>台湾</item>
     </string-array>
+    <!-- lz -->
+    <string-array name="gongxu_main_type">
+        <item>资金资源</item>
+        <item>商业机会</item>
+        <item>人才资源</item>
+        <item>技术资源</item>
+        <item>人脉资源</item>
+        <item>智慧资源</item>
+    </string-array>
+    <string-array name="subtype_fund">
+        <item>所有资金</item>
+        <item>银行资金</item>
+        <item>风险资金</item>
+        <item>个人资金</item>
+    </string-array>
+    <string-array name="subtype_commercy">
+        <item>所有行业</item>
+        <item>教育培训</item>
+        <item>房地产</item>
+        <item>互联网</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="subtype_people">
+        <item>所有人才</item>
+        <item>企业管理</item>
+        <item>市场营销</item>
+        <item>人力资源</item>
+        <item>财务管控</item>
+        <item>品牌策划</item>
+        <item>生产管理</item>
+        <item>软件开发</item>
+        <item>平面设计</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="subtype_tec">
+        <item>所有行业</item>
+        <item>电力</item>
+        <item>计算机</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="subtype_renmai">
+        <item>所有人脉</item>
+        <item>亲戚</item>
+        <item>朋友</item>
+        <item>同事</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="subtype_zhihui">
+        <item>所有智慧</item>
+        <item>战略设计</item>
+        <item>商业模式</item>
+        <item>税务筹划</item>
+        <item>法律顾问</item>
+        <item>上市辅导</item>
+        <item>薪酬设计</item>
+        <item>绩效设计</item>
+        <item>业绩提升</item>
+        <item>效益改善</item>
+        <item>创业辅导</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="share_gx">
+        <item>分享资源</item>
+        <item>分享需要</item>
+    </string-array>
+    <string-array name="share_resource_items">
+        <item>资金资源</item>
+        <item>商业机会</item>
+        <item>人脉资源</item>
+        <item>技术资源</item>
+        <item>人才资源</item>
+        <item>上市辅导</item>
+        <item>智慧资源</item>
+    </string-array>
+    <string-array name="share_need_items">
+        <item>需要资金</item>
+        <item>寻找商机</item>
+        <item>需要人脉</item>
+        <item>寻找技术</item>
+        <item>需要人才</item>
+        <item>智慧帮助</item>
+    </string-array>
+
 </resources>

@@ -20,17 +20,25 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseFragmentActivity;
+import com.cpstudio.zhuojiaren.PublishResourceActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.QuanziCreateFra;
 import com.cpstudio.zhuojiaren.fragment.QuanziFra;
+import com.cpstudio.zhuojiaren.fragment.ResourceGXFragment;
 import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.ResourceGXVO;
+import com.cpstudio.zhuojiaren.ui.PublishCrowdFundingActivity;
+import com.cpstudio.zhuojiaren.ui.ResourceGXFilterActivity;
 import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
+import com.cpstudio.zhuojiaren.widget.TabButton.TabsButtonOnClickListener;
+
 /**
  * acitivity与fragment通信,当fragment选中我圈子时，设置管理，点击管理后，操作fragment
+ * 
  * @author lef
- *
+ * 
  */
 public class ResourceGXActivity extends BaseFragmentActivity {
 	@InjectView(R.id.azq_tab)
@@ -38,8 +46,9 @@ public class ResourceGXActivity extends BaseFragmentActivity {
 	@InjectView(R.id.azq_viewpager)
 	ViewPager viewPager;
 	private Context mContext;
-	//四个fragment 方便通信
+	// 四个fragment 方便通信
 	List<Fragment> fragments;
+	int currentFragmentIndex=0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,108 +58,112 @@ public class ResourceGXActivity extends BaseFragmentActivity {
 		initTitle();
 		title.setText(R.string.mp_gongxu);
 		function.setText(R.string.label_filter2);
-		//初始化tab和viewpager
+		// 初始化tab和viewpager
 		viewPager.setAdapter(getPagerAdapter());
-		
 		tabButton.setViewPager(viewPager);
 		initOnClick();
 	}
+
 	private void initOnClick() {
 		// TODO Auto-generated method stub
-		//选择不同的fragment，function按键不同
 		tabButton.setPageChangeListener(new PageChangeListener() {
-			
+
 			@Override
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
-				setFunctionText(arg0);
+				currentFragmentIndex=arg0;
+				if(arg0==2){
+					//不展示第三个page
+					viewPager.setCurrentItem(1);
+					mContext.startActivity(new Intent(mContext,PublishResourceActivity.class));
+				//跳转到供需发布页面
+				}
 			}
-			
+
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		function.setOnClickListener(new OnClickListener() {
+		
+		tabButton.setTabsButtonOnClickListener(new TabsButtonOnClickListener() {
 			
 			@Override
-			public void onClick(View v) {
+			public void tabsButtonOnClick(int id, View v) {
 				// TODO Auto-generated method stub
-//				ResourceGXActivity.this.startActivityForResult(new Intent(mContext,QuanziFilterActivity.class), 1);
+				if((Integer)(v.getTag())==2)
+					mContext.startActivity(new Intent(mContext,PublishResourceActivity.class));
+				else{
+					viewPager.setCurrentItem((Integer)v.getTag());
+				}
+			}
+		});
+		
+		function.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+	//			跳转到筛选页面
+				Intent i=new Intent(ResourceGXActivity.this,ResourceGXFilterActivity.class);
+				i.putExtra(ResourceGXVO.RESOURCEGXTYPE, currentFragmentIndex);
+				startActivityForResult(i, currentFragmentIndex);
 			}
 		});
 	}
-	
+
 	PagerAdapter getPagerAdapter() {
-		 fragments = new ArrayList<Fragment>();
+		fragments = new ArrayList<Fragment>();
 		List<CharSequence> titles = new ArrayList<CharSequence>();
-		String quanMyTitle = getString(R.string.quanzi_my);
-		String quanQueryTitle = getString(R.string.quanzi_query);
-		String quanRecommendTitle = getString(R.string.quanzi_recommend);
-		String quanCreateTitle = getString(R.string.quanzi_create);
-	
-		Fragment quanMyFragment = addBundle(new QuanziFra(),QuanVO.QUANZIMY);
+
+		String searchResourceTitle = getString(R.string.title_search_resource);
+		String findneedTitle = getString(R.string.title_find_need);
+		String pubgxTitle = getString(R.string.title_pub_gx);
+
+		Fragment quanMyFragment = addBundle(new ResourceGXFragment(),
+				ResourceGXVO.RESOURCE_FIND);
 		fragments.add(quanMyFragment);
-		titles.add(quanMyTitle);
-		
-		Fragment quanQueryFragment = addBundle(new QuanziFra(), QuanVO.QUANZIQUERY);
+		titles.add(searchResourceTitle);
+
+		Fragment quanQueryFragment = addBundle(new ResourceGXFragment(),
+				ResourceGXVO.NEED_FIND);
 		fragments.add(quanQueryFragment);
-		titles.add(quanQueryTitle);
-		
-		Fragment quanRecommendFragment = addBundle(new QuanziFra(), QuanVO.QUANZIRECOMMEND);
+		titles.add(findneedTitle);
+
+
+		Fragment quanRecommendFragment = addBundle(new ResourceGXFragment(),
+				ResourceGXVO.PUB_NEED_RESOURCE);
 		fragments.add(quanRecommendFragment);
-		titles.add(quanRecommendTitle);
-		Fragment quanCreateFragment = addBundle(new QuanziCreateFra(), QuanVO.QUANZIRECOMMEND);
-		fragments.add(quanCreateFragment);
-		titles.add(quanCreateTitle);
-		return new ActivePagerAdapter(getSupportFragmentManager(), fragments, titles);
+		titles.add(pubgxTitle);
+
+		return new ActivePagerAdapter(getSupportFragmentManager(), fragments,
+				titles);
 	}
-	protected Fragment addBundle(Fragment fragment, int catlog){
+
+	protected Fragment addBundle(Fragment fragment, int catlog) {
 		Bundle bundle = new Bundle();
-		bundle.putInt(QuanVO.QUANZITYPE, catlog);
+		bundle.putInt(ResourceGXVO.RESOURCEGXTYPE, catlog);
 		fragment.setArguments(bundle);
 		return fragment;
 	}
-	
-	private void setFunctionText(int arg0){
-		switch(arg0){
-		case 0:
-			function.setText("管理");
-			function.setTag(0);
-			break;
-		case 1:
-			function.setTag(1);
-			ImageSpan span = new ImageSpan(mContext, R.drawable.tab_good);
-			SpannableString spanStr = new SpannableString(" ");
-			spanStr.setSpan(span, 0, 1,Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-			function.setText(spanStr);
-			break;
-		case 2:
-			function.setText("筛选");
-			function.setTag(2);
-			break;
-		case 3:
-			function.setText("");
-			function.setTag(3);
-			break;
-		}
-	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
-		super.onActivityResult( requestCode,  resultCode,  data);
-		//筛选
-		if(requestCode==1){
-			if(resultCode==RESULT_OK){
-				
-			}
+		super.onActivityResult(requestCode, resultCode, data);
+		// 筛选
+		if (resultCode == RESULT_OK) {
+			int type=data.getIntExtra(ResourceGXVO.RESOURCEGXFILTER_TYPE, 0);
+			String loc=data.getStringExtra(ResourceGXVO.RESOURCEGXFILTER_LOCATION);
+			String subType=data.getStringExtra(ResourceGXVO.RESOURCEGXFILTER_TYPE);
+			((ResourceGXFragment)(fragments.get(currentFragmentIndex))).filterData(loc, subType);
 		}
+		
 	}
 }

@@ -51,7 +51,7 @@ public class FindActivity extends Activity {
 
 //	Class[] classArrays = { QuanListActivity.class, MsgResourceActivity.class,
 
-	Class[] classArrays = { ZhuoQuanActivity.class, MsgResourceActivity.class,
+	Class[] classArrays = { ZhuoQuanActivity.class, ResourceGXActivity.class,
 
 			CrowdFundingActivity.class,// ÖÚ³ï
 			UserSameActivity.class,// Í¬³Ç
@@ -89,7 +89,7 @@ public class FindActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-
+				
 				Intent i = new Intent(FindActivity.this, classArrays[arg2]);
 				if (arg2 == 3)
 					i.putExtra("type", 1);

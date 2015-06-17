@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
@@ -6,29 +6,14 @@
     android:orientation="vertical"
     tools:context=".PublishResourceActivity" >
 
-    <RelativeLayout
-        android:id="@+id/userNameShowParent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_title" >
-
-        <Button
-            android:id="@+id/buttonBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
-            android:background="@drawable/button_top_bg_back"
-            android:paddingLeft="7dp"
-            android:text="@string/label_back"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
-    </RelativeLayout>
+    <include
+        android:id="@+id/title"
+        layout="@layout/title_activity" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/title"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="0dp" >
@@ -39,16 +24,7 @@
             android:layout_marginRight="10dp"
             android:orientation="vertical" >
 
-            <!--
-            LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:focusableInTouchMode="true" >
-
-                <requestFocus />
-            </LinearLayout
-            -->
+            
 
             <RelativeLayout
                 android:id="@+id/relativeLayoutchoiceType"
@@ -160,7 +136,7 @@
                     android:paddingTop="5dp"
                     android:text="@string/info20" />
             </LinearLayout>
-
+            <!--
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -177,33 +153,64 @@
                     android:textColor="#ffffff"
                     android:textSize="18sp" />
             </RelativeLayout>
+            -->
 
-            <TextView
-                android:id="@+id/textName"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/linearLayoutContacts"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ico_my_on"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:paddingBottom="5dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="5dp"
-                android:text="张三" />
-            
-             <TextView
-                android:id="@+id/textPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ico_my_on"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:paddingBottom="5dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="5dp"
-                android:text="张三" />
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_corners"
+                android:orientation="horizontal">"
+
+                <TextView
+                    android:id="@+id/textName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ico_my_on"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="5dp"
+                    android:text="张三" />
+
+                <TextView
+                    android:id="@+id/textPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ico_my_on"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="5dp"
+                    android:text="18811456936" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/lt_addContactPeople"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/gray"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <Button
+            android:id="@+id/btnAddContactPeople"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:drawableLeft="@drawable/ico_alert"
+            android:minHeight="20dp"
+            android:text="@string/add_contact"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</RelativeLayout>
