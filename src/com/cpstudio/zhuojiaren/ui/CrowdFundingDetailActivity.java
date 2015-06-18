@@ -220,8 +220,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 				peopleName.setText(result.getBoss().getUsername());
 				peopleCompany.setText(result.getBoss().getCompany());
 				peoplePostion.setText(result.getBoss().getPost());
-				mLoadImage.addTask(result.getBoss().getUheader(), peopleImage);
-				mLoadImage.doTask();
+				mLoadImage.beginLoad(result.getBoss().getUheader(), peopleImage);
 			}
 		}
 	};

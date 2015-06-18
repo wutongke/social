@@ -17,20 +17,20 @@ import android.widget.GridView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.cpstudio.zhuojiaren.FieldSelectUserActivity;
 import com.cpstudio.zhuojiaren.MsgResourceActivity;
 import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.QuanListActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.TeacherListActivity;
 import com.cpstudio.zhuojiaren.UserAllActivity;
-import com.cpstudio.zhuojiaren.UserSameActivity;
 import com.cpstudio.zhuojiaren.adapter.CrowdFundingAdapter;
 import com.cpstudio.zhuojiaren.helper.BaiduLocationHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.ui.CrowdFundingActivity;
+import com.cpstudio.zhuojiaren.ui.FieldSelectUserActivity;
+import com.cpstudio.zhuojiaren.ui.UserSameActivity;
 //<<<<<<< HEAD
 //=======
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
@@ -55,10 +55,10 @@ public class FindActivity extends Activity {
 
 			CrowdFundingActivity.class,// 众筹
 			UserSameActivity.class,// 同城
-			FieldSelectUserActivity.class,// 同行
+			UserSameActivity.class,// 同行
 			UserSameActivity.class,// 附件
-			FieldSelectUserActivity.class,// 同趣
-			TeacherListActivity.class, UserAllActivity.class };
+			UserSameActivity.class,// 同趣
+			UserSameActivity.class, UserSameActivity.class };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +93,16 @@ public class FindActivity extends Activity {
 				Intent i = new Intent(FindActivity.this, classArrays[arg2]);
 				if (arg2 == 3)
 					i.putExtra("type", 1);
+				if (arg2 == 4)
+					i.putExtra("type", 2);
 				if (arg2 == 5)
 					i.putExtra("type", 3);
+				if (arg2 == 6)
+					i.putExtra("type", 4);
+				if (arg2 == 7)
+					i.putExtra("type", 5);
+				if (arg2 == 8)
+					i.putExtra("type", 6);
 				startActivity(i);
 
 			}

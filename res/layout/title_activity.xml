@@ -22,7 +22,7 @@
         android:gravity="center"
         android:textColor="#ffffff"
         android:textSize="20dp"
-        android:visibility="gone"/>
+        />
 
     <TextView
         android:id="@+id/activity_function2"
@@ -31,7 +31,6 @@
         android:layout_marginRight="15dp"
         android:layout_toLeftOf="@+id/activity_function"
         android:gravity="center_vertical"
-        android:text="sadas"
         android:textColor="#ffffff"
         android:textSize="20dp" />
 
@@ -42,7 +41,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
         android:gravity="center_vertical"
-        android:text="hsh"
         android:textColor="#ffffff"
         android:textSize="20dp" />
 

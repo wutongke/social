@@ -1,4 +1,4 @@
-package com.cpstudio.zhuojiaren;
+package com.cpstudio.zhuojiaren.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.array;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.HangYeVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,11 +34,15 @@ public class FieldSelectUserActivity extends Activity implements
 	private ListView mListView;
 	private SimpleAdapter mAdapter;
 	List<Map<String, String>> contents = new ArrayList<Map<String, String>>();
-
+	//行业，兴趣，导师
+	private int type = 1;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_field_select);
+		type= getIntent().getIntExtra("type", 1);
+		
 		initClick();
 		mAdapter = new SimpleAdapter(this, contents, R.layout.item_field_list,
 				new String[] { "id", "name" }, new int[] {
@@ -45,6 +53,20 @@ public class FieldSelectUserActivity extends Activity implements
 		RelativeLayout mFooterView = (RelativeLayout) inflater.inflate(
 				R.layout.listview_footer2, null);
 		View head = inflater.inflate(R.layout.listview_header11, null);
+		TextView text = (TextView) head.findViewById(R.id.lh11_text);
+		switch(type){
+		case 1:
+			text.setText(R.string.label_select_th);
+			break;
+		case 2:
+			text.setText(R.string.label_select_hoppy);
+			break;
+		case 3:
+			text.setText(R.string.label_select_direction);
+			break;
+		default :
+			text.setText(R.string.label_select_th);
+		}
 		mListView.addHeaderView(head);
 		mListView.addFooterView(mFooterView);
 		mListView.setAdapter(mAdapter);
@@ -94,8 +116,17 @@ public class FieldSelectUserActivity extends Activity implements
 		findViewById(R.id.textViewLoading).setVisibility(View.VISIBLE);
 		findViewById(R.id.textViewNoData).setVisibility(View.GONE);
 		Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-		String[] fields = getResources().getStringArray(
+		String[] fields;
+		if(type==1)
+			fields = getResources().getStringArray(
 				R.array.array_field_type);
+		else if(type ==2)
+			fields = getResources().getStringArray(
+					R.array.array_hobby);
+		else{
+			fields = getResources().getStringArray(
+					R.array.array_teacher_type);
+		}
 		StringBuffer sb = new StringBuffer();
 		sb.append("{\"code\":\"10000\",\"msg\":\"\",\"data\":[{\"name\":\"");
 		for (int i = 0; i < fields.length; i++) {
@@ -115,13 +146,20 @@ public class FieldSelectUserActivity extends Activity implements
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		if (arg3 != -1) {
-			Intent intent = new Intent(FieldSelectUserActivity.this,
-					UserSameActivity.class);
-			intent.putExtra("type", 2);
-			intent.putExtra("mSearchKey", ((TextView) arg1
+//			Intent intent = new Intent(FieldSelectUserActivity.this,
+//					UserSameActivity.class);
+//			intent.putExtra("type", 2);
+//			intent.putExtra("mSearchKey", ((TextView) arg1
+//					.findViewById(R.id.textViewGroup3Name)).getText()
+//					.toString() + ":");
+//			startActivity(intent);
+			Intent intent = new Intent();
+			intent.putExtra("industry", ((TextView) arg1
 					.findViewById(R.id.textViewGroup3Name)).getText()
-					.toString() + ":");
-			startActivity(intent);
+					.toString());
+			setResult(RESULT_OK, intent);
+			FieldSelectUserActivity.this.finish();
+			
 		}
 	}
 
