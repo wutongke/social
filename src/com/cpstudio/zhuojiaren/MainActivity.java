@@ -1,7 +1,7 @@
 package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
-import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter;
+import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter2;
 import com.cpstudio.zhuojiaren.facade.InfoFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -48,7 +48,7 @@ import android.widget.TextView.OnEditorActionListener;
 public class MainActivity extends Activity implements OnPullDownListener,
 		OnItemClickListener {
 	private ListView mListView;
-	private ZhuoUserListAdapter mAdapter;
+	private ZhuoUserListAdapter2 mAdapter;
 	private PullDownView mPullDownView;
 	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
 	private String mSearchKey = null;

@@ -31,7 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 /**
  * 倬家人adapter
- * 同城、童趣、同行等
+ * 同城、童趣�?同行�?
  * @author lef
  *
  */
