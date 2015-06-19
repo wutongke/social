@@ -313,7 +313,7 @@ public class TopicDetailActivity extends BaseActivity implements
 						getApplicationContext());
 				List<CmtVO> list = nljh.parsePagesCmt().getData();
 				if (!list.isEmpty()) {
-					textViewTip.setVisibility(View.VISIBLE);
+					textViewTip.setVisibility(View.GONE);
 					mListViewFooter.hasData();
 					if (!append) {
 						mList.clear();
@@ -322,7 +322,8 @@ public class TopicDetailActivity extends BaseActivity implements
 					mList.addAll(list);
 					mAdapter.notifyDataSetChanged();
 				} else {
-					textViewTip.setVisibility(View.GONE);
+					textViewTip.setVisibility(View.VISIBLE);
+					
 					
 					mListViewFooter.noData(!refresh);
 				}
@@ -588,6 +589,7 @@ public class TopicDetailActivity extends BaseActivity implements
 						}
 					}
 				});
+		textViewTip=findViewById(R.id.textViewTip);
 	}
 
 	@Override

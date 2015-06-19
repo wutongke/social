@@ -22,7 +22,8 @@ public class ZhuoCommHelper {
 	
 	//lz
 		private final static String SERVICE_HOT_WORDS = "/hot_words";
-	
+		private final static String SERVICE_RESOURCE_GONGXU_DETAIL = "/resource_gongxu_detail";
+		
 	private final static String SERVICE_LOGIN = "/login";
 	private final static String SERVICE_MODIFYPWD = "/modifypwd";
 	private final static String SERVICE_MSGLIST = "/msglist";
@@ -409,7 +410,9 @@ public class ZhuoCommHelper {
 	public static String getHotWords() {
 		return SERVER + SERVICE_HOT_WORDS;
 	}
-	
+	public static String getResourceGongxuDetail() {
+		return SERVER + SERVICE_RESOURCE_GONGXU_DETAIL;
+	}
 	
 	public static String getYearFromTime(String time) {
 		try {

@@ -34,6 +34,7 @@ import com.cpstudio.zhuojiaren.ui.CrowdFundingListActivity;
 import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
+import com.cpstudui.zhuojiaren.lz.GongXuDetailActivity;
 import com.cpstudui.zhuojiaren.lz.ResourceGXAdapter;
 /**
  * 众筹Fragmengt，包括我的众筹、寻找众筹等，
@@ -96,6 +97,19 @@ public class ResourceGXFragment extends Fragment{
 		mListView = pullDownView.getListView();
 		mAdapter = new ResourceGXAdapter(getActivity(), mListDatas, R.layout.item_resource_gx);
 		mListView.setAdapter(mAdapter);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(),
+						GongXuDetailActivity.class);
+//暂时写死，测试				intent.putExtra("msgid",mListDatas.get(arg2).getMsgId());
+				intent.putExtra("msgid","123");
+				startActivity(intent);
+			}
+		});
 		MyGridView gridView = (MyGridView) view.findViewById(R.id.hcd_gridview);
 		final ArrayList<ImageRadioButton> list = new ArrayList<ImageRadioButton>();
 		if(type==ResourceGXVO.RESOURCE_FIND){//此处需要加载不同图片
@@ -155,7 +169,7 @@ public class ResourceGXFragment extends Fragment{
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
-
+				
 			}
 
 			@Override
@@ -200,12 +214,10 @@ public class ResourceGXFragment extends Fragment{
 		// TODO Auto-generated method stub
 		//test
 		//根据参数type和item来加载数据
-		ResourceGXVO test = new ResourceGXVO();
-		
+		for(int i=0;i<10;i++)
+			mListDatas.add(new ResourceGXVO());
 		pullDownView.finishLoadData(true);
 		pullDownView.hasData();
-		mListDatas.add(test);
-		
 		mAdapter.notifyDataSetChanged();
 	}
 }

@@ -22,6 +22,7 @@ import com.cpstudio.zhuojiaren.model.ImQuanVO;
 import com.cpstudio.zhuojiaren.model.PagesCmtVO;
 import com.cpstudio.zhuojiaren.model.PushMsgVO;
 import com.cpstudio.zhuojiaren.model.RecentVisitVO;
+import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.RuleVO;
 import com.cpstudio.zhuojiaren.model.TeacherVO;
@@ -228,7 +229,21 @@ public class JsonHandler {
 		}
 		return zhuoInfoVO;
 	}
-
+	
+/*
+ * lz获取供需详情
+ */
+	public ResourceGXVO parseGongxuInfo() {
+		ResourceGXVO gxInfoVO = null;
+		try {
+			Gson gson = new Gson();
+			gxInfoVO = gson.fromJson(jsonData, ResourceGXVO.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return gxInfoVO;
+	}
+	
 	public AboutUsVO parseAboutUs() {
 		AboutUsVO aboutUsVO = null;
 		try {
