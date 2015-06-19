@@ -2,11 +2,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.cpstudui.zhuojiaren.lz.GongXuDetailActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/lltitle"
+        layout="@layout/title_activity" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/card"
+        android:layout_below="@id/lltitle"
+        android:layout_margin="15dp" >
+
+        <ListView
+            android:id="@+id/listViewDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:listSelector="@drawable/indicator_list" >
+        </ListView>
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/card"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_above="@+id/linearLayoutBottom"
+        layout="@layout/card_detail" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@color/gray" >
+
+            <TextView
+                android:id="@+id/buttonTabWrite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@drawable/tab_collect_off"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="@string/write_to_it"
+                android:textColor="#ffffff" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/buttonTabCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@drawable/tab_cmt"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="@string/call_it"
+                android:textColor="@color/green" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

@@ -854,5 +854,7 @@
     <string name="accordingto_resource">选择资源:</string>
     <string name="title_pub_gxxq">发布供需信息</string>
     <string name="title_activity_gong_xu_detail">供需详情</string>
-
+ <string name="resource_sharer">供需分享人</string>
+  <string name="call_it">拨打电话</string>
+  <string name="write_to_it">给他写信</string>
 </resources>
