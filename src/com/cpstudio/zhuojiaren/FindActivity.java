@@ -1,6 +1,8 @@
 package com.cpstudio.zhuojiaren;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.ui.FieldSelectUserActivity;
+import com.cpstudio.zhuojiaren.ui.UserSameActivity;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
 
 import android.os.Bundle;
@@ -86,7 +88,7 @@ public class FindActivity extends Activity {
 					@Override
 					public void onClick(View v) {
 						Intent i = new Intent(FindActivity.this,
-								TeacherListActivity.class);
+								UserSameActivity.class);
 						startActivity(i);
 					}
 				});

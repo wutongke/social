@@ -49,6 +49,11 @@ public class LoadImage {
 		this.round = round;
 	}
 
+	public void beginLoad(String url, ImageView img){
+		img.setTag(url);
+		addTask(url, img);
+		doTask();
+	}
 	public void addTask(String url, ImageView img) {
 		if (null != url && !url.equals("")) {
 			Bitmap bitmap = memoryCache.getBitmapFromCache(url);

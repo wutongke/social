@@ -107,13 +107,13 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".FieldSelectUserActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.FieldSelectUserActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_group_type3"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".UserSameActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.UserSameActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_group_type2"
             android:screenOrientation="portrait" >
@@ -738,6 +738,11 @@
         </activity>
         <activity
             android:name=".ui.CrowdFundingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".ui.CityChooseActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>

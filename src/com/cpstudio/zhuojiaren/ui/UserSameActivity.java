@@ -1,19 +1,10 @@
-package com.cpstudio.zhuojiaren;
+package com.cpstudio.zhuojiaren.ui;
 
 import java.util.ArrayList;
 
-import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.widget.PullDownView;
-import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,28 +16,46 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.TextView;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
+import android.widget.TextView.OnEditorActionListener;
 
-public class UserSameActivity extends Activity implements OnPullDownListener,
+import com.cpstudio.zhuojiaren.BaseActivity;
+import com.cpstudio.zhuojiaren.MsgDetailActivity;
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.adapter.ZhuoNearByUserListAdatper;
+import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter2;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ResHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserAndCollection;
+import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.util.CommonAdapter;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.widget.PullDownView;
+import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
+
+public class UserSameActivity extends BaseActivity implements OnPullDownListener,
 		OnItemClickListener {
 	private ListView mListView;
-	private ZhuoUserListAdapter mAdapter;
+	private CommonAdapter  mAdapter;
 	private PullDownView mPullDownView;
-	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
+	private ArrayList<UserAndCollection> mList = new ArrayList<UserAndCollection>();
 	private String mSearchKey = null;
 	private String mLastId = null;
 	private String uid = null;
 	private String mType = "1";
 	private ZhuoConnHelper mConnHelper = null;
 
+	
+	private int requestCodeCity =1;
+	private int requestCodeIndustry =2;
+	private int requestCodeHoppy =3;
+	private int requestCodeTeacher =4;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,13 +64,71 @@ public class UserSameActivity extends Activity implements OnPullDownListener,
 		Intent intent = getIntent();
 		int type = intent.getIntExtra("type", 1);
 		mType = String.valueOf(type);
-		TextView textViewNav = (TextView) findViewById(R.id.userNameShow);
-		if (type == 1) {
-			textViewNav.setText(R.string.title_activity_group_type2);
-		} else if (type == 2) {
-			textViewNav.setText(R.string.title_activity_group_type3);
-		} else if (type == 3) {
-			textViewNav.setText(R.string.title_activity_group_type4);
+		initTitle();
+		switch(type){
+		case 1:
+			title.setText(R.string.title_activity_group_type2);
+			function.setText(R.string.country);
+			function.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					startActivityForResult(new Intent(UserSameActivity.this,CityChooseActivity.class), requestCodeCity);
+				}
+			});
+			break;
+		case 2:
+			title.setText(R.string.title_activity_group_type3);
+			function.setText(R.string.label_field);
+			//选择行业
+			function.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(UserSameActivity.this,FieldSelectUserActivity.class);
+					intent.putExtra("type", 1);
+					startActivityForResult(intent, requestCodeIndustry);
+				}
+			});
+			break;
+		case 3:
+			title.setText(R.string.title_activity_group_type5);
+			break;
+		case 4:
+			title.setText(R.string.title_activity_group_type4);
+			function.setText(R.string.label_hobby);
+			//选择行业
+			function.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(UserSameActivity.this,FieldSelectUserActivity.class);
+					intent.putExtra("type", 2);
+					startActivityForResult(intent, requestCodeHoppy);				
+					}
+			});
+			break;
+		case 5:
+			title.setText(R.string.title_activity_group_type6);
+			function.setText(R.string.label_filter2);
+			//选择行业
+			function.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(UserSameActivity.this,FieldSelectUserActivity.class);
+					intent.putExtra("type", 3);
+					startActivityForResult(intent, requestCodeTeacher);				
+					}
+			});
+			break;
+		case 6:
+			title.setText(R.string.title_activity_group_type7);
+			break;
 		}
 		String sk = intent.getStringExtra("mSearchKey");
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
@@ -71,7 +138,10 @@ public class UserSameActivity extends Activity implements OnPullDownListener,
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
-		mAdapter = new ZhuoUserListAdapter(UserSameActivity.this, mList);
+		if(type!=3)
+			mAdapter = new ZhuoUserListAdapter2(UserSameActivity.this, mList,R.layout.item_zhuouser_list2);
+		else
+			mAdapter = new ZhuoNearByUserListAdatper(UserSameActivity.this, mList,R.layout.item_zhuouser_near_list);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
@@ -80,7 +150,36 @@ public class UserSameActivity extends Activity implements OnPullDownListener,
 			mSearchKey = sk;
 			((EditText) findViewById(R.id.editTextSearch)).setText(sk);
 		}
-		loadData();
+//		loadData();
+		//test
+		UserAndCollection a = new UserAndCollection();
+		a.setIsCollection("1");
+		a.setDistance("1公里");
+		UserVO user = new UserVO();
+		user.setUsername("张来才");
+		user.setPost("php董事");
+		user.setUheader("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2222979786,259610352&fm=116&gp=0.jpg");
+		user.setCompany("php902大集团");
+		a.setUser(user);
+		UserAndCollection b = new UserAndCollection();
+		b.setIsCollection("0");
+		b.setDistance("1.5公里");
+		b.setUser(user);
+		mList.add(a);
+		mList.add(b);
+		mList.add(a);
+		mList.add(b);
+		mList.add(a);
+		mList.add(b);
+		mList.add(a);
+		mList.add(b);
+		mList.add(a);
+		mList.add(b);
+		mList.add(a);
+		mList.add(b);
+		mList.add(a);
+		mList.add(b);
+		mAdapter.notifyDataSetChanged();
 	}
 
 	private void updateItemList(String data, boolean refresh, boolean append) {
@@ -88,7 +187,8 @@ public class UserSameActivity extends Activity implements OnPullDownListener,
 			if (data != null && !data.equals("")) {
 				JsonHandler nljh = new JsonHandler(data,
 						getApplicationContext());
-				ArrayList<ZhuoInfoVO> list = nljh.parseZhuoInfoList();
+				ArrayList<UserAndCollection> list =new ArrayList<UserAndCollection>();
+//				=nljh.parseZhuoInfoList();
 				if (!list.isEmpty()) {
 					mPullDownView.hasData();
 					if (!append) {
@@ -97,7 +197,7 @@ public class UserSameActivity extends Activity implements OnPullDownListener,
 					mList.addAll(list);
 					mAdapter.notifyDataSetChanged();
 					if (mList.size() > 0) {
-						mLastId = mList.get(mList.size() - 1).getMsgid();
+						mLastId = mList.get(mList.size() - 1).getId();
 					}
 				} else {
 					if (refresh && mSearchKey != null && !mSearchKey.equals("")) {
@@ -212,13 +312,6 @@ public class UserSameActivity extends Activity implements OnPullDownListener,
 
 	private void initClick() {
 
-		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				UserSameActivity.this.finish();
-			}
-		});
 		final EditText searchView = (EditText) findViewById(R.id.editTextSearch);
 		final View delSearch = findViewById(R.id.imageViewDelSearch);
 		searchView.setOnEditorActionListener(new OnEditorActionListener() {
@@ -271,5 +364,32 @@ public class UserSameActivity extends Activity implements OnPullDownListener,
 			}
 		});
 	}
-
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode==RESULT_OK){
+			switch(requestCode){
+			//城市
+			case 1:
+				function.setText(data.getStringExtra("city"));
+				break;
+			case 2:
+				TextView view1 = (TextView)findViewById(R.id.lvh5_text);
+				view1.setVisibility(View.VISIBLE);
+				view1.setText("当前选择:"+data.getStringExtra("industry"));
+				break;
+			case 3:
+				TextView view2 = (TextView)findViewById(R.id.lvh5_text);
+				view2.setVisibility(View.VISIBLE);
+				view2.setText("当前选择:"+data.getStringExtra("industry"));
+				break;
+			case 4:
+				TextView view3 = (TextView)findViewById(R.id.lvh5_text);
+				view3.setVisibility(View.VISIBLE);
+				view3.setText("当前选择:"+data.getStringExtra("industry"));
+				break;
+			}
+		}
+	}
 }

@@ -130,5 +130,14 @@
         android:layout_height="wrap_content" >
 
     </RelativeLayout>
-
+	<TextView 
+	    android:id="@+id/lvh5_text"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    style="@style/basic_text"
+	    android:drawableBottom="@drawable/bg_border4"
+	    android:padding="5dp"
+	    android:visibility="gone"
+	    />
 </LinearLayout>
