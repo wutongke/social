@@ -11,6 +11,7 @@ import com.cpstudio.zhuojiaren.facade.SysMsgFacade;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.SysApplication;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.ui.StudyActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 import android.os.Bundle;
@@ -56,7 +57,7 @@ public class TabContainerActivity extends TabActivity implements
 
 	@SuppressWarnings("rawtypes")
 	private Class[] mTabClassArray = {  com.cpstudui.zhuojiaren.lz.MainActivity.class,
-			JiarenActiveActivity.class, UplevelActivity.class,
+			JiarenActiveActivity.class, StudyActivity.class,
 			MsgListActivity.class, MyHomeActivity.class };
 	private int[] mImageResourceArray = { R.drawable.indicator_tab_ico_zhuo,
 			R.drawable.indicator_tab_ico_active,

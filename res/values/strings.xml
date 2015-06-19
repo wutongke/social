@@ -73,17 +73,17 @@
         <item>其他行业</item>
     </string-array>
     <string-array name="array_teacher_type">
-        <item >战略设计</item>
-        <item >商业模式</item>
-        <item >税务筹划</item>
-        <item >法律顾问</item>
-        <item >上市辅导</item>
-        <item >薪酬设计</item>
-        <item >绩效设计</item>
-        <item >业绩提升</item>
-        <item >效益改善</item>
-        <item >创业辅导</item>
-        <item >形象礼仪</item>
+        <item>战略设计</item>
+        <item>商业模式</item>
+        <item>税务筹划</item>
+        <item>法律顾问</item>
+        <item>上市辅导</item>
+        <item>薪酬设计</item>
+        <item>绩效设计</item>
+        <item>业绩提升</item>
+        <item>效益改善</item>
+        <item>创业辅导</item>
+        <item>形象礼仪</item>
     </string-array>
     <string-array name="array_level_type">
         <item>初识倬家</item>
@@ -819,13 +819,11 @@
     <string name="create_people">发起人</string>
     <string name="crowdfungding_detail">众筹项目详情</string>
     <string name="support_atonce">立即支持</string>
-   
     <string name="reply">回复</string>
     <string name="praise">点赞</string>
     <string name="somedes">这里记录了发起人的一些成果，快来看看</string>
-    
     <string name="country">全国</string>
- <!-- lz -->
+    <!-- lz -->
     <string name="label_main_find">发现</string>
     <string name="label_main_searchHint">可搜索人名/公司/职务等关键词</string>
     <string name="label_plus">+</string>
@@ -877,4 +875,5 @@
  <string name="resource_sharer">供需分享人</string>
   <string name="call_it">拨打电话</string>
   <string name="write_to_it">给他写信</string>
-</resources>
+    <string name="title_activity_study">StudyActivity</string>
+    <string name="title_activity_grouth_query">GrouthQueryActivity</string></resources>
