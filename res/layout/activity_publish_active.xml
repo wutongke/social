@@ -60,7 +60,7 @@
                 android:background="@drawable/bg_corners"
                 android:ems="10"
                 android:gravity="top"
-                android:hint="@string/info28"
+                android:hint="@string/info_pub_new"
                 android:inputType="textMultiLine"
                 android:minLines="5"
                 android:paddingLeft="15dp"

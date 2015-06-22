@@ -62,7 +62,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	AutoTextView antoText;
 
 	private ListView mListView;
-	private ZhuoUserListAdapter2 mAdapter;
+	private ZhuoUserListAdapter mAdapter;
 	private PullDownView mPullDownView;
 	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
 	private String mSearchKey = null;

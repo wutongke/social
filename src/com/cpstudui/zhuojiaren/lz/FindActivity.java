@@ -17,23 +17,15 @@ import android.widget.GridView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.cpstudio.zhuojiaren.MsgResourceActivity;
-import com.cpstudio.zhuojiaren.PublishActiveActivity;
-import com.cpstudio.zhuojiaren.QuanListActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.TeacherListActivity;
-import com.cpstudio.zhuojiaren.UserAllActivity;
-import com.cpstudio.zhuojiaren.adapter.CrowdFundingAdapter;
 import com.cpstudio.zhuojiaren.helper.BaiduLocationHelper;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.ui.CrowdFundingActivity;
-import com.cpstudio.zhuojiaren.ui.FieldSelectUserActivity;
 import com.cpstudio.zhuojiaren.ui.UserSameActivity;
+import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
 //<<<<<<< HEAD
 //=======
-import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
 //>>>>>>> c26bbdfe7b3755ff856bc2689757a7bf1f2d8fac
 
 public class FindActivity extends Activity {

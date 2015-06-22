@@ -1,6 +1,8 @@
 package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
+
+import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter;
 import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter2;
 import com.cpstudio.zhuojiaren.facade.InfoFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
@@ -48,7 +50,7 @@ import android.widget.TextView.OnEditorActionListener;
 public class MainActivity extends Activity implements OnPullDownListener,
 		OnItemClickListener {
 	private ListView mListView;
-	private ZhuoUserListAdapter2 mAdapter;
+	private ZhuoUserListAdapter mAdapter;
 	private PullDownView mPullDownView;
 	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
 	private String mSearchKey = null;
@@ -367,7 +369,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 			@Override
 			public void onClick(View v) {
-				//打开链接
+				// 打开链接
 				Uri uri = Uri.parse(link);
 				Intent it = new Intent(Intent.ACTION_VIEW, uri);
 				startActivity(it);

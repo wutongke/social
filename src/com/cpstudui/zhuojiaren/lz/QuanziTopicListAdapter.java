@@ -72,6 +72,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 	}
 
 	public QuanziTopicListAdapter(Fragment fragment, ArrayList<ZhuoInfoVO> list) {
+//圈子话题的列表
 		this.mContext = fragment.getActivity();
 		this.fragment = fragment;
 		this.mList = list;
@@ -83,6 +84,19 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 
 	}
 
+	public QuanziTopicListAdapter(Activity activity, ArrayList<ZhuoInfoVO> list) {
+//好友动态的列表，fragment为null
+		this.mContext = activity;
+		this.fragment = null;
+		this.mList = list;
+		this.inflater = LayoutInflater.from(mContext);
+		this.width = DeviceInfoUtil.getDeviceCsw(mContext);
+		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
+		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
+		this.phw = new PopupWindows((Activity) mContext);
+
+	}
+	
 	public void setIsFollow(boolean flag) {
 		isFollow = flag;
 	}
@@ -201,16 +215,17 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View view) {
 
-				if (!isFollow) {
-
+				if (fragment!=null && !isFollow) {
 					OnClickListener applyTojoinListener = new OnClickListener() {
 						@Override
 						public void onClick(View v) {
 							Intent i = new Intent(mContext,
 									ApplyToJoinQuanActicvity.class);
 							i.putExtra("groupid", msgid);
-
-							fragment.startActivity(i);
+							if(fragment!=null)
+								fragment.startActivity(i);
+							else
+								mContext.startActivity(i);
 							// mConnHelper.goodMsg(msgid, mHandler,
 							// MsgTagVO.MSG_LIKE,
 							// null, true, null, msgid);
@@ -246,8 +261,12 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 							i.putExtra("parentid", msgid);
 							// ((Activity)
 							// mContext).startActivityForResult(i,MsgTagVO.MSG_CMT);
-							fragment.startActivityForResult(i,
-									Activity.RESULT_FIRST_USER);
+							if(fragment!=null)
+								fragment.startActivityForResult(i,
+										Activity.RESULT_FIRST_USER);
+							else
+								((Activity) mContext).startActivityForResult(i,MsgTagVO.MSG_CMT);
+							
 						}
 					};
 					phw.showOptionsPop(view, times, zanListener, cmtListener);

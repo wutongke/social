@@ -59,7 +59,7 @@ public class SearchMainActivity extends Activity implements OnPullDownListener,
 
 	private PullDownView mPullDownView;
 	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
-	ZhuoUserListAdapter2 mAdapter;
+	ZhuoUserListAdapter mAdapter;
 	ArrayList<String> historyList = new ArrayList<String>();
 	String[] hotWords;
 String mLastId;

@@ -122,46 +122,55 @@
             </RelativeLayout>
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#f9f9f9"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:paddingTop="10dp" >
 
             <TextView
-                android:id="@+id/textViewActiveFabu"
-                android:layout_width="wrap_content"
+                android:id="@+id/textViewActiveJiaren"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:drawablePadding="5dp"
                 android:drawableTop="@drawable/button_fabu"
-                android:gravity="center_horizontal"
-                android:text="@string/label_publish"
+                android:text="@string/label_active_jiaren"
                 android:textColor="#636161" />
 
             <TextView
-                android:id="@+id/textViewActiveGongXu"
-                android:layout_width="wrap_content"
+                android:id="@+id/textViewActiveCard"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
                 android:drawablePadding="5dp"
                 android:drawableTop="@drawable/button_gongxu"
-                android:gravity="center_horizontal"
-                android:text="@string/label_gongxu"
+                android:text="@string/label_active_card"
                 android:textColor="#636161" />
 
             <TextView
-                android:id="@+id/textViewActiveZenghui"
-                android:layout_width="wrap_content"
+                android:id="@+id/textViewActiveQuanzi"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_weight="1"
                 android:drawablePadding="5dp"
                 android:drawableTop="@drawable/button_zenghui"
-                android:gravity="center_horizontal"
-                android:text="@string/label_zenghui"
+                android:text="@string/label_active_quanzi"
                 android:textColor="#636161" />
-        </RelativeLayout>
+
+            <TextView
+                android:id="@+id/textViewActiveZhuomai"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/button_zenghui"
+                android:text="@string/label_active_zhuomai"
+                android:textColor="#636161" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

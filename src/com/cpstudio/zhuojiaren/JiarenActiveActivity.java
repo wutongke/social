@@ -17,7 +17,12 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
+import com.cpstudui.zhuojiaren.lz.CardActiveNumListActivity;
+import com.cpstudui.zhuojiaren.lz.JiarenActiveNumListActivity;
+import com.cpstudui.zhuojiaren.lz.QuanziActiveNumListActivity;
+import com.cpstudui.zhuojiaren.lz.QuanziTopicListAdapter;
 import com.cpstudui.zhuojiaren.lz.TopicDetailActivity;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiActiveActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,24 +37,33 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Button;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class JiarenActiveActivity extends Activity implements
 		OnPullDownListener, OnItemClickListener {
 	private ListView mListView;
-	private ZhuoInfoAdapter mAdapter;
+	// private ZhuoInfoAdapter mAdapter;
+
+	// 与圈子话题内容一样
+	private QuanziTopicListAdapter mAdapter;
+
 	private PullDownView mPullDownView;
 	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
 	private LoadImage mLoadImage = null;
 	private PopupWindows pwh = null;
 	private String mUid = null;
-	private String mType = "0";
+	private String mType = "0";// 0：查看全部，1：查看资源
 	private String mLastId = "0";
 	private ZhuoConnHelper mConnHelper = null;
 	private UserFacade mFacade = null;
 	private int mPage = 1;
 	private InfoFacade infoFacade = null;
-
+/*不同条件的：
+	家人 动态：我关注的家人动态，所有倬家人动态,
+	名片动态：请求交换名片的家人，浏览过我名片的人，收藏我名片的人，赞过我名片的人，通过我创建名片的人
+	圈子动态：我创建的圈子、我加入的圈子、所有圈子
+	*/
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,7 +81,7 @@ public class JiarenActiveActivity extends Activity implements
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
-		mAdapter = new ZhuoInfoAdapter(JiarenActiveActivity.this, mList);
+		mAdapter = new QuanziTopicListAdapter(JiarenActiveActivity.this, mList);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
@@ -82,50 +96,105 @@ public class JiarenActiveActivity extends Activity implements
 	}
 
 	private void initClick() {
-		findViewById(R.id.textViewActiveFabu).setOnClickListener(
+		findViewById(R.id.buttonViewPub).setOnClickListener(
 				new OnClickListener() {
+
 					@Override
 					public void onClick(View v) {
 						pwh.showPop(findViewById(R.id.layoutJiarenActive));
+						// if (mType == "1") {
+						// mType = "0";
+						// ((Button) v).setText(R.string.label_view2);
+						// } else {
+						// mType = "1";
+						// ((Button) v).setText(R.string.label_view1);
+						// }
+						// loadData();
 					}
 				});
-		findViewById(R.id.textViewActiveZenghui).setOnClickListener(
-				new OnClickListener() {
-
+		findViewById(R.id.textViewActiveJiaren).setOnClickListener(
+				new OnClickListener() {//我的家人动态
 					@Override
 					public void onClick(View v) {
 						Intent i = new Intent(JiarenActiveActivity.this,
-								ZenghuiTypeActivity.class);
+								JiarenActiveNumListActivity.class);
 						startActivity(i);
 					}
 				});
-
-		findViewById(R.id.textViewActiveGongXu).setOnClickListener(
-				new OnClickListener() {
-
+		findViewById(R.id.textViewActiveCard).setOnClickListener(
+				new OnClickListener() {//我的家人动态
 					@Override
 					public void onClick(View v) {
 						Intent i = new Intent(JiarenActiveActivity.this,
-								PublishResourceActivity.class);
-						startActivityForResult(i, MsgTagVO.DATA_REFRESH);
+								CardActiveNumListActivity.class);
+						startActivity(i);
 					}
 				});
-
-		findViewById(R.id.buttonViewType).setOnClickListener(
-				new OnClickListener() {
-
+		findViewById(R.id.textViewActiveQuanzi).setOnClickListener(
+				new OnClickListener() {//我的家人动态
 					@Override
 					public void onClick(View v) {
-						if (mType == "1") {
-							mType = "0";
-							((Button) v).setText(R.string.label_view2);
-						} else {
-							mType = "1";
-							((Button) v).setText(R.string.label_view1);
-						}
-						loadData();
+						Intent i = new Intent(JiarenActiveActivity.this,
+								QuanziActiveNumListActivity.class);
+						startActivity(i);
 					}
 				});
+		
+		findViewById(R.id.textViewActiveZhuomai).setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						//倬脉。是否可以用旧版本中的UplevelActivity
+						Intent i = new Intent(JiarenActiveActivity.this,
+								ZhuoMaiActiveActivity.class);
+						startActivity(i);
+					}
+				});
+		
+		// findViewById(R.id.textViewActiveFabu).setOnClickListener(
+		// new OnClickListener() {
+		// @Override
+		// public void onClick(View v) {
+		// pwh.showPop(findViewById(R.id.layoutJiarenActive));
+		// }
+		// });
+		// findViewById(R.id.textViewActiveZenghui).setOnClickListener(
+		// new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// Intent i = new Intent(JiarenActiveActivity.this,
+		// ZenghuiTypeActivity.class);
+		// startActivity(i);
+		// }
+		// });
+		//
+		// findViewById(R.id.textViewActiveGongXu).setOnClickListener(
+		// new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// Intent i = new Intent(JiarenActiveActivity.this,
+		// PublishResourceActivity.class);
+		// startActivityForResult(i, MsgTagVO.DATA_REFRESH);
+		// }
+		// });
+
+		// findViewById(R.id.buttonViewType).setOnClickListener(
+		// new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// if (mType == "1") {
+		// mType = "0";
+		// ((Button) v).setText(R.string.label_view2);
+		// } else {
+		// mType = "1";
+		// ((Button) v).setText(R.string.label_view1);
+		// }
+		// loadData();
+		// }
+		// });
 
 	}
 
@@ -152,16 +221,19 @@ public class JiarenActiveActivity extends Activity implements
 			if (null != user) {
 				String name = user.getUsername();
 				String blog = user.getActivenum();
-				String fans = user.getFannum();
+				// String families = user.getFamilytotal();//为空
+				// 好友个数不知道从哪里取
+				String families = "" + user.getFamily().size();
+
 				String headurl = user.getUheader();
 
 				((TextView) findViewById(R.id.textViewUsername)).setText(name);
-				if (blog != null && fans != null) {
+				if (blog != null && families != null) {
 					((TextView) findViewById(R.id.textViewBolgnum))
-							.setText(getString(R.string.p_jiaren_active_fans)
-									+ fans + "\t"
-									+ getString(R.string.p_jiaren_active_blog)
-									+ blog);
+							.setText(families
+									+ getString(R.string.p_jiaren_active_families)
+									+ "~" + blog
+									+ getString(R.string.p_jiaren_active_rizhi));
 				}
 				ImageView iv = (ImageView) findViewById(R.id.imageViewUserHead);
 				iv.setOnClickListener(new OnClickListener() {
@@ -281,10 +353,10 @@ public class JiarenActiveActivity extends Activity implements
 			// }
 			// if (!iszenghui) {
 
-//lz暂时该为话题详情，测试用
-//			i.setClass(JiarenActiveActivity.this, MsgDetailActivity.class);
+			// lz暂时该为话题详情，测试用
+			// i.setClass(JiarenActiveActivity.this, MsgDetailActivity.class);
 			i.setClass(JiarenActiveActivity.this, TopicDetailActivity.class);
-//lz
+			// lz
 			// }
 			// }
 			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
@@ -371,44 +443,45 @@ public class JiarenActiveActivity extends Activity implements
 			if (requestCode == MsgTagVO.DATA_REFRESH) {
 				onRefresh();
 			} else if (requestCode == MsgTagVO.MSG_CMT) {
-				String forward = data.getStringExtra("forward");
-				String msgid = data.getStringExtra("msgid");
-				String outterid = data.getStringExtra("outterid");
-				if (forward != null && forward.equals("1")) {
-					onRefresh();
-				} else {
-					for (int i = 0; i < mList.size(); i++) {
-						ZhuoInfoVO item = mList.get(i);
-						if (msgid != null) {
-							if (item.getMsgid().equals(msgid)
-									&& outterid == null) {
-								if (forward != null && forward.equals("1")) {
-									item.setForwardnum(String.valueOf(Integer
-											.valueOf(item.getForwardnum()) + 1));
-								}
-								item.setCmtnum(String.valueOf(Integer
-										.valueOf(item.getCmtnum()) + 1));
-								mList.set(i, item);
-								break;
-							} else if (outterid != null
-									&& item.getOrigin() != null
-									&& item.getOrigin().getMsgid()
-											.equals(msgid)) {
-								if (forward != null && forward.equals("1")) {
-									String forwardStr = String.valueOf(Integer
-											.valueOf(item.getOrigin()
-													.getForwardnum()) + 1);
-									item.getOrigin().setForwardnum(forwardStr);
-								}
-								item.getOrigin().setCmtnum(
-										String.valueOf(Integer.valueOf(item
-												.getOrigin().getCmtnum()) + 1));
-								mList.set(i, item);
-							}
-						}
-					}
-				}
-				mAdapter.notifyDataSetChanged();
+				Toast.makeText(JiarenActiveActivity.this, "评论成功！", 2000).show();
+				// String forward = data.getStringExtra("forward");
+				// String msgid = data.getStringExtra("msgid");
+				// String outterid = data.getStringExtra("outterid");
+				// if (forward != null && forward.equals("1")) {
+				// onRefresh();
+				// } else {
+				// for (int i = 0; i < mList.size(); i++) {
+				// ZhuoInfoVO item = mList.get(i);
+				// if (msgid != null) {
+				// if (item.getMsgid().equals(msgid)
+				// && outterid == null) {
+				// if (forward != null && forward.equals("1")) {
+				// item.setForwardnum(String.valueOf(Integer
+				// .valueOf(item.getForwardnum()) + 1));
+				// }
+				// item.setCmtnum(String.valueOf(Integer
+				// .valueOf(item.getCmtnum()) + 1));
+				// mList.set(i, item);
+				// break;
+				// } else if (outterid != null
+				// && item.getOrigin() != null
+				// && item.getOrigin().getMsgid()
+				// .equals(msgid)) {
+				// if (forward != null && forward.equals("1")) {
+				// String forwardStr = String.valueOf(Integer
+				// .valueOf(item.getOrigin()
+				// .getForwardnum()) + 1);
+				// item.getOrigin().setForwardnum(forwardStr);
+				// }
+				// item.getOrigin().setCmtnum(
+				// String.valueOf(Integer.valueOf(item
+				// .getOrigin().getCmtnum()) + 1));
+				// mList.set(i, item);
+				// }
+				// }
+				// }
+				// }
+				// mAdapter.notifyDataSetChanged();
 			} else {
 				String filePath = pwh.dealPhotoReturn(requestCode, resultCode,
 						data, false);
