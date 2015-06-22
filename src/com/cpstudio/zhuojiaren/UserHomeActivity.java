@@ -128,15 +128,18 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 		if (null != user) {
 			String name = user.getUsername();
 			String blog = user.getActivenum();
-			String fans = user.getFannum();
+//			String families = user.getFamilytotal();//ЮЊПе
+			String families = ""+user.getFamily().size();//ЮЊПе
+			
 			String headurl = user.getUheader();
+
 			((TextView) findViewById(R.id.textViewUsername)).setText(name);
-			if (blog != null && fans != null) {
+			if (blog != null && families != null) {
 				((TextView) findViewById(R.id.textViewBolgnum))
-						.setText(getString(R.string.p_jiaren_active_blog)
+						.setText(families+getString(R.string.p_jiaren_active_families)
+								+ "~"
 								+ blog
-								+ getString(R.string.p_jiaren_active_fans)
-								+ fans);
+								+ getString(R.string.p_jiaren_active_rizhi));
 			}
 			ImageView iv = (ImageView) findViewById(R.id.imageViewUserHead);
 			iv.setTag(headurl);

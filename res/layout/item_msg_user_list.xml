@@ -10,7 +10,7 @@
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center_vertical"
 	    android:enabled="true"
-	    android:visibility="visible"
+	    android:visibility="gone"
 	    />
     <RelativeLayout
         android:id="@+id/layoutBasic"

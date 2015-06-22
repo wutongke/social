@@ -1,7 +1,9 @@
 package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
+
 import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter;
+import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter2;
 import com.cpstudio.zhuojiaren.facade.InfoFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -367,7 +369,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 			@Override
 			public void onClick(View v) {
-				//打开链接
+				// 打开链接
 				Uri uri = Uri.parse(link);
 				Intent it = new Intent(Intent.ACTION_VIEW, uri);
 				startActivity(it);

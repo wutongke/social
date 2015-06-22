@@ -56,12 +56,14 @@ public class TabContainerActivity extends TabActivity implements
 	private MsgReceiver msgReceiver = null;
 
 	@SuppressWarnings("rawtypes")
-	private Class[] mTabClassArray = {  com.cpstudui.zhuojiaren.lz.MainActivity.class,
-			JiarenActiveActivity.class, StudyActivity.class,
-			MsgListActivity.class, MyHomeActivity.class };
+	private Class[] mTabClassArray = {
+			com.cpstudui.zhuojiaren.lz.MainActivity.class,
+			JiarenActiveActivity.class, MsgListActivity.class,
+			StudyActivity.class, MyHomeActivity.class };
+
 	private int[] mImageResourceArray = { R.drawable.indicator_tab_ico_zhuo,
 			R.drawable.indicator_tab_ico_active,
-			R.drawable.indicator_tab_ico_up, R.drawable.indicator_tab_ico_im,
+			R.drawable.indicator_tab_ico_im, R.drawable.indicator_tab_ico_up,
 			R.drawable.indicator_tab_ico_my };
 	private String[] mTextArray = null;
 
@@ -92,11 +94,12 @@ public class TabContainerActivity extends TabActivity implements
 		tab.setOnTabChangedListener(this);
 	}
 
-/**
- * 底部显示的布局：倬家人、活动、精进、消息等，还包括隐藏的用于显示未读消息数目的tv
- * @param index
- * @return
- */
+	/**
+	 * 底部显示的布局：倬家人、活动、精进、消息等，还包括隐藏的用于显示未读消息数目的tv
+	 * 
+	 * @param index
+	 * @return
+	 */
 	private View getTabItemView(int index) {
 		LayoutInflater layoutInflater = LayoutInflater.from(this);
 		View view = layoutInflater.inflate(R.layout.item_view_tab, null);
@@ -143,7 +146,7 @@ public class TabContainerActivity extends TabActivity implements
 				} else {
 					numTV.setText(String.valueOf("0"));
 					numTV.setVisibility(View.GONE);
-			//清楚通知栏消息
+					// 清楚通知栏消息
 					Notifier notifier = new Notifier(getApplicationContext());
 					notifier.clearNotify();
 				}

@@ -147,6 +147,8 @@ public class MsgListActivity extends Activity implements OnItemClickListener {
 						startCmtActivity();
 					}
 				});
+		
+		//ͨѶ¼
 		findViewById(R.id.buttonLinkList).setOnClickListener(
 				new OnClickListener() {
 
