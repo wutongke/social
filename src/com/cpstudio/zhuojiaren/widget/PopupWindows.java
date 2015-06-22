@@ -8,6 +8,7 @@ import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
+import kankan.wheel.widget.adapters.WheelViewAdapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -49,9 +50,12 @@ import com.cpstudio.zhuojiaren.adapter.ResFilterListAdapter;
 import com.cpstudio.zhuojiaren.adapter.TypeFilterListAdapter;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.ui.GrouthChooseActivity;
+import com.cpstudio.zhuojiaren.ui.GrouthListActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.utils.ImageRectUtil;
+import com.zhuojiaren.sortlistview.NamePup;
 
 public class PopupWindows {
 	private PopupWindow popupWindow;
@@ -264,6 +268,43 @@ public class PopupWindows {
 		return showBottomPop(parent, onClickListeners, info, 20, tag);
 	}
 
+	public PopupWindow showGrouthType(View parent,int margin){
+		LayoutInflater inflater = (LayoutInflater)mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View grouthType = inflater.inflate(R.layout.pop_grouth_type, null);
+		final PopupWindow grouthPop = new PopupWindow(grouthType,LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		final WheelView wheel = (WheelView) grouthType.findViewById(R.id.pgt_wheel_view);
+		final String[] data = mActivity.getResources().getStringArray(R.array.grouth_type);
+		ArrayWheelAdapter<String> adapter = new ArrayWheelAdapter<String>(mActivity, data);
+		wheel.setViewAdapter(adapter);
+		wheel.setCurrentItem(0);
+		grouthType.findViewById(R.id.pgt_cancle).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				grouthPop.dismiss();
+			}
+		});
+		grouthType.findViewById(R.id.pgt_ok).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(mActivity,GrouthListActivity.class);
+				intent.putExtra("teacher", data[wheel.getCurrentItem()]);
+				mActivity.startActivity(intent);
+				mActivity.finish();
+			}
+		});
+		setPopupWindowParams(grouthPop);
+		grouthPop.showAtLocation(parent,
+				Gravity.CENTER_HORIZONTAL, 0, margin);
+		
+		return grouthPop;
+	}
+	public void showGrouthTeacher(View parent){
+		new NamePup(mActivity,parent).showPup();
+	}
 	public PopupWindow showBreakQuanzi(int tag, View parent, int layoutId,
 			int margin, OnClickListener breakBtnListener) {
 		if (null != parent) {
@@ -1118,6 +1159,7 @@ public class PopupWindows {
 
 	/**
 	 * 主页右上角“+”弹出选择菜单：发布、邀请好友(邀请下载该APP)
+	 * 
 	 * @param parent
 	 * @param times
 	 * @param pub
@@ -1180,6 +1222,7 @@ public class PopupWindows {
 
 	/**
 	 * 圈子详情右上角点击菜单：圈子简介、分享、邀请好友(邀请加入圈子)
+	 * 
 	 * @param parent
 	 * @param times
 	 * @param brief

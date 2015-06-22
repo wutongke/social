@@ -758,7 +758,8 @@
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.CrowdFundingDetailActivity"
-            android:label="@string/title_activity_crowd_funding_detail" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.TopicDetailActivity"
@@ -778,7 +779,8 @@
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.ResourceGXFilterActivity"
-            android:label="@string/title_gx_filter" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.GongXuDetailActivity"
@@ -786,11 +788,26 @@
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.StudyActivity"
-            android:label="@string/title_activity_study" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.GrouthQueryActivity"
-            android:label="@string/title_activity_grouth_query" >
+            android:name="com.cpstudio.zhuojiaren.ui.GrouthListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.GrouthChooseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.GrouthVisitListctivity"
+            android:label="@string/title_activity_grouth_visit_listctivity" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.GrouthVisitDetailActivity"
+            android:label="@string/title_activity_grouth_visit_detail" >
         </activity>
     </application>
 

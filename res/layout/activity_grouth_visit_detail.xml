@@ -1,0 +1,97 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".GrouthVisitDetailActivity" >
+
+    <include layout="@layout/title_activity" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/agvd_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" 
+                    android:scaleType="centerCrop"
+                    />
+
+                <TextView
+                    android:id="@+id/agvd_name_and_order"
+                    style="@style/basic_second_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/agvd_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/graywhite" />
+
+                <include layout="@layout/bg_image" />
+
+                <TextView
+                    android:id="@+id/agvd_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:textColor="@color/graywhite" />
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/graywhitem"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" >
+
+            <TextView
+                style="@style/basic_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ico_cmt_cmt"
+                android:drawablePadding="10dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:text="@string/share_inspiration" />
+
+            <ImageView 
+                android:layout_height="2dp"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                />
+
+            <EditText
+                android:id="@+id/agvd_share_inspiration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/graywhitem"
+                android:hint="@string/share_text"
+                android:minHeight="50dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
