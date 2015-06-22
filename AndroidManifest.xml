@@ -792,13 +792,10 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.GrouthQueryActivity"
-            android:label="@string/title_activity_grouth_query" >
             android:name="com.cpstudio.zhuojiaren.ui.GrouthListActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.GrouthChooseActivity"
             android:screenOrientation="portrait"
@@ -806,13 +803,15 @@
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.GrouthVisitListctivity"
-            android:label="@string/title_activity_grouth_visit_listctivity" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.GrouthVisitDetailActivity"
-            android:label="@string/title_activity_grouth_visit_detail" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-<activity
+        <activity
             android:name="com.cpstudui.zhuojiaren.lz.JiarenActiveNumListActivity"
             android:label="@string/label_active_jiaren" >
         </activity>
@@ -831,6 +830,7 @@
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.LZMyHomeActivity"
             android:label="@string/title_activity_lzmy_home" >
-        </activity>    </application>
+        </activity>
+    </application>
 
 </manifest>
