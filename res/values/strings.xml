@@ -826,11 +826,16 @@
     <string name="praise">点赞</string>
     <string name="somedes">这里记录了发起人的一些成果，快来看看</string>
     <string name="country">全国</string>
+    <!-- 精进 -->
     <string name="grouth_online">成长在线</string>
     <string name="grouth_visite_label">家人专访</string>
     <string name="share_inspiration">分享感悟</string>
     <string name="share_text">此时此刻我想分享点什么呢&#8230;</string>
     <string name="visit_detail">专访详情</string>
+    <string name="creater">作者：</string>
+    <string name="create_time">创建时间：</string>
+    <string name="zhuo_audio">倬元语音</string>
+    <string name="more_inspiration">查看更多家人感悟</string>
 
     <!-- lz -->
     <string name="label_main_find">发现</string>
@@ -885,7 +890,7 @@
     <string name="call_it">拨打电话</string>
     <string name="write_to_it">给他写信</string>
     <string name="title_activity_study">StudyActivity</string>
-   <string name="title_activity_grouth_query">GrouthQueryActivity</string>
+    <string name="title_activity_grouth_query">GrouthQueryActivity</string>
     <string name="label_active_jiaren">家人动态</string>
     <string name="label_active_card">名片动态</string>
     <string name="label_active_quanzi">圈子动态</string>
@@ -908,10 +913,13 @@
     <string name="title_zhuoxin">倬信</string>
     <string name="title_activity_lzmy_home">我的</string>
     <string name="label_my_chengzhang">我的成长</string>
- <string name="label_my_purse">我的钱包</string>
-  <string name="label_my_zhuomaishangcheng">倬脉商城</string>
-   <string name="label_my_collect">我的收藏</string>
+    <string name="label_my_purse">我的钱包</string>
+    <string name="label_my_zhuomaishangcheng">倬脉商城</string>
+    <string name="label_my_collect">我的收藏</string>
     <string name="label_my_set">设置</string>
-    
     <string name="label_my_callback">建议反馈</string>
-    <string name="label_my_about">关于倬脉</string></resources>
+    <string name="label_my_about">关于倬脉</string>
+    <string name="title_activity_audio_list">AudioListActivity</string>
+    <string name="title_activity_audio_detail">AudioDetailActivity</string>
+
+</resources>

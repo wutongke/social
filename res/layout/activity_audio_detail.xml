@@ -1,0 +1,111 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AudioDetailActivity" >
+
+    <include layout="@layout/title_activity" />
+
+    <ImageView
+        android:id="@+id/aad_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/aad_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/aad_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ico_start_play"
+             />
+
+        <SeekBar
+            android:id="@+id/aad_seekbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:focusable="true"
+            android:maxHeight="4.0dip"
+            android:minHeight="4.0dip"
+            android:paddingLeft="16.0dip"
+            android:paddingRight="16.0dip"
+            android:progressDrawable="@drawable/po_seekbar"
+            android:thumb="@drawable/seekbar_thumb" />
+
+        <TextView
+            android:id="@+id/aad_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:drawableRight="@drawable/ico_alert" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/graywhitem"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" >
+
+        <TextView
+            style="@style/basic_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ico_cmt_cmt"
+            android:drawablePadding="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="@string/share_inspiration" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/white" />
+
+        <EditText
+            android:id="@+id/aad_share_inspiration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/graywhitem"
+            android:hint="@string/share_text"
+            android:minHeight="50dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/aad_more_inspiration"
+        style="@style/basic_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/graywhite"
+        android:textColor="@color/white" 
+        android:text="@string/more_inspiration"
+        android:padding="10dp"
+        />
+
+</LinearLayout>

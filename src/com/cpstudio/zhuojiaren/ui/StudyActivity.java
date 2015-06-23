@@ -104,7 +104,7 @@ public class StudyActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				startActivity(new Intent(StudyActivity.this,
-						GrouthListActivity.class));
+						AudioListActivity.class));
 			}
 		});
 	}
