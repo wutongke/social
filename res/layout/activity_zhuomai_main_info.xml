@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_active_top"
+    android:padding="15dp" >
+
+
+        <ImageView
+            android:id="@+id/imageViewHeader"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:contentDescription="@string/label_author_header"
+            android:src="@drawable/default_grouphead" />
+
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/imageViewHeader"
+            android:text="卓卖技术"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/llm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewName"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@+id/imageViewHeader"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textViewPosition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="职位"
+                    android:textColor="#6a6a6a"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/textViewPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="1558521212"
+                    android:textColor="#6a6a6a"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textViewStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ico_alert"
+                    android:text="代言人"
+                    android:textColor="#6a6a6a"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/textViewPurse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:drawableLeft="@drawable/ico_alert"
+                    android:text="123个"
+                    android:textColor="#6a6a6a"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewht"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/llm"
+            android:layout_below="@id/llm"
+            android:drawableLeft="@drawable/ico_alert"
+            android:text="中国事业有限公司"
+            android:textColor="#6a6a6a"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewht"
+            android:layout_centerHorizontal="true"
+            android:text="真是自然"
+            android:textColor="#6a6a6a"
+            android:textSize="14sp" />
+
+</RelativeLayout>

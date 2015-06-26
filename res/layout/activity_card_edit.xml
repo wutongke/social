@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="@string/title_activity_card_add_user_image"
+            android:text="@string/title_my_info"
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
@@ -59,11 +59,53 @@
             android:orientation="vertical"
             android:padding="10dp" >
 
-            <TextView
-                android:id="@+id/textViewIntro"
-                android:layout_width="wrap_content"
+             <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="5dp"
+                    android:ellipsize="end"
+                    android:text="@string/my_info_hint"
+                    android:gravity="left|center_vertical"
+                    android:textColor="#6f6f6f" />
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/info37"
+                android:background="@drawable/bg_header"
+                android:padding="10dp" >
+
+                <ImageView
+                    android:id="@+id/ivHead"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/label_author_header"
+                    android:src="@drawable/default_grouphead" />
+
+                <TextView
+                    android:id="@+id/textViewChangeHead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/ico_arrow_big"
+                    android:ellipsize="end"
+                    android:text="@string/label_change_head_image"
+                    android:gravity="right|center_vertical"
+                    android:singleLine="true"
+                    android:textColor="#6f6f6f" />
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/etSignature"
+                android:layout_marginTop="5dp"
+                 android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:hint="@string/text_signature_hint"
+                android:background="@drawable/bg_corners"
                 android:textColor="#999999" />
 
             <LinearLayout
@@ -150,6 +192,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:padding="10dp" >
 
                     <TextView

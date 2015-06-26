@@ -1,5 +1,17 @@
 package com.cpstudio.zhuojiaren;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.cpstudio.zhuojiaren.facade.RecordChatFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -10,18 +22,7 @@ import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 public class MyHomeActivity extends Activity {
 
@@ -197,7 +198,7 @@ public class MyHomeActivity extends Activity {
 						@Override
 						public void onClick(View paramView) {
 							Intent intent = new Intent(MyHomeActivity.this,
-									UserCardActivity.class);
+									ZhuoMaiCardActivity.class);
 							intent.putExtra("userid", userid);
 							startActivity(intent);
 						}

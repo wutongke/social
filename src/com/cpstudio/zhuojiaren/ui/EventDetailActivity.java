@@ -9,12 +9,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Browser;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,22 +20,18 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.CardAddUserWorkActivity;
-import com.cpstudio.zhuojiaren.MsgDetailActivity;
-import com.cpstudio.zhuojiaren.QuanDetailActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.UserCardActivity;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 public class EventDetailActivity extends Activity {
 	@InjectView(R.id.aed_activity_back)
@@ -141,7 +135,7 @@ public class EventDetailActivity extends Activity {
 				// TODO Auto-generated method stub
 				if(event!=null){
 					Intent intent = new Intent(mContext,
-							UserCardActivity.class);
+							ZhuoMaiCardActivity.class);
 					intent.putExtra("userid", event.getBoss().getUserid());
 					startActivity(intent);
 				}

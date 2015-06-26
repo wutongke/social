@@ -24,6 +24,7 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 import com.utils.FileUtil;
 
 import android.media.AudioManager;
@@ -565,7 +566,7 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 							@Override
 							public void onClick(View paramView) {
 								Intent i = new Intent(ChatActivity.this,
-										UserCardActivity.class);
+										ZhuoMaiCardActivity.class);
 								i.putExtra("userid", userid);
 								startActivity(i);
 							}
@@ -1426,7 +1427,7 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 
 	private void viewCard(View v) {
 		String uid = (String) v.getTag(R.id.tag_string);
-		Intent intent = new Intent(ChatActivity.this, UserCardActivity.class);
+		Intent intent = new Intent(ChatActivity.this, ZhuoMaiCardActivity.class);
 		intent.putExtra("userid", uid);
 		startActivity(intent);
 	}

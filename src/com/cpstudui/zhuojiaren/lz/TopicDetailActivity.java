@@ -30,12 +30,9 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.ChatActivity;
 import com.cpstudio.zhuojiaren.MsgCmtActivity;
-import com.cpstudio.zhuojiaren.MsgDetailActivity;
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.UserCardActivity;
 import com.cpstudio.zhuojiaren.UserSelectActivity;
 import com.cpstudio.zhuojiaren.adapter.MsgCmtListAdapter;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
@@ -152,7 +149,7 @@ public class TopicDetailActivity extends BaseActivity implements
 			@Override
 			public void onClick(View paramView) {
 				Intent intent = new Intent(TopicDetailActivity.this,
-						UserCardActivity.class);
+						ZhuoMaiCardActivity.class);
 				intent.putExtra("userid", uid);
 				startActivity(intent);
 			}
@@ -292,7 +289,7 @@ public class TopicDetailActivity extends BaseActivity implements
 					@Override
 					public void onClick(View v) {
 						Intent intent = new Intent(TopicDetailActivity.this,
-								UserCardActivity.class);
+								ZhuoMaiCardActivity.class);
 						intent.putExtra("userid", userid);
 						startActivity(intent);
 					}
@@ -402,7 +399,7 @@ public class TopicDetailActivity extends BaseActivity implements
 						public void onClick(View v) {
 							Intent intent = new Intent(
 									TopicDetailActivity.this,
-									UserCardActivity.class);
+									ZhuoMaiCardActivity.class);
 							intent.putExtra("userid", myid);
 							startActivity(intent);
 						}

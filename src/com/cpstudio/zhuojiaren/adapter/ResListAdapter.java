@@ -3,31 +3,40 @@ package com.cpstudio.zhuojiaren.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
-import com.cpstudio.zhuojiaren.model.PicVO;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.PicVO;
+import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
+
 public class ResListAdapter extends BaseAdapter {
 	private List<ZhuoInfoVO> mList = null;
 	private LoadImage mLoadImage = new LoadImage();
 	private LayoutInflater inflater = null;
+	boolean isManaging = false;
 
+	// lz需要根据不同类型分类列表显示。。。
 	public ResListAdapter(Context context, ArrayList<ZhuoInfoVO> list) {
 		this.mList = list;
 		this.inflater = LayoutInflater.from(context);
+	}
+
+	// 设置是否处于管理状态，显示选中符号
+	public void setManagable(boolean flag) {
+		isManaging = flag;
+		notifyDataSetChanged();
 	}
 
 	@Override
@@ -60,6 +69,10 @@ public class ResListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
 		}
+		
+		if(isManaging)
+			holder.cb.setVisibility(View.VISIBLE);
+		
 		Context context = convertView.getContext();
 		ZhuoInfoVO zhuoinfo = mList.get(position);
 		convertView.setTag(R.id.tag_id, zhuoinfo.getMsgid());
@@ -72,8 +85,8 @@ public class ResListAdapter extends BaseAdapter {
 			msgType = ZhuoCommHelper.transferMsgTypeToString(type, context);
 			category = ZhuoCommHelper.transferMsgCategoryToString(category,
 					context);
-			holder.textViewTitle.setText("【" + category + "】" + title
-					+ "//" + detail);
+			holder.textViewTitle.setText("【" + category + "】" + title + "//"
+					+ detail);
 		}
 		holder.rl.removeAllViews();
 		holder.textViewAll.setText("");
@@ -136,6 +149,7 @@ public class ResListAdapter extends BaseAdapter {
 		RelativeLayout rl;
 		TextView typeTV;
 		TextView dateTV;
+		CheckBox cb;
 	}
 
 	private ViewHolder initHolder(View convertView) {
@@ -148,6 +162,7 @@ public class ResListAdapter extends BaseAdapter {
 				.findViewById(R.id.relativeLayoutImageContainer);
 		holder.typeTV = (TextView) convertView.findViewById(R.id.textViewType);
 		holder.dateTV = (TextView) convertView.findViewById(R.id.textViewDate);
+		holder.cb=(CheckBox) convertView.findViewById(R.id.imul_select);
 		return holder;
 	}
 }

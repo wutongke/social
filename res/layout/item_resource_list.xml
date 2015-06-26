@@ -4,6 +4,82 @@
     android:layout_height="wrap_content"
     android:padding="10dp" >
 
+    <CheckBox
+        android:id="@+id/imul_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:enabled="true" />
+
+    <TextView
+        android:id="@+id/textViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="26sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp" >
+
+        <ImageView
+            android:id="@+id/imageViewResourcePic"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginRight="10dp"
+            android:contentDescription="@string/ico"
+            android:src="@drawable/default_userhead" />
+
+        <TextView
+            android:id="@+id/textViewDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imageViewResourcePic"
+            android:maxLines="2"
+            android:text="textViewTitle"
+            android:textColor="#1c1c1c"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/textViewDetail"
+            android:layout_below="@id/textViewDetail"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="2dp"
+            android:maxLines="1"
+            android:text="textViewTime"
+            android:textColor="#585858"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageViewResourcePic" >
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutImageContainer"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" >
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp" >
+
+                <TextView
+                    android:id="@+id/textViewAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!--
     <LinearLayout
         android:layout_width="60dp"
         android:layout_height="wrap_content"
@@ -65,5 +141,6 @@
         </LinearLayout>
 
     </LinearLayout>
+    -->
 
 </LinearLayout>

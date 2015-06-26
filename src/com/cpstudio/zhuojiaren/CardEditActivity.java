@@ -5,6 +5,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
@@ -19,20 +39,15 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.utils.SolarToLundar;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.Intent;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.TextView;
-
 public class CardEditActivity extends Activity {
+	
+	@InjectView(R.id.ivHead)
+	ImageView ivHead;
+	@InjectView(R.id.textViewChangeHead)
+	TextView textViewChangeHead;
+	@InjectView(R.id.etSignature)
+	EditText etSignature;
+
 	private String userid = "";
 	private UserVO mUser = null;
 	public final static int EDIT_BIRTH = 0;
@@ -87,11 +102,12 @@ public class CardEditActivity extends Activity {
 	private PopupWindows pwh = null;
 	private UserFacade mFacade = null;
 	private boolean edit = false;
-
+//Î´ÍêÉÆ
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_card_edit);
+		ButterKnife.inject(this);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		mFacade = new UserFacade(getApplicationContext());
 		pwh = new PopupWindows(CardEditActivity.this);
@@ -101,6 +117,39 @@ public class CardEditActivity extends Activity {
 	}
 
 	private void initClick() {
+		
+		etSignature.addTextChangedListener(new TextWatcher() {
+            private CharSequence temp;
+            private int selectionStart ;
+            private int selectionEnd ;
+            @Override
+            public void beforeTextChanged(CharSequence s, int arg1, int arg2,
+                    int arg3) {
+                temp = s;
+            }
+ 
+            @Override
+            public void onTextChanged(CharSequence s, int arg1, int arg2,
+                    int arg3) {
+            }
+ 
+            @Override
+            public void afterTextChanged(Editable s) {
+                 selectionStart = etSignature.getSelectionStart();
+                selectionEnd = etSignature.getSelectionEnd();
+                
+                if (temp.length() > 15) {
+                    Toast.makeText(CardEditActivity.this,
+                            R.string.edit_nsignature_limit, Toast.LENGTH_SHORT)
+                            .show();
+                    s.delete(selectionStart-1, selectionEnd);
+                    int tempSelection = selectionStart;
+                    etSignature.setText(s);
+                    etSignature.setSelection(tempSelection);
+                }
+            }
+        });
+		
 		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

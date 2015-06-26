@@ -4,7 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.cpstudio.zhuojiaren.R;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+
 import com.cpstudio.zhuojiaren.adapter.MsgCmtListAdapter;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.facade.ZhuoInfoFacade;
@@ -13,39 +36,16 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.model.CmtVO;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout.LayoutParams;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 public class MsgDetailActivity extends Activity implements OnItemClickListener {
 	private ListView mListView;
@@ -134,7 +134,7 @@ public class MsgDetailActivity extends Activity implements OnItemClickListener {
 			@Override
 			public void onClick(View paramView) {
 				Intent intent = new Intent(MsgDetailActivity.this,
-						UserCardActivity.class);
+						ZhuoMaiCardActivity.class);
 				intent.putExtra("userid", uid);
 				startActivity(intent);
 			}
@@ -274,7 +274,7 @@ public class MsgDetailActivity extends Activity implements OnItemClickListener {
 					@Override
 					public void onClick(View v) {
 						Intent intent = new Intent(MsgDetailActivity.this,
-								UserCardActivity.class);
+								ZhuoMaiCardActivity.class);
 						intent.putExtra("userid", userid);
 						startActivity(intent);
 					}
@@ -379,7 +379,7 @@ public class MsgDetailActivity extends Activity implements OnItemClickListener {
 						@Override
 						public void onClick(View v) {
 							Intent intent = new Intent(MsgDetailActivity.this,
-									UserCardActivity.class);
+									ZhuoMaiCardActivity.class);
 							intent.putExtra("userid", myid);
 							startActivity(intent);
 						}

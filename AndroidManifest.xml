@@ -769,7 +769,7 @@
             android:label="@string/title_active_join_quan" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.PubTopiccticvity"
+            android:name="com.cpstudui.zhuojiaren.lz.PubTopicActicvity"
             android:label="@string/title_pub_topic" >
         </activity>
         <activity
@@ -811,6 +811,15 @@
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.LZMyHomeActivity"
             android:label="@string/title_activity_lzmy_home" >
+        </activity>
+        <activity
+            android:name="com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity"
+            android:label="@string/title_zhuomai_card" >
+        </activity>
+        
+         <activity
+            android:name="com.cpstudui.zhuojiaren.lz.QuanziActiveActiveActivity"
+            android:label="@string/label_active_quanzi" >
         </activity>
     </application>
 

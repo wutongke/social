@@ -24,9 +24,6 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.ui.CrowdFundingActivity;
 import com.cpstudio.zhuojiaren.ui.UserSameActivity;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
-//<<<<<<< HEAD
-//=======
-//>>>>>>> c26bbdfe7b3755ff856bc2689757a7bf1f2d8fac
 
 public class FindActivity extends Activity {
 	private String mLocation = "";

@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_activity" />
+
+    <include layout="@layout/activity_zhuomai_main_info" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.cpstudio.zhuojiaren.widget.TabButton
+            android:id="@+id/azq_tab"
+            android:layout_width="match_parent"
+            android:layout_height="42dp" >
+        </com.cpstudio.zhuojiaren.widget.TabButton>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/azq_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/lt_menue"
+            android:layout_below="@+id/azq_tab"
+            android:layout_gravity="center" >
+        </android.support.v4.view.ViewPager>
+
+        <LinearLayout
+            android:id="@+id/lt_menue"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:background="#03fff3"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/lt_chengyuan_menue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="#03fff3"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/btnEditBG"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:drawableLeft="@drawable/ico_alert"
+                    android:minHeight="20dp"
+                    android:text="@string/label_edit_bg"
+                    android:textColor="@color/white" />
+                <Button
+                    android:id="@+id/btnEditCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:drawableLeft="@drawable/ico_alert"
+                    android:minHeight="20dp"
+                    android:text="@string/label_editcard"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
