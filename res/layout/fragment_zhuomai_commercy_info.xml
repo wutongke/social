@@ -1,0 +1,171 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:drawableLeft="@drawable/ico_alert"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/mp_mygong" />
+
+            <TextView
+                android:id="@+id/tvMoreResource"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableRight="@drawable/ico_arrow_big"
+                android:maxLines="1"
+                android:text="@string/label_justmore" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:background="#d8d8d8" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp" >
+
+            <ImageView
+                android:id="@+id/imageViewResourcePic"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@string/ico"
+                android:src="@drawable/default_userhead" />
+
+            <TextView
+                android:id="@+id/textViewResourceTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imageViewResourcePic"
+                android:maxLines="2"
+                android:text="textViewTitle"
+                android:textColor="#1c1c1c"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textViewTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/textViewResourceTitle"
+                android:layout_below="@id/textViewResourceTitle"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="1"
+                android:text="textViewTime"
+                android:textColor="#585858"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:drawableLeft="@drawable/ico_alert"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/mp_myxu" />
+
+            <TextView
+                android:id="@+id/tvMoreNeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableRight="@drawable/ico_arrow_big"
+                android:maxLines="1"
+                android:text="@string/label_justmore" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:background="#d8d8d8" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp" >
+
+            <ImageView
+                android:id="@+id/imageViewNeedPic"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@string/ico"
+                android:src="@drawable/default_userhead" />
+
+            <TextView
+                android:id="@+id/textViewNeedTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imageViewNeedPic"
+                android:maxLines="2"
+                android:text="textViewTitle"
+                android:textColor="#1c1c1c"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textViewNeedTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/textViewNeedTitle"
+                android:layout_below="@id/textViewNeedTitle"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="1"
+                android:text="textViewTime"
+                android:textColor="#585858"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp" >
+
+            <TextView
+                android:id="@+id/textViewWeidian"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/newmsg" />
+
+            <TextView
+                android:id="@+id/textViewVideo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/newmsg" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

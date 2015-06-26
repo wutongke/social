@@ -1,14 +1,10 @@
 package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
-import com.cpstudio.zhuojiaren.adapter.UserListAdapter;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
-import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,15 +16,21 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
+
+import com.cpstudio.zhuojiaren.adapter.UserListAdapter;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.widget.ListViewFooter;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 public class UserAllActivity extends Activity implements OnItemClickListener {
 
@@ -200,7 +202,7 @@ public class UserAllActivity extends Activity implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		if (arg3 != -1) {
-			Intent i = new Intent(UserAllActivity.this, UserCardActivity.class);
+			Intent i = new Intent(UserAllActivity.this, ZhuoMaiCardActivity.class);
 			i.putExtra("userid", (String) arg1.getTag(R.id.tag_id));
 			startActivity(i);
 		}

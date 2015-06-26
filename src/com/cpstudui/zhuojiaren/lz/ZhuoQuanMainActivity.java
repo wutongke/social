@@ -72,12 +72,12 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	View ltYouke;// 非成员操作菜单
 
 	@InjectView(R.id.btnPubActive)
-	Button btnPubActive;// 非成员操作菜单
+	Button btnPubActive;
 
 	@InjectView(R.id.btnPubTopic)
-	Button btnPubTopic;// 非成员操作菜单
+	Button btnPubTopic;
 	@InjectView(R.id.btnJoinQuan)
-	Button btnJoinQuan;// 非成员操作菜单
+	Button btnJoinQuan;
 
 	@InjectView(R.id.btnQuanChat)
 	Button btnQuanChat;

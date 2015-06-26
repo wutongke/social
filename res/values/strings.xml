@@ -526,12 +526,12 @@
     <string name="label_origin">原文</string>
     <string name="label_addone">+1</string>
     <string name="mp_hy">行业:</string>
-    <string name="mp_gszw">公司职位:</string>
+    <string name="mp_gszw">公司职位(我的企业):</string>
     <string name="mp_mygs">我的公司:</string>
     <string name="mp_myzw">我的职位:</string>
-    <string name="mp_name">姓名:</string>
+    <string name="mp_name">我的姓名:</string>
     <string name="mp_sex">性别:</string>
-    <string name="mp_images">形象:</string>
+    <string name="mp_images">我的照片:</string>
     <string name="mp_addtime">成为家人的时间:</string>
     <string name="mp_ismarry">是否已婚:</string>
     <string name="mp_qy">区域:</string>
@@ -937,7 +937,7 @@
     <string name="label_my_set">设置</string>
     <string name="label_my_callback">建议反馈</string>
     <string name="label_my_about">关于倬脉</string>
-    <string name="title_activity_audio_list">AudioListActivity</string>
+<string name="title_activity_audio_list">AudioListActivity</string>
     <string name="title_activity_audio_detail">AudioDetailActivity</string>
     <string name="title_activity_my_money">MyMoneyActivity</string>
     <string name="title_activity_my_broken_money">MyBrokenMoneyActivity</string>
@@ -945,4 +945,19 @@
     <string name="title_activity_income_details">IncomeDetailsActivity</string>
     <string name="title_activity_my_zhuo_bi">MyZhuoBiActivity</string>
 
-</resources>
+<string name="title_zhuomai_card">倬脉名片</string>
+    <string name="label_edit_bg">个性背景</string>
+    <string name="label_justmore">更多</string>
+    <string name="label_commercy_info">商务信息</string>
+    <string name="label_more_info">更多资料</string>
+    <string name="renmai_my">我的人脉</string>
+    <string name="active_my">我的活动</string>
+    <string name="label_viewed">被浏览</string>
+    <string name="label_aimed">被关注</string>
+    <string name="label_zaned">被赞</string>
+    <string name="label_zhuomao_rank">倬脉排行</string>
+    <string name="label_change_head_image">更换头像</string>
+    <string name="text_signature_hint">名片签名，最多15个字</string>
+    <string name="edit_nsignature_limit">签名最多输入15个字</string>
+    <string name="my_info_hint">真实地表达自己，让更多家人了解自己。真实和了解是建立有效人脉的关键。</string>
+ <string name="title_my_info">我的资料</string></resources>

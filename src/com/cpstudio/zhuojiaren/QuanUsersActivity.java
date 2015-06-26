@@ -2,7 +2,31 @@ package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import com.cpstudio.zhuojiaren.R;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+
 import com.cpstudio.zhuojiaren.adapter.LinkListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
@@ -14,30 +38,7 @@ import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.util.AlphabetComparator;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.IndexableListView;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView.OnEditorActionListener;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 public class QuanUsersActivity extends Activity implements OnItemClickListener {
 
@@ -267,7 +268,7 @@ public class QuanUsersActivity extends Activity implements OnItemClickListener {
 			String userid = (String) arg1.getTag(R.id.tag_id);
 			if (null != userid) {
 				Intent i = new Intent(QuanUsersActivity.this,
-						UserCardActivity.class);
+						ZhuoMaiCardActivity.class);
 				i.putExtra("userid", userid);
 				startActivity(i);
 			}

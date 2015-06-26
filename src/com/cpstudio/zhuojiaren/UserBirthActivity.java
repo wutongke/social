@@ -1,7 +1,21 @@
 package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
-import com.cpstudio.zhuojiaren.R;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+
 import com.cpstudio.zhuojiaren.adapter.BirthUsersListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
@@ -9,20 +23,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.RelativeLayout;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 public class UserBirthActivity extends Activity implements OnItemClickListener {
 	private ListView mListView;
@@ -143,7 +144,7 @@ public class UserBirthActivity extends Activity implements OnItemClickListener {
 		if (arg3 != -1) {
 			String userid = (String) arg1.getTag(R.id.tag_id);
 			Intent i = new Intent(UserBirthActivity.this,
-					UserCardActivity.class);
+					ZhuoMaiCardActivity.class);
 			i.putExtra("userid", userid);
 			startActivity(i);
 		}

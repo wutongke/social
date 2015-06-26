@@ -2,6 +2,20 @@ package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import com.cpstudio.zhuojiaren.adapter.ActiveListAdapter;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.facade.UserInfoFacade;
@@ -10,26 +24,13 @@ import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 public class UserHomeActivity extends Activity implements OnPullDownListener,
 		OnItemClickListener {
@@ -93,7 +94,7 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(UserHomeActivity.this,
-						UserCardActivity.class);
+						ZhuoMaiCardActivity.class);
 				i.putExtra("userid", uid);
 				startActivity(i);
 			}
@@ -148,7 +149,7 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 				@Override
 				public void onClick(View paramView) {
 					Intent i = new Intent(UserHomeActivity.this,
-							UserCardActivity.class);
+							ZhuoMaiCardActivity.class);
 					i.putExtra("userid", uid);
 					startActivity(i);
 				}

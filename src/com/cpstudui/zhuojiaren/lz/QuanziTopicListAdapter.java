@@ -29,7 +29,6 @@ import android.widget.TextView;
 import com.cpstudio.zhuojiaren.MsgCmtActivity;
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.UserCardActivity;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
@@ -44,7 +43,7 @@ import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.utils.ImageRectUtil;
 
 /**
- * 閸婎剙顔嶆禍绡磀apter
+ * 
  * 
  * @author lef
  * 
@@ -202,7 +201,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(mContext, UserCardActivity.class);
+				Intent intent = new Intent(mContext, ZhuoMaiCardActivity.class);
 				intent.putExtra("userid", userid);
 				mContext.startActivity(intent);
 			}

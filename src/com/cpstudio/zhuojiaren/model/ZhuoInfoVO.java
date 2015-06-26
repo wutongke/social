@@ -4,14 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ZhuoInfoVO {
-	
-	
-	
-	
-	
 	private String msgid;
 	private UserVO user = new UserVO();
-	private String type;//包括，家人动态(发布的个人动态消息)，名片动态()，圈子动态(谁加入了圈子，退出圈子，创建圈子？)，倬脉动态(谁发布了啥？？？)
+	private String type;
 	private String category;
 	private String title;
 	private String text;

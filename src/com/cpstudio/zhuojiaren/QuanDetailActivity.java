@@ -2,19 +2,12 @@ package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.facade.QuanFacade;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.QuanVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
-import com.cpstudio.zhuojiaren.ui.QuanCreateActivity;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,11 +19,19 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.Intent;
+
+import com.cpstudio.zhuojiaren.facade.QuanFacade;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.ui.QuanCreateActivity;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.widget.PopupWindows;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 public class QuanDetailActivity extends Activity {
 	private final static int USER_SELECT = 0;
@@ -152,7 +153,7 @@ public class QuanDetailActivity extends Activity {
 								public void onClick(View v) {
 									Intent i = new Intent(
 											QuanDetailActivity.this,
-											UserCardActivity.class);
+											ZhuoMaiCardActivity.class);
 									i.putExtra("userid", createrId);
 									startActivity(i);
 								}
@@ -189,7 +190,7 @@ public class QuanDetailActivity extends Activity {
 								public void onClick(View v) {
 									Intent i = new Intent(
 											QuanDetailActivity.this,
-											UserCardActivity.class);
+											ZhuoMaiCardActivity.class);
 									i.putExtra("userid", managerId);
 									startActivity(i);
 								}

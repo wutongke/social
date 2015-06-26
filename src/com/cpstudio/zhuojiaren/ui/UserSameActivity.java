@@ -129,6 +129,22 @@ public class UserSameActivity extends BaseActivity implements OnPullDownListener
 		case 6:
 			title.setText(R.string.title_activity_group_type7);
 			break;
+		case 7://请求交换名片的人
+			title.setText(R.string.label_active_reuqest_card); //还需要显示人数
+			
+			break;
+		case 8:
+			title.setText(R.string.label_active_viewed); 
+			break;
+		case 9:
+			title.setText(R.string.label_active_collected_me); 
+			break;
+		case 10:
+			title.setText(R.string.label_active_zaned_me); 
+			break;
+		case 11:
+			title.setText(R.string.label_active_by_me); 
+			break;
 		}
 		String sk = intent.getStringExtra("mSearchKey");
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();

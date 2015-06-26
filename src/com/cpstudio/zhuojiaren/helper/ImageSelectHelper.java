@@ -2,6 +2,7 @@ package com.cpstudio.zhuojiaren.helper;
 
 import java.util.ArrayList;
 import java.util.Map;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -16,8 +17,8 @@ import android.widget.LinearLayout;
 
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.UserCardActivity;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 import com.utils.ImageRectUtil;
 
 public class ImageSelectHelper implements OnClickListener {
@@ -135,7 +136,7 @@ public class ImageSelectHelper implements OnClickListener {
 		return new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(mActivity, UserCardActivity.class);
+				Intent i = new Intent(mActivity, ZhuoMaiCardActivity.class);
 				i.putExtra("userid", uid);
 				mActivity.startActivity(i);
 			}

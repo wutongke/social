@@ -127,6 +127,7 @@ public class ImageLoader
 					public void handleMessage(Message msg)
 					{
 						mThreadPool.execute(getTask());
+					
 						try
 						{
 							mPoolSemaphore.acquire();

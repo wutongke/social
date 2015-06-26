@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
@@ -26,9 +27,11 @@ import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
 public class ZhuoMaiActiveActivity extends BaseActivity implements
 		OnPullDownListener, OnItemClickListener {
+	@InjectView(R.id.pull_down_view)
+	PullDownView mPullDownView;
 	private ListView mListView;
 	ZhuoMaiActiveAdapter mAdapter;
-	private PullDownView mPullDownView;
+
 	private ArrayList<ZhuoMaiVO> mList = new ArrayList<ZhuoMaiVO>();
 	private LoadImage mLoadImage = null;
 	private PopupWindows pwh = null;

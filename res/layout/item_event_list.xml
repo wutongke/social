@@ -9,9 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="2"
+        android:padding="10dp"
         android:text="标题"
-        
-    android:padding="10dp"
         android:textSize="24sp" />
 
     <LinearLayout
@@ -71,7 +70,8 @@
             android:gravity="center"
             android:text="已过期"
             android:textColor="@color/red" />
-          <TextView
+
+        <TextView
             android:id="@+id/textViewNums"
             android:layout_width="0dp"
             android:layout_height="30dp"
@@ -79,15 +79,16 @@
             android:background="@drawable/bg_border"
             android:gravity="center"
             android:text="15人报名" />
-          <TextView
-            android:id="@+id/textDetail"
+
+        <TextView
+            android:id="@+id/textViewDetail"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@drawable/bg_border"
             android:gravity="center"
-            android:text="查看詳情" 
-            android:textColor="@color/green"/>
+            android:text="查看詳情"
+            android:textColor="@color/green" />
     </LinearLayout>
 
 </LinearLayout>

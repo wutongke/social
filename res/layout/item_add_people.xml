@@ -30,7 +30,8 @@
             android:background="@color/white" />
     </LinearLayout>
 
-    <include layout="@layout/bg_image" />
+    <include layout="@layout/bg_image" 
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"

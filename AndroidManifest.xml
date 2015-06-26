@@ -770,7 +770,7 @@
             android:label="@string/title_active_join_quan" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.PubTopiccticvity"
+            android:name="com.cpstudui.zhuojiaren.lz.PubTopicActicvity"
             android:label="@string/title_pub_topic" >
         </activity>
         <activity
@@ -831,7 +831,7 @@
             android:name="com.cpstudui.zhuojiaren.lz.LZMyHomeActivity"
             android:label="@string/title_activity_lzmy_home" >
         </activity>
-        <activity
+<activity
             android:name="com.cpstudio.zhuojiaren.ui.AudioListActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
@@ -861,10 +861,17 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        <activity
+<activity
+            android:name="com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity"
+            android:label="@string/title_zhuomai_card" >
+        </activity>
+        
+         <activity
+            android:name="com.cpstudui.zhuojiaren.lz.QuanziActiveActiveActivity"
+            android:label="@string/label_active_quanzi" >
+        </activity>  <activity
             android:name="com.cpstudio.zhuojiaren.ui.MyZhuoBiActivity"
             android:label="@string/title_activity_my_zhuo_bi" >
-        </activity>
-    </application>
+        </activity>    </application>
 
 </manifest>

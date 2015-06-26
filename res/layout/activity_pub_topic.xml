@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.cpstudui.zhuojiaren.lz.ApplyToJoinQuanActicvity" >
@@ -19,9 +20,9 @@
         android:inputType="textMultiLine" />
 
     <LinearLayout
-        android:layout_below="@id/editTextContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/editTextContent"
         android:background="@color/white"
         android:orientation="vertical"
         android:padding="20dp" >
