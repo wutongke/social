@@ -838,7 +838,9 @@
     <string name="more_inspiration">查看更多家人感悟</string>
     <!--  -->
     <string name="my_money">我的零钱</string>
+    <string name="my_zhuobi">我的倬币</string>
     <string name="recharge_money">充值</string>
+    <string name="give_zhuobi">送倬币给朋友</string>
     <string name="take_money">提现</string>
     <string name="my_wallet">我的钱包</string>
     <string name="my_zhuo_money">我的倬币</string>
@@ -851,6 +853,7 @@
     <string name="time2">时&#160;&#160;&#160;&#160;&#160;&#160;&#160;间</string>
     <string name="left_broken_money">剩余零钱</string>
     <string name="remark">备&#160;&#160;&#160;&#160;&#160;&#160;&#160;注</string>
+    <string name="remark2">备注\n倬币是倬家人通过为倬脉代言，传播真实</string>
 
     <!-- lz -->
     <string name="label_main_find">发现</string>
@@ -940,5 +943,6 @@
     <string name="title_activity_my_broken_money">MyBrokenMoneyActivity</string>
     <string name="title_activity_income">IncomeActivity</string>
     <string name="title_activity_income_details">IncomeDetailsActivity</string>
+    <string name="title_activity_my_zhuo_bi">MyZhuoBiActivity</string>
 
 </resources>
