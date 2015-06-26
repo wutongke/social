@@ -344,7 +344,7 @@ public class CommonUtil {
 
 	public static String getTime(long time) {
 		SimpleDateFormat formatter = new SimpleDateFormat(
-				"yyyy/MM/dd HH:mm:ss", Locale.CHINESE);
+				"yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
 		long curDate = time;
 		String str = formatter.format(curDate);
 		return str;

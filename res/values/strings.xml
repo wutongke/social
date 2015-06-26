@@ -2,7 +2,7 @@
 <resources>
 
     <item name="tag_view_holder" type="id"></item>
-    <item name="tag_id" type="id"></item>
+    <item name="tag_id" type="id">id</item>
     <item name="tag_type" type="id"></item>
     <item name="tag_boolean" type="id"></item>
     <item name="tag_path" type="id"></item>
@@ -836,6 +836,21 @@
     <string name="create_time">创建时间：</string>
     <string name="zhuo_audio">倬元语音</string>
     <string name="more_inspiration">查看更多家人感悟</string>
+    <!--  -->
+    <string name="my_money">我的零钱</string>
+    <string name="recharge_money">充值</string>
+    <string name="take_money">提现</string>
+    <string name="my_wallet">我的钱包</string>
+    <string name="my_zhuo_money">我的倬币</string>
+    <string name="add_bank_card">添加银行卡</string>
+    <string name="income_expenditure_details">收支明细</string>
+    <string name="income_money">收入金额</string>
+    <string name="expenditure_money">出帐金额</string>
+    <string name="type">类&#160;&#160;&#160;&#160;&#160;&#160;&#160;型</string>
+    <string name="deal_number">交易单号</string>
+    <string name="time2">时&#160;&#160;&#160;&#160;&#160;&#160;&#160;间</string>
+    <string name="left_broken_money">剩余零钱</string>
+    <string name="remark">备&#160;&#160;&#160;&#160;&#160;&#160;&#160;注</string>
 
     <!-- lz -->
     <string name="label_main_find">发现</string>
@@ -921,5 +936,9 @@
     <string name="label_my_about">关于倬脉</string>
     <string name="title_activity_audio_list">AudioListActivity</string>
     <string name="title_activity_audio_detail">AudioDetailActivity</string>
+    <string name="title_activity_my_money">MyMoneyActivity</string>
+    <string name="title_activity_my_broken_money">MyBrokenMoneyActivity</string>
+    <string name="title_activity_income">IncomeActivity</string>
+    <string name="title_activity_income_details">IncomeDetailsActivity</string>
 
 </resources>
