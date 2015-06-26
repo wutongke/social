@@ -1,0 +1,69 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/layout"
+    android:background="@color/graywhitem"
+    tools:context=".GrouthChooseActivity" >
+
+    <include layout="@layout/title_activity" />
+
+
+    <LinearLayout
+        android:id="@+id/according_teacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_weight="1"
+            android:text="@string/accordingto_teacher" />
+
+        <TextView
+            android:id="@+id/type_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/ico_arrow_gray"
+            android:gravity="center_vertical"
+            android:text="@string/all"
+            android:textColor="@color/graywhite" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/according_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_weight="1"
+            android:text="@string/accordingto_type2" />
+
+        <TextView
+            android:id="@+id/locate_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/ico_arrow_gray"
+            android:gravity="center_vertical"
+            android:text="@string/all"
+            android:textColor="@color/graywhite" />
+    </LinearLayout>
+
+</LinearLayout>

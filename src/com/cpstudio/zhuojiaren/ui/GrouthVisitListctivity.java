@@ -5,108 +5,101 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
-import com.cpstudio.zhuojiaren.model.GrouthVideo;
+import com.cpstudio.zhuojiaren.adapter.GrouthVisitAdapter;
+import com.cpstudio.zhuojiaren.model.GrouthVisit;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
-public class StudyActivity extends BaseActivity {
-	@InjectView(R.id.as_pulldown)
+public class GrouthVisitListctivity extends BaseActivity {
+
+	@InjectView(R.id.agv_pulldown)
 	PullDownView pullDownView;
-	private GrouthAdapter mAdapter;
+	private GrouthVisitAdapter mAdapter;
 	private ListView listView;
-	private ArrayList<GrouthVideo> mDatas = new ArrayList<GrouthVideo>();
+	private ArrayList<GrouthVisit> mDatas = new ArrayList<GrouthVisit>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_study);
+		setContentView(R.layout.activity_grouth_visit_listctivity);
 		ButterKnife.inject(this);
 		initTitle();
-		findViewById(R.id.activity_back).setVisibility(View.GONE);
-		title.setText(R.string.title_activity_up_level);
+		title.setText(R.string.grouth_visite_label);
 		initPullDownView();
 		loadData();
 	}
 
 	private void loadData() {
 		// TODO Auto-generated method stub
-		GrouthVideo g = new GrouthVideo();
-		g.setBrowerCount("145");
+		// test
+		GrouthVisit g = new GrouthVisit();
 		g.setImageUrl("http://img0.imgtn.bdimg.com/it/u=3317101867,3739965699&fm=11&gp=0.jpg");
 		g.setName("张博士亲授");
-		g.setDuration("4小时");
-		pullDownView.finishLoadData(true);
-		pullDownView.hasData();
+		g.setContent("三井是个逃兵，毋庸置疑。他曾经是个骄傲的战士，带着无可置疑的天赋与荣誉。对于这样的人来说，一场意外就是一次灾难，他陷入了一个令人绝望的困境，最可怕的是，所有关于未来的规划被迫打断。这是一个少年遇到的最大困境，他面对的是可能永远不能重回巅峰的现实，这个现实对于他来说，太过残酷。");
+		g.setTime("2013.5.6");
+		g.setOrder("第十二期");
+		
+		mDatas.add(g);
+		mDatas.add(g);
+		mDatas.add(g);
 		mDatas.add(g);
 		mAdapter.notifyDataSetChanged();
+		Message msg = uiHandler.obtainMessage();
+		msg.sendToTarget();
 	}
 
 	Handler uiHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-
+			pullDownView.finishLoadData(true);
+			pullDownView.hasData();
 		};
 	};
 
 	private void initPullDownView() {
 		// TODO Auto-generated method stub
 		pullDownView.initHeaderViewAndFooterViewAndListView(this,
-				R.layout.head_grouth_main);
+				R.layout.head_pull_all_no);
 		listView = pullDownView.getListView();
-		mAdapter = new GrouthAdapter(this, mDatas, R.layout.item_growth);
+		mAdapter = new GrouthVisitAdapter(this, mDatas, R.layout.item_visite);
 		listView.setAdapter(mAdapter);
-		pullDownView.setShowHeader();
-		pullDownView.setShowFooter(false);
 		pullDownView.setOnPullDownListener(new OnPullDownListener() {
 
 			@Override
 			public void onRefresh() {
 				// TODO Auto-generated method stub
-//				loadData();
+				loadData();
 			}
 
 			@Override
 			public void onMore() {
 				// TODO Auto-generated method stub
-//				loadData();
+				loadData();
 			}
 		});
-
-		findViewById(R.id.hgm_grouth).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				startActivity(new Intent(StudyActivity.this,
-						GrouthChooseActivity.class));
-			}
-		});
-		findViewById(R.id.hgm_visit).setOnClickListener(new OnClickListener() {
+		pullDownView.setShowHeader();
+		pullDownView.setShowFooter(false);
+		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onClick(View v) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent(StudyActivity.this,
-						GrouthVisitListctivity.class));
-			}
-		});
-		findViewById(R.id.hgm_radio).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				startActivity(new Intent(StudyActivity.this,
-						AudioListActivity.class));
+				Intent intent = new Intent(GrouthVisitListctivity.this,GrouthVisitDetailActivity.class);
+				startActivity(intent);
 			}
 		});
 	}
+
 
 }

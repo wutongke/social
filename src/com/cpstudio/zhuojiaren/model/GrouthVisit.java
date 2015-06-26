@@ -1,16 +1,20 @@
 package com.cpstudio.zhuojiaren.model;
-/**
- * 成长视频
+/***
+ * 成长专访
  * @author lef
  *
  */
-public class Grouth {
+public class GrouthVisit{
+
 	private String id;
 	private String imageUrl;
-	private String videoUrl;
 	private String name;
-	private String browerCount;
-	private String duration;
+	/**
+	 *  第几期
+	 */
+	private String order;
+	private String content;
+	private String time;
 	public String getId() {
 		return id;
 	}
@@ -29,18 +33,23 @@ public class Grouth {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getBrowerCount() {
-		return browerCount;
+	public String getOrder() {
+		return order;
 	}
-	public void setBrowerCount(String browerCount) {
-		this.browerCount = browerCount;
+	public void setOrder(String order) {
+		this.order = order;
 	}
-	public String getDuration() {
-		return duration;
+	public String getContent() {
+		return content;
 	}
-	public void setDuration(String duration) {
-		this.duration = duration;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
 
 }

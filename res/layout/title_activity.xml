@@ -19,8 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:textColor="#ffffff"/>
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:gravity="center"/>
     <TextView
         android:id="@+id/activity_function2"
         android:layout_width="wrap_content"
@@ -31,7 +32,6 @@
         android:textColor="#ffffff"
         android:textSize="20dp"
         android:visibility="gone" />
-
     <TextView
         android:id="@+id/activity_function"
         android:layout_width="wrap_content"

@@ -2,7 +2,7 @@
 <resources>
 
     <item name="tag_view_holder" type="id"></item>
-    <item name="tag_id" type="id"></item>
+    <item name="tag_id" type="id">id</item>
     <item name="tag_type" type="id"></item>
     <item name="tag_boolean" type="id"></item>
     <item name="tag_path" type="id"></item>
@@ -762,6 +762,8 @@
     <string name="finish">完成</string>
     <string name="accordingto_type">按分类</string>
     <string name="accordingto_locate">按所在地</string>
+    <string name="accordingto_teacher">按老师查询</string>
+    <string name="accordingto_type2">按分类查询</string>
     <string name="all">全部</string>
     <string name="filter_quanzi">筛选圈子</string>
     <string name="before_create">我确定创建圈子</string>
@@ -824,6 +826,32 @@
     <string name="praise">点赞</string>
     <string name="somedes">这里记录了发起人的一些成果，快来看看</string>
     <string name="country">全国</string>
+    <!-- 精进 -->
+    <string name="grouth_online">成长在线</string>
+    <string name="grouth_visite_label">家人专访</string>
+    <string name="share_inspiration">分享感悟</string>
+    <string name="share_text">此时此刻我想分享点什么呢&#8230;</string>
+    <string name="visit_detail">专访详情</string>
+    <string name="creater">作者：</string>
+    <string name="create_time">创建时间：</string>
+    <string name="zhuo_audio">倬元语音</string>
+    <string name="more_inspiration">查看更多家人感悟</string>
+    <!--  -->
+    <string name="my_money">我的零钱</string>
+    <string name="recharge_money">充值</string>
+    <string name="take_money">提现</string>
+    <string name="my_wallet">我的钱包</string>
+    <string name="my_zhuo_money">我的倬币</string>
+    <string name="add_bank_card">添加银行卡</string>
+    <string name="income_expenditure_details">收支明细</string>
+    <string name="income_money">收入金额</string>
+    <string name="expenditure_money">出帐金额</string>
+    <string name="type">类&#160;&#160;&#160;&#160;&#160;&#160;&#160;型</string>
+    <string name="deal_number">交易单号</string>
+    <string name="time2">时&#160;&#160;&#160;&#160;&#160;&#160;&#160;间</string>
+    <string name="left_broken_money">剩余零钱</string>
+    <string name="remark">备&#160;&#160;&#160;&#160;&#160;&#160;&#160;注</string>
+
     <!-- lz -->
     <string name="label_main_find">发现</string>
     <string name="label_main_searchHint">可搜索人名/公司/职务等关键词</string>
@@ -906,7 +934,14 @@
     <string name="label_my_set">设置</string>
     <string name="label_my_callback">建议反馈</string>
     <string name="label_my_about">关于倬脉</string>
-    <string name="title_zhuomai_card">倬脉名片</string>
+<string name="title_activity_audio_list">AudioListActivity</string>
+    <string name="title_activity_audio_detail">AudioDetailActivity</string>
+    <string name="title_activity_my_money">MyMoneyActivity</string>
+    <string name="title_activity_my_broken_money">MyBrokenMoneyActivity</string>
+    <string name="title_activity_income">IncomeActivity</string>
+    <string name="title_activity_income_details">IncomeDetailsActivity</string>
+
+<string name="title_zhuomai_card">倬脉名片</string>
     <string name="label_edit_bg">个性背景</string>
     <string name="label_justmore">更多</string>
     <string name="label_commercy_info">商务信息</string>
@@ -921,5 +956,4 @@
     <string name="text_signature_hint">名片签名，最多15个字</string>
     <string name="edit_nsignature_limit">签名最多输入15个字</string>
     <string name="my_info_hint">真实地表达自己，让更多家人了解自己。真实和了解是建立有效人脉的关键。</string>
- <string name="title_my_info">我的资料</string>
-</resources>
+ <string name="title_my_info">我的资料</string></resources>
