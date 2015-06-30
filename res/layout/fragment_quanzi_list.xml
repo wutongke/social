@@ -14,13 +14,13 @@
             android:layout_height="wrap_content"
             android:background="@color/graywhitem"
             android:orientation="horizontal"
-            android:visibility="gone" >
+            android:gravity="center_horizontal"
+            android:visibility="visible" >
 
             <RadioButton
                 android:id="@+id/fql_my_create"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="match_parent"
                 android:button="@null"
                 android:background="@drawable/imageview_selector" />
 
@@ -28,9 +28,9 @@
                 android:id="@+id/fql_my_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginLeft="50dp"
                 android:button="@null"
-                android:background="@drawable/imageview_selector" />
+                android:background="@drawable/imageview_selector2" />
         </RadioGroup>
 
         <GridView
