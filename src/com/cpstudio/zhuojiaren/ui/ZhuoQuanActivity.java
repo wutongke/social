@@ -50,6 +50,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 		title.setText(R.string.title_activity_zhuojiaquan);
 		//设置初始值 0 管理，1搜索，2筛选，3退出
 		function.setTag(0);
+		function.setBackgroundResource(R.drawable.button_bg);
 		function.setText(R.string.label_manage);
 		//初始化tab和viewpager
 		viewPager.setAdapter(getPagerAdapter());
@@ -90,7 +91,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 				case 0:
 					((QuanziFra)(fragments.get(0))).setManager();
 					function.setTag(3);
-					function.setText("退出");
+					function.setText("完成");
 					break;
 				case 1:
 					break;

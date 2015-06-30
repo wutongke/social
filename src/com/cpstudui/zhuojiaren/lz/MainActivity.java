@@ -120,10 +120,17 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		catsViewPager = (ViewPager) findViewById(R.id.cats_viewpager);
 		// catsViewPager.setLayoutParams(params);
 		catsListData = new ArrayList<BeanCats>();
+		int drawId[] = { R.drawable.jiarendongtai,
+				R.drawable.chengzhangzaixian, R.drawable.zhuoyuanyuyin,
+				R.drawable.wodemingpian, R.drawable.zhuojiaquanzi,
+				R.drawable.ziyuangongxu, R.drawable.zhuomaishangcheng,
+				R.drawable.zhongchouxiangmu, R.drawable.index_1,
+				R.drawable.index_2, R.drawable.index_3, R.drawable.index_4,
+				R.drawable.index_5, R.drawable.index_6, R.drawable.index_7 };
 
 		for (int i = 0; i < 14; i++) {
 			BeanCats item = new BeanCats();
-			item.setPicId(R.drawable.newmsg);
+			item.setPicId(drawId[i]);
 			catsListData.add(item);
 		}
 
@@ -141,9 +148,12 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 		antoText = (AutoTextView) findViewById(R.id.at_notices);
 		noticesListData = new ArrayList<BeanNotice>();
-		for (int i = 0; i < 4; i++) {
+		String [] notices = {"【最新动态】 第95期加入专访，理想与您相约",
+				"【最新动态】 第94期加入专访，放飞梦想"
+		};
+		for (int i = 0; i < 2; i++) {
 			BeanNotice item = new BeanNotice();
-			item.setContent("mseeage:" + i);
+			item.setContent(notices[i]);
 			noticesListData.add(item);
 		}
 
@@ -204,7 +214,8 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 					@Override
 					public void onClick(View v) {
-						Toast.makeText(MainActivity.this, "完善中...", 2000).show();
+						Toast.makeText(MainActivity.this, "完善中...", 2000)
+								.show();
 						// 此处应该是以微信等其他第三方方式邀请朋友
 						// Intent i = new Intent(MainActivity.this,
 						// UserSelectActivity.class);
@@ -431,11 +442,21 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		// bannerViewPager.setLayoutParams(params);
 
 		bannerListData = new ArrayList<BeanBanner>();
-
+		String[] urls = {"http://img3.imgtn.bdimg.com/it/u=2628293733,2370129064&fm=21&gp=0.jpg",
+				"http://img2.imgtn.bdimg.com/it/u=2906966334,223089362&fm=21&gp=0.jpg",
+				"http://img4.imgtn.bdimg.com/it/u=1704061436,275613074&fm=21&gp=0.jpg",
+				"http://img3.imgtn.bdimg.com/it/u=1440545533,1670448902&fm=21&gp=0.jpg",
+				"http://img2.imgtn.bdimg.com/it/u=697459274,2261536128&fm=21&gp=0.jpg",
+				"http://img4.imgtn.bdimg.com/it/u=2079958976,1443524702&fm=21&gp=0.jpg",
+				"http://img3.imgtn.bdimg.com/it/u=1849853359,1757644016&fm=21&gp=0.jpg",
+				"http://img0.imgtn.bdimg.com/it/u=1703091849,1006427253&fm=21&gp=0.jpg",
+				"http://img1.imgtn.bdimg.com/it/u=3254378695,3573443632&fm=21&gp=0.jpg",
+				"http://img4.imgtn.bdimg.com/it/u=420516615,2115785755&fm=21&gp=0.jpg"
+		}; 
 		for (int i = 0; i < 5; i++) {
 
 			BeanBanner item = new BeanBanner();
-			item.setPicUrl("http://pic.nipic.com/2008-05-07/20085722191339_2.jpg");
+			item.setPicUrl(urls[i]);
 			bannerListData.add(item);
 		}
 
@@ -469,7 +490,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		hotImages.add((ImageView) findViewById(R.id.ivHot3));
 		for (int i = 0; i < 3; i++) {
 			BeanBanner item = new BeanBanner();
-			item.setPicUrl("http://img2.imgtn.bdimg.com/it/u=834958572,3645145128&fm=21&gp=0.jpg");
+			item.setPicUrl(urls[i+5]);
 			hotListData.add(item);
 		}
 		for (int i = 0; i < 3; i++) {
