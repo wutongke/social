@@ -997,7 +997,9 @@
     <string name="title_activity_account_protect">AccountProtectActivity</string>
     <string name="title_activity_messaeg_remind">MessaegRemindActivity</string>
     <string name="title_activity_my_collection">MyCollectionActivity</string>
-<string name="title_activity_change_background">个性化背景</string>
-  <string name="title_activity_my_active">我的活动</string>
-  <string name="title_zhuomai_card">倬脉名片</string>
+    <string name="title_activity_change_background">个性化背景</string>
+    <string name="title_activity_my_active">我的活动</string>
+    <string name="title_zhuomai_card">倬脉名片</string>
+    <string name="label_td_card">我的倬脉二维码:</string>
+
 </resources>

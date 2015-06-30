@@ -490,7 +490,27 @@ public class CardEditActivity extends Activity {
 						}
 					}
 				});
-
+//ЖўЮЌТы
+		((View) findViewById(R.id.textViewEditTDCard).getParent())
+		.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+			//
+//				if (mUser != null) {
+//					Intent i = new Intent(CardEditActivity.this,
+//							CardAddUserNameActivity.class);
+//					i.putExtra(EDIT_NAME_STR1, mUser.getUsername());
+//					i.putExtra(EDIT_NAME_STR2, mUser.getSex());
+//					i.putExtra(EDIT_NAME_STR3, mUser.getIsmarry());
+//					startActivityForResult(i, EDIT_NAME);
+//				} else {
+//					CommonUtil.displayToast(getApplicationContext(),
+//							R.string.error12);
+//				}
+			}
+		});
+		
+		
 		((View) findViewById(R.id.textViewEditProductShow).getParent())
 				.setOnClickListener(new OnClickListener() {
 					@Override
