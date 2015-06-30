@@ -23,7 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
 public class CardAddUserProductActivity extends Activity {
-
+//产品添加图片等还未做
 	private LinearLayout linearLayout;
 	private ArrayList<String> titleTags = new ArrayList<String>();
 	private ArrayList<String> detailTags = new ArrayList<String>();

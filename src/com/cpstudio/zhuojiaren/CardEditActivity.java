@@ -510,23 +510,23 @@ public class CardEditActivity extends Activity {
 			}
 		});
 		
-		
-		((View) findViewById(R.id.textViewEditProductShow).getParent())
-				.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						if (mUser != null) {
-							Intent i = new Intent(CardEditActivity.this,
-									CardAddUserProductActivity.class);
-							i.putParcelableArrayListExtra(EDIT_PRODUCT_STR,
-									(ArrayList<ProductVO>) mUser.getProduct());
-							startActivityForResult(i, EDIT_PRODUCT);
-						} else {
-							CommonUtil.displayToast(getApplicationContext(),
-									R.string.error12);
-						}
-					}
-				});
+//移到了我的企业中的主营产品,注意对EDIT_PRODUCT处理
+//		((View) findViewById(R.id.textViewEditProductShow).getParent())
+//				.setOnClickListener(new OnClickListener() {
+//					@Override
+//					public void onClick(View v) {
+//						if (mUser != null) {
+//							Intent i = new Intent(CardEditActivity.this,
+//									CardAddUserProductActivity.class);
+//							i.putParcelableArrayListExtra(EDIT_PRODUCT_STR,
+//									(ArrayList<ProductVO>) mUser.getProduct());
+//							startActivityForResult(i, EDIT_PRODUCT);
+//						} else {
+//							CommonUtil.displayToast(getApplicationContext(),
+//									R.string.error12);
+//						}
+//					}
+//				});
 		((View) findViewById(R.id.textViewEditWorkShow).getParent())
 				.setOnClickListener(new OnClickListener() {
 					@Override
@@ -534,6 +534,8 @@ public class CardEditActivity extends Activity {
 						if (mUser != null) {
 							Intent i = new Intent(CardEditActivity.this,
 									CardAddUserWorkActivity.class);
+							i.putParcelableArrayListExtra(EDIT_PRODUCT_STR,
+									(ArrayList<ProductVO>) mUser.getProduct());
 							i.putExtra(EDIT_WORK_STR1, mUser.getCompany());
 							i.putExtra(EDIT_WORK_STR2, mUser.getPost());
 							i.putExtra(EDIT_WORK_STR3, mUser.getIsworking());
@@ -673,19 +675,19 @@ public class CardEditActivity extends Activity {
 				((TextView) findViewById(R.id.textViewEditNameShow))
 						.setText(name);
 				break;
-			case EDIT_PRODUCT:
-				ArrayList<ProductVO> products = data
-						.getParcelableArrayListExtra(EDIT_PRODUCT_STR);
-				mUser.setProduct(products);
-				String product = "";
-				if (product != null) {
-					for (ProductVO productVO : products) {
-						product += productVO.getTitle() + " ";
-					}
-				}
-				((TextView) findViewById(R.id.textViewEditProductShow))
-						.setText(product);
-				break;
+//			case EDIT_PRODUCT:
+//				ArrayList<ProductVO> products = data
+//						.getParcelableArrayListExtra(EDIT_PRODUCT_STR);
+//				mUser.setProduct(products);
+//				String product = "";
+//				if (product != null) {
+//					for (ProductVO productVO : products) {
+//						product += productVO.getTitle() + " ";
+//					}
+//				}
+//				((TextView) findViewById(R.id.textViewEditProductShow))
+//						.setText(product);
+//				break;
 			case EDIT_WORK:
 				String company = data.getStringExtra(EDIT_WORK_STR1);
 				String work = data.getStringExtra(EDIT_WORK_STR2);
@@ -789,15 +791,15 @@ public class CardEditActivity extends Activity {
 					String hobby = mUser.getHobby();
 					((TextView) findViewById(R.id.textViewEditHobbyShow))
 							.setText(hobby);
-					List<ProductVO> products = mUser.getProduct();
-					if (products != null) {
-						String cps = "";
-						for (int i = 0; i < products.size(); i++) {
-							cps += products.get(i).getTitle() + "    ";
-						}
-						((TextView) findViewById(R.id.textViewEditProductShow))
-								.setText(cps);
-					}
+//					List<ProductVO> products = mUser.getProduct();
+//					if (products != null) {
+//						String cps = "";
+//						for (int i = 0; i < products.size(); i++) {
+//							cps += products.get(i).getTitle() + "    ";
+//						}
+//						((TextView) findViewById(R.id.textViewEditProductShow))
+//								.setText(cps);
+//					}
 					int level = Integer.valueOf(mUser.getLevel());
 
 					String[] levels = getResources().getStringArray(

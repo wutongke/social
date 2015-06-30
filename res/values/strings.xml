@@ -254,12 +254,12 @@
     <string name="info27">确定不保存就离开吗？</string>
     <string name="info28">我的故事 我的传记</string>
     <string name="info29">请选择供需类型</string>
-    <string name="info30">最多可上传N张形象照</string>
+    <string name="info30">最多可上传10张形象照，以便家人更加了解你</string>
     <string name="info31">请输入行业</string>
     <string name="info32">以下信息只作为匹配推荐使用,不会展示给其他用户</string>
     <string name="info33">是否准备或正在创业：</string>
     <string name="info34">是否准备或正在工作：</string>
-    <string name="info35">请输入公司名称</string>
+    <string name="info35">请输入企业名称</string>
     <string name="info36">请输入职务名称</string>
     <string name="info37">真实完善个人资料，让你更容易获得机会</string>
     <string name="info38">请输入手机号码</string>
@@ -270,12 +270,12 @@
     <string name="info43">请输入现居住城市</string>
     <string name="info44">请输入经常来往的城市</string>
     <string name="info45">请输入我的家乡</string>
-    <string name="info46">请选择您的爱好</string>
+    <string name="info46">请选择您的爱好,以发现与自己有相同爱好的家人</string>
     <string name="info47">请输入您的客户</string>
     <string name="info48">请描述您的梦想，让我们一起来实现它</string>
     <string name="info49">请描述什么是您坚守的做人原则</string>
     <string name="info50">请输入产品名称</string>
-    <string name="info51">产品描述</string>
+    <string name="info51">请对产品进行介绍，让家人更加清晰地了解产品的功能</string>
     <string name="info52">您的产品能为客户带来什么好处，您的产品都适合哪些客户</string>
     <string name="info53">请输入我的网站</string>
     <string name="info54">我经常去的城市</string>
@@ -300,7 +300,7 @@
     <string name="info73">亲爱的家人，为了保证您的信息安全，请立即更换密码</string>
     <string name="info74">亲爱的家人，感谢您的用心和认真，为了安全和保障您的利益，我们的家人服务使者将会在2个工作日之内与您联系，以确认信息。祝您每天都有好心情，拥有平和、宁静、和谐的生命状态。</string>
     <string name="info75">亲爱的家人，欢迎您使用倬家币商品兑换功能，您现在拥有的倬家币是*****元，兑换此商品后，将会变成****元。请您认真填写以下内容，以便于我们为您提供更好的服务。</string>
-    <string name="info76">请输入您的其他爱好</string>
+    <string name="info76">如果没有以上爱好，可以进行描述</string>
     <string name="info77">说两句</string>
     <string name="info78">复制成功</string>
     <string name="info79">正在加载内容</string>
@@ -497,7 +497,7 @@
     <string name="label_zym">座右铭</string>
     <string name="label_dream">梦想</string>
     <string name="label_customer">客户</string>
-    <string name="label_hobby">爱好</string>
+    <string name="label_hobby">我的爱好</string>
     <string name="label_good">赞</string>
     <string name="label_share">分享</string>
     <string name="label_good2">赞一下</string>
@@ -526,8 +526,8 @@
     <string name="label_origin">原文</string>
     <string name="label_addone">+1</string>
     <string name="mp_hy">行业:</string>
-    <string name="mp_gszw">公司职位(我的企业):</string>
-    <string name="mp_mygs">我的公司:</string>
+    <string name="mp_gszw">我的企业:</string>
+    <string name="mp_mygs">我的企业名称:</string>
     <string name="mp_myzw">我的职位:</string>
     <string name="mp_name">我的姓名:</string>
     <string name="mp_sex">性别:</string>
@@ -646,13 +646,13 @@
     <string name="title_activity_zenghui">增慧</string>
     <string name="title_activity_active_photo">活动详情</string>
     <string name="title_activity_user_card"></string>
-    <string name="title_activity_card_add_user_image">名片编辑</string>
+    <string name="title_activity_card_add_user_image">我的照片</string>
     <string name="title_activity_card_add_user_fields">名片编辑</string>
-    <string name="title_activity_card_add_user_work">名片编辑</string>
+    <string name="title_activity_card_add_user_work">我的企业</string>
     <string name="title_activity_card_add_user_phone">名片编辑</string>
     <string name="title_activity_card_add_user_email">名片编辑</string>
     <string name="title_activity_card_add_user_birth">生日生肖</string>
-    <string name="title_activity_card_add_user_city">名片编辑</string>
+    <string name="title_activity_card_add_user_city">我的位置</string>
     <string name="title_activity_card_add_user_hobby">爱好</string>
     <string name="title_activity_card_add_user_customer">名片编辑</string>
     <string name="title_activity_card_add_user_motto">名片编辑</string>
@@ -917,6 +917,7 @@
     <string name="text_pub_topic_hint">+请输入话题内容</string>
     <string name="title_pub_topic">发布话题</string>
     <string name="image_des2">上传照片，9张以内</string>
+     <string name="image_des3">产品图片，最多上传5张图片</string>
     <string name="title_activity_crowd_funding_detail">CrowdFundingDetailActivity</string>
     <string name="label_gonggao">圈公告</string>
     <string name="label_class">圈分类</string>
@@ -1005,5 +1006,13 @@
     <string name="title_activity_my_active">我的活动</string>
     <string name="title_zhuomai_card">倬脉名片</string>
     <string name="label_td_card">我的倬脉二维码:</string>
-
+    <string name="mp_industry">所属行业:</string>
+    <string name="info100">请输入行业名称</string>
+    <string name="mp_company_local">企业所在地:</string>
+    <string name="main_product">主营产品:</string>
+    <string name="company_web">企业网站:</string>
+    <string name="title_activity_main_product">主营产品</string>
+<string name="label_target_client">适合客户:</string>
+<string name="label_fit_client">请对产品适合的客户进行介绍，让家人了解自己是否需要以及朋友是否需要</string>
+<string name="infocity">请分享自己经常所在的城市，以发现同城家人。</string>
 </resources>
