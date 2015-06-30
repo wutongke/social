@@ -1,8 +1,6 @@
 package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -18,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -32,18 +31,19 @@ import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 public class CardAddUserResourceActivity extends Activity implements
 		OnItemClickListener {
 	@InjectView(R.id.tvTitle)
-	Button tvTitle;
+	TextView tvTitle;
 
 	@InjectView(R.id.buttonManage)
-	Button buttonManage;
+	TextView buttonManage;
+
 	@InjectView(R.id.fql_footer)
-	Button fql_footer;
+	View fql_footer;
 	@InjectView(R.id.lt_pub_res)
-	Button lt_pub_res;
+	View lt_pub_res;
 	@InjectView(R.id.fql_share)
-	Button fql_share;
+	View fql_share;
 	@InjectView(R.id.fql_delete)
-	Button fql_delete;
+	View fql_delete;
 
 	private ListView mListView;
 	private ResListAdapter mAdapter;
@@ -65,8 +65,8 @@ public class CardAddUserResourceActivity extends Activity implements
 		Intent i = getIntent();
 		mType = i.getIntExtra(CardEditActivity.EDIT_RES_STR1, 0);
 		userid = i.getStringExtra(CardEditActivity.EDIT_RES_STR2);
-		
-		if(mType==2)
+
+		if (mType == 2)
 			tvTitle.setText(R.string.mp_mygong);
 		else
 			tvTitle.setText(R.string.mp_myxu);
@@ -192,8 +192,6 @@ public class CardAddUserResourceActivity extends Activity implements
 
 	};
 
-	
-	
 	private void loadData() {
 		if (mListViewFooter.startLoading()) {
 			mList.clear();

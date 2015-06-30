@@ -1,4 +1,4 @@
-package com.cpstudio.zhuojiaren.ui;
+package com.cpstudui.zhuojiaren.lz;
 
 import java.util.ArrayList;
 
@@ -11,6 +11,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -19,175 +20,96 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.MsgDetailActivity;
+import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.adapter.ZhuoNearByUserListAdatper;
-import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter2;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.UserAndCollection;
-import com.cpstudio.zhuojiaren.model.UserVO;
-import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
-public class UserSameActivity extends BaseActivity implements
+public class MyActiveActivity extends BaseActivity implements
 		OnPullDownListener, OnItemClickListener {
-	private ListView mListView;
-	private CommonAdapter mAdapter;
-	private PullDownView mPullDownView;
-	private ArrayList<UserAndCollection> mList = new ArrayList<UserAndCollection>();
+	@InjectView(R.id.llMenueTop)
+	View pubView;
+	
+
+	boolean isManaging = false;
 	private String mSearchKey = null;
+	private ArrayList<EventVO> mList = new ArrayList<EventVO>();
+	private ZhuoConnHelper mConnHelper = null;
+	private int mPage = 1;
+	private int mType = 6;
+	private EventListAdapter mAdapter;
+	private PullDownView mPullDownView;
+	private ListViewFooter mListViewFooter = null;
+	private ListView mListView;
 	private String mLastId = null;
 	private String uid = null;
-	private String mType = "1";
-	private ZhuoConnHelper mConnHelper = null;
-
-	private int requestCodeCity = 1;
-	private int requestCodeIndustry = 2;
-	private int requestCodeHoppy = 3;
-	private int requestCodeTeacher = 4;
-
-	// add by lz
-	boolean isManaging = false;
+	String sk = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_same_city);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		Intent intent = getIntent();
-		int type = intent.getIntExtra("type", 1);
-		mType = String.valueOf(type);
+		setContentView(R.layout.activity_my_active);
+		ButterKnife.inject(this);
 		initTitle();
-		switch (type) {
-		case 1:
-			title.setText(R.string.title_activity_group_type2);
-			function.setText(R.string.country);
-			function.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					startActivityForResult(new Intent(UserSameActivity.this,
-							CityChooseActivity.class), requestCodeCity);
-				}
-			});
-			break;
-		case 2:
-			title.setText(R.string.title_activity_group_type3);
-			function.setText(R.string.label_field);
-			// 选择行业
-			function.setOnClickListener(new OnClickListener() {
+		title.setText(R.string.title_activity_my_active);
+		function.setVisibility(View.VISIBLE);
+		function.setText(R.string.label_manage);
 
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					Intent intent = new Intent(UserSameActivity.this,
-							FieldSelectUserActivity.class);
-					intent.putExtra("type", 1);
-					startActivityForResult(intent, requestCodeIndustry);
-				}
-			});
-			break;
-		case 3:
-			title.setText(R.string.title_activity_group_type5);
-			break;
-		case 4:
-			title.setText(R.string.title_activity_group_type4);
-			function.setText(R.string.label_hobby);
-			// 选择行业
-			function.setOnClickListener(new OnClickListener() {
+		mConnHelper = ZhuoConnHelper.getInstance(MyActiveActivity.this
+				.getApplicationContext());
 
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					Intent intent = new Intent(UserSameActivity.this,
-							FieldSelectUserActivity.class);
-					intent.putExtra("type", 2);
-					startActivityForResult(intent, requestCodeHoppy);
-				}
-			});
-			break;
-		case 5:
-			title.setText(R.string.title_activity_group_type6);
-			function.setText(R.string.label_filter2);
-			// 选择行业
-			function.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					Intent intent = new Intent(UserSameActivity.this,
-							FieldSelectUserActivity.class);
-					intent.putExtra("type", 3);
-					startActivityForResult(intent, requestCodeTeacher);
-				}
-			});
-			break;
-		case 6:
-			title.setText(R.string.title_activity_group_type7);
-			break;
-		case 7:// 请求交换名片的人
-			title.setText(R.string.label_active_reuqest_card); // 还需要显示人数
-
-			break;
-		case 8:
-			title.setText(R.string.label_active_viewed);
-			break;
-		case 9:
-			title.setText(R.string.label_active_collected_me);
-			break;
-		case 10:
-			title.setText(R.string.label_active_zaned_me);
-			break;
-		case 11:
-			title.setText(R.string.label_active_by_me);
-		case 12:// 我的人脉
-			title.setText(R.string.renmai_my);
-			function.setText(R.string.label_manage);
-		
-			//我的人脉不显示“收藏”
-			if(findViewById(R.id.ll_collect)!=null)
-				findViewById(R.id.ll_collect).setVisibility(View.GONE);
-			function.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View arg0) {
-					// TODO Auto-generated method stub
-					isManaging = !isManaging;
-					if (isManaging)
-						function.setText(R.string.EXIT);
-					else
-						function.setText(R.string.label_manage);
-					if (mAdapter != null)
-						((ZhuoUserListAdapter2) mAdapter)
-								.setIsManaging(isManaging);
-				}
-			});
-			break;
-		}
-		String sk = intent.getStringExtra("mSearchKey");
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
+
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.listview_header5);
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
-		if (type != 3)
-			mAdapter = new ZhuoUserListAdapter2(UserSameActivity.this, mList,
-					R.layout.item_zhuouser_list2);
-		else
-			mAdapter = new ZhuoNearByUserListAdatper(UserSameActivity.this,
-					mList, R.layout.item_zhuouser_near_list);
+
+		mAdapter = new EventListAdapter(MyActiveActivity.this, mList);
+		
+
+		RelativeLayout mFooterView = (RelativeLayout) LayoutInflater.from(this).inflate(
+				R.layout.listview_footer, null);
+
+		mListView.addFooterView(mFooterView);
+		mListViewFooter = new ListViewFooter(mFooterView, onMoreClick);
+		mListView.setAdapter(mAdapter);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// Intent i = new Intent(getActivity(),
+				// EventDetailActivity.class);
+				// i.putExtra("eventId", mList.get(position).getEventId());
+				// startActivity(i);
+			}
+
+		});
+
+		// 测试，用死的数据
+		// loadData();
+		for (int i = 0; i < 8; i++)
+			mList.add(new EventVO());
+		mAdapter.notifyDataSetChanged();
+
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
@@ -196,35 +118,6 @@ public class UserSameActivity extends BaseActivity implements
 			mSearchKey = sk;
 			((EditText) findViewById(R.id.editTextSearch)).setText(sk);
 		}
-		// loadData();
-		// test
-		UserAndCollection a = new UserAndCollection();
-		a.setIsCollection("1");
-		a.setDistance("1公里");
-		UserVO user = new UserVO();
-		user.setUsername("张来才");
-		user.setPost("php董事");
-		user.setUheader("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2222979786,259610352&fm=116&gp=0.jpg");
-		user.setCompany("php902大集团");
-		a.setUser(user);
-		UserAndCollection b = new UserAndCollection();
-		b.setIsCollection("0");
-		b.setDistance("1.5公里");
-		b.setUser(user);
-		mList.add(a);
-		mList.add(b);
-		mList.add(a);
-		mList.add(b);
-		mList.add(a);
-		mList.add(b);
-		mList.add(a);
-		mList.add(b);
-		mList.add(a);
-		mList.add(b);
-		mList.add(a);
-		mList.add(b);
-		mList.add(a);
-		mList.add(b);
 		mAdapter.notifyDataSetChanged();
 	}
 
@@ -233,7 +126,7 @@ public class UserSameActivity extends BaseActivity implements
 			if (data != null && !data.equals("")) {
 				JsonHandler nljh = new JsonHandler(data,
 						getApplicationContext());
-				ArrayList<UserAndCollection> list = new ArrayList<UserAndCollection>();
+				ArrayList<EventVO> list = new ArrayList<EventVO>();
 				// =nljh.parseZhuoInfoList();
 				if (!list.isEmpty()) {
 					mPullDownView.hasData();
@@ -243,7 +136,7 @@ public class UserSameActivity extends BaseActivity implements
 					mList.addAll(list);
 					mAdapter.notifyDataSetChanged();
 					if (mList.size() > 0) {
-						mLastId = mList.get(mList.size() - 1).getId();
+						mLastId = mList.get(mList.size() - 1).getEventId();
 					}
 				} else {
 					if (refresh && mSearchKey != null && !mSearchKey.equals("")) {
@@ -296,7 +189,7 @@ public class UserSameActivity extends BaseActivity implements
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		if (id != -1) {
-			Intent i = new Intent(UserSameActivity.this,
+			Intent i = new Intent(MyActiveActivity.this,
 					MsgDetailActivity.class);
 			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
 			startActivity(i);
@@ -355,11 +248,34 @@ public class UserSameActivity extends BaseActivity implements
 	}
 
 	private void initClick() {
+		function.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				isManaging = !isManaging;
+				mAdapter.setManaging(isManaging);
+				if (isManaging)
+					function.setText(R.string.EXIT);
+				else
+					function.setText(R.string.label_manage);
+			}
+		});
+
+		pubView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(MyActiveActivity.this,
+						PublishActiveActivity.class);
+				startActivity(i);
+			}
+		});
+
+		
 		final EditText searchView = (EditText) findViewById(R.id.editTextSearch);
 		final View delSearch = findViewById(R.id.imageViewDelSearch);
 		searchView.setOnEditorActionListener(new OnEditorActionListener() {
-
 			@Override
 			public boolean onEditorAction(TextView v, int actionId,
 					KeyEvent event) {
@@ -407,34 +323,28 @@ public class UserSameActivity extends BaseActivity implements
 				}
 			}
 		});
+
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
-			switch (requestCode) {
-			// 城市
-			case 1:
-				function.setText(data.getStringExtra("city"));
-				break;
-			case 2:
-				TextView view1 = (TextView) findViewById(R.id.lvh5_text);
-				view1.setVisibility(View.VISIBLE);
-				view1.setText("当前选择:" + data.getStringExtra("industry"));
-				break;
-			case 3:
-				TextView view2 = (TextView) findViewById(R.id.lvh5_text);
-				view2.setVisibility(View.VISIBLE);
-				view2.setText("当前选择:" + data.getStringExtra("industry"));
-				break;
-			case 4:
-				TextView view3 = (TextView) findViewById(R.id.lvh5_text);
-				view3.setVisibility(View.VISIBLE);
-				view3.setText("当前选择:" + data.getStringExtra("industry"));
-				break;
-			}
+	private void loadMore() {
+		if (mListViewFooter.startLoading()) {
+			String params = ZhuoCommHelper.getUrlMsgList();
+			params += "?pageflag=" + "1";
+			params += "&reqnum=" + "10";
+			params += "&lastid=" + mLastId;
+			params += "&type=" + "0";
+			params += "&gongxutype=" + "0";
+			params += "&from=" + "0";
+			params += "&uid=" + uid;
+			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
 		}
 	}
+
+	private OnClickListener onMoreClick = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			loadMore();
+		}
+	};
+
 }

@@ -22,6 +22,16 @@ public class UserAndCollection {
 	private String distance;
 	private UserVO user;
 	
+	
+	//add by lz
+	private boolean isChecked;
+	
+	public boolean isChecked() {
+		return isChecked;
+	}
+	public void setChecked(boolean isChecked) {
+		this.isChecked = isChecked;
+	}
 	public String getId() {
 		return id;
 	}

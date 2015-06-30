@@ -29,18 +29,28 @@ import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 /**
- * å€¬å®¶äººadapter
- * åŒåŸã€ç«¥è¶£ã?åŒè¡Œç­?
+ * å€¬å®¶äººadapter åŒåŸã€ç«¥è¶£ã?åŒè¡Œç­?
+ * 
  * @author lef
- *
+ * 
  */
 public class ZhuoUserListAdapter2 extends CommonAdapter<UserAndCollection> {
+	// addByLz
+	boolean isManageing = false;// ¡°ÎÒµÄÈËÂö¡±-> ÊÇ·ñÉ¾³ı
+
 	LoadImage loadImage = new LoadImage(50);
-	public ZhuoUserListAdapter2(Context context, List<UserAndCollection> mDatas,
-			int itemLayoutId) {
+
+	public ZhuoUserListAdapter2(Context context,
+			List<UserAndCollection> mDatas, int itemLayoutId) {
 		super(context, mDatas, itemLayoutId);
 		// TODO Auto-generated constructor stub
+	}
+
+	public void setIsManaging(boolean flag) {
+		isManageing = flag;
+		notifyDataSetChanged();
 	}
 
 	@Override
@@ -50,13 +60,18 @@ public class ZhuoUserListAdapter2 extends CommonAdapter<UserAndCollection> {
 		helper.setText(R.id.izul_company, item.getUser().getCompany());
 		helper.setText(R.id.izul_position, item.getUser().getPost());
 		helper.setImageResource(R.id.izul_collect, R.drawable.tab_collect_off);
-		if(item.getIsCollection().equals(UserAndCollection.collection)){
-			helper.setImageResource(R.id.izul_collect, R.drawable.tab_collect_on);
+		if (item.getIsCollection().equals(UserAndCollection.collection)) {
+			helper.setImageResource(R.id.izul_collect,
+					R.drawable.tab_collect_on);
 		}
-		ImageView iv = (ImageView)helper.getView(R.id.izul_image);
+		ImageView iv = (ImageView) helper.getView(R.id.izul_image);
 		iv.setTag(item.getUser().getUheader());
+
+		// add by lz
+		helper.setCheckBox(R.id.isChecked, false, isManageing ? View.VISIBLE
+				: View.GONE);
+
 		loadImage.addTask(item.getUser().getUheader(), iv);
 		loadImage.doTask();
 	}
-	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -31,8 +32,10 @@ import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
+import com.cpstudui.zhuojiaren.lz.LZMyHomeActivity;
 import com.cpstudui.zhuojiaren.lz.QuanMemberListAdapter;
 import com.cpstudui.zhuojiaren.lz.QuanziTopicListAdapter;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
 
 public class QuanziMemberFra extends Fragment {
@@ -97,13 +100,11 @@ public class QuanziMemberFra extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				// if (mType == QuanVO.QUANZIACTIVE) {
-				//
-				// } else if (mType == QuanVO.QUANZITOPIC) {
-				//
-				// } else {
-				//
-				// }
+				Intent intent = new Intent(mContext,
+						ZhuoMaiCardActivity.class);
+	//需要从item中获得ID
+				intent.putExtra("userid", 1001);
+				startActivity(intent);
 			}
 
 		});

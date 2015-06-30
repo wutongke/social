@@ -1,6 +1,7 @@
 package com.cpstudio.zhuojiaren.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,9 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.ui.UserSameActivity;
+import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
+import com.cpstudui.zhuojiaren.lz.MyActiveActivity;
 
 public class ZhuomaiActiveInfoFra extends Fragment {
 
@@ -31,7 +35,7 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 	View llMyActive;
 	@InjectView(R.id.llMyQuanzi)
 	View llMyQuanzi;
-	
+
 	private ZhuoConnHelper mConnHelper = null;
 
 	private Context mContext;
@@ -67,16 +71,15 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 
 	private void initclick() {
 		// TODO Auto-generated method stub
-		
-		
-		
-		
+
 		llMyRenmai.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				
+				Intent i = new Intent(mContext, UserSameActivity.class);
+				i.putExtra("type", 12);
+				startActivity(i);
 			}
 		});
 		llMyActive.setOnClickListener(new OnClickListener() {
@@ -84,7 +87,8 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				
+				Intent i = new Intent(mContext, MyActiveActivity.class);
+				startActivity(i);
 			}
 		});
 		llMyQuanzi.setOnClickListener(new OnClickListener() {
@@ -92,7 +96,8 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				
+				Intent i = new Intent(mContext, ZhuoQuanActivity.class);
+				startActivity(i);
 			}
 		});
 	}

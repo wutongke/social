@@ -110,7 +110,7 @@ public class TabContainerActivity extends TabActivity implements
 		}
 		TextView textView = (TextView) view.findViewById(R.id.tabtitle);
 		textView.setText(mTextArray[index]);
-		if (index == 3) {
+		if (index == 2) {
 			numTV = (TextView) view.findViewById(R.id.textViewNum);
 		}
 		return view;

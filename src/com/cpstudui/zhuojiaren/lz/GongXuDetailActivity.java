@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -438,6 +439,11 @@ public class GongXuDetailActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				// 用intent启动拨打电话
+				if (sharer==null  || sharer.getPhone() == null) {
+					Toast.makeText(GongXuDetailActivity.this, "号码为空", 1100)
+							.show();
+					return;
+				}
 				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
 						+ sharer.getPhone()));
 				startActivity(intent);

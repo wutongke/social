@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
@@ -16,10 +17,15 @@ import com.cpstudio.zhuojiaren.model.EventVO;
 public class EventListAdapter extends BaseAdapter {
 	private List<EventVO> mList = null;
 	private LayoutInflater inflater = null;
-
+	public boolean  isManaging=false;
 	public EventListAdapter(Context context, ArrayList<EventVO> list) {
 		this.mList = list;
 		this.inflater = LayoutInflater.from(context);
+	}
+
+	public void setManaging(boolean isManaging) {
+		this.isManaging = isManaging;
+		notifyDataSetChanged();
 	}
 
 	@Override
@@ -48,13 +54,15 @@ public class EventListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.item_event_list,
 					null);
-			
 			holder=initHolderActive(convertView);
 			convertView.setTag(R.id.tag_view_holder, holder);
 		} else {
 			holder = (ViewHolderActive) convertView.getTag(R.id.tag_view_holder);
 		}
-
+        if(isManaging)
+        	holder.cbSelected.setVisibility(View.VISIBLE);
+        else
+        	holder.cbSelected.setVisibility(View.GONE);
 		return convertView;
 	}
 
@@ -66,6 +74,7 @@ public class EventListAdapter extends BaseAdapter {
 		TextView textViewIsOverTime;
 		TextView textViewNums;
 		TextView textViewDetail;
+		CheckBox cbSelected;
 	}
 
 	private ViewHolderActive initHolderActive(View convertView) {
@@ -83,6 +92,7 @@ public class EventListAdapter extends BaseAdapter {
 		holder.textViewNums = (TextView) convertView.findViewById(R.id.textViewNums);
 		holder.textViewDetail = (TextView) convertView
 				.findViewById(R.id.textViewDetail);
+		holder.cbSelected =(CheckBox) convertView.findViewById(R.id.cbChecked);
 		
 		return holder;
 	}
