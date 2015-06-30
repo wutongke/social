@@ -972,7 +972,8 @@
     <string name="title_activity_my_broken_money">MyBrokenMoneyActivity</string>
     <string name="title_activity_income">IncomeActivity</string>
     <string name="title_activity_income_details">IncomeDetailsActivity</string>
-    <string name="title_activity_my_zhuo_bi">MyZhuoBiActivity</string>    <string name="label_edit_bg">个性背景</string>
+    <string name="title_activity_my_zhuo_bi">MyZhuoBiActivity</string>
+    <string name="label_edit_bg">个性背景</string>
     <string name="label_justmore">更多</string>
     <string name="label_commercy_info">商务信息</string>
     <string name="label_more_info">更多资料</string>
@@ -986,9 +987,9 @@
     <string name="text_signature_hint">名片签名，最多15个字</string>
     <string name="edit_nsignature_limit">签名最多输入15个字</string>
     <string name="my_info_hint">真实地表达自己，让更多家人了解自己。真实和了解是建立有效人脉的关键。</string>
- <string name="title_my_info">我的资料</string>
-
- <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_my_info">我的资料</string>
+    <string name="label_setup_active">发起活动</string>
+    <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_account">AccountActivity</string>
     <string name="title_activity_phone">PhoneActivity</string>
     <string name="title_activity_qq">QQActivity</string>
@@ -996,6 +997,7 @@
     <string name="title_activity_account_protect">AccountProtectActivity</string>
     <string name="title_activity_messaeg_remind">MessaegRemindActivity</string>
     <string name="title_activity_my_collection">MyCollectionActivity</string>
-
-
+<string name="title_activity_change_background">个性化背景</string>
+  <string name="title_activity_my_active">我的活动</string>
+  <string name="title_zhuomai_card">倬脉名片</string>
 </resources>

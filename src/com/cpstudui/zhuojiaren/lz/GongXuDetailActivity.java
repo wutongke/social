@@ -439,7 +439,7 @@ public class GongXuDetailActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				// 用intent启动拨打电话
-				if (sharer.getPhone() == null) {
+				if (sharer==null  || sharer.getPhone() == null) {
 					Toast.makeText(GongXuDetailActivity.this, "号码为空", 1100)
 							.show();
 					return;

@@ -443,7 +443,8 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
- android:name="com.cpstudio.zhuojiaren.ui.MyChangePwdActivity"            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:name="com.cpstudio.zhuojiaren.ui.MyChangePwdActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_my_change_pwd"
             android:screenOrientation="portrait" >
         </activity>
@@ -682,7 +683,6 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        </activity>
         <activity
             android:name=".ui.NewPasswordActivity"
             android:screenOrientation="portrait"
@@ -826,7 +826,9 @@
             android:name="com.cpstudui.zhuojiaren.lz.LZMyHomeActivity"
             android:label="@string/title_activity_lzmy_home" >
         </activity>
-android:name="com.cpstudio.zhuojiaren.ui.AudioListActivity"            android:screenOrientation="portrait"
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.AudioListActivity"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
@@ -856,12 +858,32 @@ android:name="com.cpstudio.zhuojiaren.ui.AudioListActivity"            android:s
         </activity>
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity"
-            android:label="@string/title_zhuomai_card" >
+             >
         </activity>
+        <activity
             android:name="com.cpstudui.zhuojiaren.lz.QuanziActiveActiveActivity"
+            android:label="@string/label_active_quanzi">
+        </activity>
+        
+        <activity
+            android:name="com.cpstudui.zhuojiaren.lz.QuanziActiveActivity"
             android:label="@string/label_active_quanzi" >
         </activity>
-<activity
+        <activity
+            android:name="com.cpstudui.zhuojiaren.lz.QuanBriefActivity"
+            android:label="@string/label_quan_brief" >
+        </activity>
+        <activity
+            android:name="com.cpstudui.zhuojiaren.lz.ChangeBackgroundActivity"
+            android:label="@string/title_activity_change_background" >
+        </activity>
+        <activity
+            android:name=".MyActiveActivity"
+            android:label="@string/title_activity_my_active" >
+        </activity>
+        
+        
+        <activity
             android:name="com.cpstudio.zhuojiaren.ui.MyZhuoBiActivity"
             android:label="@string/title_activity_my_zhuo_bi" >
         </activity>
@@ -898,6 +920,7 @@ android:name="com.cpstudio.zhuojiaren.ui.AudioListActivity"            android:s
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.MyCollectionActivity"
             android:label="@string/title_activity_my_collection" >
-        </activity>    </application>
+        </activity>
+    </application>
 
 </manifest>
