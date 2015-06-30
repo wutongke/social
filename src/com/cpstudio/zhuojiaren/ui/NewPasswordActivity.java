@@ -1,7 +1,5 @@
 package com.cpstudio.zhuojiaren.ui;
 
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,8 +17,6 @@ import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.LoginActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
@@ -42,7 +38,7 @@ public class NewPasswordActivity extends BaseActivity {
 		mContext = this;
 		pwh = new PopupWindows(this);
 		initTitle();
-		title.setText("’“ªÿ√‹¬Î");
+		title.setText(R.string.get_password);
 		initOnclick();
 	}
 	private void initOnclick() {

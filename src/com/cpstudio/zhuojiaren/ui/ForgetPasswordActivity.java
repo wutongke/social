@@ -41,7 +41,7 @@ public class ForgetPasswordActivity extends BaseActivity {
 		setContentView(R.layout.activity_forget_password);
 		ButterKnife.inject(this);
 		initTitle();
-		title.setText("找回密码");
+		title.setText(R.string.get_password);
 		initView();
 	}
 
@@ -54,19 +54,19 @@ public class ForgetPasswordActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				if (phone.getText().toString().equals("")
 						|| messageText.getText().toString().isEmpty()) {
-					Toast.makeText(ForgetPasswordActivity.this, "请填写完整",
+					Toast.makeText(ForgetPasswordActivity.this, R.string.please_finish,
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
 				if (Util.isMobileNum(phone.getText().toString()) == false) {
-					Toast.makeText(ForgetPasswordActivity.this, "手机号不合法",
+					Toast.makeText(ForgetPasswordActivity.this, R.string.invalid_number,
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
 				progressDialog = new ProgressDialog(
 						ForgetPasswordActivity.this,
 						ProgressDialog.THEME_HOLO_DARK);
-				progressDialog.setMessage("密码提交");
+				progressDialog.setMessage(getResources().getString(R.string.submitting));
 				progressDialog.show();
 				// join(nickName.getText().toString(),
 				// MD5.getMessageDigest(password.getText().toString().getBytes()),
@@ -82,12 +82,12 @@ public class ForgetPasswordActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (phone.getText().toString().isEmpty()) {
-					Toast.makeText(ForgetPasswordActivity.this, "请填写手机号",
+					Toast.makeText(ForgetPasswordActivity.this, R.string.please_finish,
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
 				if (Util.isMobileNum(phone.getText().toString()) == false) {
-					Toast.makeText(ForgetPasswordActivity.this, "手机号不合法",
+					Toast.makeText(ForgetPasswordActivity.this, R.string.invalid_number,
 							Toast.LENGTH_SHORT).show();
 					return;
 				}

@@ -883,6 +883,10 @@
     <string name="get_new_message">新消息提醒</string>
     <string name="sound">声音</string>
     <string name="vibrate">震动</string>
+    <string name="get_password">找回密码</string>
+    <string name="please_finish">请填写完整</string>
+    <string name="invalid_number">手机号不合法</string>
+    <string name="submitting">提交中&#8230;&#8230;&#8230;</string>
 
     <!-- lz -->
     <string name="label_main_find">发现</string>
