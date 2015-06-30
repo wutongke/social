@@ -58,7 +58,9 @@ public class ZhuoMaiCardActivity extends BaseFragmentActivity {
 	Button btnEditBG;// 个性化背景
 	@InjectView(R.id.btnEditCard)
 	Button btnEditCard;//
-
+	@InjectView(R.id.rootLayout)
+	View rootLayout;//
+	
 	private final static int USER_SELECT = 0;
 	private Context mContext;
 	// 四个fragment 方便通信
@@ -114,6 +116,9 @@ public class ZhuoMaiCardActivity extends BaseFragmentActivity {
 		} else
 			ltMenue.setVisibility(View.GONE);
 		mLoadImage = new LoadImage();
+		
+		//设置个性背景图片，在个人信息里。个人可以选择更换
+		rootLayout.setBackgroundResource(R.drawable.audio_start);
 		
 		initOnClick();
 		// loadInfo();
@@ -222,9 +227,9 @@ public class ZhuoMaiCardActivity extends BaseFragmentActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				// Intent i = new Intent(ZhuoMaiCardActivity.this,
-				// PubTopicActicvity.class);
-				// startActivity(i);
+				 Intent i = new Intent(ZhuoMaiCardActivity.this,
+				 ChangeBackgroundActivity.class);
+				 startActivity(i);
 			}
 		});
 		btnEditCard.setOnClickListener(new OnClickListener() {

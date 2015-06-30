@@ -4,6 +4,13 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
 
+    <CheckBox
+        android:id="@+id/isChecked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical" >
+    </CheckBox>
+
     <RelativeLayout
         android:layout_width="52dp"
         android:layout_height="52dp"
@@ -60,11 +67,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_collect"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingRight="10dp"
         android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingRight="10dp" >
 
         <ImageView
             android:id="@+id/izul_collect"

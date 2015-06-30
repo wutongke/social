@@ -8,6 +8,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -111,9 +112,25 @@ public class ViewHolder {
 	 * @return
 	 */
 	public ViewHolder setImageByUrl(int viewId, String url) {
-		//先创建，后使用
+		// 先创建，后使用
 		ImageLoader il = ImageLoader.getInstance(3, Type.LIFO);
 		il.loadImage(url, (ImageView) getView(viewId));
+		return this;
+	}
+
+	// add by lz
+	/**
+	 * 为CheckBox赋值
+	 * 
+	 * @param viewId
+	 * @param drawableId
+	 * @return
+	 */
+	public ViewHolder setCheckBox(int viewId, boolean flag,int visibility) {
+		// 先创建，后使用
+		CheckBox cb = getView(viewId);
+		cb.setChecked(flag);
+		cb.setVisibility(visibility);
 		return this;
 	}
 

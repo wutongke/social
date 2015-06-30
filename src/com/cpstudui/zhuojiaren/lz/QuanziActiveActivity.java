@@ -42,7 +42,7 @@ import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
  * @author lz
  * 
  */
-public class QuanziActiveActiveActivity extends Activity implements
+public class QuanziActiveActivity extends Activity implements
 		OnPullDownListener, OnItemClickListener {
 	//数据根据这个向网络取出不同的
 	int dataType;//0:倬脉全部圈子动态，创建的圈子动态，我加入的圈子动态
@@ -84,7 +84,7 @@ public class QuanziActiveActiveActivity extends Activity implements
 		infoFacade = new InfoFacade(getApplicationContext(),
 				InfoFacade.ACTIVELIST);
 		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
-		pwh = new PopupWindows(QuanziActiveActiveActivity.this);
+		pwh = new PopupWindows(QuanziActiveActivity.this);
 		mLoadImage = new LoadImage();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
@@ -92,7 +92,7 @@ public class QuanziActiveActiveActivity extends Activity implements
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
-		mAdapter = new QuanziActiveListAdapter(QuanziActiveActiveActivity.this,
+		mAdapter = new QuanziActiveListAdapter(QuanziActiveActivity.this,
 				mList);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
@@ -170,7 +170,7 @@ public class QuanziActiveActiveActivity extends Activity implements
 
 					@Override
 					public void onClick(View v) {
-						Intent i = new Intent(QuanziActiveActiveActivity.this,
+						Intent i = new Intent(QuanziActiveActivity.this,
 								UserHomeActivity.class);
 						i.putExtra("userid", mUid);
 						i.putExtra("from", "home");
@@ -285,7 +285,7 @@ public class QuanziActiveActiveActivity extends Activity implements
 
 			// lz暂时该为话题详情，测试用
 			// i.setClass(JiarenActiveActivity.this, MsgDetailActivity.class);
-			i.setClass(QuanziActiveActiveActivity.this,
+			i.setClass(QuanziActiveActivity.this,
 					TopicDetailActivity.class);
 			// lz
 			// }
@@ -374,7 +374,7 @@ public class QuanziActiveActiveActivity extends Activity implements
 			if (requestCode == MsgTagVO.DATA_REFRESH) {
 				onRefresh();
 			} else if (requestCode == MsgTagVO.MSG_CMT) {
-				Toast.makeText(QuanziActiveActiveActivity.this, "评论成功！", 2000)
+				Toast.makeText(QuanziActiveActivity.this, "评论成功！", 2000)
 						.show();
 				// String forward = data.getStringExtra("forward");
 				// String msgid = data.getStringExtra("msgid");
@@ -419,7 +419,7 @@ public class QuanziActiveActiveActivity extends Activity implements
 						data, false);
 				if (filePath != null) {
 					try {
-						Intent i = new Intent(QuanziActiveActiveActivity.this,
+						Intent i = new Intent(QuanziActiveActivity.this,
 								PublishActiveActivity.class);
 						i.putExtra("filePath", filePath);
 						startActivityForResult(i, MsgTagVO.DATA_REFRESH);

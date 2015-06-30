@@ -934,14 +934,13 @@
     <string name="label_my_set">设置</string>
     <string name="label_my_callback">建议反馈</string>
     <string name="label_my_about">关于倬脉</string>
-<string name="title_activity_audio_list">AudioListActivity</string>
+    <string name="title_activity_audio_list">AudioListActivity</string>
     <string name="title_activity_audio_detail">AudioDetailActivity</string>
     <string name="title_activity_my_money">MyMoneyActivity</string>
     <string name="title_activity_my_broken_money">MyBrokenMoneyActivity</string>
     <string name="title_activity_income">IncomeActivity</string>
     <string name="title_activity_income_details">IncomeDetailsActivity</string>
-
-<string name="title_zhuomai_card">倬脉名片</string>
+    <string name="title_zhuomai_card">倬脉名片</string>
     <string name="label_edit_bg">个性背景</string>
     <string name="label_justmore">更多</string>
     <string name="label_commercy_info">商务信息</string>
@@ -956,4 +955,8 @@
     <string name="text_signature_hint">名片签名，最多15个字</string>
     <string name="edit_nsignature_limit">签名最多输入15个字</string>
     <string name="my_info_hint">真实地表达自己，让更多家人了解自己。真实和了解是建立有效人脉的关键。</string>
- <string name="title_my_info">我的资料</string></resources>
+    <string name="title_my_info">我的资料</string>
+    <string name="title_activity_change_background">个性化背景</string>
+    <string name="title_activity_my_active">我的活动</string>
+ <string name="label_setup_active">发起活动</string>
+</resources>

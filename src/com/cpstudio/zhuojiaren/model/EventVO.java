@@ -18,7 +18,15 @@ public class EventVO {
 	private String memberType;
 	private String isCollection;
 	private String isShared;
+	//add by lz
+	boolean isSelected=false;
 	
+	public boolean isSelected() {
+		return isSelected;
+	}
+	public void setSelected(boolean isSelected) {
+		this.isSelected = isSelected;
+	}
 	public String getEventId() {
 		return eventId;
 	}

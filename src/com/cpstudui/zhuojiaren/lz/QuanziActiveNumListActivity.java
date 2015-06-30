@@ -38,7 +38,7 @@ public class QuanziActiveNumListActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(QuanziActiveNumListActivity.this,
-						QuanziActiveActiveActivity.class);
+						QuanziActiveActivity.class);
 				i.putExtra("mType", 1);
 				startActivity(i);
 			}
@@ -49,7 +49,7 @@ public class QuanziActiveNumListActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(QuanziActiveNumListActivity.this,
-						QuanziActiveActiveActivity.class);
+						QuanziActiveActivity.class);
 				i.putExtra("mType", 0);
 				startActivity(i);
 			}
@@ -60,7 +60,7 @@ public class QuanziActiveNumListActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(QuanziActiveNumListActivity.this,
-						QuanziActiveActiveActivity.class);
+						QuanziActiveActivity.class);
 				i.putExtra("mType", 2);
 				startActivity(i);
 			}

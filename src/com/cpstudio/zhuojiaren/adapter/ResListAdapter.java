@@ -72,7 +72,8 @@ public class ResListAdapter extends BaseAdapter {
 		
 		if(isManaging)
 			holder.cb.setVisibility(View.VISIBLE);
-		
+		else
+			holder.cb.setVisibility(View.GONE);
 		Context context = convertView.getContext();
 		ZhuoInfoVO zhuoinfo = mList.get(position);
 		convertView.setTag(R.id.tag_id, zhuoinfo.getMsgid());
