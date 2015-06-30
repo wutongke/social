@@ -1,0 +1,235 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg"
+    tools:context=".AccountActivity" >
+	<include layout="@layout/title_activity"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/graywhitem" />
+
+    <LinearLayout 
+        android:id="@+id/ac_zhuo_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basic_text"
+            android:text="@string/zhuo_login"
+            />
+        <TextView 
+            android:id="@+id/ac_zhuo_account_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/graywhitem"
+            android:textSize="15dp"
+            android:drawableRight="@drawable/ico_arrow_gray"
+            android:drawablePadding="10dp"
+            android:gravity="right|center_vertical"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/graywhitem" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/graywhitem" />
+
+    <LinearLayout 
+        android:id="@+id/ac_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basic_text"
+            android:text="@string/phone_number"
+            />
+        <TextView 
+            android:id="@+id/ac_phone_number_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/graywhitem"
+            android:textSize="15dp"
+            android:drawableRight="@drawable/ico_arrow_gray"
+            android:drawablePadding="10dp"
+            android:gravity="right|center_vertical"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/graywhitem" />
+
+    <LinearLayout 
+        android:id="@+id/ac_qq_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basic_text"
+            android:text="@string/qq_number"
+            />
+        <TextView 
+            android:id="@+id/ac_qq_number_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/graywhitem"
+            android:textSize="15dp"
+            android:drawableRight="@drawable/ico_arrow_gray"
+            android:drawablePadding="10dp"
+            android:gravity="right|center_vertical"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/graywhitem" />
+
+    <LinearLayout 
+        android:id="@+id/ac_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basic_text"
+            android:text="@string/email"
+            />
+        <TextView 
+            android:id="@+id/ac_email_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/graywhitem"
+            android:textSize="15dp"
+            android:drawableRight="@drawable/ico_arrow_gray"
+            android:drawablePadding="10dp"
+            android:gravity="right|center_vertical"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/graywhitem" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/graywhitem" />
+
+    <LinearLayout 
+        android:id="@+id/ac_zhuo_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basic_text"
+            android:text="@string/zhuo_password"
+            />
+        <TextView
+            android:id="@+id/ac_zhuo_password_text" 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/graywhitem"
+            android:textSize="15dp"
+            android:drawableRight="@drawable/ico_arrow_gray"
+            android:drawablePadding="10dp"
+            android:gravity="right|center_vertical"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/graywhitem" />
+
+    <LinearLayout
+        android:id="@+id/ac_account_security" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basic_text"
+            android:text="@string/account_security"
+            />
+        <TextView 
+            android:id="@+id/ac_account_security_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/graywhitem"
+            android:textSize="15dp"
+            android:drawableRight="@drawable/ico_arrow_gray"
+            android:drawablePadding="10dp"
+            android:gravity="right|center_vertical"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/graywhitem" />
+
+</LinearLayout>

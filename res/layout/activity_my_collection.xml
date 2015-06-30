@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MyCollectionActivity" >
+
+    <include layout="@layout/title_activity" />
+
+    <com.cpstudio.zhuojiaren.widget.PullDownView
+        android:id="@+id/amc_pulldownview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </com.cpstudio.zhuojiaren.widget.PullDownView>
+
+</LinearLayout>

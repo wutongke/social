@@ -1,6 +1,17 @@
-package com.cpstudio.zhuojiaren;
+package com.cpstudio.zhuojiaren.ui;
 
 import java.util.HashMap;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+
+import com.cpstudio.zhuojiaren.BaseActivity;
+import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
@@ -8,16 +19,7 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.EditText;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-
-public class MyChangePwdActivity extends Activity {
+public class MyChangePwdActivity extends BaseActivity {
 	private PopupWindows pwh = null;
 	private String mPassword = null;
 	private ZhuoConnHelper mConnHelper = null;
@@ -28,18 +30,14 @@ public class MyChangePwdActivity extends Activity {
 		setContentView(R.layout.activity_my_change_pwd);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		pwh = new PopupWindows(MyChangePwdActivity.this);
+		
+		initTitle();
+		title.setText(R.string.zhuo_password);
 		initClick();
 	}
 
 	private void initClick() {
 
-		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				MyChangePwdActivity.this.finish();
-			}
-		});
 
 		findViewById(R.id.buttonSend).setOnClickListener(new OnClickListener() {
 

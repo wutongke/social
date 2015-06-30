@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical"
+    tools:context=".PhoneActivity" >
+
+    <include layout="@layout/title_activity" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/ap_phone_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/phone" />
+
+        <ImageView
+            android:id="@+id/ap_phone_bang_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ap_phone_image"
+            android:layout_alignRight="@+id/ap_phone_image"
+            android:background="@drawable/pictures_selected" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/ap_phone_number"
+        style="@style/basic_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/ap_phone_des"
+        style="@style/basic_second_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/phone_des" />
+
+    <Button
+        android:id="@+id/ap_phone_box"
+        style="@style/basic_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/lightgreen"
+        android:padding="10dp"
+        android:text="@string/view_phone_box"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/ap_update_phone"
+        style="@style/basic_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:text="@string/update_phone_number"
+        android:textColor="@color/black" />
+
+</LinearLayout>
