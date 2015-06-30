@@ -443,7 +443,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.MyChangePwdActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.MyChangePwdActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_my_change_pwd"
             android:screenOrientation="portrait" >
@@ -683,10 +683,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        <activity
-            android:name="com.cpstudio.zhuojiaren.BaseActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        <activity android:name="com.cpstudio.zhuojiaren.BaseActivity" >
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.NewPasswordActivity"
@@ -831,7 +828,7 @@
             android:name="com.cpstudui.zhuojiaren.lz.LZMyHomeActivity"
             android:label="@string/title_activity_lzmy_home" >
         </activity>
-<activity
+        <activity
             android:name="com.cpstudio.zhuojiaren.ui.AudioListActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
@@ -861,17 +858,52 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-<activity
+        <activity
             android:name="com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity"
             android:label="@string/title_zhuomai_card" >
         </activity>
-        
-         <activity
+        <activity
             android:name="com.cpstudui.zhuojiaren.lz.QuanziActiveActiveActivity"
             android:label="@string/label_active_quanzi" >
-        </activity>  <activity
+        </activity>
+        <activity
             android:name="com.cpstudio.zhuojiaren.ui.MyZhuoBiActivity"
             android:label="@string/title_activity_my_zhuo_bi" >
-        </activity>    </application>
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.SettingActivity"
+            android:label="@string/title_activity_setting" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.AccountActivity"
+            android:label="@string/title_activity_account" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.PhoneActivity"
+            android:label="@string/title_activity_phone" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.QQActivity"
+            android:label="@string/title_activity_qq" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.EmailActivity"
+            android:label="@string/title_activity_email" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.AccountProtectActivity"
+            android:label="@string/title_activity_account_protect" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.MessageRemindActivity"
+            android:label="@string/title_activity_messaeg_remind" >
+        </activity>
+        <activity android:name="com.cpstudio.zhuojiaren.ui.TextEditActivity" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.MyCollectionActivity"
+            android:label="@string/title_activity_my_collection" >
+        </activity>
+    </application>
 
 </manifest>

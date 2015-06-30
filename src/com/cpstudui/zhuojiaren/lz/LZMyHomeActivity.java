@@ -29,6 +29,9 @@ import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.ui.MyCollectionActivity;
+import com.cpstudio.zhuojiaren.ui.MyMoneyActivity;
+import com.cpstudio.zhuojiaren.ui.SettingActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class LZMyHomeActivity extends Activity {
@@ -81,7 +84,8 @@ public class LZMyHomeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// 我的钱包
-				Toast.makeText(LZMyHomeActivity.this, "待完善！", 1000).show();
+//				Toast.makeText(LZMyHomeActivity.this, "待完善！", 1000).show();
+				startActivity(new Intent(LZMyHomeActivity.this,MyMoneyActivity.class));
 			}
 		});
 
@@ -111,7 +115,7 @@ public class LZMyHomeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(LZMyHomeActivity.this,
-						MyCollectListActivity.class);
+						MyCollectionActivity.class);
 				startActivity(i);
 			}
 		});
@@ -177,7 +181,7 @@ public class LZMyHomeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(LZMyHomeActivity.this,
-						MySettingActivity.class);
+						SettingActivity.class);
 				startActivity(i);
 			}
 		});

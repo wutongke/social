@@ -600,9 +600,9 @@
     <string name="my_clearmsgalert">确定要清空本地聊天记录吗？</string>
     <string name="my_passwordmanage">密码管理</string>
     <string name="my_logout">切换用户</string>
-    <string name="my_oldpwd">旧密码</string>
+    <string name="my_oldpwd">原始密码</string>
     <string name="my_newpwd">新密码</string>
-    <string name="my_renewpwd">重复密码</string>
+    <string name="my_renewpwd">重新输入新密码</string>
     <string name="title_activity_poster"></string>
     <string name="title_activity_login">登录</string>
     <string name="title_activity_main">倬家人首页</string>
@@ -853,7 +853,36 @@
     <string name="time2">时&#160;&#160;&#160;&#160;&#160;&#160;&#160;间</string>
     <string name="left_broken_money">剩余零钱</string>
     <string name="remark">备&#160;&#160;&#160;&#160;&#160;&#160;&#160;注</string>
-    <string name="remark2">备注\n倬币是倬家人通过为倬脉代言，传播真实</string>
+    <string name="remark2">备注\n倬币是倬家人通过为倬脉代言，传播真实、精进、正能量的倬脉文化而获得的奖励，是倬脉平台的虚拟货币，不能兑换现金，只能用于在倬脉商城兑换商品使用。</string>
+    <string name="account_and_security">账户与安全</string>
+    <string name="new_message">新消息提醒</string>
+    <string name="new_versions">版本检测</string>
+    <string name="out_login">退出登录</string>
+    <string name="zhuo_login">倬脉登录号</string>
+    <string name="phone_number">手机号</string>
+    <string name="qq_number">QQ号</string>
+    <string name="bang_qq">绑定QQ号</string>
+    <string name="email">邮箱地址</string>
+    <string name="zhuo_password">倬脉密码</string>
+    <string name="account_security">账户安全</string>
+    <string name="edit">编辑</string>
+    <string name="view_phone_box">查看手机通讯录</string>
+    <string name="update_phone_number">更换手机号</string>
+    <string name="phone_des">已启用手机通讯录匹配，如果你的通讯录中有人注册了倬脉，系统会通知您</string>
+    <string name="qq_des">您已绑定qq号，现在您可以使用qq相关的功能了，并且可以找到更多的qq好友</string>
+    <string name="bang_phone">绑定手机号</string>
+    <string name="your_phone">您的手机号</string>
+    <string name="invalid_phone">非法手机号</string>
+    <string name="no_qq">还未绑定QQ号</string>
+    <string name="email_function">你可以使用已经验证过的邮箱地址登录倬脉，也可以用它来找回倬脉密码</string>
+    <string name="change_email">修改邮箱地址</string>
+    <string name="change_zhuo_password">重新设置倬脉登录密码</string>
+    <string name="des_zhuo_password">密码有6&#8211;16位字母或数字组成</string>
+    <string name="account_protect">账户保护</string>
+    <string name="account_protect_des">开启账户保护后，在不常用的手机上登录，需要验证你的手机号码</string>
+    <string name="get_new_message">新消息提醒</string>
+    <string name="sound">声音</string>
+    <string name="vibrate">震动</string>
 
     <!-- lz -->
     <string name="label_main_find">发现</string>
@@ -937,15 +966,14 @@
     <string name="label_my_set">设置</string>
     <string name="label_my_callback">建议反馈</string>
     <string name="label_my_about">关于倬脉</string>
-<string name="title_activity_audio_list">AudioListActivity</string>
+    <string name="title_activity_audio_list">AudioListActivity</string>
     <string name="title_activity_audio_detail">AudioDetailActivity</string>
     <string name="title_activity_my_money">MyMoneyActivity</string>
     <string name="title_activity_my_broken_money">MyBrokenMoneyActivity</string>
     <string name="title_activity_income">IncomeActivity</string>
     <string name="title_activity_income_details">IncomeDetailsActivity</string>
     <string name="title_activity_my_zhuo_bi">MyZhuoBiActivity</string>
-
-<string name="title_zhuomai_card">倬脉名片</string>
+    <string name="title_zhuomai_card">倬脉名片</string>
     <string name="label_edit_bg">个性背景</string>
     <string name="label_justmore">更多</string>
     <string name="label_commercy_info">商务信息</string>
@@ -960,4 +988,14 @@
     <string name="text_signature_hint">名片签名，最多15个字</string>
     <string name="edit_nsignature_limit">签名最多输入15个字</string>
     <string name="my_info_hint">真实地表达自己，让更多家人了解自己。真实和了解是建立有效人脉的关键。</string>
- <string name="title_my_info">我的资料</string></resources>
+    <string name="title_my_info">我的资料</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_activity_account">AccountActivity</string>
+    <string name="title_activity_phone">PhoneActivity</string>
+    <string name="title_activity_qq">QQActivity</string>
+    <string name="title_activity_email">EmailActivity</string>
+    <string name="title_activity_account_protect">AccountProtectActivity</string>
+    <string name="title_activity_messaeg_remind">MessaegRemindActivity</string>
+    <string name="title_activity_my_collection">MyCollectionActivity</string>
+
+</resources>

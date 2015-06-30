@@ -16,12 +16,12 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center_horizontal"
-	    android:text="@string/my_倬币"
+	    android:text="@string/my_zhuobi"
 	    android:layout_marginTop="20dp"
 	    style="@style/basic_text"
 	    android:textColor="@color/black"/>
 	<TextView
-	    android:id="@+id/ambm_rmb"
+	    android:id="@+id/amzb_rmb"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center_horizontal"
@@ -30,7 +30,7 @@
 	    android:textSize="25dp"
 	    android:textColor="@color/black"/>
 	<Button 
-	    android:id="@+id/ambm_recharge_money"
+	    android:id="@+id/amzb_give_money"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:gravity="center"
@@ -47,7 +47,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_margin="20dp"
-	    android:text=""
+	    android:text="@string/remark2"
 	    android:textSize="15dp"
 	    android:textColor="@color/lightgreen"
 	    />

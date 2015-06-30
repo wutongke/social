@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+	<string-array name="my_collection">
+	    <item >视频</item>
+	    <item >音频</item>
+	    <item >文章</item>
+	    <item >活动</item>
+	    <item >名片</item>
+	    <item >产品</item>
+	    <item >圈子</item>
+	    <item >话题</item>
+	    <item >动态</item>
+	    <item >人脉</item>
+	    <item >供</item>
+	    <item >需</item>
+	</string-array>
     <string-array name="grouth_type">
         <item>商道智慧</item>
         <item>投资智慧</item>

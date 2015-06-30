@@ -51,9 +51,9 @@ public class MyMoneyActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(MyMoneyActivity.this,MyBrokenMoneyActivity.class);
+				Intent intent = new Intent(MyMoneyActivity.this,MyZhuoBiActivity.class);
 				intent.putExtra(getResources().getString(R.id.tag_id),zhuoBi.getText().toString() );
-				startActivity(new Intent(MyMoneyActivity.this,MyBrokenMoneyActivity.class));
+				startActivity(intent);
 			}
 		});
 	}
