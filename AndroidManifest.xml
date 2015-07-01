@@ -916,7 +916,6 @@
             android:name=".ui.MyCollectionActivity"
             android:label="@string/title_activity_my_collection" >
         </activity>
-        
         <activity
             android:name=".CardAddUserQQActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -927,10 +926,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" >
         </activity>
-         <activity
+        <activity
             android:name="com.cpstudui.zhuojiaren.lz.SearchMainActivity"
             android:label="@string/label_active_quanzi" >
         </activity>
-        
-        
     </application>
+
+</manifest>
