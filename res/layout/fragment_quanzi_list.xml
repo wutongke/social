@@ -15,7 +15,7 @@
             android:background="@color/graywhitem"
             android:orientation="horizontal"
             android:gravity="center_horizontal"
-            android:visibility="visible" >
+            android:visibility="gone" >
 
             <RadioButton
                 android:id="@+id/fql_my_create"
