@@ -31,8 +31,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:background="@drawable/button_top_bg_back"
-            android:text="@string/label_back"
             android:paddingLeft="7dp"
+            android:text="@string/label_back"
             android:textColor="#ffffff"
             android:textSize="14sp" />
 
@@ -63,15 +63,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginBottom="10dp"
+                android:background="@drawable/shape_corners3"
                 android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/textViewIntro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
-                    android:text="@string/mp_mysr"
+                    android:text="@string/mp_mysr_hint"
                     android:textColor="#999999"
                     android:textSize="14sp" />
 
@@ -79,7 +81,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@drawable/shape_corners3"
                     android:padding="12dp" >
 
                     <TextView
@@ -92,11 +93,17 @@
                         android:textSize="16sp" />
                 </RelativeLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:background="#d8d8d8" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@drawable/shape_corners3"
                     android:padding="12dp" >
 
                     <TextView
@@ -109,6 +116,63 @@
                         android:textSize="16sp" />
                 </RelativeLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:background="#d8d8d8" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="12dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/my_xinzuo"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textViewXinzuo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:drawableRight="@drawable/ico_alert"
+                        android:text="双子座"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="12dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/my_shuxiang"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textViewShuXiang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:drawableRight="@drawable/ico_alert"
+                        android:text="猴"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
                 <CheckBox
                     android:id="@+id/checkBoxIsOpen"
                     style="@style/CPCheckBox"
@@ -117,7 +181,17 @@
                     android:layout_margin="5dp"
                     android:checked="true"
                     android:paddingLeft="35dp"
-                    android:text="@string/info42" />
+                    android:text="@string/info41" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxIsOpenToAll"
+                    style="@style/CPCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:checked="false"
+                    android:paddingLeft="35dp"
+                    android:text="@string/info399" />
             </LinearLayout>
         </ScrollView>
 
@@ -162,7 +236,6 @@
                     android:text="@string/OK"
                     android:textColor="#ffffff"
                     android:textSize="14sp" />
-
             </RelativeLayout>
 
             <LinearLayout

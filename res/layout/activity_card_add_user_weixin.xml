@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="@string/title_activity_card_add_user_phone"
+            android:text="@string/card_weixin"
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
-                android:text="@string/info37phone"
+                android:text="@string/card_weixin_hint"
                 android:textColor="#999999"
                 android:textSize="14sp" />
 
@@ -91,12 +91,12 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="@string/mp_mysj"
+                        android:text="@string/card_weixin"
                         android:textSize="16sp" />
                 </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/textViewPhone"
+                    android:id="@+id/textViewWeixin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true" >

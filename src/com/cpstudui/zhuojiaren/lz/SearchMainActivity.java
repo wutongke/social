@@ -56,23 +56,22 @@ public class SearchMainActivity extends Activity implements OnPullDownListener,
 	private ListView mlvHistory;
 	ArrayAdapter<String> historyAdapter;
 
-
 	private PullDownView mPullDownView;
 	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
 	ZhuoUserListAdapter mAdapter;
 	ArrayList<String> historyList = new ArrayList<String>();
 	String[] hotWords;
-String mLastId;
+	String mLastId;
 	private SharedPreferences sharedPrefs;
 	ViewGroup searchLayout;
 	ViewGroup hotwordsLayout;
 
-
-	String uid=null;
-	String mSearchKey=null;
+	String uid = null;
+	String mSearchKey = null;
 	private ZhuoConnHelper mConnHelper = null;
 	private InfoFacade infoFacade = null;
 	private int mPage = 1;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,8 +80,6 @@ String mLastId;
 		// getWindow().setSoftInputMode(
 		// WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-	
-		
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		infoFacade = new InfoFacade(getApplicationContext(),
 				InfoFacade.NEWSLIST);
@@ -100,10 +97,8 @@ String mLastId;
 		mListView.setOnItemClickListener(this);
 		mAdapter = new ZhuoUserListAdapter(SearchMainActivity.this, mList);
 		mListView.setAdapter(mAdapter);
-		mPullDownView.setShowHeader();
-		mPullDownView.setShowFooter(false);
-		
-		
+		mPullDownView.setHideHeader();
+		mPullDownView.setHideFooter(false);
 
 		searchLayout = (ViewGroup) findViewById(R.id.searchLayout);
 		hotwordsLayout = (ViewGroup) findViewById(R.id.hotContainer);
@@ -157,20 +152,22 @@ String mLastId;
 
 			}
 		});
-		findViewById(R.id.tvDeleteHistory).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				if (sharedPrefs == null)
-					sharedPrefs = getSharedPreferences(
-							Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
-				Editor editor = sharedPrefs.edit();
-				editor.remove(Constants.SEARCH_HISTORY);
-				historyList.clear();
-				historyAdapter.notifyDataSetChanged();
-			}
-		});
+		findViewById(R.id.tvDeleteHistory).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View arg0) {
+						// TODO Auto-generated method stub
+						if (sharedPrefs == null)
+							sharedPrefs = getSharedPreferences(
+									Constants.SHARED_PREFERENCE_NAME,
+									Context.MODE_PRIVATE);
+						Editor editor = sharedPrefs.edit();
+						editor.remove(Constants.SEARCH_HISTORY);
+						historyList.clear();
+						historyAdapter.notifyDataSetChanged();
+					}
+				});
 	}
 
 	private void loadHistory() {
@@ -210,9 +207,6 @@ String mLastId;
 		editor.commit();
 	}
 
-	
-
-
 	private void updateItemList(ArrayList<ZhuoInfoVO> list, boolean refresh,
 			boolean append) {
 		if (!list.isEmpty()) {
@@ -231,14 +225,12 @@ String mLastId;
 		}
 	}
 
-
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
 		saveHistory();
 	}
-
 
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
@@ -374,8 +366,6 @@ String mLastId;
 		}
 	}
 
-		
-
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
@@ -438,7 +428,6 @@ String mLastId;
 		}
 	}
 
-
 	/**
 	 * 获取推荐热词数据
 	 */
@@ -495,11 +484,4 @@ String mLastId;
 		}
 	}
 
-
-	
 }
-
-
-
-
-
