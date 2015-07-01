@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="@string/title_activity_card_add_user_image"
+            android:text="@string/title_activity_card_add_user_work"
             android:textColor="#ffffff"
             android:textSize="20sp" />
 

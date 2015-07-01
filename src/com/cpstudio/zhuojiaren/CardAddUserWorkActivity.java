@@ -2,6 +2,8 @@ package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
 
+import com.cpstudio.zhuojiaren.model.ProductVO;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,10 @@ import android.content.Intent;
 
 public class CardAddUserWorkActivity extends Activity {
 	private LinearLayout linearLayoutWorks;
+
+	private ArrayList<ProductVO> mProducts = new ArrayList<ProductVO>();
+	// ps很多能添加多项的没有删除功能
+	// 新增了我的企业网站等许多内容,此外还增加了一个页面的内容"主营产品"
 	private ArrayList<String> companyTags = new ArrayList<String>();
 	private ArrayList<String> workTags = new ArrayList<String>();
 
@@ -23,6 +29,8 @@ public class CardAddUserWorkActivity extends Activity {
 		setContentView(R.layout.activity_card_add_user_work);
 		linearLayoutWorks = (LinearLayout) findViewById(R.id.linearLayoutWorks);
 		Intent intent = getIntent();
+		mProducts = intent
+				.getParcelableArrayListExtra(CardEditActivity.EDIT_PRODUCT_STR);
 		String companys = intent
 				.getStringExtra(CardEditActivity.EDIT_WORK_STR1);
 		String works = intent.getStringExtra(CardEditActivity.EDIT_WORK_STR2);
@@ -60,10 +68,23 @@ public class CardAddUserWorkActivity extends Activity {
 			addWork("", "");
 		}
 		initClick();
-
 	}
 
 	private void initClick() {
+
+		findViewById(R.id.textViewEditMainProduce).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Intent i = new Intent(CardAddUserWorkActivity.this,
+								CardAddUserProductActivity.class);
+						i.putParcelableArrayListExtra(
+								CardEditActivity.EDIT_PRODUCT_STR, mProducts);
+						startActivity(i);
+					}
+				});
+
 		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
 
 			@Override

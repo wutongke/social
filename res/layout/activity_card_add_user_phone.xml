@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="@string/title_activity_card_add_user_image"
+            android:text="@string/title_activity_card_add_user_phone"
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
@@ -31,8 +31,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:background="@drawable/button_top_bg_back"
-            android:text="@string/label_back"
             android:paddingLeft="7dp"
+            android:text="@string/label_back"
             android:textColor="#ffffff"
             android:textSize="14sp" />
 
@@ -63,11 +63,12 @@
 
             <TextView
                 android:id="@+id/textViewIntro"
+                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
-                android:text="@string/info37"
+                android:text="@string/info37phone"
                 android:textColor="#999999"
                 android:textSize="14sp" />
 
@@ -114,6 +115,15 @@
                 android:paddingLeft="35dp"
                 android:text="@string/info39" />
 
+            <CheckBox
+                android:id="@+id/checkBoxIsOpenToAll"
+                style="@style/CPCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:checked="false"
+                android:paddingLeft="35dp"
+                android:text="@string/info399" />
         </LinearLayout>
     </ScrollView>
 

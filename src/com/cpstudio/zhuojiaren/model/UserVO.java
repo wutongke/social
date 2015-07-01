@@ -57,12 +57,51 @@ public class UserVO {
 	private String phone;
 	private String mycustomer;
 	private String isalert;
+	//add by lz
+	private String qq;
+	private String weixin;
+	private String isqqopen;
+	private String isweixinopen;
+	
+	
 	private List<ProductVO> product = new ArrayList<ProductVO>();
 	private List<UserVO> family = new ArrayList<UserVO>();
 	private List<QuanVO> groups = new ArrayList<QuanVO>();
 	private List<ZhuoInfoVO> growth = new ArrayList<ZhuoInfoVO>();
 	private List<DreamVO> dream = new ArrayList<DreamVO>();
 	private List<PicVO> pics = new ArrayList<PicVO>();
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	public String getIsqqopen() {
+		return isqqopen;
+	}
+
+	public void setIsqqopen(String isqqopen) {
+		this.isqqopen = isqqopen;
+	}
+
+	public String getIsweixinopen() {
+		return isweixinopen;
+	}
+
+	public void setIsweixinopen(String isweixinopen) {
+		this.isweixinopen = isweixinopen;
+	}
+
+	public String getWeixin() {
+		return weixin;
+	}
+
+	public void setWeixin(String weixin) {
+		this.weixin = weixin;
+	}
 
 	public String getIsread() {
 		return isread;

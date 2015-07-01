@@ -26,7 +26,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/searchbg"
-                android:focusable="false"
                 android:hint="@string/label_main_searchHint"
                 android:imeOptions="actionSearch"
                 android:paddingLeft="35dp"
@@ -89,6 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#f9f9f9"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical" >
 
                 <TextView

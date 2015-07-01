@@ -40,7 +40,7 @@ import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.utils.SolarToLundar;
 
 public class CardEditActivity extends Activity {
-	
+
 	@InjectView(R.id.ivHead)
 	ImageView ivHead;
 	@InjectView(R.id.textViewChangeHead)
@@ -63,6 +63,16 @@ public class CardEditActivity extends Activity {
 	public final static int EDIT_EMAIL = 3;
 	public final static String EDIT_EMAIL_STR1 = "email";
 	public final static String EDIT_EMAIL_STR2 = "emailopen";
+
+	// lz add
+	// lz add
+	public final static int EDIT_QQ = 14;
+	public final static String EDIT_QQ_STR1 = "qq";
+	public final static String EDIT_QQ_STR2 = "qqopen";
+	public final static int EDIT_WEIXIN = 15;
+	public final static String EDIT_WEIXIN_STR1 = "weixin";
+	public final static String EDIT_WEIXIN_STR2 = "weixinopen";
+
 	public final static int EDIT_HOBBY = 4;
 	public final static String EDIT_HOBBY_STR = "hobby";
 	public final static int EDIT_MOTTO = 5;
@@ -95,6 +105,7 @@ public class CardEditActivity extends Activity {
 	public final static String EDIT_WORK_STR4 = "isisentrepreneurship";
 	public final static int EDIT_CUSTOMER = 13;
 	public final static String EDIT_CUSTOMER_STR = "customer";
+
 	private ZhuoConnHelper mConnHelper = null;
 	private ArrayList<String> dreamsList = new ArrayList<String>();
 	private ArrayList<String> localImages = new ArrayList<String>();
@@ -102,7 +113,8 @@ public class CardEditActivity extends Activity {
 	private PopupWindows pwh = null;
 	private UserFacade mFacade = null;
 	private boolean edit = false;
-//未完善
+
+	// 未完善
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -117,39 +129,40 @@ public class CardEditActivity extends Activity {
 	}
 
 	private void initClick() {
-		
+
 		etSignature.addTextChangedListener(new TextWatcher() {
-            private CharSequence temp;
-            private int selectionStart ;
-            private int selectionEnd ;
-            @Override
-            public void beforeTextChanged(CharSequence s, int arg1, int arg2,
-                    int arg3) {
-                temp = s;
-            }
- 
-            @Override
-            public void onTextChanged(CharSequence s, int arg1, int arg2,
-                    int arg3) {
-            }
- 
-            @Override
-            public void afterTextChanged(Editable s) {
-                 selectionStart = etSignature.getSelectionStart();
-                selectionEnd = etSignature.getSelectionEnd();
-                
-                if (temp.length() > 15) {
-                    Toast.makeText(CardEditActivity.this,
-                            R.string.edit_nsignature_limit, Toast.LENGTH_SHORT)
-                            .show();
-                    s.delete(selectionStart-1, selectionEnd);
-                    int tempSelection = selectionStart;
-                    etSignature.setText(s);
-                    etSignature.setSelection(tempSelection);
-                }
-            }
-        });
-		
+			private CharSequence temp;
+			private int selectionStart;
+			private int selectionEnd;
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int arg1, int arg2,
+					int arg3) {
+				temp = s;
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int arg1, int arg2,
+					int arg3) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				selectionStart = etSignature.getSelectionStart();
+				selectionEnd = etSignature.getSelectionEnd();
+
+				if (temp.length() > 15) {
+					Toast.makeText(CardEditActivity.this,
+							R.string.edit_nsignature_limit, Toast.LENGTH_SHORT)
+							.show();
+					s.delete(selectionStart - 1, selectionEnd);
+					int tempSelection = selectionStart;
+					etSignature.setText(s);
+					etSignature.setSelection(tempSelection);
+				}
+			}
+		});
+
 		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -274,7 +287,7 @@ public class CardEditActivity extends Activity {
 						}
 					}
 				});
-
+		// 此处要改为两个选项：对好友公开和对所有人公开。。
 		((View) findViewById(R.id.textViewEditEmailShow).getParent())
 				.setOnClickListener(new OnClickListener() {
 					@Override
@@ -291,6 +304,50 @@ public class CardEditActivity extends Activity {
 						}
 					}
 				});
+
+		// lz add
+		((View) findViewById(R.id.textViewEditQQShow).getParent())
+				.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						if (mUser != null) {
+							Intent i = new Intent(CardEditActivity.this,
+									CardAddUserQQActivity.class);
+							String qq = mUser.getQq(), qqopen = mUser
+									.getIsqqopen();
+							if (qq != null)
+								i.putExtra(EDIT_QQ_STR1, qq);
+							if (qqopen != null)
+								i.putExtra(EDIT_QQ_STR2, qqopen);
+							startActivityForResult(i, EDIT_QQ);
+						} else {
+							CommonUtil.displayToast(getApplicationContext(),
+									R.string.error12);
+						}
+					}
+				});
+		// lz add
+		((View) findViewById(R.id.textViewEditWeixinShow).getParent())
+				.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						if (mUser != null) {
+							Intent i = new Intent(CardEditActivity.this,
+									CardAddUserWeiXinActivity.class);
+							String weixin = mUser.getWeixin(), weixinopen = mUser
+									.getIsweixinopen();
+							if (weixin != null)
+								i.putExtra(EDIT_WEIXIN_STR1, weixin);
+							if (weixinopen != null)
+								i.putExtra(EDIT_WEIXIN_STR2, weixinopen);
+							startActivityForResult(i, EDIT_WEIXIN);
+						} else {
+							CommonUtil.displayToast(getApplicationContext(),
+									R.string.error12);
+						}
+					}
+				});
+
 		((View) findViewById(R.id.textViewEditHobbyShow).getParent())
 				.setOnClickListener(new OnClickListener() {
 					@Override
@@ -306,6 +363,7 @@ public class CardEditActivity extends Activity {
 						}
 					}
 				});
+		// 价值观与信念
 		((View) findViewById(R.id.textViewEditZymShow).getParent())
 				.setOnClickListener(new OnClickListener() {
 					@Override
@@ -465,6 +523,7 @@ public class CardEditActivity extends Activity {
 							Intent i = new Intent(CardEditActivity.this,
 									CardAddUserPhoneActivity.class);
 							i.putExtra(EDIT_PHONE_STR1, mUser.getUserid());
+							// 此处要改为两个选项：对好友公开和对所有人公开。。
 							i.putExtra(EDIT_PHONE_STR2, mUser.getIsphoneopen());
 							startActivityForResult(i, EDIT_PHONE);
 						} else {
@@ -490,23 +549,43 @@ public class CardEditActivity extends Activity {
 						}
 					}
 				});
-
-		((View) findViewById(R.id.textViewEditProductShow).getParent())
+		// 二维码
+		((View) findViewById(R.id.textViewEditTDCard).getParent())
 				.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						if (mUser != null) {
-							Intent i = new Intent(CardEditActivity.this,
-									CardAddUserProductActivity.class);
-							i.putParcelableArrayListExtra(EDIT_PRODUCT_STR,
-									(ArrayList<ProductVO>) mUser.getProduct());
-							startActivityForResult(i, EDIT_PRODUCT);
-						} else {
-							CommonUtil.displayToast(getApplicationContext(),
-									R.string.error12);
-						}
+						//
+						// if (mUser != null) {
+						// Intent i = new Intent(CardEditActivity.this,
+						// CardAddUserNameActivity.class);
+						// i.putExtra(EDIT_NAME_STR1, mUser.getUsername());
+						// i.putExtra(EDIT_NAME_STR2, mUser.getSex());
+						// i.putExtra(EDIT_NAME_STR3, mUser.getIsmarry());
+						// startActivityForResult(i, EDIT_NAME);
+						// } else {
+						// CommonUtil.displayToast(getApplicationContext(),
+						// R.string.error12);
+						// }
 					}
 				});
+
+		// 移到了我的企业中的主营产品,注意对EDIT_PRODUCT处理
+		// ((View) findViewById(R.id.textViewEditProductShow).getParent())
+		// .setOnClickListener(new OnClickListener() {
+		// @Override
+		// public void onClick(View v) {
+		// if (mUser != null) {
+		// Intent i = new Intent(CardEditActivity.this,
+		// CardAddUserProductActivity.class);
+		// i.putParcelableArrayListExtra(EDIT_PRODUCT_STR,
+		// (ArrayList<ProductVO>) mUser.getProduct());
+		// startActivityForResult(i, EDIT_PRODUCT);
+		// } else {
+		// CommonUtil.displayToast(getApplicationContext(),
+		// R.string.error12);
+		// }
+		// }
+		// });
 		((View) findViewById(R.id.textViewEditWorkShow).getParent())
 				.setOnClickListener(new OnClickListener() {
 					@Override
@@ -514,6 +593,8 @@ public class CardEditActivity extends Activity {
 						if (mUser != null) {
 							Intent i = new Intent(CardEditActivity.this,
 									CardAddUserWorkActivity.class);
+							i.putParcelableArrayListExtra(EDIT_PRODUCT_STR,
+									(ArrayList<ProductVO>) mUser.getProduct());
 							i.putExtra(EDIT_WORK_STR1, mUser.getCompany());
 							i.putExtra(EDIT_WORK_STR2, mUser.getPost());
 							i.putExtra(EDIT_WORK_STR3, mUser.getIsworking());
@@ -570,6 +651,22 @@ public class CardEditActivity extends Activity {
 				mUser.setIsemailopen(emailopen);
 				((TextView) findViewById(R.id.textViewEditEmailShow))
 						.setText(email);
+				break;
+
+			case EDIT_QQ:
+				String qq = data.getStringExtra(EDIT_QQ_STR1);
+				String qqopen = data.getStringExtra(EDIT_QQ_STR2);
+				mUser.setQq(qq);
+				mUser.setIsqqopen(qqopen);
+				((TextView) findViewById(R.id.textViewEditQQShow)).setText(qq);
+				break;
+			case EDIT_WEIXIN:
+				String weixin = data.getStringExtra(EDIT_WEIXIN_STR1);
+				String weixinopen = data.getStringExtra(EDIT_WEIXIN_STR2);
+				mUser.setWeixin(weixin);
+				mUser.setIsweixinopen(weixinopen);
+				((TextView) findViewById(R.id.textViewEditWeixinShow))
+						.setText(weixin);
 				break;
 			case EDIT_HOBBY:
 				String hobby = data.getStringExtra(EDIT_HOBBY_STR);
@@ -653,19 +750,19 @@ public class CardEditActivity extends Activity {
 				((TextView) findViewById(R.id.textViewEditNameShow))
 						.setText(name);
 				break;
-			case EDIT_PRODUCT:
-				ArrayList<ProductVO> products = data
-						.getParcelableArrayListExtra(EDIT_PRODUCT_STR);
-				mUser.setProduct(products);
-				String product = "";
-				if (product != null) {
-					for (ProductVO productVO : products) {
-						product += productVO.getTitle() + " ";
-					}
-				}
-				((TextView) findViewById(R.id.textViewEditProductShow))
-						.setText(product);
-				break;
+			// case EDIT_PRODUCT:
+			// ArrayList<ProductVO> products = data
+			// .getParcelableArrayListExtra(EDIT_PRODUCT_STR);
+			// mUser.setProduct(products);
+			// String product = "";
+			// if (product != null) {
+			// for (ProductVO productVO : products) {
+			// product += productVO.getTitle() + " ";
+			// }
+			// }
+			// ((TextView) findViewById(R.id.textViewEditProductShow))
+			// .setText(product);
+			// break;
 			case EDIT_WORK:
 				String company = data.getStringExtra(EDIT_WORK_STR1);
 				String work = data.getStringExtra(EDIT_WORK_STR2);
@@ -769,15 +866,15 @@ public class CardEditActivity extends Activity {
 					String hobby = mUser.getHobby();
 					((TextView) findViewById(R.id.textViewEditHobbyShow))
 							.setText(hobby);
-					List<ProductVO> products = mUser.getProduct();
-					if (products != null) {
-						String cps = "";
-						for (int i = 0; i < products.size(); i++) {
-							cps += products.get(i).getTitle() + "    ";
-						}
-						((TextView) findViewById(R.id.textViewEditProductShow))
-								.setText(cps);
-					}
+					// List<ProductVO> products = mUser.getProduct();
+					// if (products != null) {
+					// String cps = "";
+					// for (int i = 0; i < products.size(); i++) {
+					// cps += products.get(i).getTitle() + "    ";
+					// }
+					// ((TextView) findViewById(R.id.textViewEditProductShow))
+					// .setText(cps);
+					// }
 					int level = Integer.valueOf(mUser.getLevel());
 
 					String[] levels = getResources().getStringArray(

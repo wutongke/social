@@ -443,7 +443,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.MyChangePwdActivity"
+            android:name=".ui.MyChangePwdActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_my_change_pwd"
             android:screenOrientation="portrait" >
@@ -827,7 +827,7 @@
             android:label="@string/title_activity_lzmy_home" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.AudioListActivity"
+            android:name=".ui.AudioListActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
@@ -856,15 +856,12 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        <activity
-            android:name="com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity"
-             >
+        <activity android:name="com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity" >
         </activity>
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.QuanziActiveActiveActivity"
-            android:label="@string/label_active_quanzi">
+            android:label="@string/label_active_quanzi" >
         </activity>
-        
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.QuanziActiveActivity"
             android:label="@string/label_active_quanzi" >
@@ -881,46 +878,59 @@
             android:name=".MyActiveActivity"
             android:label="@string/title_activity_my_active" >
         </activity>
-        
-        
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.MyZhuoBiActivity"
+            android:name=".ui.MyZhuoBiActivity"
             android:label="@string/title_activity_my_zhuo_bi" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.SettingActivity"
+            android:name=".ui.SettingActivity"
             android:label="@string/title_activity_setting" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.AccountActivity"
+            android:name=".ui.AccountActivity"
             android:label="@string/title_activity_account" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.PhoneActivity"
+            android:name=".ui.PhoneActivity"
             android:label="@string/title_activity_phone" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.QQActivity"
+            android:name=".ui.QQActivity"
             android:label="@string/title_activity_qq" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.EmailActivity"
+            android:name=".ui.EmailActivity"
             android:label="@string/title_activity_email" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.AccountProtectActivity"
+            android:name=".ui.AccountProtectActivity"
             android:label="@string/title_activity_account_protect" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.MessageRemindActivity"
+            android:name=".ui.MessageRemindActivity"
             android:label="@string/title_activity_messaeg_remind" >
         </activity>
-        <activity android:name="com.cpstudio.zhuojiaren.ui.TextEditActivity" >
+        <activity android:name=".ui.TextEditActivity" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.MyCollectionActivity"
+            android:name=".ui.MyCollectionActivity"
             android:label="@string/title_activity_my_collection" >
         </activity>
+        
+        <activity
+            android:name=".CardAddUserQQActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".CardAddUserWeiXinActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" >
+        </activity>
+         <activity
+            android:name="com.cpstudui.zhuojiaren.lz.SearchMainActivity"
+            android:label="@string/label_active_quanzi" >
+        </activity>
+        
+        
     </application>
-
-</manifest>

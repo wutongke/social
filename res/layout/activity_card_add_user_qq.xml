@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#f9f9f9"
     android:orientation="vertical"
-    tools:context=".CardAddUserHobbyActivity" >
+    tools:context=".CardAddUserPhoneActivity" >
 
     <RelativeLayout
         android:id="@+id/userNameShowParent"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="@string/title_activity_card_add_user_hobby"
+            android:text="@string/title_card_qq"
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
@@ -50,62 +50,80 @@
     </RelativeLayout>
 
     <ScrollView
-        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical" >
 
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="0px"
-                android:focusable="true"
-                android:focusableInTouchMode="true" >
-
-                <requestFocus />
-            </LinearLayout>
-
             <TextView
+                android:id="@+id/textViewIntro"
+                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
-                android:text="@string/info46"
+                android:text="@string/card_qq_hint"
                 android:textColor="#999999"
                 android:textSize="14sp" />
 
-            <TableLayout
-                android:id="@+id/tableLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-            </TableLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/label_qt"
-                android:textColor="#999999"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/editText"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_input"
-                android:hint="@string/info76"
-                android:inputType="textMultiLine"
-                android:minLines="1"
-                android:paddingLeft="5dp" >
-            </EditText>
+                android:background="@drawable/shape_corners3"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/card_qq"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/textViewQQ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true" >
+
+                    <requestFocus />
+                </TextView>
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/checkBoxIsOpen"
+                style="@style/CPCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:checked="true"
+                android:paddingLeft="35dp"
+                android:text="@string/info39" />
+
+            <CheckBox
+                android:id="@+id/checkBoxIsOpenToAll"
+                style="@style/CPCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:checked="false"
+                android:paddingLeft="35dp"
+                android:text="@string/info399" />
         </LinearLayout>
     </ScrollView>
 
