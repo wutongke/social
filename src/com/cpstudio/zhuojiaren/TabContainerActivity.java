@@ -1,5 +1,7 @@
 package com.cpstudio.zhuojiaren;
 
+import java.util.ArrayList;
+
 import org.androidpn.client.Notifier;
 
 import com.cpstudio.zhuojiaren.R;
@@ -24,11 +26,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
@@ -55,12 +59,12 @@ public class TabContainerActivity extends TabActivity implements
 	public final static int MSG_CLOUD = 7;
 	private int mBackClickTimes = 0;
 	private MsgReceiver msgReceiver = null;
-
+	ArrayList<TextView> tvs = new ArrayList<TextView>();
 	@SuppressWarnings("rawtypes")
 	private Class[] mTabClassArray = {
 			com.cpstudui.zhuojiaren.lz.MainActivity.class,
 			JiarenActiveActivity.class, MsgListActivity.class,
-			StudyActivity.class, LZMyHomeActivity.class };//MyHomeActivity.class
+			StudyActivity.class, LZMyHomeActivity.class };// MyHomeActivity.class
 
 	private int[] mImageResourceArray = { R.drawable.indicator_tab_ico_zhuo,
 			R.drawable.indicator_tab_ico_active,
@@ -81,6 +85,7 @@ public class TabContainerActivity extends TabActivity implements
 		mTextArray = new String[] { getString(R.string.tab_item1),
 				getString(R.string.tab_item2), getString(R.string.tab_item3),
 				getString(R.string.tab_item4), getString(R.string.tab_item5) };
+		
 		TabHost tab = getTabHost();
 		int count = mTabClassArray.length;
 		Intent intent = getIntent();
@@ -92,6 +97,7 @@ public class TabContainerActivity extends TabActivity implements
 			tab.addTab(tabSpec);
 		}
 		tab.setCurrentTab(curr);
+		tvs.get(0).setTextColor(Color.GREEN);
 		tab.setOnTabChangedListener(this);
 	}
 
@@ -113,6 +119,7 @@ public class TabContainerActivity extends TabActivity implements
 		if (index == 2) {
 			numTV = (TextView) view.findViewById(R.id.textViewNum);
 		}
+		tvs.add(textView);
 		return view;
 	}
 
@@ -212,6 +219,14 @@ public class TabContainerActivity extends TabActivity implements
 	public void onTabChanged(String tabId) {
 		if (tabId.equals(getString(R.string.tab_item4))) {
 			numTV.setVisibility(View.GONE);
+		}
+		int count = mTabClassArray.length;
+		for (int i = 0; i < count; i++) {
+
+			if (mTextArray[i].equals(tabId))
+				tvs.get(i).setTextColor(Color.GREEN);
+			else
+				tvs.get(i).setTextColor(Color.WHITE);
 		}
 	}
 

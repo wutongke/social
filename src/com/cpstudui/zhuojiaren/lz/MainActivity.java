@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.cpstudio.zhuojiaren.MsgDetailActivity;
 import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.UserSelectActivity;
 import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter;
 import com.cpstudio.zhuojiaren.facade.InfoFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
@@ -47,22 +46,22 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		OnItemClickListener {
 	private float times = 2;
 	private PopupWindows phw = null;
-	private ViewPager bannerViewPager, catsViewPager;
-	private PageIndicator bannerIndicator, catsIndicator;
+	private ViewPager catsViewPager;
+	ImageView idBanner;
+	private PageIndicator catsIndicator;
 
-	private ArrayList<BeanBanner> bannerListData;
 	private ArrayList<BeanBanner> hotListData;
 	private ArrayList<BeanCats> catsListData;
 	private ArrayList<BeanNotice> noticesListData;
 
 	private ArrayList<ImageView> hotImages;
-	private Bee_PageAdapter bannerPageAdapter;
 	private Cats_PageAdapter catPageAdapter;
 
 	AutoTextView antoText;
 
 	private ListView mListView;
-	private ZhuoUserListAdapter mAdapter;
+//lz ..	private ZhuoUserListAdapter mAdapter;
+	private QuanziTopicListAdapter mAdapter;
 	private PullDownView mPullDownView;
 	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
 	private String mSearchKey = null;
@@ -94,7 +93,9 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
-		mAdapter = new ZhuoUserListAdapter(MainActivity.this, mList);
+//		mAdapter = new ZhuoUserListAdapter(MainActivity.this, mList);
+		mAdapter = new QuanziTopicListAdapter(MainActivity.this, mList);
+		
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
@@ -122,15 +123,16 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		catsListData = new ArrayList<BeanCats>();
 		int drawId[] = { R.drawable.jiarendongtai,
 				R.drawable.chengzhangzaixian, R.drawable.zhuoyuanyuyin,
-				R.drawable.wodemingpian, R.drawable.zhuojiaquanzi,
-				R.drawable.ziyuangongxu, R.drawable.zhuomaishangcheng,
-				R.drawable.zhongchouxiangmu, R.drawable.index_1,
-				R.drawable.index_2, R.drawable.index_3, R.drawable.index_4,
-				R.drawable.index_5, R.drawable.index_6, R.drawable.index_7 };
-
+				R.drawable.wodemingpian, R.drawable.zhuo,
+				R.drawable.resource, R.drawable.shop,
+				R.drawable.project, R.drawable.travel,
+				R.drawable.city, R.drawable.interest, R.drawable.near,
+				R.drawable.jinjing, R.drawable.teacher, R.drawable.money };
+		String[] texts=getResources().getStringArray(R.array.main_cats);
 		for (int i = 0; i < 14; i++) {
 			BeanCats item = new BeanCats();
 			item.setPicId(drawId[i]);
+			item.setText(texts[i]);
 			catsListData.add(item);
 		}
 
@@ -146,11 +148,20 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		catsIndicator = (PageIndicator) findViewById(R.id.cats_indicator);
 		catsIndicator.setViewPager(catsViewPager);
 
+		catsViewPager.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				int x=(Integer) arg0.getTag();
+				Toast.makeText(MainActivity.this, x+"", 1000).show();
+			}
+		});
+		
+		
 		antoText = (AutoTextView) findViewById(R.id.at_notices);
 		noticesListData = new ArrayList<BeanNotice>();
-		String [] notices = {"【最新动态】 第95期加入专访，理想与您相约",
-				"【最新动态】 第94期加入专访，放飞梦想"
-		};
+		String[] notices = { "【最新动态】 第95期加入专访，理想与您相约", "【最新动态】 第94期加入专访，放飞梦想" };
 		for (int i = 0; i < 2; i++) {
 			BeanNotice item = new BeanNotice();
 			item.setContent(notices[i]);
@@ -331,11 +342,6 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				}
 				break;
 			}
-			case MsgTagVO.FLIP:
-				bannerViewPager.setCurrentItem((bannerViewPager
-						.getCurrentItem() + 1) % bannerPageAdapter.getCount());
-
-				break;
 			}
 		}
 
@@ -435,14 +441,14 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		// int height = (int) (75 * DeviceInfoUtil
 		// .getDeviceCsd(getApplicationContext()));
 
-		bannerViewPager = (ViewPager) findViewById(R.id.banner_viewpager);
+		idBanner = (ImageView) findViewById(R.id.main_banner);
 
 		// LayoutParams params=new LayoutParams(LayoutParams.MATCH_PARENT,
 		// height);
 		// bannerViewPager.setLayoutParams(params);
 
-		bannerListData = new ArrayList<BeanBanner>();
-		String[] urls = {"http://img3.imgtn.bdimg.com/it/u=2628293733,2370129064&fm=21&gp=0.jpg",
+		String[] urls = {
+				"http://img3.imgtn.bdimg.com/it/u=2628293733,2370129064&fm=21&gp=0.jpg",
 				"http://img2.imgtn.bdimg.com/it/u=2906966334,223089362&fm=21&gp=0.jpg",
 				"http://img4.imgtn.bdimg.com/it/u=1704061436,275613074&fm=21&gp=0.jpg",
 				"http://img3.imgtn.bdimg.com/it/u=1440545533,1670448902&fm=21&gp=0.jpg",
@@ -451,37 +457,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				"http://img3.imgtn.bdimg.com/it/u=1849853359,1757644016&fm=21&gp=0.jpg",
 				"http://img0.imgtn.bdimg.com/it/u=1703091849,1006427253&fm=21&gp=0.jpg",
 				"http://img1.imgtn.bdimg.com/it/u=3254378695,3573443632&fm=21&gp=0.jpg",
-				"http://img4.imgtn.bdimg.com/it/u=420516615,2115785755&fm=21&gp=0.jpg"
-		}; 
-		for (int i = 0; i < 5; i++) {
-
-			BeanBanner item = new BeanBanner();
-			item.setPicUrl(urls[i]);
-			bannerListData.add(item);
-		}
-
-		bannerPageAdapter = new Bee_PageAdapter(MainActivity.this,
-				bannerListData);
-		bannerViewPager.setAdapter(bannerPageAdapter);
-		bannerViewPager.setCurrentItem(0);
-		bannerIndicator = (PageIndicator) findViewById(R.id.indicator);
-		bannerIndicator.setViewPager(bannerViewPager);
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(3000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					if (isContinue) {
-						mUIHandler.sendEmptyMessage(MsgTagVO.FLIP);
-					}
-				}
-			}
-		}).start();
+				"http://img4.imgtn.bdimg.com/it/u=420516615,2115785755&fm=21&gp=0.jpg" };
 
 		hotImages = new ArrayList<ImageView>();
 		hotListData = new ArrayList<BeanBanner>();
@@ -490,15 +466,15 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		hotImages.add((ImageView) findViewById(R.id.ivHot3));
 		for (int i = 0; i < 3; i++) {
 			BeanBanner item = new BeanBanner();
-			item.setPicUrl(urls[i+5]);
+			item.setPicUrl(urls[i + 5]);
 			hotListData.add(item);
 		}
-		for (int i = 0; i < 3; i++) {
-			String url = hotListData.get(i).getPicUrl();
-			hotImages.get(i).setTag(url);
-			imageLoader.addTask(url, hotImages.get(i));
-		}
-		imageLoader.doTask();
+//		for (int i = 0; i < 3; i++) {
+//			String url = hotListData.get(i).getPicUrl();
+//			hotImages.get(i).setTag(url);
+//			imageLoader.addTask(url, hotImages.get(i));
+//		}
+//		imageLoader.doTask();
 	}
 
 }

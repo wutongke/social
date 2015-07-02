@@ -612,5 +612,20 @@
         <item>需要人才</item>
         <item>智慧帮助</item>
     </string-array>
-
+<string-array name="main_cats">
+	    <item >家人动态</item>
+	    <item >成长在线</item>
+	    <item >倬元语音</item>
+	    <item >我的名片</item>
+	    <item >倬家圈子</item>
+	    <item >资源供需</item>
+	    <item >倬脉商城</item>
+	    <item >众筹项目</item>
+	    <item >同行家人</item>
+	    <item >同城家人</item>
+	    <item >同趣家人</item>
+	    <item >智慧精进</item>
+	    <item >智慧导师</item>
+	    <item >我的钱包</item>
+	</string-array>
 </resources>

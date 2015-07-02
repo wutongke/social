@@ -7,6 +7,14 @@ public class BeanCats {
 	private int picId;
 	private int type;
 	private String itemId;
+	private String text;
+	
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
 	public String getPicUrl() {
 		return picUrl;
 	}

@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -22,8 +21,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.ClipboardManager;
-import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,7 +37,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.ViewFlipper;
+import butterknife.ButterKnife;
 
 import com.cpstudio.zhuojiaren.adapter.ImQuanListAdapter;
 import com.cpstudio.zhuojiaren.adapter.ZhuoInfoListAdapter;
@@ -60,25 +57,20 @@ import com.cpstudio.zhuojiaren.model.ImQuanVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
-import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
+import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
 import com.utils.FileUtil;
 
 @SuppressWarnings("deprecation")
-public class QuanBoardChatActivity extends Activity implements
-		OnGestureListener, OnItemClickListener, OnPullDownListener {
-	private ViewFlipper mViewFlipper;
-	private GestureDetector mDetector;
+public class QuanBoardChatActivity extends BaseActivity implements
+		OnPullDownListener {
 
-	private ListView mListView;
 	private PullDownView mPullDownView;
-	private ZhuoInfoListAdapter mAdapter;
-	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
 
 	private ListView mListView2;
 	private ImQuanListAdapter mAdapter2;
@@ -106,6 +98,10 @@ public class QuanBoardChatActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_quan_board_chat);
+
+		initTitle();
+		ButterKnife.inject(this);
+
 		Intent intent = getIntent();
 		toTab = intent.getBooleanExtra("toTab", false);
 		userFacade = new UserFacade(QuanBoardChatActivity.this);
@@ -115,8 +111,9 @@ public class QuanBoardChatActivity extends Activity implements
 		times = DeviceInfoUtil.getDeviceCsd(getApplicationContext());
 		Intent i = getIntent();
 		groupid = i.getStringExtra("groupid");
-		String type = i.getStringExtra("type");
+//		String type = i.getStringExtra("type");//"board","chat"旧版本两种，现在不用了
 		QuanVO detail = quanFacade.getById(groupid);
+
 		UserVO founder = detail.getFounder();
 		if (founder != null) {
 			String founderid = founder.getUserid();
@@ -125,23 +122,10 @@ public class QuanBoardChatActivity extends Activity implements
 			}
 		}
 		String quanName = detail.getGname();
-		TextView title = (TextView) findViewById(R.id.userNameShow);
 		title.setText(quanName);
-		if (isCreater.equals("1")) {
-			findViewById(R.id.buttonPublish).setVisibility(View.VISIBLE);
-		}
+
 		pwh = new PopupWindows(QuanBoardChatActivity.this);
 		mFacade = new ImQuanFacade(QuanBoardChatActivity.this);
-		mDetector = new GestureDetector(this, this);
-		mViewFlipper = (ViewFlipper) findViewById(R.id.VFGroupInfo);
-		if (type.equals("chat")) {
-			changeButtonBg(0);
-			mViewFlipper.setDisplayedChild(1);
-		}
-		mAdapter = new ZhuoInfoListAdapter(QuanBoardChatActivity.this, mList);
-		mListView = (ListView) findViewById(R.id.listViewBoard);
-		mListView.setAdapter(mAdapter);
-		mListView.setOnItemClickListener(this);
 
 		ep = new EmotionPopHelper(QuanBoardChatActivity.this,
 				getEmotionClickListener());
@@ -170,7 +154,6 @@ public class QuanBoardChatActivity extends Activity implements
 		mPullDownView.setShowHeader();
 		mPullDownView.setHideFooter(false);
 		initClick();
-		loadBoardData();
 		loadChatData();
 	}
 
@@ -247,19 +230,19 @@ public class QuanBoardChatActivity extends Activity implements
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case MsgTagVO.DATA_OTHER: {
-				if (msg.obj != null && !msg.obj.equals("")) {
-					JsonHandler nljh = new JsonHandler((String) msg.obj,
-							getApplicationContext());
-					ArrayList<ZhuoInfoVO> list = nljh.parseZhuoInfoList();
-					if (!list.isEmpty()) {
-						mList.clear();
-						mList.addAll(list);
-						mAdapter.notifyDataSetChanged();
-					}
-				}
-				break;
-			}
+//			case MsgTagVO.DATA_OTHER: {
+//				if (msg.obj != null && !msg.obj.equals("")) {
+//					JsonHandler nljh = new JsonHandler((String) msg.obj,
+//							getApplicationContext());
+//					ArrayList<ZhuoInfoVO> list = nljh.parseZhuoInfoList();
+//					if (!list.isEmpty()) {
+//						mList.clear();
+//						mList.addAll(list);
+//						mAdapter.notifyDataSetChanged();
+//					}
+//				}
+//				break;
+//			}
 			case MsgTagVO.DATA_MORE: {
 				if (msg.obj != null && msg.obj instanceof ImQuanVO) {
 					ImQuanVO immsg = (ImQuanVO) msg.obj;
@@ -309,18 +292,6 @@ public class QuanBoardChatActivity extends Activity implements
 			}
 		}
 	};
-
-	private void loadBoardData() {
-		String params = ZhuoCommHelper.getUrlMsgList();
-		params += "?pageflag=" + "0";
-		params += "&reqnum=" + "20";
-		params += "&lastid=" + "0";
-		params += "&type=" + "3";
-		params += "&gongxutype=" + "0";
-		params += "&from=" + "5";
-		params += "&groupid=" + groupid;
-		mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_OTHER);
-	}
 
 	private void loadChatData() {
 		ArrayList<ImQuanVO> list = mFacade.getAllByCondition("groupid = ?",
@@ -522,60 +493,37 @@ public class QuanBoardChatActivity extends Activity implements
 	}
 
 	private void initClick() {
-		findViewById(R.id.buttonPublish).setOnClickListener(
-				new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						Intent i = new Intent(QuanBoardChatActivity.this,
-								PublishBoardActivity.class);
-						i.putExtra("groupid", groupid);
-						startActivity(i);
-					}
-				});
-		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
+		function.setBackgroundResource(R.drawable.ico_about);
+		function.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
-				QuanBoardChatActivity.this.finish();
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(QuanBoardChatActivity.this,
+						ZhuoQuanMainActivity.class);
+				i.putExtra("groupid", groupid);
+				startActivity(i);
 			}
 		});
+		// findViewById(R.id.buttonPublish).setOnClickListener(
+		// new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// Intent i = new Intent(QuanBoardChatActivity.this,
+		// PublishBoardActivity.class);
+		// i.putExtra("groupid", groupid);
+		// startActivity(i);
+		// }
+		// });
+//		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				QuanBoardChatActivity.this.finish();
+//			}
+//		});
 
-		findViewById(R.id.relativeLayoutBoard).setOnClickListener(
-				new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						if (mViewFlipper.getDisplayedChild() != 0) {
-							changeButtonBg(mViewFlipper.getDisplayedChild());
-							mViewFlipper.setInAnimation(
-									getApplicationContext(),
-									R.anim.push_right_in);
-							mViewFlipper.setOutAnimation(
-									getApplicationContext(),
-									R.anim.push_right_out);
-							mViewFlipper.showPrevious();
-						}
-					}
-				});
-
-		findViewById(R.id.relativeLayoutQuanLiao).setOnClickListener(
-				new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						if (mViewFlipper.getDisplayedChild() != 1) {
-							changeButtonBg(mViewFlipper.getDisplayedChild());
-							mViewFlipper.setInAnimation(
-									getApplicationContext(),
-									R.anim.push_left_in);
-							mViewFlipper.setOutAnimation(
-									getApplicationContext(),
-									R.anim.push_left_out);
-							mViewFlipper.showNext();
-						}
-					}
-				});
 		findViewById(R.id.buttonChatMore).setOnClickListener(
 				new OnClickListener() {
 
@@ -860,30 +808,30 @@ public class QuanBoardChatActivity extends Activity implements
 					sendChatMsg("card", id, "");
 				}
 				break;
-			case MsgTagVO.DATA_REFRESH: {
-				loadBoardData();
-			}
-			case MsgTagVO.MSG_CMT: {
-				String forward = data.getStringExtra("forward");
-				String msgid = data.getStringExtra("msgid");
-				for (int i = 0; i < mList.size(); i++) {
-					ZhuoInfoVO item = mList.get(i);
-					if (msgid != null) {
-						if (item.getMsgid().equals(msgid)) {
-							if (forward != null && forward.equals("1")) {
-								item.setForwardnum(String.valueOf(Integer
-										.valueOf(item.getForwardnum()) + 1));
-							}
-							item.setCmtnum(String.valueOf(Integer.valueOf(item
-									.getCmtnum()) + 1));
-							mList.set(i, item);
-							break;
-						}
-					}
-				}
-				mAdapter.notifyDataSetChanged();
-				break;
-			}
+//			case MsgTagVO.DATA_REFRESH: {
+//				loadBoardData();
+//			}
+//			case MsgTagVO.MSG_CMT: {
+//				String forward = data.getStringExtra("forward");
+//				String msgid = data.getStringExtra("msgid");
+//				for (int i = 0; i < mList.size(); i++) {
+//					ZhuoInfoVO item = mList.get(i);
+//					if (msgid != null) {
+//						if (item.getMsgid().equals(msgid)) {
+//							if (forward != null && forward.equals("1")) {
+//								item.setForwardnum(String.valueOf(Integer
+//										.valueOf(item.getForwardnum()) + 1));
+//							}
+//							item.setCmtnum(String.valueOf(Integer.valueOf(item
+//									.getCmtnum()) + 1));
+//							mList.set(i, item);
+//							break;
+//						}
+//					}
+//				}
+//				mAdapter.notifyDataSetChanged();
+//				break;
+//			}
 			default:
 				String filePath = pwh.dealPhotoReturn(requestCode, resultCode,
 						data, false);
@@ -899,82 +847,10 @@ public class QuanBoardChatActivity extends Activity implements
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	private void changeButtonBg(int i) {
-		if (i == 0) {
-			findViewById(R.id.textViewBoard).setBackgroundResource(0);
-			findViewById(R.id.textViewQuanLiao).setBackgroundResource(
-					R.drawable.bg_select_tab);
-			findViewById(R.id.buttonPublish).setVisibility(View.GONE);
-		} else if (i == 1) {
-			findViewById(R.id.textViewQuanLiao).setBackgroundResource(0);
-			findViewById(R.id.textViewBoard).setBackgroundResource(
-					R.drawable.bg_select_tab);
-			if (isCreater.equals("1")) {
-				findViewById(R.id.buttonPublish).setVisibility(View.VISIBLE);
-			}
-		}
-	}
+	
 
-	@Override
-	public boolean onDown(MotionEvent e) {
-		return false;
-	}
-
-	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
-		if (e1.getX() - e2.getX() > 100 * times) {
-			changeButtonBg(mViewFlipper.getDisplayedChild());
-			mViewFlipper.setInAnimation(getApplicationContext(),
-					R.anim.push_left_in);
-			mViewFlipper.setOutAnimation(getApplicationContext(),
-					R.anim.push_left_out);
-			mViewFlipper.showNext();
-			return true;
-		} else if (e1.getX() - e2.getX() < -100 * times) {
-			changeButtonBg(mViewFlipper.getDisplayedChild());
-			mViewFlipper.setInAnimation(getApplicationContext(),
-					R.anim.push_right_in);
-			mViewFlipper.setOutAnimation(getApplicationContext(),
-					R.anim.push_right_out);
-			mViewFlipper.showPrevious();
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public void onLongPress(MotionEvent e) {
-
-	}
-
-	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
-		return false;
-	}
-
-	@Override
-	public void onShowPress(MotionEvent e) {
-
-	}
-
-	@Override
-	public boolean onSingleTapUp(MotionEvent e) {
-		return false;
-	}
-
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		return this.mDetector.onTouchEvent(event);
-	}
-
-	@Override
-	public boolean dispatchTouchEvent(MotionEvent ev) {
-		this.mDetector.onTouchEvent(ev);
-		return super.dispatchTouchEvent(ev);
-	}
-
+	
+	
 	private PlayingListener playingListener(final View v, boolean left) {
 		if (!left) {
 			return new PlayingListener() {
@@ -1042,16 +918,6 @@ public class QuanBoardChatActivity extends Activity implements
 			loadChatAfterData();
 		}
 
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		if (arg3 != -1) {
-			Intent intent = new Intent(QuanBoardChatActivity.this,
-					MsgDetailActivity.class);
-			intent.putExtra("msgid", (String) arg1.getTag(R.id.tag_id));
-			startActivity(intent);
-		}
 	}
 
 	@Override

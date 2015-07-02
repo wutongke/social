@@ -25,6 +25,7 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseFragmentActivity;
 import com.cpstudio.zhuojiaren.MsgCmtActivity;
+import com.cpstudio.zhuojiaren.QuanBoardChatActivity;
 import com.cpstudio.zhuojiaren.QuanDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.UserSelectActivity;
@@ -443,9 +444,11 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				// 进入圈聊界面
-				// Intent i = new Intent(ZhuoQuanMainActivity.this,
-				// EditEventActivity.class);
-				// startActivity(i);
+				 Intent i = new Intent(ZhuoQuanMainActivity.this,
+				 QuanBoardChatActivity.class);
+				 i.putExtra("groupid", groupid);
+					
+				 startActivity(i);
 			}
 		});
 		btnJoinQuan.setOnClickListener(new OnClickListener() {

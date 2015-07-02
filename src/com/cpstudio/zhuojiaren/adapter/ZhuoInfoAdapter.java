@@ -638,7 +638,7 @@ public class ZhuoInfoAdapter extends BaseAdapter {
 		TextView workTV;
 		TextView gongTV;
 		TextView xuTV;
-		TextView boardTV;
+//		TextView boardTV;
 		TableLayout tl;
 		RelativeLayout.LayoutParams rlp;
 		RelativeLayout.LayoutParams rlp2;
@@ -712,8 +712,8 @@ public class ZhuoInfoAdapter extends BaseAdapter {
 		holder.workTV = (TextView) convertView.findViewById(R.id.textViewWork);
 		holder.gongTV = (TextView) convertView.findViewById(R.id.textViewGong);
 		holder.xuTV = (TextView) convertView.findViewById(R.id.textViewXu);
-		holder.boardTV = (TextView) convertView
-				.findViewById(R.id.textViewBoard);
+//		holder.boardTV = (TextView) convertView
+//				.findViewById(R.id.textViewBoard);
 		holder.tl = (TableLayout) convertView
 				.findViewById(R.id.tableLayoutPics);
 		holder.rlp = new RelativeLayout.LayoutParams((int) (50 * times),

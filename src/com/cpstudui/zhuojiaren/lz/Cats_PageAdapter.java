@@ -17,30 +17,41 @@ package com.cpstudui.zhuojiaren.lz;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
+import com.cpstudio.zhuojiaren.helper.ResHelper;
+import com.cpstudio.zhuojiaren.ui.AudioListActivity;
+import com.cpstudio.zhuojiaren.ui.CrowdFundingActivity;
+import com.cpstudio.zhuojiaren.ui.GrouthListActivity;
+import com.cpstudio.zhuojiaren.ui.MyMoneyActivity;
+import com.cpstudio.zhuojiaren.ui.UserSameActivity;
+import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
-import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
-
-import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import android.widget.TextView;
 
 public class Cats_PageAdapter extends PagerAdapter {
 	public List<BeanCats> mListData;
 	// LoadImage mLoadImage=new LoadImage(5);
 	int pages = 0;
 	public ArrayList<View> mListView = new ArrayList<View>();
+	Context mContext;
 
-	public Cats_PageAdapter(Context context, List<BeanCats> mListData,int w,int h) {
+	public Cats_PageAdapter(final Context context, List<BeanCats> mListData,
+			int w, int h) {
 		pages = (int) Math.ceil(mListData.size() / 8.0);
+		mContext = context;
+		int cellWidth = (w - 5 * 5) / 4;
 
-		int cellWidth=(w-5*5)/4;
-		
 		// for (int i = 0; i < pages; i++) {
 		// ImageView iv = new ImageView(context);
 		// iv.setImageResource(R.drawable.backspace);
@@ -51,6 +62,7 @@ public class Cats_PageAdapter extends PagerAdapter {
 		this.mListData = mListData;
 
 		ImageView iv = null;
+		TextView tv = null;
 		for (int i = 0; i < pages; i++) {
 			LinearLayout.LayoutParams rllp = new LinearLayout.LayoutParams(
 					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -67,26 +79,42 @@ public class Cats_PageAdapter extends PagerAdapter {
 
 				linearLayout.addView(childlinearLayou);
 
-				int base = i * 8 + j * 4;
+				final int base = i * 8 + j * 4;
 				for (int k = 0; base + k < n && k < 4; k++) {
+					final LinearLayout ccll = new LinearLayout(context);
+					LinearLayout.LayoutParams ccp = new LinearLayout.LayoutParams(
+							LayoutParams.WRAP_CONTENT,
+							LayoutParams.WRAP_CONTENT);
+					ccp.gravity = Gravity.CENTER_HORIZONTAL;
+					ccll.setLayoutParams(ccp);
+					ccll.setOrientation(LinearLayout.VERTICAL);
+					final int index = base + k;
 					iv = new ImageView(context);
-					iv.setImageResource(mListData.get(base + k).getPicId());
-					iv.setOnClickListener(new OnClickListener() {
+					iv.setImageResource(mListData.get(index).getPicId());
+
+					tv = new TextView(context);
+					tv.setText(mListData.get(index).getText());
+					tv.setTextSize(10);
+					ccll.addView(iv, ccp);
+					ccll.addView(tv, ccp);
+					ccll.setTag(index);
+					ccll.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
 							// TODO Auto-generated method stub
 							// 跳转页面
+							onClicked(index);
+
 						}
 					});
 					LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-							cellWidth,cellWidth);
-					lp.setMargins(5, 5, 5, 5);
-					childlinearLayou.addView(iv, lp);
+							cellWidth, LayoutParams.WRAP_CONTENT);
+					lp.setMargins(5, 3, 5, 3);
+					childlinearLayou.addView(ccll, lp);
 				}
 			}
 			mListView.add(linearLayout);
 		}
-
 	}
 
 	@Override
@@ -111,4 +139,77 @@ public class Cats_PageAdapter extends PagerAdapter {
 		return arg0 == arg1;
 	}
 
+	void onClicked(int x) {
+		Intent i;
+		switch (x) {
+		case 0:
+			i = new Intent(mContext, JiarenActiveNumListActivity.class);
+			mContext.startActivity(i);
+			break;
+		case 1:// 成长在线
+			i = new Intent(mContext, GrouthListActivity.class);
+			mContext.startActivity(i);
+			break;
+		case 2:// 倬元语音
+			i = new Intent(mContext, AudioListActivity.class);
+			mContext.startActivity(i);
+
+			break;
+		case 3:
+			String uid = ResHelper
+					.getInstance(mContext.getApplicationContext()).getUserid();
+			i = new Intent(mContext, ZhuoMaiCardActivity.class);
+			i.putExtra("userid", uid);
+			mContext.startActivity(i);
+			break;
+		case 4:
+			i = new Intent(mContext, ZhuoQuanActivity.class);
+			mContext.startActivity(i);
+			break;
+
+		case 5:// 资源供需
+			i = new Intent(mContext, ResourceGXActivity.class);
+			mContext.startActivity(i);
+
+			break;
+		case 6:
+			Toast.makeText(mContext, "完善中", 1000).show();
+			break;
+		case 7:
+			i = new Intent(mContext, CrowdFundingActivity.class);
+			mContext.startActivity(i);
+			break;
+
+		case 8:
+			i = new Intent(mContext, UserSameActivity.class);
+			i.putExtra("type", 2);
+			mContext.startActivity(i);
+			break;
+
+		case 9:
+			i = new Intent(mContext, UserSameActivity.class);
+			i.putExtra("type", 1);
+			mContext.startActivity(i);
+			break;
+
+		case 10:
+			i = new Intent(mContext, UserSameActivity.class);
+			i.putExtra("type", 4);
+			mContext.startActivity(i);
+			break;
+		case 11:
+			Toast.makeText(mContext, "模糊，完善中", 1000).show();
+			break;
+
+		case 12:
+			i = new Intent(mContext, UserSameActivity.class);
+			i.putExtra("type", 5);
+			mContext.startActivity(i);
+			break;
+		case 13:
+			i = new Intent(mContext, MyMoneyActivity.class);
+			mContext.startActivity(i);
+			break;
+		}
+	}
 }

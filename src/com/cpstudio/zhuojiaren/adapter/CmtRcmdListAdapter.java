@@ -389,7 +389,7 @@ public class CmtRcmdListAdapter extends BaseAdapter {
 		TextView workTV;
 		TextView gongTV;
 		TextView xuTV;
-		TextView boardTV;
+//		TextView boardTV;
 		TableLayout tl;
 		TableLayout.LayoutParams tllp;
 		TableRow.LayoutParams trlp;
@@ -428,8 +428,8 @@ public class CmtRcmdListAdapter extends BaseAdapter {
 		holder.workTV = (TextView) convertView.findViewById(R.id.textViewWork);
 		holder.gongTV = (TextView) convertView.findViewById(R.id.textViewGong);
 		holder.xuTV = (TextView) convertView.findViewById(R.id.textViewXu);
-		holder.boardTV = (TextView) convertView
-				.findViewById(R.id.textViewBoard);
+//		holder.boardTV = (TextView) convertView
+//				.findViewById(R.id.textViewBoard);
 		holder.tl = (TableLayout) convertView
 				.findViewById(R.id.tableLayoutPics);
 		holder.tllp = new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT,

@@ -62,8 +62,7 @@ public class MsgTagVO {
 	public static final int INIT = 200;
 	public static final int SCROLLVIEW = 201;
 	
-	//lz
-	public static final int FLIP = 99;
+	
 	public static final int HOT_WORD = 100;
 	
 	//lz供需，数据

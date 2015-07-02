@@ -10,9 +10,9 @@
         android:id="@+id/buttonPubActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="10dp"
         android:background="#00000000"
-        android:drawableLeft="@drawable/ico_alert"
+        android:drawableLeft="@drawable/iwrite"
         android:minHeight="20dp"
         android:text="@string/label_main_pubactive"
         android:textColor="@color/white" />
@@ -23,9 +23,9 @@
         android:id="@+id/buttonInviteFriends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="10dp"
         android:background="#00000000"
-        android:drawableLeft="@drawable/ico_alert"
+        android:drawableLeft="@drawable/iaddpeo"
         android:minHeight="20dp"
         android:text="@string/label_invite_friends"
         android:textColor="@color/white" />

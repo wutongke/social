@@ -53,7 +53,8 @@
             android:background="@drawable/button_top_bg_menu"
             android:text="@string/label_plus"
             android:textColor="#ffffff"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+             android:visibility="gone" />
 
         <Button
             android:id="@+id/buttonSearch"
@@ -66,7 +67,8 @@
             android:background="@drawable/button_top_bg_menu"
             android:text="@string/label_main_find"
             android:textColor="#ffffff"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <FrameLayout
@@ -78,8 +80,6 @@
             android:id="@+id/searchLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
             android:background="@color/vpi__background_holo_light"
             android:orientation="vertical" >
 
@@ -87,8 +87,6 @@
                 android:id="@+id/hotLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#f9f9f9"
-                android:layout_marginTop="15dp"
                 android:orientation="vertical" >
 
                 <TextView

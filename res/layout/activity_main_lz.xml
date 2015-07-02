@@ -51,8 +51,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:background="@drawable/button_top_bg_menu"
-            android:text="@string/label_plus"
+            android:background="@drawable/imenu"
             android:textColor="#ffffff"
             android:textSize="14sp" />
 
@@ -64,7 +63,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:background="@drawable/button_top_bg_menu"
+            android:background="@drawable/ibutton"
             android:text="@string/label_main_find"
             android:textColor="#ffffff"
             android:textSize="14sp" />
