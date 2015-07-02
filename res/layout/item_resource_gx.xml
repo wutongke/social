@@ -73,7 +73,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:background="@drawable/ico_zpgw"
+        android:layout_margin="5dp"
+        android:background="@drawable/jian"
         android:textSize="15dp" />
 
 </RelativeLayout>

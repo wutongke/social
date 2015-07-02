@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+     android:background="#000000"
     tools:context=".PublishResourceActivity" >
 
     <include
@@ -14,17 +15,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp" >
+        android:layout_margin="10dp"
+        
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginRight="10dp"
             android:orientation="vertical" >
-
-            
 
             <RelativeLayout
                 android:id="@+id/relativeLayoutchoiceType"
@@ -58,7 +57,7 @@
                     android:layout_marginRight="6dp"
                     android:contentDescription="@string/ico"
                     android:padding="6dp"
-                    android:src="@drawable/ico_arrow_down" />
+                    android:src="@drawable/menu" />
             </RelativeLayout>
 
             <EditText
@@ -112,7 +111,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_corners"
                 android:orientation="vertical" >
             </LinearLayout>
 
@@ -161,8 +159,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/bg_corners"
-                android:orientation="vertical">
-
+                android:orientation="vertical" >
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -182,7 +179,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00000000"
-            android:drawableLeft="@drawable/ico_alert"
+            android:drawableLeft="@drawable/addpeople"
             android:minHeight="20dp"
             android:text="@string/add_contact"
             android:textColor="@color/white" />

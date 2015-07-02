@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="#dddddd"
-            android:drawableLeft="@drawable/ico_pos_white"
+            android:drawableLeft="@drawable/zaddress2"
             android:drawablePadding="15dp"
             android:gravity="center"
             android:paddingBottom="5dp"

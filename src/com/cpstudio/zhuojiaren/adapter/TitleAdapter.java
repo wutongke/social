@@ -30,6 +30,7 @@ public class TitleAdapter extends CommonAdapter<ImageRadioButton>{
 	public void convert(ViewHolder helper, final ImageRadioButton item) {
 		// TODO Auto-generated method stub
 		helper.setImageResource(R.id.iti_image, item.getaImage());
+		
 //		final ImageView image = helper.getView(R.id.iti_image);
 //		image.setBackgroundResource(item.getaImage());
 //		if(mSelect.equals(item))

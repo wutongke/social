@@ -31,7 +31,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
+import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.MsgDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter;
@@ -49,22 +52,27 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
-public class SearchMainActivity extends Activity implements OnPullDownListener,
-		OnItemClickListener {
+public class SearchMainActivity extends BaseActivity implements
+		OnPullDownListener, OnItemClickListener {
+	@InjectView(R.id.search_pull_down_view)
+	PullDownView mPullDownView;
+	@InjectView(R.id.searchLayout)
+	ViewGroup searchLayout;
+	@InjectView(R.id.hotContainer)
+	ViewGroup hotwordsLayout;
+	@InjectView(R.id.search_input)
+	EditText searchView;
 
 	private ListView mListView;
 	private ListView mlvHistory;
 	ArrayAdapter<String> historyAdapter;
 
-	private PullDownView mPullDownView;
 	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
 	ZhuoUserListAdapter mAdapter;
 	ArrayList<String> historyList = new ArrayList<String>();
 	String[] hotWords;
 	String mLastId;
 	private SharedPreferences sharedPrefs;
-	ViewGroup searchLayout;
-	ViewGroup hotwordsLayout;
 
 	String uid = null;
 	String mSearchKey = null;
@@ -76,7 +84,9 @@ public class SearchMainActivity extends Activity implements OnPullDownListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_lz);
-
+		ButterKnife.inject(this);
+		initTitle();
+		title.setText(R.string.label_searchUserHint);
 		// getWindow().setSoftInputMode(
 		// WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -84,8 +94,6 @@ public class SearchMainActivity extends Activity implements OnPullDownListener,
 		infoFacade = new InfoFacade(getApplicationContext(),
 				InfoFacade.NEWSLIST);
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
-
-		mPullDownView = (PullDownView) findViewById(R.id.search_pull_down_view);
 
 		mPullDownView.setOnPullDownListener(this);
 
@@ -100,18 +108,15 @@ public class SearchMainActivity extends Activity implements OnPullDownListener,
 		mPullDownView.setHideHeader();
 		mPullDownView.setHideFooter(false);
 
-		searchLayout = (ViewGroup) findViewById(R.id.searchLayout);
-		hotwordsLayout = (ViewGroup) findViewById(R.id.hotContainer);
 		initClick();
 		loadHistory();
 		loadHotWordData();
 
-		displayHotWord("he;h2;h3;h4;h4;h6");
+		displayHotWord("商誉指导;杨思卓;大爆炸;实习;文慧桥;禽流感");
 	}
 
 	private void initClick() {
 		// TODO Auto-generated method stub
-		final EditText searchView = (EditText) findViewById(R.id.search_input);
 		searchView.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override
@@ -333,37 +338,28 @@ public class SearchMainActivity extends Activity implements OnPullDownListener,
 
 	private void displayHotWord(String words) {
 		// TODO Auto-generated method stub
+
+		int[] ids = { R.id.hotword1, R.id.hotword2, R.id.hotword3,
+				R.id.hotword4, R.id.hotword5, R.id.hotword6 };
+
 		hotWords = words.split(";");
-		LinearLayout.LayoutParams rllp = null;
-		for (int i = 0; i < 2; i++) {
-			rllp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
-					LayoutParams.WRAP_CONTENT);
-			rllp.setMargins(5, 10, 5, 10);
-			rllp.gravity = Gravity.CENTER;
-			LinearLayout linearLayout = new LinearLayout(
-					SearchMainActivity.this);
-			linearLayout.setLayoutParams(rllp);
-			linearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-			hotwordsLayout.addView(linearLayout);
-
-			for (int j = 0; j < 3; j++) {
-				LinearLayout.LayoutParams chlp = new LinearLayout.LayoutParams(
-						LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-				chlp.weight = 1;
-				final TextView tv = new TextView(SearchMainActivity.this);
-				tv.setText(hotWords[i * 2 + j]);
-				linearLayout.addView(tv, chlp);
-				tv.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						mSearchKey = tv.getText().toString();
-						loadData();
-					}
-				});
-			}
+		for (int i = 0; i < hotWords.length && i < ids.length; i++) {
+			final TextView tv = (TextView) findViewById(ids[i]);
+			if (tv == null)
+				continue;
+			tv.setText(hotWords[i]);
+			tv.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					mSearchKey = tv.getText().toString();
+					searchView.setText(mSearchKey);
+					loadData();
+				}
+			});
 		}
+
 	}
 
 	@Override

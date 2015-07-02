@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <ImageView
+        <com.cpstudio.zhuojiaren.widget.RoundImageView
             android:id="@+id/imageViewAuthorHeader"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -99,7 +99,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:contentDescription="@string/label_author_header"
-            android:src="@drawable/default_userhead" />
+            android:src="@drawable/cart" />
     </RelativeLayout>
 
 </LinearLayout>
