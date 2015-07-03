@@ -43,9 +43,9 @@ public class CommentAdapter extends CommonAdapter<CommentVO>{
 			helper.setText(R.id.ic_reply_name, item.getReplyUser().getUsername());
 		}
 		//µãÔÞ
-		helper.setImageResource(R.id.ic_praise, R.drawable.ico_like);
+		helper.setImageResource(R.id.ic_praise, R.drawable.zhan_crowd_cmt);
 		if(item.getIsPraise()!=null&&item.getIsPraise().equals(CommentVO.praise)){
-			helper.setImageResource(R.id.ic_praise, R.drawable.ico_good_red);
+			helper.setImageResource(R.id.ic_praise, R.drawable.zhan2_crowd_cmt);
 		}
 		helper.getView(R.id.ic_praise).setOnClickListener(new OnClickListener() {
 			

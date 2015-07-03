@@ -85,8 +85,8 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 		// ≥ı ºªØtab
 		tabTitles = new String[3];
 		tabTitles[0] = getString(R.string.pay_back);
-		tabTitles[1] = getString(R.string.progress);
-		tabTitles[2] = getString(R.string.label_cmt);
+		tabTitles[1] = getString(R.string.label_cmt);
+		tabTitles[2] = getString(R.string.progress);
 		tab.setTab(tabTitles);
 
 		final View root = findViewById(R.id.acfd_root);

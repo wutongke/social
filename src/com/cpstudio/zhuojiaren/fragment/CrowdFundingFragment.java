@@ -111,6 +111,7 @@ public class CrowdFundingFragment extends Fragment{
 				}else if(type==CrowdFundingVO.CROWDFUNDINGQUERY){
 					intent.putExtra("type", CrowdFundingVO.typeStr[position+3]);
 				}
+				mTitleAdapter.notifyDataSetChanged();
 				startActivity(intent);
 			}
 		});
