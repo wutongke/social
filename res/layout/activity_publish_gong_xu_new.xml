@@ -3,8 +3,8 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     android:orientation="vertical"
-     android:background="#000000"
     tools:context=".PublishResourceActivity" >
 
     <include
@@ -14,10 +14,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/lt_addContactPeople"
         android:layout_below="@id/title"
-        android:layout_margin="10dp"
-        
-        >
+        android:layout_margin="10dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -150,7 +149,7 @@
                     android:text="@string/label_comfirmpub"
                     android:textColor="#ffffff"
                     android:textSize="18sp" />
-            </RelativeLayout>
+            </RelativeLayout>
             -->
 
             <LinearLayout
