@@ -29,17 +29,24 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.QuanDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.QuanListAdapter;
+import com.cpstudio.zhuojiaren.adapter.TitleAdapter;
+import com.cpstudio.zhuojiaren.adapter.TitleAdapter.ImageOnclick;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
+import com.cpstudio.zhuojiaren.model.ImageRadioButton;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.util.Util;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
@@ -69,6 +76,10 @@ public class QuanziFra extends Fragment {
 	private ListViewFooter mListViewFooter = null;
 	private Context mContext;
 	private PopupWindows pupWindow;
+	//六个类别
+	ArrayList<ImageRadioButton> titleList = new ArrayList<ImageRadioButton>();
+	
+	TitleAdapter mTitleAdapter;
 	//主View
 	View layout;
 	public interface functionListener {
@@ -161,7 +172,8 @@ public class QuanziFra extends Fragment {
 		});
 		
 		// 如果是我的圈子，则展示我的圈子
-		if (mType == 6) {
+		if (mType == QuanVO.QUANZIMY) {
+			quanziRecommend.setVisibility(View.GONE);
 			myQuanziLayout.setVisibility(View.VISIBLE);
 			//设置默认选中第一个；
 			myQuanziLayout.check(myCreate.getId());
@@ -183,11 +195,31 @@ public class QuanziFra extends Fragment {
 					}
 				}
 			});
-		} else if (mType == 1) {
+		} else if (mType == QuanVO.QUANZIQUERY) {
+			myQuanziLayout.setVisibility(View.GONE);
 			quanziRecommend.setVisibility(View.VISIBLE);
-			
+			titleList.add(new ImageRadioButton(R.drawable.resource_quan, R.drawable.resourceu_quan));
+			titleList.add(new ImageRadioButton(R.drawable.invest_quan, R.drawable.resourceu_quan));
+			titleList.add(new ImageRadioButton(R.drawable.interest_quan, R.drawable.resourceu_quan));
+			titleList.add(new ImageRadioButton(R.drawable.growup, R.drawable.resourceu_quan));
+			titleList.add(new ImageRadioButton(R.drawable.city2, R.drawable.resourceu_quan));
+			titleList.add(new ImageRadioButton(R.drawable.activity, R.drawable.resourceu_quan));
+			mTitleAdapter = new TitleAdapter(getActivity(), titleList, R.layout.item_title_image);
+			mTitleAdapter.setImageOnclick(new ImageOnclick() {
+				
+				@Override
+				public void OnClickItem(ImageRadioButton item) {
+					// TODO Auto-generated method stub
+					for(ImageRadioButton temp:titleList){
+						if(item.equals(temp))
+							Util.toastMessage(getActivity(), item.getaImage()+"");
+						mTitleAdapter.notifyDataSetChanged();
+					}
+				}
+			});
+			quanziRecommend.setAdapter(mTitleAdapter);
 		}
-
+		
 	}
 
 	/**
@@ -198,7 +230,7 @@ public class QuanziFra extends Fragment {
 			mAdapter.setManagerVisible(true);
 			mAdapter.notifyDataSetChanged();
 		}
-		 shareFooter.setVisibility(View.VISIBLE);
+		shareFooter.setVisibility(View.VISIBLE);
 	}
 
 	/**

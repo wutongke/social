@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -50,7 +51,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 		title.setText(R.string.title_activity_zhuojiaquan);
 		//设置初始值 0 管理，1搜索，2筛选，3退出
 		function.setTag(0);
-		function.setBackgroundResource(R.drawable.button_bg);
+		function.setBackgroundResource(R.drawable.ibutton);
 		function.setText(R.string.label_manage);
 		//初始化tab和viewpager
 		viewPager.setAdapter(getPagerAdapter());
@@ -91,7 +92,8 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 				case 0:
 					((QuanziFra)(fragments.get(0))).setManager();
 					function.setTag(3);
-					function.setText("完成");
+					function.setBackgroundResource(R.drawable.button_bg);
+					function.setText(R.string.finish);
 					break;
 				case 1:
 					break;
@@ -101,7 +103,8 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 				case 3:
 					((QuanziFra)(fragments.get(0))).offManager();
 					function.setTag(0);
-					function.setText("管理");
+					function.setBackgroundResource(R.drawable.ibutton);
+					function.setText(R.string.label_manage);
 					break;
 				}
 			}
@@ -142,22 +145,27 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 	private void setFunctionText(int arg0){
 		switch(arg0){
 		case 0:
-			function.setText("管理");
+			function.setText(R.string.label_manage);
+			function.setBackgroundResource(R.drawable.ibutton);
 			function.setTag(0);
 			break;
 		case 1:
 			function.setTag(1);
-			ImageSpan span = new ImageSpan(mContext, R.drawable.tab_good);
-			SpannableString spanStr = new SpannableString(" ");
-			spanStr.setSpan(span, 0, 1,Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-			function.setText(spanStr);
+//			ImageSpan span = new ImageSpan(mContext, R.drawable.tab_good);
+//			SpannableString spanStr = new SpannableString(" ");
+//			spanStr.setSpan(span, 0, 1,Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+//			function.setText(spanStr);
+			function.setText("");
+			function.setBackgroundResource(R.drawable.searcher_new_search_icon);
 			break;
 		case 2:
 			function.setText("筛选");
+			function.setBackgroundResource(R.drawable.ibutton);
 			function.setTag(2);
 			break;
 		case 3:
 			function.setText("");
+			function.setBackgroundColor(Color.BLACK);
 			function.setTag(3);
 			break;
 		}

@@ -19,6 +19,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:text="@string/off_reason"
+        style="@style/basic_text"
         android:textColor="@color/white" />
 
     <EditText
@@ -34,18 +35,22 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        style="@style/basic_text"
         android:text="@string/confirm_off"
         android:textColor="@color/white" />
 
     <Button
         android:id="@+id/fql_break_btn"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
         android:background="@drawable/button_enble"
         android:enabled="false"
         android:gravity="center"
         android:text="@string/OK" 
+        android:textColor="@color/white"
         android:layout_marginBottom="20dp"
         />
 

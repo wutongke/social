@@ -82,11 +82,14 @@
 
     <LinearLayout
         android:id="@+id/fql_footer"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/graywhite"
-        android:padding="10dp"
         android:orientation="horizontal" >
 
         <TextView
@@ -94,9 +97,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableLeft="@drawable/ico_forward_small"
-            android:gravity="center"
+            android:drawableLeft="@drawable/share"
+            android:drawablePadding="20dp"
+            android:gravity="left"
+            android:layout_gravity="center"
             android:text="@string/share"
+            android:textColor="@color/white"
             android:textSize="20dp" />
 
         <TextView
@@ -104,9 +110,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableLeft="@drawable/ico_forward_small"
-            android:gravity="center"
+            android:drawableLeft="@drawable/trash"
+            android:drawablePadding="20dp"
+            android:gravity="left"
             android:text="@string/label_del"
+            android:textColor="@color/white"
             android:textSize="20dp" />
     </LinearLayout>
 

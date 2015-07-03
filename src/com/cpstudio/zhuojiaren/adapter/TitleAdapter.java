@@ -18,6 +18,10 @@ import com.cpstudio.zhuojiaren.util.ViewHolder;
  */
 public class TitleAdapter extends CommonAdapter<ImageRadioButton>{
 	private ImageRadioButton mSelect ;
+	private ImageOnclick imageOnclick;
+	public interface ImageOnclick{
+		public void OnClickItem(ImageRadioButton item);
+	}
 	public TitleAdapter(Context context, List<ImageRadioButton> mDatas,
 			int itemLayoutId) {
 		super(context, mDatas, itemLayoutId);
@@ -29,22 +33,30 @@ public class TitleAdapter extends CommonAdapter<ImageRadioButton>{
 	@Override
 	public void convert(ViewHolder helper, final ImageRadioButton item) {
 		// TODO Auto-generated method stub
-		helper.setImageResource(R.id.iti_image, item.getaImage());
-//		final ImageView image = helper.getView(R.id.iti_image);
-//		image.setBackgroundResource(item.getaImage());
-//		if(mSelect.equals(item))
-//			image.setBackgroundResource(item.getbImage());
-//		image.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				// TODO Auto-generated method stub
-//				if(!item.equals(mSelect)){
-//					mSelect = item;
-//					image.setBackgroundResource(item.getbImage());
-//				}
-//			}
-//		});
+		final ImageView image = helper.getView(R.id.iti_image);
+		image.setBackgroundResource(item.getaImage());
+		if(mSelect.equals(item))
+			image.setBackgroundResource(item.getbImage());
+		image.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(!item.equals(mSelect)){
+					mSelect = item;
+					image.setBackgroundResource(item.getbImage());
+					imageOnclick.OnClickItem(item);
+				}
+			}
+		});
+	}
+
+	public ImageOnclick getImageOnclick() {
+		return imageOnclick;
+	}
+
+	public void setImageOnclick(ImageOnclick imageOnclick) {
+		this.imageOnclick = imageOnclick;
 	}
 
 }

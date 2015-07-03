@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:paddingRight="10dp"
     android:background="@color/black"
     android:paddingBottom="3dp" >
 
@@ -9,6 +10,7 @@
         android:id="@+id/activity_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:drawableLeft="@drawable/go_back"
         android:text="@string/label_back"
         android:textColor="#ffffff"
@@ -37,11 +39,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
         android:gravity="center_vertical"
         android:textColor="#ffffff"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:textSize="20dp" />
 
 </RelativeLayout>

@@ -710,7 +710,7 @@
     <string name="image">照片</string>
     <string name="app_name">倬家人</string>
     <string name="action_settings">设置</string>
-    <string name="OK">确定</string>
+    <string name="OK">确&#160;&#160;定</string>
     <string name="EXIT">退出</string>
     <string name="FAILED">失败</string>
     <string name="CANCEL">取消</string>
