@@ -32,11 +32,11 @@ public class FindActivity extends Activity {
 	private ZhuoConnHelper mConnHelper = null;
 	private ArrayList<BeanNotice> noticesListData;
 
-	int[] imageIds = { R.drawable.button_gongxu, R.drawable.button_gongxu,
-			R.drawable.button_gongxu, R.drawable.button_gongxu,
-			R.drawable.button_gongxu, R.drawable.button_gongxu,
-			R.drawable.button_gongxu, R.drawable.button_gongxu,
-			R.drawable.button_gongxu };
+	int[] imageIds = { R.drawable.circleu, R.drawable.resourceu,
+			R.drawable.fianceu, R.drawable.zcityu,
+			R.drawable.travelu, R.drawable.nearu,
+			R.drawable.interestu, R.drawable.teacheru,
+			R.drawable.allu };
 
 //	Class[] classArrays = { QuanListActivity.class, MsgResourceActivity.class,
 

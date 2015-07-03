@@ -6,6 +6,8 @@
     android:background="#f9f9f9"
     android:orientation="vertical" >
 
+    <include layout="@layout/title_activity" />
+
     <RelativeLayout
         android:id="@+id/userNameShowParent"
         android:layout_width="match_parent"
@@ -54,7 +56,7 @@
             android:text="@string/label_plus"
             android:textColor="#ffffff"
             android:textSize="14sp"
-             android:visibility="gone" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/buttonSearch"
@@ -81,7 +83,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/vpi__background_holo_light"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="10dp" >
 
             <LinearLayout
                 android:id="@+id/hotLayout"
@@ -99,12 +102,79 @@
                 <LinearLayout
                     android:id="@+id/hotContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="#ffffff"
                     android:gravity="center"
-                    android:orientation="vertical" >
+                    android:orientation="vertical"
+                    android:padding="10dp" >
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="#ffffff"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/hotword1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="商誉指导" />
+
+                        <TextView
+                            android:id="@+id/hotword2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="商誉指导" />
+
+                        <TextView
+                            android:id="@+id/hotword3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="商誉指导" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:background="#ffffff"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/hotword4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="商誉指导" />
+
+                        <TextView
+                            android:id="@+id/hotword5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="商誉指导" />
+
+                        <TextView
+                            android:id="@+id/hotword6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="商誉指导" />
+                    </LinearLayout>
                     <!-- 加入热门推荐内容 -->
                 </LinearLayout>
             </LinearLayout>

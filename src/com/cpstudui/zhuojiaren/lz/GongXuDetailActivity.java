@@ -397,7 +397,7 @@ public class GongXuDetailActivity extends BaseActivity {
 		// startActivity(i);
 		// }
 		// });
-		tvShare.setBackgroundResource(R.drawable.tab_trainsfer);
+		tvShare.setBackgroundResource(R.drawable.share);
 		tvShare.setOnClickListener(new OnClickListener() {
 
 			@Override

@@ -33,6 +33,7 @@ public class TitleAdapter extends CommonAdapter<ImageRadioButton>{
 	@Override
 	public void convert(ViewHolder helper, final ImageRadioButton item) {
 		// TODO Auto-generated method stub
+		
 		final ImageView image = helper.getView(R.id.iti_image);
 		image.setBackgroundResource(item.getaImage());
 		if(mSelect.equals(item))
@@ -49,6 +50,7 @@ public class TitleAdapter extends CommonAdapter<ImageRadioButton>{
 				}
 			}
 		});
+
 	}
 
 	public ImageOnclick getImageOnclick() {

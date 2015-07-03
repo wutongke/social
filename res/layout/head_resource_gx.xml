@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-	<include  layout="@layout/head_pull_all">
-	</include>
+	<include  layout="@layout/head_pull_all"/>
+
     <com.cpstudio.zhuojiaren.widget.MyGridView
         android:id="@+id/hcd_gridview"
         android:layout_width="match_parent"
@@ -23,6 +23,7 @@
         android:id="@+id/head_searchLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:background="@drawable/bg_search" >
 
         <EditText

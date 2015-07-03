@@ -65,7 +65,7 @@
             android:id="@+id/textViewivCmt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/tab_cmt"
+            android:drawableLeft="@drawable/comment"
             android:text="@string/label_cmt"
             android:textColor="#6a6a6a"
             android:textSize="16sp" />
@@ -76,7 +76,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/textViewivCmt"
             android:layout_alignParentRight="true"
-            android:drawableLeft="@drawable/ico_cmt"
+            android:layout_margin="10dp"
+            android:drawableLeft="@drawable/write"
             android:textColor="#6a6a6a"
             android:textSize="16sp" />
     </RelativeLayout>
