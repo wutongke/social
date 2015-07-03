@@ -9,10 +9,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.ui.QuanCreateActivity;
 
 public class QuanziCreateFra extends Fragment{
@@ -26,12 +28,20 @@ public class QuanziCreateFra extends Fragment{
 	Button beforeBtn;
 	@InjectView(R.id.begin_btn)
 	Button beginBtn;
+	@InjectView(R.id.before_crete_text)
+	TextView text1;
+	@InjectView(R.id.begin_crete_text)
+	TextView text2;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		layout = inflater.inflate(R.layout.activity_before_create, null);
 		ButterKnife.inject(this, layout);
+		
+		String name = ResHelper.getInstance(getActivity()).getUserid();
+		text1.setText(String.format(getResources().getString(R.string.before_create_text,name)));
+		text2.setText(String.format(getResources().getString(R.string.begin_create_text,name)));
 		beforeBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override

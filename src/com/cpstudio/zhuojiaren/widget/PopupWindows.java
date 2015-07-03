@@ -247,7 +247,14 @@ public class PopupWindows {
 				selectClickListener, makeClickListener }, new int[] {
 				R.string.label_select, R.string.label_capture }, "photo");
 	}
-
+/**
+ * 
+ * @param parent
+ * @param onClickListeners
+ * @param infoResId
+ * @param tag
+ * @return
+ */
 	public PopupWindow showBottomPop(View parent,
 			OnClickListener[] onClickListeners, int[] infoResId, String tag) {
 		return showBottomPop(parent, onClickListeners, infoResId, 20, tag);

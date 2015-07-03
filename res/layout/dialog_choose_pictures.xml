@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="left"
+    android:orientation="vertical"
+    android:padding="25dp" >
+
+    <TextView
+        android:id="@+id/dcp_album"
+        style="@style/basic_second_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:drawableLeft="@drawable/fxmypic_pic"
+        android:drawablePadding="15dp"
+        android:gravity="center_vertical"
+        android:text="@string/choose_altum" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/bg" />
+
+    <TextView
+        android:id="@+id/dcp_zhuo"
+        style="@style/basic_second_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:drawableLeft="@drawable/fxzhuopic_pic"
+        android:drawablePadding="15dp"
+        android:gravity="center_vertical"
+        android:text="@string/choose_zhuo" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/bg" />
+
+    <TextView
+        android:id="@+id/dcp_camera"
+        style="@style/basic_second_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:drawableLeft="@drawable/fxcamera_pic"
+        android:drawablePadding="15dp"
+        android:gravity="center_vertical"
+        android:text="@string/choose_camera" />
+
+</LinearLayout>

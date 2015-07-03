@@ -39,7 +39,7 @@ public class PlaceChooseDialog extends AlertDialog{
 		}
 		provinceWV = (WheelView) placeView.findViewById(R.id.place_province);
 		cityWV = (WheelView)placeView.findViewById(R.id.place_city);
-		
+		place.setText(mypro+" "+mycity);
 		setPlace(mypro,mycity);
 //		place.setText(province[0]+" "+city[0][0]);
 //		provinceWV.setLabel("Ê¡/Ö±Ï½ÊÐ");

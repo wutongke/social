@@ -13,12 +13,17 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -35,14 +40,17 @@ import com.cpstudio.zhuojiaren.R.layout;
 import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PlaceChooseDialog;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
+import com.cpstudui.zhuojiaren.lz.ChangeBackgroundActivity;
 
 /**
  * 创建圈子和修改圈子
@@ -78,17 +86,18 @@ public class QuanCreateActivity extends BaseActivity {
 	private LoadImage mLoadImage = new LoadImage();
 	private boolean mHeadChanged = false;
 	private Context mContext;
-	private int typeQuanzi=0;
+	private int typeQuanzi = 0;
 	private String[] quanziType;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_quan_create);
 
 		ButterKnife.inject(this);
-		mContext=this;
+		mContext = this;
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		//圈子类型
+		// 圈子类型
 		quanziType = getResources().getStringArray(R.array.quanzi_type);
 		initTitle();
 		title.setText(R.string.title_activity_create_quan);
@@ -114,21 +123,21 @@ public class QuanCreateActivity extends BaseActivity {
 	}
 
 	private void initClick() {
-		
+
 		/**
 		 * 选择类型
 		 */
 		quanTypeView.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				
-				
+
 				// TODO Auto-generated method stub
-				new AlertDialog.Builder(mContext,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+				new AlertDialog.Builder(mContext,
+						AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
 						.setTitle("选择圈子类型")
 						.setIcon(R.drawable.ico_syzy)
-						.setSingleChoiceItems(quanziType,0,
+						.setSingleChoiceItems(quanziType, 0,
 								new DialogInterface.OnClickListener() {
 
 									@Override
@@ -138,25 +147,29 @@ public class QuanCreateActivity extends BaseActivity {
 										typeQuanzi = which;
 									}
 								})
-						.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-									
+						.setPositiveButton("确定",
+								new DialogInterface.OnClickListener() {
+
 									@Override
-									public void onClick(DialogInterface dialog, int which) {
+									public void onClick(DialogInterface dialog,
+											int which) {
 										// TODO Auto-generated method stub
-										quanTypeView.setText(quanziType[typeQuanzi]);
+										quanTypeView
+												.setText(quanziType[typeQuanzi]);
 									}
-								})
-						.setNegativeButton("取消", null).create().show();
-			
+								}).setNegativeButton("取消", null).create()
+						.show();
+
 			}
 		});
 		quanLocationView.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				final PlaceChooseDialog placeChoose = new PlaceChooseDialog(
-						mContext, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,"北京","北京");
+						mContext, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, "北京",
+						"北京");
 				placeChoose.setButton(DialogInterface.BUTTON_POSITIVE, "确定",
 						new DialogInterface.OnClickListener() {
 
@@ -164,7 +177,8 @@ public class QuanCreateActivity extends BaseActivity {
 							public void onClick(DialogInterface dialog,
 									int which) {
 								// TODO Auto-generated method stub
-								quanLocationView.setText(placeChoose.getPlace().getText().toString());
+								quanLocationView.setText(placeChoose.getPlace()
+										.getText().toString());
 							}
 						});
 				placeChoose.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
@@ -215,8 +229,73 @@ public class QuanCreateActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				mIsh2.initParams();
-				pwh.showPop(findViewById(R.id.rootLayout));
+				// pwh.showPop(findViewById(R.id.rootLayout));
+				LinearLayout ll = (LinearLayout) getLayoutInflater().inflate(
+						R.layout.dialog_choose_pictures, null);
+				ll.findViewById(R.id.dcp_album).setOnClickListener(
+						new OnClickListener() {
 
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								Intent intent = new Intent(
+										Intent.ACTION_GET_CONTENT);
+								intent.addCategory(Intent.CATEGORY_OPENABLE);
+								intent.setType("image/*");
+								((Activity) mContext).startActivityForResult(
+										Intent.createChooser(intent, mContext
+												.getString(R.string.info0)),
+										MsgTagVO.SELECT_PICTURE);
+							}
+						});
+				ll.findViewById(R.id.dcp_camera).setOnClickListener(
+						new OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								String state = Environment
+										.getExternalStorageState();
+								if (state.equals(Environment.MEDIA_MOUNTED)) {
+									Intent intent = new Intent(
+											MediaStore.ACTION_IMAGE_CAPTURE);
+									intent.putExtra(MediaStore.EXTRA_OUTPUT,
+											ResHelper.getInstance(mContext)
+													.getCaptrueUri());
+									((Activity) mContext)
+											.startActivityForResult(intent,
+													MsgTagVO.SELECT_CAMER);
+								} else {
+									CommonUtil.displayToast(mContext,
+											R.string.error2);
+								}
+							}
+						});
+				ll.findViewById(R.id.dcp_zhuo).setOnClickListener(
+						new OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								((Activity) mContext)
+										.startActivityForResult(
+												new Intent(
+														mContext,
+														ChangeBackgroundActivity.class),
+												MsgTagVO.ZHUOMAI_PIC);
+							}
+						});
+				AlertDialog adl = new AlertDialog.Builder(
+						QuanCreateActivity.this).
+						create();
+				adl.setCanceledOnTouchOutside(true);// 设置dialog外面点击则消失
+				Window w = adl.getWindow();
+				WindowManager.LayoutParams lp = w.getAttributes();
+				adl.onWindowAttributesChanged(lp);
+				lp.x = 20;
+				lp.y = 0;
+				adl.show();
+				adl.getWindow().setContentView(R.layout.dialog_choose_pictures);
 			}
 		});
 	}
@@ -383,6 +462,12 @@ public class QuanCreateActivity extends BaseActivity {
 				}
 			}
 		} else {
+			if (requestCode == MsgTagVO.ZHUOMAI_PIC) {
+				if (resultCode == RESULT_OK) {
+
+				}
+				return;
+			}
 			String filePath = pwh
 					.dealPhotoReturn(requestCode, resultCode, data);
 			if (filePath != null) {
