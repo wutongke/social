@@ -58,7 +58,7 @@ public class EditEventActivity extends BaseActivity {
 	@InjectView(R.id.aee_people_contact)
 	LinearLayout contactPeople;
 	@InjectView(R.id.aee_add_contact_people)
-	Button addPeople;
+	TextView addPeople;
 	private Context mContext;
 	private int requestCode = 1;
 	private ArrayList<String> imageDir = new ArrayList<String>();

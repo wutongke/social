@@ -767,9 +767,9 @@
     <string name="all">全部</string>
     <string name="filter_quanzi">筛选圈子</string>
     <string name="before_create">我确定创建圈子</string>
-    <string name="before_create_text">  亲爱的家人，祝贺你拥有了想建立属于自己的集体意识的想法，在您创建圈子之前，我们建议您先查看是否有相同的圈子，如果能发现家人已经创建了相近的圈子，建议您选择加入，一起将集体意识进行绽放\n找到组织和创建组织都一样重要</string>
+    <string name="before_create_text">&#160;&#160;&#160;&#160;&#160;&#160;&#160;亲爱的%s家人，祝贺你拥有了想建立属于自己的集体意识的想法，在您创建圈子之前，我们建议您先查看是否有相同的圈子，如果能发现家人已经创建了相近的圈子，建议您选择加入，一起将集体意识进行绽放\n找到组织和创建组织都一样重要</string>
     <string name="begin_create">开始创建</string>
-    <string name="begin_create_text">亲爱的家人，创建一个圈子，就意味着建立一个家，家是一个放心的地方，需要我们用心经营和呵护，希望你用敬畏之心创建和经营这个家，认真填写相关资料，以吸引更多同频的朋友到你的家里来</string>
+    <string name="begin_create_text">&#160;&#160;&#160;&#160;&#160;&#160;&#160;亲爱的%s家人，创建一个圈子，就意味着建立一个家，家是一个放心的地方，需要我们用心经营和呵护，希望你用敬畏之心创建和经营这个家，认真填写相关资料，以吸引更多同频的朋友到你的家里来</string>
     <!-- 活动 -->
     <string name="zhuo_event_title">倬脉活动</string>
     <string name="browse">浏览</string>
@@ -917,7 +917,7 @@
     <string name="text_pub_topic_hint">+请输入话题内容</string>
     <string name="title_pub_topic">发布话题</string>
     <string name="image_des2">上传照片，9张以内</string>
-     <string name="image_des3">产品图片，最多上传5张图片</string>
+    <string name="image_des3">产品图片，最多上传5张图片</string>
     <string name="title_activity_crowd_funding_detail">CrowdFundingDetailActivity</string>
     <string name="label_gonggao">圈公告</string>
     <string name="label_class">圈分类</string>
@@ -1012,20 +1012,28 @@
     <string name="main_product">主营产品:</string>
     <string name="company_web">企业网站:</string>
     <string name="title_activity_main_product">主营产品</string>
-<string name="label_target_client">适合客户:</string>
-<string name="label_fit_client">请对产品适合的客户进行介绍，让家人了解自己是否需要以及朋友是否需要</string>
-<string name="infocity">请分享自己经常所在的城市，以发现同城家人。</string>
-<string name="hint_value">什么是我认为做人和做事和我坚守的信念。</string>
-<string name="info399">对倬脉所有家人公开</string>
- <string name="info377">请留下真实邮箱，以便于家人找到你</string>
- <string name="info37phone">请留下真实手机号，以便于家人找到你</string>
- <string name="card_qq_hint">请留下真实QQ号，以便于家人找到你</string>
- <string name="card_weixin_hint">请留下真实微信号，以便于家人找到你</string>
- <string name="title_card_qq">我的QQ</string>
- <string name="card_qq">我的QQ:</string>
- <string name="card_weixin">我的微信:</string>
-  <string name="title_card_weixin">我的微信</string>
-  <string name="mp_mysr_hint">让家人知道你的生日，你将会得到更多人的祝福</string>
-   <string name="my_xinzuo">我的星座:</string>
-   <string name="my_shuxiang">我的属相:</string>
+    <string name="label_target_client">适合客户:</string>
+    <string name="label_fit_client">请对产品适合的客户进行介绍，让家人了解自己是否需要以及朋友是否需要</string>
+    <string name="infocity">请分享自己经常所在的城市，以发现同城家人。</string>
+    <string name="hint_value">什么是我认为做人和做事和我坚守的信念。</string>
+    <string name="info399">对倬脉所有家人公开</string>
+    <string name="info377">请留下真实邮箱，以便于家人找到你</string>
+    <string name="info37phone">请留下真实手机号，以便于家人找到你</string>
+    <string name="card_qq_hint">请留下真实QQ号，以便于家人找到你</string>
+    <string name="card_weixin_hint">请留下真实微信号，以便于家人找到你</string>
+    <string name="title_card_qq">我的QQ</string>
+    <string name="card_qq">我的QQ:</string>
+    <string name="card_weixin">我的微信:</string>
+    <string name="title_card_weixin">我的微信</string>
+    <string name="mp_mysr_hint">让家人知道你的生日，你将会得到更多人的祝福</string>
+    <string name="my_xinzuo">我的星座:</string>
+    <string name="my_shuxiang">我的属相:</string>
+    <string name="choose_altum">使用相册图片</string>
+    <string name="choose_camera">拍照</string>
+    <string name="choose_zhuo">使用倬脉图片</string>
+    <string name="title_activity_quan_create_success">QuanCreateSuccessActivity</string>
+    <string name="quan_create_success">祝贺您成功创建了\n开始发布第一份公告吧</string>
+    <string name="quan_create_success_bro">亲爱的倬家人们，我的圈子成功创建了，欢迎大家一起来经营我们的家</string>
+    <string name="public_bro">发布公告</string>
+
 </resources>

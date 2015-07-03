@@ -17,6 +17,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.CrowdFundingAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter;
+import com.cpstudio.zhuojiaren.adapter.TitleAdapter.ImageOnclick;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.ImageRadioButton;
 import com.cpstudio.zhuojiaren.ui.CrowdFundingDetailActivity;
@@ -86,26 +87,24 @@ public class CrowdFundingFragment extends Fragment{
 		MyGridView gridView = (MyGridView) view.findViewById(R.id.hcd_gridview);
 		final ArrayList<ImageRadioButton> list = new ArrayList<ImageRadioButton>();
 		if(type==CrowdFundingVO.CROWDFUNDINGMY){
-			list.add(new ImageRadioButton(R.drawable.bg_grid, R.drawable.bg_weel));
-			list.add(new ImageRadioButton(R.drawable.bg_grid, R.drawable.bg_weel));
+			list.add(new ImageRadioButton(R.drawable.startucrowd, R.drawable.startdcrowd));
+			list.add(new ImageRadioButton(R.drawable.investucrowd, R.drawable.investdcrowd));
 		}else if(type==CrowdFundingVO.CROWDFUNDINGQUERY){
-			list.add(new ImageRadioButton(R.drawable.bg_grid, R.drawable.bg_grid_on));
-			list.add(new ImageRadioButton(R.drawable.bg_grid, R.drawable.bg_grid_on));
-			list.add(new ImageRadioButton(R.drawable.bg_grid, R.drawable.bg_grid_on));
-			list.add(new ImageRadioButton(R.drawable.bg_grid, R.drawable.bg_grid_on));
-			list.add(new ImageRadioButton(R.drawable.bg_grid, R.drawable.bg_grid_on));
-			list.add(new ImageRadioButton(R.drawable.bg_grid, R.drawable.bg_grid_on));
+			list.add(new ImageRadioButton(R.drawable.scienceucrowd, R.drawable.sciencedcrowd));
+			list.add(new ImageRadioButton(R.drawable.publishingucrowd, R.drawable.publishingdcrowd));
+			list.add(new ImageRadioButton(R.drawable.publicucrowd, R.drawable.publicdcrowd));
+			list.add(new ImageRadioButton(R.drawable.gameucrowd, R.drawable.gamedcrowd));
+			list.add(new ImageRadioButton(R.drawable.farmerucrowd, R.drawable.farmerdcrowd));
+			list.add(new ImageRadioButton(R.drawable.artucrowd, R.drawable.artdcrowd));
 		}
 		mTitleAdapter = new TitleAdapter(getActivity(), list, R.layout.item_title_image);
-		gridView.setAdapter(mTitleAdapter);
-		//跳转到某个类型的list
-		gridView.setOnItemClickListener(new OnItemClickListener() {
-
+		mTitleAdapter.setImageOnclick(new ImageOnclick() {
+			
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void OnClickItem(ImageRadioButton item) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(getActivity(),CrowdFundingListActivity.class);
+				int position = list.indexOf(item);
 				if(type==CrowdFundingVO.CROWDFUNDINGMY){
 					
 					intent.putExtra("type", CrowdFundingVO.typeStr[position+1]);
@@ -115,6 +114,17 @@ public class CrowdFundingFragment extends Fragment{
 				startActivity(intent);
 			}
 		});
+		gridView.setAdapter(mTitleAdapter);
+		//跳转到某个类型的list
+//		gridView.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view,
+//					int position, long id) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
 	}
 	private void loadData() {
 		// TODO Auto-generated method stub

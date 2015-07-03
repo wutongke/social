@@ -198,12 +198,13 @@ public class QuanziFra extends Fragment {
 		} else if (mType == QuanVO.QUANZIQUERY) {
 			myQuanziLayout.setVisibility(View.GONE);
 			quanziRecommend.setVisibility(View.VISIBLE);
-			titleList.add(new ImageRadioButton(R.drawable.resource_quan, R.drawable.resourceu_quan));
-			titleList.add(new ImageRadioButton(R.drawable.invest_quan, R.drawable.resourceu_quan));
-			titleList.add(new ImageRadioButton(R.drawable.interest_quan, R.drawable.resourceu_quan));
-			titleList.add(new ImageRadioButton(R.drawable.growup, R.drawable.resourceu_quan));
-			titleList.add(new ImageRadioButton(R.drawable.city2, R.drawable.resourceu_quan));
-			titleList.add(new ImageRadioButton(R.drawable.activity, R.drawable.resourceu_quan));
+			titleList.clear();
+			titleList.add(new ImageRadioButton( R.drawable.resourceu_quan,R.drawable.resource_quan));
+			titleList.add(new ImageRadioButton( R.drawable.invest_quan,R.drawable.invest_quan));
+			titleList.add(new ImageRadioButton(R.drawable.interest_quan, R.drawable.interest_quan));
+			titleList.add(new ImageRadioButton(R.drawable.growupu_quan,R.drawable.growup));
+			titleList.add(new ImageRadioButton(R.drawable.cityu_quan,R.drawable.city2));
+			titleList.add(new ImageRadioButton( R.drawable.activityu_quan,R.drawable.activity));
 			mTitleAdapter = new TitleAdapter(getActivity(), titleList, R.layout.item_title_image);
 			mTitleAdapter.setImageOnclick(new ImageOnclick() {
 				

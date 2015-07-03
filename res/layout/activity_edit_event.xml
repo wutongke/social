@@ -31,6 +31,7 @@
             <EditText
                 android:id="@+id/aee_event_name"
                 style="@style/basic_text"
+                android:gravity="top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/graywhitem"
@@ -56,6 +57,7 @@
             <EditText
                 android:id="@+id/aee_event_des"
                 style="@style/basic_text"
+                android:gravity="top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -94,7 +96,7 @@
                     style="@style/basic_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/bg_head_add"
+                    android:drawableLeft="@drawable/addimg"
                     android:gravity="center_vertical"
                     android:text="@string/image_des" />
             </LinearLayout>
@@ -116,7 +118,7 @@
                     style="@style/basic_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ico_my_on"
+                    android:drawableLeft="@drawable/starttime_pub_event"
                     android:drawablePadding="5dp"
                     android:text="@string/start_time" />
 
@@ -144,7 +146,7 @@
                     style="@style/basic_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ico_my_on"
+                    android:drawableLeft="@drawable/endtime_pub_event"
                     android:drawablePadding="5dp"
                     android:text="@string/end_time" />
 
@@ -172,7 +174,7 @@
                     style="@style/basic_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ico_my_on"
+                    android:drawableLeft="@drawable/address_pub_event"
                     android:drawablePadding="5dp"
                     android:text="@string/event_locate" />
 
@@ -200,7 +202,7 @@
                     style="@style/basic_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ico_my_on"
+                    android:drawableLeft="@drawable/mark_pub_event"
                     android:drawablePadding="5dp"
                     android:text="@string/event_locate_more" />
 
@@ -220,12 +222,13 @@
                 android:orientation="vertical" >
             </LinearLayout>
 
-            <Button
+            <com.cpstudio.zhuojiaren.widget.DrawableCenterTextView
                 android:id="@+id/aee_add_contact_people"
                 style="@style/basic_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
+                android:drawableLeft="@drawable/addpeople_pub_event"
                 android:text="@string/add_contact" />
         </LinearLayout>
     </ScrollView>
