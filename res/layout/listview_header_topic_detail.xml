@@ -17,7 +17,7 @@
             android:layout_margin="12dp"
             android:orientation="vertical" >
 
-            <ImageView
+            <com.cpstudio.zhuojiaren.widget.RoundImageView
                 android:id="@+id/imageViewAuthorHeader"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -166,7 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/ico"
-                android:src="@drawable/ico_like" />
+                android:src="@drawable/zhan_hqxq1" />
         </RelativeLayout>
 
         <TableLayout
@@ -200,7 +200,7 @@
                 android:id="@+id/textViewivCmt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/tab_cmt"
+                android:drawableLeft="@drawable/talk_hqxq1"
                 android:text="@string/label_cmt"
                 android:textColor="#6a6a6a"
                 android:textSize="16sp" />

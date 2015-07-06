@@ -11,6 +11,35 @@ public class GoodsVO {
 	private List<PicVO> pic = new ArrayList<PicVO>();
 	private String detail;
 	private String addtime;
+	
+//	add by lz
+	private String zhuobi;//倬币价格(多少个)
+	private String goodCmtRate;//好评百分比
+	private int payerNum;//付款人数
+	
+	public String getGoodCmtRate() {
+		return goodCmtRate;
+	}
+
+	public void setGoodCmtRate(String goodCmtRate) {
+		this.goodCmtRate = goodCmtRate;
+	}
+
+	public int  getPayerNum() {
+		return payerNum;
+	}
+
+	public void setPayerNum(int payerNum) {
+		this.payerNum = payerNum;
+	}
+
+	public String getZhuobi() {
+		return zhuobi;
+	}
+
+	public void setZhuobi(String zhuobi) {
+		this.zhuobi = zhuobi;
+	}
 
 	public String getGid() {
 		return gid;

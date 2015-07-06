@@ -112,7 +112,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		initTitle();
 		title.setText(R.string.title_activity_zhuojiaquan_main);
 		function.setTag(0);
-		function.setBackgroundResource(R.drawable.ico_about);
+		function.setBackgroundResource(R.drawable.menu_qht1);
 		// ≥ı ºªØtab∫Õviewpager
 		viewPager.setAdapter(getPagerAdapter());
 

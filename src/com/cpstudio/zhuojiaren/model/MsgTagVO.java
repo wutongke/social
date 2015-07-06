@@ -68,6 +68,10 @@ public class MsgTagVO {
 	public static int RESOURCE_FIND = 1;// 寻找资源
 	public static int NEED_FIND = 2;// 发现需求
 	public static int PUB_NEED_RESOURCE = 3;// 供需发布
+	
+	public static final int FLIP = 99;// 广告图片滚动
+	
+	
 	/**
 	 * 从倬脉图片
 	 */

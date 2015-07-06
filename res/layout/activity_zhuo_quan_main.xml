@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#00000000"
-                    android:drawableLeft="@drawable/ico_alert"
+                    android:drawableLeft="@drawable/write_qht1"
                     android:minHeight="20dp"
                     android:text="@string/label_pub_topic"
                     android:textColor="@color/white" />
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#00000000"
-                    android:drawableLeft="@drawable/ico_alert"
+                    android:drawableLeft="@drawable/activity_qht1"
                     android:minHeight="20dp"
                     android:text="@string/label_pub_active"
                     android:textColor="@color/white" />
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#00000000"
-                    android:drawableLeft="@drawable/ico_alert"
+                    android:drawableLeft="@drawable/talk_qht1"
                     android:minHeight="20dp"
                     android:text="@string/label_qzql"
                     android:textColor="@color/white" />
@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="#00000000"
-                    android:drawableLeft="@drawable/ico_alert"
+                    android:drawableLeft="@drawable/addpeople"
                     android:minHeight="20dp"
                     android:text="@string/label_join_quan"
                     android:textColor="@color/white" />

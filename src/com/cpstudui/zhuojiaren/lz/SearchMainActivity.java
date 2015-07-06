@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.androidpn.client.Constants;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,7 +14,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,9 +24,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import butterknife.ButterKnife;
@@ -185,7 +181,7 @@ public class SearchMainActivity extends BaseActivity implements
 			if ("".equals(hisStr))
 				return;
 			String[] strArray = hisStr.split(";");
-			for (int i = strArray.length - 1; i >= 0; i--)
+			for (int i = 0; i <strArray.length ; i++)
 				historyList.add(strArray[i]);
 		}
 		mlvHistory = (ListView) findViewById(R.id.lvHostory);
@@ -443,7 +439,7 @@ public class SearchMainActivity extends BaseActivity implements
 		searchLayout.setVisibility(View.GONE);
 		mPullDownView.setVisibility(View.VISIBLE);
 		if (!mSearchKey.trim().equals("")) {
-			historyList.add(mSearchKey);
+			historyList.add(0,mSearchKey);
 			historyAdapter.notifyDataSetChanged();
 		}
 

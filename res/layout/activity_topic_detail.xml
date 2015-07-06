@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="5dp"
-                android:drawableTop="@drawable/tab_trainsfer"
+                android:drawableTop="@drawable/share_hqxq1"
                 android:gravity="center_horizontal"
                 android:text="@string/label_share"
                 android:textColor="#ffffff" />
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="5dp"
-                android:drawableTop="@drawable/tab_good"
+                android:drawableTop="@drawable/zhan2_hqxq1"
                 android:gravity="center"
                 android:text="@string/label_good"
                 android:textColor="#ffffff" />
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="5dp"
-                android:drawableTop="@drawable/tab_collect_off"
+                android:drawableTop="@drawable/collect_hqxq1"
                 android:gravity="center_horizontal"
                 android:text="@string/label_collect"
                 android:textColor="#ffffff" />
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="5dp"
-                android:drawableTop="@drawable/tab_cmt"
+                android:drawableTop="@drawable/write_qht1"
                 android:gravity="center_horizontal"
                 android:text="@string/label_cmt"
                 android:textColor="#ffffff" />

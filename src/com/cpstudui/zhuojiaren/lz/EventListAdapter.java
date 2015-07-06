@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
@@ -13,14 +15,18 @@ import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.EventVO;
+import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
 
 public class EventListAdapter extends BaseAdapter {
 	private List<EventVO> mList = null;
 	private LayoutInflater inflater = null;
-	public boolean  isManaging=false;
+	public boolean isManaging = false;
+	Context c;
+
 	public EventListAdapter(Context context, ArrayList<EventVO> list) {
 		this.mList = list;
 		this.inflater = LayoutInflater.from(context);
+		c = context;
 	}
 
 	public void setManaging(boolean isManaging) {
@@ -49,27 +55,43 @@ public class EventListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolderActive holder;
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.item_event_list,
-					null);
-			holder=initHolderActive(convertView);
+			convertView = inflater.inflate(R.layout.item_event_list, null);
+			holder = initHolderActive(convertView);
 			convertView.setTag(R.id.tag_view_holder, holder);
 		} else {
-			holder = (ViewHolderActive) convertView.getTag(R.id.tag_view_holder);
+			holder = (ViewHolderActive) convertView
+					.getTag(R.id.tag_view_holder);
 		}
-        if(isManaging)
-        	holder.cbSelected.setVisibility(View.VISIBLE);
-        else
-        	holder.cbSelected.setVisibility(View.GONE);
+
+		holder.textViewDetail.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(c, EventDetailActivity.class);
+				String id = "111";
+				if (mList.get(position).getEventId() != null)
+					id = mList.get(position).getEventId();
+				i.putExtra("eventId", id);
+
+				c.startActivity(i);
+			}
+		});
+
+		if (isManaging)
+			holder.cbSelected.setVisibility(View.VISIBLE);
+		else
+			holder.cbSelected.setVisibility(View.GONE);
 		return convertView;
 	}
 
 	static class ViewHolderActive {
 		TextView textViewTitle;
 		TextView textViewDateTime;
-		
+
 		TextView textViewPlace;
 		TextView textViewIsOverTime;
 		TextView textViewNums;
@@ -78,22 +100,25 @@ public class EventListAdapter extends BaseAdapter {
 	}
 
 	private ViewHolderActive initHolderActive(View convertView) {
-		
+
 		ViewHolderActive holder = new ViewHolderActive();
-		
 
 		holder.textViewTitle = (TextView) convertView
 				.findViewById(R.id.tvActiveTitle);
-		
-		holder.textViewDateTime = (TextView) convertView.findViewById(R.id.textViewDateTime);
+
+		holder.textViewDateTime = (TextView) convertView
+				.findViewById(R.id.textViewDateTime);
 		holder.textViewPlace = (TextView) convertView
 				.findViewById(R.id.textViewPlace);
-		holder.textViewIsOverTime = (TextView) convertView.findViewById(R.id.textViewIsOverTime);
-		holder.textViewNums = (TextView) convertView.findViewById(R.id.textViewNums);
+		holder.textViewIsOverTime = (TextView) convertView
+				.findViewById(R.id.textViewIsOverTime);
+		holder.textViewNums = (TextView) convertView
+				.findViewById(R.id.textViewNums);
 		holder.textViewDetail = (TextView) convertView
 				.findViewById(R.id.textViewDetail);
-		holder.cbSelected =(CheckBox) convertView.findViewById(R.id.cbChecked);
-		
+
+		holder.cbSelected = (CheckBox) convertView.findViewById(R.id.cbChecked);
+
 		return holder;
 	}
 }

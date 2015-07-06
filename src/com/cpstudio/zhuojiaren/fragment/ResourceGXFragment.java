@@ -27,10 +27,12 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.CrowdFundingAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter;
+import com.cpstudio.zhuojiaren.adapter.TitleAdapter.ImageOnclick;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.ImageRadioButton;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.ui.CrowdFundingListActivity;
+import com.cpstudio.zhuojiaren.util.Util;
 import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
@@ -130,12 +132,15 @@ public class ResourceGXFragment extends Fragment {
 			list.add(new ImageRadioButton(R.drawable.wisdomu,
 					R.drawable.wisdomd));
 		} else if (type == ResourceGXVO.NEED_FIND) {
-			list.add(new ImageRadioButton(R.drawable.moneyu_1, R.drawable.moneyd_1));
+			list.add(new ImageRadioButton(R.drawable.moneyu_1,
+					R.drawable.moneyd_1));
 
-			list.add(new ImageRadioButton(R.drawable.busyu_1, R.drawable.busyd_1));
+			list.add(new ImageRadioButton(R.drawable.busyu_1,
+					R.drawable.busyd_1));
 			list.add(new ImageRadioButton(R.drawable.talentu_1,
 					R.drawable.talentd_1));
-			list.add(new ImageRadioButton(R.drawable.moneyu_1, R.drawable.moneyd_1));
+			list.add(new ImageRadioButton(R.drawable.moneyu_1,
+					R.drawable.moneyd_1));
 			list.add(new ImageRadioButton(R.drawable.personu_1,
 					R.drawable.persond_1));
 			list.add(new ImageRadioButton(R.drawable.wisdomu_1,
@@ -143,6 +148,30 @@ public class ResourceGXFragment extends Fragment {
 		}
 		mTitleAdapter = new TitleAdapter(getActivity(), list,
 				R.layout.item_title_image);
+
+		mTitleAdapter.setImageOnclick(new ImageOnclick() {
+
+			@Override
+			public void OnClickItem(ImageRadioButton btnview) {
+				// TODO Auto-generated method stub
+				int i = 0;
+				for (ImageRadioButton temp : list) {
+					if (btnview.equals(temp)) {
+						Util.toastMessage(getActivity(), btnview.getaImage()
+								+ "");
+						break;
+					}
+					i++;
+				}
+				if (item != i) {
+					mTitleAdapter.notifyDataSetChanged();
+					item = i;
+					// 重新请求数据刷新列表
+					loadData();
+				}
+			}
+		});
+
 		gridView.setAdapter(mTitleAdapter);
 		// 跳转到某个类型的list
 		gridView.setOnItemClickListener(new OnItemClickListener() {
