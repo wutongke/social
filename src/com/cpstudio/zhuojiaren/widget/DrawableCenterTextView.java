@@ -9,8 +9,6 @@ import android.widget.TextView;
 /**
  * drawableLeft与文本一起居中显示
  * 
- * @author 农民伯伯
- * @see http://www.cnblogs.com/over140/p/3464348.html
  * 
  */
 public class DrawableCenterTextView extends TextView {

@@ -934,6 +934,10 @@
             android:name="com.cpstudio.zhuojiaren.ui.QuanCreateSuccessActivity"
             android:label="@string/title_activity_quan_create_success" >
         </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity"
+            android:label="@string/title_activity_goods_detail_l" >
+        </activity>
     </application>
 
 </manifest>
