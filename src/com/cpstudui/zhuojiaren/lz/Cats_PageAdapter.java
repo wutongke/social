@@ -173,7 +173,8 @@ public class Cats_PageAdapter extends PagerAdapter {
 
 			break;
 		case 6:
-			Toast.makeText(mContext, "ÍêÉÆÖÐ", 1000).show();
+			i = new Intent(mContext, StoreMainActivity.class);
+			mContext.startActivity(i);
 			break;
 		case 7:
 			i = new Intent(mContext, CrowdFundingActivity.class);

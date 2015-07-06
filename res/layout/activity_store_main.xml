@@ -1,0 +1,120 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_activity" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black" >
+
+        <EditText
+            android:id="@+id/search_input"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/searchbg"
+            android:focusable="false"
+            android:hint="@string/label_main_searchHint"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="35dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/search_search"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:padding="10dp"
+            android:src="@drawable/searcher_new_search_icon" />
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/main_cats"
+        android:layout_width="match_parent"
+        android:layout_height="110dp" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/ads_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.external.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/ads_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:padding="2dp" />
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/gv_cats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:listSelector="@drawable/indicator_list"
+        android:numColumns="5"
+        android:verticalSpacing="10dp" >
+    </GridView>
+
+    <GridView
+        android:id="@+id/gv_goods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:listSelector="@drawable/indicator_list"
+        android:numColumns="3"
+        android:verticalSpacing="10dp" >
+    </GridView>
+
+    <RelativeLayout
+        android:id="@+id/layoutFooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp" >
+
+        <TextView
+            android:id="@+id/textViewFooterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/button_view_more"
+            android:gravity="center"
+            android:visibility="visible" />
+
+        <ProgressBar
+            android:id="@+id/progressFooterLoading"
+            style="@android:style/Widget.ProgressBar.Small.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingRight="80dp"
+            android:paddingTop="5dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textViewNoData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/label_no_data"
+            android:textColor="#aaaaaa"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

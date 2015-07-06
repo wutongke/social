@@ -6,6 +6,9 @@ public class BeanBanner {
 	private String picUrl;
 	private int type;
 	private String itemId;
+	
+//	private String linkedUrl;
+	
 	public String getPicUrl() {
 		return picUrl;
 	}
