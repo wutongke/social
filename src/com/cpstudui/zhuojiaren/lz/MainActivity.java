@@ -34,6 +34,7 @@ import com.cpstudio.zhuojiaren.model.AdVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
+import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
@@ -441,6 +442,14 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		// .getDeviceCsd(getApplicationContext()));
 
 		idBanner = (ImageView) findViewById(R.id.main_banner);
+		idBanner.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent(MainActivity.this,GoodsDetailLActivity.class));
+			}
+		});
 
 		// LayoutParams params=new LayoutParams(LayoutParams.MATCH_PARENT,
 		// height);

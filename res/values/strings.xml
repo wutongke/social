@@ -1035,7 +1035,7 @@
     <string name="quan_create_success">祝贺您成功创建了\n开始发布第一份公告吧</string>
     <string name="quan_create_success_bro">亲爱的倬家人们，我的圈子成功创建了，欢迎大家一起来经营我们的家</string>
     <string name="public_bro">发布公告</string>
-  <string name="title_activity_goods_detail_l">GoodsDetailLActivity</string>
+    <string name="title_activity_goods_detail_l">GoodsDetailLActivity</string>
     <string name="cart_count">购物车(%n)</string>
     <string name="cart">加入购物车</string>
     <string name="product_des">产品介绍</string>
@@ -1044,5 +1044,8 @@
     <string name="market_price">市场价 :</string>
     <string name="zhuo_price">倬家币 :</string>
     <string name="title_activity_store_main">倬脉商城</string>
-<string name="title_male">男士</string>
-<string name="title_female">女士</string></resources>
+    <string name="title_male">男士</string>
+    <string name="title_female">女士</string>
+    <string name="title_activity_cart">CartActivity</string>
+
+</resources>

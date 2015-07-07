@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CartActivity" >
+
+    <include
+        android:id="@+id/agd_layout"
+        layout="@layout/title_activity" />
+
+    <com.cpstudio.zhuojiaren.widget.PullDownView
+        android:id="@+id/agd_pulldown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/agd_layout"
+        android:background="@color/white" >
+    </com.cpstudio.zhuojiaren.widget.PullDownView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+       <CheckBox 
+           
+           />
+    </LinearLayout>
+
+</RelativeLayout>
