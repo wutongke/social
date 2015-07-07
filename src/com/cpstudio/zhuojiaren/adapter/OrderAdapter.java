@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
-import com.cpstudio.zhuojiaren.model.OrderVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 
@@ -29,25 +28,26 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 	}
 
 	@Override
-	public void convert(ViewHolder helper, final GoodsVO item) {
+	public void convert(final ViewHolder helper, final GoodsVO item) {
 		// TODO Auto-generated method stub
-		final CheckBox checkBox = (CheckBox) helper.getView(R.id.icg_select);
-		checkBox.setChecked(false);
+		((CheckBox) helper.getView(R.id.icg_select)).setChecked(false);
 		if (selectList.contains(item)) {
-			checkBox.setChecked(true);
-		} 
-		checkBox.setOnClickListener(new OnClickListener() {
+			((CheckBox) helper.getView(R.id.icg_select)).setChecked(true);
+		} else{
+			((CheckBox) helper.getView(R.id.icg_select)).setChecked(false);
+		}
+		((CheckBox) helper.getView(R.id.icg_select)).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (selectList.contains(item)) {
-					checkBox.setChecked(false);
+					((CheckBox) helper.getView(R.id.icg_select)).setChecked(false);
 					selectList.remove(item);
 					if(goodsChangeListenter!=null)
 						goodsChangeListenter.onGoodsChange(addAllGoodsPrice(),selectList.size());
 				} else {
-					checkBox.setChecked(true);
+					((CheckBox) helper.getView(R.id.icg_select)).setChecked(true);
 					selectList.add(item);
 					if(goodsChangeListenter!=null)
 						goodsChangeListenter.onGoodsChange(addAllGoodsPrice(),selectList.size());
@@ -119,7 +119,7 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 			SelectGoodsChangeListener goodsChangeListenter) {
 		this.goodsChangeListenter = goodsChangeListenter;
 	}
-	private int addAllGoodsPrice(){
+	public int addAllGoodsPrice(){
 		int sum = 0;
 		int tempCount=0;
 		for(GoodsVO temp:selectList){

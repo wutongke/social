@@ -26,6 +26,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.ui.CartActivity;
 import com.cpstudio.zhuojiaren.ui.MyCollectionActivity;
 import com.cpstudio.zhuojiaren.ui.MyMoneyActivity;
 import com.cpstudio.zhuojiaren.ui.SettingActivity;
@@ -101,8 +102,8 @@ public class StoreMyHomeActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 
-				// startActivity(new
-				// Intent(StoreMyHomeActivity.this,MyMoneyActivity.class));
+				 startActivity(new
+				 Intent(StoreMyHomeActivity.this,CartActivity.class));
 			}
 		});
 

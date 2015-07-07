@@ -1,9 +1,10 @@
 package com.cpstudio.zhuojiaren.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoodsVO {
+public class GoodsVO implements Serializable{
 	private String gid;
 	// 商品名字
 	private String name;
@@ -12,6 +13,8 @@ public class GoodsVO {
 	private String money;
 	// 商品图片
 	private List<PicVO> pic = new ArrayList<PicVO>();
+	// 商品首页图片
+	private PicVO firstPic;
 	// 商品描述
 	private String detail;
 	// 添加时间
@@ -101,6 +104,7 @@ public class GoodsVO {
 
 	public void setPic(List<PicVO> pic) {
 		this.pic = pic;
+		this.firstPic=pic.get(0);
 	}
 
 	public String getDetail() {
@@ -149,6 +153,14 @@ public class GoodsVO {
 
 	public void setCompanyPic(PicVO companyPic) {
 		this.companyPic = companyPic;
+	}
+
+	public PicVO getFirstPic() {
+		return firstPic;
+	}
+
+	public void setFirstPic(PicVO firstPic) {
+		this.firstPic = firstPic;
 	}
 
 }
