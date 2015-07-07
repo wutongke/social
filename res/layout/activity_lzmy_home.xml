@@ -108,6 +108,7 @@
                     android:drawableLeft="@drawable/ico_alert"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:drawablePadding="5dp"
                     android:text="@string/label_my_chengzhang" />
 
                 <TextView
@@ -136,6 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ico_alert"
+                    android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/label_my_purse" />
@@ -166,6 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ico_alert"
+                    android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/label_my_zhuomaishangcheng" />
@@ -196,6 +199,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ico_alert"
+                    android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/label_my_collect" />
@@ -234,6 +238,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ico_alert"
+                    android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/label_my_set" />
@@ -272,6 +277,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ico_alert"
+                    android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/label_my_callback" />
@@ -302,6 +308,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ico_alert"
+                    android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/label_my_about" />
