@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/ico_pointer_blue" />
+            android:src="@drawable/time_crowd" />
     </RelativeLayout>
 
     <LinearLayout

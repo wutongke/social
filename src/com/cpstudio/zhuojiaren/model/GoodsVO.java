@@ -1,22 +1,47 @@
 package com.cpstudio.zhuojiaren.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoodsVO {
+public class GoodsVO implements Serializable{
 	private String gid;
+	// 商品名字
 	private String name;
+	// 商品价格
 	private String price;
 	private String money;
+	// 商品图片
 	private List<PicVO> pic = new ArrayList<PicVO>();
+	// 商品首页图片
+	private PicVO firstPic;
+	// 商品描述
 	private String detail;
+	// 添加时间
 	private String addtime;
-	
-//	add by lz
-	private String zhuobi;//倬币价格(多少个)
-	private String goodCmtRate;//好评百分比
-	private int payerNum;//付款人数
-	
+
+	private String zhuobi;// 倬币价格(多少个)
+	private String goodCmtRate;// 好评百分比
+	private int payerNum;// 付款人数
+	// 商家名字
+	private String companyName;
+	//商家图片
+	private PicVO companyPic;
+	// 商家描述
+	private String companyDes;
+	// 是否收藏
+	private String isCollection;
+	//订单时候用的商品数量
+	private String goodsCount;
+
+	public String getGoodsCount() {
+		return goodsCount;
+	}
+
+	public void setGoodsCount(String goodsCount) {
+		this.goodsCount = goodsCount;
+	}
+
 	public String getGoodCmtRate() {
 		return goodCmtRate;
 	}
@@ -25,7 +50,7 @@ public class GoodsVO {
 		this.goodCmtRate = goodCmtRate;
 	}
 
-	public int  getPayerNum() {
+	public int getPayerNum() {
 		return payerNum;
 	}
 
@@ -79,6 +104,7 @@ public class GoodsVO {
 
 	public void setPic(List<PicVO> pic) {
 		this.pic = pic;
+		this.firstPic=pic.get(0);
 	}
 
 	public String getDetail() {
@@ -93,8 +119,48 @@ public class GoodsVO {
 		return addtime;
 	}
 
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public String getCompanyDes() {
+		return companyDes;
+	}
+
+	public String getIsCollection() {
+		return isCollection;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public void setCompanyDes(String companyDes) {
+		this.companyDes = companyDes;
+	}
+
+	public void setIsCollection(String isCollection) {
+		this.isCollection = isCollection;
+	}
+
 	public void setAddtime(String addtime) {
 		this.addtime = addtime;
+	}
+
+	public PicVO getCompanyPic() {
+		return companyPic;
+	}
+
+	public void setCompanyPic(PicVO companyPic) {
+		this.companyPic = companyPic;
+	}
+
+	public PicVO getFirstPic() {
+		return firstPic;
+	}
+
+	public void setFirstPic(PicVO firstPic) {
+		this.firstPic = firstPic;
 	}
 
 }

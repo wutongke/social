@@ -49,7 +49,7 @@ public class PayBackAdapter extends CommonAdapter<PayBackVO>{
 			images.setAdapter(new GridViewAdapter(mContext, item.getImageUrl(), R.layout.item_gridview_image));
 		}
 		price.setText(mContext.getResources().getString(R.string.crowdfunding_price_label2)+item.getPrice());
-		peopleCount.setText("限制"+item.getName()+"人");
+		peopleCount.setText("限制"+item.getMaxCount()+"人");
 		des.setText(item.getDes());
 		supportCount.setText(item.getSupportCount()+"人支持");
 		supportBtn.setOnClickListener(new OnClickListener() {
@@ -74,8 +74,10 @@ public class PayBackAdapter extends CommonAdapter<PayBackVO>{
 		@Override
 		public void convert(ViewHolder helper, String item) {
 			// TODO Auto-generated method stub
-			helper.setImageResource(R.id.gridview_image, R.drawable.ico_grid_on);
+//			helper.setImageResource(R.id.gridview_image, R.drawable.ico_chat_pic);
+			
 			ImageView iv = helper.getView(R.id.gridview_image);
+//			iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ico_chat_pic));
 			iv.setTag(item);
 			iv.setOnClickListener(new OnClickListener() {
 				

@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CartActivity" >
+
+    <include
+        android:id="@+id/acart_layout"
+        layout="@layout/title_activity" />
+
+    <ListView
+        android:id="@+id/acart_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/acart_layout"
+        android:background="@color/white" 
+        android:layout_marginBottom="50dp"
+    />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/graywhite"
+        android:orientation="horizontal" >
+
+       <CheckBox 
+           android:id="@+id/acart_check"
+           android:layout_width="20dp"
+           android:layout_marginLeft="20dp"
+           android:layout_height="wrap_content"
+           android:button="@null"
+           android:background="@drawable/check_bg"
+           />
+       <TextView 
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           style="@style/basic_second_text"
+           android:text="@string/choose_all"
+           android:textColor="@color/white"
+           />
+       <LinearLayout 
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:gravity="center_vertical"
+           android:orientation="vertical"
+           android:layout_weight="1"
+           android:layout_marginRight="10dp"
+           android:layout_marginLeft="10dp"
+           >
+           <TextView 
+               android:id="@+id/acart_add_all"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               style="@style/basic_text"
+               android:textColor="@color/white"
+               android:text="@string/add"
+               />
+            <TextView 
+               android:id="@+id/acart_cash"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               style="@style/basic_second_text"
+               android:text="@string/cash"
+               android:textColor="@color/white"
+               android:visibility="gone"
+               />
+       </LinearLayout>
+       <TextView 
+           android:background="#e35063"
+           android:id="@+id/acart_to_pay"
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:gravity="center"
+           android:layout_height="match_parent"
+           android:text="@string/to_pay"
+           style="@style/basic_text_white"
+           />
+    </LinearLayout>
+	
+</RelativeLayout>

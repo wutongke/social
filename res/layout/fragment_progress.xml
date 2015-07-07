@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:padding="20dp"
         style="@style/basic_text"
-        android:drawableLeft="@drawable/ico_collect"
+        android:drawableLeft="@drawable/icon_crowd"
         android:text="@string/somedes"
         />
      <ListView

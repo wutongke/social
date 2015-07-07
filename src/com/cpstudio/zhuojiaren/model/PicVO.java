@@ -1,6 +1,8 @@
 package com.cpstudio.zhuojiaren.model;
 
-public class PicVO {
+import java.io.Serializable;
+
+public class PicVO implements Serializable{
 	private String thumburl;
 	private String orgurl;
 	private String desc;

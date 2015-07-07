@@ -212,7 +212,7 @@
                         style="@style/basic_second_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/tab_collect_off"
+                        android:drawableLeft="@drawable/heart_crowd"
                         android:drawablePadding="10dp"
                         android:gravity="center"
                         android:text="@string/like" />
@@ -238,7 +238,7 @@
                         style="@style/basic_second_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/tab_good"
+                        android:drawableLeft="@drawable/zhan_crowd"
                         android:drawablePadding="10dp"
                         android:gravity="center"
                         android:text="@string/support" />
@@ -298,8 +298,8 @@
 
                 <com.cpstudio.zhuojiaren.widget.RoundImageView
                     android:id="@+id/acfd_people_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_marginBottom="10dp"
                     android:src="@drawable/chat_more_option_off" />
 
