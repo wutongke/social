@@ -85,7 +85,7 @@ public class StoreGoodsListAdapter extends BaseAdapter {
 		ImageView image;
 		TextView zhuobimoney;// 倬币
 	}
-
+	
 	private ViewHolder initHolder(View convertView) {
 		ViewHolder holder = new ViewHolder();
 		holder.title = (TextView) convertView.findViewById(R.id.tvSimpInfo);

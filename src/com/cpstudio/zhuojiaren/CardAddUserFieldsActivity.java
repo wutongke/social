@@ -29,6 +29,9 @@ public class CardAddUserFieldsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		
+		
 		setContentView(R.layout.activity_card_add_user_fields);
 		pwh = new PopupWindows(CardAddUserFieldsActivity.this);
 		Intent intent = getIntent();

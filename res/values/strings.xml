@@ -1038,4 +1038,9 @@
     <string name="title_activity_store_main">倬脉商城</string>
 <string name="title_male">男士</string>
 <string name="title_female">女士</string>
+  <string name="label_my_store_collect">收藏的宝贝</string>
+<string name="label_view_order">查看订单</string>
+<string name="label_gwc">购物车</string>
+<string name="label_my_store">我的店铺</string>
+<string name="label_address">收货地址</string>
 </resources>
