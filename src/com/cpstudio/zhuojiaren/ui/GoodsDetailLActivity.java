@@ -132,6 +132,8 @@ public class GoodsDetailLActivity extends BaseActivity {
 		msg1.what = 1;
 		msg1.obj = goods;
 		msg1.sendToTarget();
+		
+		
 		CommentVO test = new CommentVO();
 		test.setContent("Ð´µÄ²»´í£¬¼ÓÓÍ");
 		test.setIsPraise("1");
@@ -207,6 +209,8 @@ public class GoodsDetailLActivity extends BaseActivity {
 					bannerListData.add(item);
 				}
 				bannerPageAdapter.notifyDataSetChanged();
+				
+				
 				productName.setText(goods.getName());
 				productDes.setText(goods.getDetail());
 				marketPrice.setText(goods.getPrice());

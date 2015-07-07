@@ -1037,6 +1037,7 @@
     <string name="public_bro">发布公告</string>
     <string name="title_activity_goods_detail_l">GoodsDetailLActivity</string>
     <string name="cart_count">购物车(%n)</string>
+    <string name="cart2">购物车</string>
     <string name="cart">加入购物车</string>
     <string name="product_des">产品介绍</string>
     <string name="product_company">供货企业</string>
@@ -1047,5 +1048,9 @@
     <string name="title_male">男士</string>
     <string name="title_female">女士</string>
     <string name="title_activity_cart">CartActivity</string>
+    <string name="choose_all">全选</string>
+    <string name="add">合计:</string>
+    <string name="cash">返现:</string>
+    <string name="to_pay">去结算(%d)</string>
 
 </resources>

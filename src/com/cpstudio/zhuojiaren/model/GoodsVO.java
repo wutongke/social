@@ -28,6 +28,16 @@ public class GoodsVO {
 	private String companyDes;
 	// 是否收藏
 	private String isCollection;
+	//订单时候用的商品数量
+	private String goodsCount;
+
+	public String getGoodsCount() {
+		return goodsCount;
+	}
+
+	public void setGoodsCount(String goodsCount) {
+		this.goodsCount = goodsCount;
+	}
 
 	public String getGoodCmtRate() {
 		return goodCmtRate;
