@@ -66,6 +66,8 @@ public class StoreMainActivity extends BaseActivity implements
 		setContentView(R.layout.activity_store_main);
 		initTitle();
 		ButterKnife.inject(this);
+		function.setText("ÎÒµÄ");
+		function.setVisibility(View.VISIBLE);
 		title.setText(R.string.title_activity_store_main);
 		initView();
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
@@ -83,6 +85,16 @@ public class StoreMainActivity extends BaseActivity implements
 
 	private void initView() {
 		// TODO Auto-generated method stub
+
+		function.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent(StoreMainActivity.this,
+						StoreMyHomeActivity.class));
+			}
+		});
 
 		final EditText searchView = (EditText) findViewById(R.id.search_input);
 

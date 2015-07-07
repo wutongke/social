@@ -1053,4 +1053,9 @@
     <string name="cash">返现:</string>
     <string name="to_pay">去结算(%d)</string>
 
+  <string name="label_my_store_collect">收藏的宝贝</string>
+<string name="label_view_order">查看订单</string>
+<string name="label_gwc">购物车</string>
+<string name="label_my_store">我的店铺</string>
+<string name="label_address">收货地址</string>
 </resources>
