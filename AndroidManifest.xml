@@ -984,6 +984,10 @@
             android:name="com.cpstudio.zhuojiaren.ui.LocateActivity"
             android:label="@string/title_activity_locate" >
         </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.GoodsCollectionActivity"
+            android:label="@string/title_activity_goods_collection" >
+        </activity>
     </application>
 
 </manifest>

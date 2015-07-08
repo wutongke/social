@@ -27,6 +27,8 @@
                 android:paddingBottom="10dp"
                 android:paddingLeft="30dp"
                 android:paddingTop="10dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:text="@string/receipt_information" />
 
             <LinearLayout
@@ -77,21 +79,21 @@
 
                 <ImageView
                     android:id="@+id/aod_pic1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:scaleType="centerCrop" />
 
                 <ImageView
                     android:id="@+id/aod_pic2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:scaleType="centerCrop" />
 
                 <ImageView
                     android:id="@+id/aod_pic3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:scaleType="centerCrop" />
@@ -113,8 +115,6 @@
                 android:paddingBottom="10dp"
                 android:paddingLeft="30dp"
                 android:paddingTop="10dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:text="@string/invoice_info" />
 
             <EditText

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="10dp" >
+
+    <ImageView
+        android:id="@+id/igc_goods_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="15dp"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="20dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/igc_name"
+            style="@style/basic_second_text"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_vertical"
+            android:text="狄忒是似乎"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             >
+
+            <TextView
+                android:id="@+id/igc_price"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="45"
+                style="@style/basic_text"
+                android:textColor="#e2590f"
+                android:drawableLeft="@drawable/cart_szhuob2" />
+            <ImageView 
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/igc_collec_image"
+                android:layout_gravity="center_vertical|right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/zcollect2"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

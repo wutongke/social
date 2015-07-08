@@ -26,15 +26,16 @@
 
        <CheckBox 
            android:id="@+id/acart_check"
-           android:layout_width="20dp"
+           android:layout_width="wrap_content"
            android:layout_marginLeft="20dp"
-           android:layout_height="wrap_content"
-           android:button="@null"
-           android:background="@drawable/check_bg"
+           android:layout_height="match_parent"
+           android:layout_gravity="center_vertical"
+           android:button="@drawable/check_bg"
            />
        <TextView 
            android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
+           android:layout_height="match_parent"
+           android:gravity="center_vertical"
            style="@style/basic_second_text"
            android:text="@string/choose_all"
            android:textColor="@color/white"
@@ -71,9 +72,12 @@
            android:id="@+id/acart_to_pay"
            android:layout_width="0dp"
            android:layout_weight="1"
+           android:minWidth="120dp"
+           android:paddingLeft="10dp"
+           android:paddingRight="10dp"
            android:gravity="center"
+           android:singleLine="true"
            android:layout_height="match_parent"
-           android:text="@string/to_pay"
            style="@style/basic_text_white"
            />
     </LinearLayout>

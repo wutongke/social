@@ -1053,6 +1053,7 @@
     <string name="add">合计:</string>
     <string name="cash">返现:</string>
     <string name="to_pay">去结算(%d)</string>
+    <string name="no_order">没有选中任何商品</string>
     <string name="label_my_store_collect">收藏的宝贝</string>
     <string name="label_view_order">查看订单</string>
     <string name="label_gwc">购物车</string>
@@ -1062,7 +1063,7 @@
     <string name="receipt_information">收货信息</string>
     <string name="choose_goods">选购商品</string>
     <string name="invoice_info">发票信息 </string>
-    <string name="goods_count">共%n件</string>
+    <string name="goods_count">共%d件</string>
     <string name="left_message">给供货方留言</string>
     <string name="user_zhuobi">使用倬币支付</string>
     <string name="left">余额:</string>
@@ -1077,5 +1078,18 @@
     <string name="receive_name">收货人姓名</string>
     <string name="phone_number2">手机号码</string>
     <string name="mail_number">邮编</string>
+    <string name="title_activity_goods_collection">GoodsCollectionActivity</string>
+    <string name="all_catgary">全部分类</string>
+    <string name="plane">机票</string>
+    <string name="movie">电影</string>
+    <string name="hotel">酒店</string>
+    <string name="phone_fee">话费</string>
+    <string name="tea">茶叶</string>
+    <string name="intelligence">智慧</string>
+    <string name="red_wine">红酒</string>
+    <string name="tele_goods">电子产品</string>
+    <string name="cosmetic">化妆品</string>
+    <string name="collection_goods">收藏的宝贝</string>
+    <string name="delete_collection_goods">确定删除您收藏的宝贝？</string>
 
 </resources>

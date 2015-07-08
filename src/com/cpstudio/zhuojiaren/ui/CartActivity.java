@@ -2,6 +2,7 @@ package com.cpstudio.zhuojiaren.ui;
 
 import java.util.ArrayList;
 
+import android.app.ApplicationErrorReport.CrashInfo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.cpstudio.zhuojiaren.adapter.OrderAdapter;
 import com.cpstudio.zhuojiaren.adapter.OrderAdapter.SelectGoodsChangeListener;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.PicVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class CartActivity extends BaseActivity {
 	@InjectView(R.id.acart_listview)
@@ -58,7 +60,12 @@ public class CartActivity extends BaseActivity {
 				toPay.setText(String.format(getResources().getString(R.string.to_pay), count));
 			}
 		});
+		
 		listView.setAdapter(mAdapter);
+		//初始化
+		addAll.setText(getResources().getString(R.string.add)+mAdapter.addAllGoodsPrice());
+		sumPrice = mAdapter.addAllGoodsPrice();
+		toPay.setText(String.format(getResources().getString(R.string.to_pay), 0));
 		initClick();
 		loadData();
 	}
@@ -191,12 +198,17 @@ public class CartActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				if(mAdapter.getSelectList().size()<1){
+					CommonUtil.displayToast(CartActivity.this, R.string.no_order);
+					return;
+				}
 				Intent intent = new Intent(CartActivity.this,OrderSubmitActivity.class);
 				intent.putExtra("goods", mAdapter.getSelectList());
 				intent.putExtra("goodsprice",String.valueOf(sumPrice));
 				startActivity(intent);
 			}
 		});
+		//
 		cheak.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -229,7 +241,13 @@ public class CartActivity extends BaseActivity {
 					function.setTag(1);
 					function.setText(R.string.label_manage);
 					mDataList.removeAll(mAdapter.getSelectList());
+					mAdapter.getSelectList().clear();
+					//设置
+					addAll.setText(getResources().getString(R.string.add)+mAdapter.addAllGoodsPrice());
+					sumPrice = mAdapter.addAllGoodsPrice();
+					toPay.setText(String.format(getResources().getString(R.string.to_pay), 0));
 					mAdapter.notifyDataSetChanged();
+					//增加网络部分
 				}
 			}
 		});
