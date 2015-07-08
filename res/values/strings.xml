@@ -201,6 +201,7 @@
     <string name="group_type_10">其他</string>
     <string name="error0">网络连接失败</string>
     <string name="error1">获取图片失败</string>
+    <string name="error_intent">订单生成出错，请重新提交</string>
     <string name="error2">请确认已经插入SD卡</string>
     <string name="error3">建立通讯录索引失败</string>
     <string name="error4">文件不存在</string>
@@ -1058,7 +1059,24 @@
     <string name="label_my_store">我的店铺</string>
     <string name="label_address">收货地址</string>
     <string name="title_activity_order_submit">OrderSubmitActivity</string>
-    <string name="title_activity_view_order">查看订单</string>
+<string name="receipt_information">收货信息</string>
+    <string name="choose_goods">选购商品</string>
+    <string name="invoice_info">发票信息 </string>
+    <string name="goods_count">共%n件</string>
+    <string name="left_message">给供货方留言</string>
+    <string name="user_zhuobi">使用倬币支付</string>
+    <string name="left">余额:</string>
+    <string name="goods_price">商品金额</string>
+    <string name="submit_order">提交订单</string>
+    <string name="write_order">填写订单</string>
+    <string name="title_activity_locate">LocateActivity</string>
+    <string name="set_loate">点击设置地址</string>
+    <string name="area">所在地区</string>
+    <string name="street">街道</string>
+    <string name="more_info">详细地址</string>
+    <string name="receive_name">收货人姓名</string>
+    <string name="phone_number2">手机号码</string>
+    <string name="mail_number">邮编</string><string name="title_activity_view_order">查看订单</string>
     <string name="text_order_total_num">共%1$d件商品</string>
     <string name="label_total_pay">实付：</string>
     <string name="label_view_detail">查看详情</string>
@@ -1067,5 +1085,4 @@
 	<string name="label_receiver_address">收货人地址:%s</string>
 	<string name="label_order_num">订单号:</string>
 	<string name="label_deal_time">成交时间:</string>
-		<string name="label_cmt_goods">评价商品</string>
-</resources>
+		<string name="label_cmt_goods">评价商品</string></resources>

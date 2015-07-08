@@ -34,6 +34,7 @@ public class CartActivity extends BaseActivity {
 	TextView toPay;
 	OrderAdapter mAdapter ;
 	ArrayList<GoodsVO> mDataList = new ArrayList<GoodsVO>();
+	private float sumPrice;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,8 +51,9 @@ public class CartActivity extends BaseActivity {
 		mAdapter.setGoodsChangeListenter(new SelectGoodsChangeListener() {
 			
 			@Override
-			public void onGoodsChange(int sum,int count) {
+			public void onGoodsChange(float sum,int count) {
 				// TODO Auto-generated method stub
+				sumPrice = sum;
 				addAll.setText(getResources().getString(R.string.add)+sum);
 				toPay.setText(String.format(getResources().getString(R.string.to_pay), count));
 			}
@@ -191,6 +193,7 @@ public class CartActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(CartActivity.this,OrderSubmitActivity.class);
 				intent.putExtra("goods", mAdapter.getSelectList());
+				intent.putExtra("goodsprice",String.valueOf(sumPrice));
 				startActivity(intent);
 			}
 		});
@@ -208,6 +211,7 @@ public class CartActivity extends BaseActivity {
 					mAdapter.notifyDataSetChanged();
 				}
 				addAll.setText(getResources().getString(R.string.add)+mAdapter.addAllGoodsPrice());
+				sumPrice = mAdapter.addAllGoodsPrice();
 				toPay.setText(String.format(getResources().getString(R.string.to_pay), mAdapter.getSelectList().size()));
 			}
 		});
