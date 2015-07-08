@@ -6,14 +6,16 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.adapter.OrderListItemGoodsListAdapter;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
+import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.widget.NestedListView;
 
 public class OrderDetailActivity extends BaseActivity {
@@ -55,7 +57,18 @@ public class OrderDetailActivity extends BaseActivity {
 		mAdapter = new OrderListItemGoodsListAdapter(this, goodsList);
 
 		lvGoods.setAdapter(mAdapter);
+		lvGoods.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(OrderDetailActivity.this,GoodsDetailLActivity.class);
+				intent.putExtra("goodsId", goodsList.get(position).getGid());
+				OrderDetailActivity.this.startActivity(intent);
+			}
+				
+		});
 		loadData();
 	}
 

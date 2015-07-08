@@ -21,7 +21,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.GoodsDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.StoreGoodsListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -29,7 +28,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
+import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.external.viewpagerindicator.PageIndicator;
 
@@ -285,7 +284,7 @@ public class StoreMainActivity extends BaseActivity implements
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		if (arg3 != -1) {
 			Intent i = new Intent(StoreMainActivity.this,
-					GoodsDetailActivity.class);
+					GoodsDetailLActivity.class);
 			i.putExtra("gid", (String) arg1.getTag(R.id.tag_id));
 			startActivity(i);
 		}
