@@ -980,6 +980,10 @@
             android:name="com.cpstudio.zhuojiaren.ui.OrderSubmitActivity"
             android:label="@string/title_activity_order_submit" >
         </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.LocateActivity"
+            android:label="@string/title_activity_locate" >
+        </activity>
     </application>
 
 </manifest>

@@ -101,7 +101,7 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 	}
 	public interface SelectGoodsChangeListener{
 		//商品价格总额和商品数量总额
-		public void onGoodsChange(int sum,int count);
+		public void onGoodsChange(float sum,int count);
 	}
 	public ArrayList<GoodsVO> getSelectList() {
 		return selectList;
@@ -119,7 +119,7 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 			SelectGoodsChangeListener goodsChangeListenter) {
 		this.goodsChangeListenter = goodsChangeListenter;
 	}
-	public int addAllGoodsPrice(){
+	public float addAllGoodsPrice(){
 		int sum = 0;
 		int tempCount=0;
 		for(GoodsVO temp:selectList){
