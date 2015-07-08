@@ -38,7 +38,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/imageViewHead"
                     android:text="王丽"
-                    android:textColor="#1c1c1c"
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
 
                 <TextView

@@ -18,6 +18,7 @@ import com.cpstudio.zhuojiaren.MyAboutUsListActivity;
 import com.cpstudio.zhuojiaren.MyAdviceActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.UserHomeActivity;
+import com.cpstudio.zhuojiaren.ViewOrderActivity;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
@@ -119,8 +120,8 @@ public class StoreMyHomeActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 
-				// startActivity(new
-				// Intent(StoreMyHomeActivity.this,MyMoneyActivity.class));
+				 startActivity(new
+				 Intent(StoreMyHomeActivity.this,ViewOrderActivity.class));
 			}
 		});
 		ivHome.setOnClickListener(new OnClickListener() {

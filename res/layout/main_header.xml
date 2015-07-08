@@ -80,7 +80,7 @@
         android:id="@+id/main_banner"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:src="@drawable/gg" >
     </ImageView>
 
@@ -148,7 +148,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitXY"
+             android:scaleType="centerCrop"
             android:src="@drawable/shopgg" />
 
         <View
@@ -168,7 +168,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleType="fitXY"
+                 android:scaleType="centerCrop"
                 android:src="@drawable/shopgg2" />
 
             <View
@@ -181,7 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleType="fitXY"
+                 android:scaleType="centerCrop"
                 android:src="@drawable/shopgg3" />
         </LinearLayout>
     </LinearLayout>
