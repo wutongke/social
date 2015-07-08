@@ -40,7 +40,7 @@ public class Bee_PageAdapter extends PagerAdapter {
 			ImageView iView = new ImageView(context);
 			String url = beanBanner.getPicUrl();
 			iView.setTag(url);
-			iView.setScaleType(ScaleType.FIT_XY);
+			iView.setScaleType(ScaleType.CENTER_CROP);
 			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
 					LayoutParams.MATCH_PARENT);
 			iView.setLayoutParams(params);

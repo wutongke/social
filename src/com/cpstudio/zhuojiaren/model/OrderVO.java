@@ -18,6 +18,28 @@ public class OrderVO {
 	
 	private LocateVO locate;
 
+	
+//	lz,订单商品总数
+	private int totalCount=0;
+	private String totalPrice="122.43";
+	
+	
+	public String getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(String totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public int getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+
 	public List<GoodsVO> getGoodsList() {
 		return goodsList;
 	}
