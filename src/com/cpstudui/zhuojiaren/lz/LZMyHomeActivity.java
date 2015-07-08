@@ -84,15 +84,16 @@ public class LZMyHomeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// 我的钱包
-//				Toast.makeText(LZMyHomeActivity.this, "待完善！", 1000).show();
-				startActivity(new Intent(LZMyHomeActivity.this,MyMoneyActivity.class));
+				// Toast.makeText(LZMyHomeActivity.this, "待完善！", 1000).show();
+				startActivity(new Intent(LZMyHomeActivity.this,
+						MyMoneyActivity.class));
 			}
 		});
 
 		vCZ.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-	
+
 				Intent i = new Intent(LZMyHomeActivity.this,
 						UserHomeActivity.class);
 				i.putExtra("userid", mUid);
@@ -105,8 +106,11 @@ public class LZMyHomeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// 需要重写倬脉商城的Activity
+				// Intent i = new Intent(LZMyHomeActivity.this,
+				// GoodsExchangeActivity.class);
+				// startActivity(i);
 				Intent i = new Intent(LZMyHomeActivity.this,
-						GoodsExchangeActivity.class);
+						StoreMainActivity.class);
 				startActivity(i);
 			}
 		});
@@ -206,8 +210,7 @@ public class LZMyHomeActivity extends Activity {
 					String name = user.getUsername();
 					String work = user.getPost();
 					String company = user.getCompany();
-					((TextView) findViewById(R.id.textViewName))
-					.setText(name);
+					((TextView) findViewById(R.id.textViewName)).setText(name);
 					((TextView) findViewById(R.id.textViewContent))
 							.setText(work);
 					((TextView) findViewById(R.id.textViewCompany))
@@ -266,15 +269,16 @@ public class LZMyHomeActivity extends Activity {
 	};
 
 	private void loadDb() {
-//		RecordChatFacade mFacade = new RecordChatFacade(getApplicationContext());
-//		int all = mFacade.getUnread().size();
-//		TextView allNum = (TextView) findViewById(R.id.textViewRecordNum);
-//		allNum.setText(all + "");
-//		if (all == 0) {
-//			allNum.setVisibility(View.GONE);
-//		} else {
-//			allNum.setVisibility(View.VISIBLE);
-//		}
+		// RecordChatFacade mFacade = new
+		// RecordChatFacade(getApplicationContext());
+		// int all = mFacade.getUnread().size();
+		// TextView allNum = (TextView) findViewById(R.id.textViewRecordNum);
+		// allNum.setText(all + "");
+		// if (all == 0) {
+		// allNum.setVisibility(View.GONE);
+		// } else {
+		// allNum.setVisibility(View.VISIBLE);
+		// }
 	}
 
 	private void loadInfo() {
