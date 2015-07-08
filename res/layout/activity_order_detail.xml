@@ -123,11 +123,11 @@
             android:layout_height="12dp"
             android:background="@color/white" />
 
-        <ListView
+        <com.cpstudio.zhuojiaren.widget.NestedListView
             android:id="@+id/ivGoods"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
-        </ListView>
+        </com.cpstudio.zhuojiaren.widget.NestedListView>
 
         <LinearLayout
             android:layout_width="match_parent"

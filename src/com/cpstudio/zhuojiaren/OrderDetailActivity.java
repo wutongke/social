@@ -14,6 +14,7 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.adapter.OrderListItemGoodsListAdapter;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
+import com.cpstudio.zhuojiaren.widget.NestedListView;
 
 public class OrderDetailActivity extends BaseActivity {
 	@InjectView(R.id.tvOrderStatus)
@@ -28,7 +29,7 @@ public class OrderDetailActivity extends BaseActivity {
 	@InjectView(R.id.tvAddress)
 	TextView tvAddress;
 	@InjectView(R.id.ivGoods)
-	ListView lvGoods;
+	NestedListView lvGoods;
 	@InjectView(R.id.tvOrderNum)
 	TextView tvOrderNum;
 	@InjectView(R.id.tvDealTime)
@@ -45,8 +46,8 @@ public class OrderDetailActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order_detail);
-		initTitle();
 		ButterKnife.inject(this);
+		initTitle();
 		title.setText(R.string.title_activity_order_detail);
 
 		orderId = getIntent().getStringExtra("orderId");
