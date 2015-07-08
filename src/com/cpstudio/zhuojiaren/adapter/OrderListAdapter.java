@@ -3,25 +3,26 @@ package com.cpstudio.zhuojiaren.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.GoodsVO;
-import com.cpstudio.zhuojiaren.model.OrderVO;
-import com.cpstudio.zhuojiaren.model.PicVO;
-import com.cpstudio.zhuojiaren.widget.ScrollOverListView;
-import com.cpstudio.zhuojiaren.OrderDetailActivity;
-import com.cpstudio.zhuojiaren.R;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.cpstudio.zhuojiaren.OrderDetailActivity;
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.GoodsVO;
+import com.cpstudio.zhuojiaren.model.OrderVO;
+import com.cpstudio.zhuojiaren.ui.CartActivity;
+import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 
 //lz
 public class OrderListAdapter extends BaseAdapter {
@@ -102,7 +103,7 @@ public class OrderListAdapter extends BaseAdapter {
 		// holder.lvGoods.setAdapter(goodsListAdapter);
 
 		// 测试
-		List<GoodsVO> goodsList = new ArrayList<GoodsVO>();
+		final List<GoodsVO> goodsList = new ArrayList<GoodsVO>();
 		for (int i = 0; i < 3; i++)
 			goodsList.add(new GoodsVO());
 
@@ -111,7 +112,17 @@ public class OrderListAdapter extends BaseAdapter {
 		OrderListItemGoodsListAdapter goodsListAdapter = new OrderListItemGoodsListAdapter(
 				mContext, goodsList);
 		holder.lvGoods.setAdapter(goodsListAdapter);
+		holder.lvGoods.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(mContext,GoodsDetailLActivity.class);
+				intent.putExtra("goodsId", goodsList.get(position).getGid());
+				mContext.startActivity(intent);
+			}
+		});
 		// 固定子listview的高度
 		int totalHeight = 0;
 		for (int i = 0, len = goodsListAdapter.getCount(); i < len; i++) { // listAdapter.getCount()返回数据项的数目

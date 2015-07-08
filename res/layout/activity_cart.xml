@@ -41,7 +41,7 @@
            android:textColor="@color/white"
            />
        <LinearLayout 
-           android:layout_width="wrap_content"
+           android:layout_width="0dp"
            android:layout_height="match_parent"
            android:gravity="center_vertical"
            android:orientation="vertical"
@@ -70,8 +70,7 @@
        <TextView 
            android:background="#e35063"
            android:id="@+id/acart_to_pay"
-           android:layout_width="0dp"
-           android:layout_weight="1"
+           android:layout_width="wrap_content"
            android:minWidth="120dp"
            android:paddingLeft="10dp"
            android:paddingRight="10dp"

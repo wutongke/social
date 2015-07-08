@@ -82,5 +82,7 @@ public class Bee_PageAdapter extends PagerAdapter {
 	public boolean isViewFromObject(View arg0, Object arg1) {
 		return arg0 == arg1;
 	}
-
+	public int getItemPosition(Object object) {
+	    return POSITION_NONE;
+	}
 }

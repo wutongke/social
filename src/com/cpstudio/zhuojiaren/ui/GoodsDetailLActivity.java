@@ -1,8 +1,8 @@
 package com.cpstudio.zhuojiaren.ui;
 
-import java.awt.List;
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -91,7 +91,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 					drawable.setBounds(0, 0, drawable.getMinimumWidth(),
 							drawable.getMinimumHeight());
 					collection.setCompoundDrawables(drawable, null, null, null);
-				}else{
+				} else {
 					Drawable drawable = getResources().getDrawable(
 							R.drawable.zuncollect2);
 					// / 这一步必须要做,否则不会显示.
@@ -102,11 +102,13 @@ public class GoodsDetailLActivity extends BaseActivity {
 			}
 		});
 		cart.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+				Intent intent = new Intent(GoodsDetailLActivity.this,CartActivity.class);
+				intent.putExtra("goods", goods);
+				startActivity(intent);
 			}
 		});
 	}
@@ -120,9 +122,15 @@ public class GoodsDetailLActivity extends BaseActivity {
 		goods.setCompanyDes("为恶劣的高科技阿里；拉时间断开连接");
 		goods.setIsCollection("0");
 		PicVO pic = new PicVO();
+		pic.setId("1");
 		pic.setOrgurl("http://img13.360buyimg.com/vclist/jfs/t931/269/1375027638/11748/d0421ed8/559a312fN059bda44.jpg");
 		goods.setCompanyPic(pic);
+		PicVO pic1 = new PicVO();
+		pic1.setOrgurl("http://img0.imgtn.bdimg.com/it/u=1703091849,1006427253&fm=21&gp=0.jpg");
+		pic1.setId("2");
+		goods.setCompanyPic(pic);
 		ArrayList<PicVO> list = new ArrayList<PicVO>();
+		list.add(pic1);
 		list.add(pic);
 		goods.setPic(list);
 		goods.setMoney("152");
@@ -132,8 +140,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 		msg1.what = 1;
 		msg1.obj = goods;
 		msg1.sendToTarget();
-		
-		
+
 		CommentVO test = new CommentVO();
 		test.setContent("写的不错，加油");
 		test.setIsPraise("1");
@@ -160,7 +167,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.head_goods_detail);
-
+		
 		mListView = mPullDownView.getListView();
 		mAdapter = new CommentAdapter(this, mDataList, R.layout.item_comment);
 		mListView.setAdapter(mAdapter);
@@ -176,15 +183,33 @@ public class GoodsDetailLActivity extends BaseActivity {
 			}
 		});
 
-		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
 		// 图片展示
 		bannerViewPager = (ViewPager) findViewById(R.id.hgd_viewpager);
 		bannerIndicator = (PageIndicator) findViewById(R.id.hgd_indicator);
 		bannerListData = new ArrayList<BeanBanner>();
 
+		String[] urls = {
+				"http://img3.imgtn.bdimg.com/it/u=2628293733,2370129064&fm=21&gp=0.jpg",
+				"http://img2.imgtn.bdimg.com/it/u=2906966334,223089362&fm=21&gp=0.jpg",
+				"http://img4.imgtn.bdimg.com/it/u=1704061436,275613074&fm=21&gp=0.jpg",
+				"http://img3.imgtn.bdimg.com/it/u=1440545533,1670448902&fm=21&gp=0.jpg",
+				"http://img2.imgtn.bdimg.com/it/u=697459274,2261536128&fm=21&gp=0.jpg",
+				"http://img4.imgtn.bdimg.com/it/u=2079958976,1443524702&fm=21&gp=0.jpg",
+				"http://img3.imgtn.bdimg.com/it/u=1849853359,1757644016&fm=21&gp=0.jpg",
+				"http://img0.imgtn.bdimg.com/it/u=1703091849,1006427253&fm=21&gp=0.jpg",
+				"http://img1.imgtn.bdimg.com/it/u=3254378695,3573443632&fm=21&gp=0.jpg",
+				"http://img4.imgtn.bdimg.com/it/u=420516615,2115785755&fm=21&gp=0.jpg" };
+		for (int i = 0; i < 5; i++) {
+
+			BeanBanner item = new BeanBanner();
+			item.setPicUrl(urls[i]);
+			bannerListData.add(item);
+		}
+		
 		bannerPageAdapter = new Bee_PageAdapter(this, bannerListData);
 		bannerViewPager.setAdapter(bannerPageAdapter);
+		bannerViewPager.setCurrentItem(0);
 		bannerIndicator.setViewPager(bannerViewPager);
 		// 其他信息
 		productName = (TextView) findViewById(R.id.hgd_product_name);
@@ -203,14 +228,15 @@ public class GoodsDetailLActivity extends BaseActivity {
 			switch (msg.what) {
 			case 1:
 				GoodsVO goods = (GoodsVO) msg.obj;
+				bannerListData.clear();
 				for (int i = 0; i < goods.getPic().size(); i++) {
 					BeanBanner item = new BeanBanner();
 					item.setPicUrl(goods.getPic().get(i).getOrgurl());
 					bannerListData.add(item);
 				}
-				bannerPageAdapter.notifyDataSetChanged();
-				
-				
+				bannerPageAdapter = new Bee_PageAdapter(GoodsDetailLActivity.this, bannerListData);
+				bannerViewPager.setAdapter(bannerPageAdapter);
+				bannerViewPager.setCurrentItem(0);
 				productName.setText(goods.getName());
 				productDes.setText(goods.getDetail());
 				marketPrice.setText(goods.getPrice());

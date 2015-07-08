@@ -81,17 +81,7 @@ public class OrderListItemGoodsListAdapter extends BaseAdapter {
 		// mLoadImage.addTask(picurl, holder.ivPic);
 		// mLoadImage.doTask();
 		// }
-		convertView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				// 跳转到商品详情界面，并将id传参数
-//				Intent i = new Intent(mContext, .class);
-//				i.putExtra("goodsId", "1232");
-//				mContext.startActivity(i);
-			}
-		});
+		
 
 		return convertView;
 	}

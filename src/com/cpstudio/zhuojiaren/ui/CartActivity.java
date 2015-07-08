@@ -179,6 +179,7 @@ public class CartActivity extends BaseActivity {
 		goods3.setMoney("152");
 		goods3.setPrice("152");
 		goods3.setZhuobi("120");
+//		mDataList.add((GoodsVO)(getIntent().getSerializableExtra("goods")));
 		mDataList.add(goods);
 		mDataList.add(goods2);
 		mDataList.add(goods3);
