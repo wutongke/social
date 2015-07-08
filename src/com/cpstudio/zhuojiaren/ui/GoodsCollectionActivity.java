@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -38,6 +37,7 @@ public class GoodsCollectionActivity extends BaseActivity {
 	LoadImage loader = new LoadImage();
 	private CommonAdapter<GoodsVO> mAdapter;
 	private ArrayList<GoodsVO> mDataList = new ArrayList<GoodsVO>();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,6 +46,18 @@ public class GoodsCollectionActivity extends BaseActivity {
 		initTitle();
 		title.setText(R.string.collection_goods);
 		initView();
+		showCategary.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(gridView.getVisibility()==View.GONE)
+					gridView.setVisibility(View.VISIBLE);
+				else
+					gridView.setVisibility(View.GONE);
+			}
+		});
+		loadData(0);
 	}
 
 	private void initView() {
@@ -54,7 +66,7 @@ public class GoodsCollectionActivity extends BaseActivity {
 				R.layout.item_goods_collection) {
 
 			@Override
-			public void convert(ViewHolder helper, GoodsVO item) {
+			public void convert(ViewHolder helper, final GoodsVO item) {
 				// TODO Auto-generated method stub
 				helper.setText(R.id.igc_name, item.getName());
 				loader.beginLoad(item.getFirstPic().getOrgurl(),
@@ -84,7 +96,10 @@ public class GoodsCollectionActivity extends BaseActivity {
 															int which) {
 														// TODO Auto-generated
 														// method stub
-
+														if(mDataList.contains(item)){
+															mDataList.remove(item);
+															mAdapter.notifyDataSetChanged();
+														}
 													}
 												}).create().show();
 							}
@@ -92,13 +107,22 @@ public class GoodsCollectionActivity extends BaseActivity {
 			}
 		};
 		listView.setAdapter(mAdapter);
-		int[]categary = {R.string.all_catgary,R.string.phone_fee,R.string.plane,R.string.movie,R.string.hotel,R.string.tea,R.string.intelligence,R.string.red_wine,R.string.tele_goods,R.string.cosmetic};
+		int[] categary = { R.string.all_catgary, R.string.phone_fee,
+				R.string.plane, R.string.movie, R.string.hotel, R.string.tea,
+				R.string.intelligence, R.string.red_wine, R.string.tele_goods,
+				R.string.cosmetic };
 		ArrayList<String> strs = new ArrayList<String>();
-		for(int i :categary){
+		for (int i : categary) {
 			strs.add(GoodsCollectionActivity.this.getResources().getString(i));
 		}
-		gridView.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, strs));
+		gridView.setAdapter(new CommonAdapter<String>(GoodsCollectionActivity.this, strs, R.layout.item_text) {
+
+			@Override
+			public void convert(ViewHolder helper, String item) {
+				// TODO Auto-generated method stub
+				helper.setText(R.id.it_text, item);
+			}
+		});
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -106,12 +130,14 @@ public class GoodsCollectionActivity extends BaseActivity {
 					int position, long id) {
 				// TODO Auto-generated method stub
 				loadData(position);
-				CommonUtil.displayToast(GoodsCollectionActivity.this, position+"");
+				CommonUtil.displayToast(GoodsCollectionActivity.this, position
+						+ "");
+				gridView.setVisibility(View.GONE);
 			}
 
-			
 		});
 	}
+
 	private void loadData(int position) {
 		// TODO Auto-generated method stub
 		GoodsVO goods = new GoodsVO();
@@ -137,15 +163,16 @@ public class GoodsCollectionActivity extends BaseActivity {
 		result.add(goods);
 		result.add(goods);
 		Message msg = uiHandler.obtainMessage();
-		msg.what=result.size();
+		msg.what = result.size();
 		msg.obj = result;
 		msg.sendToTarget();
 	}
-	Handler uiHandler = new Handler(){
+
+	Handler uiHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			if(msg.what>=1){
+			if (msg.what >= 1) {
 				mDataList.clear();
-				mDataList.addAll((ArrayList<GoodsVO>)msg.obj);
+				mDataList.addAll((ArrayList<GoodsVO>) msg.obj);
 				mAdapter.notifyDataSetChanged();
 			}
 		};
