@@ -1,9 +1,11 @@
 package com.cpstudio.zhuojiaren.util;
 
+import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.util.ImageLoader.Type;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ public class ViewHolder {
 	private final SparseArray<View> mViews;
 	private int mPosition;
 	private View mConvertView;
+	private Context mContext;
 
 	private ViewHolder(Context context, ViewGroup parent, int layoutId,
 			int position) {
@@ -23,6 +26,7 @@ public class ViewHolder {
 		this.mViews = new SparseArray<View>();
 		mConvertView = LayoutInflater.from(context).inflate(layoutId, parent,
 				false);
+		mContext = context;
 		// setTag
 		mConvertView.setTag(this);
 	}
@@ -73,6 +77,10 @@ public class ViewHolder {
 	 */
 	public ViewHolder setText(int viewId, String text) {
 		TextView view = getView(viewId);
+		if(text==null){
+			Log.d("Debug", mContext.getResources().getString(R.string.error_null));
+			view.setText("");
+		}
 		view.setText(text);
 		return this;
 	}

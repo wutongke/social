@@ -63,10 +63,11 @@ public class MyCollectionActivity extends BaseActivity {
 				R.layout.head_collection);
 		listView = pullDownView.getListView();
 		table = (TableLayout) findViewById(R.id.amc_tableLayout);
-		pullDownView.setShowHeader();
+		pullDownView.setShowHeader(false);
 		pullDownView.setShowFooter(false);
 		mAdapter = new AudioAdapter(mContext, mDatas, R.layout.item_radio);
 		listView.setAdapter(mAdapter);
+		
 		pullDownView.setOnPullDownListener(new OnPullDownListener() {
 
 			@Override

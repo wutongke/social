@@ -31,14 +31,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * 倬家人adapter 同城、童趣�?同行�?
+ * 倬家人adapter 同城、童趣�?同行�?
  * 
  * @author lef
  * 
  */
 public class ZhuoUserListAdapter2 extends CommonAdapter<UserAndCollection> {
 	// addByLz
-	boolean isManageing = false;// ���ҵ�������-> �Ƿ�ɾ��
+	boolean isManageing = false;// ���ҵ�������-> �Ƿ�ɾ��
 
 	LoadImage loadImage = new LoadImage(50);
 
@@ -54,16 +54,32 @@ public class ZhuoUserListAdapter2 extends CommonAdapter<UserAndCollection> {
 	}
 
 	@Override
-	public void convert(ViewHolder helper, UserAndCollection item) {
+	public void convert(final ViewHolder helper, final UserAndCollection item) {
 		// TODO Auto-generated method stub
 		helper.setText(R.id.izul_name, item.getUser().getUsername());
 		helper.setText(R.id.izul_company, item.getUser().getCompany());
 		helper.setText(R.id.izul_position, item.getUser().getPost());
-		helper.setImageResource(R.id.izul_collect, R.drawable.tab_collect_off);
+		helper.setImageResource(R.id.izul_collect, R.drawable.zuncollect2);
 		if (item.getIsCollection().equals(UserAndCollection.collection)) {
 			helper.setImageResource(R.id.izul_collect,
-					R.drawable.tab_collect_on);
+					R.drawable.zcollect2);
 		}
+		//收藏
+		helper.getView(R.id.izul_collect).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (item.getIsCollection().equals(UserAndCollection.collection)) {
+					helper.setImageResource(R.id.izul_collect,
+							R.drawable.zuncollect2);
+					//需要加网络部分
+				}else{
+					helper.setImageResource(R.id.izul_collect,
+							R.drawable.zcollect2);
+				}
+			}
+		});
 		ImageView iv = (ImageView) helper.getView(R.id.izul_image);
 		iv.setTag(item.getUser().getUheader());
 
