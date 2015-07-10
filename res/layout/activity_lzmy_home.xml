@@ -32,11 +32,12 @@
             android:orientation="vertical" >
 
             <RelativeLayout
+                android:id="@+id/rlbg"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_active_top"
+                android:layout_height="110dp"
+                android:background="@drawable/mbg6_wdzy_1"
                 android:gravity="center"
-                android:padding="35dp" >
+                android:padding="20dp" >
 
                 <com.cpstudio.zhuojiaren.widget.RoundImageView
                     android:id="@+id/imageViewHead"
@@ -52,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/imageViewHead"
                     android:text="textViewName"
-                    android:textColor="#1c1c1c"
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
 
                 <TextView
@@ -62,7 +63,7 @@
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@id/textViewName"
                     android:text="textView"
-                    android:textColor="#989898"
+                   android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <TextView
@@ -73,12 +74,12 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:drawableLeft="@drawable/ico_money"
+                    android:drawableLeft="@drawable/zhuob5_wdhd_1"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:maxLines="1"
+                    android:textColor="@color/white"
                     android:text="904个"
-                    android:textColor="#ca690a"
                     android:textSize="16sp" />
 
                 <TextView
@@ -91,7 +92,7 @@
                     android:lineSpacingExtra="2dp"
                     android:maxLines="4"
                     android:text="textViewRes"
-                    android:textColor="#585858"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
             </RelativeLayout>
 
@@ -105,10 +106,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ico_alert"
+                    android:drawableLeft="@drawable/mgrowp_wdzy_1"
+                    android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:drawablePadding="5dp"
                     android:text="@string/label_my_chengzhang" />
 
                 <TextView
@@ -136,7 +137,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ico_alert"
+                    android:drawableLeft="@drawable/mwallet_wdzy_1"
                     android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
@@ -167,7 +168,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ico_alert"
+                    android:drawableLeft="@drawable/mshop_wdzy_1"
                     android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
@@ -198,7 +199,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ico_alert"
+                    android:drawableLeft="@drawable/mcollect_wdzy_1"
                     android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
@@ -237,7 +238,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ico_alert"
+                    android:drawableLeft="@drawable/minstall_wdzy_1"
                     android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
@@ -276,7 +277,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ico_alert"
+                    android:drawableLeft="@drawable/mback_wdzy_1"
                     android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
@@ -307,7 +308,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ico_alert"
+                    android:drawableLeft="@drawable/mabout_wdzy_1"
                     android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"

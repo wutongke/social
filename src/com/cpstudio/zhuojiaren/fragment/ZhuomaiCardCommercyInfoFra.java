@@ -8,12 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.CardAddUserResourceActivity;
-import com.cpstudio.zhuojiaren.CardEditActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
@@ -23,6 +23,10 @@ public class ZhuomaiCardCommercyInfoFra extends Fragment {
 	TextView tvMoreResource;
 	@InjectView(R.id.tvMoreNeed)
 	TextView tvMoreNeed;
+	@InjectView(R.id.textViewWeidian)
+	ImageView ivWeidian;
+	@InjectView(R.id.textViewVideo)
+	ImageView ivVideo;
 	public final static String EDIT_RES_STR1 = "type";
 	public final static String EDIT_RES_STR2 = "userid";
 	private ZhuoConnHelper mConnHelper = null;
@@ -61,12 +65,28 @@ public class ZhuomaiCardCommercyInfoFra extends Fragment {
 
 	private void initclick() {
 		// TODO Auto-generated method stub
+		ivWeidian.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		ivVideo.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		tvMoreResource.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				//跳转到我的资源列表
+				// 跳转到我的资源列表
 				Intent i = new Intent(mContext,
 						CardAddUserResourceActivity.class);
 				i.putExtra(EDIT_RES_STR1, 2);
@@ -79,7 +99,7 @@ public class ZhuomaiCardCommercyInfoFra extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				//跳转到我的需求列表
+				// 跳转到我的需求列表
 				Intent i = new Intent(mContext,
 						CardAddUserResourceActivity.class);
 				i.putExtra(EDIT_RES_STR1, 1);
