@@ -27,7 +27,6 @@ public class ImageFileCache {
 	public ImageFileCache(String savePath) {
 		this.cachdir = savePath;
 		removeCache(getDirectory());
-
 	}
 
 	public Bitmap getImage(final String url) {

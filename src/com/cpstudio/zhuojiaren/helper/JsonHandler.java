@@ -19,6 +19,7 @@ import com.cpstudio.zhuojiaren.model.GeoVO;
 import com.cpstudio.zhuojiaren.model.CmtVO;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.ImQuanVO;
+import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.PagesCmtVO;
 import com.cpstudio.zhuojiaren.model.PushMsgVO;
 import com.cpstudio.zhuojiaren.model.RecentVisitVO;
@@ -62,7 +63,7 @@ public class JsonHandler {
 
 	public String processResult(String str, Context context, boolean showMsg) {
 		if (null != str && !str.equals("")) {
-//			str = str.replaceAll(":null", ":\"\"");
+			// str = str.replaceAll(":null", ":\"\"");
 			resultVO = parseResult(str);
 			String code = resultVO.getCode();
 			String data = resultVO.getData();
@@ -89,7 +90,7 @@ public class JsonHandler {
 	public static boolean checkResult(String str) {
 		if (null != str && !str.equals("")) {
 			String code = parseResult(str).getCode();
-			if (code!=null&&code.equals("10000")) {
+			if (code != null && code.equals("10000")) {
 				return true;
 			}
 		}
@@ -111,7 +112,7 @@ public class JsonHandler {
 		if (null != str && !str.equals("")) {
 			ResultVO result = parseResult(str);
 			String code = result.getCode();
-			if (null != code&&code.equals("10000")) {
+			if (null != code && code.equals("10000")) {
 				return true;
 			} else {
 				CommonUtil.displayToast(context, result.getMsg());
@@ -194,6 +195,7 @@ public class JsonHandler {
 		}
 		return quanVO;
 	}
+
 	/**
 	 * 解析活动详情
 	 */
@@ -218,7 +220,7 @@ public class JsonHandler {
 		}
 		return userVO;
 	}
-	
+
 	public ZhuoInfoVO parseZhuoInfo() {
 		ZhuoInfoVO zhuoInfoVO = null;
 		try {
@@ -229,10 +231,10 @@ public class JsonHandler {
 		}
 		return zhuoInfoVO;
 	}
-	
-/*
- * lz获取供需详情
- */
+
+	/*
+	 * lz获取供需详情
+	 */
 	public ResourceGXVO parseGongxuInfo() {
 		ResourceGXVO gxInfoVO = null;
 		try {
@@ -243,7 +245,7 @@ public class JsonHandler {
 		}
 		return gxInfoVO;
 	}
-	
+
 	public AboutUsVO parseAboutUs() {
 		AboutUsVO aboutUsVO = null;
 		try {
@@ -320,7 +322,7 @@ public class JsonHandler {
 		}
 		return data;
 	}
-	
+
 	public TotalUserVO parseTotalUser() {
 		TotalUserVO data = null;
 		try {
@@ -331,7 +333,7 @@ public class JsonHandler {
 		}
 		return data;
 	}
-	
+
 	public ArrayList<AdVO> parseAdList() {
 		ArrayList<AdVO> list = new ArrayList<AdVO>();
 		try {
@@ -391,7 +393,7 @@ public class JsonHandler {
 		}
 		return list;
 	}
-	
+
 	public ArrayList<ZhuoInfoVO> parseZhuoInfoList() {
 		ArrayList<ZhuoInfoVO> list = new ArrayList<ZhuoInfoVO>();
 		try {
@@ -412,7 +414,7 @@ public class JsonHandler {
 		return list;
 	}
 
-	//lz解析活动列表
+	// lz解析活动列表
 	public ArrayList<EventVO> parseEventInfoList() {
 		ArrayList<EventVO> list = new ArrayList<EventVO>();
 		try {
@@ -432,7 +434,7 @@ public class JsonHandler {
 		}
 		return list;
 	}
-	
+
 	public ArrayList<GoodsVO> parseGoodsList() {
 		ArrayList<GoodsVO> list = new ArrayList<GoodsVO>();
 		try {
@@ -474,7 +476,7 @@ public class JsonHandler {
 		}
 		return list;
 	}
-	
+
 	public ArrayList<RecentVisitVO> parseRecentVisitList() {
 		ArrayList<RecentVisitVO> list = new ArrayList<RecentVisitVO>();
 		try {
@@ -482,7 +484,8 @@ public class JsonHandler {
 			}.getType();
 			Gson gson = new Gson();
 			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
-				LinkedList<RecentVisitVO> li = gson.fromJson(jsonData, listType);
+				LinkedList<RecentVisitVO> li = gson
+						.fromJson(jsonData, listType);
 
 				for (Iterator<RecentVisitVO> iterator = li.iterator(); iterator
 						.hasNext();) {
@@ -495,7 +498,7 @@ public class JsonHandler {
 		}
 		return list;
 	}
-	
+
 	public ArrayList<UserVO> parseUserList() {
 		ArrayList<UserVO> list = new ArrayList<UserVO>();
 		try {
@@ -761,4 +764,18 @@ public class JsonHandler {
 		String rs = obj.get(key).getAsString();
 		return rs;
 	}
+
+	// lzlzl
+	public MainHeadInfo parseAdInfo() {
+		MainHeadInfo data = null;
+		try {
+			Gson gson = new Gson();
+			
+			data = gson.fromJson(jsonData, MainHeadInfo.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+
 }
