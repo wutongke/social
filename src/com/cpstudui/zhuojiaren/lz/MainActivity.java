@@ -33,6 +33,7 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.GoodsPicAdVO;
 import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -63,6 +64,8 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	private PopupWindows phw = null;
 	private ViewPager catsViewPager;
 
+	GoodsPicAdVO picAd;
+	
 	private PageIndicator catsIndicator;
 
 	private List<PicAdVO> hotListData;
@@ -119,8 +122,9 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
-		initHeadView();
+		
 		initClick();
+		initHeadView();
 		loadData();
 		times = DeviceInfoUtil.getDeviceCsd(MainActivity.this);
 	}
@@ -168,7 +172,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		hotImages.add(ivHot2);
 		hotImages.add(ivHot3);
 
-//		loadAd();
+		loadAd();
 	}
 
 	private void initClick() {
@@ -178,8 +182,10 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent(MainActivity.this,
-						GoodsDetailLActivity.class));
+				if(picAd!=null)
+					;
+//				startActivity(new Intent(MainActivity.this,
+//						GoodsDetailLActivity.class));
 			}
 		});
 
@@ -447,13 +453,19 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		} else {
 			// String params = ZhuoCommHelperLz.getMainAdInfo();
 			// ≤‚ ‘
-			String params = "http://115.28.167.196:9001/ZhuoFamily/getmygroup?userid=15106936602&password=e10adc3949ba59abbe56e057f20f883e";
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_OTHER);
+			String params = "http://115.28.167.196:9001/zhuo-api/getportalinfo.do";
+							 
+			mConnHelper.getFromServerByPost(params, mUIHandler, MsgTagVO.DATA_OTHER);
 		}
 	}
 
 	private void updateAdInfo(MainHeadInfo info) {
 
+		picAd=info.getAdtop();
+		
+		imageLoader.addTask(picAd.getAdlink(), idBanner);
+	    imageLoader.doTask();
+		
 		ArrayList<MessagePubVO> listData = (ArrayList<MessagePubVO>) info
 				.getPub();
 		if (noticesListData != null)

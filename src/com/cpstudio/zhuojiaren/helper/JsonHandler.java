@@ -69,7 +69,8 @@ public class JsonHandler {
 			String data = resultVO.getData();
 			String msg = resultVO.getMsg();
 			if (null != code) {
-				if (code.equals("10000")) {
+//新版本后台code为0时表示成功
+				if (code.equals("10000") || code.equals("0")) {
 					if (null != data) {
 						return data;
 					}
