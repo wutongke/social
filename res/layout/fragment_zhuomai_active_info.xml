@@ -120,7 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ico_my_on" >
+                    android:src="@drawable/myfriend_zmmp_1" >
                 </ImageView>
 
                 <TextView
@@ -129,6 +129,7 @@
                     android:layout_gravity="center_vertical"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:drawablePadding="5dp"
                     android:text="@string/renmai_my" />
             </LinearLayout>
 
@@ -159,7 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ico_my_on" >
+                    android:src="@drawable/mytalks_zmmp_1" >
                 </ImageView>
 
                 <TextView
@@ -198,7 +199,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ico_my_on" >
+                    android:src="@drawable/myactive_zmmp_1" >
                 </ImageView>
 
                 <TextView

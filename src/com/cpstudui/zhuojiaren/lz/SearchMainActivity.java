@@ -40,7 +40,6 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.model.AdVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
@@ -292,17 +291,7 @@ public class SearchMainActivity extends BaseActivity implements
 				updateItemList(list, false, true);
 				break;
 			}
-			case MsgTagVO.DATA_OTHER: {
-				if (msg.obj != null && !msg.obj.equals("")) {
-					JsonHandler nljh = new JsonHandler((String) msg.obj,
-							getApplicationContext());
-					AdVO ad = nljh.parseAd();
-					if (ad != null) {
-						// addAd(ad.getFile(), ad.getLink());
-					}
-				}
-				break;
-			}
+			
 			case MsgTagVO.UPDATE: {
 				if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,

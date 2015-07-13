@@ -982,25 +982,27 @@
             android:label="@string/title_activity_order_submit" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.LocateActivity"
+            android:name=".ui.LocateActivity"
             android:label="@string/title_activity_locate" >
         </activity>
-        <activity android:name="com.cpstudio.zhuojiaren.ViewOrderActivity" >
-        </activity>
+
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.GoodsCollectionActivity"
+            android:name=".ui.GoodsCollectionActivity"
             android:label="@string/title_activity_goods_collection" >
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.OrderDetailActivity"
             android:label="@string/title_activity_order_detail" >
         </activity>
-        <activity
+<activity
+            android:name=".AboutZhuomaoActivity"
+            android:label="@string/label_my_about" >
+        </activity>
+<activity
             android:name="com.cpstudio.zhuojiaren.ui.VedioActivity"
             android:label="@string/title_activity_vedio" 
             android:screenOrientation="portrait"
             >
-        </activity>
-    </application>
+        </activity>    </application>
 
 </manifest>

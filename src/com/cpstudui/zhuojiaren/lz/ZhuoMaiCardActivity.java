@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -17,7 +18,6 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseFragmentActivity;
 import com.cpstudio.zhuojiaren.CardEditActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.facade.CardMsgFacade;
@@ -41,7 +41,16 @@ import com.cpstudio.zhuojiaren.widget.TabButton.TabsButtonOnClickListener;
  * @author lz
  * 
  */
-public class ZhuoMaiCardActivity extends BaseFragmentActivity {
+public class ZhuoMaiCardActivity extends FragmentActivity {
+	@InjectView(R.id.activity_back)
+	TextView tvBack;
+	@InjectView(R.id.activity_title)
+	TextView tvTitle;
+	@InjectView(R.id.activity_function)
+	ImageView ivShare;
+	@InjectView(R.id.activity_function2)
+	ImageView ivZan;
+
 	@InjectView(R.id.azq_tab)
 	TabButton tabButton;
 	@InjectView(R.id.azq_viewpager)
@@ -58,9 +67,9 @@ public class ZhuoMaiCardActivity extends BaseFragmentActivity {
 	Button btnEditBG;// 个性化背景
 	@InjectView(R.id.btnEditCard)
 	Button btnEditCard;//
-	@InjectView(R.id.rootLayout)
-	View rootLayout;//
-	
+	@InjectView(R.id.rootmain)
+	View rootMainBG;//
+
 	private final static int USER_SELECT = 0;
 	private Context mContext;
 	// 四个fragment 方便通信
@@ -92,12 +101,9 @@ public class ZhuoMaiCardActivity extends BaseFragmentActivity {
 		setContentView(R.layout.activity_zhuo_card_main);
 		ButterKnife.inject(this);
 		mContext = this;
-		initTitle();
-		title.setText(R.string.title_zhuomai_card);
-		function.setTag(0);
-		function.setBackgroundResource(R.drawable.tab_trainsfer);
-		function2.setBackgroundResource(R.drawable.tab_good);
-		function2.setVisibility(View.VISIBLE);
+
+		tvTitle.setText(R.string.title_zhuomai_card);
+
 		// 初始化tab和viewpager
 		viewPager.setAdapter(getPagerAdapter());
 
@@ -116,10 +122,10 @@ public class ZhuoMaiCardActivity extends BaseFragmentActivity {
 		} else
 			ltMenue.setVisibility(View.GONE);
 		mLoadImage = new LoadImage();
-		
-		//设置个性背景图片，在个人信息里。个人可以选择更换
-		rootLayout.setBackgroundResource(R.drawable.audio_start);
-		
+
+		// 设置个性背景图片，在个人信息里。个人可以选择更换
+		rootMainBG.setBackgroundResource(R.drawable.manbg_zmmp_1);
+
 		initOnClick();
 		// loadInfo();
 		// initClick();
@@ -135,11 +141,12 @@ public class ZhuoMaiCardActivity extends BaseFragmentActivity {
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
 
-				if(arg0==2){
-					//不展示第三个page
+				if (arg0 == 2) {
+					// 不展示第三个page
 					viewPager.setCurrentItem(1);
-					mContext.startActivity(new Intent(mContext,CardEditActivity.class));
-				//跳转到供需发布页面
+					mContext.startActivity(new Intent(mContext,
+							CardEditActivity.class));
+					// 跳转到供需发布页面
 				}
 			}
 
@@ -155,20 +162,21 @@ public class ZhuoMaiCardActivity extends BaseFragmentActivity {
 
 			}
 		});
-		
+
 		tabButton.setTabsButtonOnClickListener(new TabsButtonOnClickListener() {
-			
+
 			@Override
 			public void tabsButtonOnClick(int id, View v) {
 				// TODO Auto-generated method stub
-				if((Integer)(v.getTag())==2)
-					mContext.startActivity(new Intent(mContext,CardEditActivity.class));
-				else{
-					viewPager.setCurrentItem((Integer)v.getTag());
+				if ((Integer) (v.getTag()) == 2)
+					mContext.startActivity(new Intent(mContext,
+							CardEditActivity.class));
+				else {
+					viewPager.setCurrentItem((Integer) v.getTag());
 				}
 			}
 		});
-		function.setOnClickListener(new OnClickListener() {
+		ivZan.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -180,7 +188,7 @@ public class ZhuoMaiCardActivity extends BaseFragmentActivity {
 				// MsgTagVO.MSG_LIKE, null, true, null, null);
 			}
 		});
-		function.setOnClickListener(new OnClickListener() {
+		ivShare.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -227,13 +235,13 @@ public class ZhuoMaiCardActivity extends BaseFragmentActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				 Intent i = new Intent(ZhuoMaiCardActivity.this,
-				 ChangeBackgroundActivity.class);
-				 startActivity(i);
+				Intent i = new Intent(ZhuoMaiCardActivity.this,
+						ChangeBackgroundActivity.class);
+				startActivity(i);
 			}
 		});
 		btnEditCard.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub

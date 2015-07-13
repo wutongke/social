@@ -14,6 +14,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.cpstudio.zhuojiaren.AboutZhuomaoActivity;
 import com.cpstudio.zhuojiaren.GoodsExchangeActivity;
 import com.cpstudio.zhuojiaren.MyAboutUsListActivity;
 import com.cpstudio.zhuojiaren.MyAdviceActivity;
@@ -35,6 +36,8 @@ import com.cpstudio.zhuojiaren.ui.SettingActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class LZMyHomeActivity extends Activity {
+	@InjectView(R.id.rlbg)
+	View rlbg;
 	@InjectView(R.id.llMyCZ)
 	View vCZ;
 	@InjectView(R.id.llMyPurse)
@@ -156,7 +159,7 @@ public class LZMyHomeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(LZMyHomeActivity.this,
-						MyAboutUsListActivity.class);
+						AboutZhuomaoActivity.class);
 				startActivity(i);
 			}
 		});
@@ -216,6 +219,13 @@ public class LZMyHomeActivity extends Activity {
 					((TextView) findViewById(R.id.textViewCompany))
 							.setText(company);
 					String url = user.getUheader();
+					String sex = user.getSex();
+
+					if (sex!=null && sex.equals("ÄÐ"))
+						rlbg.setBackgroundResource(R.drawable.mbg6_wdzy_1);
+					else
+						rlbg.setBackgroundResource(R.drawable.mbg5_wdzy_1);
+
 					// String levelStr = user.getLevel();
 					// if (levelStr != null && !levelStr.equals("")) {
 					// int level = Integer.valueOf(levelStr);

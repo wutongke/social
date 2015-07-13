@@ -92,6 +92,7 @@ public class LoadImage {
 		if (result == null) {
 			result = fileCache.getImage(url);
 			if (result == null) {
+				//¥”Õ¯¬ÁªÒ»°Õº∆¨
 				result = ImageGetForHttp.downloadBitmap(url, fileCache);
 				if (result != null) {
 					memoryCache.addBitmapToCache(url, result);

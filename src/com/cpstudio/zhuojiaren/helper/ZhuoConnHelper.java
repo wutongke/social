@@ -30,7 +30,7 @@ public class ZhuoConnHelper {
 	private static ZhuoConnHelper instance;
 	private String userid = null;
 	private String password = null;
-	//标识每一次请求，请求开始后不重复请求
+	// 标识每一次请求，请求开始后不重复请求
 	private Set<String> mStartedTag = new HashSet<String>();
 
 	private void init(Context context) {
@@ -67,6 +67,11 @@ public class ZhuoConnHelper {
 
 	public boolean getFromServer(String url, Handler handler, int tag) {
 		return getFromServer(url, handler, tag, null, false, null, null);
+	}
+
+	// lz0713
+	public boolean getFromServerByPost(String url, Handler handler, int tag) {
+		return getFromServerByPost(url, handler, tag, null, false, null, null);
 	}
 
 	public boolean getFromServer(String url, Handler handler, int tag,
@@ -109,6 +114,16 @@ public class ZhuoConnHelper {
 			Activity activity, boolean cancelable, OnCancelListener cancel,
 			String data) {
 		return doGet(url, handler, tag, url, activity, cancelable, cancel, data);
+	}
+
+	// lz0713
+	public boolean getFromServerByPost(String url, Handler handler, int tag,
+			Activity activity, boolean cancelable, OnCancelListener cancel,
+			String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("pubnum", "5"));
+		return doPostByPost(nameValuePairs, url, handler, tag, activity, url, cancelable,
+				cancel, data);
 	}
 
 	public boolean getFromServer(String url, FinishCallback callback) {
@@ -626,6 +641,27 @@ public class ZhuoConnHelper {
 		return false;
 	}
 
+	// lz0713
+	private boolean doPostByPost(List<NameValuePair> nameValuePairs,
+			String url, Handler handler, int handlerTag, Activity activity,
+			String tag, boolean cancelable, OnCancelListener cancel, String data) {
+		if (!mStartedTag.contains(tag) || tag == null) {
+			if (tag != null) {
+				mStartedTag.add(tag);
+			}
+			AsyncConnectHelper conn = new AsyncConnectHelper(
+					addUserInfoByPost(nameValuePairs), url, getFinishCallback(
+							handler, handlerTag, tag, data), activity);
+			conn.setCancelable(cancelable);
+			if (cancelable) {
+				conn.setCancel(getCancelListener(cancel, tag, conn));
+			}
+			conn.execute();
+			return true;
+		}
+		return false;
+	}
+
 	private boolean doPost(List<NameValuePair> nameValuePairs, String url,
 			FinishCallback callback, Activity activity, String tag,
 			boolean cancelable, OnCancelListener cancel) {
@@ -788,6 +824,16 @@ public class ZhuoConnHelper {
 	private List<NameValuePair> addUserInfo(List<NameValuePair> nameValuePairs) {
 		nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		nameValuePairs.add(new BasicNameValuePair("password", password));
+		return nameValuePairs;
+	}
+
+	// lz0713
+	private List<NameValuePair> addUserInfoByPost(
+			List<NameValuePair> nameValuePairs) {
+		nameValuePairs.add(new BasicNameValuePair("session",
+				"e72d664f93de40e7aa08b28f15444f5b"));
+		nameValuePairs.add(new BasicNameValuePair("apptype",
+				"0"));
 		return nameValuePairs;
 	}
 

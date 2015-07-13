@@ -1,5 +1,8 @@
 package com.cpstudui.zhuojiaren.lz;
+
 import java.util.List;
+
+import com.cpstudio.zhuojiaren.model.MessagePubVO;
 
 import android.content.Context;
 import android.graphics.Camera;
@@ -27,7 +30,7 @@ public class AutoTextView extends TextSwitcher implements
 	private Rotate3dAnimation mInDown;
 	private Rotate3dAnimation mOutDown;
 	//
-	private List<BeanNotice> list;
+	private List<MessagePubVO> list;
 	public int index = 0;
 	private Thread updateThread;
 	private volatile boolean stopFlag = false;
@@ -76,7 +79,7 @@ public class AutoTextView extends TextSwitcher implements
 		TextView t = new TextView(mContext);
 		t.setGravity(Gravity.CENTER);
 		t.setTextSize(mHeight);
-//		t.setTextColor(mContext.getResources().getColor(R.color.white));
+		// t.setTextColor(mContext.getResources().getColor(R.color.white));
 		t.setMaxLines(1);
 		return t;
 	}
@@ -153,19 +156,23 @@ public class AutoTextView extends TextSwitcher implements
 			matrix.postTranslate(centerX, centerY);
 		}
 	}
-	public void updateUI(){
-		AutoTextView.this.setText(getList().get(index).getContent());
+
+	public void updateUI() {
+		AutoTextView.this.setText(getList().get(index).getPublish());
 		invalidate(); // 鏇存柊瑙嗗浘
-		if(updateThread == null )
+		if (updateThread == null)
 			updateThread = new Thread(new updateThread());
 		updateThread.start();
 	}
-	public void stopAutoText(){
+
+	public void stopAutoText() {
 		stopFlag = true;
 	}
+
 	class updateThread implements Runnable {
 		long time = 2000; // 寮� 鐨勬椂闂达紝涓嶈兘涓洪浂锛屽惁鍒欏墠闈㈠嚑鍙ユ瓕璇嶆病鏈夋樉绀哄嚭鏉�
-		int i=0;
+		int i = 0;
+
 		public void run() {
 			while (!stopFlag) {
 				long sleeptime = updateIndex(i);
@@ -176,31 +183,35 @@ public class AutoTextView extends TextSwitcher implements
 				try {
 					Thread.sleep(time);
 					i++;
-					if(i==getList().size())
-						i=0;
-				} catch (InterruptedException e) {					
+					if (i == getList().size())
+						i = 0;
+				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 	}
+
 	Handler mHandler = new Handler();
 	Runnable mUpdateResults = new Runnable() {
 		public void run() {
-			AutoTextView.this.setText(getList().get(index).getContent());
+			AutoTextView.this.setText(getList().get(index).getPublish());
 			invalidate(); // 鏇存柊瑙嗗浘
 		}
 	};
-	public long updateIndex(int index) {	
+
+	public long updateIndex(int index) {
 		if (index == -1)
 			return -1;
-		this.index=index;		
+		this.index = index;
 		return index;
 	}
-	public List<BeanNotice> getList() {
+
+	public List<MessagePubVO> getList() {
 		return list;
 	}
-	public void setList(List<BeanNotice> list){
+
+	public void setList(List<MessagePubVO> list) {
 		this.list = list;
 	}
 }

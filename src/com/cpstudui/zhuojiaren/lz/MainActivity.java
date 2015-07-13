@@ -1,6 +1,7 @@
 package com.cpstudui.zhuojiaren.lz;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -19,6 +20,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.MsgDetailActivity;
 import com.cpstudio.zhuojiaren.PublishActiveActivity;
@@ -30,8 +33,11 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.AdVO;
+import com.cpstudio.zhuojiaren.model.GoodsPicAdVO;
+import com.cpstudio.zhuojiaren.model.MainHeadInfo;
+import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.PicAdVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
@@ -44,23 +50,36 @@ import com.external.viewpagerindicator.PageIndicator;
 
 public class MainActivity extends Activity implements OnPullDownListener,
 		OnItemClickListener {
+	@InjectView(R.id.main_banner)
+	ImageView idBanner;
+	@InjectView(R.id.at_notices)
+	AutoTextView antoText;
+	@InjectView(R.id.ivHot1)
+	ImageView ivHot1;
+	@InjectView(R.id.ivHot2)
+	ImageView ivHot2;
+	@InjectView(R.id.ivHot3)
+	ImageView ivHot3;
 	private float times = 2;
 	private PopupWindows phw = null;
 	private ViewPager catsViewPager;
-	ImageView idBanner;
+
+	GoodsPicAdVO picAd;
+	
 	private PageIndicator catsIndicator;
 
-	private ArrayList<BeanBanner> hotListData;
-	private ArrayList<BeanCats> catsListData;
-	private ArrayList<BeanNotice> noticesListData;
+	private List<PicAdVO> hotListData;
 
-	private ArrayList<ImageView> hotImages;
+	private List<MessagePubVO> noticesListData = new ArrayList<MessagePubVO>();
+
+	private ArrayList<ImageView> hotImages = new ArrayList<ImageView>();
+
+	private ArrayList<BeanCats> catsListData;
 	private Cats_PageAdapter catPageAdapter;
 
-	AutoTextView antoText;
-
+	// ImageView idBanner;
 	private ListView mListView;
-//lz ..	private ZhuoUserListAdapter mAdapter;
+	// lz .. private ZhuoUserListAdapter mAdapter;
 	private QuanziTopicListAdapter mAdapter;
 	private PullDownView mPullDownView;
 	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
@@ -72,6 +91,8 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	private int mPage = 1;
 	boolean isContinue = true;
 	LoadImage imageLoader = new LoadImage(3);
+
+	MainHeadInfo adInfo = new MainHeadInfo();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,23 +111,22 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.main_header);
 
+		ButterKnife.inject(this);
+
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
-//		mAdapter = new ZhuoUserListAdapter(MainActivity.this, mList);
+		// mAdapter = new ZhuoUserListAdapter(MainActivity.this, mList);
 		mAdapter = new QuanziTopicListAdapter(MainActivity.this, mList);
-		
+
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
-
-		initHeadView();
-
+		
 		initClick();
+		initHeadView();
 		loadData();
-
 		times = DeviceInfoUtil.getDeviceCsd(MainActivity.this);
-		// loadAd();
 	}
 
 	// 获取屏幕宽度
@@ -117,18 +137,18 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	}
 
 	private void initHeadView() {
+		// idBanner = (ImageView) findViewById(R.id.main_banner);
 
 		catsViewPager = (ViewPager) findViewById(R.id.cats_viewpager);
 		// catsViewPager.setLayoutParams(params);
 		catsListData = new ArrayList<BeanCats>();
 		int drawId[] = { R.drawable.jiarendongtai,
 				R.drawable.chengzhangzaixian, R.drawable.zhuoyuanyuyin,
-				R.drawable.wodemingpian, R.drawable.zhuo,
-				R.drawable.resource, R.drawable.shop,
-				R.drawable.project, R.drawable.travel,
+				R.drawable.wodemingpian, R.drawable.zhuo, R.drawable.resource,
+				R.drawable.shop, R.drawable.project, R.drawable.travel,
 				R.drawable.city, R.drawable.interest, R.drawable.near,
 				R.drawable.jinjing, R.drawable.teacher, R.drawable.money };
-		String[] texts=getResources().getStringArray(R.array.main_cats);
+		String[] texts = getResources().getStringArray(R.array.main_cats);
 		for (int i = 0; i < 14; i++) {
 			BeanCats item = new BeanCats();
 			item.setPicId(drawId[i]);
@@ -148,36 +168,27 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		catsIndicator = (PageIndicator) findViewById(R.id.cats_indicator);
 		catsIndicator.setViewPager(catsViewPager);
 
-		catsViewPager.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				int x=(Integer) arg0.getTag();
-				Toast.makeText(MainActivity.this, x+"", 1000).show();
-			}
-		});
-		
-		
-		antoText = (AutoTextView) findViewById(R.id.at_notices);
-		noticesListData = new ArrayList<BeanNotice>();
-		String[] notices = { "【最新动态】 第95期加入专访，理想与您相约", "【最新动态】 第94期加入专访，放飞梦想" };
-		for (int i = 0; i < 2; i++) {
-			BeanNotice item = new BeanNotice();
-			item.setContent(notices[i]);
-			noticesListData.add(item);
-		}
+		hotImages.add(ivHot1);
+		hotImages.add(ivHot2);
+		hotImages.add(ivHot3);
 
-		antoText.setList(noticesListData);
-
-		antoText.updateUI();
-
-		// antoText.stopAutoText();
-
-		addAd();
+		loadAd();
 	}
 
 	private void initClick() {
+
+		idBanner.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(picAd!=null)
+					;
+//				startActivity(new Intent(MainActivity.this,
+//						GoodsDetailLActivity.class));
+			}
+		});
+
 		findViewById(R.id.buttonSearch).setOnClickListener(
 				new OnClickListener() {
 
@@ -322,9 +333,9 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					AdVO ad = nljh.parseAd();
-					if (ad != null) {
-						// addAd(ad.getFile(), ad.getLink());
+					MainHeadInfo info = nljh.parseAdInfo();
+					if (info != null) {
+						updateAdInfo(info);
 					}
 				}
 				break;
@@ -401,7 +412,6 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	private void loadData() {
 		String url = ZhuoCommHelper.getUrlUserInfo() + "?uid="
 				+ ResHelper.getInstance(getApplicationContext()).getUserid();
-
 		// 加载刷新个人信息
 		mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
 		if (mPullDownView.startLoadData()) {
@@ -433,24 +443,41 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	}
 
 	private void loadAd() {
-		String params = ZhuoCommHelper.getUrlZhuoNotice();
-		mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_OTHER);
+		if (CommonUtil.getNetworkState(getApplicationContext()) == 2
+				&& (mSearchKey == null || mSearchKey.equals(""))) {
+			// 获取本地数据
+			// adInfo = infoFacade.getByPage(mPage);
+			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_OTHER);
+			// msg.obj = adInfo;
+			// msg.sendToTarget();
+		} else {
+			// String params = ZhuoCommHelperLz.getMainAdInfo();
+			// 测试
+			String params = "http://115.28.167.196:9001/zhuo-api/getportalinfo.do";
+							 
+			mConnHelper.getFromServerByPost(params, mUIHandler, MsgTagVO.DATA_OTHER);
+		}
 	}
 
-	private void addAd() {
-		// int height = (int) (75 * DeviceInfoUtil
-		// .getDeviceCsd(getApplicationContext()));
+	private void updateAdInfo(MainHeadInfo info) {
 
-		idBanner = (ImageView) findViewById(R.id.main_banner);
-		idBanner.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				startActivity(new Intent(MainActivity.this,GoodsDetailLActivity.class));
-			}
-		});
+		picAd=info.getAdtop();
+		
+		imageLoader.addTask(picAd.getAdlink(), idBanner);
+	    imageLoader.doTask();
+		
+		ArrayList<MessagePubVO> listData = (ArrayList<MessagePubVO>) info
+				.getPub();
+		if (noticesListData != null)
+			noticesListData.clear();
+		for (int i = 0; i < listData.size(); i++) {
+			noticesListData.add(listData.get(i));
+		}
 
+		antoText.setList(noticesListData);
+		antoText.updateUI();
+
+		// antoText.stopAutoText();
 		// LayoutParams params=new LayoutParams(LayoutParams.MATCH_PARENT,
 		// height);
 		// bannerViewPager.setLayoutParams(params);
@@ -467,22 +494,20 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				"http://img1.imgtn.bdimg.com/it/u=3254378695,3573443632&fm=21&gp=0.jpg",
 				"http://img4.imgtn.bdimg.com/it/u=420516615,2115785755&fm=21&gp=0.jpg" };
 
-		hotImages = new ArrayList<ImageView>();
-		hotListData = new ArrayList<BeanBanner>();
-		hotImages.add((ImageView) findViewById(R.id.ivHot1));
-		hotImages.add((ImageView) findViewById(R.id.ivHot2));
-		hotImages.add((ImageView) findViewById(R.id.ivHot3));
+		if (hotListData != null)
+			hotListData.clear();
+		hotListData = info.getAdmid();
+		// for (int i = 0; i < 3; i++) {
+		// BeanBanner item = new BeanBanner();
+		// item.setPicUrl(urls[i + 5]);
+		// hotListData.add(item);
+		// }
 		for (int i = 0; i < 3; i++) {
-			BeanBanner item = new BeanBanner();
-			item.setPicUrl(urls[i + 5]);
-			hotListData.add(item);
+			String url = hotListData.get(i).getAdpic();
+			hotImages.get(i).setTag(url);
+			imageLoader.addTask(url, hotImages.get(i));
 		}
-//		for (int i = 0; i < 3; i++) {
-//			String url = hotListData.get(i).getPicUrl();
-//			hotImages.get(i).setTag(url);
-//			imageLoader.addTask(url, hotImages.get(i));
-//		}
-//		imageLoader.doTask();
+		imageLoader.doTask();
 	}
 
 }

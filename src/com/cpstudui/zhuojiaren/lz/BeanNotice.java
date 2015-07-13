@@ -1,6 +1,6 @@
 package com.cpstudui.zhuojiaren.lz;
 
-public class BeanNotice {
+public class BeanNotice{
 	
 	private String content;
 	private int type;

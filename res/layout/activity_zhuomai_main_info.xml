@@ -1,13 +1,65 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootLayout"
+    android:id="@+id/rootmain"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_active_top"
-    android:padding="15dp" >
+    android:background="@drawable/manbg_zmmp_1"
+    android:orientation="vertical" >
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/activity_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/go_back"
+            android:text="@string/label_back"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/activity_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
 
         <ImageView
+            android:id="@+id/activity_function2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/activity_function"
+            android:background="@drawable/mpzhan_zmmp_1"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/activity_function"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/mpshare_zmmp_1"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
+            android:scaleType="centerCrop" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rootLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp" >
+
+        <com.cpstudio.zhuojiaren.widget.RoundImageView
             android:id="@+id/imageViewHeader"
             android:layout_width="64dp"
             android:layout_height="64dp"
@@ -21,6 +73,7 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/imageViewHeader"
             android:text="卓卖技术"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
         <LinearLayout
@@ -43,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="职位"
-                    android:textColor="#6a6a6a"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
                 <TextView
@@ -52,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="1558521212"
-                    android:textColor="#6a6a6a"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -67,9 +120,10 @@
                     android:id="@+id/textViewStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ico_alert"
+                    android:drawableLeft="@drawable/represent_zmmp_1"
+                    android:drawablePadding="5dp"
                     android:text="代言人"
-                    android:textColor="#6a6a6a"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
                 <TextView
@@ -77,9 +131,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:drawableLeft="@drawable/ico_alert"
+                    android:drawableLeft="@drawable/mpzhuob_zmmp_1"
+                    android:drawablePadding="5dp"
                     android:text="123个"
-                    android:textColor="#6a6a6a"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
@@ -90,9 +145,10 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/llm"
             android:layout_below="@id/llm"
-            android:drawableLeft="@drawable/ico_alert"
+            android:drawableLeft="@drawable/company"
+            android:drawablePadding="5dp"
             android:text="中国事业有限公司"
-            android:textColor="#6a6a6a"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
         <TextView
@@ -101,8 +157,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewht"
             android:layout_centerHorizontal="true"
-            android:text="真是自然"
-            android:textColor="#6a6a6a"
+            android:background="@drawable/jianjie_zmmp_1"
+            android:text="真实自然"
+            android:gravity="center"
+            android:textColor="@color/white"
             android:textSize="14sp" />
+    </RelativeLayout>
 
-</RelativeLayout>
+</LinearLayout>
