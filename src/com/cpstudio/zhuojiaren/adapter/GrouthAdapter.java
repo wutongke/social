@@ -7,19 +7,19 @@ import android.widget.ImageView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.GrouthVideo;
+import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 
-public class GrouthAdapter extends CommonAdapter<GrouthVideo>{
+public class GrouthAdapter extends CommonAdapter<GrouthVedio>{
 	LoadImage imageLoader = new LoadImage();
-	public GrouthAdapter(Context context, List<GrouthVideo> mDatas, int itemLayoutId) {
+	public GrouthAdapter(Context context, List<GrouthVedio> mDatas, int itemLayoutId) {
 		super(context, mDatas, itemLayoutId);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void convert(ViewHolder helper, GrouthVideo item) {
+	public void convert(ViewHolder helper, GrouthVedio item) {
 		// TODO Auto-generated method stub
 //		helper.setImageResource(R.id.ig_grouth_image, R.drawable.pop_cancel2);
 		helper.setText(R.id.ig_grouth_name, item.getName());

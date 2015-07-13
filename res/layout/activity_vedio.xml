@@ -1,0 +1,167 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/avedio_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include
+        android:id="@+id/avedio_title"
+        layout="@layout/title_activity" />
+
+    <LinearLayout
+        android:layout_below="@+id/avedio_title"
+        android:id="@+id/avedio_play_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+		
+        <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/avedio_image"
+            />
+        <com.cpstudio.zhuojiaren.widget.VedioPlayer
+            android:id="@+id/avedio_textureView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@color/black"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal" />
+
+        <SeekBar
+            android:id="@+id/avedio_vedio_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:focusable="true"
+            android:maxHeight="4.0dip"
+            android:minHeight="4.0dip"
+            android:paddingLeft="16.0dip"
+            android:paddingRight="16.0dip"
+            android:progressDrawable="@drawable/po_seekbar"
+            android:thumb="@drawable/seekbar_thumb" />
+
+        <RelativeLayout
+            android:id="@+id/avedio_control"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/black"
+            android:padding="10dp" >
+
+            <ImageButton
+                android:id="@+id/avedio_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/zcollect2" />
+
+            <ImageButton
+                android:id="@+id/avedio_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@+id/avedio_start"
+                android:background="@drawable/zcollect2" />
+
+            <TextView
+                android:id="@+id/avedio_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/avedio_next" />
+
+            <TextView
+                android:id="@+id/avedio_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/avedio_time" />
+
+            <SeekBar
+                android:id="@+id/avedio_sound_seekbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginLeft="10dp"
+                android:layout_toLeftOf="@+id/avedio_full_screen"
+                android:focusable="true"
+                android:maxHeight="4.0dip"
+                android:minHeight="4.0dip"
+                android:minWidth="100dp"
+                android:paddingLeft="10dp"
+                android:progressDrawable="@drawable/po_seekbar"
+                android:thumb="@drawable/seekbar_thumb" />
+
+            <ImageButton
+                android:id="@+id/avedio_full_screen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/zcollect2" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/avedio_vedio_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/avedio_play_layout"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:textColor="@color/graywhite" />
+
+    <ImageView
+        android:id="@+id/avedio_bg"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/avedio_vedio_time"
+        android:background="@color/bg" />
+
+    <TextView
+        android:id="@+id/avedio_vedio_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/avedio_bg"
+        android:layout_margin="20dp"
+        android:textColor="@color/graywhite" />
+
+    <LinearLayout
+        android:id="@+id/avedio_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/graywhitem"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" >
+
+        <TextView
+            style="@style/basic_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ico_cmt_cmt"
+            android:drawablePadding="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="@string/share_inspiration" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/white" />
+
+        <EditText
+            android:id="@+id/avedio_share_inspiration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/graywhitem"
+            android:hint="@string/share_text"
+            android:minHeight="50dp" />
+    </LinearLayout>
+
+</RelativeLayout>

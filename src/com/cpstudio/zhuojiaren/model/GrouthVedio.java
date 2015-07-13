@@ -1,10 +1,13 @@
 package com.cpstudio.zhuojiaren.model;
+
+import java.io.Serializable;
+
 /**
  * ≥…≥§ ”∆µ
  * @author lef
  *
  */
-public class GrouthVideo {
+public class GrouthVedio implements Serializable{
 	private String id;
 	private String imageUrl;
 	private String videoUrl;
@@ -25,6 +28,12 @@ public class GrouthVideo {
 	}
 	public String getName() {
 		return name;
+	}
+	public String getVideoUrl() {
+		return videoUrl;
+	}
+	public void setVideoUrl(String videoUrl) {
+		this.videoUrl = videoUrl;
 	}
 	public void setName(String name) {
 		this.name = name;

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -14,7 +16,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
-import com.cpstudio.zhuojiaren.model.GrouthVideo;
+import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
@@ -23,7 +25,7 @@ public class StudyActivity extends BaseActivity {
 	PullDownView pullDownView;
 	private GrouthAdapter mAdapter;
 	private ListView listView;
-	private ArrayList<GrouthVideo> mDatas = new ArrayList<GrouthVideo>();
+	private ArrayList<GrouthVedio> mDatas = new ArrayList<GrouthVedio>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class StudyActivity extends BaseActivity {
 
 	private void loadData() {
 		// TODO Auto-generated method stub
-		GrouthVideo g = new GrouthVideo();
+		GrouthVedio g = new GrouthVedio();
 		g.setBrowerCount("145");
 		g.setImageUrl("http://img0.imgtn.bdimg.com/it/u=3317101867,3739965699&fm=11&gp=0.jpg");
 		g.setName("ÕÅ²©Ê¿Ç×ÊÚ");
@@ -63,6 +65,18 @@ public class StudyActivity extends BaseActivity {
 		listView = pullDownView.getListView();
 		mAdapter = new GrouthAdapter(this, mDatas, R.layout.item_growth);
 		listView.setAdapter(mAdapter);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(StudyActivity.this,
+						VedioActivity.class);
+				intent.putExtra("vedio", mDatas.get(position - 1));
+				startActivity(intent);
+			}
+		});
 		pullDownView.setShowHeader();
 		pullDownView.setShowFooter(false);
 		pullDownView.setOnPullDownListener(new OnPullDownListener() {
@@ -70,13 +84,13 @@ public class StudyActivity extends BaseActivity {
 			@Override
 			public void onRefresh() {
 				// TODO Auto-generated method stub
-//				loadData();
+				loadData();
 			}
 
 			@Override
 			public void onMore() {
 				// TODO Auto-generated method stub
-//				loadData();
+				loadData();
 			}
 		});
 

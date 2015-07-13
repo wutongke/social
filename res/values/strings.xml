@@ -1103,5 +1103,7 @@
     <string name="tele_goods">电子产品</string>
     <string name="cosmetic">化妆品</string>
     <string name="error_null">TextView内容为空</string>
+    <string name="title_activity_vedio">VedioActivity</string>
+    <string name="grouth_online_detail">成长在线详情</string>
 
 </resources>
