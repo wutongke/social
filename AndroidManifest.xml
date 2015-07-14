@@ -985,7 +985,6 @@
             android:name=".ui.LocateActivity"
             android:label="@string/title_activity_locate" >
         </activity>
-
         <activity
             android:name=".ui.GoodsCollectionActivity"
             android:label="@string/title_activity_goods_collection" >
@@ -994,15 +993,15 @@
             android:name="com.cpstudio.zhuojiaren.OrderDetailActivity"
             android:label="@string/title_activity_order_detail" >
         </activity>
-<activity
+        <activity
             android:name=".AboutZhuomaoActivity"
             android:label="@string/label_my_about" >
         </activity>
-<activity
+        <activity
             android:name="com.cpstudio.zhuojiaren.ui.VedioActivity"
-            android:label="@string/title_activity_vedio" 
-            android:screenOrientation="portrait"
-            >
-        </activity>    </application>
+            android:label="@string/title_activity_vedio"
+            android:screenOrientation="portrait" >
+        </activity>
+    </application>
 
 </manifest>

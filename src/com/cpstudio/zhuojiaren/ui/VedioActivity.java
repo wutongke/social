@@ -9,15 +9,13 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.BoringLayout.Metrics;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.SeekBar;
@@ -28,6 +26,7 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.util.Util;
 import com.cpstudio.zhuojiaren.widget.VedioPlayer;
@@ -41,7 +40,7 @@ public class VedioActivity extends BaseActivity {
 	View titleView;
 	@InjectView(R.id.avedio_textureView)
 	VedioPlayer vedioPlayer;
-	@InjectView(R.id.avedio_play_layout)
+	@InjectView(R.id.frameLayout)
 	View frame;
 	@InjectView(R.id.avedio_bottom)
 	View bottom;
@@ -50,9 +49,9 @@ public class VedioActivity extends BaseActivity {
 	@InjectView(R.id.avedio_image)
 	ImageView Image;
 	@InjectView(R.id.avedio_start)
-	ImageView startIV;
+	ImageButton startIV;
 	@InjectView(R.id.avedio_next)
-	ImageView Next;
+	ImageButton Next;
 	@InjectView(R.id.avedio_time)
 	TextView time;
 	@InjectView(R.id.avedio_length)
@@ -78,7 +77,7 @@ public class VedioActivity extends BaseActivity {
 	// 声音控制
 	private AudioManager mAudioManager;
 	private int maxVolume, currentVolume;
-	private mediac vedioControl;
+	private mediac vedioControl = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -96,6 +95,12 @@ public class VedioActivity extends BaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		if(vedio!=null){
+			vedioName.setText(vedio.getName());
+			vedioName.setText(vedio.getDuration());
+			LoadImage load = new LoadImage();
+			load.beginLoad(vedio.getImageUrl(), Image);
+		}
 		if (VedioPlayer.getmCurrentState() != 0) {
 			// 初始化time
 			init = true;
@@ -110,6 +115,12 @@ public class VedioActivity extends BaseActivity {
 			visible(!isFullscreen);
 			Image.setVisibility(View.GONE);
 			vedioPlayer.setVisibility(View.VISIBLE);
+			if (isFullscreen) {
+				if (vedioControl == null) {
+					vedioControl = new mediac(VedioActivity.this, vedioPlayer);
+				}
+				vedioPlayer.setMediaController(vedioControl);
+			}
 		} else {
 			Image.setBackgroundColor(Color.BLACK);
 		}
@@ -164,7 +175,6 @@ public class VedioActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				if (!init) {
 					startIV.setEnabled(false);
-					vedioPlayer = new VedioPlayer(VedioActivity.this);
 					vedioPlayer
 							.setVideoPath("http://172.25.50.1:8080/Media/WebRoot/1.mp4");
 					vedioPlayer.setSeekListener(new VedioPlayer.SeekListener() {
@@ -189,8 +199,8 @@ public class VedioActivity extends BaseActivity {
 								public void onPrepared(final MediaPlayer mp) {
 									// 完成之后再设置高宽
 									Image.setVisibility(View.GONE);
-									vedioPlayer.invalidate();
 									vedioPlayer.setVisibility(View.VISIBLE);
+									frame.setLayoutParams(frame.getLayoutParams());
 									vedioPlayer.start();
 									// 初始化time
 									length.setText(Util
@@ -210,30 +220,6 @@ public class VedioActivity extends BaseActivity {
 								}
 							});
 					startIV.setBackgroundResource(R.drawable.zuncollect2);
-
-					vedioBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-
-						@Override
-						public void onStopTrackingTouch(SeekBar seekBar) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void onStartTrackingTouch(SeekBar seekBar) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void onProgressChanged(SeekBar seekBar,
-								int progress, boolean fromUser) {
-							// TODO Auto-generated method stub
-							if (vedioPlayer != null && fromUser)
-								vedioPlayer.seekTo(progress);
-						}
-					});
-
 					return;
 				}
 				if (vedioPlayer.isPlaying()) {
@@ -243,6 +229,28 @@ public class VedioActivity extends BaseActivity {
 					vedioPlayer.start();
 					startIV.setBackgroundResource(R.drawable.zcollect2);
 				}
+			}
+		});
+		vedioBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar,
+					int progress, boolean fromUser) {
+				// TODO Auto-generated method stub
+				if (vedioPlayer != null && fromUser)
+					vedioPlayer.seekTo(progress);
 			}
 		});
 		fullScreen.setOnClickListener(new OnClickListener() {
@@ -307,6 +315,7 @@ public class VedioActivity extends BaseActivity {
 			frame.setLayoutParams(frame.getLayoutParams());
 			frame.requestLayout();
 			quitFullScreen();
+			vedioPlayer.setMediaController(null);
 			isFullscreen = false;
 		} else {
 			activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -318,10 +327,8 @@ public class VedioActivity extends BaseActivity {
 									| View.SYSTEM_UI_FLAG_FULLSCREEN);
 			DisplayMetrics metric = new DisplayMetrics();
 			getWindowManager().getDefaultDisplay().getMetrics(metric);
-			int height = metric.heightPixels - vedioBar.getHeight()
-					- controlLayout.getHeight() - 30;
 			VedioPlayer.getLayoutParamsBasedOnParent(frame, metric.widthPixels,
-					height);
+					metric.heightPixels);
 			setFullScreen();
 			isFullscreen = true;
 		}

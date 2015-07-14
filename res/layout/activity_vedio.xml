@@ -9,24 +9,31 @@
         layout="@layout/title_activity" />
 
     <LinearLayout
-        android:layout_below="@+id/avedio_title"
         android:id="@+id/avedio_play_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/avedio_title"
         android:orientation="vertical" >
-		
-        <ImageView 
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:id="@+id/avedio_image"
-            />
-        <com.cpstudio.zhuojiaren.widget.VedioPlayer
-            android:id="@+id/avedio_textureView"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:background="@color/black"
-            android:visibility="gone"
-            android:layout_gravity="center_horizontal" />
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/avedio_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.cpstudio.zhuojiaren.widget.VedioPlayer
+                android:id="@+id/avedio_textureView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/black" 
+                android:visibility="gone"
+                />
+
+        </FrameLayout>
 
         <SeekBar
             android:id="@+id/avedio_vedio_seekbar"
