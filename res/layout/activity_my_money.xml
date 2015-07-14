@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:drawableLeft="@drawable/ico_zh_ldzx"
+            android:drawableLeft="@drawable/money_qbmoney"
             android:drawablePadding="10dp"
             android:gravity="center"
             android:text="@string/my_money"
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:drawableLeft="@drawable/ico_zh_ldzx"
+            android:drawableLeft="@drawable/money_qbzmoney"
             android:drawablePadding="10dp"
             android:gravity="center"
             android:text="@string/my_zhuo_money"
@@ -69,5 +69,20 @@
             android:textColor="@color/white"
             android:textSize="30dp" />
     </LinearLayout>
-
+	<ListView 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/band_card"
+	    android:cacheColorHint="@color/transparent"
+	    ></ListView>
+	<Button
+	    android:id="@+id/add_bank_card"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@color/black"
+	    android:padding="10dp"
+	    style="@style/basic_text"
+	    android:text="@string/add_bank_card"
+	     />
+	
 </LinearLayout>
