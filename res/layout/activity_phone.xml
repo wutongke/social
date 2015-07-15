@@ -17,7 +17,7 @@
             android:id="@+id/ap_phone_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/phone" />
+            android:background="@drawable/set_szphone" />
 
         <ImageView
             android:id="@+id/ap_phone_bang_image"
@@ -25,7 +25,9 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/ap_phone_image"
             android:layout_alignRight="@+id/ap_phone_image"
-            android:background="@drawable/pictures_selected" />
+            android:background="@drawable/pictures_selected" 
+            android:visibility="gone"
+            />
     </RelativeLayout>
 
     <TextView

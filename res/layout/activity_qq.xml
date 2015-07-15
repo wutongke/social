@@ -15,7 +15,7 @@
 	        android:id="@+id/aq_qq_image"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:background="@drawable/qq"
+	        android:background="@drawable/set_szqq"
 	        />
 	    <ImageView 
 	        android:id="@+id/aq_qq_bang_image"
@@ -24,6 +24,7 @@
 	        android:background="@drawable/pictures_selected"
 	        android:layout_alignRight="@+id/aq_qq_image"
 	        android:layout_alignBottom="@+id/aq_qq_image"
+	        android:visibility="gone"
 	        />
 	</RelativeLayout>
 	<TextView 

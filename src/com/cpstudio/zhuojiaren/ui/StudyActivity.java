@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -16,6 +17,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
@@ -62,6 +64,8 @@ public class StudyActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		pullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.head_grouth_main);
+		ImageView advertisement = (ImageView)findViewById(R.id.hgm_adv);
+		new LoadImage().beginLoad("http://img0.imgtn.bdimg.com/it/u=3317101867,3739965699&fm=11&gp=0.jpg", advertisement);
 		listView = pullDownView.getListView();
 		mAdapter = new GrouthAdapter(this, mDatas, R.layout.item_growth);
 		listView.setAdapter(mAdapter);

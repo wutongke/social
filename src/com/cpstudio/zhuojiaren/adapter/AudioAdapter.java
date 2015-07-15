@@ -42,7 +42,7 @@ public class AudioAdapter extends CommonAdapter<RecordVO> {
 						+ item.getDate());
 		helper.setText(R.id.ir_duration, item.getLength());
 		final ImageView play = (ImageView) helper.getView(R.id.ir_play);
-		play.setBackgroundResource(R.drawable.ico_start_play);
+		play.setBackgroundResource(R.drawable.jjplay2);
 		if (play.getTag() != null) {
 			play.setBackgroundResource(R.drawable.ico_voice);
 		}
@@ -184,6 +184,7 @@ public class AudioAdapter extends CommonAdapter<RecordVO> {
 			getCurPlayView().setTag(null);
 			setCurPlayView(null);
 			isPlaying = false;
+			if(seekBar!=null)
 			seekBar.setProgress(0);
 		}
 	}
