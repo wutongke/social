@@ -62,7 +62,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="8dp"
-                android:background="@drawable/bg_search3"
+                android:background="@drawable/zxinput_zx_1"
                 android:ems="10"
                 android:hint="@string/label_searchUserHint"
                 android:imeOptions="actionSearch"
@@ -79,18 +79,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:contentDescription="@string/ico"
-                android:src="@drawable/ico_search" />
+                android:src="@drawable/magnifier5_zx_1" />
 
-            <ImageView
-                android:id="@+id/imageViewDelSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="30dp"
-                android:contentDescription="@string/ico"
-                android:src="@drawable/ico_close_gray"
-                android:visibility="gone" />
+            
         </RelativeLayout>
 
         <ListView

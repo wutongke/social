@@ -493,7 +493,7 @@ public class QuanBoardChatActivity extends BaseActivity implements
 	}
 
 	private void initClick() {
-		function.setBackgroundResource(R.drawable.ico_about);
+		function.setBackgroundResource(R.drawable.zxhome_zx_1);
 		function.setOnClickListener(new OnClickListener() {
 
 			@Override

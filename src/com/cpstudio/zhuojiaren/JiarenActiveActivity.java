@@ -36,7 +36,6 @@ import com.cpstudui.zhuojiaren.lz.JiarenActiveNumListActivity;
 import com.cpstudui.zhuojiaren.lz.QuanziActiveNumListActivity;
 import com.cpstudui.zhuojiaren.lz.QuanziTopicListAdapter;
 import com.cpstudui.zhuojiaren.lz.TopicDetailActivity;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiActiveActivity;
 
 public class JiarenActiveActivity extends Activity implements
 		OnPullDownListener, OnItemClickListener {

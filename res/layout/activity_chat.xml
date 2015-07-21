@@ -53,7 +53,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
-            android:background="@drawable/button_top_bg_menu"
+            android:background="@drawable/zxpeo_zx_1"
             android:text="@string/label_manage"
             android:textColor="#ffffff"
             android:textSize="14sp"
@@ -183,7 +183,6 @@
                         android:layout_toRightOf="@+id/buttonChatMore"
                         android:background="@drawable/bg_text_chat"
                         android:ems="10"
-                        android:hint="@string/info70"
                         android:inputType="textMultiLine"
                         android:maxLines="5" />
 

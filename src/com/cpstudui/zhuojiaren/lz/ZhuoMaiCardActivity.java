@@ -64,9 +64,9 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	View ltMenue;// 个人资料编辑菜单
 
 	@InjectView(R.id.btnEditBG)
-	Button btnEditBG;// 个性化背景
+	View btnEditBG;// 个性化背景
 	@InjectView(R.id.btnEditCard)
-	Button btnEditCard;//
+	View btnEditCard;//
 	@InjectView(R.id.rootmain)
 	View rootMainBG;//
 
@@ -135,6 +135,14 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	private void initOnClick() {
 		// TODO Auto-generated method stub
 		// 选择不同的fragment，function按键不同
+		tvTitle.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				ZhuoMaiCardActivity.this.finish();
+			}
+		});
 		tabButton.setPageChangeListener(new PageChangeListener() {
 
 			@Override

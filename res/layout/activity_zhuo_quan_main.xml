@@ -32,87 +32,87 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
-            android:background="#03fff3"
+            android:background="#767475"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:id="@+id/lt_chengyuan_menue"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#03fff3"
-                android:gravity="center"
+                android:background="#767475"
+                android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
-                <LinearLayout
-                    android:id="@+id/btnPubTopic"
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
 
                     <Button
+                        android:id="@+id/btnPubTopic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
                         android:background="#00000000"
                         android:drawableLeft="@drawable/write_qht1"
                         android:minHeight="20dp"
                         android:text="@string/label_pub_topic"
                         android:textColor="@color/white" />
-                </LinearLayout>
+                </RelativeLayout>
 
-                <LinearLayout
-                    android:id="@+id/btnPubActive"
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
 
                     <Button
+                        android:id="@+id/btnPubActive"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
                         android:background="#00000000"
                         android:drawableLeft="@drawable/activity_qht1"
                         android:minHeight="20dp"
                         android:text="@string/label_pub_active"
                         android:textColor="@color/white" />
-                </LinearLayout>
+                </RelativeLayout>
 
-                <LinearLayout
-                    android:id="@+id/btnQuanChat"
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
 
                     <Button
+                        android:id="@+id/btnQuanChat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
                         android:background="#00000000"
                         android:drawableLeft="@drawable/talk_qht1"
                         android:minHeight="20dp"
                         android:text="@string/label_qzql"
                         android:textColor="@color/white" />
-                </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/lt_youke_menue"
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/lt_youke_menue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#767475"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/btnJoinQuan"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#03fff3"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
-
-                    <Button
-                        android:id="@+id/btnJoinQuan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#00000000"
-                        android:drawableLeft="@drawable/addpeople"
-                        android:minHeight="20dp"
-                        android:text="@string/label_join_quan"
-                        android:textColor="@color/white" />
-                </LinearLayout>
+                    android:background="#00000000"
+                    android:drawableLeft="@drawable/addpeople"
+                    android:minHeight="20dp"
+                    android:text="@string/label_join_quan"
+                    android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

@@ -213,7 +213,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:background="#03fff3"
+        android:background="#767475"
         android:gravity="center"
         android:orientation="horizontal" >
 
@@ -221,7 +221,6 @@
             android:id="@+id/lt_chengyuan_menue"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#03fff3"
             android:gravity="center"
             android:orientation="horizontal" >
 
@@ -229,9 +228,9 @@
                 android:id="@+id/btnQuitQuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#00000000"
-                android:drawableLeft="@drawable/ico_alert"
+                android:drawableLeft="@drawable/collect_hqxq1"
                 android:minHeight="20dp"
+                android:background="@null"
                 android:text="@string/label_quit_quan"
                 android:textColor="@color/white" />
         </LinearLayout>
@@ -240,16 +239,15 @@
             android:id="@+id/lt_youke_menue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#03fff3"
             android:gravity="center"
             android:orientation="horizontal" >
             <Button
                 android:id="@+id/btnJoinQuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#00000000"
-                android:drawableLeft="@drawable/ico_alert"
+                android:drawableLeft="@drawable/addpeople"
                 android:minHeight="20dp"
+                 android:background="@null"
                 android:text="@string/label_join_quan"
                 android:textColor="@color/white" />
         </LinearLayout>

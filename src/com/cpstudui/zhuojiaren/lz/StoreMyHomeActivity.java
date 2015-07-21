@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
+import butterknife.Optional;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.GoodsExchangeActivity;
@@ -80,33 +82,53 @@ public class StoreMyHomeActivity extends BaseActivity {
 		super.onResume();
 	}
 
+	// @OnClick(R.id.llMyCollect)
+	// public void gotoCollection(View v) {
+	// startActivity(new Intent(StoreMyHomeActivity.this,
+	// GoodsCollectionActivity.class));
+	// }
+
+	@Optional@OnClick({ R.id.llMyCollect, R.id.llAddress })
+	public void gotoCollection(View v) {
+		switch (v.getId()) {
+		case R.id.llMyCollect:
+			startActivity(new Intent(StoreMyHomeActivity.this,
+					GoodsCollectionActivity.class));
+			break;
+		case R.id.llAddress:
+			startActivity(new Intent(StoreMyHomeActivity.this,
+					LocateActivity.class));
+			break;
+		}
+	}
+
 	private void initClick() {
 
-		vCollect.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// 收藏的
+		// vCollect.setOnClickListener(new OnClickListener() {
+		// @Override
+		// public void onClick(View v) {
+		// // 收藏的
+		//
+		// startActivity(new
+		// Intent(StoreMyHomeActivity.this,GoodsCollectionActivity.class));
+		// }
+		// });
 
-				 startActivity(new
-				 Intent(StoreMyHomeActivity.this,GoodsCollectionActivity.class));
-			}
-		});
-
-		vAddress.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-				 startActivity(new
-				 Intent(StoreMyHomeActivity.this,LocateActivity.class));
-			}
-		});
+		// vAddress.setOnClickListener(new OnClickListener() {
+		// @Override
+		// public void onClick(View v) {
+		//
+		// startActivity(new Intent(StoreMyHomeActivity.this,
+		// LocateActivity.class));
+		// }
+		// });
 
 		vGWC.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-				 startActivity(new
-				 Intent(StoreMyHomeActivity.this,CartActivity.class));
+				startActivity(new Intent(StoreMyHomeActivity.this,
+						CartActivity.class));
 			}
 		});
 
@@ -122,8 +144,8 @@ public class StoreMyHomeActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 
-				 startActivity(new
-				 Intent(StoreMyHomeActivity.this,ViewOrderActivity.class));
+				startActivity(new Intent(StoreMyHomeActivity.this,
+						ViewOrderActivity.class));
 			}
 		});
 		ivHome.setOnClickListener(new OnClickListener() {
