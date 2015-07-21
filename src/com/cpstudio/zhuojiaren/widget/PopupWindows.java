@@ -305,7 +305,7 @@ public class PopupWindows {
 		});
 		setPopupWindowParams(grouthPop);
 		grouthPop.showAtLocation(parent,
-				Gravity.CENTER_HORIZONTAL, 0, margin);
+				Gravity.CENTER, 0, margin);
 		
 		return grouthPop;
 	}

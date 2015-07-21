@@ -30,7 +30,7 @@
                 android:id="@+id/ig_browse_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ico_syzy"
+                android:drawableLeft="@drawable/jjhow"
                 android:drawablePadding="5dp"
                 />
              <TextView 
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:drawableLeft="@drawable/ico_syzy"
+                android:drawableLeft="@drawable/jjclock"
                 android:drawablePadding="5dp"
                 />
         </LinearLayout>

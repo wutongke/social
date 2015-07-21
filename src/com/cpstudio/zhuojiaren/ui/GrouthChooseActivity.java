@@ -43,7 +43,7 @@ public class GrouthChooseActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				new PopupWindows(GrouthChooseActivity.this).showGrouthType(ll, 30);
+				new PopupWindows(GrouthChooseActivity.this).showGrouthType(ll, 0);
 			}
 		});
 	}

@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 
 public class AudioDetailActivity extends Activity {
@@ -36,6 +37,8 @@ public class AudioDetailActivity extends Activity {
 	SeekBar seekBar;
 	@InjectView(R.id.aad_share_inspiration)
 	EditText shareInspriration;
+	@InjectView(R.id.aad_adv)
+	ImageView advertisementIamge;
 	MediaPlayer mediaPlayer;
 	RecordVO record;
 	private volatile boolean isPlaying = false;
@@ -47,16 +50,20 @@ public class AudioDetailActivity extends Activity {
 		setContentView(R.layout.activity_audio_detail);
 		ButterKnife.inject(this);
 		mId = getIntent().getStringExtra("id");
+		playImage.setBackgroundResource(R.drawable.jjplay);
+		playImage2.setBackgroundResource(R.drawable.jjplay3);
 		loadData();
 		initOnclick();
 	}
+
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		if(mediaPlayer!=null)
+		if (mediaPlayer != null)
 			stop();
 	}
+
 	private void initOnclick() {
 		// TODO Auto-generated method stub
 		playImage.setOnClickListener(new OnClickListener() {
@@ -69,15 +76,13 @@ public class AudioDetailActivity extends Activity {
 						// 暂停
 						if (mediaPlayer.isPlaying()) {
 							mediaPlayer.pause();
-							playImage
-									.setBackgroundResource(R.drawable.audio_start);
+							playImage.setBackgroundResource(R.drawable.jjplay);
 							playImage2
-									.setBackgroundResource(R.drawable.ico_start_play);
+									.setBackgroundResource(R.drawable.jjplay3);
 						} else {
 							// 继续
 							mediaPlayer.start();
-							playImage
-									.setBackgroundResource(R.drawable.audio_stop);
+							playImage.setBackgroundResource(R.drawable.jjstop);
 							playImage2
 									.setBackgroundResource(R.drawable.ico_voice);
 						}
@@ -86,7 +91,7 @@ public class AudioDetailActivity extends Activity {
 
 					else {
 						mediaPlayer = new MediaPlayer();
-						playImage.setBackgroundResource(R.drawable.audio_stop);
+						playImage.setBackgroundResource(R.drawable.jjstop);
 						playImage2.setBackgroundResource(R.drawable.ico_voice);
 						isPlaying = true;
 						// give data to mediaPlayer
@@ -130,6 +135,9 @@ public class AudioDetailActivity extends Activity {
 
 	private void loadData() {
 		// TODO Auto-generated method stub
+		new LoadImage().beginLoad(
+				"http://pic6.nipic.com/20100404/4635053_162100094928_2.jpg",
+				advertisementIamge);
 		RecordVO g = new RecordVO();
 		g.setName("张来才");
 		g.setLength("12:12:13");

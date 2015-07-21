@@ -845,7 +845,6 @@
     <string name="take_money">提现</string>
     <string name="my_wallet">我的钱包</string>
     <string name="my_zhuo_money">我的倬币</string>
-    <string name="add_bank_card">添加银行卡</string>
     <string name="income_expenditure_details">收支明细</string>
     <string name="income_money">收入金额</string>
     <string name="expenditure_money">出帐金额</string>
@@ -1102,8 +1101,10 @@
     <string name="delete_collection_goods">确定删除您收藏的宝贝？</string>
     <string name="tele_goods">电子产品</string>
     <string name="cosmetic">化妆品</string>
-<string name="error_null">TextView内容为空</string>
+    <string name="error_null">TextView内容为空</string>
     <string name="title_activity_vedio">VedioActivity</string>
     <string name="grouth_online_detail">成长在线详情</string>
-<string name="text_about_zm">倬脉全称为：北京倬家文化...</string>
+    <string name="text_about_zm">倬脉全称为：北京倬家文化...</string>
+    <string name="add_bank_card">+&#160;&#160;添加银行卡</string>
+
 </resources>
