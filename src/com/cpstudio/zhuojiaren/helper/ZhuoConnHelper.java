@@ -42,11 +42,17 @@ public class ZhuoConnHelper {
 
 	UploadManager uploadManager;
 
+	
+	String session;
+	String uploadFileToken;
+	String imToken;
 	private void init(Context context) {
 		ResHelper resHelper = ResHelper.getInstance(context);
 		this.userid = resHelper.getUserid();
 		this.password = resHelper.getPassword();
-	
+		this.session=resHelper.getSessionForAPP();
+		this.imToken=resHelper.getImTokenForRongyun();
+		this.uploadFileToken=resHelper.getUpLoadTokenForQiniu();
 	}
 
 	public static ZhuoConnHelper getInstance(Context context) {

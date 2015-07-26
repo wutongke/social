@@ -25,7 +25,7 @@ public class ResHelper {
 	
 	//add by lz20150725
 	private String upLoadTokenForQiniu;//上传文件token,七牛
-	private String session;
+	private String sessionForAPP;
 	private String imTokenForRongyun;//聊天与融云服务器的token
 	
 	/**
@@ -78,9 +78,21 @@ public class ResHelper {
 		mPu = new PreferenceUtil(context, "cpzhuojiaren");
 		userid = getLoginName();
 		password = getLoginPwd();
-		session=getSession();
+		sessionForAPP=getSession();
 		upLoadTokenForQiniu=getUploadToken();
 		imTokenForRongyun=getImToken();		
+	}
+
+	public String getUpLoadTokenForQiniu() {
+		return upLoadTokenForQiniu;
+	}
+
+	public String getSessionForAPP() {
+		return sessionForAPP;
+	}
+
+	public String getImTokenForRongyun() {
+		return imTokenForRongyun;
 	}
 
 	public static ResHelper getInstance(Context context) {
