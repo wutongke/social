@@ -1,4 +1,15 @@
 package com.cpstudio.zhuojiaren.model;
+
+import java.io.File;
+
+import org.json.JSONObject;
+
+import android.util.Log;
+
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UploadManager;
+
 /**
  * ÆÀÂÛ
  * @author lef
