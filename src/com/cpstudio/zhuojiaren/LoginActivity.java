@@ -4,15 +4,6 @@ import java.util.HashMap;
 
 import org.androidpn.client.ServiceManager;
 
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.ui.ForgetPasswordActivity;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.widget.PopupWindows;
-import com.cpstudio.zhuojiaren.R;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -29,6 +20,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
+import com.cpstudio.zhuojiaren.helper.ResHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.LoginRes;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.ui.ForgetPasswordActivity;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
 public class LoginActivity extends Activity {
 
@@ -56,17 +57,18 @@ public class LoginActivity extends Activity {
 		mUidView = (EditText) findViewById(R.id.uid);
 		mUidView.setText(mUid);
 		mPwdView = (EditText) findViewById(R.id.password);
-		mFrogetPasswordView = (TextView)findViewById(R.id.froget_password);
+		mFrogetPasswordView = (TextView) findViewById(R.id.froget_password);
 		initClick();
 	}
 
 	private void initClick() {
 		mFrogetPasswordView.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent(LoginActivity.this,ForgetPasswordActivity.class));
+				startActivity(new Intent(LoginActivity.this,
+						ForgetPasswordActivity.class));
 			}
 		});
 		findViewById(R.id.rootLayout).setOnClickListener(new OnClickListener() {
@@ -122,15 +124,33 @@ public class LoginActivity extends Activity {
 			case MsgTagVO.PUB_INFO:
 				String rs = (String) msg.obj;
 				if (JsonHandler.checkResult(rs, getApplicationContext())) {
+					// 获取session
+					LoginRes res = JsonHandler_Lef.parseLoginRes(
+							LoginActivity.this, JsonHandler.parseResult(rs)
+									.getData());
 					boolean first = mResHelper.getFirstUse();
 					HashMap<String, Object> map = new HashMap<String, Object>();
 					map.put(ResHelper.USER_ID, mUid);
 					map.put(ResHelper.PASSWORD, mPassword);
 					map.put(ResHelper.LOGIN_STATE, 1);
+					map.put(ResHelper.SESSION,res.getSession());
+					map.put(ResHelper.UPLIOAD_TOKEN, res.getQiniuToken());
+					map.put(ResHelper.IM_TOKEN, res.getRongyunToken());
+					//保存到本地
 					mResHelper.setPreference(map);
+					//保存到两个单例中
 					mResHelper.setPassword(mPassword);
-					connHelper.setPassword(mPassword);
+					mResHelper.setSessionForAPP(res.getSession());
+					mResHelper.setUpLoadTokenForQiniu(res.getQiniuToken());
+					mResHelper.setImTokenForRongyun(res.getRongyunToken());
 					mResHelper.setUserid(mUid);
+					
+					connHelper.setPassword(mPassword);
+					connHelper.setSession(res.getSession());
+					connHelper.setUploadFileToken(res.getQiniuToken());
+					connHelper.setImToken(res.getRongyunToken());
+					mResHelper.setUserid(mUid);
+					
 					if (mPwdView.getText().toString().equals("000000") && first) {
 						OnClickListener ok = new OnClickListener() {
 							@Override

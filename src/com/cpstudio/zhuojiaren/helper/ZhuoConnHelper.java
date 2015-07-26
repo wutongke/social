@@ -896,4 +896,28 @@ public class ZhuoConnHelper {
 		}).start();
 
 	}
+
+	public String getSession() {
+		return session;
+	}
+
+	public String getUploadFileToken() {
+		return uploadFileToken;
+	}
+
+	public String getImToken() {
+		return imToken;
+	}
+
+	public void setSession(String session) {
+		this.session = session;
+	}
+
+	public void setUploadFileToken(String uploadFileToken) {
+		this.uploadFileToken = uploadFileToken;
+	}
+
+	public void setImToken(String imToken) {
+		this.imToken = imToken;
+	}
 }
