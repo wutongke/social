@@ -106,7 +106,7 @@ public class VedioActivity extends BaseActivity {
 			init = true;
 			length.setText(Util.getTimeString(vedioPlayer.getDuration()));
 			time.setText(Util.getTimeString(vedioPlayer.getCurrentPosition()));
-
+			startIV.setBackgroundResource(R.drawable.jjst);
 			// ≥ı ºªØseekbar
 			vedioBar.setMax(vedioPlayer.getDuration());
 			vedioBar.setProgress(vedioPlayer.getCurrentPosition());
@@ -219,15 +219,15 @@ public class VedioActivity extends BaseActivity {
 									uiHandler.post(mRunnable);
 								}
 							});
-					startIV.setBackgroundResource(R.drawable.zuncollect2);
+					startIV.setBackgroundResource(R.drawable.jjst);
 					return;
 				}
 				if (vedioPlayer.isPlaying()) {
 					vedioPlayer.pause();
-					startIV.setBackgroundResource(R.drawable.zuncollect2);
+					startIV.setBackgroundResource(R.drawable.jjst);
 				} else {
 					vedioPlayer.start();
-					startIV.setBackgroundResource(R.drawable.zcollect2);
+					startIV.setBackgroundResource(R.drawable.jjpl);
 				}
 			}
 		});

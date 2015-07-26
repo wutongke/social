@@ -18,10 +18,15 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
-
+import android.widget.RelativeLayout;
+/**
+ * 视频类型选择
+ * @author lef
+ *
+ */
 public class GrouthChooseActivity extends BaseActivity {
 	@InjectView (R.id.layout)
-	LinearLayout ll;
+	RelativeLayout ll;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

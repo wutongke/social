@@ -30,7 +30,11 @@ import com.cpstudio.zhuojiaren.widget.OverScrollableScrollView;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
 import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
-
+/***
+ * ึฺณ๏ฯ๊ว้
+ * @author lef
+ *
+ */
 public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 	@InjectView(R.id.acfd_state)
 	TextView state;

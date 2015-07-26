@@ -19,7 +19,11 @@ import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
-
+/**
+ * 消息提示设置
+ * @author lef
+ *
+ */
 public class MessageRemindActivity extends BaseActivity {
 	@InjectView(R.id.amr_message_remind)
 	ImageView messageRemind;

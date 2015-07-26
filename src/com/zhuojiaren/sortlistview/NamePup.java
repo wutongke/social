@@ -43,7 +43,7 @@ public class NamePup {
 
 	public  void showPup() {
 		// TODO Auto-generated method stub
-		showBreakQuanzi(view);
+		showView(view);
 	}
 
 	ListView sortListView;
@@ -62,7 +62,7 @@ public class NamePup {
 	 */
 	PinyinComparator pinyinComparator;
 
-	public PopupWindow showBreakQuanzi(View parent) {
+	public PopupWindow showView(View parent) {
 		if (null != parent) {
 			InputMethodManager imm = (InputMethodManager) mContext
 					.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -72,8 +72,8 @@ public class NamePup {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View viewBreakQuanzi = layoutInflater.inflate(R.layout.pup_name_list,
 				null);
-		PopupWindow breakQaunziPopupWindow = new PopupWindow(viewBreakQuanzi,
-				LayoutParams.MATCH_PARENT, 650);
+		PopupWindow popupWindow = new PopupWindow(viewBreakQuanzi,
+				LayoutParams.MATCH_PARENT, (int) (view.getHeight()*0.6));
 
 		
 
@@ -147,10 +147,10 @@ public class NamePup {
 			}
 		});
 
-		setPopupWindowParams(breakQaunziPopupWindow);
-		breakQaunziPopupWindow.showAtLocation(parent,
-				Gravity.BOTTOM, 0, 200);
-		return breakQaunziPopupWindow;
+		setPopupWindowParams(popupWindow);
+		popupWindow.showAtLocation(parent,
+				Gravity.BOTTOM, 0, 0);
+		return popupWindow;
 	}
 
 	private List<SortModel> filledData(String[] date) {

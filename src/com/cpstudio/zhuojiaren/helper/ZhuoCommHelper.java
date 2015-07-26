@@ -1,4 +1,3 @@
-
 package com.cpstudio.zhuojiaren.helper;
 
 import java.util.HashMap;
@@ -9,21 +8,20 @@ import android.content.Context;
 import com.cpstudio.zhuojiaren.R;
 
 public class ZhuoCommHelper {
-	
-	
-	
+
 	private final static String SERVER_PREFIX = "http://";
-	private final static String SERVER_IP = "115.29.145.63";//"115.29.145.63";//  "zjr.ci77.com";//
-															
+	private final static String SERVER_IP = "115.29.145.63";// "115.29.145.63";//
+															// "zjr.ci77.com";//
+
 	private final static String SERVER_PORT = ":80";
 	private final static String SERVER_APP = "/ZhuoFamily";
 	public final static String SERVER = SERVER_PREFIX + SERVER_IP + SERVER_PORT
 			+ SERVER_APP;
-	
-	//lz
-		private final static String SERVICE_HOT_WORDS = "/hot_words";
-		private final static String SERVICE_RESOURCE_GONGXU_DETAIL = "/resource_gongxu_detail";
-		
+
+	// lz
+	private final static String SERVICE_HOT_WORDS = "/hot_words";
+	private final static String SERVICE_RESOURCE_GONGXU_DETAIL = "/resource_gongxu_detail";
+
 	private final static String SERVICE_LOGIN = "/login";
 	private final static String SERVICE_MODIFYPWD = "/modifypwd";
 	private final static String SERVICE_MSGLIST = "/msglist";
@@ -100,15 +98,15 @@ public class ZhuoCommHelper {
 	private final static String SERVICE_TEACHER = "/teacher";
 	private final static String SERVICE_CMT_LIKE = "/cmt_like";
 	private final static String SERVICE_SHARECLOUD = "/sharecloud";
-	
+
 	public static String getUrlShareCloud() {
 		return SERVER + SERVICE_SHARECLOUD;
 	}
-	
+
 	public static String getUrlCmtLike() {
 		return SERVER + SERVICE_CMT_LIKE;
 	}
-	
+
 	public static String getUrlTeacher() {
 		return SERVER + SERVICE_TEACHER;
 	}
@@ -405,15 +403,15 @@ public class ZhuoCommHelper {
 		return SERVER + SERVICE_ANDROIDNAME;
 	}
 
-	
-	//lz
+	// lz
 	public static String getHotWords() {
 		return SERVER + SERVICE_HOT_WORDS;
 	}
+
 	public static String getResourceGongxuDetail() {
 		return SERVER + SERVICE_RESOURCE_GONGXU_DETAIL;
 	}
-	
+
 	public static String getYearFromTime(String time) {
 		try {
 			time = time.trim();
@@ -474,15 +472,15 @@ public class ZhuoCommHelper {
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (type != null && !type.equals("")) {
 			if (type.equals(context.getString(R.string.type_xu_type))) {
-				category = ZhuoCommHelper.transferMsgCategoryToString(
-						category, context);
+				category = ZhuoCommHelper.transferMsgCategoryToString(category,
+						context);
 				map.put("ico", R.drawable.ico_xu);
 				map.put("category", "¡¡¡¾" + category + "¡¿");
 				map.put("title", title + "//");
 				map.put("content", content);
 			} else if (type.equals(context.getString(R.string.type_gong_type))) {
-				category = ZhuoCommHelper.transferMsgCategoryToString(
-						category, context);
+				category = ZhuoCommHelper.transferMsgCategoryToString(category,
+						context);
 				map.put("ico", R.drawable.ico_gong);
 				map.put("category", "¡¡¡¾" + category + "¡¿");
 				map.put("title", title + "//");
