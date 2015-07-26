@@ -45,7 +45,7 @@ import com.utils.ImageRectUtil;
 /**
  * 
  * 
- * @author lef
+ * @author lz
  * 
  */
 public class QuanziTopicListAdapter extends BaseAdapter {

@@ -137,40 +137,32 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawablePadding="5dp"
-                android:drawableTop="@drawable/button_fabu"
-                android:text="@string/label_active_jiaren"
-                android:textColor="#636161" />
+                android:drawableTop="@drawable/jiarenactive_bg"
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/textViewActiveCard"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawablePadding="5dp"
-                android:drawableTop="@drawable/button_gongxu"
-                android:text="@string/label_active_card"
-                android:textColor="#636161" />
+                android:drawableTop="@drawable/card_bg"
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/textViewActiveQuanzi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawablePadding="5dp"
-                android:drawableTop="@drawable/button_zenghui"
-                android:text="@string/label_active_quanzi"
-                android:textColor="#636161" />
+                android:drawableTop="@drawable/quanziactive_bg"
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/textViewActiveZhuomai"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawablePadding="5dp"
-                android:drawableTop="@drawable/button_zenghui"
-                android:text="@string/label_active_zhuomai"
-                android:textColor="#636161" />
+                android:drawableTop="@drawable/zhuomai_bg"
+                android:gravity="center" />
         </LinearLayout>
     </LinearLayout>
 

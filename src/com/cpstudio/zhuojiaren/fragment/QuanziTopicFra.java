@@ -32,6 +32,7 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
@@ -47,8 +48,9 @@ public class QuanziTopicFra extends Fragment {
 	private QuanziTopicListAdapter mAdapter;
 	// private ArrayList<UserVO> mList = new ArrayList<UserVO>();
 	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
-	// ÐèÒª¸Ä
-	// private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
+//	private ArrayList<QuanTopicVO> mList = new ArrayList<QuanTopicVO>();
+	
+	
 	private ZhuoConnHelper mConnHelper = null;
 	private int mPage = 1;
 	private int mType = 6;

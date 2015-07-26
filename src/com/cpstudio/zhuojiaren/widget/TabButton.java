@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.cpstudio.zhuojiaren.R;
 
 public class TabButton extends HorizontalScrollView {
-
+// HorizontalScrollView是一个 FrameLayout   ， 这意味着你只能在它下面放置一个子控件 
 	private static final int DEF_LINE_COLOR = 0x6600000;
 	private static final int DEF_SLIDER_COLOR = R.color.black;
 	private static final int DEF_TEXT_COLOR = R.color.graywhite;
@@ -72,6 +72,7 @@ public class TabButton extends HorizontalScrollView {
 		super(context);
 		init(context, null);
 		this.mContext = context;
+	
 	}
 
 	public TabButton(Context context, AttributeSet attrs) {
@@ -135,6 +136,7 @@ public class TabButton extends HorizontalScrollView {
 				DEF_LINE_COLOR);
 		int sliderColor = tArray.getColor(R.styleable.TabButton_sliderColor,
 				R.color.graywhitem);
+		//变为标准尺寸
 		float defBottonLineSize = TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, DEF_BOTTON_LINE_SIZE,
 				getResources().getDisplayMetrics());

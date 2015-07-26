@@ -21,6 +21,13 @@ public class ResHelper {
 	private String SDPATH;
 	private Context mContext;
 	private float times = 1;
+	
+	
+	//add by lz20150725
+	private String upLoadTokenForQiniu;//上传文件token,七牛
+	private String session;
+	private String imTokenForRongyun;//聊天与融云服务器的token
+	
 	/**
 	 * 当前正在聊天的对象
 	 */
@@ -59,12 +66,21 @@ public class ResHelper {
 	public final static String HEAD_PATH = "headPath";
 	public final static String DEFAULT_HEAD_PATH = "zhuojiaren/userhead/";
 
+	//add by lz
+	
+	public final static String SESSION = "zhuojiaren/session/";
+	public final static String UPLIOAD_TOKEN = "zhuojiaren/uploadtoken/";
+	public final static String IM_TOKEN="zhuojiaren/imtoken/";
+	
 	private ResHelper(Context context) {
 		mContext = context;
 		SDPATH = Environment.getExternalStorageDirectory() + "/";
 		mPu = new PreferenceUtil(context, "cpzhuojiaren");
 		userid = getLoginName();
 		password = getLoginPwd();
+		session=getSession();
+		upLoadTokenForQiniu=getUploadToken();
+		imTokenForRongyun=getImToken();		
 	}
 
 	public static ResHelper getInstance(Context context) {
@@ -253,4 +269,16 @@ public class ResHelper {
 	public void setPreference(HashMap<String, Object> hashMap) {
 		mPu.setPreference(hashMap);
 	}
+	
+	//add by lz 20150725
+	private String getSession() {
+		return mPu.getPreference(SESSION, "");
+	}
+	private String getUploadToken() {
+		return mPu.getPreference(UPLIOAD_TOKEN, "");
+	}
+	private String getImToken() {
+		return mPu.getPreference(IM_TOKEN, "");
+	}
+	
 }

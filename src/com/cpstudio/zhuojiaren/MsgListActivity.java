@@ -161,7 +161,6 @@ public class MsgListActivity extends Activity implements OnItemClickListener {
 				});
 
 		final EditText searchView = (EditText) findViewById(R.id.editTextSearch);
-		final View delSearch = findViewById(R.id.imageViewDelSearch);
 		searchView.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override
@@ -174,41 +173,6 @@ public class MsgListActivity extends Activity implements OnItemClickListener {
 					loadData();
 				}
 				return false;
-			}
-		});
-		searchView.addTextChangedListener(new TextWatcher() {
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				if (searchView.getText().toString().equals("")) {
-					delSearch.setVisibility(View.GONE);
-				} else {
-					delSearch.setVisibility(View.VISIBLE);
-				}
-			}
-		});
-
-		delSearch.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				searchView.setText("");
-				if (mSearchKey != null && !mSearchKey.equals("")) {
-					mSearchKey = "";
-					loadData();
-				}
 			}
 		});
 	}

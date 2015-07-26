@@ -22,18 +22,15 @@
             android:text="@string/title_active"
             android:textColor="#ffffff"
             android:textSize="20sp" />
-        
+
         <Button
             android:id="@+id/buttonViewPub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/button_top_bg_menu"
-            android:text="@string/label_publish"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
+            android:layout_marginRight="10dp"
+            android:background="@drawable/iwrite" />
     </RelativeLayout>
 
     <LinearLayout
@@ -41,11 +38,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-        
+
         <com.cpstudio.zhuojiaren.widget.PullDownView
             android:id="@+id/pull_down_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
+
 </LinearLayout>

@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,8 +18,14 @@ import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper;
+import android.util.Log;
+
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper.FinishCallback;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UpProgressHandler;
+import com.qiniu.android.storage.UploadManager;
+import com.qiniu.android.storage.UploadOptions;
 
 /**
  * 网络相关
@@ -33,10 +40,13 @@ public class ZhuoConnHelper {
 	// 标识每一次请求，请求开始后不重复请求
 	private Set<String> mStartedTag = new HashSet<String>();
 
+	UploadManager uploadManager;
+
 	private void init(Context context) {
 		ResHelper resHelper = ResHelper.getInstance(context);
 		this.userid = resHelper.getUserid();
 		this.password = resHelper.getPassword();
+	
 	}
 
 	public static ZhuoConnHelper getInstance(Context context) {
@@ -122,8 +132,8 @@ public class ZhuoConnHelper {
 			String data) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("pubnum", "5"));
-		return doPostByPost(nameValuePairs, url, handler, tag, activity, url, cancelable,
-				cancel, data);
+		return doPostByPost(nameValuePairs, url, handler, tag, activity, url,
+				cancelable, cancel, data);
 	}
 
 	public boolean getFromServer(String url, FinishCallback callback) {
@@ -711,14 +721,27 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-			AsyncConnectHelper conn = new AsyncConnectHelper(files,
-					nameValuePairs, addUserInfo(url), true, getFinishCallback(
-							handler, handlerTag, tag, data), activity);
-			conn.setCancelable(cancelable);
-			if (cancelable) {
-				conn.setCancel(getCancelListener(cancel, tag, conn));
-			}
-			conn.execute();
+			// 文件上传以七牛云的方式上传
+			// AsyncConnectHelper conn = new AsyncConnectHelper(files,
+			// nameValuePairs, addUserInfo(url), true, getFinishCallback(
+			// handler, handlerTag, tag, data), activity);
+			// conn.setCancelable(cancelable);
+			// if (cancelable) {
+			// conn.setCancel(getCancelListener(cancel, tag, conn));
+			// }
+			// conn.execute();
+
+			// AsyncConnectHelper conn = new AsyncConnectHelper("",
+			// nameValuePairs, addUserInfo(url), true, getFinishCallback(
+			// handler, handlerTag, tag, data), activity);
+			// conn.setCancelable(cancelable);
+			// if (cancelable) {
+			// conn.setCancel(getCancelListener(cancel, tag, conn));
+			// }
+			// conn.execute();
+
+			qiniuUpLoadFiles(files);
+
 			return true;
 		}
 		return false;
@@ -832,9 +855,39 @@ public class ZhuoConnHelper {
 			List<NameValuePair> nameValuePairs) {
 		nameValuePairs.add(new BasicNameValuePair("session",
 				"e72d664f93de40e7aa08b28f15444f5b"));
-		nameValuePairs.add(new BasicNameValuePair("apptype",
-				"0"));
+		nameValuePairs.add(new BasicNameValuePair("apptype", "0"));
 		return nameValuePairs;
 	}
 
+	// 七牛文件上传
+	private void qiniuUpLoadFiles(final ArrayList<String> files) {
+		final String token = "gqyn9mD9OEVHoayK16ivmeCMcUgLNxVnxIjcrGCm:xFUsFZVKJLh7YnZXI5fTLf1-rNU=:eyJzY29wZSI6InpodW90ZXN0IiwiZGVhZGxpbmUiOjE0Mzc4Mjg3NjN9";
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				if (uploadManager == null)
+					uploadManager = new UploadManager();
+				for (String path : files) {
+					uploadManager.put(path, null, token,
+							new UpCompletionHandler() {
+
+								@Override
+								public void complete(String key,
+										ResponseInfo arg1, JSONObject arg2) {
+									// TODO Auto-generated method stub
+									Log.i("qiniu", key + ": " + arg2);
+								}
+
+							}, new UploadOptions(null, null, false,
+									new UpProgressHandler() {
+										public void progress(String key,
+												double percent) {
+										}
+									}, null));
+				}
+			}
+		}).start();
+
+	}
 }
