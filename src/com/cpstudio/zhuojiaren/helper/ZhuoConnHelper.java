@@ -555,9 +555,9 @@ public class ZhuoConnHelper {
 	/**
 	 * 获取验证码
 	 * 
-	 * @param code
+	 * @param code 电话号
 	 * @param handler
-	 * @param handlerTag
+	 * @param handlerTag 回调时候的msg.what
 	 * @param activity
 	 * @param cancelalbe
 	 * @return
