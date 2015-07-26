@@ -8,7 +8,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Build;
-
+/**
+ * 双缓冲，如果数量过多，则加入到软引用中
+ * @author lef
+ *
+ */
 public class ImageMemoryCache {
 	private static final int HARD_CACHE_CAPACITY = 30;
 	private HashMap<String, Bitmap> mHardBitmapCache;
@@ -44,7 +48,7 @@ public class ImageMemoryCache {
 	 */
 	public Bitmap getBitmapFromCache(String url) {
 		synchronized (mHardBitmapCache) {
-			final Bitmap bitmap = mHardBitmapCache.get(url);//final
+			final Bitmap bitmap = mHardBitmapCache.get(url);// final
 			if (bitmap != null) {
 				mHardBitmapCache.remove(url);
 				mHardBitmapCache.put(url, bitmap);
@@ -53,7 +57,7 @@ public class ImageMemoryCache {
 		}
 		SoftReference<Bitmap> bitmapReference = mSoftBitmapCache.get(url);
 		if (bitmapReference != null) {
-			final Bitmap bitmap = bitmapReference.get();//final
+			final Bitmap bitmap = bitmapReference.get();// final
 			if (bitmap != null) {
 				mHardBitmapCache.put(url, bitmap);
 				mSoftBitmapCache.remove(url);

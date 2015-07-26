@@ -17,8 +17,12 @@ import android.util.Log;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 
-public class ImageLoader
-{
+/**
+ * 加载本地图片，使用android自带的lru算法
+ * @author lef
+ * 
+ */
+public class ImageLoader {
 	/**
 	 * 图片缓存的核心类
 	 */
@@ -62,7 +66,6 @@ public class ImageLoader
 	 * 引入一个值为1的信号量，由于线程池内部也有一个阻塞线程，防止加入任务的速度过快，使LIFO效果不明显
 	 */
 	private volatile Semaphore mPoolSemaphore;
-	
 
 	private static ImageLoader mInstance;
 
@@ -72,26 +75,20 @@ public class ImageLoader
 	 * @author zhy
 	 * 
 	 */
-	public enum Type
-	{
+	public enum Type {
 		FIFO, LIFO
 	}
-
 
 	/**
 	 * 单例获得该实例对象
 	 * 
 	 * @return
 	 */
-	public static ImageLoader getInstance()
-	{
+	public static ImageLoader getInstance() {
 
-		if (mInstance == null)
-		{
-			synchronized (ImageLoader.class)
-			{
-				if (mInstance == null)
-				{
+		if (mInstance == null) {
+			synchronized (ImageLoader.class) {
+				if (mInstance == null) {
 					mInstance = new ImageLoader(1, Type.LIFO);
 				}
 			}
@@ -99,40 +96,30 @@ public class ImageLoader
 		return mInstance;
 	}
 
-	private ImageLoader(int threadCount, Type type)
-	{
+	private ImageLoader(int threadCount, Type type) {
 		init(threadCount, type);
 	}
 
-	private void init(int threadCount, Type type)
-	{
+	private void init(int threadCount, Type type) {
 		// loop thread
-		mPoolThread = new Thread()
-		{
+		mPoolThread = new Thread() {
 			@Override
-			public void run()
-			{
-				try
-				{
+			public void run() {
+				try {
 					// 请求一个信号量
 					mSemaphore.acquire();
-				} catch (InterruptedException e)
-				{
+				} catch (InterruptedException e) {
 				}
 				Looper.prepare();
 
-				mPoolThreadHander = new Handler()
-				{
+				mPoolThreadHander = new Handler() {
 					@Override
-					public void handleMessage(Message msg)
-					{
+					public void handleMessage(Message msg) {
 						mThreadPool.execute(getTask());
-					
-						try
-						{
+
+						try {
 							mPoolSemaphore.acquire();
-						} catch (InterruptedException e)
-						{
+						} catch (InterruptedException e) {
 						}
 					}
 				};
@@ -147,11 +134,9 @@ public class ImageLoader
 		// 获取应用程序最大可用内存
 		int maxMemory = (int) Runtime.getRuntime().maxMemory();
 		int cacheSize = maxMemory / 8;
-		mLruCache = new LruCache<String, Bitmap>(cacheSize)
-		{
+		mLruCache = new LruCache<String, Bitmap>(cacheSize) {
 			@Override
-			protected int sizeOf(String key, Bitmap value)
-			{
+			protected int sizeOf(String key, Bitmap value) {
 				return value.getRowBytes() * value.getHeight();
 			};
 		};
@@ -169,27 +154,22 @@ public class ImageLoader
 	 * @param path
 	 * @param imageView
 	 */
-	public void loadImage(final String path, final ImageView imageView)
-	{
-		//防止未初始化
-		if(init<1)
+	public void loadImage(final String path, final ImageView imageView) {
+		// 防止未初始化
+		if (init < 1)
 			return;
 		// set tag
 		imageView.setTag(path);
 		// UI线程
-		if (mHandler == null)
-		{
-			mHandler = new Handler()
-			{
+		if (mHandler == null) {
+			mHandler = new Handler() {
 				@Override
-				public void handleMessage(Message msg)
-				{
+				public void handleMessage(Message msg) {
 					ImgBeanHolder holder = (ImgBeanHolder) msg.obj;
 					ImageView imageView = holder.imageView;
 					Bitmap bm = holder.bitmap;
 					String path = holder.path;
-					if (imageView.getTag().toString().equals(path))
-					{
+					if (imageView.getTag().toString().equals(path)) {
 						imageView.setImageBitmap(bm);
 					}
 				}
@@ -197,8 +177,7 @@ public class ImageLoader
 		}
 
 		Bitmap bm = getBitmapFromLruCache(path);
-		if (bm != null)
-		{
+		if (bm != null) {
 			ImgBeanHolder holder = new ImgBeanHolder();
 			holder.bitmap = bm;
 			holder.imageView = imageView;
@@ -206,13 +185,10 @@ public class ImageLoader
 			Message message = Message.obtain();
 			message.obj = holder;
 			mHandler.sendMessage(message);
-		} else
-		{
-			addTask(new Runnable()
-			{
+		} else {
+			addTask(new Runnable() {
 				@Override
-				public void run()
-				{
+				public void run() {
 
 					ImageSize imageSize = getImageViewWidth(imageView);
 
@@ -236,22 +212,19 @@ public class ImageLoader
 		}
 
 	}
-	
+
 	/**
 	 * 添加一个任务
 	 * 
 	 * @param runnable
 	 */
-	private synchronized void addTask(Runnable runnable)
-	{
-		try
-		{
+	private synchronized void addTask(Runnable runnable) {
+		try {
 			// 请求信号量，防止mPoolThreadHander为null
-			if (mPoolThreadHander == null){
+			if (mPoolThreadHander == null) {
 				mSemaphore.acquire();
 			}
-		} catch (InterruptedException e)
-		{
+		} catch (InterruptedException e) {
 			Log.i("DEBUG", "mPoolThreadHander");
 		}
 		mPoolThreadHander.sendEmptyMessage(0x110);
@@ -263,32 +236,25 @@ public class ImageLoader
 	 * 
 	 * @return
 	 */
-	private synchronized Runnable getTask()
-	{
-		if (mType == Type.FIFO)
-		{
+	private synchronized Runnable getTask() {
+		if (mType == Type.FIFO) {
 			return mTasks.removeFirst();
-		} else if (mType == Type.LIFO)
-		{
+		} else if (mType == Type.LIFO) {
 			return mTasks.removeLast();
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 单例获得该实例对象
 	 * 
 	 * @return
 	 */
-	public static ImageLoader getInstance(int threadCount, Type type)
-	{
+	public static ImageLoader getInstance(int threadCount, Type type) {
 
-		if (mInstance == null)
-		{
-			synchronized (ImageLoader.class)
-			{
-				if (mInstance == null)
-				{
+		if (mInstance == null) {
+			synchronized (ImageLoader.class) {
+				if (mInstance == null) {
 					mInstance = new ImageLoader(threadCount, type);
 				}
 			}
@@ -296,15 +262,13 @@ public class ImageLoader
 		return mInstance;
 	}
 
-
 	/**
 	 * 根据ImageView获得适当的压缩的宽和高
 	 * 
 	 * @param imageView
 	 * @return
 	 */
-	private ImageSize getImageViewWidth(ImageView imageView)
-	{
+	private ImageSize getImageViewWidth(ImageView imageView) {
 		ImageSize imageSize = new ImageSize();
 		final DisplayMetrics displayMetrics = imageView.getContext()
 				.getResources().getDisplayMetrics();
@@ -339,8 +303,7 @@ public class ImageLoader
 	/**
 	 * 从LruCache中获取一张图片，如果不存在就返回null。
 	 */
-	private Bitmap getBitmapFromLruCache(String key)
-	{
+	private Bitmap getBitmapFromLruCache(String key) {
 		return mLruCache.get(key);
 	}
 
@@ -350,10 +313,8 @@ public class ImageLoader
 	 * @param key
 	 * @param bitmap
 	 */
-	private void addBitmapToLruCache(String key, Bitmap bitmap)
-	{
-		if (getBitmapFromLruCache(key) == null)
-		{
+	private void addBitmapToLruCache(String key, Bitmap bitmap) {
+		if (getBitmapFromLruCache(key) == null) {
 			if (bitmap != null)
 				mLruCache.put(key, bitmap);
 		}
@@ -368,15 +329,13 @@ public class ImageLoader
 	 * @return
 	 */
 	private int calculateInSampleSize(BitmapFactory.Options options,
-			int reqWidth, int reqHeight)
-	{
+			int reqWidth, int reqHeight) {
 		// 源图片的宽度
 		int width = options.outWidth;
 		int height = options.outHeight;
 		int inSampleSize = 1;
 
-		if (width > reqWidth && height > reqHeight)
-		{
+		if (width > reqWidth && height > reqHeight) {
 			// 计算出实际宽度和目标宽度的比率
 			int widthRatio = Math.round((float) width / (float) reqWidth);
 			int heightRatio = Math.round((float) width / (float) reqWidth);
@@ -394,8 +353,7 @@ public class ImageLoader
 	 * @return
 	 */
 	private Bitmap decodeSampledBitmapFromResource(String pathName,
-			int reqWidth, int reqHeight)
-	{
+			int reqWidth, int reqHeight) {
 		// 第一次解析将inJustDecodeBounds设置为true，来获取图片大小
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -406,19 +364,17 @@ public class ImageLoader
 		// 使用获取到的inSampleSize值再次解析图片
 		options.inJustDecodeBounds = false;
 		Bitmap bitmap = BitmapFactory.decodeFile(pathName, options);
-		
+
 		return bitmap;
 	}
 
-	private class ImgBeanHolder
-	{
+	private class ImgBeanHolder {
 		Bitmap bitmap;
 		ImageView imageView;
 		String path;
 	}
 
-	private class ImageSize
-	{
+	private class ImageSize {
 		int width;
 		int height;
 	}
@@ -430,22 +386,18 @@ public class ImageLoader
 	 * @param fieldName
 	 * @return
 	 */
-	private static int getImageViewFieldValue(Object object, String fieldName)
-	{
+	private static int getImageViewFieldValue(Object object, String fieldName) {
 		int value = 0;
-		try
-		{
+		try {
 			Field field = ImageView.class.getDeclaredField(fieldName);
 			field.setAccessible(true);
 			int fieldValue = (Integer) field.get(object);
-			if (fieldValue > 0 && fieldValue < Integer.MAX_VALUE)
-			{
+			if (fieldValue > 0 && fieldValue < Integer.MAX_VALUE) {
 				value = fieldValue;
 
 				Log.e("TAG", value + "");
 			}
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 		}
 		return value;
 	}

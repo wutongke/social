@@ -60,7 +60,7 @@
                 android:id="@+id/avedio_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/zcollect2" />
+                android:background="@drawable/jjpl" />
 
             <ImageButton
                 android:id="@+id/avedio_next"
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_toRightOf="@+id/avedio_start"
-                android:background="@drawable/zcollect2" />
+                android:background="@drawable/jjnext" />
 
             <TextView
                 android:id="@+id/avedio_time"
@@ -106,7 +106,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="right"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/zcollect2" />
+                android:background="@drawable/jjall" />
         </RelativeLayout>
     </LinearLayout>
 

@@ -60,6 +60,7 @@ public class AudioAdapter extends CommonAdapter<RecordVO> {
 							R.drawable.ico_start_play);
 					getCurPlayView().setTag(null);
 					isPlaying = false;
+					if(seekBar!=null)
 					seekBar.setProgress(0);
 					//Èç¹ûÊÇ
 					if(v==getCurPlayView())
