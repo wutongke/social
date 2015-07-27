@@ -1,6 +1,8 @@
 package com.cpstudio.zhuojiaren;
 
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.androidpn.client.ServiceManager;
 

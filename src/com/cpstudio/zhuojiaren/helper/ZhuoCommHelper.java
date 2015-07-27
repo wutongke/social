@@ -10,11 +10,11 @@ import com.cpstudio.zhuojiaren.R;
 public class ZhuoCommHelper {
 
 	private final static String SERVER_PREFIX = "http://";
-	private final static String SERVER_IP = "115.29.145.63";// "115.29.145.63";//
+	private final static String SERVER_IP = "115.28.167.196";// "115.29.145.63";//
 															// "zjr.ci77.com";//
 
-	private final static String SERVER_PORT = ":80";
-	private final static String SERVER_APP = "/ZhuoFamily";
+	private final static String SERVER_PORT = ":9001";
+	private final static String SERVER_APP = "/zhuo-api";
 	public final static String SERVER = SERVER_PREFIX + SERVER_IP + SERVER_PORT
 			+ SERVER_APP;
 
@@ -22,7 +22,7 @@ public class ZhuoCommHelper {
 	private final static String SERVICE_HOT_WORDS = "/hot_words";
 	private final static String SERVICE_RESOURCE_GONGXU_DETAIL = "/resource_gongxu_detail";
 
-	private final static String SERVICE_LOGIN = "/login";
+	private final static String SERVICE_LOGIN = "/login.do";
 	private final static String SERVICE_MODIFYPWD = "/modifypwd";
 	private final static String SERVICE_MSGLIST = "/msglist";
 	private final static String SERVICE_PUBINFO = "/pubzhuoinfo";

@@ -21,8 +21,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper.FinishCallback;
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelperLZ.FinishCallback;
 import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.UploadCompleteCallback;
 import com.qiniu.android.http.ResponseInfo;
@@ -47,6 +49,7 @@ public class ZhuoConnHelper {
 
 	UploadManager uploadManager;
 
+	
 	String session;
 	String uploadFileToken;
 	String imToken;
@@ -55,6 +58,9 @@ public class ZhuoConnHelper {
 		ResHelper resHelper = ResHelper.getInstance(context);
 		this.userid = resHelper.getUserid();
 		this.password = resHelper.getPassword();
+		this.session=resHelper.getSessionForAPP();
+		this.imToken=resHelper.getImTokenForRongyun();
+		this.uploadFileToken=resHelper.getUpLoadTokenForQiniu();
 		this.session = resHelper.getSessionForAPP();
 		this.imToken = resHelper.getImTokenForRongyun();
 		this.uploadFileToken = resHelper.getUpLoadTokenForQiniu();
@@ -567,9 +573,11 @@ public class ZhuoConnHelper {
 	/**
 	 * 获取验证码
 	 * 
+	 * @param code 电话号
 	 * @param code
 	 *            电话号
 	 * @param handler
+	 * @param handlerTag 回调时候的msg.what
 	 * @param handlerTag
 	 *            回调时候的msg.what
 	 * @param activity
@@ -624,6 +632,7 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("secs", secs));
 		Map<String, String> files = new HashMap<String, String>();
 		if (filePath != null && !filePath.equals("")) {
+			files.put("file", filePath);
 			// files.put("file", filePath);
 			nameValuePairs.add(new BasicNameValuePair("file", filePath));
 		}
@@ -654,6 +663,7 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
+			AsyncConnectHelper conn = new AsyncConnectHelper(
 			AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
 					addUserInfo(nameValuePairs), url, getFinishCallback(
 							handler, handlerTag, tag, data), activity);
@@ -675,6 +685,7 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
+			AsyncConnectHelper conn = new AsyncConnectHelper(
 			AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
 					addUserInfoByPost(nameValuePairs), url, getFinishCallback(
 							handler, handlerTag, tag, data), activity);
@@ -695,6 +706,7 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
+			AsyncConnectHelper conn = new AsyncConnectHelper(
 			AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
 					addUserInfo(nameValuePairs), url, getFinishCallback(
 							callback, tag), activity);
@@ -712,6 +724,9 @@ public class ZhuoConnHelper {
 			List<NameValuePair> nameValuePairs, String url, Handler handler,
 			int handlerTag, Activity activity, String tag, boolean cancelable,
 			OnCancelListener cancel, String data) {
+		if (!mStartedTag.contains(tag) || tag == null) {
+			if (tag != null) {
+				mStartedTag.add(tag);
 
 		ArrayList<String> pathList = new ArrayList<String>();
 		if (files != null) {
@@ -720,13 +735,26 @@ public class ZhuoConnHelper {
 				// + entry.getValue());
 				pathList.add(entry.getValue());
 			}
+			AsyncConnectHelper conn = new AsyncConnectHelper(files,
+					nameValuePairs, addUserInfo(url), true, getFinishCallback(
+							handler, handlerTag, tag, data), activity);
+			conn.setCancelable(cancelable);
+			if (cancelable) {
+				conn.setCancel(getCancelListener(cancel, tag, conn));
+			}
+			conn.execute();
+			return true;
 		}
+		return false;
 
 		return doFormPost(pathList, nameValuePairs, url, handler, handlerTag,
 				activity, tag, cancelable, cancel, data);
 	}
 
 	private boolean doFormPost(ArrayList<String> files,
+			List<NameValuePair> nameValuePairs, String url, Handler handler,
+			int handlerTag, Activity activity, String tag, boolean cancelable,
+			OnCancelListener cancel, String data) {
 			final List<NameValuePair> nameValuePairs, final String url,
 			final Handler handler, final int handlerTag,
 			final Activity activity, final String tag,
@@ -737,6 +765,15 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
+			// 文件上传以七牛云的方式上传
+			// AsyncConnectHelper conn = new AsyncConnectHelper(files,
+			// nameValuePairs, addUserInfo(url), true, getFinishCallback(
+			// handler, handlerTag, tag, data), activity);
+			// conn.setCancelable(cancelable);
+			// if (cancelable) {
+			// conn.setCancel(getCancelListener(cancel, tag, conn));
+			// }
+			// conn.execute();
 			if (files != null) {
 				AsyncUploadHelper asyncTaskHeaper = new AsyncUploadHelper(
 						new UploadCompleteCallback() {
@@ -759,8 +796,17 @@ public class ZhuoConnHelper {
 								}
 								conn.execute();
 
+			// AsyncConnectHelper conn = new AsyncConnectHelper("",
+			// nameValuePairs, addUserInfo(url), true, getFinishCallback(
+			// handler, handlerTag, tag, data), activity);
+			// conn.setCancelable(cancelable);
+			// if (cancelable) {
+			// conn.setCancel(getCancelListener(cancel, tag, conn));
+			// }
+			// conn.execute();
 							}
 
+			qiniuUpLoadFiles(files);
 						});
 			} else {
 				AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(null,
@@ -786,6 +832,8 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
+			AsyncConnectHelper conn = new AsyncConnectHelper(addUserInfo(url),
+					getFinishCallback(handler, handlerTag, tag, data), activity);
 			AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
 					addUserInfo(url), getFinishCallback(handler, handlerTag,
 							tag, data), activity);
@@ -805,6 +853,8 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
+			AsyncConnectHelper conn = new AsyncConnectHelper(addUserInfo(url),
+					getFinishCallback(callback, tag), activity);
 			AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
 					addUserInfo(url), getFinishCallback(callback, tag),
 					activity);
@@ -855,6 +905,7 @@ public class ZhuoConnHelper {
 	}
 
 	private OnCancelListener getCancelListener(final OnCancelListener cancel,
+			final String tag, final AsyncConnectHelper conn) {
 			final String tag, final AsyncConnectHelperLZ conn) {
 		return new OnCancelListener() {
 			@Override
@@ -894,6 +945,9 @@ public class ZhuoConnHelper {
 		return nameValuePairs;
 	}
 
+	// 七牛文件上传
+	private void qiniuUpLoadFiles(final ArrayList<String> files) {
+		final String token = "gqyn9mD9OEVHoayK16ivmeCMcUgLNxVnxIjcrGCm:xFUsFZVKJLh7YnZXI5fTLf1-rNU=:eyJzY29wZSI6InpodW90ZXN0IiwiZGVhZGxpbmUiOjE0Mzc4Mjg3NjN9";
 //	private class AsyUploadFile extends
 //			AsyncTask<List<String>, Integer, List<String>> {
 //		ArrayList<String> files;
@@ -993,6 +1047,34 @@ public class ZhuoConnHelper {
 //		}
 //
 //	}
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				if (uploadManager == null)
+					uploadManager = new UploadManager();
+				for (String path : files) {
+					uploadManager.put(path, null, token,
+							new UpCompletionHandler() {
+
+								@Override
+								public void complete(String key,
+										ResponseInfo arg1, JSONObject arg2) {
+									// TODO Auto-generated method stub
+									Log.i("qiniu", key + ": " + arg2);
+								}
+
+							}, new UploadOptions(null, null, false,
+									new UpProgressHandler() {
+										public void progress(String key,
+												double percent) {
+										}
+									}, null));
+				}
+			}
+		}).start();
+
+	}
 
 	public String getSession() {
 		return session;
