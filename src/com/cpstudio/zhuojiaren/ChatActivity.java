@@ -8,7 +8,7 @@ import java.util.Set;
 import com.cpstudio.zhuojiaren.adapter.ImMsgListAdapter;
 import com.cpstudio.zhuojiaren.facade.ImChatFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
-import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper.FinishCallback;
+import com.cpstudio.zhuojiaren.helper.AsyncConnectHelperLZ.FinishCallback;
 import com.cpstudio.zhuojiaren.helper.EmotionPopHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;

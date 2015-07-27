@@ -40,11 +40,10 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 
 import com.cpstudio.zhuojiaren.adapter.ImQuanListAdapter;
-import com.cpstudio.zhuojiaren.adapter.ZhuoInfoListAdapter;
 import com.cpstudio.zhuojiaren.facade.ImQuanFacade;
 import com.cpstudio.zhuojiaren.facade.QuanFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
-import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper.FinishCallback;
+import com.cpstudio.zhuojiaren.helper.AsyncConnectHelperLZ.FinishCallback;
 import com.cpstudio.zhuojiaren.helper.EmotionPopHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
