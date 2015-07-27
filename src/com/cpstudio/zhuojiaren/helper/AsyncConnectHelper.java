@@ -37,7 +37,7 @@ public class AsyncConnectHelper extends AsyncTask<String, Integer, Boolean> {
 	private HttpClient httpClient = null;
 	private int responseCode = -1;
 
-	public AsyncConnectHelper(String url, FinishCallback callback,
+	public AsyncConnectHelper11(String url, FinishCallback callback,
 			Activity activity) {
 		this.mActivity = activity;
 		mType = HTTP_GET;

@@ -565,9 +565,9 @@ public class ZhuoConnHelper {
 	/**
 	 * 获取验证码
 	 * 
-	 * @param code
+	 * @param code 电话号
 	 * @param handler
-	 * @param handlerTag
+	 * @param handlerTag 回调时候的msg.what
 	 * @param activity
 	 * @param cancelalbe
 	 * @return
@@ -860,14 +860,27 @@ public class ZhuoConnHelper {
 	// lz0713
 	private List<NameValuePair> addUserInfoByPost(
 			List<NameValuePair> nameValuePairs) {
+		nameValuePairs.add(new BasicNameValuePair("session",
+				"e72d664f93de40e7aa08b28f15444f5b"));
 		nameValuePairs.add(new BasicNameValuePair("session", session));
 		nameValuePairs.add(new BasicNameValuePair("apptype", "0"));
 		return nameValuePairs;
 	}
 
+	// 七牛文件上传
+	private void qiniuUpLoadFiles(final ArrayList<String> files) {
+		final String token = "gqyn9mD9OEVHoayK16ivmeCMcUgLNxVnxIjcrGCm:xFUsFZVKJLh7YnZXI5fTLf1-rNU=:eyJzY29wZSI6InpodW90ZXN0IiwiZGVhZGxpbmUiOjE0Mzc4Mjg3NjN9";
 	private class AsyUploadFile extends
 			AsyncTask<List<String>, Integer, List<String>> {
 
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				if (uploadManager == null)
+					uploadManager = new UploadManager();
+				for (String path : files) {
+					uploadManager.put(path, null, token,
+							new UpCompletionHandler() {
 		ArrayList<String> files;
 		List<NameValuePair> nameValuePairs;
 		String url;
@@ -879,6 +892,12 @@ public class ZhuoConnHelper {
 		OnCancelListener cancel;
 		String data;
 
+								@Override
+								public void complete(String key,
+										ResponseInfo arg1, JSONObject arg2) {
+									// TODO Auto-generated method stub
+									Log.i("qiniu", key + ": " + arg2);
+								}
 		public void setParams(ArrayList<String> files,
 				List<NameValuePair> nameValuePairs, String url,
 				Handler handler, int handlerTag, Activity activity, String tag,
@@ -894,6 +913,13 @@ public class ZhuoConnHelper {
 			this.data = data;
 		}
 
+							}, new UploadOptions(null, null, false,
+									new UpProgressHandler() {
+										public void progress(String key,
+												double percent) {
+										}
+									}, null));
+				}
 		@Override
 		protected List<String> doInBackground(List<String>... files) {
 			// TODO Auto-generated method stub
@@ -928,6 +954,7 @@ public class ZhuoConnHelper {
 							}
 						}, null));
 			}
+		}).start();
 			try {
 				countLock.await();
 			} catch (InterruptedException e) {
@@ -965,4 +992,26 @@ public class ZhuoConnHelper {
 
 	}
 
-}
+	public String getSession() {
+		return session;
+	}
+
+	public String getUploadFileToken() {
+		return uploadFileToken;
+	}
+
+	public String getImToken() {
+		return imToken;
+	}
+
+	public void setSession(String session) {
+		this.session = session;
+	}
+
+	public void setUploadFileToken(String uploadFileToken) {
+		this.uploadFileToken = uploadFileToken;
+	}
+
+	public void setImToken(String imToken) {
+		this.imToken = imToken;
+	}}

@@ -12,6 +12,7 @@ import android.os.Environment;
 
 /**
  * 工具类，preferenceUtil相关操作，
+ * 单例模式
  */
 public class ResHelper {
 	private static ResHelper instance;
@@ -291,6 +292,18 @@ public class ResHelper {
 	}
 	private String getImToken() {
 		return mPu.getPreference(IM_TOKEN, "");
+	}
+
+	public void setUpLoadTokenForQiniu(String upLoadTokenForQiniu) {
+		this.upLoadTokenForQiniu = upLoadTokenForQiniu;
+	}
+
+	public void setSessionForAPP(String sessionForAPP) {
+		this.sessionForAPP = sessionForAPP;
+	}
+
+	public void setImTokenForRongyun(String imTokenForRongyun) {
+		this.imTokenForRongyun = imTokenForRongyun;
 	}
 	
 }
