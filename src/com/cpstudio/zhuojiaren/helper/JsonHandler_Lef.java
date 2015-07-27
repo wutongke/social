@@ -38,6 +38,7 @@ public class JsonHandler_Lef {
 			res.setRongyunToken(rongyunToken);
 			res.setUserid(userId);
 			res.setSession(session);
+			//如果是session过期导致的重新登录，则在这里处理
 			return res;
 			
 		} catch (JSONException e) {

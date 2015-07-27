@@ -553,7 +553,7 @@ public class ZhuoConnHelper {
 		this.userid = userid;
 		this.password = password;
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("from", "android"));
+//		nameValuePairs.add(new BasicNameValuePair("from", "android"));
 		return doPost(nameValuePairs, ZhuoCommHelper.getUrlLogin(), handler,
 				handlerTag, activity, "login", cancelable, cancel, data);
 	}
@@ -844,14 +844,14 @@ public class ZhuoConnHelper {
 
 	private String addUserInfo(String params) {
 		if (params.contains("?")) {
-			return params + "&userid=" + userid + "&password=" + password;
+			return params + "&username=" + userid + "&password=" + password;
 		} else {
-			return params + "?userid=" + userid + "&password=" + password;
+			return params + "?username=" + userid + "&password=" + password;
 		}
 	}
 
 	private List<NameValuePair> addUserInfo(List<NameValuePair> nameValuePairs) {
-		nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		nameValuePairs.add(new BasicNameValuePair("username", userid));
 		nameValuePairs.add(new BasicNameValuePair("password", password));
 		return nameValuePairs;
 	}
@@ -860,7 +860,7 @@ public class ZhuoConnHelper {
 	private List<NameValuePair> addUserInfoByPost(
 			List<NameValuePair> nameValuePairs) {
 		nameValuePairs.add(new BasicNameValuePair("session",
-				"e72d664f93de40e7aa08b28f15444f5b"));
+				session));
 		nameValuePairs.add(new BasicNameValuePair("apptype", "0"));
 		return nameValuePairs;
 	}

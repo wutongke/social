@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.AboutUsVO;
@@ -113,9 +114,15 @@ public class JsonHandler {
 		if (null != str && !str.equals("")) {
 			ResultVO result = parseResult(str);
 			String code = result.getCode();
-			if (null != code && code.equals("10000")) {
+			if (null != code && code.equals("0")) {
 				return true;
 			} else {
+				//处理出错信息，目前只处理session，其他错处直接输出
+				switch(Integer.parseInt(code)){
+				case ResultVO.SESSIONOUT:
+					AppClientLef.getInstance(context).refreshSession(context);
+					return false;
+				}
 				CommonUtil.displayToast(context, result.getMsg());
 			}
 		} else {
@@ -127,6 +134,7 @@ public class JsonHandler {
 	public static ResultVO parseResult(String str) {
 		ResultVO resultVO = new ResultVO();
 		try {
+			Log.i("Debug", str);
 			JsonParser parser = new JsonParser();
 			JsonElement ele = parser.parse(str);
 			JsonObject object = ele.getAsJsonObject();
