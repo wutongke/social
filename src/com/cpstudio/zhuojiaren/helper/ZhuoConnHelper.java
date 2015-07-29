@@ -871,14 +871,14 @@ public class ZhuoConnHelper {
 
 	private String addUserInfo(String params) {
 		if (params.contains("?")) {
-			return params + "&userid=" + userid + "&password=" + password;
+			return params + "&username=" + userid + "&password=" + password;
 		} else {
-			return params + "?userid=" + userid + "&password=" + password;
+			return params + "?username=" + userid + "&password=" + password;
 		}
 	}
 
 	private List<NameValuePair> addUserInfo(List<NameValuePair> nameValuePairs) {
-		nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		nameValuePairs.add(new BasicNameValuePair("username", userid));
 		nameValuePairs.add(new BasicNameValuePair("password", password));
 		return nameValuePairs;
 	}

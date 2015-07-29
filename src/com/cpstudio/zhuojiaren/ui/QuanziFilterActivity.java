@@ -113,6 +113,7 @@ public class QuanziFilterActivity extends BaseActivity {
 									int which) {
 								// TODO Auto-generated method stub
 								locate.setText(placeChoose.getPlace().getText().toString());
+								city = placeChoose.getCityCode();
 							}
 						});
 				placeChoose.setButton(DialogInterface.BUTTON_NEGATIVE, "È¡Ïû",
