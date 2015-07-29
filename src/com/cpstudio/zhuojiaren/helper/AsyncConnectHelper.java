@@ -20,7 +20,7 @@ import android.util.Log;
 import com.cpstudio.zhuojiaren.R;
 import com.utils.CommunicationUtil;
 
-public class AsyncConnectHelperXXXX extends AsyncTask<String, Integer, Boolean> {
+public class AsyncConnectHelper extends AsyncTask<String, Integer, Boolean> {
 	private ProgressDialog mDialog;
 	private Activity mActivity = null;
 	private String mUrl = null;
@@ -38,7 +38,7 @@ public class AsyncConnectHelperXXXX extends AsyncTask<String, Integer, Boolean> 
 	private HttpClient httpClient = null;
 	private int responseCode = -1;
 
-	public AsyncConnectHelperXXXX(String url, FinishCallback callback,
+	public AsyncConnectHelper(String url, FinishCallback callback,
 			Activity activity) {
 		this.mActivity = activity;
 		mType = HTTP_GET;
@@ -46,7 +46,7 @@ public class AsyncConnectHelperXXXX extends AsyncTask<String, Integer, Boolean> 
 		this.mCallback = callback;
 	}
 
-	public AsyncConnectHelperXXXX(List<NameValuePair> nameValuePairs, String url,
+	public AsyncConnectHelper(List<NameValuePair> nameValuePairs, String url,
 			FinishCallback callback, Activity activity) {
 		this.mActivity = activity;
 		mNameValuePairs = nameValuePairs;
@@ -55,7 +55,7 @@ public class AsyncConnectHelperXXXX extends AsyncTask<String, Integer, Boolean> 
 		this.mCallback = callback;
 	}
 
-	public AsyncConnectHelperXXXX(ArrayList<String> paths,
+	public AsyncConnectHelper(ArrayList<String> paths,
 			List<NameValuePair> nameValuePairs, String url, boolean thunckMode,
 			FinishCallback callback, Activity activity) {
 		this.mActivity = activity;
@@ -72,7 +72,7 @@ public class AsyncConnectHelperXXXX extends AsyncTask<String, Integer, Boolean> 
 		this.mCallback = callback;
 	}
 
-	public AsyncConnectHelperXXXX(Map<String, String> paths,
+	public AsyncConnectHelper(Map<String, String> paths,
 			List<NameValuePair> nameValuePairs, String url, boolean thunckMode,
 			FinishCallback callback, Activity activity) {
 		this.mActivity = activity;
@@ -88,7 +88,7 @@ public class AsyncConnectHelperXXXX extends AsyncTask<String, Integer, Boolean> 
 		this.mCallback = callback;
 	}
 
-	public AsyncConnectHelperXXXX(String path, List<NameValuePair> nameValuePairs,
+	public AsyncConnectHelper(String path, List<NameValuePair> nameValuePairs,
 			String url, boolean thunckMode, FinishCallback callback,
 			Activity activity) {
 		this.mActivity = activity;
