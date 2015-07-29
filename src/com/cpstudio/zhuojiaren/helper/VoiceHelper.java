@@ -7,7 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper.FinishCallback;
+import com.cpstudio.zhuojiaren.helper.AsyncConnectHelperLZ.FinishCallback;
 import com.cpstudio.zhuojiaren.util.AudioCombineHelper;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 

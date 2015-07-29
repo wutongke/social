@@ -80,18 +80,23 @@
                 android:layout_marginLeft="10dp"
                 android:contentDescription="@string/ico"
                 android:src="@drawable/magnifier5_zx_1" />
-
-            
         </RelativeLayout>
 
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="#f9f9f9"
             android:cacheColorHint="#00000000"
             android:divider="@drawable/bg_border3" >
         </ListView>
+
+        <LinearLayout
+            android:id="@+id/ryConversationListContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -100,8 +100,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
         mPaintStroke.setStrokeWidth(a.getDimension(R.styleable.CirclePageIndicator_strokeWidth, defaultStrokeWidth));
         mPaintFill.setStyle(Style.FILL);
         mPaintFill.setColor(a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor));
-        mRadius = a.getDimension(R.styleable.CirclePageIndicator_radius, defaultRadius);
-        mSnap = a.getBoolean(R.styleable.CirclePageIndicator_snap, defaultSnap);
+//        mRadius = a.getDimension(R.styleable.CirclePageIndicator_radius, defaultRadius);
+//        mSnap = a.getBoolean(R.styleable.CirclePageIndicator_snap, defaultSnap);
 
         Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
         if (background != null) {

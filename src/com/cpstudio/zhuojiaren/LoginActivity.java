@@ -1,5 +1,9 @@
 package com.cpstudio.zhuojiaren;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient.ConnectCallback;
+import io.rong.imlib.RongIMClient.ErrorCode;
+
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -21,6 +25,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -135,24 +140,24 @@ public class LoginActivity extends Activity {
 					map.put(ResHelper.USER_ID, mUid);
 					map.put(ResHelper.PASSWORD, mPassword);
 					map.put(ResHelper.LOGIN_STATE, 1);
-					map.put(ResHelper.SESSION,res.getSession());
+					map.put(ResHelper.SESSION, res.getSession());
 					map.put(ResHelper.UPLIOAD_TOKEN, res.getQiniuToken());
 					map.put(ResHelper.IM_TOKEN, res.getRongyunToken());
-					//保存到本地
+					// 保存到本地
 					mResHelper.setPreference(map);
-					//保存到两个单例中
+					// 保存到两个单例中
 					mResHelper.setPassword(mPassword);
 					mResHelper.setSessionForAPP(res.getSession());
 					mResHelper.setUpLoadTokenForQiniu(res.getQiniuToken());
 					mResHelper.setImTokenForRongyun(res.getRongyunToken());
 					mResHelper.setUserid(mUid);
-					
+
 					connHelper.setPassword(mPassword);
 					connHelper.setSession(res.getSession());
 					connHelper.setUploadFileToken(res.getQiniuToken());
 					connHelper.setImToken(res.getRongyunToken());
 					mResHelper.setUserid(mUid);
-					
+
 					if (mPwdView.getText().toString().equals("000000") && first) {
 						OnClickListener ok = new OnClickListener() {
 							@Override
@@ -176,8 +181,35 @@ public class LoginActivity extends Activity {
 				}
 				break;
 			case MsgTagVO.START_SEND:
+				String token=mResHelper.getImTokenForRongyun();
+				//之后需删除，暂测试用
+				token = "Py74UXPT8qhWh2FBRCIcMTFjiRWti9Q/V/JbvRGji8CEHe0b5wf8iw2NE/ATk8uhgGu1XTpqtsG7e1/c1dAylg==";
+				//token=1i0IMiO5dWjOuGb10l2INNGFPZgrVDszbwnCc2LVvviZzRX4y7mcfCOL7dMa+prc1m3BcXo7y7yZu7T7F6rXBg==
+				
+				RongIM.connect(token, new ConnectCallback() {
+
+					@Override
+					public void onError(ErrorCode arg0) {
+						Toast.makeText(LoginActivity.this, "connect onError",
+								Toast.LENGTH_SHORT).show();
+					}
+
+					@Override
+					public void onSuccess(String arg0) {
+						Toast.makeText(LoginActivity.this,
+								"connect onSuccess", Toast.LENGTH_SHORT).show();
+					}
+
+					@Override
+					public void onTokenIncorrect() {
+						// TODO Auto-generated method stub
+						Toast.makeText(LoginActivity.this,
+								"onTokenIncorrect", Toast.LENGTH_SHORT).show();
+					}
+				});
 				ServiceManager serviceManager = new ServiceManager(
 						getApplicationContext());
+				
 				serviceManager.setNotificationIcon(R.drawable.newmsg);
 				serviceManager.startService();
 				break;

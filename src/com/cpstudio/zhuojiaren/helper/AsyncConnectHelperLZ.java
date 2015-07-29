@@ -1,32 +1,29 @@
 package com.cpstudio.zhuojiaren.helper;
 
-import java.io.File;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.cpstudio.zhuojiaren.R;
 import com.utils.CommunicationUtil;
 
-public class AsyncConnectHelper extends AsyncTask<String, Integer, Boolean> {
+//对于文件只上传对应的key,及一个普通的key,value
+public class AsyncConnectHelperLZ extends AsyncTask<String, Integer, Boolean> {
 	private ProgressDialog mDialog;
 	private Activity mActivity = null;
 	private String mUrl = null;
 	private boolean mThunckMode = true;
 	private List<NameValuePair> mNameValuePairs = new ArrayList<NameValuePair>();
-	private Map<String, File> mFiles = null;
 	private FinishCallback mCallback = null;
 	private static final int HTTP_GET = 0;
 	private static final int HTTP_POST = 1;
@@ -38,7 +35,7 @@ public class AsyncConnectHelper extends AsyncTask<String, Integer, Boolean> {
 	private HttpClient httpClient = null;
 	private int responseCode = -1;
 
-	public AsyncConnectHelper(String url, FinishCallback callback,
+	public AsyncConnectHelperLZ(String url, FinishCallback callback,
 			Activity activity) {
 		this.mActivity = activity;
 		mType = HTTP_GET;
@@ -46,7 +43,7 @@ public class AsyncConnectHelper extends AsyncTask<String, Integer, Boolean> {
 		this.mCallback = callback;
 	}
 
-	public AsyncConnectHelper(List<NameValuePair> nameValuePairs, String url,
+	public AsyncConnectHelperLZ(List<NameValuePair> nameValuePairs, String url,
 			FinishCallback callback, Activity activity) {
 		this.mActivity = activity;
 		mNameValuePairs = nameValuePairs;
@@ -55,47 +52,18 @@ public class AsyncConnectHelper extends AsyncTask<String, Integer, Boolean> {
 		this.mCallback = callback;
 	}
 
-	public AsyncConnectHelper(ArrayList<String> paths,
+	public AsyncConnectHelperLZ(ArrayList<String> fileKeys,
 			List<NameValuePair> nameValuePairs, String url, boolean thunckMode,
 			FinishCallback callback, Activity activity) {
 		this.mActivity = activity;
 		mNameValuePairs = nameValuePairs;
-		Map<String, File> files = new HashMap<String, File>();
 		int i = 0;
-		for (String path : paths) {
-			files.put("img" + i, new File(path));
-			i++;
+		if (fileKeys != null && fileKeys.size() > 0) {
+			String keysStr = fileKeys.get(0);
+			for (i = 1; i < fileKeys.size(); i++)
+				keysStr += (";" + fileKeys.get(i));
+			mNameValuePairs.add(new BasicNameValuePair("filekeys", keysStr));
 		}
-		mFiles = files;
-		mThunckMode = thunckMode;
-		mUrl = url;
-		this.mCallback = callback;
-	}
-
-	public AsyncConnectHelper(Map<String, String> paths,
-			List<NameValuePair> nameValuePairs, String url, boolean thunckMode,
-			FinishCallback callback, Activity activity) {
-		this.mActivity = activity;
-		mNameValuePairs = nameValuePairs;
-		Map<String, File> files = new HashMap<String, File>();
-		for (String name : paths.keySet()) {
-			String path = paths.get(name);
-			files.put(name, new File(path));
-		}
-		mFiles = files;
-		mThunckMode = thunckMode;
-		mUrl = url;
-		this.mCallback = callback;
-	}
-
-	public AsyncConnectHelper(String path, List<NameValuePair> nameValuePairs,
-			String url, boolean thunckMode, FinishCallback callback,
-			Activity activity) {
-		this.mActivity = activity;
-		mNameValuePairs = nameValuePairs;
-		Map<String, File> files = new HashMap<String, File>();
-		files.put("img0", new File(path));
-		mFiles = files;
 		mThunckMode = thunckMode;
 		mUrl = url;
 		this.mCallback = callback;
@@ -149,19 +117,13 @@ public class AsyncConnectHelper extends AsyncTask<String, Integer, Boolean> {
 		boolean result = false;
 		try {
 			CommunicationUtil comm = new CommunicationUtil();
-			if (mFiles != null) {
-				conn = comm.executePost(mUrl, mNameValuePairs, mFiles,
-						mThunckMode);
+			if (mType == HTTP_GET) {
+				httpClient = comm.executeGet(mUrl);
 			} else {
-				Log.i("Debug",mUrl);
-				if (mType == HTTP_GET) {
-					httpClient = comm.executeGet(mUrl);
-				} else {
-					httpClient = comm.executePost(mUrl, mNameValuePairs);
-				}
+				httpClient = comm.executePost(mUrl, mNameValuePairs);
 			}
+
 			jsonData = comm.getResult();
-			Log.i("Debug",jsonData);
 			responseCode = comm.getResponseCode();
 			result = true;
 		} catch (Exception e) {

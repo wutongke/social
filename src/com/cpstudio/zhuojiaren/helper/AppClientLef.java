@@ -76,9 +76,9 @@ public class AppClientLef {
 	 */
 	public void refreshSession(final Context context) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		AsyncConnectHelper conn = new AsyncConnectHelper(
+		AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
 				addUserInfo(nameValuePairs), ZhuoCommHelper.getUrlLogin(),
-				new AsyncConnectHelper.FinishCallback() {
+				new AsyncConnectHelperLZ.FinishCallback() {
 
 					@Override
 					public boolean onReturn(String rs, int responseCode) {

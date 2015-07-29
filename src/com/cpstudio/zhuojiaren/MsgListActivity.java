@@ -1,10 +1,42 @@
 package com.cpstudio.zhuojiaren;
 
+import io.rong.imkit.RongIM;
+import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.RongIMClient.ConnectCallback;
+import io.rong.imlib.RongIMClient.ErrorCode;
+import io.rong.imlib.model.Conversation;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import com.cpstudio.zhuojiaren.R;
+
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
+
 import com.cpstudio.zhuojiaren.adapter.MsgUserListAdapter;
 import com.cpstudio.zhuojiaren.facade.CardMsgFacade;
 import com.cpstudio.zhuojiaren.facade.CmtRcmdFacade;
@@ -21,30 +53,8 @@ import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ImMsgComparator;
 
-import android.os.Bundle;
-import android.app.Activity;
-import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.drawable.Drawable;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView.OnEditorActionListener;
-import android.widget.TextView;
-
-public class MsgListActivity extends Activity implements OnItemClickListener {
+public class MsgListActivity extends FragmentActivity implements
+		OnItemClickListener {
 	private ListView mListView;
 	private MsgUserListAdapter mAdapter;
 	private ArrayList<ImMsgVO> mList = new ArrayList<ImMsgVO>();
@@ -67,6 +77,44 @@ public class MsgListActivity extends Activity implements OnItemClickListener {
 		mListView.addHeaderView(headView);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(this);
+
+	
+		ViewGroup root = (ViewGroup) findViewById(R.id.ryConversationListContainer);
+		ConversationListFragment listFragment = ConversationListFragment
+				.getInstance();
+		Uri uri = Uri
+				.parse("rong://" + getApplicationInfo().packageName)
+				.buildUpon()
+				.appendPath("conversationlist")
+				.appendQueryParameter(
+						Conversation.ConversationType.PRIVATE.getName(),
+						"false") // 设置私聊会话是否聚合显示
+				.appendQueryParameter(
+						Conversation.ConversationType.GROUP.getName(), "true")// 群组
+				.appendQueryParameter(
+						Conversation.ConversationType.DISCUSSION.getName(),
+						"false")
+				// 讨论组
+				.appendQueryParameter(
+						Conversation.ConversationType.APP_PUBLIC_SERVICE
+								.getName(),
+						"false")// 应用公众服务。
+				.appendQueryParameter(
+						Conversation.ConversationType.PUBLIC_SERVICE.getName(),
+						"false")// 公共服务号
+				.appendQueryParameter(
+						Conversation.ConversationType.SYSTEM.getName(), "false")// 系统
+				.build();
+		listFragment.setUri(uri);
+
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager
+				.beginTransaction();
+
+		fragmentTransaction.add(R.id.ryConversationListContainer, listFragment);
+		fragmentTransaction.commit();
+//		RongIM.getInstance().startPrivateChat(MsgListActivity.this,"9237", "标题");
+		//token:1i0IMiO5dWjOuGb10l2INNGFPZgrVDszbwnCc2LVvviZzRX4y7mcfCOL7dMa+prc1m3BcXo7y7yZu7T7F6rXBg==
 	}
 
 	@Override
@@ -97,9 +145,10 @@ public class MsgListActivity extends Activity implements OnItemClickListener {
 	}
 
 	private void startQuanListActivity() {
-		findViewById(R.id.textViewMsgQuanAll).setVisibility(View.GONE);
-		Intent i = new Intent(MsgListActivity.this, MsgQuanListActivity.class);
-		startActivity(i);
+		RongIM.getInstance().startPrivateChat(MsgListActivity.this,"9237", "标题");
+//		findViewById(R.id.textViewMsgQuanAll).setVisibility(View.GONE);
+//		Intent i = new Intent(MsgListActivity.this, MsgQuanListActivity.class);
+//		startActivity(i);
 	}
 
 	private void startSysActivity() {
@@ -147,8 +196,8 @@ public class MsgListActivity extends Activity implements OnItemClickListener {
 						startCmtActivity();
 					}
 				});
-		
-		//通讯录
+
+		// 通讯录
 		findViewById(R.id.buttonLinkList).setOnClickListener(
 				new OnClickListener() {
 
@@ -312,31 +361,29 @@ public class MsgListActivity extends Activity implements OnItemClickListener {
 	private void loadChatData() {
 		try {
 			Map<String, ImMsgVO> map = new HashMap<String, ImMsgVO>();
-			//未读消息数目
+			// 未读消息数目
 			Map<String, Integer> map2 = new HashMap<String, Integer>();
-//可能得猜测。group by 返回的是该组中最后插入的一条元素，默认按时间顺序插入的，所以此处能选出最新的消息，但感觉不太严谨			
-//一下的两个查询能保证保存的是接收到的每个人的最新消息么？	“addtime desc”		
-			
-			//别人发送的消息,group by senderid
+			// 可能得猜测。group by 返回的是该组中最后插入的一条元素，默认按时间顺序插入的，所以此处能选出最新的消息，但感觉不太严谨
+			// 一下的两个查询能保证保存的是接收到的每个人的最新消息么？ “addtime desc”
+
+			// 别人发送的消息,group by senderid
 			//
 			ArrayList<ImMsgVO> list1 = mFacade.getAllByCondition(
 					"senderid <> ?", new String[] { myid }, "senderid",
 					"addtime desc", mSearchKey.trim());
-			//我发送的消息
+			// 我发送的消息
 			ArrayList<ImMsgVO> list2 = mFacade.getAllByCondition(
 					"receiverid <> ?", new String[] { myid }, "receiverid",
 					"addtime desc", mSearchKey.trim());
-			
-			
-	
-//list1中保存的是接收到的每个人的最新消息么？
+
+			// list1中保存的是接收到的每个人的最新消息么？
 			for (ImMsgVO msg : list1) {
 				map.put(msg.getSender().getUserid(), msg);
 			}
 			for (ImMsgVO msg : list2) {
 				if (map.get(msg.getReceiver().getUserid()) == null) {
 					map.put(msg.getReceiver().getUserid(), msg);
-				} else {//既有发送的也有接收的，选择最新的一条
+				} else {// 既有发送的也有接收的，选择最新的一条
 					String time1 = map.get(msg.getReceiver().getUserid())
 							.getAddtime();
 					String time2 = msg.getAddtime();
@@ -349,15 +396,15 @@ public class MsgListActivity extends Activity implements OnItemClickListener {
 			list2.clear();
 			for (String userid : map.keySet()) {
 				int unreadCount = mFacade.getUnreadById(userid).size();
-				if (unreadCount > 0) {//list1保存接收到的每个人的未读消息的最后一条
+				if (unreadCount > 0) {// list1保存接收到的每个人的未读消息的最后一条
 					list1.add(map.get(userid));
 					map2.put(userid, unreadCount);
 				} else {
-					list2.add(map.get(userid));//list2保存已读消息的最后一条
+					list2.add(map.get(userid));// list2保存已读消息的最后一条
 					map2.put(userid, 0);
 				}
 			}
-			//按接收到的时间降序排序
+			// 按接收到的时间降序排序
 			Collections.sort(list1, new ImMsgComparator());
 			Collections.sort(list2, new ImMsgComparator());
 			mList.clear();
