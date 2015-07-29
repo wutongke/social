@@ -1,5 +1,9 @@
 package com.cpstudio.zhuojiaren;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient.ConnectCallback;
+import io.rong.imlib.RongIMClient.ErrorCode;
+
 import java.util.HashMap;
 
 import org.androidpn.client.ServiceManager;
@@ -11,6 +15,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
+import android.widget.Toast;
+
 import com.cpstudio.zhuojiaren.facade.ImChatFacade;
 import com.cpstudio.zhuojiaren.facade.ImQuanFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -97,6 +103,34 @@ public class InitActivity extends Activity {
 				break;
 			// 登陆成功后会启动聊天后台服务(NotificationService)以接收推送消息
 			case MsgTagVO.START_SEND:
+				ResHelper mResHelper = ResHelper.getInstance(getApplicationContext());
+				String token=mResHelper.getImTokenForRongyun();
+				//之后需删除，暂测试用
+				token = "Py74UXPT8qhWh2FBRCIcMTFjiRWti9Q/V/JbvRGji8CEHe0b5wf8iw2NE/ATk8uhgGu1XTpqtsG7e1/c1dAylg==";
+				//token=1i0IMiO5dWjOuGb10l2INNGFPZgrVDszbwnCc2LVvviZzRX4y7mcfCOL7dMa+prc1m3BcXo7y7yZu7T7F6rXBg==
+				
+				RongIM.connect(token, new ConnectCallback() {
+
+					@Override
+					public void onError(ErrorCode arg0) {
+						Toast.makeText(InitActivity.this, "connect onError",
+								Toast.LENGTH_SHORT).show();
+					}
+
+					@Override
+					public void onSuccess(String arg0) {
+						Toast.makeText(InitActivity.this,
+								"connect onSuccess", Toast.LENGTH_SHORT).show();
+					}
+
+					@Override
+					public void onTokenIncorrect() {
+						// TODO Auto-generated method stub
+						Toast.makeText(InitActivity.this,
+								"onTokenIncorrect", Toast.LENGTH_SHORT).show();
+					}
+				});
+				
 				ServiceManager serviceManager = new ServiceManager(
 						getApplicationContext());
 				serviceManager.setNotificationIcon(R.drawable.newmsg);

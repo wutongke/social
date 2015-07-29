@@ -1,36 +1,27 @@
 package com.cpstudio.zhuojiaren.helper;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelperLZ.FinishCallback;
 import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.UploadCompleteCallback;
-import com.qiniu.android.http.ResponseInfo;
-import com.qiniu.android.storage.UpCompletionHandler;
-import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadManager;
-import com.qiniu.android.storage.UploadOptions;
 
 /**
  * ÍøÂçÏà¹Ø
@@ -895,8 +886,8 @@ public class ZhuoConnHelper {
 	// lz0713
 	private List<NameValuePair> addUserInfoByPost(
 			List<NameValuePair> nameValuePairs) {
-		nameValuePairs.add(new BasicNameValuePair("session",
-				"e72d664f93de40e7aa08b28f15444f5b"));
+//		nameValuePairs.add(new BasicNameValuePair("session",
+//				"e72d664f93de40e7aa08b28f15444f5b"));
 		nameValuePairs.add(new BasicNameValuePair("session", session));
 		nameValuePairs.add(new BasicNameValuePair("apptype", "0"));
 		return nameValuePairs;

@@ -78,28 +78,7 @@ public class MsgListActivity extends FragmentActivity implements
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(this);
 
-		String token = "Py74UXPT8qhWh2FBRCIcMTFjiRWti9Q/V/JbvRGji8CEHe0b5wf8iw2NE/ATk8uhgGu1XTpqtsG7e1/c1dAylg==";
-		RongIM.connect(token, new ConnectCallback() {
-
-			@Override
-			public void onError(ErrorCode arg0) {
-				Toast.makeText(MsgListActivity.this, "connect onError",
-						Toast.LENGTH_SHORT).show();
-			}
-
-			@Override
-			public void onSuccess(String arg0) {
-				Toast.makeText(MsgListActivity.this, "connect onSuccess",
-						Toast.LENGTH_SHORT).show();
-			}
-
-			@Override
-			public void onTokenIncorrect() {
-				// TODO Auto-generated method stub
-				Toast.makeText(MsgListActivity.this, "onTokenIncorrect",
-						Toast.LENGTH_SHORT).show();
-			}
-		});
+	
 		ViewGroup root = (ViewGroup) findViewById(R.id.ryConversationListContainer);
 		ConversationListFragment listFragment = ConversationListFragment
 				.getInstance();
