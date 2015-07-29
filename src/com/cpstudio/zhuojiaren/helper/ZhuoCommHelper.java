@@ -22,6 +22,8 @@ public class ZhuoCommHelper {
 	private final static String SERVICE_HOT_WORDS = "/hot_words";
 	private final static String SERVICE_RESOURCE_GONGXU_DETAIL = "/resource_gongxu_detail";
 
+	private final static String DISOLVE_QUAN = "/grouprelease.do";
+	private final static String QUIT_QUAN = "//followgroup.do";
 	private final static String SERVICE_LOGIN = "/login.do";
 	private final static String SERVICE_MODIFYPWD = "/modifypwd";
 	private final static String SERVICE_MSGLIST = "/msglist";
@@ -60,7 +62,8 @@ public class ZhuoCommHelper {
 	private final static String SERVICE_PLAN = "/plan";
 	private final static String SERVICE_PLANLIST = "/planlist";
 	private final static String SERVICE_HOTGROUPLIST = "/hotgrouplist";
-	private final static String SERVICE_GROUPLIST = "/grouplist";
+	private final static String SERVICE_REGROUPLIST = "/grouprecommend.do";
+	private final static String SERVICE_MYGROUPLIST = "/getmygroup.do";
 	private final static String SERVICE_COLLECTLIST = "/collectlist";
 	private final static String SERVICE_ALLZHUO = "/allzhuo";
 	private final static String SERVICE_ADDDREAM = "/adddream";
@@ -98,6 +101,16 @@ public class ZhuoCommHelper {
 	private final static String SERVICE_TEACHER = "/teacher";
 	private final static String SERVICE_CMT_LIKE = "/cmt_like";
 	private final static String SERVICE_SHARECLOUD = "/sharecloud";
+	private final static String SERVICE_SEARCH_QUAN = "/groupsearch.do";
+	private final static String SERVICE_CITY_LIST = "/getcitylist.do";
+
+	public static String getServiceCityList() {
+		return SERVER + SERVICE_CITY_LIST;
+	}
+
+	public static String getServiceSearchQuan() {
+		return SERVER + SERVICE_SEARCH_QUAN;
+	}
 
 	public static String getUrlShareCloud() {
 		return SERVER + SERVICE_SHARECLOUD;
@@ -311,10 +324,12 @@ public class ZhuoCommHelper {
 		return SERVER + SERVICE_HOTGROUPLIST;
 	}
 
-	public static String getUrlGroupList() {
-		return SERVER + SERVICE_GROUPLIST;
+	public static String getUrlReGroupList() {
+		return SERVER + SERVICE_REGROUPLIST;
 	}
-
+	public static String getUrlMyGroupList() {
+		return SERVER + SERVICE_MYGROUPLIST;
+	}
 	public static String getUrlCollectList() {
 		return SERVER + SERVICE_COLLECTLIST;
 	}
@@ -410,6 +425,12 @@ public class ZhuoCommHelper {
 
 	public static String getResourceGongxuDetail() {
 		return SERVER + SERVICE_RESOURCE_GONGXU_DETAIL;
+	}
+	public static String getDisolveQuan() {
+		return SERVER + DISOLVE_QUAN;
+	}
+	public static String getQuitQuan() {
+		return SERVER + QUIT_QUAN;
 	}
 
 	public static String getYearFromTime(String time) {
@@ -739,4 +760,6 @@ public class ZhuoCommHelper {
 			return "";
 		}
 	}
+
+	
 }

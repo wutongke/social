@@ -50,7 +50,7 @@ public class WheelView extends View {
 			0x00AAAAAA, 0x00AAAAAA };
 
 	/** Top and bottom items offset (to hide that) */
-	private static final int ITEM_OFFSET_PERCENT = 10;
+	private static final int ITEM_OFFSET_PERCENT = 5;
 
 	/** Left and right padding value */
 	private static final int PADDING = 10;
@@ -65,7 +65,7 @@ public class WheelView extends View {
 	private int visibleItems = DEF_VISIBLE_ITEMS;
 
 	// Item height
-	private int itemHeight = 0;
+	private int itemHeight = 20;
 
 	// Center Line
 	private Drawable centerDrawable;
@@ -605,7 +605,7 @@ public class WheelView extends View {
 			drawCenterRect(canvas);
 		}
 
-		//drawShadows(canvas);
+//		drawShadows(canvas);
 	}
 
 	/**

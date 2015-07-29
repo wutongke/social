@@ -30,7 +30,8 @@ public class QuanziFilterActivity extends BaseActivity {
 	@InjectView(R.id.filter_ok_btn)
 	Button filterOk;
 	private Context mContext;
-	private int typeQuanzi=0;
+	private int typeQuanzi=-1;
+	private int city = -1;
 	private String[] quanziType;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,14 @@ public class QuanziFilterActivity extends BaseActivity {
 					// TODO Auto-generated method stub
 					Intent data = new Intent();
 					//1按类型2按地区
-					data.putExtra("type", 1);
+					if(typeQuanzi!=-1){
+						data.putExtra("type", 1);
+						data.putExtra("quanzitype", typeQuanzi);
+					}else{
+						data.putExtra("type", 2);
+						data.putExtra("city", city);
+					}
+					
 					setResult(RESULT_OK, data);
 					((android.app.Activity) mContext).finish();
 			}

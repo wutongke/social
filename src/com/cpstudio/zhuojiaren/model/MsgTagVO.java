@@ -76,4 +76,10 @@ public class MsgTagVO {
 	 * 从倬脉图片
 	 */
 	public static int ZHUOMAI_PIC = 401;// 供需发布
+	/**
+	 * 圈子操作
+	 */
+	public static final int disolve_quan = 501;
+	public static final int out_quan = 502;
+	public static final int join_quan = 503;
 }

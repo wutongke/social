@@ -107,7 +107,7 @@ public class QuanListDetailActivity extends Activity implements
 			mList.clear();
 			mAdapter.notifyDataSetChanged();
 			mPage = 1;
-			String params = ZhuoCommHelper.getUrlGroupList() + "?page=" + mPage;
+			String params = ZhuoCommHelper.getUrlReGroupList() + "?page=" + mPage;
 			params += "&type=" + mType;
 			if (mSearchKey != null && !mSearchKey.equals("")) {
 				params += "&key=" + mSearchKey;
@@ -118,7 +118,7 @@ public class QuanListDetailActivity extends Activity implements
 
 	private void loadMore() {
 		if (mListViewFooter.startLoading()) {
-			String params = ZhuoCommHelper.getUrlGroupList() + "?page=" + mPage;
+			String params = ZhuoCommHelper.getUrlReGroupList() + "?page=" + mPage;
 			params += "&type=" + mType;
 			if (mSearchKey != null && !mSearchKey.equals("")) {
 				params += "&key=" + mSearchKey;

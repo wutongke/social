@@ -10,14 +10,15 @@ import java.util.Map;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 
-import com.cpstudio.zhuojiaren.R;
-import com.utils.CommunicationUtil;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
+import android.util.Log;
+
+import com.cpstudio.zhuojiaren.R;
+import com.utils.CommunicationUtil;
 
 public class AsyncConnectHelper extends AsyncTask<String, Integer, Boolean> {
 	private ProgressDialog mDialog;
@@ -152,6 +153,7 @@ public class AsyncConnectHelper extends AsyncTask<String, Integer, Boolean> {
 				conn = comm.executePost(mUrl, mNameValuePairs, mFiles,
 						mThunckMode);
 			} else {
+				Log.i("Debug",mUrl);
 				if (mType == HTTP_GET) {
 					httpClient = comm.executeGet(mUrl);
 				} else {
@@ -159,6 +161,7 @@ public class AsyncConnectHelper extends AsyncTask<String, Integer, Boolean> {
 				}
 			}
 			jsonData = comm.getResult();
+			Log.i("Debug",jsonData);
 			responseCode = comm.getResponseCode();
 			result = true;
 		} catch (Exception e) {

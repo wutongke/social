@@ -6,7 +6,8 @@ import java.util.List;
 public class QuanVO {
 	//»¶◊”¿‡–Õ
 	public final static  String QUANZITYPE = "quanzitype";
-	public final static  int QUANZIMY = 6;
+	public final static  int QUANZIMYCTEATE = 6;
+	public final static  int QUANZIMYADD = 7;
 	public final static  int QUANZIRECOMMEND = 2;
 	public final static  int QUANZIQUERY = 3;
 	
@@ -27,6 +28,7 @@ public class QuanVO {
 	private String lastbroadcast;
 	private String lastmsgtime;
 	private String alert;
+	private String memberCount;
 	private UserVO founder = new UserVO();
 	private List<UserVO> managers = new ArrayList<UserVO>();
 	private List<UserVO> members = new ArrayList<UserVO>();
@@ -130,6 +132,14 @@ public class QuanVO {
 
 	public String getAlert() {
 		return alert;
+	}
+
+	public String getMemberCount() {
+		return memberCount;
+	}
+
+	public void setMemberCount(String memberCount) {
+		this.memberCount = memberCount;
 	}
 
 	public void setAlert(String alert) {

@@ -25,15 +25,14 @@ public class QuanListAdapter extends BaseAdapter {
 	private LoadImage mLoadImage = new LoadImage(50);
 	private Context mContext;
 	private List<QuanVO> mSelectedList = new ArrayList<QuanVO>();
-	private boolean managerVisible=false;
+	private boolean managerVisible = false;
 
 	public QuanListAdapter(Context context, ArrayList<QuanVO> list) {
 		this.mList = list;
 		this.mContext = context;
 		this.inflater = LayoutInflater.from(context);
 	}
-	
-	
+
 	@Override
 	public int getCount() {
 		return mList.size();
@@ -58,7 +57,7 @@ public class QuanListAdapter extends BaseAdapter {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.item_msg_user_list, null);
+			convertView = inflater.inflate(R.layout.item_zhuoquan_list, null);
 			holder = initHolder(convertView);
 			convertView.setTag(R.id.tag_view_holder, holder);
 		} else {
@@ -67,50 +66,44 @@ public class QuanListAdapter extends BaseAdapter {
 		QuanVO quan = mList.get(position);
 		String groupid = quan.getGroupid();
 		String headUrl = quan.getGheader();
-		String time = quan.getLastmsgtime();
+		String des = quan.getGintro();
 		String groupname = quan.getGname();
-		String membersnum = quan.getMembersnum();
-		String membersmax = quan.getMembersmax();
+		String memCount = quan.getMemberCount();
 		convertView.setTag(R.id.tag_id, groupid);
-		if(!managerVisible)
+		if (!managerVisible)
 			holder.selectCheck.setVisibility(View.GONE);
 		else
 			holder.selectCheck.setVisibility(View.VISIBLE);
 		holder.selectCheck.setChecked(false);
-		//设置是否选中
-		if(mSelectedList.contains(mList.get(position))){
+		// 设置是否选中
+		if (mSelectedList.contains(mList.get(position))) {
 			holder.selectCheck.setChecked(true);
-		}else{
+		} else {
 			holder.selectCheck.setChecked(false);
 		}
 		holder.selectCheck.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				if(mSelectedList.contains(mList.get(position))){
+				if (mSelectedList.contains(mList.get(position))) {
 					holder.selectCheck.setChecked(false);
 					mSelectedList.remove(mList.get(position));
-				}else{
+				} else {
 					holder.selectCheck.setChecked(true);
 					mSelectedList.add(mList.get(position));
 				}
 			}
 		});
 		holder.nameTV.setText(groupname);
-		// holder.textViewTime.setText(time);
-		holder.textViewMsg.setText(/*
-									 * mContext.getString(R.string.label_qzhm) +
-									 * groupid + "    " +
-									 */mContext.getString(R.string.label_qzcy)
-				+ membersnum + "/" + membersmax);
+		holder.memCount.setText(memCount
+				+ mContext.getString(R.string.label_qzcy));
 		holder.headIV.setImageResource(R.drawable.default_grouphead);
 		holder.headIV.setTag(headUrl);
-		if (time != null && !time.equals("")) {
-			holder.textViewUpdateTime.setText(mContext
-					.getString(R.string.label_qzgx) + time);
-			holder.textViewUpdateTime.setVisibility(View.VISIBLE);
+		if (des != null && !des.equals("")) {
+			holder.des.setText(des);
+			holder.des.setVisibility(View.VISIBLE);
 		}
 		mLoadImage.addTask(headUrl, holder.headIV);
 		mLoadImage.doTask();
@@ -120,37 +113,33 @@ public class QuanListAdapter extends BaseAdapter {
 	static class ViewHolder {
 		TextView nameTV;
 		CheckBox selectCheck;
-		// TextView textViewTime;
-		TextView textViewMsg;
-		TextView textViewUpdateTime;
-		ImageView resIV;
+		TextView memCount;
+		TextView des;
 		ImageView headIV;
 	}
 
 	private ViewHolder initHolder(View convertView) {
 		ViewHolder holder = new ViewHolder();
-		holder.nameTV = (TextView) convertView
-				.findViewById(R.id.textViewAuthorName);
+		holder.nameTV = (TextView) convertView.findViewById(R.id.izl_name);
 		holder.selectCheck = (CheckBox) convertView
-				.findViewById(R.id.imul_select);
-		// holder.textViewTime = (TextView) convertView
-		// .findViewById(R.id.textViewTime);
-		holder.textViewMsg = (TextView) convertView
-				.findViewById(R.id.textViewMsg);
-		holder.textViewUpdateTime = (TextView) convertView
-				.findViewById(R.id.textViewUpdateTime);
+				.findViewById(R.id.izl_select);
+		holder.des = (TextView) convertView.findViewById(R.id.izl_des);
+		holder.memCount = (TextView) convertView
+				.findViewById(R.id.izl_mem_count);
 		holder.headIV = (ImageView) convertView
-				.findViewById(R.id.imageViewAuthorHeader);
+				.findViewById(R.id.izl_imageViewAuthorHeader);
 		return holder;
 	}
-
 
 	public boolean isManagerVisible() {
 		return managerVisible;
 	}
 
-
 	public void setManagerVisible(boolean managerVisible) {
 		this.managerVisible = managerVisible;
+	}
+
+	public List<QuanVO> getmSelectedList() {
+		return mSelectedList;
 	}
 }

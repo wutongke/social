@@ -295,7 +295,7 @@ public class QuanCreateActivity extends BaseActivity {
 				lp.x = 20;
 				lp.y = 0;
 				adl.show();
-				adl.getWindow().setContentView(R.layout.dialog_choose_pictures);
+				adl.getWindow().setContentView(ll);
 			}
 		});
 	}

@@ -8,13 +8,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
 import android.view.View;
 import android.view.View.OnClickListener;
 import butterknife.ButterKnife;
@@ -98,6 +93,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 				case 1:
 					break;
 				case 2:
+					//1请求参数
 					ZhuoQuanActivity.this.startActivityForResult(new Intent(mContext,QuanziFilterActivity.class), 1);
 					break;
 				case 3:
@@ -119,7 +115,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 		String quanRecommendTitle = getString(R.string.quanzi_recommend);
 		String quanCreateTitle = getString(R.string.quanzi_create);
 	
-		Fragment quanMyFragment = addBundle(new QuanziFra(),QuanVO.QUANZIMY);
+		Fragment quanMyFragment = addBundle(new QuanziFra(),QuanVO.QUANZIMYCTEATE);
 		fragments.add(quanMyFragment);
 		titles.add(quanMyTitle);
 		
@@ -168,17 +164,6 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 			function.setBackgroundColor(Color.BLACK);
 			function.setTag(3);
 			break;
-		}
-	}
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult( requestCode,  resultCode,  data);
-		//筛选
-		if(requestCode==1){
-			if(resultCode==RESULT_OK){
-				
-			}
 		}
 	}
 }

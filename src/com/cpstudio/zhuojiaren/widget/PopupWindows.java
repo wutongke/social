@@ -312,7 +312,7 @@ public class PopupWindows {
 	public void showGrouthTeacher(View parent){
 		new NamePup(mActivity,parent).showPup();
 	}
-	public PopupWindow showBreakQuanzi(int tag, View parent, int layoutId,
+	public PopupWindow showBreakQuanzi(int tag, View parent, View layoutId,
 			int margin, OnClickListener breakBtnListener) {
 		if (null != parent) {
 			InputMethodManager imm = (InputMethodManager) mActivity
@@ -321,9 +321,10 @@ public class PopupWindows {
 		}
 		if (null == breakQaunziPopupWindow
 				|| (Integer) viewBreakQuanzi.getTag() != tag) {
-			LayoutInflater layoutInflater = (LayoutInflater) mActivity
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			viewBreakQuanzi = layoutInflater.inflate(layoutId, null);
+//			LayoutInflater layoutInflater = (LayoutInflater) mActivity
+//					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//			viewBreakQuanzi = layoutInflater.inflate(layoutId, null);
+			viewBreakQuanzi = layoutId;
 			viewBreakQuanzi.setTag(tag);
 			breakQaunziPopupWindow = new PopupWindow(viewBreakQuanzi,
 					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -1392,6 +1393,9 @@ public class PopupWindows {
 			popupWindowTip.dismiss();
 		} else if (popupWindowOptions != null) {
 			popupWindowOptions.dismiss();
+		}
+		if(breakQaunziPopupWindow!=null){
+			breakQaunziPopupWindow.dismiss();
 		}
 	}
 
