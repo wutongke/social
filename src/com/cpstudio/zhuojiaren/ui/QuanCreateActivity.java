@@ -10,7 +10,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,6 +25,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -33,16 +33,11 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.QuanMngActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.R.array;
-import com.cpstudio.zhuojiaren.R.drawable;
-import com.cpstudio.zhuojiaren.R.id;
-import com.cpstudio.zhuojiaren.R.layout;
-import com.cpstudio.zhuojiaren.R.string;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
@@ -81,14 +76,19 @@ public class QuanCreateActivity extends BaseActivity {
 	// 圈子图片
 	private ImageSelectHelper mIsh2 = null;
 	private ArrayList<String> mSelectlist = new ArrayList<String>();
-	private ZhuoConnHelper mConnHelper = null;
+	private AppClientLef mConnHelper = null;
 	private String groupid = null;
 	private LoadImage mLoadImage = new LoadImage();
 	private boolean mHeadChanged = false;
 	private Context mContext;
 	private int typeQuanzi = 0;
 	private String[] quanziType;
-
+	//城市编码
+	private String locateCode;
+	//加入权限
+	private String addRight;
+	//查看权限
+	private String seeRight;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -96,7 +96,7 @@ public class QuanCreateActivity extends BaseActivity {
 
 		ButterKnife.inject(this);
 		mContext = this;
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = AppClientLef.getInstance(getApplicationContext());
 		// 圈子类型
 		quanziType = getResources().getStringArray(R.array.quanzi_type);
 		initTitle();
@@ -179,6 +179,8 @@ public class QuanCreateActivity extends BaseActivity {
 								// TODO Auto-generated method stub
 								quanLocationView.setText(placeChoose.getPlace()
 										.getText().toString());
+								locateCode = String.valueOf(placeChoose
+										.getCityCode());
 							}
 						});
 				placeChoose.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
@@ -286,8 +288,7 @@ public class QuanCreateActivity extends BaseActivity {
 							}
 						});
 				AlertDialog adl = new AlertDialog.Builder(
-						QuanCreateActivity.this).
-						create();
+						QuanCreateActivity.this).create();
 				adl.setCanceledOnTouchOutside(true);// 设置dialog外面点击则消失
 				Window w = adl.getWindow();
 				WindowManager.LayoutParams lp = w.getAttributes();
@@ -298,19 +299,41 @@ public class QuanCreateActivity extends BaseActivity {
 				adl.getWindow().setContentView(ll);
 			}
 		});
+		addQuanRight1.setChecked(true);
+		visiteQuanRight1.setChecked(true);
+		addQuanRight.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				// TODO Auto-generated method stub
+				if(checkedId==addQuanRight1.getId())
+					addRight = "0";
+				else addRight = "1";
+			}
+		});
+		QuanRight.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				// TODO Auto-generated method stub
+				if(checkedId==visiteQuanRight1.getId())
+					seeRight = "0";
+				else seeRight = "1";
+			}
+		});
 	}
 
 	private void loadData() {
-		String params = ZhuoCommHelper.getUrlGroupDetail() + "?groupid="
-				+ groupid;
-		mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD,
-				QuanCreateActivity.this, true, new OnCancelListener() {
-
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						QuanCreateActivity.this.finish();
-					}
-				});
+		// String params = ZhuoCommHelper.getUrlGroupDetail() + "?groupid="
+		// + groupid;
+		// mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD,
+		// QuanCreateActivity.this, true, new OnCancelListener() {
+		//
+		// @Override
+		// public void onCancel(DialogInterface dialog) {
+		// QuanCreateActivity.this.finish();
+		// }
+		// });
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -439,9 +462,8 @@ public class QuanCreateActivity extends BaseActivity {
 				files.put("gheader", path);
 			}
 		}
-		mConnHelper.createGroup(files, mUIHandler, MsgTagVO.PUB_INFO,
-				QuanCreateActivity.this, intro, gproperty, title, "0", groupid,
-				ids, true, null, null);
+		mConnHelper.createQuan(title, intro, String.valueOf(typeQuanzi),
+				locateCode, addRight,seeRight);
 
 	}
 

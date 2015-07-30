@@ -19,9 +19,12 @@ import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.facade.ImChatFacade;
 import com.cpstudio.zhuojiaren.facade.ImQuanFacade;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.LoginRes;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
@@ -95,6 +98,10 @@ public class InitActivity extends Activity {
 			case MsgTagVO.PUB_INFO:
 				// µÇÂ½ÊÇ·ñ³É¹¦
 				if (JsonHandler.checkResult((String) msg.obj)) {
+					LoginRes res = JsonHandler_Lef.parseLoginRes(
+							InitActivity.this, JsonHandler.parseResult((String) msg.obj)
+									.getData());
+					AppClientLef.getInstance(InitActivity.this).refreshUserInfo(res);
 					startService();
 					goActivity(TabContainerActivity.class);
 				} else {

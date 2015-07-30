@@ -96,6 +96,7 @@ public class MyMoneyActivity extends BaseActivity {
 			card.setCardType("储蓄卡");
 			card.setBankName("工商银行");
 			card.setBankNumber("12312331313");
+			card.setBankImage("");
 			mDataList.add(card);
 		}
 		mAdapter.notifyDataSetChanged();

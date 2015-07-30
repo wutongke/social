@@ -15,7 +15,6 @@ import org.apache.http.message.BasicNameValuePair;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,8 +25,7 @@ import com.cpstudio.zhuojiaren.helper.AsyncConnectHelperLZ.FinishCallback;
 import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.UploadCompleteCallback;
 import com.cpstudio.zhuojiaren.helper.CopyOfAsyncUploadHelper.ICompleteCallback;
 import com.cpstudio.zhuojiaren.model.LoginRes;
-import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.qiniu.android.storage.UploadManager;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;import com.qiniu.android.storage.UploadManager;
 
 /**
  * ÍøÂçÏà¹Ø

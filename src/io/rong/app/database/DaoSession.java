@@ -1,9 +1,8 @@
 package io.rong.app.database;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import java.util.Map;
 
+import android.database.sqlite.SQLiteDatabase;
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.AbstractDaoSession;
 import de.greenrobot.dao.identityscope.IdentityScopeType;
