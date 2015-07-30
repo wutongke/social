@@ -31,15 +31,16 @@ public class AudioAdapter extends CommonAdapter<RecordVO> {
 	@Override
 	public void convert(final ViewHolder helper, final RecordVO item) {
 		// TODO Auto-generated method stub
-		helper.setText(R.id.ir_name, item.getName());
+		helper.setText(R.id.ir_name, item.getTitle());
 		helper.setText(
 				R.id.ir_creater,
 				mContext.getResources().getString(R.string.creater)
-						+ item.getUsers());
+						+ item.getTutorName());
+		String date = item.getCrtDate().substring(0, item.getCrtDate().indexOf(" "));
 		helper.setText(
 				R.id.ir_time,
 				mContext.getResources().getString(R.string.create_time)
-						+ item.getDate());
+						+ date);
 		helper.setText(R.id.ir_duration, item.getLength());
 		final ImageView play = (ImageView) helper.getView(R.id.ir_play);
 		play.setBackgroundResource(R.drawable.jjplay2);
@@ -73,7 +74,7 @@ public class AudioAdapter extends CommonAdapter<RecordVO> {
 				isPlaying = true;
 				// give data to mediaPlayer
 				try {
-					mediaPlayer.setDataSource(item.getPath());
+					mediaPlayer.setDataSource(item.getAudioAddr());
 					// media player asynchronous preparation
 					mediaPlayer.prepareAsync();
 					// execute this code at the end of asynchronous media player

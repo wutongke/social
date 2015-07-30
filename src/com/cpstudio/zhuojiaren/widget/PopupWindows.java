@@ -298,7 +298,7 @@ public class PopupWindows {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(mActivity,GrouthListActivity.class);
-				intent.putExtra("teacher", data[wheel.getCurrentItem()]);
+				intent.putExtra("typeId", data[wheel.getCurrentItem()]);
 				mActivity.startActivity(intent);
 				mActivity.finish();
 			}

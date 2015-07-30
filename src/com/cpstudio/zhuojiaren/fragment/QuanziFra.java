@@ -276,7 +276,7 @@ public class QuanziFra extends Fragment {
 		}
 		shareFooter.setVisibility(View.VISIBLE);
 	}
-
+	
 	/**
 	 * 退出管理
 	 */
@@ -395,25 +395,18 @@ public class QuanziFra extends Fragment {
 		}
 	};
 	
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onResult(Intent data) {
 		// TODO Auto-generated method stub
-		super.onActivityResult( requestCode,  resultCode,  data);
-		//筛选
-		if(requestCode==1){
-			if(resultCode==getActivity().RESULT_OK){
-				url = ZhuoCommHelper.getServiceSearchQuan();
-				//先设置为空
-				gtype=null;
-				city = null;
-				int type = data.getIntExtra("type", 1);
-				if(type==1){
-					gtype = data.getIntExtra("quanzitype", 1)+"";
-				}else{
-					city = data.getIntExtra("city", 1)+"";
-				}
-				loadData();
-			}
+		url = ZhuoCommHelper.getServiceSearchQuan();
+		//先设置为空
+		gtype=null;
+		city = null;
+		int type = data.getIntExtra("type", 1);
+		if(type==1){
+			gtype = data.getIntExtra("quanzitype", 1)+"";
+		}else{
+			city = data.getIntExtra("city", 1)+"";
 		}
+		loadData();
 	}
 }

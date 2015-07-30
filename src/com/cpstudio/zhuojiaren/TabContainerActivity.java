@@ -33,7 +33,7 @@ import com.cpstudio.zhuojiaren.facade.SysMsgFacade;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.SysApplication;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.ui.StudyActivity;
+import com.cpstudio.zhuojiaren.ui.GrouthActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudui.zhuojiaren.lz.LZMyHomeActivity;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -70,7 +70,7 @@ public class TabContainerActivity extends TabActivity implements
 	private Class[] mTabClassArray = {
 			com.cpstudui.zhuojiaren.lz.MainActivity.class,
 			JiarenActiveActivity.class, MsgListActivity.class,
-			StudyActivity.class, LZMyHomeActivity.class };// MyHomeActivity.class
+			GrouthActivity.class, LZMyHomeActivity.class };// MyHomeActivity.class
 
 	private int[] mImageResourceArray = { R.drawable.indicator_tab_ico_zhuo,
 			R.drawable.indicator_tab_ico_active,

@@ -22,10 +22,10 @@ public class GrouthAdapter extends CommonAdapter<GrouthVedio>{
 	public void convert(ViewHolder helper, GrouthVedio item) {
 		// TODO Auto-generated method stub
 //		helper.setImageResource(R.id.ig_grouth_image, R.drawable.pop_cancel2);
-		helper.setText(R.id.ig_grouth_name, item.getName());
+		helper.setText(R.id.ig_grouth_name, item.getTutorName());
 		helper.setText(R.id.ig_browse_count,item.getBrowerCount());
 		helper.setText(R.id.ig_duration, item.getDuration());
-		imageLoader.beginLoad(item.getImageUrl(), (ImageView)helper.getView(R.id.ig_grouth_image));
+		imageLoader.beginLoad(item.getImageAddr(), (ImageView)helper.getView(R.id.ig_grouth_image));
 	}
 
 

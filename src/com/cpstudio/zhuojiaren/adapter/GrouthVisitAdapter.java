@@ -22,11 +22,12 @@ public class GrouthVisitAdapter extends CommonAdapter<GrouthVisit>{
 	@Override
 	public void convert(ViewHolder helper, GrouthVisit item) {
 		// TODO Auto-generated method stub
-		helper.setText(R.id.iv_grouth_name, item.getName());
+		helper.setText(R.id.iv_grouth_name, item.getTitle());
 		String content = item.getContent();
 		if(item.getContent().length()>30)
 			content = content.substring(0,30)+"...";
 		helper.setText(R.id.iv_grouth_content, content);
+		if(item.getImageUrl()!=null)
 		imageLoad.beginLoad(item.getImageUrl(), (ImageView)helper.getView(R.id.iv_grouth_image));
 	}
 

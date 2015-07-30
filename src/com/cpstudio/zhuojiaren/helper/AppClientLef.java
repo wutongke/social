@@ -194,14 +194,87 @@ public class AppClientLef {
 			msg.setData(bundle);
 			msg.obj = res;
 			msg.sendToTarget();
+			return true;
+		}else{
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+			nameValuePairs = addUserInfoByPost(nameValuePairs);
+			nameValuePairs.add(new BasicNameValuePair("version", "0"));
+			String url = ZhuoCommHelper.getServiceCityList();
+			return doPost(nameValuePairs, url,
+					handler, handlerTag, activity, url, cancelable,
+					cancel, data);
 		}
-		
+	}
+	/**
+	 * 获取视频在线
+	 */
+	public boolean getVedioList(String tutorId,String typeId ,int pageNo,int pageSize, Handler handler,
+			int handlerTag, Activity activity, boolean cancelable,
+			OnCancelListener cancel, String data) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
-		String url = ZhuoCommHelper.getServiceCityList();
+		if(tutorId!=null)
+		nameValuePairs.add(new BasicNameValuePair("tutorId", tutorId));
+		if(typeId!=null)
+		nameValuePairs.add(new BasicNameValuePair("typeId", typeId));
+		String url = ZhuoCommHelper.getServiceVedioList();
 		return doPost(nameValuePairs, url,
 				handler, handlerTag, activity, url, cancelable,
 				cancel, data);
+	}
+	/**
+	 * 获取音频在线
+	 */
+	public boolean getAudioList(int pageNo,int pageSize, Handler handler,
+			int handlerTag, Activity activity, boolean cancelable,
+			OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		String url = ZhuoCommHelper.getServiceAudioList();
+		return doPost(nameValuePairs, url,
+				handler, handlerTag, activity, url, cancelable,
+				cancel, data);
+	}
+	/**
+	 * 获取采访
+	 * @param pageNo
+	 * @param pageSize
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
+	public boolean getVisiteList(int pageNo,int pageSize, Handler handler,
+			int handlerTag, Activity activity, boolean cancelable,
+			OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		String url = ZhuoCommHelper.getServiceVisitList();
+		return doPost(nameValuePairs, url,
+				handler, handlerTag, activity, url, cancelable,
+				cancel, data);
+	}
+	/**
+	 * 获取老师列表
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
+	public boolean getTeacherList(Handler handler,
+			int handlerTag, Activity activity) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		String url = ZhuoCommHelper.getServiceTeacherList();
+		return doPost(nameValuePairs, url,
+				handler, handlerTag, activity, url, false,
+				null, null);
 	}
 	/**
 	 * 保存对象

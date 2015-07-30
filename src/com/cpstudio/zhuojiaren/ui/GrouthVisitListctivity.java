@@ -17,7 +17,13 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.GrouthVisitAdapter;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.GrouthVisit;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.RecordVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
@@ -28,6 +34,9 @@ public class GrouthVisitListctivity extends BaseActivity {
 	private GrouthVisitAdapter mAdapter;
 	private ListView listView;
 	private ArrayList<GrouthVisit> mDatas = new ArrayList<GrouthVisit>();
+	// 分页
+	private int mPage = 0;
+	private AppClientLef appClientLef;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,36 +44,77 @@ public class GrouthVisitListctivity extends BaseActivity {
 		setContentView(R.layout.activity_grouth_visit_listctivity);
 		ButterKnife.inject(this);
 		initTitle();
+		appClientLef = AppClientLef.getInstance(this);
 		title.setText(R.string.grouth_visite_label);
 		initPullDownView();
 		loadData();
 	}
 
 	private void loadData() {
-		// TODO Auto-generated method stub
-		// test
-		GrouthVisit g = new GrouthVisit();
-		g.setImageUrl("http://img0.imgtn.bdimg.com/it/u=3317101867,3739965699&fm=11&gp=0.jpg");
-		g.setName("张博士亲授");
-		g.setContent("三井是个逃兵，毋庸置疑。他曾经是个骄傲的战士，带着无可置疑的天赋与荣誉。对于这样的人来说，一场意外就是一次灾难，他陷入了一个令人绝望的困境，最可怕的是，所有关于未来的规划被迫打断。这是一个少年遇到的最大困境，他面对的是可能永远不能重回巅峰的现实，这个现实对于他来说，太过残酷。");
-		g.setTime("2013.5.6");
-		g.setOrder("第十二期");
-		
-		mDatas.add(g);
-		mDatas.add(g);
-		mDatas.add(g);
-		mDatas.add(g);
-		mAdapter.notifyDataSetChanged();
-		Message msg = uiHandler.obtainMessage();
-		msg.sendToTarget();
+		if (pullDownView.startLoadData()) {
+			mDatas.clear();
+			mPage = 0;
+			mAdapter.notifyDataSetChanged();
+			appClientLef.getVisiteList(mPage, 5, uiHandler,
+					MsgTagVO.DATA_LOAD, GrouthVisitListctivity.this, true, null,
+					null);
+		}
+
+	}
+
+	private void loadMore() {
+		appClientLef.getVisiteList(mPage, 5, uiHandler,
+				MsgTagVO.DATA_MORE, GrouthVisitListctivity.this, true, null, null);
 	}
 
 	Handler uiHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			pullDownView.finishLoadData(true);
-			pullDownView.hasData();
-		};
+			switch (msg.what) {
+			case MsgTagVO.DATA_LOAD: {
+				ResultVO res;
+				if (JsonHandler.checkResult((String) msg.obj,
+						GrouthVisitListctivity.this)) {
+					res = JsonHandler.parseResult((String) msg.obj);
+				} else {
+					return;
+				}
+				String data = res.getData();
+				updateItemList(data, true, false);
+				break;
+			}
+			case MsgTagVO.DATA_MORE: {
+				updateItemList((String) msg.obj, false, true);
+				break;
+			}
+			}
+			;
+		}
+
 	};
+
+	private void updateItemList(String data, boolean refresh, boolean append) {
+		// TODO Auto-generated method stub
+		try {
+			pullDownView.finishLoadData(true);
+			if (data != null && !data.equals("")) {
+				ArrayList<GrouthVisit> list = JsonHandler_Lef
+						.parseVisitList(data);
+				if (!list.isEmpty()) {
+					if (!append) {
+						mDatas.clear();
+						pullDownView.hasData();
+					}
+					mDatas.addAll(list);
+					mAdapter.notifyDataSetChanged();
+					mPage++;
+				} else {
+					pullDownView.noData(true);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	private void initPullDownView() {
 		// TODO Auto-generated method stub
@@ -84,7 +134,7 @@ public class GrouthVisitListctivity extends BaseActivity {
 			@Override
 			public void onMore() {
 				// TODO Auto-generated method stub
-				loadData();
+				loadMore();
 			}
 		});
 		pullDownView.setShowHeader();
@@ -95,11 +145,12 @@ public class GrouthVisitListctivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(GrouthVisitListctivity.this,GrouthVisitDetailActivity.class);
+				Intent intent = new Intent(GrouthVisitListctivity.this,
+						GrouthVisitDetailActivity.class);
+				intent.putExtra("visit", mDatas.get(position-1));
 				startActivity(intent);
 			}
 		});
 	}
-
 
 }
