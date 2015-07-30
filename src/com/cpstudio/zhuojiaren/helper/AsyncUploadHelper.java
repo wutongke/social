@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.cpstudio.zhuojiaren.R;
 import com.qiniu.android.http.ResponseInfo;
@@ -30,7 +31,6 @@ public class AsyncUploadHelper extends
 	ArrayList<String> keysList = new ArrayList<String>();
 	String token;
 	Context mContext = null;
-
 	public AsyncUploadHelper(Context context, String token,
 			UploadCompleteCallback mCallback) {
 		super();
@@ -63,6 +63,9 @@ public class AsyncUploadHelper extends
 
 		if (token == null)
 			token = "gqyn9mD9OEVHoayK16ivmeCMcUgLNxVnxIjcrGCm:i7rT4MfI_Wg2guWBLyOV5CJQmYw=:eyJzY29wZSI6InpodW90ZXN0IiwiZGVhZGxpbmUiOjE0MzgyMzk1ODJ9";
+		
+//token="gqyn9mD9OEVHoayK16ivmeCMcUgLNxVnxIjcrGCm:Ujs0kdVbywu6OQwYpZhuqLJSIL8=:eyJzY29wZSI6InpodW90ZXN0IiwiZGVhZGxpbmUiOjE0MzgyNTgyOTZ9";
+		
 		// 真实环境需要替换 final String token = uploadFileToken;
 		List<String> filePathsList = files[0];
 		final List<String> keys = Collections
@@ -89,6 +92,7 @@ public class AsyncUploadHelper extends
 					// token过期时会返回null
 					if (arg1.isOK() && arg2 != null) {
 						String s = arg2.optString("key", "");
+						Log.i("token", arg1.toString());
 						if (s != null)
 							keys.add(s);
 					}
