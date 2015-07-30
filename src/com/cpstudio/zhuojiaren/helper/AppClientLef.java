@@ -287,13 +287,28 @@ public class AppClientLef {
 				cancel, data);
 	}
 	/**
-	 * 获取老师列表
 	 * @param handler
 	 * @param handlerTag
 	 * @param activity
 	 * @param cancelable
 	 * @param cancel
 	 * @param data
+	 * @return
+	 */
+	public boolean getGrowthOnlineType(Handler handler,
+			int handlerTag, Activity activity) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		String url = ZhuoCommHelper.getGrowthonlinetype();
+		return doPost(nameValuePairs, url,
+				handler, handlerTag, activity, url, false,
+				null, null);
+	}
+	/**
+	 * 
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
 	 * @return
 	 */
 	public boolean getTeacherList(Handler handler,

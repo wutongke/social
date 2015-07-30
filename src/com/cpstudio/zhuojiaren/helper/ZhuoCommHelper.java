@@ -111,7 +111,11 @@ public class ZhuoCommHelper {
 	private final static String SERVICE_Teacher_LIST = "/getTutor.do";
 	private final static String SERVICE_Funding_LIST = "/getTutor.do";
 	private final static String AUDIO_COLL = "/praiseAudio.do";
+	private final static String GrowthOnlineType = "/getGrowthOnlineType.do";
 
+	public static String getGrowthonlinetype() {
+		return SERVER + GrowthOnlineType;
+	}
 	public static String getAudioColl() {
 		return SERVER + AUDIO_COLL;
 	}

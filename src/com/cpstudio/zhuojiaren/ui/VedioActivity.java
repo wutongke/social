@@ -388,4 +388,14 @@ public class VedioActivity extends BaseActivity {
 			AppClientLef.getInstance(this).submitVedio(vedio.getId());
 		}
 	}
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (vedioPlayer != null) {
+			vedioPlayer.release();
+			vedioPlayer = null;
+		}
+		VedioActivity.this.finish();
+	}
 }
