@@ -799,7 +799,7 @@ public class ZhuoConnHelper {
 				mStartedTag.add(tag);
 			}
 			if (files != null) {
-				AsyncUploadHelper asyncTaskHeaper = new AsyncUploadHelper(
+				AsyncUploadHelper asyncTaskHeaper = new AsyncUploadHelper(activity,
 						uploadFileToken, new UploadCompleteCallback() {
 							@Override
 							public void onReturn(List<String> keyList) {

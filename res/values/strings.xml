@@ -290,6 +290,8 @@
     <string name="info62">发布成功</string>
     <string name="info63">提示</string>
     <string name="info64">正在发送中</string>
+     <string name="infofile">文件上传中...</string>
+    
     <string name="info65">请输入评论内容</string>
     <string name="info66">创建成功</string>
     <string name="info67">更新成功</string>
