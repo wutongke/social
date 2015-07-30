@@ -9,11 +9,9 @@ import java.util.concurrent.CountDownLatch;
 
 import org.json.JSONObject;
 
-import u.aly.as;
-
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -31,7 +29,6 @@ public class UploadFileCallable implements Callable<Map<String, StringBuilder>> 
 
 	public UploadFileCallable(String token, Context mContext,
 			Map<String, ArrayList<String>> filesMap) {
-		super();
 		this.filesMap = filesMap;
 		this.token = token;
 		this.mContext = mContext;
@@ -58,9 +55,9 @@ public class UploadFileCallable implements Callable<Map<String, StringBuilder>> 
 			final String key = entry.getKey();
 			ArrayList<String> fileKeysList = entry.getValue();
 			for (String path : fileKeysList) {
-				uploadManager.put(path, key, token, new UpCompletionHandler() {
+				uploadManager.put(path, null, token, new UpCompletionHandler() {
 					@Override
-					public void complete(String key, ResponseInfo arg1,
+					public void complete(String reqKey, ResponseInfo arg1,
 							JSONObject arg2) {
 						if (arg1.isOK() && arg2 != null) {
 							String s = arg2.optString("key", "");
@@ -76,13 +73,13 @@ public class UploadFileCallable implements Callable<Map<String, StringBuilder>> 
 								resultMap.put(key, sb);
 							}
 						} else {
-							Log.i("token", key + "，上传失败");
+							Log.i("token", key + "，上传失败:" + arg1.toString());
 						}
 						countLock.countDown();
 					}
 				}, new UploadOptions(null, null, false,
 						new UpProgressHandler() {
-							public void progress(String key, double percent) {
+							public void progress(String reqkey, double percent) {
 							}
 						}, null));
 			}

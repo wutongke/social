@@ -28,10 +28,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper.FinishCallback;
-import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.UploadCompleteCallback;
 import com.cpstudio.zhuojiaren.model.LoginRes;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;

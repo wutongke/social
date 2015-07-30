@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.CountDownLatch;
 import java.util.Set;
 
 import org.apache.http.NameValuePair;
@@ -22,10 +20,8 @@ import android.os.Message;
 import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelperLZ.FinishCallback;
-import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.UploadCompleteCallback;
-import com.cpstudio.zhuojiaren.helper.CopyOfAsyncUploadHelper.ICompleteCallback;
-import com.cpstudio.zhuojiaren.model.LoginRes;
-import com.cpstudio.zhuojiaren.model.MsgTagVO;import com.qiniu.android.storage.UploadManager;
+import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.ICompleteCallback;
+import com.qiniu.android.storage.UploadManager;
 
 /**
  * 网络相关
@@ -789,7 +785,7 @@ public class ZhuoConnHelper {
 	// }
 
 	/**
-	 * 之后废弃
+	 * 之后废弃,不要用
 	 */
 	public boolean doFormPost(ArrayList<String> files,
 			final List<NameValuePair> nameValuePairs, final String url,
@@ -802,20 +798,23 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-			if (files != null) {
-				AsyncUploadHelper asyncTaskHeaper = new AsyncUploadHelper(
-						activity, uploadFileToken,
-						new UploadCompleteCallback() {
-							@Override
-							public void onReturn(List<String> keyList) {
-								// TODO Auto-generated method stub
-								if (keyList == null || keyList.size() < 1) {
-									Toast.makeText(activity, "上传图片到七牛云失败", 1000)
-											.show();
+			AsyncUploadHelper helper = new AsyncUploadHelper(
+					activity, uploadFileToken, null,
+					new ICompleteCallback() {
+
+						@Override
+						public void onReturn(Map<String, StringBuilder> map) {
+							// TODO Auto-generated method stub
+							if(map==null)
+								Toast.makeText(activity, "上传到七牛云失败", 1000).show();
+							else if (map.size() > 0) {
+								for (Map.Entry<String, StringBuilder> entry : map
+										.entrySet()) {
+									String key = entry.getKey();
+									String value = entry.getValue().toString();
+									nameValuePairs.add(new BasicNameValuePair(
+											key, value));
 								}
-								List<String> keys = null;
-								if (keyList != null)
-									keys = keyList;
 								AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
 										addUserInfoByPost(nameValuePairs), url,
 										true, getFinishCallback(handler,
@@ -827,22 +826,10 @@ public class ZhuoConnHelper {
 											tag, conn));
 								}
 								conn.execute();
-
 							}
-						});
-				asyncTaskHeaper.execute(files);
-			} else {
-				AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
-						addUserInfoByPost(nameValuePairs), url, true,
-						getFinishCallback(handler, handlerTag, tag, data),
-						activity);
-				conn.setCancelable(cancelable);
-				if (cancelable) {
-					conn.setCancel(getCancelListener(cancel, tag, conn));
-				}
-				conn.execute();
-			}
-
+						}
+					});
+			helper.execute("test");
 			return true;
 		}
 		return false;
@@ -878,15 +865,17 @@ public class ZhuoConnHelper {
 				mStartedTag.add(tag);
 			}
 
-			CopyOfAsyncUploadHelper helper = new CopyOfAsyncUploadHelper(
+			AsyncUploadHelper helper = new AsyncUploadHelper(
 					activity, uploadFileToken, filesMap,
 					new ICompleteCallback() {
 
 						@Override
 						public void onReturn(Map<String, StringBuilder> map) {
 							// TODO Auto-generated method stub
-							if (map != null || map.size() > 0) {
-								for (Map.Entry<String, ArrayList<String>> entry : filesMap
+							if(map==null)
+								Toast.makeText(activity, "上传到七牛云失败", 1000).show();
+							else if (map.size() > 0) {
+								for (Map.Entry<String, StringBuilder> entry : map
 										.entrySet()) {
 									String key = entry.getKey();
 									String value = entry.getValue().toString();
@@ -906,8 +895,8 @@ public class ZhuoConnHelper {
 								conn.execute();
 							}
 						}
-
 					});
+			helper.execute("test");
 			return true;
 		}
 		return false;
