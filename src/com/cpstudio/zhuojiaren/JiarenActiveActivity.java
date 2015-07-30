@@ -25,6 +25,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -47,7 +48,7 @@ public class JiarenActiveActivity extends Activity implements
 	private QuanziTopicListAdapter mAdapter;
 
 	private PullDownView mPullDownView;
-	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
+	private ArrayList<QuanTopicVO> mList = new ArrayList<QuanTopicVO>();
 	private LoadImage mLoadImage = null;
 	private PopupWindows pwh = null;
 	private String mUid = null;
@@ -205,7 +206,7 @@ public class JiarenActiveActivity extends Activity implements
 
 	}
 
-	private void updateItemList(ArrayList<ZhuoInfoVO> list, boolean refresh,
+	private void updateItemList(ArrayList<QuanTopicVO> list, boolean refresh,
 			boolean append) {
 		if (!list.isEmpty()) {
 			mPullDownView.hasData();
@@ -215,7 +216,7 @@ public class JiarenActiveActivity extends Activity implements
 			mList.addAll(list);
 			mAdapter.notifyDataSetChanged();
 			if (mList.size() > 0) {
-				mLastId = mList.get(mList.size() - 1).getMsgid();
+				mLastId = mList.get(mList.size() - 1).getTopicid();
 			}
 			mPage++;
 		} else {
@@ -272,18 +273,18 @@ public class JiarenActiveActivity extends Activity implements
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
-				ArrayList<ZhuoInfoVO> list = new ArrayList<ZhuoInfoVO>();
+				ArrayList<QuanTopicVO> list = new ArrayList<QuanTopicVO>();
 				boolean loadState = false;
 				if (msg.obj instanceof ArrayList) {
-					list = (ArrayList<ZhuoInfoVO>) msg.obj;
+					list = (ArrayList<QuanTopicVO>) msg.obj;
 				} else {
 					if (msg.obj != null && !msg.obj.equals("")) {
 						loadState = true;
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
-						list = nljh.parseZhuoInfoList();
+						list = nljh.parseQuanTopicList();
 						if (!list.isEmpty()) {
-							infoFacade.update(list);
+//							infoFacade.update(list);
 						}
 					}
 				}
@@ -297,7 +298,7 @@ public class JiarenActiveActivity extends Activity implements
 					loadState = true;
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					ArrayList<ZhuoInfoVO> list = nljh.parseZhuoInfoList();
+					ArrayList<QuanTopicVO> list = nljh.parseQuanTopicList();
 					updateItemList(list, false, false);
 				}
 				mPullDownView.RefreshComplete(loadState);
@@ -305,16 +306,16 @@ public class JiarenActiveActivity extends Activity implements
 			}
 			case MsgTagVO.DATA_MORE: {
 				mPullDownView.notifyDidMore();
-				ArrayList<ZhuoInfoVO> list = new ArrayList<ZhuoInfoVO>();
+				ArrayList<QuanTopicVO> list = new ArrayList<QuanTopicVO>();
 				if (msg.obj instanceof ArrayList) {
-					list = (ArrayList<ZhuoInfoVO>) msg.obj;
+					list = (ArrayList<QuanTopicVO>) msg.obj;
 				} else {
 					if (msg.obj != null && !msg.obj.equals("")) {
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
-						list = nljh.parseZhuoInfoList();
+						list = nljh.parseQuanTopicList();
 						if (!list.isEmpty()) {
-							infoFacade.update(list);
+//							infoFacade.update(list);
 						}
 					}
 				}

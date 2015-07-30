@@ -38,6 +38,7 @@ import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicAdVO;
+import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -65,7 +66,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	private ViewPager catsViewPager;
 
 	GoodsPicAdVO picAd;
-	
+
 	private PageIndicator catsIndicator;
 
 	private List<PicAdVO> hotListData;
@@ -82,11 +83,13 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	// lz .. private ZhuoUserListAdapter mAdapter;
 	private QuanziTopicListAdapter mAdapter;
 	private PullDownView mPullDownView;
-	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
+	// 圈话题的布局与动态一样，暂时用QuanTopicVO的List和adapter
+	private ArrayList<QuanTopicVO> mList = new ArrayList<QuanTopicVO>();
 	private String mSearchKey = null;
 	private String mLastId = null;
 	private String uid = null;
 	private ZhuoConnHelper mConnHelper = null;
+	// 存本地。需改写
 	private InfoFacade infoFacade = null;
 	private int mPage = 1;
 	boolean isContinue = true;
@@ -122,7 +125,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
-		
+
 		initClick();
 		initHeadView();
 		loadData();
@@ -182,10 +185,10 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(picAd!=null)
+				if (picAd != null)
 					;
-//				startActivity(new Intent(MainActivity.this,
-//						GoodsDetailLActivity.class));
+				// startActivity(new Intent(MainActivity.this,
+				// GoodsDetailLActivity.class));
 			}
 		});
 
@@ -252,7 +255,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		});
 	}
 
-	private void updateItemList(ArrayList<ZhuoInfoVO> list, boolean refresh,
+	private void updateItemList(ArrayList<QuanTopicVO> list, boolean refresh,
 			boolean append) {
 		if (!list.isEmpty()) {
 			mPullDownView.hasData();
@@ -262,7 +265,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			mList.addAll(list);
 			mAdapter.notifyDataSetChanged();
 			if (mList.size() > 0) {
-				mLastId = mList.get(mList.size() - 1).getMsgid();
+				mLastId = mList.get(mList.size() - 1).getTopicid();
 			}
 			mPage++;
 		} else {
@@ -277,18 +280,18 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: { // 加载数据（本地或网络），本地数据返回一个list,网络数据返回一个json
-				ArrayList<ZhuoInfoVO> list = new ArrayList<ZhuoInfoVO>();
+				ArrayList<QuanTopicVO> list = new ArrayList<QuanTopicVO>();
 				boolean loadState = false;
 				if (msg.obj instanceof ArrayList) {// 加载的本地数据
-					list = (ArrayList<ZhuoInfoVO>) msg.obj;
+					list = (ArrayList<QuanTopicVO>) msg.obj;
 				} else {
 					if (msg.obj != null && !msg.obj.equals("")) {
 						loadState = true;
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
-						list = nljh.parseZhuoInfoList();
+						list = nljh.parseQuanTopicList();
 						if (!list.isEmpty()) {
-							infoFacade.update(list);
+							// infoFacade.update(list);
 						} else if (mSearchKey != null && !mSearchKey.equals("")) {
 							CommonUtil.displayToast(getApplicationContext(),
 									R.string.error18);
@@ -305,7 +308,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 					loadState = true;
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					ArrayList<ZhuoInfoVO> list = nljh.parseZhuoInfoList();
+					ArrayList<QuanTopicVO> list = nljh.parseQuanTopicList();
 					updateItemList(list, false, false);
 				}
 				mPullDownView.RefreshComplete(loadState);
@@ -313,16 +316,16 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			}
 			case MsgTagVO.DATA_MORE: {
 				mPullDownView.notifyDidMore();
-				ArrayList<ZhuoInfoVO> list = new ArrayList<ZhuoInfoVO>();
+				ArrayList<QuanTopicVO> list = new ArrayList<QuanTopicVO>();
 				if (msg.obj instanceof ArrayList) {
-					list = (ArrayList<ZhuoInfoVO>) msg.obj;
+					list = (ArrayList<QuanTopicVO>) msg.obj;
 				} else {
 					if (msg.obj != null && !msg.obj.equals("")) {
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
-						list = nljh.parseZhuoInfoList();
+						list = nljh.parseQuanTopicList();
 						if (!list.isEmpty()) {
-							infoFacade.update(list);
+							// infoFacade.update(list);
 						}
 					}
 				}
@@ -451,21 +454,17 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			// msg.obj = adInfo;
 			// msg.sendToTarget();
 		} else {
-			// String params = ZhuoCommHelperLz.getMainAdInfo();
-			// 测试
-			String params = "http://115.28.167.196:9001/zhuo-api/getportalinfo.do";
-							 
-			mConnHelper.getFromServerByPost(params, mUIHandler, MsgTagVO.DATA_OTHER);
+			mConnHelper.getMainAdInfo(mUIHandler, MsgTagVO.DATA_OTHER);
 		}
 	}
 
 	private void updateAdInfo(MainHeadInfo info) {
 
-		picAd=info.getAdtop();
-		
+		picAd = info.getAdtop();
+
 		imageLoader.addTask(picAd.getAdlink(), idBanner);
-	    imageLoader.doTask();
-		
+		imageLoader.doTask();
+
 		ArrayList<MessagePubVO> listData = (ArrayList<MessagePubVO>) info
 				.getPub();
 		if (noticesListData != null)

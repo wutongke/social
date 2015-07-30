@@ -34,7 +34,9 @@ import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.PicVO;
+import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -49,7 +51,7 @@ import com.utils.ImageRectUtil;
  * 
  */
 public class QuanziTopicListAdapter extends BaseAdapter {
-	private List<ZhuoInfoVO> mList = null;
+	private List<QuanTopicVO> mList = null;
 	private LayoutInflater inflater = null;
 	private LoadImage mLoadImage = new LoadImage(10);
 	private Context mContext = null;
@@ -70,8 +72,8 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		this.groupId = groupId;
 	}
 
-	public QuanziTopicListAdapter(Fragment fragment, ArrayList<ZhuoInfoVO> list) {
-//圈子话题的列表
+	public QuanziTopicListAdapter(Fragment fragment, ArrayList<QuanTopicVO> list) {
+		// 圈子话题的列表
 		this.mContext = fragment.getActivity();
 		this.fragment = fragment;
 		this.mList = list;
@@ -83,8 +85,8 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 
 	}
 
-	public QuanziTopicListAdapter(Activity activity, ArrayList<ZhuoInfoVO> list) {
-//好友动态的列表，fragment为null
+	public QuanziTopicListAdapter(Activity activity, ArrayList<QuanTopicVO> list) {
+		// 好友动态的列表，fragment为null..与圈话题的内容一致
 		this.mContext = activity;
 		this.fragment = null;
 		this.mList = list;
@@ -95,7 +97,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		this.phw = new PopupWindows((Activity) mContext);
 
 	}
-	
+
 	public void setIsFollow(boolean flag) {
 		isFollow = flag;
 	}
@@ -131,68 +133,76 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
 		}
-		ZhuoInfoVO item = mList.get(position);
-		msgid = item.getMsgid();
-		UserVO user = item.getUser();
-		final String userid = user.getUserid();
-		String company = user.getCompany();
-		String authorName = user.getUsername();
-		String headUrl = user.getUheader();
-		String work = user.getPost();
-		String type = item.getType();
-		String category = item.getCategory();
-		String title = item.getTitle();
-		String detail = item.getText();
+		QuanTopicVO item = mList.get(position);
+		msgid = item.getTopicid();
+
+		final String userId = item.getUserid();
+
+		String authorName = item.getName();
+
+		String headUrl = item.getUheader();
+
+		String work = item.getPosition();
+
+		String detail = item.getContent();
+
 		String time = item.getAddtime();
+
 		time = CommonUtil.calcTime(time);
-		convertView.setTag(R.id.tag_id, item.getMsgid());
+
+		convertView.setTag(R.id.tag_id, msgid);
+
 		holder.nameTV.setText(authorName);
+
 		holder.timeTV.setText(time);
-		String woco = ZhuoCommHelper.concatStringWithTag(work, company, "|");
-		if (woco.length() > 1) {
-			holder.workTV.setText(woco);
+
+		if (work != null) {
+			holder.workTV.setText(work);
 			holder.workTV.setVisibility(View.VISIBLE);
 		} else {
 			holder.workTV.setText("");
 			holder.workTV.setVisibility(View.GONE);
 		}
-		if (type != null && !type.equals("")) {
-			Map<String, Object> resinfo = ZhuoCommHelper.gentResInfo(type,
-					category, title, detail, mContext);
-			holder.resIV.setImageResource((Integer) resinfo.get("ico"));
-			String text = (String) resinfo.get("category")
-					+ (String) resinfo.get("title")
-					+ (String) resinfo.get("content");
-			holder.resTV.setText(text.trim());
-			Rect bounds = new Rect();
-			TextPaint paint = holder.resTV.getPaint();
-			paint.getTextBounds(text, 0, text.length(), bounds);
-			// int width = bounds.width();
-			// if (width / (this.width - 85 * times) > 4) {
-			// holder.moreTV.setVisibility(View.VISIBLE);
-			// holder.moreTV.setOnClickListener(new OnClickListener() {
-			//
-			// @Override
-			// public void onClick(View view) {
-			// TextView showTypeView = (TextView) view;
-			// if (showTypeView.getText().equals(
-			// mContext.getString(R.string.info2))) {
-			// showTypeView.setText(R.string.info1);
-			// holder.resTV.setMaxLines(4);
-			// } else {
-			//
-			// showTypeView.setText(R.string.info2);
-			// holder.resTV.setMaxLines(200);
-			// }
-			// }
-			// });
-			// } else {
-			// holder.moreTV.setVisibility(View.GONE);
-			// }
-		} else {
-			holder.resIV.setImageResource(0);
-			holder.resTV.setText("");
-		}
+		// if (type != null && !type.equals("")) {
+		// Map<String, Object> resinfo = ZhuoCommHelper.gentResInfo(type,
+		// category, title, detail, mContext);
+		// holder.resIV.setImageResource((Integer) resinfo.get("ico"));
+		// String text = (String) resinfo.get("category")
+		// + (String) resinfo.get("title")
+		// + (String) resinfo.get("content");
+		// holder.resTV.setText(text.trim());
+		// Rect bounds = new Rect();
+		// TextPaint paint = holder.resTV.getPaint();
+		// paint.getTextBounds(text, 0, text.length(), bounds);
+		// // int width = bounds.width();
+		// // if (width / (this.width - 85 * times) > 4) {
+		// // holder.moreTV.setVisibility(View.VISIBLE);
+		// // holder.moreTV.setOnClickListener(new OnClickListener() {
+		// //
+		// // @Override
+		// // public void onClick(View view) {
+		// // TextView showTypeView = (TextView) view;
+		// // if (showTypeView.getText().equals(
+		// // mContext.getString(R.string.info2))) {
+		// // showTypeView.setText(R.string.info1);
+		// // holder.resTV.setMaxLines(4);
+		// // } else {
+		// //
+		// // showTypeView.setText(R.string.info2);
+		// // holder.resTV.setMaxLines(200);
+		// // }
+		// // }
+		// // });
+		// // } else {
+		// // holder.moreTV.setVisibility(View.GONE);
+		// // }
+		// } else {
+		// holder.resIV.setImageResource(0);
+		// holder.resTV.setText("");
+		// }
+
+		holder.resTV.setText(detail.trim());
+
 		holder.headIV.setImageBitmap(ImageRectUtil.toRoundCorner(BitmapFactory
 				.decodeResource(mContext.getResources(),
 						R.drawable.default_userhead), 10));
@@ -202,7 +212,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(mContext, ZhuoMaiCardActivity.class);
-				intent.putExtra("userid", userid);
+				intent.putExtra("userid", userId);
 				mContext.startActivity(intent);
 			}
 		});
@@ -214,14 +224,14 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View view) {
 
-				if (fragment!=null && !isFollow) {
+				if (fragment != null && !isFollow) {
 					OnClickListener applyTojoinListener = new OnClickListener() {
 						@Override
 						public void onClick(View v) {
 							Intent i = new Intent(mContext,
 									ApplyToJoinQuanActicvity.class);
 							i.putExtra("groupid", msgid);
-							if(fragment!=null)
+							if (fragment != null)
 								fragment.startActivity(i);
 							else
 								mContext.startActivity(i);
@@ -260,12 +270,13 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 							i.putExtra("parentid", msgid);
 							// ((Activity)
 							// mContext).startActivityForResult(i,MsgTagVO.MSG_CMT);
-							if(fragment!=null)
+							if (fragment != null)
 								fragment.startActivityForResult(i,
 										Activity.RESULT_FIRST_USER);
 							else
-								((Activity) mContext).startActivityForResult(i,MsgTagVO.MSG_CMT);
-							
+								((Activity) mContext).startActivityForResult(i,
+										MsgTagVO.MSG_CMT);
+
 						}
 					};
 					phw.showOptionsPop(view, times, zanListener, cmtListener);
@@ -274,7 +285,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		});
 
 		holder.tl.removeAllViews();
-		final List<PicVO> picsinner = item.getPic();
+		final List<PicNewVO> picsinner = item.getTopicPic();
 		RelativeLayout.LayoutParams layoutParams = holder.rlp;
 		if (picsinner != null && picsinner.size() == 1) {
 			layoutParams = holder.rlp2;
@@ -292,10 +303,11 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 				ImageView iv = new ImageView(mContext);
 				iv.setLayoutParams(layoutParams);
 				rl.addView(iv);
-				rl.setTag(picsinner.get(i).getOrgurl());
-				iv.setTag(picsinner.get(i).getUrl());
+				final String url = picsinner.get(i).getPic();
+				rl.setTag(url);
+				iv.setTag(url);
 				iv.setImageResource(R.drawable.default_image);
-				mLoadImage.addTask(picsinner.get(i).getUrl(), iv);
+				mLoadImage.addTask(url, iv);
 				rl.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -303,7 +315,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 								PhotoViewMultiActivity.class);
 						ArrayList<String> orgs = new ArrayList<String>();
 						for (int j = 0; j < picsinner.size(); j++) {
-							orgs.add(picsinner.get(j).getOrgurl());
+							orgs.add(url);
 						}
 						intent.putStringArrayListExtra("pics", orgs);
 						intent.putExtra("pic", (String) v.getTag());

@@ -30,6 +30,7 @@ import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelperLz;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
@@ -47,13 +48,13 @@ public class QuanziTopicFra extends Fragment {
 
 	private QuanziTopicListAdapter mAdapter;
 	// private ArrayList<UserVO> mList = new ArrayList<UserVO>();
-	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
-//	private ArrayList<QuanTopicVO> mList = new ArrayList<QuanTopicVO>();
-	
-	
+	// private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
+	private ArrayList<QuanTopicVO> mList = new ArrayList<QuanTopicVO>();
+
 	private ZhuoConnHelper mConnHelper = null;
 	private int mPage = 1;
-	private int mType = 6;
+	private int mPageSize = 5;
+	private int mType = 5;
 	private ListViewFooter mListViewFooter = null;
 	private Context mContext;
 	private String mLastId = null;
@@ -124,7 +125,7 @@ public class QuanziTopicFra extends Fragment {
 			if (data != null && !data.equals("")) {
 				JsonHandler nljh = new JsonHandler(data, getActivity()
 						.getApplicationContext());
-				ArrayList<ZhuoInfoVO> list = nljh.parseZhuoInfoList();
+				ArrayList<QuanTopicVO> list = nljh.parseQuanTopicList();
 				if (!list.isEmpty()) {
 					mListViewFooter.hasData();
 					if (!append) {
@@ -133,7 +134,7 @@ public class QuanziTopicFra extends Fragment {
 					mList.addAll(list);
 					mAdapter.notifyDataSetChanged();
 					if (mList.size() > 0) {
-						mLastId = mList.get(mList.size() - 1).getMsgid();
+						mLastId = mList.get(mList.size() - 1).getTopicid();
 					}
 					mPage++;
 				} else {
@@ -152,7 +153,7 @@ public class QuanziTopicFra extends Fragment {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
 				mListViewFooter.finishLoading();
-				//通过返回数据判断是否属于该圈子，然后就行设置，暂时假定属于
+				// 通过返回数据判断是否属于该圈子，然后就行设置，暂时假定属于
 				mAdapter.setIsFollow(false);
 				updateItemList((String) msg.obj, true, false);
 				break;
@@ -180,29 +181,21 @@ public class QuanziTopicFra extends Fragment {
 	};
 
 	private void loadData() {
-//重要：：：：此处请求的返回结果中还应包含“我”是否在这个圈子之中的标志
-		String url = ZhuoCommHelper.getUrlUserInfo()
-				+ "?uid="
-				+ ResHelper.getInstance(getActivity().getApplicationContext())
-						.getUserid();
-
-		// 加载刷新个人信息
-		mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
+		// 重要：：：：此处请求的返回结果中还应包含“我”是否在这个圈子之中的标志
+		// String url = ZhuoCommHelper.getUrlUserInfo()
+		// + "?uid="
+		// + ResHelper.getInstance(getActivity().getApplicationContext())
+		// .getUserid();
+		//
+		// // 加载刷新个人信息
+		// mConnHelper.getFromServer(url, null,mUIHandler, MsgTagVO.UPDATE);
 
 		if (mListViewFooter.startLoading()) {
 			mList.clear();
 			mAdapter.notifyDataSetChanged();
 			mPage = 1;
-			String params = ZhuoCommHelper.getUrlMsgList();
-			params += "?pageflag=" + "0";
-			params += "&reqnum=" + "10";
-			params += "&lastid=" + "0";
-			params += "&type=" + "0";
-
-			params += "&gongxutype=" + "0";
-			params += "&from=" + "0";
-			params += "&uid=" + uid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD);
+			mConnHelper.getQuanTopicList(mUIHandler, MsgTagVO.DATA_LOAD,
+					groupId, uid, mPage, mPageSize);
 		}
 
 	}
@@ -212,26 +205,19 @@ public class QuanziTopicFra extends Fragment {
 		// TODO Auto-generated method stub
 		if (resultCode == Activity.RESULT_OK) {
 			// if (requestCode == MsgTagVO.MSG_CMT) {
-//			String forward = data.getStringExtra("forward");
-//			String msgid = data.getStringExtra("msgid");
-//			String outterid = data.getStringExtra("outterid");
+			// String forward = data.getStringExtra("forward");
+			// String msgid = data.getStringExtra("msgid");
+			// String outterid = data.getStringExtra("outterid");
 			Toast.makeText(mContext, "评论成功！", 2000).show();
-			}
-		
+		}
+
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	private void loadMore() {
 		if (mListViewFooter.startLoading()) {
-			String params = ZhuoCommHelper.getUrlMsgList();
-			params += "?pageflag=" + "1";
-			params += "&reqnum=" + "10";
-			params += "&lastid=" + mLastId;
-			params += "&type=" + "0";
-			params += "&gongxutype=" + "0";
-			params += "&from=" + "0";
-			params += "&uid=" + uid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
+			mConnHelper.getQuanTopicList(mUIHandler, MsgTagVO.DATA_MORE,
+					groupId, uid, mPage, mPageSize);
 		}
 	}
 

@@ -13,6 +13,7 @@ import org.apache.http.message.BasicNameValuePair;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelperLZ.FinishCallback;
 import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.UploadCompleteCallback;
+import com.cpstudio.zhuojiaren.model.LoginRes;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.qiniu.android.storage.UploadManager;
 
 /**
@@ -86,8 +89,12 @@ public class ZhuoConnHelper {
 	}
 
 	// lz0713
-	public boolean getFromServerByPost(String url, Handler handler, int tag) {
-		return getFromServerByPost(url, handler, tag, null, false, null, null);
+	private boolean getFromServerByPost(String url,
+			List<NameValuePair> pamNameValuePairs, Handler handler, int tag) {
+		if (pamNameValuePairs == null)
+			pamNameValuePairs = new ArrayList<NameValuePair>();
+		return getFromServerByPost(url, pamNameValuePairs, handler, tag, null,
+				false, null, null);
 	}
 
 	public boolean getFromServer(String url, Handler handler, int tag,
@@ -133,13 +140,13 @@ public class ZhuoConnHelper {
 	}
 
 	// lz0713
-	public boolean getFromServerByPost(String url, Handler handler, int tag,
+	public boolean getFromServerByPost(String url,
+			List<NameValuePair> pamNameValuePairs, Handler handler, int tag,
 			Activity activity, boolean cancelable, OnCancelListener cancel,
 			String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("pubnum", "5"));
-		return doPostByPost(nameValuePairs, url, handler, tag, activity, url,
-				cancelable, cancel, data);
+		pamNameValuePairs.add(new BasicNameValuePair("pubnum", "5"));
+		return doPostByPost(pamNameValuePairs, url, handler, tag, activity,
+				url, cancelable, cancel, data);
 	}
 
 	public boolean getFromServer(String url, FinishCallback callback) {
@@ -149,6 +156,43 @@ public class ZhuoConnHelper {
 	public boolean getFromServer(String url, FinishCallback callback,
 			Activity activity, boolean cancelable, OnCancelListener cancel) {
 		return doGet(url, callback, url, activity, cancelable, cancel);
+	}
+
+	// /////lz new 0729
+	public boolean getMainAdInfo(Handler mUIHandler, int tag) {
+		return getFromServerByPost(ZhuoCommHelperLz.getMainAdInfo(), null,
+				mUIHandler, tag);
+	}
+
+	/**
+	 * 
+	 * @param context
+	 * @param groupid
+	 * @param uid
+	 *            uid为null则获取本圈子的圈话题；否则获取此用户在此圈子的圈话
+	 * @param pageNo
+	 * @param pageSize
+	 */
+	public boolean getQuanTopicList(Handler mUIHandler, int tag,
+			String groupid, String uid, int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		if (uid != null)
+			nameValuePairs.add(new BasicNameValuePair("uid", uid));
+		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
+		return getFromServerByPost(ZhuoCommHelperLz.getQuanTopicList(),
+				nameValuePairs, mUIHandler, tag);
+	}
+
+	public boolean pubQuanTopic(Activity activity, Handler mUIHandler, int tag,
+			String groupid, String content, ArrayList<String> files) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		return doFormPost(files, nameValuePairs,
+				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
+				"pubQuanTopic", false, null, null);
 	}
 
 	public boolean pubCmt(String msgid, String parentid, String content,
@@ -555,7 +599,8 @@ public class ZhuoConnHelper {
 		this.password = password;
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("from", "android"));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlLogin(), handler,
+		//登陆时需要添加额外的账号和密码信息
+		return doPost(addUserInfo(nameValuePairs), ZhuoCommHelper.getUrlLogin(), handler,
 				handlerTag, activity, "login", cancelable, cancel, data);
 	}
 
@@ -654,8 +699,9 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
+			//添加的是用户名和密码，其他地方直接用addUserInfoByPost
 			AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
-					addUserInfo(nameValuePairs), url, getFinishCallback(
+					addUserInfoByPost(nameValuePairs), url, getFinishCallback(
 							handler, handlerTag, tag, data), activity);
 			conn.setCancelable(cancelable);
 			if (cancelable) {
@@ -726,6 +772,21 @@ public class ZhuoConnHelper {
 
 	}
 
+	/**
+	 * 需要上传文件时调用此接口
+	 * 
+	 * @param files 欲上传文件地址列表
+	 * @param nameValuePairs 参数
+	 * @param url	url
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param tag
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
 	private boolean doFormPost(ArrayList<String> files,
 			final List<NameValuePair> nameValuePairs, final String url,
 			final Handler handler, final int handlerTag,
@@ -739,7 +800,7 @@ public class ZhuoConnHelper {
 			}
 			if (files != null) {
 				AsyncUploadHelper asyncTaskHeaper = new AsyncUploadHelper(
-						new UploadCompleteCallback() {
+						uploadFileToken, new UploadCompleteCallback() {
 							@Override
 							public void onReturn(List<String> keyList) {
 								// TODO Auto-generated method stub
@@ -747,11 +808,14 @@ public class ZhuoConnHelper {
 									Toast.makeText(activity, "上传图片到七牛云失败", 1000)
 											.show();
 								}
+								List<String> keys = null;
+								if (keyList != null)
+									keys = keyList;
 								AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
-										(ArrayList<String>) keyList,
-										nameValuePairs, addUserInfo(url), true,
-										getFinishCallback(handler, handlerTag,
-												tag, data), activity);
+										keys, addUserInfoByPost(nameValuePairs),url,
+										true, getFinishCallback(handler,
+												handlerTag, tag, data),
+										activity);
 								conn.setCancelable(cancelable);
 								if (cancelable) {
 									conn.setCancel(getCancelListener(cancel,
@@ -761,9 +825,10 @@ public class ZhuoConnHelper {
 
 							}
 						});
+				asyncTaskHeaper.execute(files);
 			} else {
 				AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(null,
-						nameValuePairs, addUserInfo(url), true,
+						addUserInfoByPost(nameValuePairs), url, true,
 						getFinishCallback(handler, handlerTag, tag, data),
 						activity);
 				conn.setCancelable(cancelable);
@@ -834,6 +899,7 @@ public class ZhuoConnHelper {
 
 	private FinishCallback getFinishCallback(final Handler handler,
 			final int handlerTag, final String tag, final String data) {
+
 		return new FinishCallback() {
 			@Override
 			public boolean onReturn(String rs, int responseCode) {
@@ -886,13 +952,12 @@ public class ZhuoConnHelper {
 	// lz0713
 	private List<NameValuePair> addUserInfoByPost(
 			List<NameValuePair> nameValuePairs) {
-//		nameValuePairs.add(new BasicNameValuePair("session",
-//				"e72d664f93de40e7aa08b28f15444f5b"));
+		// nameValuePairs.add(new BasicNameValuePair("session",
+		// "e72d664f93de40e7aa08b28f15444f5b"));
 		nameValuePairs.add(new BasicNameValuePair("session", session));
 		nameValuePairs.add(new BasicNameValuePair("apptype", "0"));
 		return nameValuePairs;
 	}
-
 
 	public String getSession() {
 		return session;

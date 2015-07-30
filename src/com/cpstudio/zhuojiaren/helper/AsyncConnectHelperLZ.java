@@ -52,7 +52,7 @@ public class AsyncConnectHelperLZ extends AsyncTask<String, Integer, Boolean> {
 		this.mCallback = callback;
 	}
 
-	public AsyncConnectHelperLZ(ArrayList<String> fileKeys,
+	public AsyncConnectHelperLZ(List<String> fileKeys,
 			List<NameValuePair> nameValuePairs, String url, boolean thunckMode,
 			FinishCallback callback, Activity activity) {
 		this.mActivity = activity;
@@ -61,8 +61,8 @@ public class AsyncConnectHelperLZ extends AsyncTask<String, Integer, Boolean> {
 		if (fileKeys != null && fileKeys.size() > 0) {
 			String keysStr = fileKeys.get(0);
 			for (i = 1; i < fileKeys.size(); i++)
-				keysStr += (";" + fileKeys.get(i));
-			mNameValuePairs.add(new BasicNameValuePair("filekeys", keysStr));
+				keysStr += ("," + fileKeys.get(i));
+			mNameValuePairs.add(new BasicNameValuePair("file", keysStr));
 		}
 		mThunckMode = thunckMode;
 		mUrl = url;

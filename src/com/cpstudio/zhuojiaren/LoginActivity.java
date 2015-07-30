@@ -183,8 +183,8 @@ public class LoginActivity extends Activity {
 			case MsgTagVO.START_SEND:
 				String token=mResHelper.getImTokenForRongyun();
 				//之后需删除，暂测试用
-				token = "Py74UXPT8qhWh2FBRCIcMTFjiRWti9Q/V/JbvRGji8CEHe0b5wf8iw2NE/ATk8uhgGu1XTpqtsG7e1/c1dAylg==";
-				//token=1i0IMiO5dWjOuGb10l2INNGFPZgrVDszbwnCc2LVvviZzRX4y7mcfCOL7dMa+prc1m3BcXo7y7yZu7T7F6rXBg==
+//				token = "Py74UXPT8qhWh2FBRCIcMTFjiRWti9Q/V/JbvRGji8CEHe0b5wf8iw2NE/ATk8uhgGu1XTpqtsG7e1/c1dAylg==";
+				token="1i0IMiO5dWjOuGb10l2INNGFPZgrVDszbwnCc2LVvviZzRX4y7mcfCOL7dMa+prc1m3BcXo7y7yZu7T7F6rXBg==";
 				
 				RongIM.connect(token, new ConnectCallback() {
 
