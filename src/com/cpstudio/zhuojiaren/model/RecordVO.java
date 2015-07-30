@@ -1,8 +1,9 @@
 package com.cpstudio.zhuojiaren.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class RecordVO {
+public class RecordVO implements Serializable{
 	private String id;
 	private String serverid;
 	private String path;
@@ -12,6 +13,14 @@ public class RecordVO {
 	private String length;
 	private String users;
 	private String state;
+//	 "title": <string> (语音标题),
+//     "tutorName": <string> (讲师名称),
+//     "audioAddr": <string> (音频地址),
+//     "crtDate": <string> (创建日期)
+	private String title;
+	private String tutorName;
+	private String audioAddr;
+	private String crtDate;
 	private ArrayList<String> userids = new ArrayList<String>();
 
 	public String getId() {
@@ -92,6 +101,38 @@ public class RecordVO {
 
 	public void setServerid(String serverid) {
 		this.serverid = serverid;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getTutorName() {
+		return tutorName;
+	}
+
+	public String getAudioAddr() {
+		return audioAddr;
+	}
+
+	public String getCrtDate() {
+		return crtDate;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setTutorName(String tutorName) {
+		this.tutorName = tutorName;
+	}
+
+	public void setAudioAddr(String audioAddr) {
+		this.audioAddr = audioAddr;
+	}
+
+	public void setCrtDate(String crtDate) {
+		this.crtDate = crtDate;
 	}
 
 }

@@ -794,7 +794,7 @@
             android:label="@string/title_activity_gong_xu_detail" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.StudyActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.GrouthActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>

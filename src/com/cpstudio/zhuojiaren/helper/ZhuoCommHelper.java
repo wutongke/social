@@ -103,6 +103,26 @@ public class ZhuoCommHelper {
 	private final static String SERVICE_SHARECLOUD = "/sharecloud";
 	private final static String SERVICE_SEARCH_QUAN = "/groupsearch.do";
 	private final static String SERVICE_CITY_LIST = "/getcitylist.do";
+	private final static String SERVICE_VEDIO_LIST = "/getGrowthOnlineList.do";
+	private final static String SERVICE_AUDIO_LIST = "/getAudio.do";
+	private final static String SERVICE_Visit_LIST = "/getInterviewList.do";
+	private final static String SERVICE_Teacher_LIST = "/getTutor.do";
+
+	public static String getServiceTeacherList() {
+		return SERVER + SERVICE_Teacher_LIST;
+	}
+
+	public static String getServiceVisitList() {
+		return SERVER + SERVICE_Visit_LIST;
+	}
+
+	public static String getServiceAudioList() {
+		return SERVER + SERVICE_AUDIO_LIST;
+	}
+
+	public static String getServiceVedioList() {
+		return SERVER + SERVICE_VEDIO_LIST;
+	}
 
 	public static String getServiceCityList() {
 		return SERVER + SERVICE_CITY_LIST;

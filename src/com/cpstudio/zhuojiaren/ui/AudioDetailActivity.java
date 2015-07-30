@@ -18,11 +18,13 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.RecordVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 
-public class AudioDetailActivity extends Activity {
+public class AudioDetailActivity extends BaseActivity {
 	@InjectView(R.id.aad_duration)
 	TextView duration;
 	@InjectView(R.id.aad_more_inspiration)
@@ -49,6 +51,9 @@ public class AudioDetailActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_audio_detail);
 		ButterKnife.inject(this);
+		initTitle();
+		record = (RecordVO) getIntent().getSerializableExtra("audio");
+		title.setText(R.string.zhuo_audio);
 		mId = getIntent().getStringExtra("id");
 		playImage.setBackgroundResource(R.drawable.jjplay);
 		playImage2.setBackgroundResource(R.drawable.jjplay3);
@@ -91,12 +96,17 @@ public class AudioDetailActivity extends Activity {
 
 					else {
 						mediaPlayer = new MediaPlayer();
-						playImage.setBackgroundResource(R.drawable.jjstop);
-						playImage2.setBackgroundResource(R.drawable.ico_voice);
-						isPlaying = true;
 						// give data to mediaPlayer
 						try {
-							mediaPlayer.setDataSource(record.getPath());
+							if (record.getAudioAddr() != null)
+								mediaPlayer.setDataSource(record.getAudioAddr());
+							else {
+								CommonUtil.displayToast(
+										AudioDetailActivity.this,
+										R.string.error4);
+								return;
+							}
+
 							// media player asynchronous preparation
 							mediaPlayer.prepareAsync();
 							// execute this code at the end of asynchronous
@@ -106,7 +116,11 @@ public class AudioDetailActivity extends Activity {
 									.setOnPreparedListener(new OnPreparedListener() {
 										public void onPrepared(
 												final MediaPlayer mp) {
-
+											playImage
+													.setBackgroundResource(R.drawable.jjstop);
+											playImage2
+													.setBackgroundResource(R.drawable.ico_voice);
+											isPlaying = true;
 											// start media player
 											mp.start();
 
@@ -138,15 +152,6 @@ public class AudioDetailActivity extends Activity {
 		new LoadImage().beginLoad(
 				"http://pic6.nipic.com/20100404/4635053_162100094928_2.jpg",
 				advertisementIamge);
-		RecordVO g = new RecordVO();
-		g.setName("张来才");
-		g.setLength("12:12:13");
-		g.setUsers("张来才");
-		g.setDate("2015.6.23");
-		g.setPath("http://yinyueshiting.baidu.com/data2/music/122878621/648618151200320.mp3?xcode=f8e09d23004f8a09b123be2e4a685e68");
-		Message msg = uiHandler.obtainMessage();
-		msg.obj = g;
-		msg.sendToTarget();
 	}
 
 	Handler uiHandler = new Handler() {

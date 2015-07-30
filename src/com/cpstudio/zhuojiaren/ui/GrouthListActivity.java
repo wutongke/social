@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.RelativeLayout;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import butterknife.ButterKnife;
@@ -15,7 +17,13 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
@@ -25,6 +33,11 @@ public class GrouthListActivity extends BaseActivity {
 	private GrouthAdapter mAdapter;
 	private ListView listView;
 	private ArrayList<GrouthVedio> mDatas = new ArrayList<GrouthVedio>();
+	// 分页
+	private int mPage = 0;
+	private AppClientLef appClientLef;
+	private String tutorId;
+	private String typeId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,31 +45,13 @@ public class GrouthListActivity extends BaseActivity {
 		setContentView(R.layout.activity_grouth_query);
 		ButterKnife.inject(this);
 		initTitle();
+		tutorId = getIntent().getStringExtra("tutorId");
+		typeId = getIntent().getStringExtra("typeId");
 		title.setText(R.string.title_activity_up_level);
 		initPullDownView();
+		appClientLef = AppClientLef.getInstance(this);
 		loadData();
 	}
-
-	private void loadData() {
-		// TODO Auto-generated method stub
-		// test
-		GrouthVedio g = new GrouthVedio();
-		g.setBrowerCount("145");
-		g.setImageUrl("http://img0.imgtn.bdimg.com/it/u=3317101867,3739965699&fm=11&gp=0.jpg");
-		g.setVideoUrl("http://183.131.2.75/sohu/s26h23eab6/v1/Tmx3Tmwd0KI7PLEmWMX48eW1e2eLhFytht8N0KoF5m47fFoGRMNiNw.mp4?k=Tl6RyY&p=jWlvzSPComvdopwWXZhuOp3Wtf5m4r&r=TildoRrnyLbUZDWS0pviyF2XvmEAoO24WFvSqm8VR5&q=OpCmhW7IWhodRD6sfhvSotE7ZD6sWDXOfO6HfJ6X5GvsfBo2ZDvORhbOWJ6tvm4cRhASqF2sY&cip=115.231.218.207");
-		g.setName("张博士亲授");
-		g.setDuration("4小时");
-		pullDownView.finishLoadData(true);
-		pullDownView.hasData();
-		mDatas.add(g);
-		mAdapter.notifyDataSetChanged();
-	}
-
-	Handler uiHandler = new Handler() {
-		public void handleMessage(android.os.Message msg) {
-
-		};
-	};
 
 	private void initPullDownView() {
 		// TODO Auto-generated method stub
@@ -71,8 +66,9 @@ public class GrouthListActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(GrouthListActivity.this,VedioActivity.class);
-				intent.putExtra("vedio", mDatas.get(position-1));
+				Intent intent = new Intent(GrouthListActivity.this,
+						VedioActivity.class);
+				intent.putExtra("vedio", mDatas.get(position - 1));
 				startActivity(intent);
 			}
 		});
@@ -87,10 +83,76 @@ public class GrouthListActivity extends BaseActivity {
 			@Override
 			public void onMore() {
 				// TODO Auto-generated method stub
-				loadData();
+				loadMore();
 			}
 		});
 		pullDownView.setShowHeader();
 		pullDownView.setShowFooter(false);
+	}
+
+	private void loadData() {
+		if (pullDownView.startLoadData()) {
+			mDatas.clear();
+			mPage = 0;
+			mAdapter.notifyDataSetChanged();
+			appClientLef.getVedioList(tutorId, typeId, mPage, 5, uiHandler,
+					MsgTagVO.DATA_LOAD, GrouthListActivity.this, true, null,
+					null);
+		}
+
+	}
+
+	private void loadMore() {
+		appClientLef.getVedioList(tutorId, typeId, mPage, 5, uiHandler,
+				MsgTagVO.DATA_MORE, GrouthListActivity.this, true, null, null);
+	}
+
+	Handler uiHandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case MsgTagVO.DATA_LOAD: {
+				ResultVO res;
+				if (JsonHandler.checkResult((String) msg.obj,
+						GrouthListActivity.this)) {
+					res = JsonHandler.parseResult((String) msg.obj);
+				} else {
+					return;
+				}
+				String data = res.getData();
+				updateItemList(data, true, false);
+				break;
+			}
+			case MsgTagVO.DATA_MORE: {
+				updateItemList((String) msg.obj, false, true);
+				break;
+			}
+			}
+			;
+		}
+
+	};
+
+	private void updateItemList(String data, boolean refresh, boolean append) {
+		// TODO Auto-generated method stub
+		try {
+			pullDownView.finishLoadData(true);
+			if (data != null && !data.equals("")) {
+				ArrayList<GrouthVedio> list = JsonHandler_Lef
+						.parseGrouthVedioList(data);
+				if (!list.isEmpty()) {
+					if (!append) {
+						mDatas.clear();
+						pullDownView.hasData();
+					}
+					mDatas.addAll(list);
+					mAdapter.notifyDataSetChanged();
+					mPage++;
+				} else {
+					pullDownView.noData(true);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

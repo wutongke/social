@@ -52,16 +52,16 @@ public class GrouthChooseActivity extends BaseActivity {
 			}
 		});
 	}
-	OnClickListener toActivity = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			Intent intent = new Intent(GrouthChooseActivity.this,GrouthListActivity.class);
-			intent.putExtra("type", 1);
-			intent.putExtra("teacher", 1);
-			GrouthChooseActivity.this.startActivity(intent);
-			GrouthChooseActivity.this.finish();
-		}
-	};
+//	OnClickListener toActivity = new OnClickListener() {
+//		
+//		@Override
+//		public void onClick(View v) {
+//			// TODO Auto-generated method stub
+//			Intent intent = new Intent(GrouthChooseActivity.this,GrouthListActivity.class);
+//			intent.putExtra("type", 1);
+//			intent.putExtra("teacher", 1);
+//			GrouthChooseActivity.this.startActivity(intent);
+//			GrouthChooseActivity.this.finish();
+//		}
+//	};
 }

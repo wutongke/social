@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".StudyActivity" >
+    tools:context=".GrouthActivity" >
 	<include layout="@layout/title_activity"/>
 	<com.cpstudio.zhuojiaren.widget.PullDownView
 	    android:id="@+id/as_pulldown"

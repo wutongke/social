@@ -1,11 +1,20 @@
 package com.zhuojiaren.sortlistview;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.model.Province;
+import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.model.Teacher;
 import com.cpstudio.zhuojiaren.ui.GrouthListActivity;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zhuojiaren.sortlistview.SideBar.OnTouchingLetterChangedListener;
 
 import android.app.Activity;
@@ -13,6 +22,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -75,7 +86,32 @@ public class NamePup {
 		PopupWindow popupWindow = new PopupWindow(viewBreakQuanzi,
 				LayoutParams.MATCH_PARENT, (int) (view.getHeight()*0.6));
 
-		
+		//下载数据
+		AppClientLef appClient = AppClientLef.getInstance(mContext);
+		appClient.getTeacherList(new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				super.handleMessage(msg);
+				ResultVO res;
+				if (JsonHandler.checkResult((String) msg.obj, mContext)) {
+					res = JsonHandler.parseResult((String) msg.obj);
+				} else {
+					CommonUtil.displayToast(mContext, R.string.error0);
+					return;
+				}
+				String data = res.getData();
+				Type listType = new TypeToken<ArrayList<Teacher>>() {
+				}.getType();
+				Gson gson = new Gson();
+				ArrayList<Teacher> list = gson.fromJson(data, listType);
+				SourceDateList = filledData(list);
+				// 根据a-z进行排序源数据
+				Collections.sort(SourceDateList, pinyinComparator);
+				adapter = new SortAdapter(mContext, SourceDateList);
+				sortListView.setAdapter(adapter);
+			}
+		}, 1,(Activity)mContext);
 
 		// 实例化汉字转拼音类
 		characterParser = CharacterParser.getInstance();
@@ -111,18 +147,11 @@ public class NamePup {
 						((SortModel) adapter.getItem(position)).getName(),
 						Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent(mContext,GrouthListActivity.class);
-				intent.putExtra("teacher",SourceDateList.get(position).getName());
+				intent.putExtra("tutorId",SourceDateList.get(position).getId());
 				mContext.startActivity(intent);
 				((Activity) mContext).finish();
 			}
 		});
-
-		SourceDateList = filledData(mContext.getResources().getStringArray(R.array.date));
-
-		// 根据a-z进行排序源数据
-		Collections.sort(SourceDateList, pinyinComparator);
-		adapter = new SortAdapter(mContext, SourceDateList);
-		sortListView.setAdapter(adapter);
 
 		mClearEditText = (ClearEditText) viewBreakQuanzi.findViewById(R.id.filter_edit);
 
@@ -153,14 +182,15 @@ public class NamePup {
 		return popupWindow;
 	}
 
-	private List<SortModel> filledData(String[] date) {
+	private List<SortModel> filledData(ArrayList<Teacher> date) {
 		List<SortModel> mSortList = new ArrayList<SortModel>();
 
-		for (int i = 0; i < date.length; i++) {
+		for (int i = 0; i < date.size(); i++) {
 			SortModel sortModel = new SortModel();
-			sortModel.setName(date[i]);
+			sortModel.setName(date.get(i).getTutorName());
+			sortModel.setId(date.get(i).getId());
 			// 汉字转换成拼音
-			String pinyin = characterParser.getSelling(date[i]);
+			String pinyin = characterParser.getSelling(date.get(i).getTutorName());
 			String sortString = pinyin.substring(0, 1).toUpperCase();
 
 			// 正则表达式，判断首字母是否是英文字母

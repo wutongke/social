@@ -42,7 +42,7 @@ public class PlaceChooseDialog extends AlertDialog{
 		super(context,theme);
 		this.mContext = context;
 		//下载城市数据，然后获取城市编码
-		
+		loadCity();
 		// TODO Auto-generated constructor stub
 		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View placeView = inflater.inflate(R.layout.place_choose, null);
@@ -133,9 +133,9 @@ public class PlaceChooseDialog extends AlertDialog{
 	}
 	public int getCityCode() {
 		// TODO Auto-generated method stub
-		for(City city:cityList){
-			if(city.getCityName().equals(chooseCity))
-				return Integer.parseInt(city.getCityId());
+		for(City temp:cityList){
+			if(temp.getCityName().contains(chooseCity))
+				return Integer.parseInt(temp.getCityId());
 		}
 		return 1;
 	}

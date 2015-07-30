@@ -8,11 +8,63 @@ import java.io.Serializable;
  *
  */
 public class GrouthVedio implements Serializable{
+//	 "id": <int> (公告id),
+//     "imageAddr": <string> (展示图片url，可以使用七牛缩略api进行缩略),
+//     "vedioAddr": <string> (视频url),
+//     "tutorName": <string> (讲师名称),
+//     "typeName": <string> (成长在线类型名称),
+//     "crtDate": <string> (创建日期)
 	private String id;
-	private String imageUrl;
-	private String videoUrl;
-	private String name;
+	public String getImageAddr() {
+		return imageAddr;
+	}
+	public String getVedioAddr() {
+		return vedioAddr;
+	}
+	public String getTutorName() {
+		return tutorName;
+	}
+	public String getTypeName() {
+		return typeName;
+	}
+	public String getCrtDate() {
+		return crtDate;
+	}
+	public String getBrowerCount() {
+		return browerCount;
+	}
+	public String getDuration() {
+		return duration;
+	}
+	public void setImageAddr(String imageAddr) {
+		this.imageAddr = imageAddr;
+	}
+	public void setVedioAddr(String vedioAddr) {
+		this.vedioAddr = vedioAddr;
+	}
+	public void setTutorName(String tutorName) {
+		this.tutorName = tutorName;
+	}
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+	public void setCrtDate(String crtDate) {
+		this.crtDate = crtDate;
+	}
+	public void setBrowerCount(String browerCount) {
+		this.browerCount = browerCount;
+	}
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+	private String imageAddr;
+	private String vedioAddr;
+	private String tutorName;
+	private String typeName;
+	private String crtDate;
+	//观看人数
 	private String browerCount;
+	//时长
 	private String duration;
 	public String getId() {
 		return id;
@@ -20,36 +72,5 @@ public class GrouthVedio implements Serializable{
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getImageUrl() {
-		return imageUrl;
-	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-	public String getName() {
-		return name;
-	}
-	public String getVideoUrl() {
-		return videoUrl;
-	}
-	public void setVideoUrl(String videoUrl) {
-		this.videoUrl = videoUrl;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getBrowerCount() {
-		return browerCount;
-	}
-	public void setBrowerCount(String browerCount) {
-		this.browerCount = browerCount;
-	}
-	public String getDuration() {
-		return duration;
-	}
-	public void setDuration(String duration) {
-		this.duration = duration;
-	}
-	
 
 }

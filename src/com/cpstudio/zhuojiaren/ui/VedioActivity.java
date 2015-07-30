@@ -96,10 +96,10 @@ public class VedioActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onResume();
 		if(vedio!=null){
-			vedioName.setText(vedio.getName());
+			vedioName.setText(vedio.getTutorName());
 			vedioName.setText(vedio.getDuration());
 			LoadImage load = new LoadImage();
-			load.beginLoad(vedio.getImageUrl(), Image);
+			load.beginLoad(vedio.getImageAddr(), Image);
 		}
 		if (VedioPlayer.getmCurrentState() != 0) {
 			// ≥ı ºªØtime
@@ -130,7 +130,7 @@ public class VedioActivity extends BaseActivity {
 	private void InitPlayer() {
 		// TODO Auto-generated method stub
 		if (vedio != null) {
-			Util.setText(vedioName, vedio.getName());
+			Util.setText(vedioName, vedio.getTutorName());
 			Util.setText(vedioTime, vedio.getDuration());
 		}
 		// …˘“Ùøÿ÷∆
