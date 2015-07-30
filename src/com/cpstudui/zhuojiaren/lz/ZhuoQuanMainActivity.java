@@ -425,6 +425,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(ZhuoQuanMainActivity.this,
 						PubTopicActicvity.class);
+				i.putExtra("groupid", groupid);
 				startActivity(i);
 			}
 		});

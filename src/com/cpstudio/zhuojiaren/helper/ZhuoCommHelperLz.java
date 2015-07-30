@@ -18,14 +18,16 @@ public class ZhuoCommHelperLz {
 	private final static String SERVICE_GET_USER_INFO = "/userinfo.do";
 
 	private final static String SERVICE_GET_UPLOADTOKEN = "/qiniu/getUploadToken.do";
-
+	
+	private final static String SERVICE_PUB_GROUP_TOPIC = "/addgrouptopic.do";
+	
 	/**
 	 * 获取主页界面的广告信息
 	 * 
 	 * @return
 	 */
 	public static String getMainAdInfo() {
-		return SERVER + SERVER_APP + SERVICE_MAIN_IDS;
+		return SERVER  + SERVICE_MAIN_IDS;
 	}
 
 	/**
@@ -34,7 +36,7 @@ public class ZhuoCommHelperLz {
 	 * @return
 	 */
 	public static String getQuanTopicList() {
-		return SERVER + SERVER_APP + SERVICE_QUAN_TOPIC_LIST;
+		return SERVER + SERVICE_QUAN_TOPIC_LIST;
 	}
 
 	/**
@@ -43,7 +45,7 @@ public class ZhuoCommHelperLz {
 	 * @return
 	 */
 	public static String getUserInfo() {
-		return SERVER + SERVER_APP + SERVICE_GET_USER_INFO;
+		return SERVER +  SERVICE_GET_USER_INFO;
 	}
 
 	/**
@@ -52,7 +54,16 @@ public class ZhuoCommHelperLz {
 	 * @return
 	 */
 	public static String getUploadToken() {
-		return SERVER + SERVER_APP + SERVICE_GET_UPLOADTOKEN;
+		return SERVER +  SERVICE_GET_UPLOADTOKEN;
 	}
 
+	
+	/**
+	 * 发布圈主题
+	 * 
+	 * @return
+	 */
+	public static String pubQuanTopic() {
+		return SERVER +  SERVICE_PUB_GROUP_TOPIC;
+	}
 }

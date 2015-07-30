@@ -7,6 +7,7 @@ import java.util.concurrent.CountDownLatch;
 
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.qiniu.android.http.ResponseInfo;
@@ -16,20 +17,23 @@ import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.UploadOptions;
 
 public class AsyncUploadHelper extends
-		AsyncTask<List<String>, Integer, List<String>> {
+		AsyncTask<List<String>, Integer,List<String>> {
 	UploadManager uploadManager;
 	private UploadCompleteCallback mCallback = null;
 	ArrayList<String> keysList = new ArrayList<String>();
-
-	public AsyncUploadHelper(UploadCompleteCallback mCallback) {
+   String token;
+	public AsyncUploadHelper(String  token,UploadCompleteCallback mCallback) {
 		super();
 		this.mCallback = mCallback;
+		this.token = token;
 	}
 
 	@Override
 	protected List<String> doInBackground(List<String>... files) {
 		// TODO Auto-generated method stub
-		final String token = "gqyn9mD9OEVHoayK16ivmeCMcUgLNxVnxIjcrGCm:HBXaleKw-ugLBORZvT0zfOrT85Y=:eyJzY29wZSI6InpodW90ZXN0IiwiZGVhZGxpbmUiOjE0Mzc4ODY4ODl9";
+		
+		if(token==null)
+			  token = "gqyn9mD9OEVHoayK16ivmeCMcUgLNxVnxIjcrGCm:i7rT4MfI_Wg2guWBLyOV5CJQmYw=:eyJzY29wZSI6InpodW90ZXN0IiwiZGVhZGxpbmUiOjE0MzgyMzk1ODJ9";
 		// 真实环境需要替换 final String token = uploadFileToken;
 		List<String> filePathsList = files[0];
 		final List<String> keys = Collections
@@ -44,7 +48,11 @@ public class AsyncUploadHelper extends
 				@Override
 				public void complete(String key, ResponseInfo arg1,
 						JSONObject arg2) {
+					//arg1:{ResponseInfo:1438236401224267,status:401, reqId:RmcAAAf1X1xjpPUT, xlog:UP/401, xvia:null, host:upload.qiniu.com, path:/mkblk/3226274, ip:106.38.227.5, port:-1, duration:1.412000 s, time:1438236402, sent:42,error:token is expired 72273 seconds}
+//					status为200则正常
+					
 					// TODO Auto-generated method stub
+					//token过期时会返回null
 					if (arg2 != null) {
 						String s = arg2.optString("key", "");
 						if (s != null)
@@ -71,7 +79,8 @@ public class AsyncUploadHelper extends
 	@Override
 	protected void onPostExecute(List<String> result) {
 		// TODO Auto-generated method stub
-		mCallback.onReturn(result);
+		if (mCallback != null)
+			mCallback.onReturn(result);
 	}
 
 	public interface UploadCompleteCallback {

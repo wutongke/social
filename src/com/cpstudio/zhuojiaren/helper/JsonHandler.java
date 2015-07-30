@@ -23,6 +23,7 @@ import com.cpstudio.zhuojiaren.model.ImQuanVO;
 import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.PagesCmtVO;
 import com.cpstudio.zhuojiaren.model.PushMsgVO;
+import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.RecentVisitVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -786,5 +787,24 @@ public class JsonHandler {
 		}
 		return data;
 	}
+	public ArrayList<QuanTopicVO> parseQuanTopicList() {
+		ArrayList<QuanTopicVO> list = new ArrayList<QuanTopicVO>();
+		try {
+			Type listType = new TypeToken<LinkedList<QuanTopicVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<QuanTopicVO> li = gson.fromJson(jsonData, listType);
 
+				for (Iterator<QuanTopicVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					QuanTopicVO item = (QuanTopicVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

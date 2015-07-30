@@ -23,6 +23,7 @@ import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ImageGridAdapter;
 import com.cpstudio.zhuojiaren.facade.QuanFacade;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -46,6 +47,7 @@ public class PubTopicActicvity extends BaseActivity {
 	private ArrayList<EditText> phoneList = new ArrayList<EditText>();
 	PopupWindows pwh;
 	String uid;
+	String groupid;
 	private ZhuoConnHelper mConnHelper = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class PubTopicActicvity extends BaseActivity {
 		title.setText(R.string.title_pub_topic);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
+		groupid=getIntent().getStringExtra("groupid");
 		function.setText(R.string.label_publish);
 		initClick();
 	}
@@ -66,19 +69,25 @@ public class PubTopicActicvity extends BaseActivity {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case MsgTagVO.FOLLOW_QUAN: {
-				// if (JsonHandler.checkResult((String) msg.obj,
-				// getApplicationContext())) {
-				// if (isfollow) {
-				// isfollow = false;
-				// pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
-				// null, R.string.label_exitSuccess);
-				// loadData();
-				// } else {
-				// pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
-				// null, R.string.label_applysuccess);
-				// }
-				// }
+			case MsgTagVO.PUB_INFO: {
+				if (msg.obj != null && !msg.obj.equals("")) {
+					if (JsonHandler.checkResult((String) msg.obj)) {
+						OnClickListener listener = new OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								setResult(RESULT_OK);
+								PubTopicActicvity.this.finish();
+							}
+						};
+						try {
+							pwh.showPopDlgOne(findViewById(R.id.rootLayout),
+									listener, R.string.info62);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
 				break;
 			}
 
@@ -140,7 +149,7 @@ public class PubTopicActicvity extends BaseActivity {
 			etContent.requestFocus();
 			return;
 		}
-		
+		mConnHelper.pubQuanTopic(PubTopicActicvity.this, mUIHandler, MsgTagVO.PUB_INFO, groupid, content, imageDir);
 //		mConnHelper.pubZhuoInfo(mIsh.getTags(), mUIHandler, MsgTagVO.PUB_INFO,
 //				PublishActiveActivity.this, content, tag, mLocation, imgCnt,
 //				"daily", true, null, null);
