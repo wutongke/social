@@ -140,7 +140,7 @@ public class AudioListActivity extends BaseActivity {
 			@Override
 			public void onMore() {
 				// TODO Auto-generated method stub
-				loadData();
+				loadMore();
 			}
 		});
 		pullDownView.setShowHeader();

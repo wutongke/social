@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.util.Log;
 
+import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.model.GrouthVisit;
 import com.cpstudio.zhuojiaren.model.LoginRes;
@@ -18,7 +19,7 @@ import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class JsonHandler_Lef {
+public class JsonHandler_Lef<T> {
 
 	/**
 	 * 登录时获取session
@@ -148,6 +149,54 @@ public class JsonHandler_Lef {
 				for (Iterator<GrouthVisit> iterator = li.iterator(); iterator
 						.hasNext();) {
 					GrouthVisit item = (GrouthVisit) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public static ArrayList<CrowdFundingVO> parseFundingList(String jsonData) {
+		// TODO Auto-generated method stub
+		ArrayList<CrowdFundingVO> list = new ArrayList<CrowdFundingVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<CrowdFundingVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<CrowdFundingVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<CrowdFundingVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					CrowdFundingVO item = (CrowdFundingVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/***
+	 * 解析列表
+	 * @param <T>
+	 * @param jsonData
+	 * @return
+	 */
+	public  ArrayList<T> parseList(String jsonData) {
+		// TODO Auto-generated method stub
+		ArrayList<T> list = new ArrayList<T>();
+		try {
+			Type listType = new TypeToken<ArrayList<T>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<T> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<T> iterator = li.iterator(); iterator
+						.hasNext();) {
+					T item = (T) iterator.next();
 					list.add(item);
 				}
 			}

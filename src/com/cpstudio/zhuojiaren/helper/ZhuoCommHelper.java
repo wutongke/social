@@ -106,7 +106,21 @@ public class ZhuoCommHelper {
 	private final static String SERVICE_VEDIO_LIST = "/getGrowthOnlineList.do";
 	private final static String SERVICE_AUDIO_LIST = "/getAudio.do";
 	private final static String SERVICE_Visit_LIST = "/getInterviewList.do";
+	private final static String SUBMIT_VISIT= "/getGrowthOnlineType.do";
+
 	private final static String SERVICE_Teacher_LIST = "/getTutor.do";
+	private final static String SERVICE_Funding_LIST = "/getTutor.do";
+	private final static String AUDIO_COLL = "/praiseAudio.do";
+
+	public static String getAudioColl() {
+		return SERVER + AUDIO_COLL;
+	}
+	public static String getSubmitVisit() {
+		return SERVER + SUBMIT_VISIT;
+	}
+	public static String getServiceFundingList() {
+		return SERVER + SERVICE_Funding_LIST;
+	}
 
 	public static String getServiceTeacherList() {
 		return SERVER + SERVICE_Teacher_LIST;

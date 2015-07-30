@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@drawable/jjsc2" />
+             />
 
         <ImageView
             android:id="@+id/ir_share"
