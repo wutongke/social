@@ -28,8 +28,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper.FinishCallback;
+import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.UploadCompleteCallback;
 import com.cpstudio.zhuojiaren.model.LoginRes;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -86,71 +88,78 @@ public class AppClientLef {
 							LoginRes res = JsonHandler_Lef.parseLoginRes(
 									context, JsonHandler.parseResult(rs)
 											.getData());
-							SharedPreferences sp = context
-									.getSharedPreferences("cpzhuojiaren",
-											Activity.MODE_PRIVATE);
-							SharedPreferences.Editor editor = sp.edit();
-							editor.putString(ResHelper.SESSION,
-									res.getSession());
-							editor.putString(ResHelper.UPLIOAD_TOKEN,
-									res.getQiniuToken());
-							editor.putString(ResHelper.IM_TOKEN,
-									res.getRongyunToken());
-							editor.commit();
-
-							// 保存到两个单例中
-							ResHelper mResHelper = ResHelper
-									.getInstance(context);
-							mResHelper.setSessionForAPP(res.getSession());
-							mResHelper.setUpLoadTokenForQiniu(res
-									.getQiniuToken());
-							mResHelper.setImTokenForRongyun(res
-									.getRongyunToken());
-							ZhuoConnHelper connHelper = ZhuoConnHelper
-									.getInstance(context);
-							connHelper.setSession(res.getSession());
-							connHelper.setUploadFileToken(res.getQiniuToken());
-							connHelper.setImToken(res.getRongyunToken());
+							refreshUserInfo(res);
 						}
 						return false;
 					}
 				}, null);
 		conn.execute();
 	}
-	
+	public void refreshUserInfo(LoginRes res){
+		SharedPreferences sp = context
+				.getSharedPreferences("cpzhuojiaren",
+						Activity.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sp.edit();
+		editor.putString(ResHelper.SESSION,
+				res.getSession());
+		editor.putString(ResHelper.UPLIOAD_TOKEN,
+				res.getQiniuToken());
+		editor.putString(ResHelper.IM_TOKEN,
+				res.getRongyunToken());
+		editor.commit();
+
+		// 保存到两个单例中
+		ResHelper mResHelper = ResHelper
+				.getInstance(context);
+		mResHelper.setSessionForAPP(res.getSession());
+		mResHelper.setUpLoadTokenForQiniu(res
+				.getQiniuToken());
+		mResHelper.setImTokenForRongyun(res
+				.getRongyunToken());
+		ZhuoConnHelper connHelper = ZhuoConnHelper
+				.getInstance(context);
+		connHelper.setSession(res.getSession());
+		connHelper.setUploadFileToken(res.getQiniuToken());
+		connHelper.setImToken(res.getRongyunToken());
+	}
 	/**
 	 * 获取圈子,根据url区分类别
 	 */
-	public boolean getQuanzi(String url,String gtype,String city,int pageNo,int pageSize, Handler handler,
-			int handlerTag, Activity activity, boolean cancelable,
-			OnCancelListener cancel, String data) {
+	public boolean getQuanzi(String url, String gtype, String city, int pageNo,
+			int pageSize, Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
-		if(gtype!=null)
-			nameValuePairs.add(new BasicNameValuePair("gtype",gtype));
-		if(city!=null)
+		if (gtype != null)
+			nameValuePairs.add(new BasicNameValuePair("gtype", gtype));
+		if (city != null)
 			nameValuePairs.add(new BasicNameValuePair("city", city));
-		return doPost(nameValuePairs, url,
-				handler, handlerTag, activity, url, cancelable,
-				cancel, data);
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
 	}
+
 	/**
 	 * 增加页信息
+	 * 
 	 * @param nameValuePairs
 	 * @param pageNo
 	 * @param pageSize
 	 * @return
 	 */
-	private List<NameValuePair> addPageInfo(List<NameValuePair> nameValuePairs,int pageNo,int pageSize){
-		nameValuePairs.add(new BasicNameValuePair("pageNo",String.valueOf(pageNo)));
-		nameValuePairs.add(new BasicNameValuePair("pageSize",String.valueOf(pageSize)));
+	private List<NameValuePair> addPageInfo(List<NameValuePair> nameValuePairs,
+			int pageNo, int pageSize) {
+		nameValuePairs.add(new BasicNameValuePair("pageNo", String
+				.valueOf(pageNo)));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", String
+				.valueOf(pageSize)));
 		return nameValuePairs;
 	}
+
 	/***
 	 * 解散圈子
 	 */
-	public boolean disolveQuan(String groupId,String content,Handler handler,
+	public boolean disolveQuan(String groupId, String content, Handler handler,
 			int handlerTag, Activity activity, boolean cancelable,
 			OnCancelListener cancel, String data) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -158,36 +167,34 @@ public class AppClientLef {
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupId));
 		nameValuePairs.add(new BasicNameValuePair("content", content));
 		String url = ZhuoCommHelper.getDisolveQuan();
-		return doPost(nameValuePairs, url,
-				handler, handlerTag, activity, url, cancelable,
-				cancel, data);
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
 	}
-	
+
 	/**
 	 * 退出圈子
 	 */
-	public boolean quitQuan(String groupId,String type,String content,Handler handler,
-			int handlerTag, Activity activity, boolean cancelable,
-			OnCancelListener cancel, String data) {
+	public boolean quitQuan(String groupId, String type, String content,
+			Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
-		//type		int				0取消关注  1申请关注  2接受关注
+		// type int 0取消关注 1申请关注 2接受关注
 		nameValuePairs.add(new BasicNameValuePair("type", type));
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupId));
 		nameValuePairs.add(new BasicNameValuePair("content", content));
 		String url = ZhuoCommHelper.getQuitQuan();
-		return doPost(nameValuePairs, url,
-				handler, handlerTag, activity, url, cancelable,
-				cancel, data);
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
 	}
+
 	/**
 	 * 获取城市列表
 	 */
-	public boolean getCitys(Handler handler,
-			int handlerTag, Activity activity, boolean cancelable,
-			OnCancelListener cancel, String data) {
+	public boolean getCitys(Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
 		String res = readObject("citys");
-		if(res!=null){
+		if (res != null) {
 			Message msg = handler.obtainMessage(handlerTag);
 			Bundle bundle = new Bundle();
 			bundle.putString("data", data);
@@ -195,34 +202,34 @@ public class AppClientLef {
 			msg.obj = res;
 			msg.sendToTarget();
 			return true;
-		}else{
+		} else {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs = addUserInfoByPost(nameValuePairs);
 			nameValuePairs.add(new BasicNameValuePair("version", "0"));
 			String url = ZhuoCommHelper.getServiceCityList();
-			return doPost(nameValuePairs, url,
-					handler, handlerTag, activity, url, cancelable,
-					cancel, data);
+			return doPost(nameValuePairs, url, handler, handlerTag, activity,
+					url, cancelable, cancel, data);
 		}
 	}
+
 	/**
 	 * 获取视频在线
 	 */
-	public boolean getVedioList(String tutorId,String typeId ,int pageNo,int pageSize, Handler handler,
-			int handlerTag, Activity activity, boolean cancelable,
-			OnCancelListener cancel, String data) {
+	public boolean getVedioList(String tutorId, String typeId, int pageNo,
+			int pageSize, Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
-		if(tutorId!=null)
-		nameValuePairs.add(new BasicNameValuePair("tutorId", tutorId));
-		if(typeId!=null)
-		nameValuePairs.add(new BasicNameValuePair("typeId", typeId));
+		if (tutorId != null)
+			nameValuePairs.add(new BasicNameValuePair("tutorId", tutorId));
+		if (typeId != null)
+			nameValuePairs.add(new BasicNameValuePair("typeId", typeId));
 		String url = ZhuoCommHelper.getServiceVedioList();
-		return doPost(nameValuePairs, url,
-				handler, handlerTag, activity, url, cancelable,
-				cancel, data);
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
 	}
+
 	/**
 	 * 提交视频统计
 	 */
@@ -231,40 +238,41 @@ public class AppClientLef {
 		nameValuePairs.add(new BasicNameValuePair("onlineid", Id));
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		String url = ZhuoCommHelper.getSubmitVisit();
-		return doPost(nameValuePairs, url,
-				null, 0, null, url, false,
-				null, null);
+		return doPost(nameValuePairs, url, null, 0, null, url, false, null,
+				null);
 	}
+
 	/**
 	 * 获取音频在线
 	 */
-	public boolean getAudioList(int pageNo,int pageSize, Handler handler,
+	public boolean getAudioList(int pageNo, int pageSize, Handler handler,
 			int handlerTag, Activity activity, boolean cancelable,
 			OnCancelListener cancel, String data) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
 		String url = ZhuoCommHelper.getServiceAudioList();
-		return doPost(nameValuePairs, url,
-				handler, handlerTag, activity, url, cancelable,
-				cancel, data);
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
 	}
+
 	/**
 	 * 获取众筹
 	 */
-	public boolean getFundingList(int pageNo,int pageSize, Handler handler,
+	public boolean getFundingList(int pageNo, int pageSize, Handler handler,
 			int handlerTag, Activity activity, boolean cancelable,
 			OnCancelListener cancel, String data) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
 		String url = ZhuoCommHelper.getServiceFundingList();
-		return doPost(nameValuePairs, url,
-				handler, handlerTag, activity, url, cancelable,
-				cancel, data);
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
 	}
+
 	/**
 	 * 获取采访
+	 * 
 	 * @param pageNo
 	 * @param pageSize
 	 * @param handler
@@ -275,17 +283,17 @@ public class AppClientLef {
 	 * @param data
 	 * @return
 	 */
-	public boolean getVisiteList(int pageNo,int pageSize, Handler handler,
+	public boolean getVisiteList(int pageNo, int pageSize, Handler handler,
 			int handlerTag, Activity activity, boolean cancelable,
 			OnCancelListener cancel, String data) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
 		String url = ZhuoCommHelper.getServiceVisitList();
-		return doPost(nameValuePairs, url,
-				handler, handlerTag, activity, url, cancelable,
-				cancel, data);
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
 	}
+
 	/**
 	 * @param handler
 	 * @param handlerTag
@@ -295,15 +303,15 @@ public class AppClientLef {
 	 * @param data
 	 * @return
 	 */
-	public boolean getGrowthOnlineType(Handler handler,
-			int handlerTag, Activity activity) {
+	public boolean getGrowthOnlineType(Handler handler, int handlerTag,
+			Activity activity) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		String url = ZhuoCommHelper.getGrowthonlinetype();
-		return doPost(nameValuePairs, url,
-				handler, handlerTag, activity, url, false,
-				null, null);
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
 	}
+
 	/**
 	 * 
 	 * @param handler
@@ -311,27 +319,54 @@ public class AppClientLef {
 	 * @param activity
 	 * @return
 	 */
-	public boolean getTeacherList(Handler handler,
-			int handlerTag, Activity activity) {
+	public boolean getTeacherList(Handler handler, int handlerTag,
+			Activity activity) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		String url = ZhuoCommHelper.getServiceTeacherList();
-		return doPost(nameValuePairs, url,
-				handler, handlerTag, activity, url, false,
-				null, null);
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
 	}
+
 	/**
 	 * 收藏
 	 */
-	public boolean collection(String url,String idKey,String id,String stateKey,String state){
+	public boolean collection(String url, String idKey, String id,
+			String stateKey, String state) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair(idKey, id));
 		nameValuePairs.add(new BasicNameValuePair(stateKey, state));
-		return doPost(nameValuePairs, url,
-				null, 0, null, url, false,
-				null, null);
+		return doPost(nameValuePairs, url, null, 0, null, url, false, null,
+				null);
 	}
+
+	/**
+	 * 创建圈子
+	 */
+	// session string(32) 账号session 登陆返回
+	// gname string(32) 圈子名称
+	// gheader string(200) 圈子logo图片名(七牛云key)
+	// gintro string(150) 圈子简介
+	// gpub string(150) 圈子公告
+	// gtype int 圈子类别 0:未知，1:资源整合圈，2:金融投资圈，3:兴趣爱好圈，4:精进成长圈，5:同城家人圈，6:公益活动圈
+	// city int 地区 城市编码
+	// followpms int 加入权限 0:允许任何人加入，1:需要申请才能加入
+	// accesspms int 访问权限 0:所有人都可以访问，1:加入圈子才可以访问
+	public boolean createQuan(String gname, String gintro, String gtype,
+			String city, String followpms, String accesspms) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair(gname, gname));
+		nameValuePairs.add(new BasicNameValuePair("gintro", gintro));
+		nameValuePairs.add(new BasicNameValuePair("gtype", gtype));
+		nameValuePairs.add(new BasicNameValuePair("city", city));
+		nameValuePairs.add(new BasicNameValuePair("followpms", followpms));
+		nameValuePairs.add(new BasicNameValuePair("accesspms", accesspms));
+//		return ZhuoConnHelper.getInstance(context).doFormPost();
+		return true;
+	}
+
 	/**
 	 * 保存对象
 	 * 
@@ -378,7 +413,7 @@ public class AppClientLef {
 		try {
 			fis = context.openFileInput(file);
 			ois = new ObjectInputStream(fis);
-			return  (String) ois.readObject();
+			return (String) ois.readObject();
 		} catch (FileNotFoundException e) {
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -399,6 +434,7 @@ public class AppClientLef {
 		}
 		return null;
 	}
+
 	/**
 	 * 判断缓存是否存在
 	 * 
@@ -412,6 +448,7 @@ public class AppClientLef {
 			exist = true;
 		return exist;
 	}
+
 	/**
 	 * 
 	 */
@@ -903,9 +940,9 @@ public class AppClientLef {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-			AsyncConnectHelper conn = new AsyncConnectHelper(
-					nameValuePairs, url, getFinishCallback(
-							handler, handlerTag, tag, data), activity);
+			AsyncConnectHelper conn = new AsyncConnectHelper(nameValuePairs,
+					url, getFinishCallback(handler, handlerTag, tag, data),
+					activity);
 			conn.setCancelable(cancelable);
 			if (cancelable) {
 				conn.setCancel(getCancelListener(cancel, tag, conn));
@@ -990,7 +1027,6 @@ public class AppClientLef {
 		}
 		return false;
 	}
-
 
 	private FinishCallback getFinishCallback(final FinishCallback callback,
 			final String tag) {

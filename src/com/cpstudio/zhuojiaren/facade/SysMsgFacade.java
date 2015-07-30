@@ -1,14 +1,15 @@
 package com.cpstudio.zhuojiaren.facade;
 
 import java.util.ArrayList;
-import com.cpstudio.zhuojiaren.helper.DatabaseHelper;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.model.SysMsgVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+
+import com.cpstudio.zhuojiaren.helper.DatabaseHelper;
+import com.cpstudio.zhuojiaren.helper.ResHelper;
+import com.cpstudio.zhuojiaren.model.SysMsgVO;
+import com.cpstudio.zhuojiaren.model.UserVO;
 
 public class SysMsgFacade {
 	private final DatabaseHelper dbHelper;
