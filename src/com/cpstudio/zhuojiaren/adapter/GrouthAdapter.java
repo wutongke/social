@@ -9,6 +9,7 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
+import com.cpstudio.zhuojiaren.util.Util;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 
 public class GrouthAdapter extends CommonAdapter<GrouthVedio>{
@@ -23,8 +24,8 @@ public class GrouthAdapter extends CommonAdapter<GrouthVedio>{
 		// TODO Auto-generated method stub
 //		helper.setImageResource(R.id.ig_grouth_image, R.drawable.pop_cancel2);
 		helper.setText(R.id.ig_grouth_name, item.getTutorName());
-		helper.setText(R.id.ig_browse_count,item.getBrowerCount());
-		helper.setText(R.id.ig_duration, item.getDuration());
+		helper.setText(R.id.ig_browse_count,item.getViewCount());
+		helper.setText(R.id.ig_duration, Util.getTimeString(Long.parseLong(item.getDuration())*1000));
 		imageLoader.beginLoad(item.getImageAddr(), (ImageView)helper.getView(R.id.ig_grouth_image));
 	}
 

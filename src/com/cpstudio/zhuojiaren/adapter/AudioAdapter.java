@@ -13,19 +13,24 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 
 public class AudioAdapter extends CommonAdapter<RecordVO> {
 	private MediaPlayer mediaPlayer;
 	private SeekBar seekBar;
 	private View curPlayView;
 	private volatile boolean isPlaying = false;
+	private AppClientLef appClient;
 
 	public AudioAdapter(Context context, List<RecordVO> mDatas, int itemLayoutId) {
 		super(context, mDatas, itemLayoutId);
 		// TODO Auto-generated constructor stub
+		appClient = AppClientLef.getInstance(context);
 	}
 
 	@Override
@@ -36,16 +41,50 @@ public class AudioAdapter extends CommonAdapter<RecordVO> {
 				R.id.ir_creater,
 				mContext.getResources().getString(R.string.creater)
 						+ item.getTutorName());
-		String date = item.getCrtDate().substring(0, item.getCrtDate().indexOf(" "));
-		helper.setText(
-				R.id.ir_time,
-				mContext.getResources().getString(R.string.create_time)
-						+ date);
+		String date = item.getCrtDate().substring(0,
+				item.getCrtDate().indexOf(" "));
+		helper.setText(R.id.ir_time,
+				mContext.getResources().getString(R.string.create_time) + date);
 		helper.setText(R.id.ir_duration, item.getLength());
+		// 点赞
+		final ImageView praise = helper.getView(R.id.ir_collection);
+		if (item.getPraise().equals(RecordVO.PRAISED)) {
+			praise.setBackgroundResource(R.drawable.jjsc2);
+		} else {
+			praise.setBackgroundResource(R.drawable.jjsc1);
+		}
+		praise.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (!item.getPraise().equals(RecordVO.PRAISED)) {
+					appClient.collection(ZhuoCommHelper.getAudioColl(),
+							"audioid", item.getId(), "praise", RecordVO.PRAISED);
+					praise.setBackgroundResource(R.drawable.jjsc2);
+					item.setPraise(RecordVO.PRAISED);
+				} else {
+					praise.setBackgroundResource(R.drawable.jjsc1);
+					appClient.collection(ZhuoCommHelper.getAudioColl(),
+							"audioid", item.getId(), "praise", RecordVO.NOPRAISED);
+					item.setPraise(RecordVO.NOPRAISED);
+				}
+			}
+		});
+		//分享
+		helper.getView(R.id.ir_share).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				CommonUtil.displayToast(mContext, "分享");
+			}
+		});
+		// 播放
 		final ImageView play = (ImageView) helper.getView(R.id.ir_play);
 		play.setBackgroundResource(R.drawable.jjplay2);
 		if (play.getTag() != null) {
-			play.setBackgroundResource(R.drawable.ico_voice);
+			play.setBackgroundResource(R.drawable.jjplay32);
 		}
 		play.setOnClickListener(new OnClickListener() {
 
@@ -57,18 +96,17 @@ public class AudioAdapter extends CommonAdapter<RecordVO> {
 					mediaPlayer.release();
 					mediaPlayer = null;
 					//
-					getCurPlayView().setBackgroundResource(
-							R.drawable.ico_start_play);
+					getCurPlayView().setBackgroundResource(R.drawable.jjplay2);
 					getCurPlayView().setTag(null);
 					isPlaying = false;
-					if(seekBar!=null)
-					seekBar.setProgress(0);
-					//如果是
-					if(v==getCurPlayView())
-					return;
+					if (seekBar != null)
+						seekBar.setProgress(0);
+					// 如果是
+					if (v == getCurPlayView())
+						return;
 				}
 				mediaPlayer = new MediaPlayer();
-				play.setBackgroundResource(R.drawable.ico_voice);
+				play.setBackgroundResource(R.drawable.jjplay32);
 				play.setTag(1);
 				setCurPlayView(v);
 				isPlaying = true;
@@ -176,18 +214,18 @@ public class AudioAdapter extends CommonAdapter<RecordVO> {
 
 		return buf.toString();
 	}
-	public void stop(){
+
+	public void stop() {
 		if (mediaPlayer != null) {
 			mediaPlayer.stop();
 			mediaPlayer.release();
 			mediaPlayer = null;
-			getCurPlayView().setBackgroundResource(
-					R.drawable.ico_start_play);
+			getCurPlayView().setBackgroundResource(R.drawable.jjplay2);
 			getCurPlayView().setTag(null);
 			setCurPlayView(null);
 			isPlaying = false;
-			if(seekBar!=null)
-			seekBar.setProgress(0);
+			if (seekBar != null)
+				seekBar.setProgress(0);
 		}
 	}
 }

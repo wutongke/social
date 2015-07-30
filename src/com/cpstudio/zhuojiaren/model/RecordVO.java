@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RecordVO implements Serializable{
+	public final static String PRAISED = "1";
+	public final static String NOPRAISED = "0";
 	private String id;
 	private String serverid;
 	private String path;
@@ -21,6 +23,7 @@ public class RecordVO implements Serializable{
 	private String tutorName;
 	private String audioAddr;
 	private String crtDate;
+	private String praise;
 	private ArrayList<String> userids = new ArrayList<String>();
 
 	public String getId() {
@@ -129,6 +132,14 @@ public class RecordVO implements Serializable{
 
 	public void setAudioAddr(String audioAddr) {
 		this.audioAddr = audioAddr;
+	}
+
+	public String getPraise() {
+		return praise;
+	}
+
+	public void setPraise(String praise) {
+		this.praise = praise;
 	}
 
 	public void setCrtDate(String crtDate) {

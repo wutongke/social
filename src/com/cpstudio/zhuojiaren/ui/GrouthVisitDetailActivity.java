@@ -40,8 +40,8 @@ public class GrouthVisitDetailActivity extends BaseActivity {
 	}
 	private void loadData() {
 		// TODO Auto-generated method stub
-		if(visit.getImageUrl()!=null)
-		imageLoader.beginLoad(visit.getImageUrl(), image) ;
+		if(visit.getImageAddr()!=null)
+		imageLoader.beginLoad(visit.getImageAddr(), image) ;
 		content.setText(visit.getContent());
 		name.setText(visit.getTitle());
 		time.setText(visit.getCalldate());

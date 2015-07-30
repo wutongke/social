@@ -27,8 +27,8 @@ public class GrouthVisitAdapter extends CommonAdapter<GrouthVisit>{
 		if(item.getContent().length()>30)
 			content = content.substring(0,30)+"...";
 		helper.setText(R.id.iv_grouth_content, content);
-		if(item.getImageUrl()!=null)
-		imageLoad.beginLoad(item.getImageUrl(), (ImageView)helper.getView(R.id.iv_grouth_image));
+		if(item.getImageAddr()!=null)
+		imageLoad.beginLoad(item.getImageAddr(), (ImageView)helper.getView(R.id.iv_grouth_image));
 	}
 
 

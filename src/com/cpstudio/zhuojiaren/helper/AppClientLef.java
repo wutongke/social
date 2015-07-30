@@ -213,6 +213,7 @@ public class AppClientLef {
 			OnCancelListener cancel, String data) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
 		if(tutorId!=null)
 		nameValuePairs.add(new BasicNameValuePair("tutorId", tutorId));
 		if(typeId!=null)
@@ -223,6 +224,18 @@ public class AppClientLef {
 				cancel, data);
 	}
 	/**
+	 * 提交视频统计
+	 */
+	public boolean submitVedio(String Id) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("onlineid", Id));
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		String url = ZhuoCommHelper.getSubmitVisit();
+		return doPost(nameValuePairs, url,
+				null, 0, null, url, false,
+				null, null);
+	}
+	/**
 	 * 获取音频在线
 	 */
 	public boolean getAudioList(int pageNo,int pageSize, Handler handler,
@@ -230,7 +243,22 @@ public class AppClientLef {
 			OnCancelListener cancel, String data) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
 		String url = ZhuoCommHelper.getServiceAudioList();
+		return doPost(nameValuePairs, url,
+				handler, handlerTag, activity, url, cancelable,
+				cancel, data);
+	}
+	/**
+	 * 获取众筹
+	 */
+	public boolean getFundingList(int pageNo,int pageSize, Handler handler,
+			int handlerTag, Activity activity, boolean cancelable,
+			OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		String url = ZhuoCommHelper.getServiceFundingList();
 		return doPost(nameValuePairs, url,
 				handler, handlerTag, activity, url, cancelable,
 				cancel, data);
@@ -252,19 +280,35 @@ public class AppClientLef {
 			OnCancelListener cancel, String data) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
 		String url = ZhuoCommHelper.getServiceVisitList();
 		return doPost(nameValuePairs, url,
 				handler, handlerTag, activity, url, cancelable,
 				cancel, data);
 	}
 	/**
-	 * 获取老师列表
 	 * @param handler
 	 * @param handlerTag
 	 * @param activity
 	 * @param cancelable
 	 * @param cancel
 	 * @param data
+	 * @return
+	 */
+	public boolean getGrowthOnlineType(Handler handler,
+			int handlerTag, Activity activity) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		String url = ZhuoCommHelper.getGrowthonlinetype();
+		return doPost(nameValuePairs, url,
+				handler, handlerTag, activity, url, false,
+				null, null);
+	}
+	/**
+	 * 
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
 	 * @return
 	 */
 	public boolean getTeacherList(Handler handler,
@@ -274,6 +318,18 @@ public class AppClientLef {
 		String url = ZhuoCommHelper.getServiceTeacherList();
 		return doPost(nameValuePairs, url,
 				handler, handlerTag, activity, url, false,
+				null, null);
+	}
+	/**
+	 * 收藏
+	 */
+	public boolean collection(String url,String idKey,String id,String stateKey,String state){
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair(idKey, id));
+		nameValuePairs.add(new BasicNameValuePair(stateKey, state));
+		return doPost(nameValuePairs, url,
+				null, 0, null, url, false,
 				null, null);
 	}
 	/**

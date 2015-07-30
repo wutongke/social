@@ -26,6 +26,7 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.util.Util;
@@ -85,6 +86,8 @@ public class VedioActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		vedio = (GrouthVedio) getIntent().getSerializableExtra("vedio");
 		activity = this;
+		//统计观看次数
+		submit();
 		initTitle();
 		title.setText(R.string.grouth_online_detail);
 		mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -176,7 +179,7 @@ public class VedioActivity extends BaseActivity {
 				if (!init) {
 					startIV.setEnabled(false);
 					vedioPlayer
-							.setVideoPath("http://172.25.50.1:8080/Media/WebRoot/1.mp4");
+							.setVideoPath(vedio.getVedioAddr());
 					vedioPlayer.setSeekListener(new VedioPlayer.SeekListener() {
 						@Override
 						public void onSeek(int msec) {
@@ -224,10 +227,10 @@ public class VedioActivity extends BaseActivity {
 				}
 				if (vedioPlayer.isPlaying()) {
 					vedioPlayer.pause();
-					startIV.setBackgroundResource(R.drawable.jjst);
+					startIV.setBackgroundResource(R.drawable.jjpl);
 				} else {
 					vedioPlayer.start();
-					startIV.setBackgroundResource(R.drawable.jjpl);
+					startIV.setBackgroundResource(R.drawable.jjst);
 				}
 			}
 		});
@@ -378,5 +381,21 @@ public class VedioActivity extends BaseActivity {
 		@Override
 		public void setAnchorView(View view) {
 		}
+	}
+	private void submit() {
+		// TODO Auto-generated method stub
+		if(vedio!=null&&vedio.getId()!=null){
+			AppClientLef.getInstance(this).submitVedio(vedio.getId());
+		}
+	}
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (vedioPlayer != null) {
+			vedioPlayer.release();
+			vedioPlayer = null;
+		}
+		VedioActivity.this.finish();
 	}
 }

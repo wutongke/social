@@ -1,7 +1,9 @@
 package com.cpstudio.zhuojiaren.widget;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import kankan.wheel.widget.OnWheelChangedListener;
@@ -20,6 +22,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -48,14 +52,22 @@ import android.widget.TextView.OnEditorActionListener;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ResFilterListAdapter;
 import com.cpstudio.zhuojiaren.adapter.TypeFilterListAdapter;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
+import com.cpstudio.zhuojiaren.model.GrouthType;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.model.Teacher;
 import com.cpstudio.zhuojiaren.ui.GrouthChooseActivity;
 import com.cpstudio.zhuojiaren.ui.GrouthListActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.utils.ImageRectUtil;
 import com.zhuojiaren.sortlistview.NamePup;
+import com.zhuojiaren.sortlistview.SortAdapter;
 
 public class PopupWindows {
 	private PopupWindow popupWindow;
@@ -247,14 +259,15 @@ public class PopupWindows {
 				selectClickListener, makeClickListener }, new int[] {
 				R.string.label_select, R.string.label_capture }, "photo");
 	}
-/**
- * 
- * @param parent
- * @param onClickListeners
- * @param infoResId
- * @param tag
- * @return
- */
+
+	/**
+	 * 
+	 * @param parent
+	 * @param onClickListeners
+	 * @param infoResId
+	 * @param tag
+	 * @return
+	 */
 	public PopupWindow showBottomPop(View parent,
 			OnClickListener[] onClickListeners, int[] infoResId, String tag) {
 		return showBottomPop(parent, onClickListeners, infoResId, 20, tag);
@@ -275,43 +288,56 @@ public class PopupWindows {
 		return showBottomPop(parent, onClickListeners, info, 20, tag);
 	}
 
-	public PopupWindow showGrouthType(View parent,int margin){
-		LayoutInflater inflater = (LayoutInflater)mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View grouthType = inflater.inflate(R.layout.pop_grouth_type, null);
-		final PopupWindow grouthPop = new PopupWindow(grouthType,LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		final WheelView wheel = (WheelView) grouthType.findViewById(R.id.pgt_wheel_view);
-		final String[] data = mActivity.getResources().getStringArray(R.array.grouth_type);
-		ArrayWheelAdapter<String> adapter = new ArrayWheelAdapter<String>(mActivity, data);
+	public PopupWindow showGrouthType(final ArrayList<GrouthType> list,
+			View parent, int margin) {
+		LayoutInflater inflater = (LayoutInflater) mActivity
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		final View grouthType = inflater
+				.inflate(R.layout.pop_grouth_type, null);
+		final PopupWindow grouthPop = new PopupWindow(grouthType,
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		final WheelView wheel = (WheelView) grouthType
+				.findViewById(R.id.pgt_wheel_view);
+		GrouthType[] wheelData = (GrouthType[]) list
+				.toArray(new GrouthType[list.size()]);
+
+		ArrayWheelAdapter<GrouthType> adapter = new ArrayWheelAdapter<GrouthType>(
+				mActivity, wheelData);
 		wheel.setViewAdapter(adapter);
 		wheel.setCurrentItem(0);
-		grouthType.findViewById(R.id.pgt_cancle).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				grouthPop.dismiss();
-			}
-		});
-		grouthType.findViewById(R.id.pgt_ok).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(mActivity,GrouthListActivity.class);
-				intent.putExtra("typeId", data[wheel.getCurrentItem()]);
-				mActivity.startActivity(intent);
-				mActivity.finish();
-			}
-		});
+		grouthType.findViewById(R.id.pgt_cancle).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						grouthPop.dismiss();
+					}
+				});
+		grouthType.findViewById(R.id.pgt_ok).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						Intent intent = new Intent(mActivity,
+								GrouthListActivity.class);
+						intent.putExtra("typeId",
+								list.get(wheel.getCurrentItem()).getId());
+						mActivity.startActivity(intent);
+						mActivity.finish();
+					}
+				});
 		setPopupWindowParams(grouthPop);
-		grouthPop.showAtLocation(parent,
-				Gravity.CENTER, 0, margin);
-		
+		grouthPop.showAtLocation(parent, Gravity.CENTER, 0, margin);
+
 		return grouthPop;
 	}
-	public void showGrouthTeacher(View parent){
-		new NamePup(mActivity,parent).showPup();
+
+	public void showGrouthTeacher(View parent) {
+		new NamePup(mActivity, parent).showPup();
 	}
+
 	public PopupWindow showBreakQuanzi(int tag, View parent, View layoutId,
 			int margin, OnClickListener breakBtnListener) {
 		if (null != parent) {
@@ -321,9 +347,9 @@ public class PopupWindows {
 		}
 		if (null == breakQaunziPopupWindow
 				|| (Integer) viewBreakQuanzi.getTag() != tag) {
-//			LayoutInflater layoutInflater = (LayoutInflater) mActivity
-//					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//			viewBreakQuanzi = layoutInflater.inflate(layoutId, null);
+			// LayoutInflater layoutInflater = (LayoutInflater) mActivity
+			// .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			// viewBreakQuanzi = layoutInflater.inflate(layoutId, null);
 			viewBreakQuanzi = layoutId;
 			viewBreakQuanzi.setTag(tag);
 			breakQaunziPopupWindow = new PopupWindow(viewBreakQuanzi,
@@ -1394,7 +1420,7 @@ public class PopupWindows {
 		} else if (popupWindowOptions != null) {
 			popupWindowOptions.dismiss();
 		}
-		if(breakQaunziPopupWindow!=null){
+		if (breakQaunziPopupWindow != null) {
 			breakQaunziPopupWindow.dismiss();
 		}
 	}

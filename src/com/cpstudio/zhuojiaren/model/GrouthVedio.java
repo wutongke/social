@@ -15,6 +15,15 @@ public class GrouthVedio implements Serializable{
 //     "typeName": <string> (成长在线类型名称),
 //     "crtDate": <string> (创建日期)
 	private String id;
+	private String imageAddr;
+	private String vedioAddr;
+	private String tutorName;
+	private String typeName;
+	private String crtDate;
+	//观看人数
+	private String viewCount;
+	//时长
+	private String duration;
 	public String getImageAddr() {
 		return imageAddr;
 	}
@@ -29,9 +38,6 @@ public class GrouthVedio implements Serializable{
 	}
 	public String getCrtDate() {
 		return crtDate;
-	}
-	public String getBrowerCount() {
-		return browerCount;
 	}
 	public String getDuration() {
 		return duration;
@@ -51,26 +57,21 @@ public class GrouthVedio implements Serializable{
 	public void setCrtDate(String crtDate) {
 		this.crtDate = crtDate;
 	}
-	public void setBrowerCount(String browerCount) {
-		this.browerCount = browerCount;
-	}
 	public void setDuration(String duration) {
 		this.duration = duration;
 	}
-	private String imageAddr;
-	private String vedioAddr;
-	private String tutorName;
-	private String typeName;
-	private String crtDate;
-	//观看人数
-	private String browerCount;
-	//时长
-	private String duration;
+	
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getViewCount() {
+		return viewCount;
+	}
+	public void setViewCount(String viewCount) {
+		this.viewCount = viewCount;
 	}
 
 }

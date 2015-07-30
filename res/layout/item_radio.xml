@@ -95,7 +95,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@drawable/jjsc2" />
+            android:scaleType="centerCrop"
+             />
 
         <ImageView
             android:id="@+id/ir_share"
@@ -103,6 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:scaleType="centerCrop"
             android:src="@drawable/jjshare" />
     </LinearLayout>
 
