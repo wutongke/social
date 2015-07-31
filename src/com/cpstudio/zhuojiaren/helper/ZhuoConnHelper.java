@@ -189,7 +189,7 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("content", content));
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", files);
-		return doFormPost(fileMap, nameValuePairs,
+		return doPostWithFile(fileMap, nameValuePairs,
 				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
 				"pubQuanTopic", false, null, null);
 	}
@@ -446,7 +446,7 @@ public class ZhuoConnHelper {
 		// return doFormPost(files, addUserInfo(nameValuePairs),
 		// ZhuoCommHelper.getUrlUpdateUserDetail(), handler, handlerTag,
 		// activity, "updateUserDetail", cancelable, cancel, data);
-		return doFormPost(new HashMap<String, ArrayList<String>>(),
+		return doPostWithFile(new HashMap<String, ArrayList<String>>(),
 				addUserInfo(nameValuePairs),
 				ZhuoCommHelper.getUrlUpdateUserDetail(), handler, handlerTag,
 				activity, "updateUserDetail", cancelable, cancel, data);
@@ -516,7 +516,7 @@ public class ZhuoConnHelper {
 		// return doFormPost(files, nameValuePairs,
 		// ZhuoCommHelper.getUrlCreateGroup(), handler, handlerTag,
 		// activity, "createGroup", cancelable, cancel, data);
-		return doFormPost(new HashMap<String, ArrayList<String>>(),
+		return doPostWithFile(new HashMap<String, ArrayList<String>>(),
 				nameValuePairs, ZhuoCommHelper.getUrlCreateGroup(), handler,
 				handlerTag, activity, "createGroup", cancelable, cancel, data);
 	}
@@ -660,7 +660,7 @@ public class ZhuoConnHelper {
 			list.add(filePath);
 			files.put("file", list);
 		}
-		return doFormPost(files, nameValuePairs,
+		return doPostWithFile(files, nameValuePairs,
 				ZhuoCommHelper.getUrlGroupChat(), handler, handlerTag,
 				activity, null, cancelable, cancel, data);
 	}
@@ -685,7 +685,7 @@ public class ZhuoConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("file", filePath));
 		}
 
-		return doFormPost(files, nameValuePairs, ZhuoCommHelper.getUrlChat(),
+		return doPostWithFile(files, nameValuePairs, ZhuoCommHelper.getUrlChat(),
 				handler, handlerTag, activity, null, cancelable, cancel, data);
 	}
 
@@ -853,7 +853,7 @@ public class ZhuoConnHelper {
 	 * @param data
 	 * @return
 	 */
-	public boolean doFormPost(final Map<String, ArrayList<String>> filesMap,
+	public boolean doPostWithFile(final Map<String, ArrayList<String>> filesMap,
 			final List<NameValuePair> nameValuePairs, final String url,
 			final Handler handler, final int handlerTag,
 			final Activity activity, final String tag,
