@@ -20,7 +20,7 @@ import android.os.Message;
 import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelperLZ.FinishCallback;
-import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.UploadCompleteCallback;
+import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.ICompleteCallback;
 import com.qiniu.android.storage.UploadManager;
 
 /**
@@ -187,7 +187,9 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
 		nameValuePairs.add(new BasicNameValuePair("content", content));
-		return doFormPost(files, nameValuePairs,
+		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
+		fileMap.put("file", files);
+		return doPostWithFile(fileMap, nameValuePairs,
 				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
 				"pubQuanTopic", false, null, null);
 	}
@@ -441,7 +443,11 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("isbirthopen", isbirthopen));
 		nameValuePairs.add(new BasicNameValuePair("mycustomer", mycustomer));
 
-		return doFormPost(files, addUserInfo(nameValuePairs),
+		// return doFormPost(files, addUserInfo(nameValuePairs),
+		// ZhuoCommHelper.getUrlUpdateUserDetail(), handler, handlerTag,
+		// activity, "updateUserDetail", cancelable, cancel, data);
+		return doPostWithFile(new HashMap<String, ArrayList<String>>(),
+				addUserInfo(nameValuePairs),
 				ZhuoCommHelper.getUrlUpdateUserDetail(), handler, handlerTag,
 				activity, "updateUserDetail", cancelable, cancel, data);
 	}
@@ -507,9 +513,12 @@ public class ZhuoConnHelper {
 		if (null != managers) {
 			nameValuePairs.add(new BasicNameValuePair("managers", managers));
 		}
-		return doFormPost(files, nameValuePairs,
-				ZhuoCommHelper.getUrlCreateGroup(), handler, handlerTag,
-				activity, "createGroup", cancelable, cancel, data);
+		// return doFormPost(files, nameValuePairs,
+		// ZhuoCommHelper.getUrlCreateGroup(), handler, handlerTag,
+		// activity, "createGroup", cancelable, cancel, data);
+		return doPostWithFile(new HashMap<String, ArrayList<String>>(),
+				nameValuePairs, ZhuoCommHelper.getUrlCreateGroup(), handler,
+				handlerTag, activity, "createGroup", cancelable, cancel, data);
 	}
 
 	public boolean groupRemoveUser(Handler handler, int handlerTag,
@@ -596,9 +605,10 @@ public class ZhuoConnHelper {
 		this.password = password;
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("from", "android"));
-		//登陆时需要添加额外的账号和密码信息
-		return doPost(addUserInfo(nameValuePairs), ZhuoCommHelper.getUrlLogin(), handler,
-				handlerTag, activity, "login", cancelable, cancel, data);
+		// 登陆时需要添加额外的账号和密码信息
+		return doPost(addUserInfo(nameValuePairs),
+				ZhuoCommHelper.getUrlLogin(), handler, handlerTag, activity,
+				"login", cancelable, cancel, data);
 	}
 
 	/**
@@ -644,11 +654,13 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("type", type));
 		nameValuePairs.add(new BasicNameValuePair("from", "android"));
 		nameValuePairs.add(new BasicNameValuePair("secs", secs));
-		Map<String, String> files = new HashMap<String, String>();
+		Map<String, ArrayList<String>> files = new HashMap<String, ArrayList<String>>();
 		if (filePath != null && !filePath.equals("")) {
-			files.put("file", filePath);
+			ArrayList<String> list = new ArrayList<String>();
+			list.add(filePath);
+			files.put("file", list);
 		}
-		return doFormPost(files, nameValuePairs,
+		return doPostWithFile(files, nameValuePairs,
 				ZhuoCommHelper.getUrlGroupChat(), handler, handlerTag,
 				activity, null, cancelable, cancel, data);
 	}
@@ -663,14 +675,17 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("type", type));
 		nameValuePairs.add(new BasicNameValuePair("from", "android"));
 		nameValuePairs.add(new BasicNameValuePair("secs", secs));
-		Map<String, String> files = new HashMap<String, String>();
+		Map<String, ArrayList<String>> files = new HashMap<String, ArrayList<String>>();
 		if (filePath != null && !filePath.equals("")) {
-			files.put("file", filePath);
+			ArrayList<String> list = new ArrayList<String>();
+			list.add(filePath);
+			files.put("file", list);
+
 			// files.put("file", filePath);
 			nameValuePairs.add(new BasicNameValuePair("file", filePath));
 		}
 
-		return doFormPost(files, nameValuePairs, ZhuoCommHelper.getUrlChat(),
+		return doPostWithFile(files, nameValuePairs, ZhuoCommHelper.getUrlChat(),
 				handler, handlerTag, activity, null, cancelable, cancel, data);
 	}
 
@@ -696,7 +711,7 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-			//添加的是用户名和密码，其他地方直接用addUserInfoByPost
+			// 添加的是用户名和密码，其他地方直接用addUserInfoByPost
 			AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
 					addUserInfoByPost(nameValuePairs), url, getFinishCallback(
 							handler, handlerTag, tag, data), activity);
@@ -751,40 +766,28 @@ public class ZhuoConnHelper {
 		return false;
 	}
 
-	private boolean doFormPost(Map<String, String> files,
-			List<NameValuePair> nameValuePairs, String url, Handler handler,
-			int handlerTag, Activity activity, String tag, boolean cancelable,
-			OnCancelListener cancel, String data) {
-
-		ArrayList<String> pathList = new ArrayList<String>();
-		if (files != null)
-			for (Map.Entry<String, String> entry : files.entrySet()) {
-				// System.out.println("key= " + entry.getKey() + " and value= "
-				// + entry.getValue());
-				pathList.add(entry.getValue());
-			}
-
-		return doFormPost(pathList, nameValuePairs, url, handler, handlerTag,
-				activity, tag, cancelable, cancel, data);
-
-	}
+	// private boolean doFormPost(Map<String, String> files,
+	// List<NameValuePair> nameValuePairs, String url, Handler handler,
+	// int handlerTag, Activity activity, String tag, boolean cancelable,
+	// OnCancelListener cancel, String data) {
+	//
+	// ArrayList<String> pathList = new ArrayList<String>();
+	// if (files != null)
+	// for (Map.Entry<String, String> entry : files.entrySet()) {
+	// // System.out.println("key= " + entry.getKey() + " and value= "
+	// // + entry.getValue());
+	// pathList.add(entry.getValue());
+	// }
+	//
+	// return doFormPost(pathList, nameValuePairs, url, handler, handlerTag,
+	// activity, tag, cancelable, cancel, data);
+	//
+	// }
 
 	/**
-	 * 需要上传文件时调用此接口
-	 * 
-	 * @param files 欲上传文件地址列表
-	 * @param nameValuePairs 参数
-	 * @param url	url
-	 * @param handler
-	 * @param handlerTag
-	 * @param activity
-	 * @param tag
-	 * @param cancelable
-	 * @param cancel
-	 * @param data
-	 * @return
+	 * 之后废弃,不要用
 	 */
-	private boolean doFormPost(ArrayList<String> files,
+	public boolean doFormPost(ArrayList<String> files,
 			final List<NameValuePair> nameValuePairs, final String url,
 			final Handler handler, final int handlerTag,
 			final Activity activity, final String tag,
@@ -795,21 +798,25 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-			if (files != null) {
-				AsyncUploadHelper asyncTaskHeaper = new AsyncUploadHelper(activity,
-						uploadFileToken, new UploadCompleteCallback() {
-							@Override
-							public void onReturn(List<String> keyList) {
-								// TODO Auto-generated method stub
-								if (keyList == null || keyList.size() < 1) {
-									Toast.makeText(activity, "上传图片到七牛云失败", 1000)
-											.show();
+			AsyncUploadHelper helper = new AsyncUploadHelper(
+					activity, uploadFileToken, null,
+					new ICompleteCallback() {
+
+						@Override
+						public void onReturn(Map<String, StringBuilder> map) {
+							// TODO Auto-generated method stub
+							if(map==null)
+								Toast.makeText(activity, "上传到七牛云失败", 1000).show();
+							else if (map.size() > 0) {
+								for (Map.Entry<String, StringBuilder> entry : map
+										.entrySet()) {
+									String key = entry.getKey();
+									String value = entry.getValue().toString();
+									nameValuePairs.add(new BasicNameValuePair(
+											key, value));
 								}
-								List<String> keys = null;
-								if (keyList != null)
-									keys = keyList;
 								AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
-										keys, addUserInfoByPost(nameValuePairs),url,
+										addUserInfoByPost(nameValuePairs), url,
 										true, getFinishCallback(handler,
 												handlerTag, tag, data),
 										activity);
@@ -819,22 +826,77 @@ public class ZhuoConnHelper {
 											tag, conn));
 								}
 								conn.execute();
-
 							}
-						});
-				asyncTaskHeaper.execute(files);
-			} else {
-				AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(null,
-						addUserInfoByPost(nameValuePairs), url, true,
-						getFinishCallback(handler, handlerTag, tag, data),
-						activity);
-				conn.setCancelable(cancelable);
-				if (cancelable) {
-					conn.setCancel(getCancelListener(cancel, tag, conn));
-				}
-				conn.execute();
+						}
+					});
+			helper.execute("test");
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 需要上传文件时调用此接口
+	 * 
+	 * @param files
+	 *            欲上传文件地址列表
+	 * @param nameValuePairs
+	 *            参数
+	 * @param url
+	 *            url
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param tag
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
+	public boolean doPostWithFile(final Map<String, ArrayList<String>> filesMap,
+			final List<NameValuePair> nameValuePairs, final String url,
+			final Handler handler, final int handlerTag,
+			final Activity activity, final String tag,
+			final boolean cancelable, final OnCancelListener cancel,
+			final String data) {
+
+		if (!mStartedTag.contains(tag) || tag == null) {
+			if (tag != null) {
+				mStartedTag.add(tag);
 			}
 
+			AsyncUploadHelper helper = new AsyncUploadHelper(
+					activity, uploadFileToken, filesMap,
+					new ICompleteCallback() {
+
+						@Override
+						public void onReturn(Map<String, StringBuilder> map) {
+							// TODO Auto-generated method stub
+							if(map==null)
+								Toast.makeText(activity, "上传到七牛云失败", 1000).show();
+							else if (map.size() > 0) {
+								for (Map.Entry<String, StringBuilder> entry : map
+										.entrySet()) {
+									String key = entry.getKey();
+									String value = entry.getValue().toString();
+									nameValuePairs.add(new BasicNameValuePair(
+											key, value));
+								}
+								AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+										addUserInfoByPost(nameValuePairs), url,
+										true, getFinishCallback(handler,
+												handlerTag, tag, data),
+										activity);
+								conn.setCancelable(cancelable);
+								if (cancelable) {
+									conn.setCancel(getCancelListener(cancel,
+											tag, conn));
+								}
+								conn.execute();
+							}
+						}
+					});
+			helper.execute("test");
 			return true;
 		}
 		return false;
