@@ -60,11 +60,15 @@ public class EditEventActivity extends BaseActivity {
 	@InjectView(R.id.aee_add_contact_people)
 	TextView addPeople;
 	private Context mContext;
+	//图片
 	private int requestCode = 1;
+	//位置
+	private int requestLocate = 2;
 	private ArrayList<String> imageDir = new ArrayList<String>();
 	private CommonAdapter<String> imageAdatper;
 	private ArrayList<EditText> peopleList = new ArrayList<EditText>();
 	private ArrayList<EditText> phoneList = new ArrayList<EditText>();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -110,26 +114,29 @@ public class EditEventActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(EditEventActivity.this,"");
+				DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
+						EditEventActivity.this, "");
 				dateTimePicKDialog.dateTimePicKDialog(startTime);
 			}
 		});
 		endTimeLayout.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(EditEventActivity.this,"");
+				DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
+						EditEventActivity.this, "");
 				dateTimePicKDialog.dateTimePicKDialog(endTime);
 			}
 		});
 		locateLayout.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				final PlaceChooseDialog placeChoose = new PlaceChooseDialog(
-						mContext, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,"北京","北京");
+						mContext, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, "北京",
+						"北京");
 				placeChoose.setButton(DialogInterface.BUTTON_POSITIVE, "确定",
 						new DialogInterface.OnClickListener() {
 
@@ -137,7 +144,8 @@ public class EditEventActivity extends BaseActivity {
 							public void onClick(DialogInterface dialog,
 									int which) {
 								// TODO Auto-generated method stub
-								locate.setText(placeChoose.getPlace().getText().toString());
+								locate.setText(placeChoose.getPlace().getText()
+										.toString());
 							}
 						});
 				placeChoose.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
@@ -154,8 +162,17 @@ public class EditEventActivity extends BaseActivity {
 				placeChoose.show();
 			}
 		});
+		locateMoreLayout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivityForResult(new Intent(EditEventActivity.this,
+						ChooseLocateActivity.class), requestLocate);
+			}
+		});
 		addPeople.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -171,13 +188,16 @@ public class EditEventActivity extends BaseActivity {
 		if (requestCode == this.requestCode && resultCode == RESULT_OK) {
 			imageDir.addAll(data.getStringArrayListExtra("data"));
 			imageAdatper.notifyDataSetChanged();
+		}else if(requestCode==requestLocate && resultCode == RESULT_OK){
+			locateMore.setText(data.getStringExtra("locate"));
 		}
 	}
-	private void addContactPeopel(){
+
+	private void addContactPeopel() {
 		LayoutInflater infloater = EditEventActivity.this.getLayoutInflater();
 		View view = infloater.inflate(R.layout.item_add_people, null);
-		EditText people = (EditText)view.findViewById(R.id.idp_people);
-		EditText phone = (EditText)view.findViewById(R.id.idp_phone);
+		EditText people = (EditText) view.findViewById(R.id.idp_people);
+		EditText phone = (EditText) view.findViewById(R.id.idp_phone);
 		contactPeople.addView(view);
 		peopleList.add(people);
 		phoneList.add(phone);

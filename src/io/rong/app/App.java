@@ -1,5 +1,7 @@
 package io.rong.app;
 
+import com.baidu.mapapi.SDKInitializer;
+
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
@@ -20,6 +22,10 @@ public class App extends Application {
     public void onCreate() {
 
         super.onCreate();
+        /**
+         * 百度地图初始化
+         */
+        SDKInitializer.initialize(this);
         /**
          * IMKit SDK调用第一步 初始化
          * context上下文
