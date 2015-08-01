@@ -24,7 +24,6 @@ public class QQActivity extends BaseActivity {
 	Button outBang;
 	@InjectView(R.id.aq_qq_des)
 	TextView des;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -171,11 +171,11 @@ public class QuanziActiveFra extends Fragment {
 			mList.clear();
 			mAdapter.notifyDataSetChanged();
 			mPage = 0;
-			// mConnHelper.getQuanEventList(mUIHandler, MsgTagVO.DATA_LOAD,
-			// groupId, null, mPage, mPageSize);
-			// ≤‚ ‘
 			mConnHelper.getQuanEventList(mUIHandler, MsgTagVO.DATA_LOAD,
-					"989038385820150729150611", null, mPage, mPageSize);
+					groupId, null, mPage, mPageSize);
+			// ≤‚ ‘
+//			mConnHelper.getQuanEventList(mUIHandler, MsgTagVO.DATA_LOAD,
+//					"989038385820150729150611", null, mPage, mPageSize);
 
 		}
 	}

@@ -106,10 +106,11 @@
         android:id="@+id/linearLayoutBroadcast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_below="@id/viewGroupInfo" >
 
         <com.cpstudui.zhuojiaren.lz.AutoTextView
-            android:id="@+id/at_notices"
+            android:id="@+id/at_pub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
@@ -117,7 +118,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/at_notices"
+            android:layout_toLeftOf="@+id/at_pub"
             android:src="@drawable/searcher_new_search_icon" >
         </ImageView>
     </RelativeLayout>

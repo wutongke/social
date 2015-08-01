@@ -14,6 +14,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -35,6 +36,7 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
@@ -70,7 +72,8 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	View ltMember;// 成员操作菜单
 	@InjectView(R.id.lt_youke_menue)
 	View ltYouke;// 非成员操作菜单
-
+	@InjectView(R.id.at_pub)
+	AutoTextView antoPubText;// 圈公告
 	@InjectView(R.id.btnPubActive)
 	View btnPubActive;
 
@@ -156,8 +159,8 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						String headUrl = detail.getGheader();
 						ivGroupHeader.setTag(headUrl);
 						mLoadImage.addTask(headUrl, ivGroupHeader);
-// 圈子类型，之后要转换为编号对应的名称
-						String jj = detail.getGtype()+"";
+						// 圈子类型，之后要转换为编号对应的名称
+						String jj = detail.getGtype() + "";
 						if (jj != null)
 							tvTopicType.setText(jj);
 						tvMemNum.setText(detail.getMemberCount() + "");
@@ -171,6 +174,15 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						changeType(isfollow);
 						mLoadImage.addTask(detail.getGheader(), ivGroupHeader);
 						mLoadImage.doTask();
+						if (!TextUtils.isEmpty(detail.getGpub())) {
+							List<MessagePubVO> noticesListData = new ArrayList<MessagePubVO>();
+							MessagePubVO pub = new MessagePubVO();
+							pub.setPublish(detail.getGpub());
+							noticesListData.add(pub);
+							antoPubText.setList(noticesListData);
+							antoPubText.updateUI();
+							findViewById(R.id.linearLayoutBroadcast).setVisibility(View.VISIBLE);
+						}
 					}
 				}
 				break;
@@ -347,7 +359,8 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-				mConnHelper.followGroup(mUIHandler, MsgTagVO.FOLLOW_QUAN, groupid, QuanVO.QUAN_JOIN, "");
+				mConnHelper.followGroup(mUIHandler, MsgTagVO.FOLLOW_QUAN,
+						groupid, QuanVO.QUAN_JOIN, "");
 			}
 		});
 	}
