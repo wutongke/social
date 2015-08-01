@@ -180,6 +180,10 @@ public class PublishCrowdFundingActivity extends BaseActivity {
 		iv.setLayoutParams(lp);
 		iv.setBackgroundResource(R.color.graywhitem);
 		iv.setTextColor(color.graywhite);
+		ETList.add(iv);
 		imageAndTextLL.addView(iv);
+	}
+	private void addPayBack(){
+		View view = getLayoutInflater().inflate(R.layout.item_payback_add, null);
 	}
 }

@@ -19,7 +19,7 @@ import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class JsonHandler_Lef<T> {
+public class JsonHandler_Lef {
 
 	/**
 	 * 登录时获取session
@@ -181,10 +181,11 @@ public class JsonHandler_Lef<T> {
 	/***
 	 * 解析列表
 	 * @param <T>
+	 * @param <T>
 	 * @param jsonData
 	 * @return
 	 */
-	public  ArrayList<T> parseList(String jsonData) {
+	public  <T> ArrayList<T> parseList(String jsonData) {
 		// TODO Auto-generated method stub
 		ArrayList<T> list = new ArrayList<T>();
 		try {

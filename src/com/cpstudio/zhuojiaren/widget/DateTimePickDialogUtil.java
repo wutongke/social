@@ -1,5 +1,6 @@
 package com.cpstudio.zhuojiaren.widget;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -37,6 +38,7 @@ public class DateTimePickDialogUtil implements OnDateChangedListener,
 	private String dateTime;
 	private String initDateTime;
 	private Activity activity;
+	private String getTime;
 
 	/**
 	 * 日期时间弹出选择框构造函数
@@ -120,9 +122,12 @@ public class DateTimePickDialogUtil implements OnDateChangedListener,
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
 
 		dateTime = sdf.format(calendar.getTime());
+		getTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").format(System.currentTimeMillis());
 		ad.setTitle(dateTime);
 	}
-
+	public String getTime(){
+		return getTime;
+	}
 	/**
 	 * 实现将初始日期时间2012年07月02日 16:45 拆分成年 月 日 时 分 秒,并赋值给calendar
 	 * 

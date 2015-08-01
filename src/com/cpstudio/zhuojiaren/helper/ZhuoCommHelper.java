@@ -113,7 +113,11 @@ public class ZhuoCommHelper {
 	private final static String AUDIO_COLL = "/praiseAudio.do";
 	private final static String GrowthOnlineType = "/getGrowthOnlineType.do";
 	private final static String CREATEGROUP = "/creategroup.do";
+	private final static String ADDGROUPACTIVITY = "/addGroupActivity.do";
 
+	public static String getAddgroupactivity() {
+		return SERVER + ADDGROUPACTIVITY;
+	}
 	public static String getCreategroup() {
 		return SERVER + CREATEGROUP;
 	}
