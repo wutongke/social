@@ -64,6 +64,8 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	TextView tvMemNum;
 	@InjectView(R.id.mtextViewTopic)
 	TextView tvTopicNum;
+	@InjectView(R.id.mtextViewGType)
+	TextView tvTopicType;
 	@InjectView(R.id.lt_chengyuan_menue)
 	View ltMember;// 成员操作菜单
 	@InjectView(R.id.lt_youke_menue)
@@ -154,13 +156,11 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						String headUrl = detail.getGheader();
 						ivGroupHeader.setTag(headUrl);
 						mLoadImage.addTask(headUrl, ivGroupHeader);
-						// 圈子简介内容
-						String jj = detail.getGintro();
+// 圈子类型，之后要转换为编号对应的名称
+						String jj = detail.getGtype()+"";
 						if (jj != null)
-							((TextView) findViewById(R.id.mtextViewMoreInto))
-									.setText(jj);
-						((TextView) findViewById(R.id.mtextViewCy))
-								.setText(detail.getMemberCount() + "");
+							tvTopicType.setText(jj);
+						tvMemNum.setText(detail.getMemberCount() + "");
 						// tvMemNum.setText(detail.getMemberCount());
 						tvTopicNum.setText(detail.getTopicCount() + "");
 						if (memberType != 0) {
@@ -348,10 +348,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-
-				mConnHelper.followGroup(groupid, "1", mUIHandler,
-						MsgTagVO.FOLLOW_QUAN, null, true, null, null);
-
+				mConnHelper.followGroup(mUIHandler, MsgTagVO.FOLLOW_QUAN, groupid, QuanVO.QUAN_JOIN, "");
 			}
 		});
 	}
