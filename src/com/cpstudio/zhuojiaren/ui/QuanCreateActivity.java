@@ -86,9 +86,9 @@ public class QuanCreateActivity extends BaseActivity {
 	//城市编码
 	private String locateCode;
 	//加入权限
-	private String addRight;
+	private String addRight="0";
 	//查看权限
-	private String seeRight;
+	private String seeRight="0";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -455,15 +455,15 @@ public class QuanCreateActivity extends BaseActivity {
 			}
 			ids = ZhuoCommHelper.subLast(ids);
 		}
-		Map<String, String> files = new HashMap<String, String>();
-		if (mHeadChanged) {
-			ArrayList<String> temp = mIsh2.getTags();
-			for (String path : temp) {
-				files.put("gheader", path);
-			}
-		}
-		mConnHelper.createQuan(title, intro, String.valueOf(typeQuanzi),
-				locateCode, addRight,seeRight);
+		// Map<String, String> files = new HashMap<String, String>();
+		// if (mHeadChanged) {
+		// ArrayList<String> temp = mIsh2.getTags();
+		// for (String path : temp) {
+		// files.put("gheader", path);
+		// }
+		// }
+		mConnHelper.createQuan(QuanCreateActivity.this,mUIHandler,MsgTagVO.PUB_INFO,title, intro, String.valueOf(typeQuanzi),
+				locateCode, addRight,seeRight,mIsh2.getTags());
 
 	}
 

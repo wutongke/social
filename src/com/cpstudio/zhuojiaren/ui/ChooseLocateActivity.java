@@ -1,6 +1,5 @@
 package com.cpstudio.zhuojiaren.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,9 +26,10 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 
-public class ChooseLocateActivity extends Activity implements
+public class ChooseLocateActivity extends BaseActivity implements
 OnMapLongClickListener, OnMapClickListener, OnGetGeoCoderResultListener{
 
 
@@ -45,6 +45,8 @@ OnMapLongClickListener, OnMapClickListener, OnGetGeoCoderResultListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_choose_locate);
+		initTitle();
+		title.setText("œÍœ∏µÿ÷∑");
 		initView();
 	}
 

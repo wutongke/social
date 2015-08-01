@@ -93,33 +93,27 @@ public class AppClientLef {
 				}, null);
 		conn.execute();
 	}
-	public void refreshUserInfo(LoginRes res){
-		SharedPreferences sp = context
-				.getSharedPreferences("cpzhuojiaren",
-						Activity.MODE_PRIVATE);
+
+	public void refreshUserInfo(LoginRes res) {
+		SharedPreferences sp = context.getSharedPreferences("cpzhuojiaren",
+				Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sp.edit();
-		editor.putString(ResHelper.SESSION,
-				res.getSession());
-		editor.putString(ResHelper.UPLIOAD_TOKEN,
-				res.getQiniuToken());
-		editor.putString(ResHelper.IM_TOKEN,
-				res.getRongyunToken());
+		editor.putString(ResHelper.SESSION, res.getSession());
+		editor.putString(ResHelper.UPLIOAD_TOKEN, res.getQiniuToken());
+		editor.putString(ResHelper.IM_TOKEN, res.getRongyunToken());
 		editor.commit();
 
 		// 保存到两个单例中
-		ResHelper mResHelper = ResHelper
-				.getInstance(context);
+		ResHelper mResHelper = ResHelper.getInstance(context);
 		mResHelper.setSessionForAPP(res.getSession());
-		mResHelper.setUpLoadTokenForQiniu(res
-				.getQiniuToken());
-		mResHelper.setImTokenForRongyun(res
-				.getRongyunToken());
-		ZhuoConnHelper connHelper = ZhuoConnHelper
-				.getInstance(context);
+		mResHelper.setUpLoadTokenForQiniu(res.getQiniuToken());
+		mResHelper.setImTokenForRongyun(res.getRongyunToken());
+		ZhuoConnHelper connHelper = ZhuoConnHelper.getInstance(context);
 		connHelper.setSession(res.getSession());
 		connHelper.setUploadFileToken(res.getQiniuToken());
 		connHelper.setImToken(res.getRongyunToken());
 	}
+
 	/**
 	 * 获取圈子,根据url区分类别
 	 */
@@ -351,18 +345,23 @@ public class AppClientLef {
 	// city int 地区 城市编码
 	// followpms int 加入权限 0:允许任何人加入，1:需要申请才能加入
 	// accesspms int 访问权限 0:所有人都可以访问，1:加入圈子才可以访问
-	public boolean createQuan(String gname, String gintro, String gtype,
-			String city, String followpms, String accesspms) {
+	public boolean createQuan(Activity activity, Handler handler,
+			int handlerTag, String gname, String gintro, String gtype,
+			String city, String followpms, String accesspms,
+			ArrayList<String> files) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
-		nameValuePairs.add(new BasicNameValuePair(gname, gname));
+		nameValuePairs.add(new BasicNameValuePair("gname", gname));
 		nameValuePairs.add(new BasicNameValuePair("gintro", gintro));
 		nameValuePairs.add(new BasicNameValuePair("gtype", gtype));
 		nameValuePairs.add(new BasicNameValuePair("city", city));
 		nameValuePairs.add(new BasicNameValuePair("followpms", followpms));
 		nameValuePairs.add(new BasicNameValuePair("accesspms", accesspms));
-//		return ZhuoConnHelper.getInstance(context).doFormPost();
-		return true;
+		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
+		filesMap.put("gheader", files);
+		return ZhuoConnHelper.getInstance(context).doPostWithFile(filesMap,
+				nameValuePairs, ZhuoCommHelper.getCreategroup(), handler,
+				handlerTag, activity, "1", false, null, null);
 	}
 
 	/**

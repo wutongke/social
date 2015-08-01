@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".ChooseLocateActivity" >
     <include layout="@layout/title_activity"/>
     <LinearLayout
@@ -31,7 +31,13 @@
         <Button
             android:id="@+id/search"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:textSize="15dp"
+            android:textColor="@color/white"
+            android:background="#1885fb"
             android:text="搜索"
             android:visibility="gone" />
     </LinearLayout>
@@ -60,7 +66,13 @@
         <Button
             android:id="@+id/ok"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:textSize="15dp"
+            android:textColor="@color/white"
+            android:background="#1885fb"
             android:text="确定" />
     </LinearLayout>
 

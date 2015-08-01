@@ -231,6 +231,8 @@ public class QuanziFra extends Fragment {
 			// url = ZhuoCommHelper.getUrlReGroupList();
 			myQuanziLayout.setVisibility(View.GONE);
 			quanziRecommend.setVisibility(View.VISIBLE);
+			url = ZhuoCommHelper.getServiceSearchQuan();
+			gtype = "1";
 			titleList.clear();
 			titleList.add(new ImageRadioButton(R.drawable.resourceu_quan,
 					R.drawable.resource_quan));
@@ -251,12 +253,15 @@ public class QuanziFra extends Fragment {
 				@Override
 				public void OnClickItem(ImageRadioButton item) {
 					// TODO Auto-generated method stub
+					int pos = 0;
 					for (ImageRadioButton temp : titleList) {
-						if (item.equals(temp))
-							Util.toastMessage(getActivity(), item.getaImage()
-									+ "");
-						mTitleAdapter.notifyDataSetChanged();
+						pos++;
+						if (item.equals(temp)){
+							gtype = pos+"";
+							loadData();
+						}
 					}
+					mTitleAdapter.notifyDataSetChanged();
 				}
 			});
 			quanziRecommend.setAdapter(mTitleAdapter);
