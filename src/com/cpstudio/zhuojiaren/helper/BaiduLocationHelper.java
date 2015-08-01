@@ -26,7 +26,7 @@ public class BaiduLocationHelper {
 
 	public void initLocation() {
 		mLocationClient = new LocationClient(mContext);
-		mLocationClient.setAK("D43e1d8957287554e149360085840fbb");
+//		mLocationClient.setAK("D43e1d8957287554e149360085840fbb");
 		mLocationClient.registerLocationListener(new BDLocationListener() {
 
 			@Override
@@ -71,7 +71,7 @@ public class BaiduLocationHelper {
 		option.setAddrType("all");
 		option.setCoorType("bd09ll");
 		option.setScanSpan(60000);
-		option.disableCache(true);
+//		option.disableCache(true);
 		mLocationClient.setLocOption(option);
 	}
 

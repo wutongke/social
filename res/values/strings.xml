@@ -290,8 +290,7 @@
     <string name="info62">发布成功</string>
     <string name="info63">提示</string>
     <string name="info64">正在发送中</string>
-     <string name="infofile">文件上传中...</string>
-    
+    <string name="infofile">文件上传中...</string>
     <string name="info65">请输入评论内容</string>
     <string name="info66">创建成功</string>
     <string name="info67">更新成功</string>
@@ -1108,5 +1107,6 @@
     <string name="grouth_online_detail">成长在线详情</string>
     <string name="text_about_zm">倬脉全称为：北京倬家文化...</string>
     <string name="add_bank_card">+&#160;&#160;添加银行卡</string>
+    <string name="title_activity_choose_locate">ChooseLocateActivity</string>
 
 </resources>

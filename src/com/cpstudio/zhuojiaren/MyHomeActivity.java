@@ -95,9 +95,9 @@ public class MyHomeActivity extends Activity {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Intent i = new Intent(MyHomeActivity.this,
-								MyLocationActivity.class);
-						startActivity(i);
+//						Intent i = new Intent(MyHomeActivity.this,
+//								MyLocationActivity.class);
+//						startActivity(i);
 					}
 				});
 		findViewById(R.id.relativeLayoutAdvice).setOnClickListener(

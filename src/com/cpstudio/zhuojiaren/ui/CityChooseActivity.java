@@ -211,16 +211,16 @@ public class CityChooseActivity extends Activity implements OnScrollListener {
 		// 需要地址信息，设置为其他任何值（string类型，且不能为null）时，都表示无地址信息。
 		option.setAddrType("all");
 		// 设置是否返回POI的电话和地址等详细信息。默认值为false，即不返回POI的电话和地址信息。
-		option.setPoiExtraInfo(true);
+//		option.setPoiExtraInfo(true);
 		// 设置产品线名称。强烈建议您使用自定义的产品线名称，方便我们以后为您提供更高效准确的定位服务。
 		option.setProdName("通过GPS定位我当前的位置");
 		// 禁用启用缓存定位数据
-		option.disableCache(true);
+//		option.disableCache(true);
 		// 设置最多可返回的POI个数，默认值为3。由于POI查询比较耗费流量，设置最多返回的POI个数，以便节省流量。
-		option.setPoiNumber(3);
+//		option.setPoiNumber(3);
 		// 设置定位方式的优先级。
 		// 当gps可用，而且获取了定位结果时，不再发起网络请求，直接返回给用户坐标。这个选项适合希望得到准确坐标位置的用户。如果gps不可用，再发起网络请求，进行定位。
-		option.setPriority(LocationClientOption.GpsFirst);
+//		option.setPriority(LocationClientOption.GpsFirst);
 		mLocationClient.setLocOption(option);
 	}
 
@@ -370,10 +370,6 @@ public class CityChooseActivity extends Activity implements OnScrollListener {
 			adapter.notifyDataSetChanged();
 		}
 
-		@Override
-		public void onReceivePoi(BDLocation arg0) {
-
-		}
 	}
 
 	private class ResultListAdapter extends BaseAdapter {

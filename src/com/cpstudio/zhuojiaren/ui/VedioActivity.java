@@ -10,6 +10,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +31,7 @@ import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.util.Util;
+import com.cpstudio.zhuojiaren.widget.CustomShareBoard;
 import com.cpstudio.zhuojiaren.widget.VedioPlayer;
 
 public class VedioActivity extends BaseActivity {
@@ -90,6 +92,17 @@ public class VedioActivity extends BaseActivity {
 		submit();
 		initTitle();
 		title.setText(R.string.grouth_online_detail);
+		function.setBackgroundResource(R.drawable.share_hqxq1);
+		function.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				CustomShareBoard shareBoard = new CustomShareBoard(VedioActivity.this);
+				shareBoard.showAtLocation(VedioActivity.this.getWindow().getDecorView(),
+						Gravity.BOTTOM, 0, 0);
+			}
+		});
 		mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		setVolum();
 	}
