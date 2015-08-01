@@ -29,7 +29,7 @@ public class QuanBriefActivity extends BaseActivity {
 	TextView tvName;
 	@InjectView(R.id.textViewCy)
 	TextView tvMemNum;
-	@InjectView(R.id.textViewTopic)
+	@InjectView(R.id.mtextViewTopic)
 	TextView tvTopicNum;
 	
 	@InjectView(R.id.btnJoinQuan)

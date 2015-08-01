@@ -17,6 +17,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.SurfaceView;
 import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelperLZ.FinishCallback;
@@ -153,45 +154,6 @@ public class ZhuoConnHelper {
 	public boolean getFromServer(String url, FinishCallback callback,
 			Activity activity, boolean cancelable, OnCancelListener cancel) {
 		return doGet(url, callback, url, activity, cancelable, cancel);
-	}
-
-	// /////lz new 0729
-	public boolean getMainAdInfo(Handler mUIHandler, int tag) {
-		return getFromServerByPost(ZhuoCommHelperLz.getMainAdInfo(), null,
-				mUIHandler, tag);
-	}
-
-	/**
-	 * 
-	 * @param context
-	 * @param groupid
-	 * @param uid
-	 *            uid为null则获取本圈子的圈话题；否则获取此用户在此圈子的圈话
-	 * @param pageNo
-	 * @param pageSize
-	 */
-	public boolean getQuanTopicList(Handler mUIHandler, int tag,
-			String groupid, String uid, int pageNo, int pageSize) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		if (uid != null)
-			nameValuePairs.add(new BasicNameValuePair("uid", uid));
-		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
-		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
-		return getFromServerByPost(ZhuoCommHelperLz.getQuanTopicList(),
-				nameValuePairs, mUIHandler, tag);
-	}
-
-	public boolean pubQuanTopic(Activity activity, Handler mUIHandler, int tag,
-			String groupid, String content, ArrayList<String> files) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		nameValuePairs.add(new BasicNameValuePair("content", content));
-		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
-		fileMap.put("file", files);
-		return doPostWithFile(fileMap, nameValuePairs,
-				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
-				"pubQuanTopic", false, null, null);
 	}
 
 	public boolean pubCmt(String msgid, String parentid, String content,
@@ -685,8 +647,9 @@ public class ZhuoConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("file", filePath));
 		}
 
-		return doPostWithFile(files, nameValuePairs, ZhuoCommHelper.getUrlChat(),
-				handler, handlerTag, activity, null, cancelable, cancel, data);
+		return doPostWithFile(files, nameValuePairs,
+				ZhuoCommHelper.getUrlChat(), handler, handlerTag, activity,
+				null, cancelable, cancel, data);
 	}
 
 	/**
@@ -798,15 +761,15 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-			AsyncUploadHelper helper = new AsyncUploadHelper(
-					activity, uploadFileToken, null,
-					new ICompleteCallback() {
+			AsyncUploadHelper helper = new AsyncUploadHelper(activity,
+					uploadFileToken, null, new ICompleteCallback() {
 
 						@Override
 						public void onReturn(Map<String, StringBuilder> map) {
 							// TODO Auto-generated method stub
-							if(map==null)
-								Toast.makeText(activity, "上传到七牛云失败", 1000).show();
+							if (map == null)
+								Toast.makeText(activity, "上传到七牛云失败", 1000)
+										.show();
 							else if (map.size() > 0) {
 								for (Map.Entry<String, StringBuilder> entry : map
 										.entrySet()) {
@@ -853,27 +816,26 @@ public class ZhuoConnHelper {
 	 * @param data
 	 * @return
 	 */
-	public boolean doPostWithFile(final Map<String, ArrayList<String>> filesMap,
+	public boolean doPostWithFile(
+			final Map<String, ArrayList<String>> filesMap,
 			final List<NameValuePair> nameValuePairs, final String url,
 			final Handler handler, final int handlerTag,
 			final Activity activity, final String tag,
 			final boolean cancelable, final OnCancelListener cancel,
 			final String data) {
-
 		if (!mStartedTag.contains(tag) || tag == null) {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-
-			AsyncUploadHelper helper = new AsyncUploadHelper(
-					activity, uploadFileToken, filesMap,
-					new ICompleteCallback() {
+			AsyncUploadHelper helper = new AsyncUploadHelper(activity,
+					uploadFileToken, filesMap, new ICompleteCallback() {
 
 						@Override
 						public void onReturn(Map<String, StringBuilder> map) {
 							// TODO Auto-generated method stub
-							if(map==null)
-								Toast.makeText(activity, "上传到七牛云失败", 1000).show();
+							if (map == null)
+								Toast.makeText(activity, "上传到七牛云失败", 1000)
+										.show();
 							else if (map.size() > 0) {
 								for (Map.Entry<String, StringBuilder> entry : map
 										.entrySet()) {
@@ -1041,4 +1003,116 @@ public class ZhuoConnHelper {
 	public void setImToken(String imToken) {
 		this.imToken = imToken;
 	}
+
+	/**
+	 * 获取首页广告信息
+	 * 
+	 * @param mUIHandler
+	 * @param tag
+	 * @param type
+	 * @return
+	 */
+	public boolean getMainAdInfo(Handler mUIHandler, int tag) {
+		return getFromServerByPost(ZhuoCommHelperLz.getMainAdInfo(), null,
+				mUIHandler, tag);
+	}
+
+	/**
+	 * 获取广告信息，暂未调用
+	 * 
+	 * @param mUIHandler
+	 * @param tag
+	 * @param type
+	 * @return
+	 */
+	public boolean getAdInfo(Handler mUIHandler, int tag, int type) {
+		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("type", type + ""));
+		return getFromServerByPost(ZhuoCommHelperLz.getAdInfo(), params,
+				mUIHandler, tag);
+	}
+
+	/**
+	 * 获取圈话题列表
+	 * 
+	 * @param context
+	 * @param groupid
+	 * @param uid
+	 *            uid为null则获取本圈子的圈话题；否则获取此用户在此圈子的圈话
+	 * @param pageNo
+	 * @param pageSize
+	 */
+	public boolean getQuanTopicList(Handler mUIHandler, int tag,
+			String groupid, String uid, int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		if (uid != null)
+			nameValuePairs.add(new BasicNameValuePair("userid", uid));
+		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
+		return getFromServerByPost(ZhuoCommHelperLz.getQuanTopicList(),
+				nameValuePairs, mUIHandler, tag);
+	}
+
+	/**
+	 * 发布圈话题
+	 * 
+	 * @param activity
+	 * @param mUIHandler
+	 * @param tag
+	 * @param groupid
+	 * @param content
+	 * @param files
+	 * @return
+	 */
+	public boolean pubQuanTopic(Activity activity, Handler mUIHandler, int tag,
+			String groupid, String content, ArrayList<String> files) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
+		fileMap.put("file", files);
+		return doPostWithFile(fileMap, nameValuePairs,
+				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
+				"pubQuanTopic", false, null, null);
+	}
+/**
+ * 获得圈子活动列表
+ * @param mUIHandler
+ * @param tag
+ * @param groupid
+ * @param uid
+ * @param pageNo
+ * @param pageSize
+ * @return
+ */
+	public boolean getQuanEventList(Handler mUIHandler, int tag,
+			String groupid, String uid, int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		if (uid != null)
+			nameValuePairs.add(new BasicNameValuePair("userid", uid));
+		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
+		return getFromServerByPost(ZhuoCommHelperLz.getQuanEventList(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	
+	/**
+	 * 获得圈子信息(圈子主页)
+	 * @param mUIHandler
+	 * @param tag
+	 * @param groupid
+	 * @param uid
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	public boolean getQuanInfo(Handler mUIHandler, int tag,String groupid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		return getFromServerByPost(ZhuoCommHelperLz.getQuanInfo(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	
 }

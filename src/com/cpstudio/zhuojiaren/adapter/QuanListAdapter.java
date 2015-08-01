@@ -68,7 +68,7 @@ public class QuanListAdapter extends BaseAdapter {
 		String headUrl = quan.getGheader();
 		String des = quan.getGintro();
 		String groupname = quan.getGname();
-		String memCount = quan.getMemberCount();
+		String memCount = quan.getMemberCount()+"";
 		convertView.setTag(R.id.tag_id, groupid);
 		if (!managerVisible)
 			holder.selectCheck.setVisibility(View.GONE);

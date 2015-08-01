@@ -1,121 +1,188 @@
 package com.cpstudio.zhuojiaren.model;
 
+import java.util.ArrayList;
 
 public class EventVO {
 
-	private String eventId;
-	private String Name;
-	private String BrowerCount;
-	private String shareCount;
-	private String applyCount;
-	private String Content;
-	private UserVO boss;
-	private String timeNow;
-	private String time;
-	private String people;
-	private String locate;
+	private String activityid;
+	private String content;
+
+	private String starttime;
+
+	private String endtime;
+	private String contacts;
+
 	private String phone;
-	private String memberType;
-	private String isCollection;
-	private String isShared;
-	//add by lz
-	boolean isSelected=false;
-	
-	public boolean isSelected() {
-		return isSelected;
+	private String userid;
+
+	private String name;
+	private String uheader;
+
+	private String position;
+	private String company;
+	private String viewCount;
+	private String shareCount;
+
+	private int outdate;//(是否过期 1已过期  0未过期) ,
+	private String address;
+	private String joinCount;
+	private ArrayList<PicNewVO> activityPic;
+	private boolean collected;
+	// add by lz
+	boolean isSelected = false;
+   
+	public boolean iscollected() {
+		return collected;
 	}
-	public void setSelected(boolean isSelected) {
-		this.isSelected = isSelected;
+
+	public void setIscollected(boolean iscollected) {
+		this.collected = iscollected;
 	}
-	public String getEventId() {
-		return eventId;
+
+	public String getEndtime() {
+		return endtime;
 	}
-	public void setEventId(String eventId) {
-		this.eventId = eventId;
+
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
 	}
-	public String getName() {
-		return Name;
+
+	public String getContacts() {
+		return contacts;
 	}
-	public void setName(String name) {
-		Name = name;
+
+	public void setContacts(String contacts) {
+		this.contacts = contacts;
 	}
-	public String getBrowerCount() {
-		return BrowerCount;
-	}
-	public void setBrowerCount(String browerCount) {
-		BrowerCount = browerCount;
-	}
-	public String getShareCount() {
-		return shareCount;
-	}
-	public void setShareCount(String shareCount) {
-		this.shareCount = shareCount;
-	}
-	public String getApplyCount() {
-		return applyCount;
-	}
-	public void setApplyCount(String applyCount) {
-		this.applyCount = applyCount;
-	}
-	public String getContent() {
-		return Content;
-	}
-	public void setContent(String content) {
-		Content = content;
-	}
-	public UserVO getBoss() {
-		return boss;
-	}
-	public void setBoss(UserVO boss) {
-		this.boss = boss;
-	}
-	public String getTimeNow() {
-		return timeNow;
-	}
-	public void setTimeNow(String timeNow) {
-		this.timeNow = timeNow;
-	}
-	public String getTime() {
-		return time;
-	}
-	public void setTime(String time) {
-		this.time = time;
-	}
-	public String getPeople() {
-		return people;
-	}
-	public void setPeople(String people) {
-		this.people = people;
-	}
-	public String getLocate() {
-		return locate;
-	}
-	public void setLocate(String locate) {
-		this.locate = locate;
-	}
+
 	public String getPhone() {
 		return phone;
 	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getMemberType() {
-		return memberType;
+
+	public String getUserid() {
+		return userid;
 	}
-	public void setMemberType(String memberType) {
-		this.memberType = memberType;
+
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
-	public String getIsCollection() {
-		return isCollection;
+
+	public String getName() {
+		return name;
 	}
-	public void setIsCollection(String isCollection) {
-		this.isCollection = isCollection;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getIsShared() {
-		return isShared;
+
+	public String getUheader() {
+		return uheader;
 	}
-	public void setIsShared(String isShared) {
-		this.isShared = isShared;
+
+	public void setUheader(String uheader) {
+		this.uheader = uheader;
 	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public String getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(String viewCount) {
+		this.viewCount = viewCount;
+	}
+
+	public String getShareCount() {
+		return shareCount;
+	}
+
+	public void setShareCount(String shareCount) {
+		this.shareCount = shareCount;
+	}
+
+	public ArrayList<PicNewVO> getActivityPic() {
+		return activityPic;
+	}
+
+	public void setActivityPic(ArrayList<PicNewVO> activityPic) {
+		this.activityPic = activityPic;
+	}
+
+	public String getActivityid() {
+		return activityid;
+	}
+
+	public void setActivityid(String activityid) {
+		this.activityid = activityid;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getStarttime() {
+		return starttime;
+	}
+
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
+
 	
+	public int getOutdate() {
+		return outdate;
+	}
+
+	public void setOutdate(int outdate) {
+		this.outdate = outdate;
+	}
+
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getJoinCount() {
+		return joinCount;
+	}
+
+	public void setJoinCount(String joinCount) {
+		this.joinCount = joinCount;
+	}
+
+	public boolean isSelected() {
+		return isSelected;
+	}
+
+	public void setSelected(boolean isSelected) {
+		this.isSelected = isSelected;
+	}
+
 }

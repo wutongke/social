@@ -46,7 +46,6 @@ public class MyActiveActivity extends BaseActivity implements
 	@InjectView(R.id.llMenueTop)
 	View pubView;
 	
-
 	boolean isManaging = false;
 	private String mSearchKey = null;
 	private ArrayList<EventVO> mList = new ArrayList<EventVO>();
@@ -136,7 +135,7 @@ public class MyActiveActivity extends BaseActivity implements
 					mList.addAll(list);
 					mAdapter.notifyDataSetChanged();
 					if (mList.size() > 0) {
-						mLastId = mList.get(mList.size() - 1).getEventId();
+						mLastId = mList.get(mList.size() - 1).getActivityid();
 					}
 				} else {
 					if (refresh && mSearchKey != null && !mSearchKey.equals("")) {

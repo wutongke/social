@@ -2,13 +2,13 @@ package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
 
-import com.cpstudio.zhuojiaren.adapter.OrderListAdapter;
-import com.cpstudio.zhuojiaren.model.OrderVO;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 import android.os.Bundle;
 import android.widget.ListView;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+import com.cpstudio.zhuojiaren.adapter.OrderListAdapter;
+import com.cpstudio.zhuojiaren.model.OrderVO;
 
 public class ViewOrderActivity extends BaseActivity {
 	@InjectView(R.id.lvOrders)

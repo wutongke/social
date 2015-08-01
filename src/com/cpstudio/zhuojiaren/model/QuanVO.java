@@ -4,35 +4,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuanVO {
-	//圈子类型
-	public final static  String QUANZITYPE = "quanzitype";
-	public final static  int QUANZIMYCTEATE = 6;
-	public final static  int QUANZIMYADD = 7;
-	public final static  int QUANZIRECOMMEND = 2;
-	public final static  int QUANZIQUERY = 3;
-	
-	//圈子主页列表类型
-	public final static  String QUANZIMAINTYPE = "quanzitype";
-	public final static  int QUANZITOPIC = 7;
-	public final static  int QUANZIEVENT = 8;
-	public final static  int QUANZIMEMBER = 9;
+	// 圈子类型
+	public final static String QUANZITYPE = "quanzitype";
+	public final static int QUANZIMYCTEATE = 6;
+	public final static int QUANZIMYADD = 7;
+	public final static int QUANZIRECOMMEND = 2;
+	public final static int QUANZIQUERY = 3;
+
+	// 圈子主页列表类型
+	public final static String QUANZIMAINTYPE = "quanzitype";
+	public final static int QUANZITOPIC = 7;
+	public final static int QUANZIEVENT = 8;
+	public final static int QUANZIMEMBER = 9;
 
 	private String groupid;
 	private String gname;
 	private String gheader;
-	private String gproperty;
 	private String gintro;
-	private String createtime;
-	private String membersnum;
-	private String membersmax;
-	private String lastbroadcast;
+
+	private String gpub;
+
+	private int gtype;
+
+	private String addtime;
+	private int memberCount;
+	private int topicCount;
 	private String lastmsgtime;
 	private String alert;
-	private String memberCount;
-	private UserVO founder = new UserVO();
-	private List<UserVO> managers = new ArrayList<UserVO>();
-	private List<UserVO> members = new ArrayList<UserVO>();
-	private String membertype;
+
+	int city;// (地区 城市编码)
+	int followpms;// 加入权限 0:允许任何人加入，1:需要申请才能加入) ,
+	int accesspms;// (访问权限 0:所有人都可以访问，1:加入圈子才可以访问) ,
+
+	int role;//角色 0-未加入  1-普通成员  2-管理员  3-圈主
+
+	
+	
+
+	public int getRole() {
+		return role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
+	}
 
 	public String getGroupid() {
 		return groupid;
@@ -66,60 +81,44 @@ public class QuanVO {
 		this.gintro = gintro;
 	}
 
-	public String getCreatetime() {
-		return createtime;
+	public String getGpub() {
+		return gpub;
 	}
 
-	public void setCreatetime(String createtime) {
-		this.createtime = createtime;
+	public void setGpub(String gpub) {
+		this.gpub = gpub;
 	}
 
-	public List<UserVO> getManagers() {
-		return managers;
+	public int getGtype() {
+		return gtype;
 	}
 
-	public void setManagers(List<UserVO> managers) {
-		this.managers = managers;
+	public void setGtype(int gtype) {
+		this.gtype = gtype;
 	}
 
-	public List<UserVO> getMembers() {
-		return members;
+	public String getAddtime() {
+		return addtime;
 	}
 
-	public void setMembers(List<UserVO> members) {
-		this.members = members;
+	public void setAddtime(String addtime) {
+		this.addtime = addtime;
 	}
 
-	public String getMembersnum() {
-		return membersnum;
+	public int getMemberCount() {
+		return memberCount;
 	}
 
-	public void setMembersnum(String membersnum) {
-		this.membersnum = membersnum;
+	public void setMemberCount(int memberCount) {
+		this.memberCount = memberCount;
 	}
 
-	public String getMembersmax() {
-		return membersmax;
+	public int getTopicCount() {
+		return topicCount;
 	}
 
-	public void setMembersmax(String membersmax) {
-		this.membersmax = membersmax;
-	}
-
-	public String getGproperty() {
-		return gproperty;
-	}
-
-	public void setGproperty(String gproperty) {
-		this.gproperty = gproperty;
-	}
-
-	public String getLastbroadcast() {
-		return lastbroadcast;
-	}
-
-	public void setLastbroadcast(String lastbroadcast) {
-		this.lastbroadcast = lastbroadcast;
+	public void setTopicCount(int topicCount) {
+		this.topicCount = topicCount;
 	}
 
 	public String getLastmsgtime() {
@@ -134,32 +133,33 @@ public class QuanVO {
 		return alert;
 	}
 
-	public String getMemberCount() {
-		return memberCount;
-	}
-
-	public void setMemberCount(String memberCount) {
-		this.memberCount = memberCount;
-	}
-
 	public void setAlert(String alert) {
 		this.alert = alert;
 	}
 
-	public UserVO getFounder() {
-		return founder;
+	public int getCity() {
+		return city;
 	}
 
-	public void setFounder(UserVO founder) {
-		this.founder = founder;
+	public void setCity(int city) {
+		this.city = city;
 	}
 
-	public String getMembertype() {
-		return membertype;
+	public int getFollowpms() {
+		return followpms;
 	}
 
-	public void setMembertype(String membertype) {
-		this.membertype = membertype;
+	public void setFollowpms(int followpms) {
+		this.followpms = followpms;
 	}
 
+	public int getAccesspms() {
+		return accesspms;
+	}
+
+	public void setAccesspms(int accesspms) {
+		this.accesspms = accesspms;
+	}
+
+	
 }

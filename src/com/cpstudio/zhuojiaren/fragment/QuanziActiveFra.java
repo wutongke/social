@@ -24,6 +24,7 @@ import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelperLz;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -42,8 +43,9 @@ public class QuanziActiveFra extends Fragment {
 	private ArrayList<EventVO> mList = new ArrayList<EventVO>();
 
 	private ZhuoConnHelper mConnHelper = null;
-	private int mPage = 1;
+	private int mPage = 0;
 	private int mType = 6;
+	private int mPageSize = 5;
 	private ListViewFooter mListViewFooter = null;
 	private Context mContext;
 	private String mLastId = null;
@@ -99,15 +101,9 @@ public class QuanziActiveFra extends Fragment {
 				// i.putExtra("eventId", mList.get(position).getEventId());
 				// startActivity(i);
 			}
-
 		});
-
-		// 测试，用死的数据
-		// loadData();
-		for (int i = 0; i < 8; i++)
-			mList.add(new EventVO());
-		mAdapter.notifyDataSetChanged();
 		groupId = ((ZhuoQuanMainActivity) getActivity()).getGroupid();
+		loadData();
 		return layout;
 	}
 
@@ -125,7 +121,7 @@ public class QuanziActiveFra extends Fragment {
 					mList.addAll(list);
 					mAdapter.notifyDataSetChanged();
 					if (mList.size() > 0) {
-						mLastId = mList.get(mList.size() - 1).getEventId();
+						mLastId = mList.get(mList.size() - 1).getActivityid();
 					}
 					mPage++;
 				} else {
@@ -171,42 +167,26 @@ public class QuanziActiveFra extends Fragment {
 
 	private void loadData() {
 
-		String url = ZhuoCommHelper.getUrlUserInfo()
-				+ "?uid="
-				+ ResHelper.getInstance(getActivity().getApplicationContext())
-						.getUserid();
-
-		// 加载刷新个人信息
-		mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
-
 		if (mListViewFooter.startLoading()) {
 			mList.clear();
 			mAdapter.notifyDataSetChanged();
-			mPage = 1;
-			String params = ZhuoCommHelper.getUrlMsgList();
-			params += "?pageflag=" + "0";
-			params += "&reqnum=" + "10";
-			params += "&lastid=" + "0";
-			params += "&type=" + "0";
+			mPage = 0;
+			// mConnHelper.getQuanEventList(mUIHandler, MsgTagVO.DATA_LOAD,
+			// groupId, null, mPage, mPageSize);
+			// 测试
+			mConnHelper.getQuanEventList(mUIHandler, MsgTagVO.DATA_LOAD,
+					"989038385820150729150611", null, mPage, mPageSize);
 
-			params += "&gongxutype=" + "0";
-			params += "&from=" + "0";
-			params += "&uid=" + uid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD);
 		}
 	}
 
 	private void loadMore() {
 		if (mListViewFooter.startLoading()) {
-			String params = ZhuoCommHelper.getUrlMsgList();
-			params += "?pageflag=" + "1";
-			params += "&reqnum=" + "10";
-			params += "&lastid=" + mLastId;
-			params += "&type=" + "0";
-			params += "&gongxutype=" + "0";
-			params += "&from=" + "0";
-			params += "&uid=" + uid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
+			// mConnHelper.getQuanEventList(mUIHandler, MsgTagVO.DATA_MORE,
+			// groupId, null, mPage, mPageSize);
+			// 测试
+			mConnHelper.getQuanEventList(mUIHandler, MsgTagVO.DATA_MORE,
+					"989038385820150729150611", null, mPage, mPageSize);
 		}
 	}
 

@@ -65,7 +65,7 @@ public class JsonHandler {
 
 	public String processResult(String str, Context context, boolean showMsg) {
 		if (null != str && !str.equals("")) {
-			// str = str.replaceAll(":null", ":\"\"");
+			Log.i("processResult", str);
 			resultVO = parseResult(str);
 			String code = resultVO.getCode();
 			String data = resultVO.getData();

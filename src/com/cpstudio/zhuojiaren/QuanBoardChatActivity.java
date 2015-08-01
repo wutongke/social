@@ -113,13 +113,13 @@ public class QuanBoardChatActivity extends BaseActivity implements
 //		String type = i.getStringExtra("type");//"board","chat"旧版本两种，现在不用了
 		QuanVO detail = quanFacade.getById(groupid);
 
-		UserVO founder = detail.getFounder();
-		if (founder != null) {
-			String founderid = founder.getUserid();
-			if (founderid != null && founderid.equals(myid)) {
-				isCreater = "1";
-			}
-		}
+//		UserVO founder = detail.getFounder();
+//		if (founder != null) {
+//			String founderid = founder.getUserid();
+//			if (founderid != null && founderid.equals(myid)) {
+//				isCreater = "1";
+//			}
+//		}
 		String quanName = detail.getGname();
 		title.setText(quanName);
 

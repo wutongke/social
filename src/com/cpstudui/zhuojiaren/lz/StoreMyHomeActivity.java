@@ -15,11 +15,7 @@ import butterknife.OnClick;
 import butterknife.Optional;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.GoodsExchangeActivity;
-import com.cpstudio.zhuojiaren.MyAboutUsListActivity;
-import com.cpstudio.zhuojiaren.MyAdviceActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.UserHomeActivity;
 import com.cpstudio.zhuojiaren.ViewOrderActivity;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -32,9 +28,6 @@ import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.CartActivity;
 import com.cpstudio.zhuojiaren.ui.GoodsCollectionActivity;
 import com.cpstudio.zhuojiaren.ui.LocateActivity;
-import com.cpstudio.zhuojiaren.ui.MyCollectionActivity;
-import com.cpstudio.zhuojiaren.ui.MyMoneyActivity;
-import com.cpstudio.zhuojiaren.ui.SettingActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class StoreMyHomeActivity extends BaseActivity {

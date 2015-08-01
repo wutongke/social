@@ -52,7 +52,7 @@ public class QuanziTopicFra extends Fragment {
 	private ArrayList<QuanTopicVO> mList = new ArrayList<QuanTopicVO>();
 
 	private ZhuoConnHelper mConnHelper = null;
-	private int mPage = 1;
+	private int mPage =0;
 	private int mPageSize = 5;
 	private int mType = 5;
 	private ListViewFooter mListViewFooter = null;
@@ -193,9 +193,9 @@ public class QuanziTopicFra extends Fragment {
 		if (mListViewFooter.startLoading()) {
 			mList.clear();
 			mAdapter.notifyDataSetChanged();
-			mPage = 1;
+			mPage = 0;
 			mConnHelper.getQuanTopicList(mUIHandler, MsgTagVO.DATA_LOAD,
-					groupId, uid, mPage, mPageSize);
+					groupId, null, mPage, mPageSize);
 		}
 
 	}
@@ -217,7 +217,7 @@ public class QuanziTopicFra extends Fragment {
 	private void loadMore() {
 		if (mListViewFooter.startLoading()) {
 			mConnHelper.getQuanTopicList(mUIHandler, MsgTagVO.DATA_MORE,
-					groupId, uid, mPage, mPageSize);
+					groupId, null, mPage, mPageSize);
 		}
 	}
 
