@@ -379,43 +379,43 @@ public class QuanCreateActivity extends BaseActivity {
 					String jj = detail.getGintro();
 					((EditText) findViewById(R.id.editTextQuanIntro))
 							.setText(jj);
-					String property = detail.getGproperty();
-					if (property.equals(getString(R.string.group_type_9))) {
-						((RadioButton) findViewById(R.id.radio0))
-								.setChecked(true);
-					} else if (property
-							.equals(getString(R.string.group_type_8))) {
-						((RadioButton) findViewById(R.id.radio1))
-								.setChecked(true);
-					} else if (property
-							.equals(getString(R.string.group_type_10))) {
-						((RadioButton) findViewById(R.id.radio2))
-								.setChecked(true);
-					}
+//					String property = detail.getGproperty();
+//					if (property.equals(getString(R.string.group_type_9))) {
+//						((RadioButton) findViewById(R.id.radio0))
+//								.setChecked(true);
+//					} else if (property
+//							.equals(getString(R.string.group_type_8))) {
+//						((RadioButton) findViewById(R.id.radio1))
+//								.setChecked(true);
+//					} else if (property
+//							.equals(getString(R.string.group_type_10))) {
+//						((RadioButton) findViewById(R.id.radio2))
+//								.setChecked(true);
+//					}
 					String headUrl = detail.getGheader();
 					mIsh.initParams();
 					mIsh2.initParams();
 					mIsh2.updateNetworkImage(headUrl, mLoadImage, null);
-					List<UserVO> managers = detail.getManagers();
-					Map<String, String> netUheader = new HashMap<String, String>();
-					Map<String, Integer> defaultUheader = new HashMap<String, Integer>();
-					for (int i = 0; i < managers.size(); i++) {
-						String header = managers.get(i).getUheader();
-						String id = managers.get(i).getUserid();
-						mSelectlist.add(id);
-						if (header != null && !header.equals("")) {
-							netUheader.clear();
-							netUheader.put(id, header);
-							mIsh.insertNetworkImage(netUheader, mLoadImage,
-									removeManagerListener, "card");
-						} else {
-							defaultUheader.clear();
-							defaultUheader.put(id, R.drawable.default_userhead);
-							mIsh.insertDefaultImage(defaultUheader,
-									removeManagerListener, "card");
-						}
-					}
-					mLoadImage.doTask();
+//					List<UserVO> managers = detail.getManagers();
+//					Map<String, String> netUheader = new HashMap<String, String>();
+//					Map<String, Integer> defaultUheader = new HashMap<String, Integer>();
+//					for (int i = 0; i < managers.size(); i++) {
+//						String header = managers.get(i).getUheader();
+//						String id = managers.get(i).getUserid();
+//						mSelectlist.add(id);
+//						if (header != null && !header.equals("")) {
+//							netUheader.clear();
+//							netUheader.put(id, header);
+//							mIsh.insertNetworkImage(netUheader, mLoadImage,
+//									removeManagerListener, "card");
+//						} else {
+//							defaultUheader.clear();
+//							defaultUheader.put(id, R.drawable.default_userhead);
+//							mIsh.insertDefaultImage(defaultUheader,
+//									removeManagerListener, "card");
+//						}
+//					}
+//					mLoadImage.doTask();
 				}
 				break;
 			}

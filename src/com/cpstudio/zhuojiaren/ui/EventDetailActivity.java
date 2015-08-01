@@ -27,7 +27,6 @@ import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
@@ -109,7 +108,7 @@ public class EventDetailActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (null == event.getIsCollection()  || event.getIsCollection().equals("0")) {
+				if (event.iscollected()==false) {
 					mConnHelper.collectMsg(eventId, "1", mUIHandler,
 							MsgTagVO.MSG_COLLECT, null, true, null,
 							null);
@@ -136,7 +135,7 @@ public class EventDetailActivity extends Activity {
 				if(event!=null){
 					Intent intent = new Intent(mContext,
 							ZhuoMaiCardActivity.class);
-					intent.putExtra("userid", event.getBoss().getUserid());
+					intent.putExtra("userid", event.getUserid());
 					startActivity(intent);
 				}
 			}
@@ -185,31 +184,32 @@ public class EventDetailActivity extends Activity {
 					}
 					if (null != detail) {
 						name.setText(detail.getName());
-						browerCount.setText(detail.getBrowerCount());
+						browerCount.setText(detail.getViewCount());
 						shareCount.setText(detail.getShareCount());
 						applyCount.setText(detail.getShareCount());
 						content.setText(detail.getContent());
-						//活动发起人
-						UserVO boss = detail.getBoss();
-						String imageUrl = boss.getUheader();
-						peopleImage.setTag(imageUrl);
-						mLoadImage.addTask(imageUrl, peopleImage);
-						peopleName.setText(boss.getUsername());
-						peoplePostion.setText(boss.getPost());
-						time.setText(detail.getTime());
-						locate.setText(detail.getLocate());
-						String contactPeopels = detail.getPeople();
-						String phones = detail.getPhone();
-						String[]contact=null;
-						String[]phone = null;
-						if(contactPeopels!=null&&phones!=null){
-							contact = contactPeopels.split(";");
-							phone = phones.split(";");
-						}
-						if(contact!=null&&phone!=null)
-						for(int i =0;i<contact.length;i++){
-							addContactPeople(contact[i],phone[i]);
-						}
+//需要lef修改
+//						//活动发起人
+//						UserVO boss = detail.getBoss();
+//						String imageUrl = boss.getUheader();
+//						peopleImage.setTag(imageUrl);
+//						mLoadImage.addTask(imageUrl, peopleImage);
+//						peopleName.setText(boss.getUsername());
+//						peoplePostion.setText(boss.getPost());
+//						time.setText(detail.getTime());
+//						locate.setText(detail.getLocate());
+//						String contactPeopels = detail.getPeople();
+//						String phones = detail.getPhone();
+//						String[]contact=null;
+//						String[]phone = null;
+//						if(contactPeopels!=null&&phones!=null){
+//							contact = contactPeopels.split(";");
+//							phone = phones.split(";");
+//						}
+//						if(contact!=null&&phone!=null)
+//						for(int i =0;i<contact.length;i++){
+//							addContactPeople(contact[i],phone[i]);
+//						}
 					}
 				}
 			}

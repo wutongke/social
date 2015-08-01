@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class EventListAdapter extends BaseAdapter {
 	private List<EventVO> mList = null;
@@ -65,16 +66,25 @@ public class EventListAdapter extends BaseAdapter {
 			holder = (ViewHolderActive) convertView
 					.getTag(R.id.tag_view_holder);
 		}
+		EventVO event = mList.get(position);
+		holder.textViewTitle.setText(event.getContent());
+		// time = CommonUtil.calcTime(time);
+		holder.textViewDateTime.setText(event.getStarttime());
+		if(event.getOutdate()==1 )
+		holder.textViewIsOverTime.setText("已过期");
+		else 
+			holder.textViewIsOverTime.setText("未过期");
+		holder.textViewNums.setText(event.getJoinCount() + "人报名");
 
+		holder.textViewPlace.setText(event.getAddress());
 		holder.textViewDetail.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(c, EventDetailActivity.class);
 				String id = "111";
-				if (mList.get(position).getEventId() != null)
-					id = mList.get(position).getEventId();
+				if (mList.get(position).getActivityid() != null)
+					id = mList.get(position).getActivityid();
 				i.putExtra("eventId", id);
 
 				c.startActivity(i);

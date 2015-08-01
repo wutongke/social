@@ -2,7 +2,7 @@ package com.cpstudio.zhuojiaren.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//不用这个
 public class QuanziVO {
 	//圈子类型
 	public final static  String QUANZITYPE = "quanzitype";

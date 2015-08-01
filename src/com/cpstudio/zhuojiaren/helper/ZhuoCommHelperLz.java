@@ -21,6 +21,13 @@ public class ZhuoCommHelperLz {
 	
 	private final static String SERVICE_PUB_GROUP_TOPIC = "/addgrouptopic.do";
 	
+	private final static String SERVICE_GET_QUANEVENTLIST = "/groupActivityList.do";
+	
+	private final static String SERVICE_GET_QUANINFO = "/getgroupinfo.do";
+	
+	//未用
+	private final static String SERVICE_GET_ADINFO = "/getadinfo.do";
+	
 	/**
 	 * 获取主页界面的广告信息
 	 * 
@@ -65,5 +72,26 @@ public class ZhuoCommHelperLz {
 	 */
 	public static String pubQuanTopic() {
 		return SERVER +  SERVICE_PUB_GROUP_TOPIC;
+	}
+	
+	public static String getQuanEventList() {
+		return SERVER +  SERVICE_GET_QUANEVENTLIST;
+	}
+	
+	public static String getQuanInfo() {
+		return SERVER +  SERVICE_GET_QUANINFO;
+	}
+	
+	
+	
+	
+	
+	/**未用
+	 * 获得广告信息
+	 * 
+	 * @return
+	 */
+	public static String getAdInfo() {
+		return SERVER +  SERVICE_GET_ADINFO;
 	}
 }

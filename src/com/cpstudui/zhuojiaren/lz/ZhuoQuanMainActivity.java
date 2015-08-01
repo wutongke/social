@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -24,12 +23,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseFragmentActivity;
-import com.cpstudio.zhuojiaren.MsgCmtActivity;
 import com.cpstudio.zhuojiaren.QuanBoardChatActivity;
-import com.cpstudio.zhuojiaren.QuanDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.UserSelectActivity;
-import com.cpstudio.zhuojiaren.adapter.ActiveListAdapter;
 import com.cpstudio.zhuojiaren.facade.QuanFacade;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.QuanziActiveFra;
@@ -44,6 +40,7 @@ import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.EditEventActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.util.ImageLoader;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
@@ -63,9 +60,9 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	ImageView ivGroupHeader;
 	@InjectView(R.id.textViewName)
 	TextView tvName;
-	@InjectView(R.id.textViewCy)
+	@InjectView(R.id.mtextViewCy)
 	TextView tvMemNum;
-	@InjectView(R.id.textViewTopic)
+	@InjectView(R.id.mtextViewTopic)
 	TextView tvTopicNum;
 	@InjectView(R.id.lt_chengyuan_menue)
 	View ltMember;// 成员操作菜单
@@ -88,9 +85,9 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	List<Fragment> fragments;
 
 	private PopupWindows phw = null;
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage = new LoadImage(3);
 	// 不同身份，功能不同
-	private String memberType = "";
+	private int memberType = 3;
 	private PopupWindows pwh = null;
 	private String groupid = null;
 	private ZhuoConnHelper mConnHelper = null;
@@ -108,6 +105,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_zhuo_quan_main);
 		ButterKnife.inject(this);
+
 		mContext = this;
 		initTitle();
 		title.setText(R.string.title_activity_zhuojiaquan_main);
@@ -145,140 +143,34 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 								getApplicationContext());
 						detail = nljh.parseQuan();
 						if (null != detail) {
-							mFacade.saveOrUpdate(detail);
+							// 是否需要保存到本地
+							// mFacade.saveOrUpdate(detail);
 						}
 					}
 					if (null != detail) {
-						// String id = detail.getGroupid();
-						memberType = detail.getMembertype();
-						// ((TextView)
-						// findViewById(R.id.textViewId)).setText(id);
+						memberType = detail.getRole();
 						String name = detail.getGname();
 						tvName.setText(name);
 						String headUrl = detail.getGheader();
 						ivGroupHeader.setTag(headUrl);
 						mLoadImage.addTask(headUrl, ivGroupHeader);
 						// 圈子简介内容
-						// String jj = detail.getGintro();
-						// ((TextView)
-						// findViewById(R.id.textViewJJ)).setText(jj);
-						String memberNum = detail.getMembersnum();
-						String memberAll = detail.getMembersmax();
-						if (memberNum == null || memberNum.equals("")) {
-							memberNum = "0";
-						}
-						if (memberAll == null || memberAll.equals("")) {
-							memberAll = "0";
-						}
-						tvMemNum.setText(memberNum + "人");
-						// ((TextView) findViewById(R.id.textViewCy))
-						// .setText(memberNum + "/" + memberAll);
-						if (memberType != null && !memberType.equals("3")) {
+						String jj = detail.getGintro();
+						if (jj != null)
+							((TextView) findViewById(R.id.mtextViewMoreInto))
+									.setText(jj);
+						((TextView) findViewById(R.id.mtextViewCy))
+								.setText(detail.getMemberCount() + "");
+						// tvMemNum.setText(detail.getMemberCount());
+						tvTopicNum.setText(detail.getTopicCount() + "");
+						if (memberType != 0) {
 							isfollow = true;
-							// ((TextView) findViewById(R.id.textViewDate))
-							// .setText(detail.getLastmsgtime());
-							// Button buttonMsgState = (Button)
-							// findViewById(R.id.buttonMsgState);
-							// String alertState = detail.getAlert();
-							// buttonMsgState.setTag(alertState);
-							// //是否圈聊消息提醒
-							// if (alertState.equals("1")) {
-							// buttonMsgState
-							// .setBackgroundResource(R.drawable.button_switch_on);
-							// } else {
-							// buttonMsgState
-							// .setBackgroundResource(R.drawable.button_switch_off);
-							// }
-							// buttonMsgState
-							// .setOnClickListener(new OnClickListener() {
-							// @Override
-							// public void onClick(View v) {
-							// if (v.getTag().equals("1")) {
-							// mConnHelper.groupAlert(groupid,
-							// "0", mUIHandler,
-							// MsgTagVO.PUB_INFO,
-							// null, true, null, null);
-							// } else {
-							// mConnHelper.groupAlert(groupid,
-							// "1", mUIHandler,
-							// MsgTagVO.PUB_INFO,
-							// null, true, null, null);
-							// }
-							// }
-							// });
-							// ((TextView) findViewById(R.id.textViewGb))
-							// .setText("        "
-							// + detail.getLastbroadcast());
 						} else {
 							isfollow = false;
 						}
 						changeType(isfollow);
-						UserVO founder = detail.getFounder();
-						if (founder != null) {
-							String createrUrl = founder.getUheader();
-							final String createrId = detail.getFounder()
-									.getUserid();
-							tempids.add(createrId);
-							// ImageView cjIV = (ImageView)
-							// findViewById(R.id.imageViewCj);
-							// cjIV.setTag(createrUrl);
-							// mLoadImage.addTask(createrUrl, cjIV);
-							// cjIV.setOnClickListener(new OnClickListener() {
-							// @Override
-							// public void onClick(View v) {
-							// Intent i = new Intent(
-							// QuanDetailActivity.this,
-							// UserCardActivity.class);
-							// i.putExtra("userid", createrId);
-							// startActivity(i);
-							// }
-							// });
-							// }
-							List<UserVO> managers = detail.getManagers();
-							int num = managers.size();
-							// ((TextView)
-							// findViewById(R.id.textViewGl)).setText(num
-							// + "");
-							// LinearLayout ll = (LinearLayout)
-							// findViewById(R.id.linearLayoutGl);
-							// int height = ll.getLayoutParams().height;
-							// LayoutParams llp = new LayoutParams(height,
-							// height);
-							// llp.rightMargin = 5;
-							// RelativeLayout.LayoutParams rlp = new
-							// RelativeLayout.LayoutParams(
-							// LayoutParams.MATCH_PARENT,
-							// LayoutParams.MATCH_PARENT);
-							for (int i = 0; i < num; i++) {
-								// String managerUrl =
-								// managers.get(i).getUheader();
-								final String managerId = managers.get(i)
-										.getUserid();
-								tempids.add(managerId);
-								// RelativeLayout rl = new RelativeLayout(
-								// QuanDetailActivity.this);
-								// rl.setLayoutParams(llp);
-								// ImageView iv = new ImageView(
-								// QuanDetailActivity.this);
-								// iv.setLayoutParams(rlp);
-								// rl.addView(iv);
-								// ll.addView(rl);
-								// iv.setTag(managerUrl);
-								// mLoadImage.addTask(managerUrl, iv);
-								// iv.setOnClickListener(new OnClickListener() {
-								// @Override
-								// public void onClick(View v) {
-								// Intent i = new Intent(
-								// QuanDetailActivity.this,
-								// UserCardActivity.class);
-								// i.putExtra("userid", managerId);
-								// startActivity(i);
-								// }
-								// });
-								// }
-								// mLoadImage.doTask();
-							}
-						}
+						mLoadImage.addTask(detail.getGheader(), ivGroupHeader);
+						mLoadImage.doTask();
 					}
 				}
 				break;
@@ -340,16 +232,15 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 				msg.sendToTarget();
 			}
 		} else {
-			String params = ZhuoCommHelper.getUrlGroupDetail() + "?groupid="
-					+ groupid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD,
-					ZhuoQuanMainActivity.this, true, new OnCancelListener() {
-
-						@Override
-						public void onCancel(DialogInterface dialog) {
-							ZhuoQuanMainActivity.this.finish();
-						}
-					});
+			mConnHelper.getQuanInfo(mUIHandler, MsgTagVO.DATA_LOAD, groupid);
+			// mConnHelper.getQuanInfo(params, mUIHandler, MsgTagVO.DATA_LOAD,
+			// ZhuoQuanMainActivity.this, true, new OnCancelListener() {
+			//
+			// @Override
+			// public void onCancel(DialogInterface dialog) {
+			// ZhuoQuanMainActivity.this.finish();
+			// }
+			// });
 		}
 	}
 
@@ -445,11 +336,11 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				// 进入圈聊界面
-				 Intent i = new Intent(ZhuoQuanMainActivity.this,
-				 QuanBoardChatActivity.class);
-				 i.putExtra("groupid", groupid);
-					
-				 startActivity(i);
+				Intent i = new Intent(ZhuoQuanMainActivity.this,
+						QuanBoardChatActivity.class);
+				i.putExtra("groupid", groupid);
+
+				startActivity(i);
 			}
 		});
 		btnJoinQuan.setOnClickListener(new OnClickListener() {
@@ -503,25 +394,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 
 	private void setFunctionText(int arg0) {
 		switch (arg0) {
-		// case 0:
-		// function.setText("管理");
-		// function.setTag(0);
-		// break;
-		// case 1:
-		// function.setTag(1);
-		// ImageSpan span = new ImageSpan(mContext, R.drawable.tab_good);
-		// SpannableString spanStr = new SpannableString(" ");
-		// spanStr.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-		// function.setText(spanStr);
-		// break;
-		// case 2:
-		// function.setText("筛选");
-		// function.setTag(2);
-		// break;
-		// case 3:
-		// function.setText("");
-		// function.setTag(3);
-		// break;
 		}
 	}
 
@@ -535,5 +407,5 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			ltYouke.setVisibility(View.VISIBLE);
 		}
 	}
-			
+
 }

@@ -59,7 +59,7 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/textViewCy"
+                        android:id="@+id/mtextViewCy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="23个"
@@ -82,7 +82,7 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/textViewTopic"
+                        android:id="@+id/mtextViewTopic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="23个"
@@ -92,7 +92,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textViewMoreInto"
+                android:id="@+id/mtextViewMoreInto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="领先技术交流圈"

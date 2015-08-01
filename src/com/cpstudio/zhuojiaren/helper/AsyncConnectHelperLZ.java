@@ -13,6 +13,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.cpstudio.zhuojiaren.R;
 import com.utils.CommunicationUtil;
@@ -45,6 +46,7 @@ public class AsyncConnectHelperLZ extends AsyncTask<String, Integer, Boolean> {
 
 	public AsyncConnectHelperLZ(List<NameValuePair> nameValuePairs, String url,
 			FinishCallback callback, Activity activity) {
+		Log.i("AsyncConnectHelperLZ", url+"param:"+nameValuePairs.toString());
 		this.mActivity = activity;
 		mNameValuePairs = nameValuePairs;
 		mType = HTTP_POST;

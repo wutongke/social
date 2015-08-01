@@ -60,7 +60,9 @@ public class TopicDetailActivity extends BaseActivity implements
 	private LoadImage mLoadImage = new LoadImage();
 	private View mHeadView = null;
 	private PopupWindows pwh;
+	
 	private String msgid = null;
+	
 	private int mPage = 1;
 	private ZhuoConnHelper mConnHelper = null;
 	private String isCollect = "0";
@@ -81,8 +83,11 @@ public class TopicDetailActivity extends BaseActivity implements
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		mFacade = new ZhuoInfoFacade(getApplicationContext());
 		myid = ResHelper.getInstance(getApplicationContext()).getUserid();
-		Intent i = getIntent();
-		msgid = i.getStringExtra("msgid");
+		
+		Intent intent = getIntent();
+		msgid = intent.getStringExtra("msgid");
+		
+		
 		pwh = new PopupWindows(TopicDetailActivity.this);
 		mAdapter = new MsgCmtListAdapter(this, mList, msgid);
 		mListView = (ListView) findViewById(R.id.listViewDetail);
@@ -98,8 +103,18 @@ public class TopicDetailActivity extends BaseActivity implements
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(this);
 		initClick();
+		loadMainData(intent);
 		loadData();
 		loadCmt();
+	}
+
+	/**
+	 * 加载从前一个页面传过来的话题基本信息
+	 * @param intent
+	 */
+	private void loadMainData(Intent intent) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public void loadHead(ZhuoInfoVO zhuoinfo) {

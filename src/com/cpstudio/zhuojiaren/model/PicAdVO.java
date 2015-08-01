@@ -1,34 +1,48 @@
 package com.cpstudio.zhuojiaren.model;
+
 public class PicAdVO {
-private int adno;
 
-private String adpic;
+	public static int AD_MAIN = 0, AD_FIND = 1, AD_JINJIN = 2, AD_STORE = 3,
+			AD_ZHONGCHOU = 4;
 
-private String goodsid;
+	private int adno;
 
-public int getAdno() {
-	return adno;
-}
+	private String adpic;
 
-public void setAdno(int adno) {
-	this.adno = adno;
-}
+	private String adlink;
 
-public String getAdpic() {
-	return adpic;
-}
+	private String goodsid;
 
-public void setAdpic(String adpic) {
-	this.adpic = adpic;
-}
+	public String getAdlink() {
+		return adlink;
+	}
 
-public String getGoodsid() {
-	return goodsid;
-}
+	public void setAdlink(String adlink) {
+		this.adlink = adlink;
+	}
 
-public void setGoodsid(String goodsid) {
-	this.goodsid = goodsid;
-}
+	public int getAdno() {
+		return adno;
+	}
 
+	public void setAdno(int adno) {
+		this.adno = adno;
+	}
+
+	public String getAdpic() {
+		return adpic;
+	}
+
+	public void setAdpic(String adpic) {
+		this.adpic = adpic;
+	}
+
+	public String getGoodsid() {
+		return goodsid;
+	}
+
+	public void setGoodsid(String goodsid) {
+		this.goodsid = goodsid;
+	}
 
 }

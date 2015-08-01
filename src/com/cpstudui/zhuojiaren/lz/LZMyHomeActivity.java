@@ -10,16 +10,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.AboutZhuomaoActivity;
-import com.cpstudio.zhuojiaren.GoodsExchangeActivity;
-import com.cpstudio.zhuojiaren.MyAboutUsListActivity;
 import com.cpstudio.zhuojiaren.MyAdviceActivity;
-import com.cpstudio.zhuojiaren.MyCollectListActivity;
-import com.cpstudio.zhuojiaren.MySettingActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.UserHomeActivity;
 import com.cpstudio.zhuojiaren.facade.UserFacade;

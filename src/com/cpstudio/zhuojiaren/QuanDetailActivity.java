@@ -79,7 +79,7 @@ public class QuanDetailActivity extends Activity {
 					}
 					if (null != detail) {
 						String id = detail.getGroupid();
-						memberType = detail.getMembertype();
+//						memberType = detail.getMembertype();
 						((TextView) findViewById(R.id.textViewId)).setText(id);
 						String name = detail.getGname();
 						((TextView) findViewById(R.id.textViewName))
@@ -90,113 +90,113 @@ public class QuanDetailActivity extends Activity {
 						mLoadImage.addTask(headUrl, headIv);
 						String jj = detail.getGintro();
 						((TextView) findViewById(R.id.textViewJJ)).setText(jj);
-						String memberNum = detail.getMembersnum();
-						String memberAll = detail.getMembersmax();
-						if (memberNum == null || memberNum.equals("")) {
-							memberNum = "0";
-						}
-						if (memberAll == null || memberAll.equals("")) {
-							memberAll = "0";
-						}
-						((TextView) findViewById(R.id.textViewCy))
-								.setText(memberNum + "/" + memberAll);
-						if (memberType != null && !memberType.equals("3")) {
-							isfollow = true;
-							((TextView) findViewById(R.id.textViewDate))
-									.setText(detail.getLastmsgtime());
-							Button buttonMsgState = (Button) findViewById(R.id.buttonMsgState);
-							String alertState = detail.getAlert();
-							buttonMsgState.setTag(alertState);
-							//是否圈聊消息提醒
-							if (alertState.equals("1")) {
-								buttonMsgState
-										.setBackgroundResource(R.drawable.button_switch_on);
-							} else {
-								buttonMsgState
-										.setBackgroundResource(R.drawable.button_switch_off);
-							}
-							buttonMsgState
-									.setOnClickListener(new OnClickListener() {
-										@Override
-										public void onClick(View v) {
-											if (v.getTag().equals("1")) {
-												mConnHelper.groupAlert(groupid,
-														"0", mUIHandler,
-														MsgTagVO.PUB_INFO,
-														null, true, null, null);
-											} else {
-												mConnHelper.groupAlert(groupid,
-														"1", mUIHandler,
-														MsgTagVO.PUB_INFO,
-														null, true, null, null);
-											}
-										}
-									});
-							((TextView) findViewById(R.id.textViewGb))
-									.setText("        "
-											+ detail.getLastbroadcast());
-						} else {
-							isfollow = false;
-						}
-						changeType(isfollow);
-						UserVO founder = detail.getFounder();
-						if (founder != null) {
-							String createrUrl = founder.getUheader();
-							final String createrId = detail.getFounder()
-									.getUserid();
-							tempids.add(createrId);
-							ImageView cjIV = (ImageView) findViewById(R.id.imageViewCj);
-							cjIV.setTag(createrUrl);
-							mLoadImage.addTask(createrUrl, cjIV);
-							cjIV.setOnClickListener(new OnClickListener() {
-								@Override
-								public void onClick(View v) {
-									Intent i = new Intent(
-											QuanDetailActivity.this,
-											ZhuoMaiCardActivity.class);
-									i.putExtra("userid", createrId);
-									startActivity(i);
-								}
-							});
-						}
-						List<UserVO> managers = detail.getManagers();
-						int num = managers.size();
-						((TextView) findViewById(R.id.textViewGl)).setText(num
-								+ "");
-						LinearLayout ll = (LinearLayout) findViewById(R.id.linearLayoutGl);
-						int height = ll.getLayoutParams().height;
-						LayoutParams llp = new LayoutParams(height, height);
-						llp.rightMargin = 5;
-						RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
-								LayoutParams.MATCH_PARENT,
-								LayoutParams.MATCH_PARENT);
-						for (int i = 0; i < num; i++) {
-							String managerUrl = managers.get(i).getUheader();
-							final String managerId = managers.get(i)
-									.getUserid();
-							tempids.add(managerId);
-							RelativeLayout rl = new RelativeLayout(
-									QuanDetailActivity.this);
-							rl.setLayoutParams(llp);
-							ImageView iv = new ImageView(
-									QuanDetailActivity.this);
-							iv.setLayoutParams(rlp);
-							rl.addView(iv);
-							ll.addView(rl);
-							iv.setTag(managerUrl);
-							mLoadImage.addTask(managerUrl, iv);
-							iv.setOnClickListener(new OnClickListener() {
-								@Override
-								public void onClick(View v) {
-									Intent i = new Intent(
-											QuanDetailActivity.this,
-											ZhuoMaiCardActivity.class);
-									i.putExtra("userid", managerId);
-									startActivity(i);
-								}
-							});
-						}
-						mLoadImage.doTask();
+//						String memberNum = detail.getMembersnum();
+//						String memberAll = detail.getMembersmax();
+//						if (memberNum == null || memberNum.equals("")) {
+//							memberNum = "0";
+//						}
+//						if (memberAll == null || memberAll.equals("")) {
+//							memberAll = "0";
+//						}
+//						((TextView) findViewById(R.id.textViewCy))
+//								.setText(memberNum + "/" + memberAll);
+//						if (memberType != null && !memberType.equals("3")) {
+//							isfollow = true;
+//							((TextView) findViewById(R.id.textViewDate))
+//									.setText(detail.getLastmsgtime());
+//							Button buttonMsgState = (Button) findViewById(R.id.buttonMsgState);
+//							String alertState = detail.getAlert();
+//							buttonMsgState.setTag(alertState);
+//							//是否圈聊消息提醒
+//							if (alertState.equals("1")) {
+//								buttonMsgState
+//										.setBackgroundResource(R.drawable.button_switch_on);
+//							} else {
+//								buttonMsgState
+//										.setBackgroundResource(R.drawable.button_switch_off);
+//							}
+//							buttonMsgState
+//									.setOnClickListener(new OnClickListener() {
+//										@Override
+//										public void onClick(View v) {
+//											if (v.getTag().equals("1")) {
+//												mConnHelper.groupAlert(groupid,
+//														"0", mUIHandler,
+//														MsgTagVO.PUB_INFO,
+//														null, true, null, null);
+//											} else {
+//												mConnHelper.groupAlert(groupid,
+//														"1", mUIHandler,
+//														MsgTagVO.PUB_INFO,
+//														null, true, null, null);
+//											}
+//										}
+//									});
+//							((TextView) findViewById(R.id.textViewGb))
+//									.setText("        "
+//											+ detail.getLastbroadcast());
+//						} else {
+//							isfollow = false;
+//						}
+//						changeType(isfollow);
+//						UserVO founder = detail.getFounder();
+//						if (founder != null) {
+//							String createrUrl = founder.getUheader();
+//							final String createrId = detail.getFounder()
+//									.getUserid();
+//							tempids.add(createrId);
+//							ImageView cjIV = (ImageView) findViewById(R.id.imageViewCj);
+//							cjIV.setTag(createrUrl);
+//							mLoadImage.addTask(createrUrl, cjIV);
+//							cjIV.setOnClickListener(new OnClickListener() {
+//								@Override
+//								public void onClick(View v) {
+//									Intent i = new Intent(
+//											QuanDetailActivity.this,
+//											ZhuoMaiCardActivity.class);
+//									i.putExtra("userid", createrId);
+//									startActivity(i);
+//								}
+//							});
+//						}
+//						List<UserVO> managers = detail.getManagers();
+//						int num = managers.size();
+//						((TextView) findViewById(R.id.textViewGl)).setText(num
+//								+ "");
+//						LinearLayout ll = (LinearLayout) findViewById(R.id.linearLayoutGl);
+//						int height = ll.getLayoutParams().height;
+//						LayoutParams llp = new LayoutParams(height, height);
+//						llp.rightMargin = 5;
+//						RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
+//								LayoutParams.MATCH_PARENT,
+//								LayoutParams.MATCH_PARENT);
+//						for (int i = 0; i < num; i++) {
+//							String managerUrl = managers.get(i).getUheader();
+//							final String managerId = managers.get(i)
+//									.getUserid();
+//							tempids.add(managerId);
+//							RelativeLayout rl = new RelativeLayout(
+//									QuanDetailActivity.this);
+//							rl.setLayoutParams(llp);
+//							ImageView iv = new ImageView(
+//									QuanDetailActivity.this);
+//							iv.setLayoutParams(rlp);
+//							rl.addView(iv);
+//							ll.addView(rl);
+//							iv.setTag(managerUrl);
+//							mLoadImage.addTask(managerUrl, iv);
+//							iv.setOnClickListener(new OnClickListener() {
+//								@Override
+//								public void onClick(View v) {
+//									Intent i = new Intent(
+//											QuanDetailActivity.this,
+//											ZhuoMaiCardActivity.class);
+//									i.putExtra("userid", managerId);
+//									startActivity(i);
+//								}
+//							});
+//						}
+//						mLoadImage.doTask();
 					}
 				}
 				break;

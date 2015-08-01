@@ -11,7 +11,7 @@ import com.cpstudio.zhuojiaren.model.UserVO;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-
+//注释部分都需要修改，为了
 public class QuanFacade {
 	private final DatabaseHelper dbHelper;
 	private static final String SQL_TABLE = "QUANLIST";
@@ -106,17 +106,17 @@ public class QuanFacade {
 		item.setGroupid(cursor.getString(0));
 		item.setGname(cursor.getString(1));
 		item.setGheader(cursor.getString(2));
-		item.setGproperty(cursor.getString(3));
-		item.setGintro(cursor.getString(4));
-		item.setCreatetime(cursor.getString(5));
-		item.setMembersnum(cursor.getString(6));
-		item.setMembersmax(cursor.getString(7));
-		item.setLastbroadcast(cursor.getString(8));
-		item.setLastmsgtime(cursor.getString(9));
-		item.setAlert(cursor.getString(10));
-		String founderid = cursor.getString(11);
-		item.setFounder(userFacade.getSimpleInfoById(founderid));
-		item.setMembertype(cursor.getString(12));
+//		item.setGproperty(cursor.getString(3));
+//		item.setGintro(cursor.getString(4));
+//		item.setCreatetime(cursor.getString(5));
+//		item.setMembersnum(cursor.getString(6));
+//		item.setMembersmax(cursor.getString(7));
+//		item.setLastbroadcast(cursor.getString(8));
+//		item.setLastmsgtime(cursor.getString(9));
+//		item.setAlert(cursor.getString(10));
+//		String founderid = cursor.getString(11);
+//		item.setFounder(userFacade.getSimpleInfoById(founderid));
+//		item.setMembertype(cursor.getString(12));
 		String managersids = cursor.getString(13);
 		ArrayList<UserVO> managers = new ArrayList<UserVO>();
 		if (managersids != null && !managersids.equals("")) {
@@ -131,7 +131,7 @@ public class QuanFacade {
 				managers.add(item2);
 			}
 		}
-		item.setManagers(managers);
+//		item.setManagers(managers);
 		String membersids = cursor.getString(14);
 		ArrayList<UserVO> members = new ArrayList<UserVO>();
 		if (membersids != null && !membersids.equals("")) {
@@ -146,7 +146,7 @@ public class QuanFacade {
 				members.add(item2);
 			}
 		}
-		item.setMembers(members);
+//		item.setMembers(members);
 		return item;
 	}
 
@@ -156,38 +156,38 @@ public class QuanFacade {
 		values.put("groupid", item.getGroupid());
 		values.put("gname", item.getGname());
 		values.put("gheader", item.getGheader());
-		values.put("gproperty", item.getGproperty());
-		values.put("gintro", item.getGintro());
-		values.put("createtime", item.getCreatetime());
-		values.put("membersnum", item.getMembersnum());
-		values.put("membersmax", item.getMembersmax());
-		values.put("lastbroadcast", item.getLastbroadcast());
-		values.put("lastmsgtime", item.getLastmsgtime());
-		values.put("alert", item.getAlert());
-		UserVO founder = item.getFounder();
-		String founderid = userFacade.add(founder);
-		values.put("founderid", founderid);
-		values.put("membertype", item.getMembertype());
-		List<UserVO> managers = item.getManagers();
-		String managersids = "";
-		if (managers != null && managers.size() > 0) {
-			for (UserVO manager : managers) {
-				String managerid = userFacade.add(manager);
-				managersids += managerid + ";";
-			}
-			managersids = managersids.substring(0, managersids.length() - 1);
-		}
-		values.put("managersids", managersids);
-		List<UserVO> members = item.getManagers();
-		String membersids = "";
-		if (members != null && members.size() > 0) {
-			for (UserVO member : members) {
-				String memberid = userFacade.add(member);
-				membersids += memberid + ";";
-			}
-			membersids = membersids.substring(0, membersids.length() - 1);
-		}
-		values.put("membersids", membersids);
+//		values.put("gproperty", item.getGproperty());
+//		values.put("gintro", item.getGintro());
+//		values.put("createtime", item.getCreatetime());
+//		values.put("membersnum", item.getMembersnum());
+//		values.put("membersmax", item.getMembersmax());
+//		values.put("lastbroadcast", item.getLastbroadcast());
+//		values.put("lastmsgtime", item.getLastmsgtime());
+//		values.put("alert", item.getAlert());
+//		UserVO founder = item.getFounder();
+//		String founderid = userFacade.add(founder);
+//		values.put("founderid", founderid);
+//		values.put("membertype", item.getMembertype());
+//		List<UserVO> managers = item.getManagers();
+//		String managersids = "";
+//		if (managers != null && managers.size() > 0) {
+//			for (UserVO manager : managers) {
+//				String managerid = userFacade.add(manager);
+//				managersids += managerid + ";";
+//			}
+//			managersids = managersids.substring(0, managersids.length() - 1);
+//		}
+//		values.put("managersids", managersids);
+//		List<UserVO> members = item.getManagers();
+//		String membersids = "";
+//		if (members != null && members.size() > 0) {
+//			for (UserVO member : members) {
+//				String memberid = userFacade.add(member);
+//				membersids += memberid + ";";
+//			}
+//			membersids = membersids.substring(0, membersids.length() - 1);
+//		}
+//		values.put("membersids", membersids);
 		return values;
 	}
 }
