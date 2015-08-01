@@ -69,7 +69,7 @@ public class UploadFileCallable implements Callable<Map<String, StringBuilder>> 
 									sb.append(",");
 									sb.append(s);
 								} else
-									sb = new StringBuilder(key);
+									sb = new StringBuilder(s);
 								resultMap.put(key, sb);
 							}
 						} else {
