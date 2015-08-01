@@ -4,6 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuanVO {
+	// lz 0801
+	/**
+	 * 退出圈子
+	 */
+	public final static int QUAN_QUIT = 0;
+	/**
+	 * 加入圈子
+	 */
+	public final static int QUAN_JOIN = 1;
+	/*
+	 * 接受某人加入圈子
+	 */
+	public final static int QUAN_PERMIT = 2;
+
+	/*
+	 * 接受某人加入圈子 角色 0-未加入 1-普通成员 2-管理员 3-圈主
+	 */
+	public final static int QUAN_ROLE_YOUKE = 0;
+	public final static int QUAN_ROLE_MEMBER = 1;
+	public final static int QUAN_ROLE_MANAGER = 2;
+	public final static int QUAN_ROLE_OWNER = 3;
+
 	// 圈子类型
 	public final static String QUANZITYPE = "quanzitype";
 	public final static int QUANZIMYCTEATE = 6;
@@ -36,10 +58,7 @@ public class QuanVO {
 	int followpms;// 加入权限 0:允许任何人加入，1:需要申请才能加入) ,
 	int accesspms;// (访问权限 0:所有人都可以访问，1:加入圈子才可以访问) ,
 
-	int role;//角色 0-未加入  1-普通成员  2-管理员  3-圈主
-
-	
-	
+	int role;// 角色 0-未加入 1-普通成员 2-管理员 3-圈主
 
 	public int getRole() {
 		return role;
@@ -161,5 +180,4 @@ public class QuanVO {
 		this.accesspms = accesspms;
 	}
 
-	
 }

@@ -25,6 +25,8 @@ public class ZhuoCommHelperLz {
 	
 	private final static String SERVICE_GET_QUANINFO = "/getgroupinfo.do";
 	
+	private final static String SERVICE_QUAN_PERMIT = "/followgroup.do";
+	
 	//未用
 	private final static String SERVICE_GET_ADINFO = "/getadinfo.do";
 	
@@ -74,17 +76,29 @@ public class ZhuoCommHelperLz {
 		return SERVER +  SERVICE_PUB_GROUP_TOPIC;
 	}
 	
+	/**
+	 * 获得圈活动列表
+	 * @return
+	 */
 	public static String getQuanEventList() {
 		return SERVER +  SERVICE_GET_QUANEVENTLIST;
 	}
 	
+	/**
+	 * 获得圈子主要信息
+	 * @return
+	 */
 	public static String getQuanInfo() {
 		return SERVER +  SERVICE_GET_QUANINFO;
 	}
-	
-	
-	
-	
+	/**
+	 * 圈子权限管理：退出圈子、加入圈子、接受加入
+	 * @return
+	 */
+	public static String manageQuanPermit()
+	{
+		return SERVER +  SERVICE_QUAN_PERMIT;
+	}
 	
 	/**未用
 	 * 获得广告信息

@@ -1115,4 +1115,20 @@ public class ZhuoConnHelper {
 				nameValuePairs, mUIHandler, tag);
 	}
 	
+	/**
+	 * 加入或退出圈子
+	 * @param mUIHandler
+	 * @param tag
+	 * @param groupid
+	 * @return
+	 */
+	public boolean followGroup(Handler mUIHandler, int tag,String groupid,int type,String content)
+	{
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		nameValuePairs.add(new BasicNameValuePair("type", type+""));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		return getFromServerByPost(ZhuoCommHelperLz.manageQuanPermit(),
+				nameValuePairs, mUIHandler, tag);
+	}
 }

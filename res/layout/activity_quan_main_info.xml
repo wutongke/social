@@ -92,7 +92,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/mtextViewMoreInto"
+                android:id="@+id/mtextViewGType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="领先技术交流圈"
