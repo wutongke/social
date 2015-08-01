@@ -363,7 +363,41 @@ public class AppClientLef {
 				nameValuePairs, ZhuoCommHelper.getCreategroup(), handler,
 				handlerTag, activity, "1", false, null, null);
 	}
-
+//	http://115.28.167.196:9001/zhuo-api/addGroupActivity.do
+//
+//		参数        类型            说明
+//		session		string(32)		session登录接口返回
+//		groupid		string(32)		圈子ID
+//		content		string(200)		活动文本内容
+//		starttime	timestamp		活动开始时间 (格式 yyyy-mm-dd hh:mm:ss)
+//		endtime		timestamp		活动结束时间 (格式 yyyy-mm-dd hh:mm:ss)
+//		address		string(100)		地址
+//		contacts	string(20)		联系人
+//		phone		string(16)		电话
+//		file		string(1024)	(可选) 圈活动图片key列表,以逗号分隔,最多5个
+	/**
+	 * 发布活动
+	 */
+	public boolean createEvent(Activity activity, Handler handler,
+			int handlerTag, String groupid, String title,String content,String contacts,String starttime,
+			String endtime,String address,String phone,
+			ArrayList<String> files) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		nameValuePairs.add(new BasicNameValuePair("title", title));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		nameValuePairs.add(new BasicNameValuePair("contacts", contacts));
+		nameValuePairs.add(new BasicNameValuePair("starttime", starttime));
+		nameValuePairs.add(new BasicNameValuePair("endtime", endtime));
+		nameValuePairs.add(new BasicNameValuePair("address", address));
+		nameValuePairs.add(new BasicNameValuePair("phone", phone));
+		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
+		filesMap.put("file", files);
+		return ZhuoConnHelper.getInstance(context).doPostWithFile(filesMap,
+				nameValuePairs, ZhuoCommHelper.getAddgroupactivity(), handler,
+				handlerTag, activity, "1", false, null, null);
+	}
 	/**
 	 * 保存对象
 	 * 

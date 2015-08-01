@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,11 +25,18 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ImageGridAdapter;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
+import com.cpstudio.zhuojiaren.model.EventVO;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.DateTimePickDialogUtil;
 import com.cpstudio.zhuojiaren.widget.ImageChooseAdapter;
 import com.cpstudio.zhuojiaren.widget.PicChooseActivity;
 import com.cpstudio.zhuojiaren.widget.PlaceChooseDialog;
+import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
 public class EditEventActivity extends BaseActivity {
 	@InjectView(R.id.aee_event_name)
@@ -59,22 +67,30 @@ public class EditEventActivity extends BaseActivity {
 	LinearLayout contactPeople;
 	@InjectView(R.id.aee_add_contact_people)
 	TextView addPeople;
+	// 提交的时间
+	String timeStart;
+	String timeEnd;
 	private Context mContext;
-	//图片
+	// 图片
 	private int requestCode = 1;
-	//位置
+	// 位置
 	private int requestLocate = 2;
 	private ArrayList<String> imageDir = new ArrayList<String>();
 	private CommonAdapter<String> imageAdatper;
 	private ArrayList<EditText> peopleList = new ArrayList<EditText>();
 	private ArrayList<EditText> phoneList = new ArrayList<EditText>();
-
+	// 从圈子主页获得 圈子id
+	private String groupeId = "1";
+	//结果提示
+	PopupWindows pwh;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_event);
 		ButterKnife.inject(this);
+		groupeId = getIntent().getStringExtra("groupid");
 		mContext = this;
+		pwh = new PopupWindows(EditEventActivity.this);
 		initTitle();
 		function.setText(R.string.finish);
 		title.setText(R.string.public_event);
@@ -179,8 +195,72 @@ public class EditEventActivity extends BaseActivity {
 				addContactPeopel();
 			}
 		});
+		function.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				String name = nameET.getText().toString();
+				String content = desET.getText().toString();
+				String address = locate.getText().toString()
+						+ locateMore.getText().toString();
+				StringBuilder contacts = new StringBuilder();
+				StringBuilder phone = new StringBuilder();
+				for (int i = peopleList.size() - 1; i >= 0; i--) {
+					if (i > 0)
+						contacts.append(peopleList.get(i).getText().toString()
+								+ ",");
+					else
+						contacts
+								.append(peopleList.get(i).getText().toString());
+				}
+				for (int i = phoneList.size() - 1; i >= 0; i--) {
+					if (i > 0)
+						phone.append(phoneList.get(i).getText().toString()
+								+ ",");
+					else
+						phone.append(phoneList.get(i).getText().toString());
+				}
+				if (groupeId == null || name == null || name.isEmpty()
+						|| content == null || content.isEmpty()
+						|| timeStart == null || timeStart.isEmpty()
+						|| timeEnd == null || timeEnd.isEmpty()
+						|| address == null || address.isEmpty()
+						|| contacts.toString().isEmpty()
+						|| phone.toString().isEmpty() || imageDir.size() == 0) {
+					CommonUtil.displayToast(mContext, R.string.please_finish);
+					return;
+				} else
+					AppClientLef.getInstance(EditEventActivity.this)
+							.createEvent(EditEventActivity.this, uiHandler,
+									MsgTagVO.PUB_INFO, groupeId, name, content,
+									contacts.toString(), timeStart, timeEnd, address,
+									phone.toString(), imageDir);
+			}
+		});
 	}
 
+	Handler uiHandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			if (msg.what == MsgTagVO.PUB_INFO) {
+				OnClickListener listener = new OnClickListener() {
+
+					@Override
+					public void onClick(View paramView) {
+						EditEventActivity.this.finish();
+					}
+				};
+				if (JsonHandler.checkResult((String) msg.obj)) {
+					View v = findViewById(R.id.event_edit_activity);
+					pwh.showPopDlgOne(v, listener, R.string.info66);
+				}else{
+					View v = findViewById(R.id.event_edit_activity);
+					pwh.showPopDlgOne(v, listener, R.string.submit_error);
+				}
+			}
+		};
+	};
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
@@ -188,7 +268,7 @@ public class EditEventActivity extends BaseActivity {
 		if (requestCode == this.requestCode && resultCode == RESULT_OK) {
 			imageDir.addAll(data.getStringArrayListExtra("data"));
 			imageAdatper.notifyDataSetChanged();
-		}else if(requestCode==requestLocate && resultCode == RESULT_OK){
+		} else if (requestCode == requestLocate && resultCode == RESULT_OK) {
 			locateMore.setText(data.getStringExtra("locate"));
 		}
 	}

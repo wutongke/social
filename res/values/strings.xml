@@ -202,6 +202,7 @@
     <string name="error0">网络连接失败</string>
     <string name="error1">获取图片失败</string>
     <string name="error_intent">订单生成出错，请重新提交</string>
+    <string name="submit_error">订单生成出错，请重新提交</string>
     <string name="error2">请确认已经插入SD卡</string>
     <string name="error3">建立通讯录索引失败</string>
     <string name="error4">文件不存在</string>
