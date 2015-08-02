@@ -207,11 +207,11 @@ public class LoginActivity extends Activity {
 								"onTokenIncorrect", Toast.LENGTH_SHORT).show();
 					}
 				});
-				ServiceManager serviceManager = new ServiceManager(
-						getApplicationContext());
-				
-				serviceManager.setNotificationIcon(R.drawable.newmsg);
-				serviceManager.startService();
+//				ServiceManager serviceManager = new ServiceManager(
+//						getApplicationContext());
+//				
+//				serviceManager.setNotificationIcon(R.drawable.newmsg);
+//				serviceManager.startService();
 				break;
 			default:
 				break;

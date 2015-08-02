@@ -21,6 +21,7 @@ import com.cpstudio.zhuojiaren.fragment.CommentFragment;
 import com.cpstudio.zhuojiaren.fragment.MyPagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.PaybackFragment;
 import com.cpstudio.zhuojiaren.fragment.ProgressFragment;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -30,10 +31,12 @@ import com.cpstudio.zhuojiaren.widget.OverScrollableScrollView;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
 import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
+
 /***
  * 众筹详情
+ * 
  * @author lef
- *
+ * 
  */
 public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 	@InjectView(R.id.acfd_state)
@@ -77,6 +80,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 	private MyPagerAdapter mAdapter;
 	private LoadImage mLoadImage = new LoadImage();
 	String[] tabTitles;
+	AppClientLef appClient;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +89,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 		ButterKnife.inject(this);
 		initTitle();
 		title.setText(R.string.crowdfungding_detail);
-
+		appClient = AppClientLef.getInstance(CrowdFundingDetailActivity.this);
 		// 初始化tab
 		tabTitles = new String[3];
 		tabTitles[0] = getString(R.string.pay_back);
@@ -121,9 +125,8 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 		viewPager.setAdapter(mAdapter);
 		tab.clearTab();
 		tab.setViewPager(viewPager);
-		//第一个可用
-		PaybackFragment fragment = (PaybackFragment) mAdapter
-				.getItem(0);
+		// 第一个可用
+		PaybackFragment fragment = (PaybackFragment) mAdapter.getItem(0);
 		scorllView.setController(fragment);
 		tab.setPageChangeListener(new PageChangeListener() {
 
@@ -176,26 +179,9 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 
 	private void loadData() {
 		// TODO Auto-generated method stub
-		// test
-		Message msg = uiHandler.obtainMessage();
-		msg.what = MsgTagVO.INIT;
-		CrowdFundingVO result = new CrowdFundingVO();
-		result.setState("进行中");
-		result.setName("三星S6钢铁侠定制版");
-		result.setDes("参与1元抢三星S6的用户请注意：① 请登录京东众筹【三星S6钢铁侠限量版】项目页面参与活动。②每日得奖的用户名单都会在H5的“S6拼抢榜”内显示。③每日10点到次日10点为榜单统计时间，活动暂时锁定。次日中午12:00在活动H5页面的“S6拼抢榜”公布最终获奖名单！");
-		result.setMoneyAim("10000");
-		result.setMoneyGet("8000");
-		result.setEndDay("49");
-		result.setLikeCount("20");
-		result.setSupportCount("50");
-		UserVO user = new UserVO();
-		user.setUheader("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2222979786,259610352&fm=116&gp=0.jpg");
-		user.setUsername("jack");
-		user.setPost("aa");
-		user.setCompany("BUPT");
-		result.setBoss(user);
-		msg.obj = result;
-		msg.sendToTarget();
+		appClient.getCrowdFunding(CrowdFundingDetailActivity.this, uiHandler,
+				MsgTagVO.INIT,
+				getIntent().getStringExtra(CrowdFundingVO.CROWDFUNDINGID));
 	}
 
 	Handler uiHandler = new Handler() {
@@ -206,25 +192,25 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 				if (msg.obj instanceof CrowdFundingVO)
 					result = (CrowdFundingVO) msg.obj;
 				state.setText(result.getState());
-				name.setText(result.getName());
-				des.setText(result.getDes());
-				
+				name.setText(result.getTitle());
+				des.setText(result.getDescription());
+
 				// 完成率
-				int aim = Integer.parseInt(result.getMoneyAim());
-				int get = Integer.parseInt(result.getMoneyGet());
+				int aim = Integer.parseInt(result.getTargetZb());
+				int get = Integer.parseInt(result.getReach());
 				int rate = (int) (get / (float) aim * 100);
 				finishRate.setText(rate + "%");
 				setWeight(finishRateImage, (float) rate);
 				setWeight(finishDayImage, (float) (100 - rate));
-				finishDay.setText(result.getEndDay() + "天");
-				totalRmb.setText("￥" + result.getMoneyGet());
-				aimRmb.setText("￥" + result.getMoneyAim());
-				likeCount.setText(result.getLikeCount());
-				supportCount.setText(result.getSupportCount());
-				peopleName.setText(result.getBoss().getUsername());
-				peopleCompany.setText(result.getBoss().getCompany());
-				peoplePostion.setText(result.getBoss().getPost());
-				mLoadImage.beginLoad(result.getBoss().getUheader(), peopleImage);
+				finishDay.setText(result.getRemainDay() + "天");
+				totalRmb.setText("￥" + result.getReach());
+				aimRmb.setText("￥" + result.getTargetZb());
+				likeCount.setText(result.getLikeNum());
+				supportCount.setText(result.getSupportNum());
+				peopleName.setText(result.getName());
+				peopleCompany.setText(result.getCompany());
+				peoplePostion.setText(result.getPosition());
+				mLoadImage.beginLoad(result.getUheader(), peopleImage);
 			}
 		}
 	};

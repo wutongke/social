@@ -34,11 +34,11 @@ public class CrowdFundingAdapter extends CommonAdapter<CrowdFundingVO>{
 		image.setImageBitmap(ImageRectUtil.toRoundCorner(BitmapFactory
 				.decodeResource(mContext.getResources(),
 						R.drawable.ico_chat_pic), 10));
-		image.setTag(item.getImageUrl());
-		mLoadImage.addTask(item.getImageUrl(), image);
-		name.setText(item.getName());
-		price.setText(mContext.getResources().getString(R.string.crowdfunding_price_label2)+item.getMinPrice());
-		finishRate.setText(mContext.getResources().getString(R.string.crowdfunding_finish_rate)+item.getMoneyGet());
+		image.setTag(item.getThumbPic());
+		mLoadImage.addTask(item.getThumbPic(), image);
+		name.setText(item.getTitle());
+		price.setText(mContext.getResources().getString(R.string.crowdfunding_price_label2)+item.getMinSupport());
+		finishRate.setText(mContext.getResources().getString(R.string.crowdfunding_finish_rate)+item.getReach());
 	}
 
 }

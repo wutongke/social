@@ -35,13 +35,20 @@ public class CrowdFundingListActivity extends BaseActivity {
 	// ·ÖÒ³
 	private int mPage = 0;
 	private AppClientLef appClientLef;
-
+	int typePubOrInv=-1;
+	int typeCrowd=0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_crowd_funding_list);
 		ButterKnife.inject(this);
 		String type = getIntent().getStringExtra("type");
+		int typeId = getIntent().getIntExtra("typeid", 0);
+		if(typeId<=2){
+			typePubOrInv = typeId;
+		}else {
+			typeCrowd = typeId-2;
+		}
 		initTitle();
 		appClientLef = AppClientLef.getInstance(this);
 		if (!type.isEmpty()) {
@@ -84,7 +91,7 @@ public class CrowdFundingListActivity extends BaseActivity {
 				Intent intent = new Intent(CrowdFundingListActivity.this,
 						CrowdFundingDetailActivity.class);
 				intent.putExtra(CrowdFundingVO.CROWDFUNDINGID,
-						mDatas.get(position - 1).getFundingId());
+						mDatas.get(position - 1).getId());
 				startActivity(intent);
 			}
 		});
@@ -95,7 +102,7 @@ public class CrowdFundingListActivity extends BaseActivity {
 			mDatas.clear();
 			mPage = 0;
 			mAdapter.notifyDataSetChanged();
-			appClientLef.getAudioList(mPage, 5, uiHandler,
+			appClientLef.getFundingList(typeCrowd,typePubOrInv,mPage, 5, uiHandler,
 					MsgTagVO.DATA_LOAD, CrowdFundingListActivity.this, true, null,
 					null);
 		}

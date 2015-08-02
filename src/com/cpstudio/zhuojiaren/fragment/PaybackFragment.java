@@ -70,26 +70,26 @@ public class PaybackFragment extends Fragment implements OverScrollController{
 		// TODO Auto-generated method stub
 		// test
 		PayBackVO test = new PayBackVO();
-		test.setPrice("298");
-		test.setMaxCount("200");
-		test.setDes("抄底价格，主动报警装置");
+		test.setAmount("298");
+		test.setLimit("200");
+		test.setIntro("抄底价格，主动报警装置");
 		test.setSupportCount("120");
 		ArrayList<String> a = new ArrayList<String>();
 		a.add("http://img0.imgtn.bdimg.com/it/u=3978527988,3847757746&fm=21&gp=0.jpg");
 		a.add("http://img4.imgtn.bdimg.com/it/u=3355886690,291919142&fm=21&gp=0.jpg");
 		a.add("http://img5.imgtn.bdimg.com/it/u=3541372963,3063415232&fm=21&gp=0.jpg");
 		a.add("http://img3.imgtn.bdimg.com/it/u=1779627396,3712161577&fm=21&gp=0.jpg");
-		test.setImageUrl(a);
+//		test.setImageUrl(a);
 		PayBackVO test2 = new PayBackVO();
-		test2.setPrice("298");
-		test2.setMaxCount("200");
-		test2.setDes("抄底价格，主动报警装置");
+		test2.setAmount("298");
+		test2.setLimit("200");
+		test2.setIntro("抄底价格，主动报警装置");
 		test2.setSupportCount("120");
 		ArrayList<String> b = new ArrayList<String>();
 		b.add("http://img3.imgtn.bdimg.com/it/u=2628293733,2370129064&fm=21&gp=0.jpg");
 		b.add("http://img3.imgtn.bdimg.com/it/u=2863599132,929299683&fm=21&gp=0.jpg");
 		b.add("http://img4.imgtn.bdimg.com/it/u=2297119962,3821452646&fm=21&gp=0.jpg");
-		test2.setImageUrl(b);
+//		test2.setImageUrl(b);
 		mDataList.clear();
 		mDataList.add(test);
 		mDataList.add(test2);

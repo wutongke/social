@@ -16,7 +16,20 @@
         android:background="@color/white"
         android:orientation="vertical"
         android:padding="20dp" >
-
+		<TextView 
+		    style="@style/basic_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/payback_pro"
+		    />
+		<EditText 
+		    android:id="@+id/ipba_des"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:minHeight="80dp"
+		    android:gravity="top"
+		    />
         <com.cpstudio.zhuojiaren.widget.MyGridView
             android:id="@+id/ipba_image_layout"
             android:layout_width="match_parent"
@@ -46,21 +59,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:orientation="horizontal" >
 
         <TextView
             style="@style/basic_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="10dp"
             android:text="@string/support" />
 
         <EditText
-            android:id="@+id/apcf_support_zhuobi"
+            android:id="@+id/ipba_support_zhuobi"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:inputType="number"
             android:minWidth="52dp"
+            android:layout_weight="1"
             android:numeric="integer"
             android:textSize="18dp" />
 
@@ -72,11 +88,12 @@
             android:text="@string/zhuo_bi" />
 
         <EditText
-            android:id="@+id/apcf_support_rmb"
+            android:id="@+id/ipba_support_people"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:inputType="number"
             android:minWidth="52dp"
+            android:layout_weight="1"
             android:numeric="integer"
             android:textSize="18dp" />
 
@@ -84,7 +101,7 @@
             style="@style/basic_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/yuan" />
+            android:text="@string/people1" />
     </LinearLayout>
 
     <ImageView

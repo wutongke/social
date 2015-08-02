@@ -14,6 +14,14 @@
 	    <item >供</item>
 	    <item >需</item>
 	</string-array>
+	<string-array name="crowdfunding">
+	    <item >科技</item>
+	    <item >出版</item>
+	    <item >娱乐</item>
+	    <item >艺术</item>
+	    <item >农业</item>
+	    <item >工艺</item>
+	</string-array>
     <string-array name="grouth_type">
         <item>商道智慧</item>
         <item>投资智慧</item>

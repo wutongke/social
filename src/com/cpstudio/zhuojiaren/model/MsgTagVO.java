@@ -30,6 +30,7 @@ public class MsgTagVO {
 	public static final int REFUSE_RCMD = 19;
 
 	public static final int PUB_INFO = 5;
+	public static final int UPLOAD_FILE = 6;
 	/**
 	 * 接受到新消息
 	 */

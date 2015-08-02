@@ -138,10 +138,10 @@ public class InitActivity extends Activity {
 					}
 				});
 				
-				ServiceManager serviceManager = new ServiceManager(
-						getApplicationContext());
-				serviceManager.setNotificationIcon(R.drawable.newmsg);
-				serviceManager.startService();
+//				ServiceManager serviceManager = new ServiceManager(
+//						getApplicationContext());
+//				serviceManager.setNotificationIcon(R.drawable.newmsg);
+//				serviceManager.startService();
 				break;
 			default:
 				break;
