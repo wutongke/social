@@ -107,8 +107,9 @@ public class QuanziTopicFra extends Fragment {
 					int position, long id) {
 				// 跳到话题详情页，话题详情内容用活动内容测试通过
 				Intent i = new Intent();
+				QuanTopicVO vo=mList.get(position);
 				i.setClass(getActivity(), TopicDetailActivity.class);
-				i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
+				i.putExtra("topicid", vo.getTopicid());
 				startActivity(i);
 			}
 

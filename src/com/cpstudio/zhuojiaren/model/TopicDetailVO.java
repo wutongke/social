@@ -1,28 +1,64 @@
 package com.cpstudio.zhuojiaren.model;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class QuanTopicVO implements Serializable{
-
+public class TopicDetailVO {
 	private String topicid;
 
 	private String content;
 
 	private String groupid;
 
+	private String userid;
+
+	private String name;
+
 	private String uheader;
 
-	private String position;
+	private int position;
 
 	private String addtime;
 
+	private String company;
+
 	private List<PicNewVO> topicPics;
 
-	private String userid;//·¢²¼Õß
-	
-	private String name;
-	
+	private List<Praise> praiseLists;
+
+	private List<Comment> commentLists;
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public List<PicNewVO> getTopicPics() {
+		return topicPics;
+	}
+
+	public void setTopicPics(List<PicNewVO> topicPics) {
+		this.topicPics = topicPics;
+	}
+
+	public List<Praise> getPraiseLists() {
+		return praiseLists;
+	}
+
+	public void setPraiseLists(List<Praise> praiseLists) {
+		this.praiseLists = praiseLists;
+	}
+
+	public List<Comment> getCommentLists() {
+		return commentLists;
+	}
+
+	public void setCommentLists(List<Comment> commentLists) {
+		this.commentLists = commentLists;
+	}
+
 	public void setTopicid(String topicid) {
 		this.topicid = topicid;
 	}
@@ -71,11 +107,11 @@ public class QuanTopicVO implements Serializable{
 		return this.uheader;
 	}
 
-	public void setPosition(String position) {
+	public void setPosition(int position) {
 		this.position = position;
 	}
 
-	public String getPosition() {
+	public int getPosition() {
 		return this.position;
 	}
 
@@ -87,11 +123,5 @@ public class QuanTopicVO implements Serializable{
 		return this.addtime;
 	}
 
-	public void setTopicPic(List<PicNewVO> topicPic) {
-		this.topicPics = topicPic;
-	}
 
-	public List<PicNewVO> getTopicPic() {
-		return this.topicPics;
-	}
 }

@@ -64,20 +64,21 @@ public class MsgCmtActivity extends Activity {
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
 		@Override
-		public void handleMessage(Message msg) {
+		public void handleMessage(final Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.PUB_INFO: {
 				if (JsonHandler.checkResult((String) msg.obj)) {
 					OnClickListener listener = new OnClickListener() {
 						@Override
 						public void onClick(View paramView) {
+							
 							Intent intent = new Intent();
 							intent.putExtra("forward", forward);
 							intent.putExtra("msgid", msgid);
 							intent.putExtra("parentid", parentid);
 							intent.putExtra("outterid", outterid);
 							intent.putExtra("userid", userid);
-							intent.putExtra("content", content);
+							intent.putExtra("data", (String) msg.obj);
 							setResult(RESULT_OK, intent);
 							MsgCmtActivity.this.finish();
 						}
@@ -111,8 +112,9 @@ public class MsgCmtActivity extends Activity {
 		if (cb.isChecked()) {
 			forward = "1";
 		}
-		mConnHelper.pubCmt(msgid, parentid, content, forward, mUIHandler,
-				MsgTagVO.PUB_INFO, MsgCmtActivity.this, true, null, null);
+//		mConnHelper.pubCmt(msgid, parentid, content, forward, mUIHandler,
+//				, MsgCmtActivity.this, true, null, null);
+		mConnHelper.CommentTopic(mUIHandler, MsgTagVO.PUB_INFO, parentid, content);
 	}
 
 

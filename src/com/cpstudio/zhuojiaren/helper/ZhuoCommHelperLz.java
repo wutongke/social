@@ -18,29 +18,32 @@ public class ZhuoCommHelperLz {
 	private final static String SERVICE_GET_USER_INFO = "/userinfo.do";
 
 	private final static String SERVICE_GET_UPLOADTOKEN = "/qiniu/getUploadToken.do";
-	
+
 	private final static String SERVICE_PUB_GROUP_TOPIC = "/addgrouptopic.do";
-	
+
 	private final static String SERVICE_GET_QUANEVENTLIST = "/groupActivityList.do";
-	
+
 	private final static String SERVICE_GET_QUANINFO = "/getgroupinfo.do";
-	
+
 	private final static String SERVICE_QUAN_PERMIT = "/followgroup.do";
-	
+
 	private final static String SERVICE_MODIFY_GROUP_INFO = "/modifygroupinfo.do";
-	
-	
-	
-	//未用
+
+	private final static String SERVICE_GET_TOPIC_DETAIL = "/getgrouptopicdetail.do";
+
+	private final static String GTOPIC_PRAISE = "/grouptopicpraise.do";
+	private final static String GTOPIC_COMMENT = "/grouptopiccmt.do";
+
+	// 未用
 	private final static String SERVICE_GET_ADINFO = "/getadinfo.do";
-	
+
 	/**
 	 * 获取主页界面的广告信息
 	 * 
 	 * @return
 	 */
 	public static String getMainAdInfo() {
-		return SERVER  + SERVICE_MAIN_IDS;
+		return SERVER + SERVICE_MAIN_IDS;
 	}
 
 	/**
@@ -58,7 +61,7 @@ public class ZhuoCommHelperLz {
 	 * @return
 	 */
 	public static String getUserInfo() {
-		return SERVER +  SERVICE_GET_USER_INFO;
+		return SERVER + SERVICE_GET_USER_INFO;
 	}
 
 	/**
@@ -67,55 +70,85 @@ public class ZhuoCommHelperLz {
 	 * @return
 	 */
 	public static String getUploadToken() {
-		return SERVER +  SERVICE_GET_UPLOADTOKEN;
+		return SERVER + SERVICE_GET_UPLOADTOKEN;
 	}
 
-	
 	/**
 	 * 发布圈主题
 	 * 
 	 * @return
 	 */
 	public static String pubQuanTopic() {
-		return SERVER +  SERVICE_PUB_GROUP_TOPIC;
+		return SERVER + SERVICE_PUB_GROUP_TOPIC;
 	}
-	
+
 	/**
 	 * 获得圈活动列表
+	 * 
 	 * @return
 	 */
 	public static String getQuanEventList() {
-		return SERVER +  SERVICE_GET_QUANEVENTLIST;
+		return SERVER + SERVICE_GET_QUANEVENTLIST;
 	}
-	
+
 	/**
 	 * 获得圈子主要信息
+	 * 
 	 * @return
 	 */
 	public static String getQuanInfo() {
-		return SERVER +  SERVICE_GET_QUANINFO;
+		return SERVER + SERVICE_GET_QUANINFO;
 	}
+
 	/**
 	 * 圈子权限管理：退出圈子、加入圈子、接受加入
+	 * 
 	 * @return
 	 */
-	public static String manageQuanPermit()
-	{
-		return SERVER +  SERVICE_QUAN_PERMIT;
+	public static String manageQuanPermit() {
+		return SERVER + SERVICE_QUAN_PERMIT;
 	}
-	public static String modifyGroupInfo()
-	{
-		return SERVER +  SERVICE_MODIFY_GROUP_INFO;
+
+	/**
+	 * 修改圈子信息
+	 * 
+	 * @return
+	 */
+	public static String modifyGroupInfo() {
+		return SERVER + SERVICE_MODIFY_GROUP_INFO;
+	}
+
+	/**
+	 * 获取圈子的点赞和评论信息
+	 * 
+	 * @return
+	 */
+	public static String getTopicDetail() {
+		return SERVER + SERVICE_GET_TOPIC_DETAIL;
+	}
+
+	/**
+	 * 圈话题点赞
+	 * 
+	 * @return
+	 */
+	public static String topicPraise() {
+		return SERVER + GTOPIC_PRAISE;
+	}
+	/**
+	 * 圈话题评论
+	 * @return
+	 */
+	public static String topicComment() {
+		return SERVER + GTOPIC_COMMENT;
 	}
 	
-	
-	
-	/**未用
-	 * 获得广告信息
+	/**
+	 * 未用 获得广告信息
 	 * 
 	 * @return
 	 */
 	public static String getAdInfo() {
-		return SERVER +  SERVICE_GET_ADINFO;
+		return SERVER + SERVICE_GET_ADINFO;
 	}
 }
