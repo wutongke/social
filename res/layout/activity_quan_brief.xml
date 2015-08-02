@@ -64,7 +64,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:layout_toRightOf="@+id/imageViewCj"
-                    android:text="王丽"
                     android:textColor="#6a6a6a"
                     android:textSize="14sp" />
 
@@ -105,7 +104,6 @@
                     android:layout_toRightOf="@id/tvlb"
                     android:lineSpacingExtra="3dp"
                     android:maxLines="2"
-                    android:text="sdjaskdasdasdaskfjasfhsdfsdfdsjfhsdajfhjsd我呢吧的阿大声道按时asdasd "
                     android:textColor="#6a6a6a"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -137,7 +135,6 @@
                     android:layout_toRightOf="@id/tvlb2"
                     android:lineSpacingExtra="3dp"
                     android:maxLines="1"
-                    android:text="资源整合圈"
                     android:textColor="#6a6a6a"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -169,7 +166,6 @@
                     android:layout_toRightOf="@id/tvlb3"
                     android:lineSpacingExtra="3dp"
                     android:maxLines="1"
-                    android:text="资源整合圈"
                     android:textColor="#6a6a6a"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -201,7 +197,6 @@
                     android:layout_toRightOf="@id/tvlb4"
                     android:lineSpacingExtra="3dp"
                     android:maxLines="1"
-                    android:text="资源整合圈"
                     android:textColor="#6a6a6a"
                     android:textSize="14sp" />
             </RelativeLayout>

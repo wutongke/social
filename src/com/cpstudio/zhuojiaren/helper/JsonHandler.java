@@ -4,15 +4,18 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import android.content.Context;
 import android.util.Log;
 
+import com.cpstudio.zhuojiaren.QuanDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.AboutUsVO;
 import com.cpstudio.zhuojiaren.model.AdVO;
 import com.cpstudio.zhuojiaren.model.CardMsgVO;
 import com.cpstudio.zhuojiaren.model.CmtRcmdVO;
+import com.cpstudio.zhuojiaren.model.Comment;
 import com.cpstudio.zhuojiaren.model.ContactVO;
 import com.cpstudio.zhuojiaren.model.DownloadVO;
 import com.cpstudio.zhuojiaren.model.EventVO;
@@ -22,6 +25,7 @@ import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.ImQuanVO;
 import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.PagesCmtVO;
+import com.cpstudio.zhuojiaren.model.Praise;
 import com.cpstudio.zhuojiaren.model.PushMsgVO;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.RecentVisitVO;
@@ -29,6 +33,7 @@ import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.RuleVO;
 import com.cpstudio.zhuojiaren.model.TeacherVO;
+import com.cpstudio.zhuojiaren.model.TopicDetailVO;
 import com.cpstudio.zhuojiaren.model.TotalUserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.model.QuanUserVO;
@@ -71,7 +76,7 @@ public class JsonHandler {
 			String data = resultVO.getData();
 			String msg = resultVO.getMsg();
 			if (null != code) {
-//lz新版本后台code为0时表示成功
+				// lz新版本后台code为0时表示成功
 				if (code.equals("10000") || code.equals("0")) {
 					if (null != data) {
 						return data;
@@ -118,8 +123,8 @@ public class JsonHandler {
 			if (null != code && code.equals("0")) {
 				return true;
 			} else {
-				//处理出错信息，目前只处理session，其他错处直接输出
-				switch(Integer.parseInt(code)){
+				// 处理出错信息，目前只处理session，其他错处直接输出
+				switch (Integer.parseInt(code)) {
 				case ResultVO.SESSIONOUT:
 					AppClientLef.getInstance(context).refreshSession(context);
 					return false;
@@ -780,13 +785,14 @@ public class JsonHandler {
 		MainHeadInfo data = null;
 		try {
 			Gson gson = new Gson();
-			
+
 			data = gson.fromJson(jsonData, MainHeadInfo.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return data;
 	}
+
 	public ArrayList<QuanTopicVO> parseQuanTopicList() {
 		ArrayList<QuanTopicVO> list = new ArrayList<QuanTopicVO>();
 		try {
@@ -799,6 +805,66 @@ public class JsonHandler {
 				for (Iterator<QuanTopicVO> iterator = li.iterator(); iterator
 						.hasNext();) {
 					QuanTopicVO item = (QuanTopicVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public TopicDetailVO parseQuanTopicDetail() {
+		TopicDetailVO detail = null;
+		try {
+			Gson gson = new Gson();
+			detail = gson.fromJson(jsonData, TopicDetailVO.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return detail;
+	}
+
+	/**
+	 * 解析评论后返回的评论列表
+	 * @return
+	 */
+	public List<Comment> parseQuanTopicCommentList() {
+		List<Comment> list = new ArrayList<Comment>();
+		try {
+			Type listType = new TypeToken<LinkedList<Comment>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<Comment> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<Comment> iterator = li.iterator(); iterator
+						.hasNext();) {
+					Comment item = (Comment) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * 解析点赞成功后返回的点赞列表
+	 * @return
+	 */
+	public List<Praise> parseQuanTopicPraiseList() {
+		List<Praise> list = new ArrayList<Praise>();
+		try {
+			Type listType = new TypeToken<LinkedList<Praise>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<Praise> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<Praise> iterator = li.iterator(); iterator
+						.hasNext();) {
+					Praise item = (Praise) iterator.next();
 					list.add(item);
 				}
 			}

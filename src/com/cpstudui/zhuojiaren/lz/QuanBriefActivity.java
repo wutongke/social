@@ -1,5 +1,8 @@
 package com.cpstudui.zhuojiaren.lz;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,14 +19,20 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.facade.QuanFacade;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.Province;
 import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.ui.QuanCreateActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class QuanBriefActivity extends BaseActivity {
 	@InjectView(R.id.imageViewGroupHeader)
@@ -35,7 +44,23 @@ public class QuanBriefActivity extends BaseActivity {
 	@InjectView(R.id.mtextViewTopic)
 	TextView tvTopicNum;
 	@InjectView(R.id.mtextViewGType)
-	TextView tvTopicType;
+	TextView tvxxx;
+	@InjectView(R.id.imageViewCj)
+	ImageView imageViewCj;
+	
+	
+	
+	@InjectView(R.id.tvQunzhuName)
+	TextView tvQunzhuName;
+	@InjectView(R.id.tvGonggao)
+	TextView tvGonggao;
+
+	@InjectView(R.id.tvClass)
+	TextView tvClass;
+	@InjectView(R.id.tvLocal)
+	TextView tvLocal;
+	@InjectView(R.id.tvBrief)
+	TextView tvBrief;
 
 	@InjectView(R.id.btnJoinQuan)
 	Button btnJoinQuan;// 非成员操作菜单
@@ -46,7 +71,7 @@ public class QuanBriefActivity extends BaseActivity {
 	View ltMember;// 成员操作菜单
 	@InjectView(R.id.lt_youke_menue)
 	View ltYouke;// 非成员操作菜单
-
+	int localCode = -1;
 	private PopupWindows phw = null;
 	private LoadImage mLoadImage = new LoadImage();
 	// 不同身份，功能不同
@@ -116,7 +141,6 @@ public class QuanBriefActivity extends BaseActivity {
 							// 是否需要保存到本地
 							// mFacade.saveOrUpdate(etail);
 						}
-						
 					}
 					if (null != detail) {
 						memberType = detail.getRole();
@@ -124,14 +148,22 @@ public class QuanBriefActivity extends BaseActivity {
 						tvName.setText(name);
 						String headUrl = detail.getGheader();
 						ivGroupHeader.setTag(headUrl);
-						mLoadImage.addTask(headUrl, ivGroupHeader);
-						// 圈子简介内容
-						String type = detail.getGintro();
-						if (type != null)
-							tvTopicType.setText(type);
+
+						tvQunzhuName.setText(detail.getName());
+						tvGonggao.setText(detail.getGpub());
+						tvBrief.setText(detail.getGintro());
+						// 圈子类型
+						String[] quanziType = getResources().getStringArray(
+								R.array.quanzi_type);
+						int type = detail.getGtype();
+						tvClass.setText(quanziType[type]);
 						tvMemNum.setText(detail.getMemberCount() + "");
-						// tvMemNum.setText(detail.getMemberCount());
 						tvTopicNum.setText(detail.getTopicCount() + "");
+						localCode = detail.getCity();
+						AppClientLef.getInstance(getApplicationContext())
+								.getCitys(mUIHandler, MsgTagVO.DATA_OTHER,
+										QuanBriefActivity.this, true, null,
+										null);
 						if (memberType != QuanVO.QUAN_ROLE_YOUKE) {
 							isfollow = true;
 						} else {
@@ -153,8 +185,33 @@ public class QuanBriefActivity extends BaseActivity {
 						}
 						changeType(isfollow);
 						mLoadImage.addTask(detail.getGheader(), ivGroupHeader);
+						mLoadImage.addTask(detail.getUheader(), imageViewCj);
 						mLoadImage.doTask();
 					}
+				}
+				break;
+			case MsgTagVO.DATA_OTHER:
+				ResultVO res;
+				if (JsonHandler.checkResult((String) msg.obj,
+						QuanBriefActivity.this)) {
+					res = JsonHandler.parseResult((String) msg.obj);
+					// 每次都写文件，没必要，如果是从网络获取则缓存，否则不用再缓存了
+					AppClientLef.getInstance(getApplicationContext())
+							.saveObject((String) msg.obj, "citys");
+				} else {
+					return;
+				}
+				String data = res.getData();
+				Type listType = new TypeToken<ArrayList<Province>>() {
+				}.getType();
+				Gson gson = new Gson();
+				ArrayList<Province> list = gson.fromJson(data, listType);
+				ArrayList<City> cityList = new ArrayList<City>();
+				for (Province temp : list) {
+					cityList.addAll(temp.getCitys());
+				}
+				if (cityList != null && localCode != -1) {
+					tvLocal.setText(cityList.get(localCode).getCityName());
 				}
 				break;
 			case MsgTagVO.FOLLOW_QUAN: {
@@ -171,6 +228,7 @@ public class QuanBriefActivity extends BaseActivity {
 					}
 				}
 				break;
+
 			}
 
 			}

@@ -1,5 +1,6 @@
 package com.cpstudui.zhuojiaren.lz;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,36 +43,50 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.CmtVO;
+import com.cpstudio.zhuojiaren.model.Comment;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.PicVO;
+import com.cpstudio.zhuojiaren.model.Praise;
+import com.cpstudio.zhuojiaren.model.Province;
+import com.cpstudio.zhuojiaren.model.QuanTopicVO;
+import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.model.TopicDetailVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.sea_monster.network.ApiCallback;
 
 public class TopicDetailActivity extends BaseActivity implements
 		OnItemClickListener {
 	private ListView mListView;
-	private MsgCmtListAdapter mAdapter;
-	private ArrayList<CmtVO> mList = new ArrayList<CmtVO>();
+	private TopicCommentListAdapter mAdapter;
+	private ArrayList<Comment> mList = new ArrayList<Comment>();
 	private LoadImage mLoadImage = new LoadImage();
 	private View mHeadView = null;
 	private PopupWindows pwh;
-	
-	private String msgid = null;
-	
+	private String topicid = null;
 	private int mPage = 1;
 	private ZhuoConnHelper mConnHelper = null;
 	private String isCollect = "0";
-	private ListViewFooter mListViewFooter = null;
+//	private ListViewFooter mListViewFooter = null;
 	private String uid = null;
 	private ZhuoInfoFacade mFacade = null;
 	private String myid = null;
-	TextView collectBtn ;
+	TextView collectBtn;
 	View textViewTip;
+	TopicDetailVO topicDetail;
+	ImageView headIV;
+	List<City> cityList;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -83,93 +98,53 @@ public class TopicDetailActivity extends BaseActivity implements
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		mFacade = new ZhuoInfoFacade(getApplicationContext());
 		myid = ResHelper.getInstance(getApplicationContext()).getUserid();
-		
+
 		Intent intent = getIntent();
-		msgid = intent.getStringExtra("msgid");
-		
-		
+		topicid = intent.getStringExtra("topicid");
+
 		pwh = new PopupWindows(TopicDetailActivity.this);
-		mAdapter = new MsgCmtListAdapter(this, mList, msgid);
+		mAdapter = new TopicCommentListAdapter(this, mList, topicid);
 		mListView = (ListView) findViewById(R.id.listViewDetail);
 		mListView.setDividerHeight(0);
 		LayoutInflater inflater = LayoutInflater.from(TopicDetailActivity.this);
 		mHeadView = (LinearLayout) inflater.inflate(
 				R.layout.listview_header_topic_detail, null);
-		RelativeLayout footerView = (RelativeLayout) inflater.inflate(
-				R.layout.listview_footer, null);
 		mListView.addHeaderView(mHeadView);
-		mListView.addFooterView(footerView);
-		mListViewFooter = new ListViewFooter(footerView, onMoreClick);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(this);
 		initClick();
-		loadMainData(intent);
 		loadData();
-		loadCmt();
 	}
 
-	/**
-	 * 加载从前一个页面传过来的话题基本信息
-	 * @param intent
-	 */
-	private void loadMainData(Intent intent) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void fillData() {
+		((TextView) (mHeadView.findViewById(R.id.textViewAuthorName)))
+				.setText(topicDetail.getName());
+		// 此处还需要从编号获得对应的名称
 
-	public void loadHead(ZhuoInfoVO zhuoinfo) {
-		Context context = mHeadView.getContext();
-		mHeadView.setTag(zhuoinfo.getMsgid());
-		UserVO user = zhuoinfo.getUser();
-		String company = user.getCompany();
-		String authorName = user.getUsername();
-		String headUrl = user.getUheader();
-		String work = user.getPost();
-		String type = zhuoinfo.getType();
-		String category = zhuoinfo.getCategory();
-		String title = zhuoinfo.getTitle();
-		String detail = zhuoinfo.getText();
-		isCollect = zhuoinfo.getIscollect();
-		uid = user.getUserid();
-//		if (!myid.equals(uid)) {
-//			findViewById(R.id.buttonChat).setVisibility(View.VISIBLE);
-//		}
-		TextView nameTV = (TextView) findViewById(R.id.textViewAuthorName);
-		nameTV.setText(authorName);
-		TextView workTV = (TextView) findViewById(R.id.textViewWork);
-		workTV.setText(work);
-		TextView conpanyTV = (TextView) findViewById(R.id.textViewRes);
-		conpanyTV.setText(company);
-//		String woco = ZhuoCommHelper.concatStringWithTag(work, company, "|");
-//		if (woco != null && !woco.equals("")) {
-//			workTV.setText(woco);
-//		} else {
-//			workTV.setVisibility(View.GONE);
-//		}
-		//加载评论内容
-		if (type != null && !type.equals("")) {
-//			ImageView resIV = (ImageView) findViewById(R.id.imageViewRes);
-			TextView resTV = (TextView) findViewById(R.id.textViewCmtContent);
-			Map<String, Object> resifo = ZhuoCommHelper.gentResInfo(type,
-					category, title, detail, context);
-//			resIV.setImageResource((Integer) resifo.get("ico"));
-			resTV.setText((String) resifo.get("category")
-					+ (String) resifo.get("title")
-					+ (String) resifo.get("content"));
+		if (cityList != null) {
+			String city = cityList.get(topicDetail.getPosition()).getCityName();
+			((TextView) (mHeadView.findViewById(R.id.textViewWork)))
+					.setText(city);
 		}
-		ImageView headIV = (ImageView) findViewById(R.id.imageViewAuthorHeader);
-		headIV.setTag(headUrl);
-		mLoadImage.addTask(headUrl, headIV);
-		headIV.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View paramView) {
-				Intent intent = new Intent(TopicDetailActivity.this,
-						ZhuoMaiCardActivity.class);
-				intent.putExtra("userid", uid);
-				startActivity(intent);
-			}
-		});
-		final List<PicVO> pics = zhuoinfo.getPic();
+
+		((TextView) (mHeadView.findViewById(R.id.textViewRes)))
+				.setText(topicDetail.getCompany());
+		((TextView) (mHeadView.findViewById(R.id.textViewTime)))
+				.setText(topicDetail.getAddtime());
+		((TextView) (mHeadView.findViewById(R.id.textViewCmtContent)))
+				.setText(topicDetail.getContent());
+
+		String url = topicDetail.getUheader();
+
+		headIV.setTag(url);
+		mLoadImage.addTask(url, headIV);
+
+		mHeadView.setTag(topicDetail.getTopicid());
+
+		uid = topicDetail.getUserid();
+
+		Context context = mHeadView.getContext();
+		final List<PicNewVO> pics = topicDetail.getTopicPics();
 		TableLayout.LayoutParams tllp = new TableLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		TableRow.LayoutParams trlp = new TableRow.LayoutParams(
@@ -192,19 +167,18 @@ public class TopicDetailActivity extends BaseActivity implements
 				ImageView iv = new ImageView(TopicDetailActivity.this);
 				iv.setLayoutParams(rlp);
 				rl.addView(iv);
-				rl.setTag(pics.get(i).getOrgurl());
-				iv.setTag(pics.get(i).getUrl());
+				rl.setTag(pics.get(i).getPic());
+				iv.setTag(pics.get(i).getPic());
 				iv.setImageResource(R.drawable.default_image);
-				mLoadImage.addTask(pics.get(i).getUrl(), iv);
+				mLoadImage.addTask(pics.get(i).getPic(), iv);
 				rl.setOnClickListener(new OnClickListener() {
-
 					@Override
 					public void onClick(View v) {
 						Intent intent = new Intent(TopicDetailActivity.this,
 								PhotoViewMultiActivity.class);
 						ArrayList<String> orgs = new ArrayList<String>();
 						for (int j = 0; j < pics.size(); j++) {
-							orgs.add(pics.get(j).getOrgurl());
+							orgs.add(pics.get(j).getPic());
 						}
 						intent.putStringArrayListExtra("pics", orgs);
 						intent.putExtra("pic", (String) v.getTag());
@@ -214,77 +188,50 @@ public class TopicDetailActivity extends BaseActivity implements
 				tr.addView(rl);
 			}
 		}
-		String place = zhuoinfo.getPosition();
-		if (null == place) {
-			place = "";
-		}
-		String time = zhuoinfo.getAddtime();
-		time = CommonUtil.calcTime(time);
-		TextView timeTV = (TextView) findViewById(R.id.textViewTime);
-		timeTV.setText(time);
-		TextView placeTV = (TextView) findViewById(R.id.textViewPlace);
-		placeTV.setText(place);
+		//
+		// if (isCollect != null && isCollect.equals("1")) {
+		// collectBtn = (TextView) findViewById(R.id.buttonTabCollect);
+		// collectBtn.setText(R.string.label_collectCancel);
+		// Drawable drawable = getResources().getDrawable(
+		// R.drawable.tab_collect_on);
+		// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+		// drawable.getMinimumHeight());
+		// collectBtn.setCompoundDrawables(null, drawable, null, null);
+		// }
+		fillPraiseList(topicDetail.getPraiseLists());
+		fillCommentList(topicDetail.getCommentLists());
+	}
 
-//		List<String> tags = zhuoinfo.getTags();
-//		if (tags != null && tags.size() > 0) {
-//			String tagStr = "	 ";
-//			for (String tag : tags) {
-//				tagStr += tag + " ";
-//			}
-//			((TextView) findViewById(R.id.textViewGongXuTag)).setText(tagStr);
-//			findViewById(R.id.relativeLayoutTag).setVisibility(View.VISIBLE);
-//		} else {
-//			findViewById(R.id.relativeLayoutTag).setVisibility(View.GONE);
-//		}
-//		String cmtNum = zhuoinfo.getCmtnum();
-//		String goodNum = zhuoinfo.getGoodnum();
-//		String collectNum = zhuoinfo.getCollectnum();
-//		String zfNum = zhuoinfo.getForwardnum();
-//		if (null == cmtNum || cmtNum.equals("")) {
-//			cmtNum = "0";
-//		}
-//		if (null == goodNum || goodNum.equals("")) {
-//			goodNum = "0";
-//		}
-//		if (null == collectNum || collectNum.equals("")) {
-//			collectNum = "0";
-//		}
-//		if (null == zfNum || zfNum.equals("")) {
-//			zfNum = "0";
-//		}
-//		TextView goodNumTV = (TextView) findViewById(R.id.textViewGongXuGoodNum);
-//		goodNumTV.setText(goodNum);
-//		TextView cmtNumTV = (TextView) findViewById(R.id.textViewGongXuCmtNum);
-//		cmtNumTV.setText(cmtNum);
-//		TextView zfNumTV = (TextView) findViewById(R.id.textViewGongXuZfNum);
-//		zfNumTV.setText(zfNum);
-//		TextView collectNumTV = (TextView) findViewById(R.id.textViewGongXuCollectNum);
-//		collectNumTV.setText(collectNum);
-		if (isCollect != null && isCollect.equals("1")) {
-			collectBtn = (TextView) findViewById(R.id.buttonTabCollect);
-			collectBtn.setText(R.string.label_collectCancel);
-			Drawable drawable = getResources().getDrawable(
-					R.drawable.tab_collect_on);
-			drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-					drawable.getMinimumHeight());
-			collectBtn.setCompoundDrawables(null, drawable, null, null);
-		}
-		List<CmtVO> cmts = zhuoinfo.getCmt();
+	private void fillCommentList(List<Comment> cmts) {
 		if (cmts != null && !cmts.isEmpty()) {
+			if (mList != null)
+				mList.clear();
 			mList.addAll(cmts);
 			mAdapter.notifyDataSetChanged();
+			textViewTip.setVisibility(View.GONE);
 		} else {
-			mListViewFooter.noData(false);
+			textViewTip.setVisibility(View.VISIBLE);
+//			mListViewFooter.noData(false);
 		}
-		List<UserVO> users = zhuoinfo.getGood();
-		if (users != null && !users.isEmpty()) {
+	}
+
+	private void fillPraiseList(List<Praise> praiseList) {
+		if (praiseList != null && praiseList.size() > 1) {
+			Context context = mHeadView.getContext();
+			TableLayout.LayoutParams tllp = new TableLayout.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			TableRow.LayoutParams trlp = new TableRow.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			TableLayout tl = (TableLayout) findViewById(R.id.tableLayoutGood);
+			if (tl != null)
+				tl.removeAllViews();
 			int width = (int) (40 * DeviceInfoUtil
 					.getDeviceCsd(TopicDetailActivity.this));
 			RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
 					width, width);
 			TableRow tr = null;
-			for (int i = 0; i < users.size(); i++) {
+			for (int i = 0; i < praiseList.size(); i++) {
+				Praise praise = praiseList.get(i);
 				if (i % 6 == 0) {
 					tr = new TableRow(context);
 					tr.setLayoutParams(tllp);
@@ -296,11 +243,10 @@ public class TopicDetailActivity extends BaseActivity implements
 				iv.setLayoutParams(rlp);
 				rl.addView(iv);
 				iv.setImageResource(R.drawable.default_userhead);
-				iv.setTag(users.get(i).getUheader());
-				mLoadImage.addTask(users.get(i).getUheader(), iv);
-				final String userid = users.get(i).getUserid();
+				iv.setTag(praise.getUheader());
+				mLoadImage.addTask(praise.getUheader(), iv);
+				final String userid = praise.getUserid();
 				rl.setOnClickListener(new OnClickListener() {
-
 					@Override
 					public void onClick(View v) {
 						Intent intent = new Intent(TopicDetailActivity.this,
@@ -318,144 +264,56 @@ public class TopicDetailActivity extends BaseActivity implements
 		mLoadImage.doTask();
 	}
 
-	private void updateItemList(String data, boolean refresh, boolean append) {
-		try {
-			if (data != null && !data.equals("")) {
-				JsonHandler nljh = new JsonHandler(data,
-						getApplicationContext());
-				List<CmtVO> list = nljh.parsePagesCmt().getData();
-				if (!list.isEmpty()) {
-					textViewTip.setVisibility(View.GONE);
-					mListViewFooter.hasData();
-					if (!append) {
-						mList.clear();
-					}
-					mPage++;
-					mList.addAll(list);
-					mAdapter.notifyDataSetChanged();
-				} else {
-					textViewTip.setVisibility(View.VISIBLE);
-					
-					
-					mListViewFooter.noData(!refresh);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case MsgTagVO.DATA_LOAD: {
+			case MsgTagVO.DATA_LOAD:
 				if (msg.obj != null) {
-					if (msg.obj instanceof ZhuoInfoVO) {
-						ZhuoInfoVO zhuoinfo = (ZhuoInfoVO) msg.obj;
-						loadHead(zhuoinfo);
+					if (msg.obj instanceof TopicDetailVO) {
+						topicDetail = (TopicDetailVO) msg.obj;
+						fillData();
 					} else if (!msg.obj.equals("")) {
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
-						ZhuoInfoVO zhuoinfo = nljh.parseZhuoInfo();
-						if (null != zhuoinfo) {
-							loadHead(zhuoinfo);
-							mFacade.saveOrUpdate(zhuoinfo);
+						topicDetail = nljh.parseQuanTopicDetail();
+						if (null != topicDetail) {
+							fillData();
+							// mFacade.saveOrUpdate(topicDetail);
 						}
 					}
+					break;
 				}
-				break;
-			}
-			case MsgTagVO.DATA_OTHER: {
-				mListViewFooter.finishLoading();
-				updateItemList((String) msg.obj, true, false);
-				break;
-			}
-			case MsgTagVO.DATA_MORE: {
-				mListViewFooter.finishLoading();
-				updateItemList((String) msg.obj, false, true);
-				break;
-			}
-			case MsgTagVO.MSG_LIKE: {
+			case MsgTagVO.MSG_LIKE:
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.label_zanSuccess);
-//					TextView numTV = (TextView) findViewById(R.id.textViewGongXuGoodNum);
-//					numTV.setText(String.valueOf(Integer.valueOf(numTV
-//							.getText().toString()) + 1));
-					TableLayout tl = (TableLayout) findViewById(R.id.tableLayoutGood);
-					TableLayout.LayoutParams tllp = new TableLayout.LayoutParams(
-							LayoutParams.WRAP_CONTENT,
-							LayoutParams.WRAP_CONTENT);
-					TableRow.LayoutParams trlp = new TableRow.LayoutParams(
-							LayoutParams.WRAP_CONTENT,
-							LayoutParams.WRAP_CONTENT);
-					trlp.setMargins(0, 0, 10, 10);
-					int width = (int) (40 * DeviceInfoUtil
-							.getDeviceCsd(TopicDetailActivity.this));
-					RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
-							width, width);
-					RelativeLayout rl = new RelativeLayout(
-							TopicDetailActivity.this);
-					rl.setLayoutParams(trlp);
-					ImageView iv = new ImageView(TopicDetailActivity.this);
-					iv.setLayoutParams(rlp);
-					rl.addView(iv);
-					iv.setImageResource(R.drawable.default_userhead);
-					UserFacade facade = new UserFacade(getApplicationContext());
-					String uhead = facade.getMySimpleInfo().getUheader();
-					iv.setTag(uhead);
-					mLoadImage.addTask(uhead, iv);
-					rl.setOnClickListener(new OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							Intent intent = new Intent(
-									TopicDetailActivity.this,
-									ZhuoMaiCardActivity.class);
-							intent.putExtra("userid", myid);
-							startActivity(intent);
-						}
-					});
-					TableRow tr = null;
-					if (tl.getChildCount() > 0
-							&& ((TableRow) tl
-									.getChildAt(tl.getChildCount() - 1))
-									.getChildCount() < 6) {
-						tr = (TableRow) tl.getChildAt(tl.getChildCount() - 1);
-						tr.addView(rl);
-					} else {
-						tr = new TableRow(TopicDetailActivity.this);
-						tr.setLayoutParams(tllp);
-						tr.addView(rl);
-						tl.addView(tr);
-						findViewById(R.id.layoutGood).setVisibility(
-								View.VISIBLE);
-						findViewById(R.id.imageViewGood).setVisibility(
-								View.VISIBLE);
-					}
-					mLoadImage.doTask();
+					JsonHandler nljh = new JsonHandler((String) msg.obj,
+							getApplicationContext());
+					List<Praise> praiseList = nljh.parseQuanTopicPraiseList();
+					fillPraiseList(praiseList);
 				}
 				break;
-			}
-			case MsgTagVO.MSG_FOWARD: {
+			case MsgTagVO.MSG_FOWARD:
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.info10);
-//					TextView numTV = (TextView) findViewById(R.id.textViewGongXuZfNum);
-//					numTV.setText(String.valueOf(Integer.valueOf(numTV
-//							.getText().toString()) + 1));
+					// TextView numTV = (TextView)
+					// findViewById(R.id.textViewGongXuZfNum);
+					// numTV.setText(String.valueOf(Integer.valueOf(numTV
+					// .getText().toString()) + 1));
 				}
 				break;
-			}
-			case MsgTagVO.MSG_COLLECT: {
+			case MsgTagVO.MSG_COLLECT:
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-//					TextView collectBtn = (TextView) findViewById(R.id.buttonTabCollect);
-//					TextView numTV = (TextView) findViewById(R.id.textViewGongXuCollectNum);
+					// TextView collectBtn = (TextView)
+					// findViewById(R.id.buttonTabCollect);
+					// TextView numTV = (TextView)
+					// findViewById(R.id.textViewGongXuCollectNum);
 					if (isCollect != null && isCollect.equals("0")) {
 						collectBtn.setText(R.string.label_collectCancel);
 						Drawable drawable = getResources().getDrawable(
@@ -467,8 +325,8 @@ public class TopicDetailActivity extends BaseActivity implements
 						isCollect = "1";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_collectSuccess);
-//						numTV.setText(String.valueOf(Integer.valueOf(numTV
-//								.getText().toString()) + 1));
+						// numTV.setText(String.valueOf(Integer.valueOf(numTV
+						// .getText().toString()) + 1));
 					} else {
 						collectBtn.setText(R.string.label_collect);
 						Drawable drawable = getResources().getDrawable(
@@ -480,84 +338,81 @@ public class TopicDetailActivity extends BaseActivity implements
 						isCollect = "0";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_cancelCollect);
-//						numTV.setText(String.valueOf(Integer.valueOf(numTV
-//								.getText().toString()) - 1));
+						// numTV.setText(String.valueOf(Integer.valueOf(numTV
+						// .getText().toString()) - 1));
 					}
 				}
 				break;
-			}
+
+			case MsgTagVO.DATA_OTHER:
+				ResultVO res;
+				if (JsonHandler.checkResult((String) msg.obj, TopicDetailActivity.this)) {
+					res = JsonHandler.parseResult((String) msg.obj);
+				  
+					mConnHelper.saveObject((String) msg.obj, "citys");
+				} else {
+					return;
+				}
+				String data = res.getData();
+				Type listType = new TypeToken<ArrayList<Province>>() {
+				}.getType();
+				Gson gson = new Gson();
+				ArrayList<Province> list = gson.fromJson(data, listType);
+				if (cityList == null)
+					cityList = new ArrayList<City>();
+				for (Province temp : list) {
+					cityList.addAll(temp.getCitys());
+				}
+
+				if (cityList != null && topicDetail != null) {
+					String city = cityList.get(topicDetail.getPosition())
+							.getCityName();
+					((TextView) (mHeadView.findViewById(R.id.textViewWork)))
+							.setText(city);
+				}
+				break;
+
 			}
 		}
 	};
 
 	private void loadData() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			ZhuoInfoVO info = mFacade.getById(msgid);
-			Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-			msg.obj = info;
-			msg.sendToTarget();
+			// QuanVO quan = mFacade.getById(groupid);
+			// if (quan == null) {
+			// CommonUtil.displayToast(getApplicationContext(),
+			// R.string.error0);
+			// } else {
+			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
+			// msg.obj = quan;
+			// msg.sendToTarget();
+			// }
 		} else {
-			String params = ZhuoCommHelper.getUrlMsgDetail() + "?msgid="
-					+ msgid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD,
-					TopicDetailActivity.this, true, new OnCancelListener() {
-
-						@Override
-						public void onCancel(DialogInterface dialog) {
-							TopicDetailActivity.this.finish();
-						}
-					});
+			mConnHelper.getTopicDetail(mUIHandler, MsgTagVO.DATA_LOAD, topicid);
 		}
 	}
-
-	private void loadCmt() {
-		if (mListViewFooter.startLoading()) {
-			mList.clear();
-			mAdapter.notifyDataSetChanged();
-			mPage = 1;
-			String params = ZhuoCommHelper.getUrlCmtList();
-			params += "?msgid=" + msgid;
-			params += "&page=" + mPage;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_OTHER);
-		}
-	}
-
-	private void loadMore() {
-		if (mListViewFooter.startLoading()) {
-			String params = ZhuoCommHelper.getUrlCmtList();
-			params += "?msgid=" + msgid;
-			params += "&page=" + mPage;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
-		}
-	}
-
-	private OnClickListener onMoreClick = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-			loadMore();
-		}
-	};
 
 	private void initClick() {
-
-//		findViewById(R.id.buttonChat).setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(TopicDetailActivity.this,
-//						ChatActivity.class);
-//				i.putExtra("userid", uid);
-//				startActivity(i);
-//			}
-//		});
+		headIV=(ImageView) findViewById(R.id.imageViewAuthorHeader);
+				headIV.setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(View paramView) {
+						Intent intent = new Intent(TopicDetailActivity.this,
+								ZhuoMaiCardActivity.class);
+						intent.putExtra("userid", uid);
+						startActivity(intent);
+					}
+				});
 		findViewById(R.id.buttonTabZan).setOnClickListener(
 				new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
-						mConnHelper.goodMsg(msgid, mUIHandler,
-								MsgTagVO.MSG_LIKE, null, true, null, null);
+						// mConnHelper.goodMsg(topicid, mUIHandler,
+						// MsgTagVO.MSG_LIKE, null, true, null, null);
+						mConnHelper.praiseTopic(mUIHandler, MsgTagVO.MSG_LIKE,
+								topicid, 1);
 					}
 				});
 		findViewById(R.id.buttonTabCmt).setOnClickListener(
@@ -567,8 +422,8 @@ public class TopicDetailActivity extends BaseActivity implements
 					public void onClick(View v) {
 						Intent i = new Intent(TopicDetailActivity.this,
 								MsgCmtActivity.class);
-						i.putExtra("msgid", msgid);
-						i.putExtra("parentid", msgid);
+						i.putExtra("msgid", topicid);
+						i.putExtra("parentid", topicid);
 						startActivityForResult(i, MsgTagVO.MSG_CMT);
 					}
 				});
@@ -591,17 +446,17 @@ public class TopicDetailActivity extends BaseActivity implements
 					@Override
 					public void onClick(View v) {
 						if (isCollect == null || isCollect.equals("0")) {
-							mConnHelper.collectMsg(msgid, "1", mUIHandler,
+							mConnHelper.collectMsg(topicid, "1", mUIHandler,
 									MsgTagVO.MSG_COLLECT, null, true, null,
 									null);
 						} else {
-							mConnHelper.collectMsg(msgid, "0", mUIHandler,
+							mConnHelper.collectMsg(topicid, "0", mUIHandler,
 									MsgTagVO.MSG_COLLECT, null, true, null,
 									null);
 						}
 					}
 				});
-		textViewTip=findViewById(R.id.textViewTip);
+		textViewTip = findViewById(R.id.textViewTip);
 	}
 
 	@Override
@@ -616,20 +471,15 @@ public class TopicDetailActivity extends BaseActivity implements
 					}
 					useridlist = useridlist.substring(0,
 							useridlist.length() - 1);
-					mConnHelper.recommandMsg(msgid, useridlist, mUIHandler,
+					mConnHelper.recommandMsg(topicid, useridlist, mUIHandler,
 							MsgTagVO.MSG_FOWARD, null, true, null, null);
 				}
 			} else if (requestCode == MsgTagVO.MSG_CMT) {
-//				String forward = data.getStringExtra("forward");
-//				if (forward != null && forward.equals("1")) {
-//					TextView numTV = (TextView) findViewById(R.id.textViewGongXuZfNum);
-//					numTV.setText(String.valueOf(Integer.valueOf(numTV
-//							.getText().toString()) + 1));
-//				}
-//				TextView numTV = (TextView) findViewById(R.id.textViewGongXuCmtNum);
-//				numTV.setText(String.valueOf(Integer.valueOf(numTV.getText()
-//						.toString()) + 1));
-				loadCmt();//
+				String dataStr = data.getStringExtra("data");
+				JsonHandler nljh = new JsonHandler(dataStr,
+						getApplicationContext());
+				List<Comment> commentList = nljh.parseQuanTopicCommentList();
+				fillCommentList(commentList);
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

@@ -53,6 +53,33 @@ public class QuanVO {
 	private int topicCount;
 	private String lastmsgtime;
 	private String alert;
+	private String userid;
+	private String name;
+	private String uheader;
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUheader() {
+		return uheader;
+	}
+
+	public void setUheader(String uheader) {
+		this.uheader = uheader;
+	}
 
 	int city;// (地区 城市编码)
 	int followpms;// 加入权限 0:允许任何人加入，1:需要申请才能加入) ,

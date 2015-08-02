@@ -67,7 +67,7 @@ public class EventListAdapter extends BaseAdapter {
 					.getTag(R.id.tag_view_holder);
 		}
 		EventVO event = mList.get(position);
-		holder.textViewTitle.setText(event.getContent());
+		holder.textViewTitle.setText(event.getTitle());
 		// time = CommonUtil.calcTime(time);
 		holder.textViewDateTime.setText(event.getStarttime());
 		if(event.getOutdate()==1 )

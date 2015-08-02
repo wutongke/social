@@ -1,5 +1,13 @@
 package com.cpstudio.zhuojiaren.helper;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InvalidClassException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -43,6 +51,7 @@ public class ZhuoConnHelper {
 	String session;
 	String uploadFileToken;
 	String imToken;
+	Context context;
 
 	private void init(Context context) {
 		ResHelper resHelper = ResHelper.getInstance(context);
@@ -54,15 +63,17 @@ public class ZhuoConnHelper {
 		this.session = resHelper.getSessionForAPP();
 		this.imToken = resHelper.getImTokenForRongyun();
 		this.uploadFileToken = resHelper.getUpLoadTokenForQiniu();
+		this.context = context;
 	}
 
-	public static ZhuoConnHelper getInstance(Context context) {
+	public static ZhuoConnHelper getInstance(Context mcontext) {
 		if (null == instance) {
 			instance = new ZhuoConnHelper();
 		}
 		if (instance.password == null || instance.password.equals("")) {
-			instance.init(context);
+			instance.init(mcontext);
 		}
+
 		return instance;
 	}
 
@@ -1076,16 +1087,18 @@ public class ZhuoConnHelper {
 				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
 				"pubQuanTopic", false, null, null);
 	}
-/**
- * 获得圈子活动列表
- * @param mUIHandler
- * @param tag
- * @param groupid
- * @param uid
- * @param pageNo
- * @param pageSize
- * @return
- */
+
+	/**
+	 * 获得圈子活动列表
+	 * 
+	 * @param mUIHandler
+	 * @param tag
+	 * @param groupid
+	 * @param uid
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
 	public boolean getQuanEventList(Handler mUIHandler, int tag,
 			String groupid, String uid, int pageNo, int pageSize) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -1097,9 +1110,10 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getQuanEventList(),
 				nameValuePairs, mUIHandler, tag);
 	}
-	
+
 	/**
 	 * 获得圈子信息(圈子主页)
+	 * 
 	 * @param mUIHandler
 	 * @param tag
 	 * @param groupid
@@ -1108,37 +1122,53 @@ public class ZhuoConnHelper {
 	 * @param pageSize
 	 * @return
 	 */
-	public boolean getQuanInfo(Handler mUIHandler, int tag,String groupid) {
+	public boolean getQuanInfo(Handler mUIHandler, int tag, String groupid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
 		return getFromServerByPost(ZhuoCommHelperLz.getQuanInfo(),
 				nameValuePairs, mUIHandler, tag);
 	}
-	
+
 	/**
 	 * 加入或退出圈子
+	 * 
 	 * @param mUIHandler
 	 * @param tag
 	 * @param groupid
 	 * @return
 	 */
-	public boolean followGroup(Handler mUIHandler, int tag,String groupid,int type,String content)
-	{
+	public boolean followGroup(Handler mUIHandler, int tag, String groupid,
+			int type, String content) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		nameValuePairs.add(new BasicNameValuePair("type", type+""));
+		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
 		nameValuePairs.add(new BasicNameValuePair("content", content));
 		return getFromServerByPost(ZhuoCommHelperLz.manageQuanPermit(),
 				nameValuePairs, mUIHandler, tag);
 	}
-	
-	public boolean modifyGroupInfo(Handler mUIHandler,
-			int handlerTag, String groupid,String gname, String gintro, String gtype,
-			String city, String followpms, String accesspms,String pub,
-			ArrayList<String> files)
-	{
+
+	/**
+	 * 修改圈子信息
+	 * 
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param groupid
+	 * @param gname
+	 * @param gintro
+	 * @param gtype
+	 * @param city
+	 * @param followpms
+	 * @param accesspms
+	 * @param pub
+	 * @param files
+	 * @return
+	 */
+	public boolean modifyGroupInfo(Handler mUIHandler, int handlerTag,
+			String groupid, String gname, String gintro, String gtype,
+			String city, String followpms, String accesspms, String pub,
+			ArrayList<String> files) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		// nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
 		nameValuePairs.add(new BasicNameValuePair("gname", gname));
 		nameValuePairs.add(new BasicNameValuePair("gintro", gintro));
@@ -1151,5 +1181,160 @@ public class ZhuoConnHelper {
 		filesMap.put("gheader", files);
 		return getFromServerByPost(ZhuoCommHelperLz.manageQuanPermit(),
 				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	/**
+	 * 获取圈话题详情
+	 * 
+	 * @return
+	 */
+	public boolean getTopicDetail(Handler mUIHandler, int handlerTag,
+			String topicid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("topicid", topicid));
+		return getFromServerByPost(ZhuoCommHelperLz.getTopicDetail(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	/**
+	 * 
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param topicid
+	 * @param praise
+	 *            0:取消赞 1:赞
+	 * @return
+	 */
+	public boolean praiseTopic(Handler mUIHandler, int handlerTag,
+			String topicid, int praise) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("topicid", topicid));
+		nameValuePairs.add(new BasicNameValuePair("praise", praise + ""));
+		return getFromServerByPost(ZhuoCommHelperLz.topicPraise(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	/**
+	 * 圈话题评论
+	 * 
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param topicid
+	 * @param comment
+	 * @return
+	 */
+	public boolean CommentTopic(Handler mUIHandler, int handlerTag,
+			String topicid, String comment) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("topicid", topicid));
+		nameValuePairs.add(new BasicNameValuePair("comment", comment));
+		return getFromServerByPost(ZhuoCommHelperLz.topicComment(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	/**
+	 * 获取城市列表,lef
+	 */
+	public boolean getCitys(Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
+		String res = readObject("citys");
+		if (res != null) {
+			Message msg = handler.obtainMessage(handlerTag);
+			Bundle bundle = new Bundle();
+			bundle.putString("data", data);
+			msg.setData(bundle);
+			msg.obj = res;
+			msg.sendToTarget();
+			return true;
+		} else {
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+			nameValuePairs = addUserInfoByPost(nameValuePairs);
+			nameValuePairs.add(new BasicNameValuePair("version", "0"));
+			String url = ZhuoCommHelper.getServiceCityList();
+			return doPost(nameValuePairs, url, handler, handlerTag, activity,
+					url, cancelable, cancel, data);
+		}
+	}
+
+	/**
+	 * 保存对象
+	 * 
+	 * @param ser
+	 * @param file
+	 * @throws IOException
+	 */
+	public boolean saveObject(String ser, String file) {
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		try {
+			fos = context.openFileOutput(file, context.MODE_PRIVATE);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(ser);
+			oos.flush();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				oos.close();
+			} catch (Exception e) {
+			}
+			try {
+				fos.close();
+			} catch (Exception e) {
+			}
+		}
+	}
+
+	/**
+	 * 读取对象,lef
+	 * 
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	public String readObject(String file) {
+		if (!isExistDataCache(file))
+			return null;
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		try {
+			fis = context.openFileInput(file);
+			ois = new ObjectInputStream(fis);
+			return (String) ois.readObject();
+		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+			// 反序列化失败 - 删除缓存文件
+			if (e instanceof InvalidClassException) {
+				File data = context.getFileStreamPath(file);
+				data.delete();
+			}
+		} finally {
+			try {
+				ois.close();
+			} catch (Exception e) {
+			}
+			try {
+				fis.close();
+			} catch (Exception e) {
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 判断缓存是否存在
+	 * 
+	 * @param cachefile
+	 * @return
+	 */
+	private boolean isExistDataCache(String cachefile) {
+		boolean exist = false;
+		File data = context.getFileStreamPath(cachefile);
+		if (data.exists())
+			exist = true;
+		return exist;
 	}
 }
