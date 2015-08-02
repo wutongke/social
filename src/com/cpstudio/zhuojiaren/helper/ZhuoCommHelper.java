@@ -116,6 +116,10 @@ public class ZhuoCommHelper {
 	private final static String ADDGROUPACTIVITY = "/addGroupActivity.do";
 	private final static String CREATECROWDFUNDING = "/crowdfunding/insert.do";
 	private final static String GETCROWDFUNDING = "/crowdfunding/detail.do";
+	private final static String GETEVENTDETAIL = "/groupActivity.do";
+	public static String getGeteventdetail() {
+		return SERVER +GETEVENTDETAIL;
+	}
 	public static String getGetcrowdfunding() {
 		return SERVER + GETCROWDFUNDING;
 	}

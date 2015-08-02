@@ -30,6 +30,7 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper.FinishCallback;
 import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.ICompleteCallback;
 import com.cpstudio.zhuojiaren.model.LoginRes;
@@ -428,6 +429,11 @@ public class AppClientLef {
 			final Map<String, ArrayList<String>> filesMap,
 			final Handler handler,
 			final int handlerTag, final Activity activity, final String tag) {
+		if (CommonUtil.getNetworkState(activity) == 2) {
+
+			CommonUtil.displayToast(activity, R.string.error0);
+			return false;
+		} 
 		if (!mStartedTag.contains(tag) || tag == null) {
 			if (tag != null) {
 				mStartedTag.add(tag);
@@ -488,6 +494,19 @@ public class AppClientLef {
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("id", id));
 		String url = ZhuoCommHelper.getGetcrowdfunding();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+	/**
+	 * 获取活动详情
+	 * 
+	 */
+	public boolean getEventDetail(Activity activity, Handler handler,
+			int handlerTag,String activityid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("activityid", activityid));
+		String url = ZhuoCommHelper.getGeteventdetail();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				false, null, null);
 	}
@@ -1060,6 +1079,12 @@ public class AppClientLef {
 	private boolean doPost(List<NameValuePair> nameValuePairs, String url,
 			Handler handler, int handlerTag, Activity activity, String tag,
 			boolean cancelable, OnCancelListener cancel, String data) {
+		if (CommonUtil.getNetworkState(activity) == 2) {
+
+			CommonUtil.displayToast(activity, R.string.error0);
+			return false;
+		} 
+
 		if (!mStartedTag.contains(tag) || tag == null) {
 			if (tag != null) {
 				mStartedTag.add(tag);

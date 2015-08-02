@@ -21,12 +21,14 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
@@ -75,8 +77,8 @@ public class EventDetailActivity extends Activity {
 	Button toApply;
 	@InjectView(R.id.aed_boss_layout)
 	RelativeLayout bossLayout;
-	
-	private ZhuoConnHelper mConnHelper = null;
+
+	private AppClientLef mConnHelper = null;
 	private LoadImage mLoadImage = new LoadImage();
 	// 不同身份，功能不同
 	private String memberType = "";
@@ -84,6 +86,7 @@ public class EventDetailActivity extends Activity {
 	private String eventId = null;
 	private Context mContext;
 	private EventVO event;
+
 	/**
 	 * 从intent中获取id号，然后加载数据，需要区别用户身份，是否是创建人，是否是联系人，是否已经加入到活动
 	 */
@@ -93,7 +96,7 @@ public class EventDetailActivity extends Activity {
 		setContentView(R.layout.activity_event_detail);
 		ButterKnife.inject(this);
 		mContext = this;
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = AppClientLef.getInstance(getApplicationContext());
 		Intent i = getIntent();
 		eventId = i.getStringExtra("eventId");
 		pwh = new PopupWindows((Activity) mContext);
@@ -104,35 +107,33 @@ public class EventDetailActivity extends Activity {
 	private void initOnclick() {
 		// TODO Auto-generated method stub
 		collect.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (event.iscollected()==false) {
+				if (event.iscollected() == false) {
 					mConnHelper.collectMsg(eventId, "1", mUIHandler,
-							MsgTagVO.MSG_COLLECT, null, true, null,
-							null);
+							MsgTagVO.MSG_COLLECT, null, true, null, null);
 				} else {
 					mConnHelper.collectMsg(eventId, "0", mUIHandler,
-							MsgTagVO.MSG_COLLECT, null, true, null,
-							null);
+							MsgTagVO.MSG_COLLECT, null, true, null, null);
 				}
 			}
 		});
 		share.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		bossLayout.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(event!=null){
+				if (event != null) {
 					Intent intent = new Intent(mContext,
 							ZhuoMaiCardActivity.class);
 					intent.putExtra("userid", event.getUserid());
@@ -141,31 +142,18 @@ public class EventDetailActivity extends Activity {
 			}
 		});
 		toApply.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				//需要判断是否已经加入
+				// 需要判断是否已经加入
 			}
 		});
 	}
 
 	private void loadData() {
-
-		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-
-			CommonUtil.displayToast(getApplicationContext(), R.string.error0);
-		} else {
-			String params = ZhuoCommHelper.getUrlGroupDetail() + "?eventid="
-					+ eventId;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD,
-					(Activity) mContext, true, new OnCancelListener() {
-						@Override
-						public void onCancel(DialogInterface dialog) {
-							((Activity) mContext).finish();
-						}
-					});
-		}
+		mConnHelper.getEventDetail(EventDetailActivity.this, mUIHandler,
+				MsgTagVO.DATA_LOAD, eventId);
 	}
 
 	private Handler mUIHandler = new Handler() {
@@ -173,65 +161,72 @@ public class EventDetailActivity extends Activity {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD:
 				if (msg.obj != null && !msg.obj.equals("")) {
-					EventVO detail = null;
-					if (msg.obj instanceof EventVO) {
-						detail = (EventVO) msg.obj;
+					ResultVO res;
+					if (JsonHandler.checkResult((String) msg.obj,
+							EventDetailActivity.this)) {
+						res = JsonHandler.parseResult((String) msg.obj);
 					} else {
-						JsonHandler nljh = new JsonHandler((String) msg.obj,
-								getApplicationContext());
-						detail = nljh.parseEvent();
-						event = detail;
+						CommonUtil.displayToast(mContext, R.string.data_error);
+						return;
 					}
+					String data = res.getData();
+					EventVO detail = null;
+					JsonHandler nljh = new JsonHandler(data,
+							getApplicationContext());
+					detail = nljh.parseEvent();
+					event = detail;
 					if (null != detail) {
 						name.setText(detail.getName());
 						browerCount.setText(detail.getViewCount());
 						shareCount.setText(detail.getShareCount());
 						applyCount.setText(detail.getShareCount());
 						content.setText(detail.getContent());
-//需要lef修改
-//						//活动发起人
-//						UserVO boss = detail.getBoss();
-//						String imageUrl = boss.getUheader();
-//						peopleImage.setTag(imageUrl);
-//						mLoadImage.addTask(imageUrl, peopleImage);
-//						peopleName.setText(boss.getUsername());
-//						peoplePostion.setText(boss.getPost());
-//						time.setText(detail.getTime());
-//						locate.setText(detail.getLocate());
-//						String contactPeopels = detail.getPeople();
-//						String phones = detail.getPhone();
-//						String[]contact=null;
-//						String[]phone = null;
-//						if(contactPeopels!=null&&phones!=null){
-//							contact = contactPeopels.split(";");
-//							phone = phones.split(";");
-//						}
-//						if(contact!=null&&phone!=null)
-//						for(int i =0;i<contact.length;i++){
-//							addContactPeople(contact[i],phone[i]);
-//						}
+						// 需要lef修改
+						// //活动发起人
+						// UserVO boss = detail.getBoss();
+						// String imageUrl = boss.getUheader();
+						// peopleImage.setTag(imageUrl);
+						// mLoadImage.addTask(imageUrl, peopleImage);
+						// peopleName.setText(boss.getUsername());
+						// peoplePostion.setText(boss.getPost());
+						// time.setText(detail.getTime());
+						// locate.setText(detail.getLocate());
+						// String contactPeopels = detail.getPeople();
+						// String phones = detail.getPhone();
+						// String[]contact=null;
+						// String[]phone = null;
+						// if(contactPeopels!=null&&phones!=null){
+						// contact = contactPeopels.split(";");
+						// phone = phones.split(";");
+						// }
+						// if(contact!=null&&phone!=null)
+						// for(int i =0;i<contact.length;i++){
+						// addContactPeople(contact[i],phone[i]);
+						// }
 					}
 				}
 			}
 		};
 	};
+
 	private void addContactPeople(String name, String phone) {
-		LayoutInflater inflater = LayoutInflater
-				.from(mContext);
+		LayoutInflater inflater = LayoutInflater.from(mContext);
 		View view = inflater.inflate(R.layout.view_event_people, null);
 		TextView nameTV = (TextView) view.findViewById(R.id.vep_people);
 		if (null != name) {
 			nameTV.setText(name);
 		}
-		final TextView phoneTV = (TextView) view.findViewById(R.id.editTextWork);
+		final TextView phoneTV = (TextView) view
+				.findViewById(R.id.editTextWork);
 		if (null != phone) {
 			phoneTV.setText(phone);
 			phoneTV.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:" + phoneTV.getText().toString()));
+					Intent intent = new Intent(Intent.ACTION_DIAL, Uri
+							.parse("tel:" + phoneTV.getText().toString()));
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(intent);
 				}

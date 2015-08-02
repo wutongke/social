@@ -214,6 +214,7 @@
     <string name="error10">定位失败</string>
     <string name="error11">已达选择上限</string>
     <string name="error12">正在加载数据，请稍候</string>
+    <string name="data_error">数据加载出错</string>
     <string name="error13">旧密码输入错误</string>
     <string name="error14">请输入新密码</string>
     <string name="error15">请在此输入新密码</string>
