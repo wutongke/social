@@ -21,6 +21,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.ui.QuanCreateActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
@@ -35,7 +36,7 @@ public class QuanBriefActivity extends BaseActivity {
 	TextView tvTopicNum;
 	@InjectView(R.id.mtextViewGType)
 	TextView tvTopicType;
-	
+
 	@InjectView(R.id.btnJoinQuan)
 	Button btnJoinQuan;// 非成员操作菜单
 	@InjectView(R.id.btnQuitQuan)
@@ -63,7 +64,7 @@ public class QuanBriefActivity extends BaseActivity {
 
 		initTitle();
 		// 是管理员的时候才出现此菜单
-		function.setVisibility(View.VISIBLE);
+		function.setVisibility(View.GONE);
 		function.setBackgroundResource(R.drawable.fabu_wdhd_1);
 		ButterKnife.inject(this);
 		title.setText(R.string.label_quan_brief);
@@ -115,6 +116,7 @@ public class QuanBriefActivity extends BaseActivity {
 							// 是否需要保存到本地
 							// mFacade.saveOrUpdate(etail);
 						}
+						
 					}
 					if (null != detail) {
 						memberType = detail.getRole();
@@ -134,6 +136,20 @@ public class QuanBriefActivity extends BaseActivity {
 							isfollow = true;
 						} else {
 							isfollow = false;
+						}
+						if (memberType >= QuanVO.QUAN_ROLE_MANAGER) {
+							function.setVisibility(View.VISIBLE);
+							function.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View arg0) {
+									// TODO Auto-generated method stub
+									Intent intent = new Intent(
+											QuanBriefActivity.this,
+											QuanCreateActivity.class);
+									intent.putExtra("groupid", groupid);
+									startActivity(intent);
+								}
+							});
 						}
 						changeType(isfollow);
 						mLoadImage.addTask(detail.getGheader(), ivGroupHeader);

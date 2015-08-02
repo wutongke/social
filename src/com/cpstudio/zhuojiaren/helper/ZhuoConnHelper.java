@@ -1131,4 +1131,25 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.manageQuanPermit(),
 				nameValuePairs, mUIHandler, tag);
 	}
+	
+	public boolean modifyGroupInfo(Handler mUIHandler,
+			int handlerTag, String groupid,String gname, String gintro, String gtype,
+			String city, String followpms, String accesspms,String pub,
+			ArrayList<String> files)
+	{
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		nameValuePairs.add(new BasicNameValuePair("gname", gname));
+		nameValuePairs.add(new BasicNameValuePair("gintro", gintro));
+		nameValuePairs.add(new BasicNameValuePair("gtype", gtype));
+		nameValuePairs.add(new BasicNameValuePair("city", city));
+		nameValuePairs.add(new BasicNameValuePair("followpms", followpms));
+		nameValuePairs.add(new BasicNameValuePair("accesspms", accesspms));
+		nameValuePairs.add(new BasicNameValuePair("gpub", pub));
+		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
+		filesMap.put("gheader", files);
+		return getFromServerByPost(ZhuoCommHelperLz.manageQuanPermit(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
 }

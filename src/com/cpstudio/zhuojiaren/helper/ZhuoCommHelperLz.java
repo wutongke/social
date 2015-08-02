@@ -27,6 +27,10 @@ public class ZhuoCommHelperLz {
 	
 	private final static String SERVICE_QUAN_PERMIT = "/followgroup.do";
 	
+	private final static String SERVICE_MODIFY_GROUP_INFO = "/modifygroupinfo.do";
+	
+	
+	
 	//未用
 	private final static String SERVICE_GET_ADINFO = "/getadinfo.do";
 	
@@ -99,6 +103,12 @@ public class ZhuoCommHelperLz {
 	{
 		return SERVER +  SERVICE_QUAN_PERMIT;
 	}
+	public static String modifyGroupInfo()
+	{
+		return SERVER +  SERVICE_MODIFY_GROUP_INFO;
+	}
+	
+	
 	
 	/**未用
 	 * 获得广告信息

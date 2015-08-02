@@ -1,5 +1,6 @@
 package com.cpstudio.zhuojiaren.ui;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,14 +39,19 @@ import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.Province;
 import com.cpstudio.zhuojiaren.model.QuanVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PlaceChooseDialog;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudui.zhuojiaren.lz.ChangeBackgroundActivity;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * 创建圈子和修改圈子
@@ -83,12 +89,15 @@ public class QuanCreateActivity extends BaseActivity {
 	private Context mContext;
 	private int typeQuanzi = 0;
 	private String[] quanziType;
-	//城市编码
+	List<City> cityList;
+
+	// 城市编码
 	private String locateCode;
-	//加入权限
-	private String addRight="0";
-	//查看权限
-	private String seeRight="0";
+	// 加入权限
+	private String addRight = "0";
+	// 查看权限
+	private String seeRight = "0";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -102,16 +111,13 @@ public class QuanCreateActivity extends BaseActivity {
 		initTitle();
 		title.setText(R.string.title_activity_create_quan);
 		function.setText(R.string.finish);
-
+		mConnHelper.getCitys(mUIHandler, MsgTagVO.DATA_OTHER, (Activity) mContext, true, null,
+				null);
 		Intent i = getIntent();
 		groupid = i.getStringExtra("groupid");
 		if (null != groupid && !groupid.equals("")) {
 			loadData();
-			((TextView) findViewById(R.id.userNameShow))
-					.setText(R.string.title_activity_quan_update);
-			((Button) findViewById(R.id.buttonCreateQuan))
-					.setText(R.string.label_qzupdate);
-			findViewById(R.id.linearLayoutManagers).setVisibility(View.VISIBLE);
+			title.setText(R.string.title_activity_quan_update);
 		}
 		pwh = new PopupWindows(QuanCreateActivity.this);
 		mIsh = ImageSelectHelper.getIntance(QuanCreateActivity.this,
@@ -302,38 +308,44 @@ public class QuanCreateActivity extends BaseActivity {
 		addQuanRight1.setChecked(true);
 		visiteQuanRight1.setChecked(true);
 		addQuanRight.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
+
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				// TODO Auto-generated method stub
-				if(checkedId==addQuanRight1.getId())
+				if (checkedId == addQuanRight1.getId())
 					addRight = "0";
-				else addRight = "1";
+				else
+					addRight = "1";
 			}
 		});
 		QuanRight.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
+
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				// TODO Auto-generated method stub
-				if(checkedId==visiteQuanRight1.getId())
+				if (checkedId == visiteQuanRight1.getId())
 					seeRight = "0";
-				else seeRight = "1";
+				else
+					seeRight = "1";
 			}
 		});
 	}
 
 	private void loadData() {
-		// String params = ZhuoCommHelper.getUrlGroupDetail() + "?groupid="
-		// + groupid;
-		// mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD,
-		// QuanCreateActivity.this, true, new OnCancelListener() {
-		//
-		// @Override
-		// public void onCancel(DialogInterface dialog) {
-		// QuanCreateActivity.this.finish();
-		// }
-		// });
+		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
+			// QuanVO quan = mFacade.getById(groupid);
+			// if (quan == null) {
+			// CommonUtil.displayToast(getApplicationContext(),
+			// R.string.error0);
+			// } else {
+			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
+			// msg.obj = quan;
+			// msg.sendToTarget();
+			// }
+		} else {
+			ZhuoConnHelper.getInstance(getApplicationContext()).getQuanInfo(
+					mUIHandler, MsgTagVO.DATA_LOAD, groupid);
+		}
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -341,6 +353,7 @@ public class QuanCreateActivity extends BaseActivity {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
+			case MsgTagVO.DATA_REFRESH:
 			case MsgTagVO.PUB_INFO: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
@@ -367,55 +380,69 @@ public class QuanCreateActivity extends BaseActivity {
 				}
 				break;
 			}
-
+			case MsgTagVO.DATA_OTHER:
+				ResultVO res;
+				if (JsonHandler.checkResult((String) msg.obj, mContext)) {
+					res = JsonHandler.parseResult((String) msg.obj);
+					mConnHelper.saveObject((String) msg.obj, "citys");
+				} else {
+					return;
+				}
+				String data = res.getData();
+				Type listType = new TypeToken<ArrayList<Province>>() {
+				}.getType();
+				Gson gson = new Gson();
+				ArrayList<Province> list = gson.fromJson(data, listType);
+				if(cityList==null)
+					cityList=new ArrayList<City>();
+				for (Province temp : list) {
+					cityList.addAll(temp.getCitys());
+				}
+				if (cityList != null && locateCode!=null) {
+					int index = Integer.parseInt(locateCode);
+					if (cityList != null)
+						quanLocationView.setText(cityList.get(index)
+								.getCityName());
+				}
+				break;
 			case MsgTagVO.DATA_LOAD: {
 				if (msg.obj != null && !msg.obj.equals("")) {
-					JsonHandler nljh = new JsonHandler((String) msg.obj,
-							getApplicationContext());
-					QuanVO detail = nljh.parseQuan();
-					String name = detail.getGname();
-					((EditText) findViewById(R.id.editTextQuanTitle))
-							.setText(name);
-					String jj = detail.getGintro();
-					((EditText) findViewById(R.id.editTextQuanIntro))
-							.setText(jj);
-//					String property = detail.getGproperty();
-//					if (property.equals(getString(R.string.group_type_9))) {
-//						((RadioButton) findViewById(R.id.radio0))
-//								.setChecked(true);
-//					} else if (property
-//							.equals(getString(R.string.group_type_8))) {
-//						((RadioButton) findViewById(R.id.radio1))
-//								.setChecked(true);
-//					} else if (property
-//							.equals(getString(R.string.group_type_10))) {
-//						((RadioButton) findViewById(R.id.radio2))
-//								.setChecked(true);
-//					}
-					String headUrl = detail.getGheader();
-					mIsh.initParams();
-					mIsh2.initParams();
-					mIsh2.updateNetworkImage(headUrl, mLoadImage, null);
-//					List<UserVO> managers = detail.getManagers();
-//					Map<String, String> netUheader = new HashMap<String, String>();
-//					Map<String, Integer> defaultUheader = new HashMap<String, Integer>();
-//					for (int i = 0; i < managers.size(); i++) {
-//						String header = managers.get(i).getUheader();
-//						String id = managers.get(i).getUserid();
-//						mSelectlist.add(id);
-//						if (header != null && !header.equals("")) {
-//							netUheader.clear();
-//							netUheader.put(id, header);
-//							mIsh.insertNetworkImage(netUheader, mLoadImage,
-//									removeManagerListener, "card");
-//						} else {
-//							defaultUheader.clear();
-//							defaultUheader.put(id, R.drawable.default_userhead);
-//							mIsh.insertDefaultImage(defaultUheader,
-//									removeManagerListener, "card");
-//						}
-//					}
-//					mLoadImage.doTask();
+					QuanVO detail = null;
+					if (msg.obj instanceof QuanVO) {
+						detail = (QuanVO) msg.obj;
+					} else {
+						JsonHandler nljh = new JsonHandler((String) msg.obj,
+								getApplicationContext());
+						detail = nljh.parseQuan();
+						if (null != detail) {
+							// 是否需要保存到本地
+							// mFacade.saveOrUpdate(etail);
+						}
+					}
+					if (null != detail) {
+						typeQuanzi = detail.getGtype();
+						quanTypeView.setText(quanziType[typeQuanzi]);
+						locateCode = detail.getCity() + "";
+						if (cityList != null)
+							quanLocationView.setText(cityList.get(
+									detail.getCity()).getCityName());
+						((EditText) findViewById(R.id.editTextQuanTitle))
+								.setText(detail.getGname());
+						((EditText) findViewById(R.id.editTextQuanIntro))
+								.setText(detail.getGintro());
+						((EditText) findViewById(R.id.editTextQuanPub))
+								.setText(detail.getGpub());
+						if (detail.getAccesspms() == 0)
+							visiteQuanRight1.setChecked(true);
+						else
+							visiteQuanRight2.setChecked(true);
+
+						if (detail.getFollowpms() == 0)
+							addQuanRight1.setChecked(true);
+						else
+							addQuanRight2.setChecked(true);
+						// 头像显示：：：？？？
+					}
 				}
 				break;
 			}
@@ -455,6 +482,8 @@ public class QuanCreateActivity extends BaseActivity {
 			}
 			ids = ZhuoCommHelper.subLast(ids);
 		}
+		String pub = ((EditText) findViewById(R.id.editTextQuanPub)).getText()
+				.toString().trim();
 		// Map<String, String> files = new HashMap<String, String>();
 		// if (mHeadChanged) {
 		// ArrayList<String> temp = mIsh2.getTags();
@@ -462,8 +491,19 @@ public class QuanCreateActivity extends BaseActivity {
 		// files.put("gheader", path);
 		// }
 		// }
-		mConnHelper.createQuan(QuanCreateActivity.this,mUIHandler,MsgTagVO.PUB_INFO,title, intro, String.valueOf(typeQuanzi),
-				locateCode, addRight,seeRight,mIsh2.getTags());
+
+		if (null != groupid && !groupid.equals(""))
+			ZhuoConnHelper.getInstance(getApplicationContext())
+					.modifyGroupInfo(mUIHandler, MsgTagVO.DATA_REFRESH,
+							groupid, title, intro, String.valueOf(typeQuanzi),
+							locateCode, addRight, seeRight, pub,
+							mIsh2.getTags());
+		else
+			// 加上pub
+			mConnHelper.createQuan(QuanCreateActivity.this, mUIHandler,
+					MsgTagVO.PUB_INFO, title, intro,
+					String.valueOf(typeQuanzi), locateCode, addRight, seeRight,
+					mIsh2.getTags());
 
 	}
 

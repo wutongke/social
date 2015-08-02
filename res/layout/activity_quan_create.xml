@@ -170,6 +170,45 @@
                     android:textColor="@color/graywhite"
                     android:textSize="14sp" />
             </LinearLayout>
+            
+            
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/ico"
+                android:src="@drawable/bg_border3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/basic_text_black"
+                    android:text="@string/label_gonggao" />
+
+                <EditText
+                    android:id="@+id/editTextQuanPub"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_corners"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:minLines="3"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="10dp"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            
 
             <ImageView
                 android:layout_width="wrap_content"
