@@ -28,9 +28,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper.FinishCallback;
+import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.ICompleteCallback;
 import com.cpstudio.zhuojiaren.model.LoginRes;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UpProgressHandler;
@@ -251,12 +254,15 @@ public class AppClientLef {
 	/**
 	 * 获取众筹
 	 */
-	public boolean getFundingList(int pageNo, int pageSize, Handler handler,
+	public boolean getFundingList(int catid,int ismy,int pageNo, int pageSize, Handler handler,
 			int handlerTag, Activity activity, boolean cancelable,
 			OnCancelListener cancel, String data) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		if(ismy>=0)
+		nameValuePairs.add(new BasicNameValuePair("ismy",ismy+""));
+		nameValuePairs.add(new BasicNameValuePair("catid",catid+""));
 		String url = ZhuoCommHelper.getServiceFundingList();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				cancelable, cancel, data);
@@ -363,25 +369,26 @@ public class AppClientLef {
 				nameValuePairs, ZhuoCommHelper.getCreategroup(), handler,
 				handlerTag, activity, "1", false, null, null);
 	}
-//	http://115.28.167.196:9001/zhuo-api/addGroupActivity.do
-//
-//		参数        类型            说明
-//		session		string(32)		session登录接口返回
-//		groupid		string(32)		圈子ID
-//		content		string(200)		活动文本内容
-//		starttime	timestamp		活动开始时间 (格式 yyyy-mm-dd hh:mm:ss)
-//		endtime		timestamp		活动结束时间 (格式 yyyy-mm-dd hh:mm:ss)
-//		address		string(100)		地址
-//		contacts	string(20)		联系人
-//		phone		string(16)		电话
-//		file		string(1024)	(可选) 圈活动图片key列表,以逗号分隔,最多5个
+
+	// http://115.28.167.196:9001/zhuo-api/addGroupActivity.do
+	//
+	// 参数 类型 说明
+	// session string(32) session登录接口返回
+	// groupid string(32) 圈子ID
+	// content string(200) 活动文本内容
+	// starttime timestamp 活动开始时间 (格式 yyyy-mm-dd hh:mm:ss)
+	// endtime timestamp 活动结束时间 (格式 yyyy-mm-dd hh:mm:ss)
+	// address string(100) 地址
+	// contacts string(20) 联系人
+	// phone string(16) 电话
+	// file string(1024) (可选) 圈活动图片key列表,以逗号分隔,最多5个
 	/**
 	 * 发布活动
 	 */
 	public boolean createEvent(Activity activity, Handler handler,
-			int handlerTag, String groupid, String title,String content,String contacts,String starttime,
-			String endtime,String address,String phone,
-			ArrayList<String> files) {
+			int handlerTag, String groupid, String title, String content,
+			String contacts, String starttime, String endtime, String address,
+			String phone, ArrayList<String> files) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
@@ -397,6 +404,92 @@ public class AppClientLef {
 		return ZhuoConnHelper.getInstance(context).doPostWithFile(filesMap,
 				nameValuePairs, ZhuoCommHelper.getAddgroupactivity(), handler,
 				handlerTag, activity, "1", false, null, null);
+	}
+
+	/**
+	 * 上传多种图片,返回图片的key
+	 * 
+	 * @param files
+	 *            欲上传文件地址列表
+	 * @param nameValuePairs
+	 *            参数
+	 * @param url
+	 *            url
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param tag
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
+	public boolean updateFilesForCrowdFunding(
+			final Map<String, ArrayList<String>> filesMap,
+			final Handler handler,
+			final int handlerTag, final Activity activity, final String tag) {
+		if (!mStartedTag.contains(tag) || tag == null) {
+			if (tag != null) {
+				mStartedTag.add(tag);
+			}
+			AsyncUploadHelper helper = new AsyncUploadHelper(activity,
+					uploadFileToken, filesMap, new ICompleteCallback() {
+
+						@Override
+						public void onReturn(Map<String, StringBuilder> map) {
+							// TODO Auto-generated method stub
+							if (tag != null) 
+							mStartedTag.remove(tag);
+							if (map == null||map.size()==0)
+								Toast.makeText(activity, "图片上传失败，请重新登录提交", Toast.LENGTH_LONG)
+										.show();
+							else if (map.size() > 0) {
+								if (handler != null) {
+									Message msg = handler
+											.obtainMessage(handlerTag);
+									msg.obj = map;
+									msg.sendToTarget();
+								}
+							}
+						}
+					});
+			helper.execute("test");
+			return true;
+		}else{
+			CommonUtil.displayToast(activity, "不要重复提交");
+		}
+		return false;
+	}
+
+	/**
+	 * 创建众筹
+	 */
+	public boolean createCrowdFunding(Activity activity, Handler handler,
+			int handlerTag, String title, String catid, String targetZb,
+			String thumbPic, String support, String description) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("title", title));
+		nameValuePairs.add(new BasicNameValuePair("catid",catid ));
+		nameValuePairs.add(new BasicNameValuePair("targetZb",targetZb ));
+		nameValuePairs.add(new BasicNameValuePair("thumbPic", thumbPic));
+		nameValuePairs.add(new BasicNameValuePair("support", support));
+		nameValuePairs.add(new BasicNameValuePair("description", description));
+		String url = ZhuoCommHelper.getCreatecrowdfunding();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+	/**
+	 * 获取众筹详情
+	 */
+	public boolean getCrowdFunding(Activity activity, Handler handler,
+			int handlerTag,String id) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("id", id));
+		String url = ZhuoCommHelper.getGetcrowdfunding();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
 	}
 	/**
 	 * 保存对象

@@ -208,10 +208,10 @@ public class MyCollectionActivity extends BaseActivity {
 		case 6:
 			final ArrayList<CrowdFundingVO> mListDatas=new ArrayList<CrowdFundingVO>();
 			CrowdFundingVO test = new CrowdFundingVO();
-			test.setFundingId("123");
-			test.setName("asdf");
-			test.setMinPrice("5");
-			test.setMoneyGet("8000");
+//			test.setFundingId("123");
+//			test.setName("asdf");
+//			test.setMinPrice("5");
+//			test.setMoneyGet("8000");
 			pullDownView.finishLoadData(true);
 			pullDownView.hasData();
 			mListDatas.add(test);
@@ -224,7 +224,7 @@ public class MyCollectionActivity extends BaseActivity {
 						int position, long id) {
 					// TODO Auto-generated method stub
 					Intent intent = new Intent(MyCollectionActivity.this,CrowdFundingDetailActivity.class);
-					intent.putExtra(CrowdFundingVO.CROWDFUNDINGID,mListDatas.get(position-1).getFundingId());
+					intent.putExtra(CrowdFundingVO.CROWDFUNDINGID,mListDatas.get(position-1).getId());
 					startActivity(intent);
 				}
 			});

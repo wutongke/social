@@ -11,10 +11,10 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="10dp"
         android:scrollbars="none" >
 
         <LinearLayout
@@ -27,8 +27,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/graywhitem"
-                android:orientation="horizontal"
                 android:gravity="center"
+                android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >
 
@@ -49,11 +49,9 @@
                     android:text="@string/choose_image" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/ico"
-                android:src="@drawable/bg_border3" />
+            <include
+                android:layout_marginBottom="10dp"
+                layout="@layout/bg_image" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,12 +87,43 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <include
+                android:layout_marginBottom="10dp"
+                layout="@layout/bg_image" />
+			<LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/ico"
-                android:src="@drawable/bg_border3" />
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal" >
 
+                <TextView
+                    style="@style/basic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:text="@string/project_name" />
+				<TextView
+				    android:id="@+id/apcf_type"
+				    style="@style/basic_text"
+				    android:layout_marginLeft="20dp"
+				    android:drawablePadding="10dp"
+				    android:gravity="center_vertical"
+				    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/technology"
+                    android:drawableRight="@drawable/dtmore_dt_1"
+                    />
+            </LinearLayout>
+            <include
+                android:layout_marginBottom="10dp"
+                layout="@layout/bg_image" />
             <TextView
                 android:id="@+id/apcf_project_des"
                 style="@style/basic_text"
@@ -105,13 +134,13 @@
                 android:textColor="@color/black" />
 
             <EditText
-                android:gravity="top"
                 android:id="@+id/apcf_des_edit"
                 style="@style/basic_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="100dp"
                 android:layout_margin="20dp"
+                android:gravity="top"
+                android:minHeight="100dp"
                 android:textSize="18dp" >
             </EditText>
 
@@ -122,8 +151,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="vertical"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
                 android:padding="20dp" >
             </LinearLayout>
 
@@ -157,7 +186,24 @@
                 android:layout_marginBottom="10dp"
                 layout="@layout/bg_image" />
 
-           
+            <LinearLayout
+                android:id="@+id/apcf_add_payback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/apcf_add_payback_btn"
+                style="@style/basic_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:text="+新增回报项目" />
 
             <include
                 android:layout_marginBottom="10dp"
@@ -170,58 +216,60 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
-                android:orientation="horizontal"
                 android:gravity="center"
-                >
+                android:orientation="horizontal" >
 
                 <TextView
+                    style="@style/basic_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
-                    style="@style/basic_text"
                     android:text="@string/aim_price" >
                 </TextView>
-                <EditText 
+
+                <EditText
                     android:id="@+id/apcf_aim_price_zhuo"
                     android:layout_width="wrap_content"
-                    android:minWidth="200dp"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
                     android:layout_weight="1"
                     android:gravity="bottom"
-                    android:textSize="18dp"
-                    />
-                 <TextView
+                    android:inputType="number"
+                    android:minWidth="200dp"
+                    android:textSize="18dp" />
+
+                <TextView
                     style="@style/basic_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
-                    android:text="@string/zhuo_bi" />
+                    android:text="@string/zhuo_bi1" />
             </LinearLayout>
-            <LinearLayout 
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                >
-                <TextView 
+                android:visibility="gone"
+                android:orientation="horizontal" >
+
+                <TextView
+                    style="@style/basic_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/basic_text"
-                    android:text="或"
                     android:layout_marginRight="20dp"
-                    />
-                <EditText 
+                    android:text="或" />
+
+                <EditText
                     android:id="@+id/apcf_aim_price_rmb"
                     android:layout_width="wrap_content"
-                    android:minWidth="200dp"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
                     android:gravity="bottom"
-                    android:textSize="18dp"
-                    />
-                 <TextView
+                    android:inputType="number"
+                    android:minWidth="200dp"
+                    android:textSize="18dp" />
+
+                <TextView
                     style="@style/basic_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

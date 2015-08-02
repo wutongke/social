@@ -202,7 +202,7 @@
     <string name="error0">网络连接失败</string>
     <string name="error1">获取图片失败</string>
     <string name="error_intent">订单生成出错，请重新提交</string>
-    <string name="submit_error">订单生成出错，请重新提交</string>
+    <string name="submit_error">发布失败，请重新发布</string>
     <string name="error2">请确认已经插入SD卡</string>
     <string name="error3">建立通讯录索引失败</string>
     <string name="error4">文件不存在</string>
@@ -809,8 +809,10 @@
     <string name="des">描述</string>
     <string name="project_name_hind">给我的项目起个名字</string>
     <string name="support">支持</string>
-    <string name="zhuo_bi">倬家币</string>
+    <string name="zhuo_bi">倬家币&#160;&#160;&#160;&#160;限制</string>
+    <string name="zhuo_bi1">倬家币</string>
     <string name="yuan">元</string>
+    <string name="people1">人</string>
     <string name="aim_price">目标筹资金额</string>
     <string name="add_image">添加图片</string>
     <string name="add_words">添加文字</string>
@@ -1109,5 +1111,7 @@
     <string name="text_about_zm">倬脉全称为：北京倬家文化...</string>
     <string name="add_bank_card">+&#160;&#160;添加银行卡</string>
     <string name="title_activity_choose_locate">ChooseLocateActivity</string>
+    <string name="payback_pro">回报项目</string>
+    <string name="technology">科技</string>
 
 </resources>

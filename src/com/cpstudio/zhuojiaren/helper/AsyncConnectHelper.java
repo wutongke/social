@@ -119,7 +119,7 @@ public class AsyncConnectHelper extends AsyncTask<String, Integer, Boolean> {
 			if (mType == HTTP_GET) {
 				mDialog.setMessage(mActivity.getString(R.string.info79));
 			} else {
-				mDialog.setMessage(mActivity.getString(R.string.info64));
+				mDialog.setMessage(mActivity.getString(R.string.info79));
 			}
 			mDialog.setIcon(R.drawable.ico_alert);
 			mDialog.setIndeterminate(false);

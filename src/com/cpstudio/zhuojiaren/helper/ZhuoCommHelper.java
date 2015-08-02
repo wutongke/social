@@ -109,12 +109,19 @@ public class ZhuoCommHelper {
 	private final static String SUBMIT_VISIT= "/getGrowthOnlineType.do";
 
 	private final static String SERVICE_Teacher_LIST = "/getTutor.do";
-	private final static String SERVICE_Funding_LIST = "/getTutor.do";
+	private final static String SERVICE_Funding_LIST = "/crowdfunding/list.do";
 	private final static String AUDIO_COLL = "/praiseAudio.do";
 	private final static String GrowthOnlineType = "/getGrowthOnlineType.do";
 	private final static String CREATEGROUP = "/creategroup.do";
 	private final static String ADDGROUPACTIVITY = "/addGroupActivity.do";
-
+	private final static String CREATECROWDFUNDING = "/crowdfunding/insert.do";
+	private final static String GETCROWDFUNDING = "/crowdfunding/detail.do";
+	public static String getGetcrowdfunding() {
+		return SERVER + GETCROWDFUNDING;
+	}
+	public static String getCreatecrowdfunding() {
+		return SERVER + CREATECROWDFUNDING;
+	}
 	public static String getAddgroupactivity() {
 		return SERVER + ADDGROUPACTIVITY;
 	}

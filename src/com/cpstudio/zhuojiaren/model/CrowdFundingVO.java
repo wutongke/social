@@ -22,15 +22,15 @@ public class CrowdFundingVO {
 	/**
 	 * id
 	 */
-	private String fundingId;
+	private String id;
 	/**
 	 * 名字
 	 */
-	private String name;
+	private String title;
 	/**
 	 * 起步价
 	 */
-	private String minPrice;
+	private String minSupport;
 	/**
 	 * 完成率
 	 */
@@ -38,7 +38,7 @@ public class CrowdFundingVO {
 	/**
 	 * 图片地址
 	 */
-	private String imageUrl;
+	private String thumbPic;
 	/**
 	 * 类型：是否是我发起的、我投资的
 	 */
@@ -58,150 +58,153 @@ public class CrowdFundingVO {
 	/**
 	 * 还有多少天完成
 	 */
-	private String endDay;
+	private String remainDay;
 	/**
 	 * 已获取筹款
 	 */
-	private String moneyGet;
+	private String reach;
 	/**
 	 * 目标
 	 */
-	private String moneyAim;
+	private String targetZb;
 	/**
 	 * 喜欢数量
 	 */
-	private String likeCount;
+	private String likeNum;
 	/**
 	 * 支持数量
 	 */
-	private String supportCount;
-	/**
-	 * 发起人
-	 */
-	private UserVO boss;
+	private String supportNum;
 	/**
 	 * 项目描述
 	 */
-	private String des;
-	public static String getCrowdfundingtype() {
-		return CROWDFUNDINGTYPE;
-	}
-	public static void setCrowdfundingtype(String crowdfundingtype) {
-		CROWDFUNDINGTYPE = crowdfundingtype;
-	}
-	public static int getCrowdfundingmy() {
-		return CROWDFUNDINGMY;
-	}
-	public static void setCrowdfundingmy(int crowdfundingmy) {
-		CROWDFUNDINGMY = crowdfundingmy;
-	}
-	public static int getCrowdfundingcreate() {
-		return CROWDFUNDINGCREATE;
-	}
-	public static void setCrowdfundingcreate(int crowdfundingcreate) {
-		CROWDFUNDINGCREATE = crowdfundingcreate;
-	}
-	public static int getCrowdfundingquery() {
-		return CROWDFUNDINGQUERY;
-	}
-	public static void setCrowdfundingquery(int crowdfundingquery) {
-		CROWDFUNDINGQUERY = crowdfundingquery;
-	}
-	public String getFundingId() {
-		return fundingId;
-	}
-	public void setFundingId(String fundingId) {
-		this.fundingId = fundingId;
+	private String description;
+	
+	private String company;
+	private String name;
+	private String uheader;
+	private String position;
+	
+	public String getCompany() {
+		return company;
 	}
 	public String getName() {
 		return name;
 	}
+	public String getUheader() {
+		return uheader;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getMinPrice() {
-		return minPrice;
+	public void setUheader(String uheader) {
+		this.uheader = uheader;
 	}
-	public void setMinPrice(String minPrice) {
-		this.minPrice = minPrice;
+	public void setPosition(String position) {
+		this.position = position;
+	}
+	public static String[] getTypeStr() {
+		return typeStr;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public String getMinSupport() {
+		return minSupport;
 	}
 	public String getFinishRate() {
 		return finishRate;
 	}
-	public void setFinishRate(String finishRate) {
-		this.finishRate = finishRate;
-	}
-	public String getImageUrl() {
-		return imageUrl;
-	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public String getThumbPic() {
+		return thumbPic;
 	}
 	public String getType() {
 		return type;
 	}
-	public void setType(String type) {
-		this.type = type;
-	}
-	public String getTotalDay() {
-		return totalDay;
-	}
-	public void setTotalDay(String totalDay) {
-		this.totalDay = totalDay;
-	}
 	public String getState() {
 		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
 	}
 	public String getIsFinish() {
 		return isFinish;
 	}
+	public String getTotalDay() {
+		return totalDay;
+	}
+	public String getRemainDay() {
+		return remainDay;
+	}
+	public String getReach() {
+		return reach;
+	}
+	public String getTargetZb() {
+		return targetZb;
+	}
+	public String getLikeNum() {
+		return likeNum;
+	}
+	public String getSupportNum() {
+		return supportNum;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public static void setTypeStr(String[] typeStr) {
+		CrowdFundingVO.typeStr = typeStr;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public void setMinSupport(String minSupport) {
+		this.minSupport = minSupport;
+	}
+	public void setFinishRate(String finishRate) {
+		this.finishRate = finishRate;
+	}
+	public void setThumbPic(String thumbPic) {
+		this.thumbPic = thumbPic;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 	public void setIsFinish(String isFinish) {
 		this.isFinish = isFinish;
 	}
-	public String getEndDay() {
-		return endDay;
+	public void setTotalDay(String totalDay) {
+		this.totalDay = totalDay;
 	}
-	public void setEndDay(String endDay) {
-		this.endDay = endDay;
+	public void setRemainDay(String remainDay) {
+		this.remainDay = remainDay;
 	}
-	public String getMoneyGet() {
-		return moneyGet;
+	public void setReach(String reach) {
+		this.reach = reach;
 	}
-	public String getDes() {
-		return des;
+	public void setTargetZb(String targetZb) {
+		this.targetZb = targetZb;
 	}
-	public void setDes(String des) {
-		this.des = des;
+	public void setLikeNum(String likeNum) {
+		this.likeNum = likeNum;
 	}
-	public void setMoneyGet(String moneyGet) {
-		this.moneyGet = moneyGet;
+	public void setSupportNum(String supportNum) {
+		this.supportNum = supportNum;
 	}
-	public String getMoneyAim() {
-		return moneyAim;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	public void setMoneyAim(String moneyAim) {
-		this.moneyAim = moneyAim;
-	}
-	public String getLikeCount() {
-		return likeCount;
-	}
-	public void setLikeCount(String likeCount) {
-		this.likeCount = likeCount;
-	}
-	public String getSupportCount() {
-		return supportCount;
-	}
-	public void setSupportCount(String supportCount) {
-		this.supportCount = supportCount;
-	}
-	public UserVO getBoss() {
-		return boss;
-	}
-	public void setBoss(UserVO boss) {
-		this.boss = boss;
-	}
+
 	
 }

@@ -44,13 +44,18 @@ public class PayBackAdapter extends CommonAdapter<PayBackVO>{
 		MyGridView images =(MyGridView) helper.getView(R.id.ipb_image);
 		images.setVisibility(View.GONE);
 		//显示图片
-		if(item.getImageUrl()!=null){
+		if(item.getPics()!=null){
 			images.setVisibility(View.VISIBLE);
-			images.setAdapter(new GridViewAdapter(mContext, item.getImageUrl(), R.layout.item_gridview_image));
+			String[] keys = item.getPics().split(",");
+			ArrayList<String> urls = new ArrayList<String>();
+			for(String temp:keys){
+				urls.add(temp);
+			}
+			images.setAdapter(new GridViewAdapter(mContext, urls, R.layout.item_gridview_image));
 		}
-		price.setText(mContext.getResources().getString(R.string.crowdfunding_price_label2)+item.getPrice());
-		peopleCount.setText("限制"+item.getMaxCount()+"人");
-		des.setText(item.getDes());
+		price.setText(mContext.getResources().getString(R.string.crowdfunding_price_label2)+item.getAmount());
+		peopleCount.setText("限制"+item.getLimit()+"人");
+		des.setText(item.getIntro());
 		supportCount.setText(item.getSupportCount()+"人支持");
 		supportBtn.setOnClickListener(new OnClickListener() {
 			
