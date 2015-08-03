@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:text="@string/info49"
         android:textColor="#999999"
         android:textSize="14sp" />
 

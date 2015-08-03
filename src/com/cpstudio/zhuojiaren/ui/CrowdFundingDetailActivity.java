@@ -136,7 +136,6 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 			@Override
 			public void onGlobalLayout() {
 				root.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-				int height = root.getHeight();
 				init();
 			}
 		});
@@ -236,6 +235,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 						CrowdFundingVO.class);
 				crowdFunding = result;
 				initTab();
+				tab.setVisibility(View.VISIBLE);
 				if (Integer.parseInt(result.getRemainDay()) >= 0) {
 
 					state.setText("½øÐÐÖÐ");

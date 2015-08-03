@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -31,6 +32,8 @@ public class CrowdFundingActivity extends BaseFragmentActivity {
 	TabButton tab;
 	@InjectView(R.id.acf_viewpager)
 	ViewPager viewPager;
+	@InjectView(R.id.activity_function_image)
+	ImageView functionImage;
 	private Context mContext;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,7 @@ public class CrowdFundingActivity extends BaseFragmentActivity {
 		mContext = this;
 		initTitle();
 		title.setText(R.string.crowdfunding);
-		function.setBackgroundResource(R.drawable.magnifiercrowd);
+		functionImage.setBackgroundResource(R.drawable.magnifiercrowd);
 		// ≥ı ºªØtab∫Õviewpager
 		viewPager.setAdapter(getPagerAdapter());
 

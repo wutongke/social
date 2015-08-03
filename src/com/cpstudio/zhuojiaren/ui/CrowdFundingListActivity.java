@@ -35,6 +35,7 @@ public class CrowdFundingListActivity extends BaseActivity {
 	// ·ÖÒ³
 	private int mPage = 0;
 	private AppClientLef appClientLef;
+	
 	int typePubOrInv=-1;
 	int typeCrowd=0;
 	@Override

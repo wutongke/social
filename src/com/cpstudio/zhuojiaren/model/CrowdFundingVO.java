@@ -20,8 +20,8 @@ public class CrowdFundingVO {
 	//handler 消息类型
 	
 	
-	public static String likeOrSupport="1";
-	public static String NOlikeOrSupport="-1";
+	public static String likeOrSupport="true";
+	public static String NOlikeOrSupport="false";
 	
 	
 	public static String[] typeStr = {"","我发起","我投资","科技","出版","娱乐","艺术","农业","工艺"};

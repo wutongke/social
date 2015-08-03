@@ -348,7 +348,9 @@
             <com.cpstudio.zhuojiaren.widget.TabButton
                 android:id="@+id/acfd_tab"
                 android:layout_width="match_parent"
-                android:layout_height="42dp" >
+                android:layout_height="42dp" 
+                android:visibility="gone"
+                >
             </com.cpstudio.zhuojiaren.widget.TabButton>
 
             <android.support.v4.view.ViewPager
