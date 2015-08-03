@@ -117,6 +117,39 @@ public class ZhuoCommHelper {
 	private final static String CREATECROWDFUNDING = "/crowdfunding/insert.do";
 	private final static String GETCROWDFUNDING = "/crowdfunding/detail.do";
 	private final static String GETEVENTDETAIL = "/groupActivity.do";
+	private final static String EVENTCOLLECTION = "/collectActivity.do";
+	private final static String EVENTADD = "/joinActivity.do";
+	private final static String COMMENT = "/crowdfunding/createComment.do";
+	private final static String LIKEINCOMMENT = "/crowdfunding/commentLike.do";
+	private final static String LIKECrowdFunding = "/crowdfunding/like.do";
+	private final static String getCrowdFundingComment = "/crowdfunding/commentList.do";
+	private final static String GETCROWDFUNDINGPROGRESS = "crowdfunding/progressList.do";
+	public static String getGetcrowdfundingprogress() {
+		return SERVER +GETCROWDFUNDINGPROGRESS;
+	}
+
+	private final static String PUBCROWDFUNDINGCOMMENT = "/crowdfunding/createProgress.do";
+	public static String getPubcrowdfundingcomment() {
+		return SERVER +PUBCROWDFUNDINGCOMMENT;
+	}
+	public static String getGetcrowdfundingcomment() {
+		return SERVER + getCrowdFundingComment;
+	}
+	public static String getLikecrowdfunding() {
+		return SERVER + LIKECrowdFunding;
+	}
+	public static String getLikeincomment() {
+		return SERVER +LIKEINCOMMENT;
+	}
+	public static String getComment() {
+		return SERVER +COMMENT;
+	}
+	public static String getEventadd() {
+		return SERVER + EVENTADD;
+	}
+	public static String getEventcollection() {
+		return SERVER +EVENTCOLLECTION;
+	}
 	public static String getGeteventdetail() {
 		return SERVER +GETEVENTDETAIL;
 	}

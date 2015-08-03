@@ -4,50 +4,36 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/fp_title"
-        style="@style/basic_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/graywhitem"
-        android:drawableLeft="@drawable/icon_crowd"
-        android:padding="20dp"
-        android:text="@string/somedes" />
-
     <ListView
-        android:id="@+id/payback_listview"
+        android:id="@+id/fc_comment_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fp_title"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="45dp"
         android:cacheColorHint="#00000000"
-        android:listSelector="#00000000" >
+        android:listSelector="#00000000"
+        android:layout_marginBottom="45dp"
+         >
     </ListView>
 
     <LinearLayout
-        android:id="@+id/fp_pub_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:background="@color/graywhitem"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:layout_alignParentBottom="true"
         android:padding="5dp" >
 
         <EditText
-            android:id="@+id/fp_comment_edit"
+            android:id="@+id/fc_comment_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/fp_comment_pub"
+        <Button 
+            android:id="@+id/fc_comment_pub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="发布" />
+            android:text="发布"
+            />
     </LinearLayout>
 
 </RelativeLayout>

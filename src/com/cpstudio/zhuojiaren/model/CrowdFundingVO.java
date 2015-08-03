@@ -1,5 +1,7 @@
 package com.cpstudio.zhuojiaren.model;
 
+import java.util.ArrayList;
+
 public class CrowdFundingVO {
 	// 众筹类型
 	public static String CROWDFUNDINGTYPE = "crowdfunding";
@@ -16,6 +18,10 @@ public class CrowdFundingVO {
 	public static int CROWDFUNDINGCRAFT = 9;
 	
 	//handler 消息类型
+	
+	
+	public static String likeOrSupport="1";
+	public static String NOlikeOrSupport="-1";
 	
 	
 	public static String[] typeStr = {"","我发起","我投资","科技","出版","娱乐","艺术","农业","工艺"};
@@ -76,14 +82,36 @@ public class CrowdFundingVO {
 	 */
 	private String supportNum;
 	/**
-	 * 项目描述
+	 * 是否是创建人 1 -1 
 	 */
-	private String description;
-	
+	private String isCreater;
 	private String company;
 	private String name;
 	private String uheader;
 	private String position;
+	private String userid;
+	
+	/**
+	 * 项目描述
+	 */
+	private ArrayList<CrowdFundingDes> description;
+	
+	private String isLike;
+	private String isSupport;
+	
+	public String getIsLike() {
+		return isLike;
+	}
+	public String getIsSupport() {
+		return isSupport;
+	}
+	public void setIsLike(String isLike) {
+		this.isLike = isLike;
+	}
+	public void setIsSupport(String isSupport) {
+		this.isSupport = isSupport;
+	}
+	
 	
 	public String getCompany() {
 		return company;
@@ -139,6 +167,12 @@ public class CrowdFundingVO {
 	public String getRemainDay() {
 		return remainDay;
 	}
+	public String getIsCreater() {
+		return isCreater;
+	}
+	public void setIsCreater(String isCreater) {
+		this.isCreater = isCreater;
+	}
 	public String getReach() {
 		return reach;
 	}
@@ -150,9 +184,6 @@ public class CrowdFundingVO {
 	}
 	public String getSupportNum() {
 		return supportNum;
-	}
-	public String getDescription() {
-		return description;
 	}
 	public static void setTypeStr(String[] typeStr) {
 		CrowdFundingVO.typeStr = typeStr;
@@ -202,9 +233,17 @@ public class CrowdFundingVO {
 	public void setSupportNum(String supportNum) {
 		this.supportNum = supportNum;
 	}
-	public void setDescription(String description) {
+	public ArrayList<CrowdFundingDes> getDescription() {
+		return description;
+	}
+	public void setDescription(ArrayList<CrowdFundingDes> description) {
 		this.description = description;
 	}
-
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
 	
 }

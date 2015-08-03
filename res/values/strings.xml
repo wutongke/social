@@ -785,6 +785,7 @@
     <string name="people">联系人: </string>
     <string name="phone">手机: </string>
     <string name="toapply">我要报名</string>
+    <string name="tonoapply">我要退出</string>
     <string name="event_name">+活动标题</string>
     <string name="event_des">+活动详情</string>
     <string name="event_name_hint">（好的标题是吸引人的关键，建议20字以内）</string>
@@ -1114,5 +1115,6 @@
     <string name="title_activity_choose_locate">ChooseLocateActivity</string>
     <string name="payback_pro">回报项目</string>
     <string name="technology">科技</string>
+    <string name="title_activity_map_locate">MapLocateActivity</string>
 
 </resources>

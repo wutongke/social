@@ -2,13 +2,13 @@ package com.cpstudio.zhuojiaren.ui;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,11 +20,11 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.cpstudio.zhuojiaren.MapLocateActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -33,6 +33,7 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
 import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
+import com.umeng.socialize.media.UMImage;
 
 public class EventDetailActivity extends Activity {
 	@InjectView(R.id.aed_activity_back)
@@ -86,6 +87,8 @@ public class EventDetailActivity extends Activity {
 	private String eventId = null;
 	private Context mContext;
 	private EventVO event;
+	// 退出活动的tag
+	private final int quit = 7;
 
 	/**
 	 * 从intent中获取id号，然后加载数据，需要区别用户身份，是否是创建人，是否是联系人，是否已经加入到活动
@@ -106,28 +109,7 @@ public class EventDetailActivity extends Activity {
 
 	private void initOnclick() {
 		// TODO Auto-generated method stub
-		collect.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (event.iscollected() == false) {
-					mConnHelper.collectMsg(eventId, "1", mUIHandler,
-							MsgTagVO.MSG_COLLECT, null, true, null, null);
-				} else {
-					mConnHelper.collectMsg(eventId, "0", mUIHandler,
-							MsgTagVO.MSG_COLLECT, null, true, null, null);
-				}
-			}
-		});
-		share.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 		bossLayout.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -154,6 +136,7 @@ public class EventDetailActivity extends Activity {
 	private void loadData() {
 		mConnHelper.getEventDetail(EventDetailActivity.this, mUIHandler,
 				MsgTagVO.DATA_LOAD, eventId);
+
 	}
 
 	private Handler mUIHandler = new Handler() {
@@ -175,35 +158,128 @@ public class EventDetailActivity extends Activity {
 							getApplicationContext());
 					detail = nljh.parseEvent();
 					event = detail;
+
+					if (event.getIsjoined().equals("1")) {
+						toApply.setText(R.string.toapply);
+					} else {
+						toApply.setText(R.string.tonoapply);
+					}
+					// 是否加入
+					toApply.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							if (event.getIsjoined().equals("1")) {
+								// 退出
+								mConnHelper.quitEvent(
+										ZhuoCommHelper.getEventadd(),
+										"activityid", eventId, "type", "0",
+										mUIHandler, quit,
+										EventDetailActivity.this);
+							} else {
+								mConnHelper.quitEvent(
+										ZhuoCommHelper.getEventadd(),
+										"activityid", eventId, "type", "1",
+										mUIHandler, quit,
+										EventDetailActivity.this);
+							}
+						}
+					});
+					share.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							com.cpstudio.zhuojiaren.widget.CustomShareBoard shareBoard = new com.cpstudio.zhuojiaren.widget.CustomShareBoard(
+									EventDetailActivity.this);
+							shareBoard.setTitle(event.getTitle());
+							UMImage image = new UMImage(mContext, event
+									.getUheader());
+							shareBoard.setImage(image);
+							shareBoard.setContent(event.getContent());
+							shareBoard.showAtLocation(EventDetailActivity.this
+									.getWindow().getDecorView(),
+									Gravity.BOTTOM, 0, 0);
+						}
+					});
 					if (null != detail) {
-						name.setText(detail.getName());
+						name.setText(detail.getTitle());
 						browerCount.setText(detail.getViewCount());
 						shareCount.setText(detail.getShareCount());
 						applyCount.setText(detail.getShareCount());
 						content.setText(detail.getContent());
-						// 需要lef修改
-						// //活动发起人
-						// UserVO boss = detail.getBoss();
-						// String imageUrl = boss.getUheader();
-						// peopleImage.setTag(imageUrl);
-						// mLoadImage.addTask(imageUrl, peopleImage);
-						// peopleName.setText(boss.getUsername());
-						// peoplePostion.setText(boss.getPost());
-						// time.setText(detail.getTime());
-						// locate.setText(detail.getLocate());
-						// String contactPeopels = detail.getPeople();
-						// String phones = detail.getPhone();
-						// String[]contact=null;
-						// String[]phone = null;
-						// if(contactPeopels!=null&&phones!=null){
-						// contact = contactPeopels.split(";");
-						// phone = phones.split(";");
-						// }
-						// if(contact!=null&&phone!=null)
-						// for(int i =0;i<contact.length;i++){
-						// addContactPeople(contact[i],phone[i]);
-						// }
+						mLoadImage.beginLoad(detail.getUheader(), peopleImage);
+						peopleCompany.setText(detail.getCompany());
+						peopleName.setText(detail.getName());
+						peoplePostion.setText(detail.getPosition());
+						time.setText(detail.getStarttime() + "-"
+								+ detail.getEndtime());
+						locate.setText(detail.getAddress());
+						locate.setOnClickListener(new OnClickListener() {
+							public void onClick(View v) {
+								Intent intent = new Intent(
+										EventDetailActivity.this,
+										MapLocateActivity.class);
+								intent.putExtra("LONGITUDE",
+										event.getLongitude());
+								intent.putExtra("LATITUDE", event.getLatitude());
+								startActivity(intent);
+							}
+						});
+						String contacts = detail.getContacts();
+						if (TextUtils.isEmpty(contacts)) {
+							String[] cons = contacts.split(",");
+							String[] phones = detail.getPhone().split(",");
+							for (int i = 0; i < cons.length; i++) {
+								addContactPeople(cons[i], phones[i]);
+							}
+						}
+						collect.setOnClickListener(new OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								if (event.isCollect()) {
+									// 取消收藏
+									collect.setBackgroundResource(R.drawable.zcollect2);
+									mConnHelper.collection(
+											ZhuoCommHelper.getEventcollection(),
+											"activityid", eventId, "type", "0");
+									event.setIscollected("0");
+									CommonUtil.displayToast(mContext, "取消收藏");
+								} else {
+									mConnHelper.collection(
+											ZhuoCommHelper.getEventcollection(),
+											"activityid", eventId, "type", "1");
+									event.setIscollected("1");
+									collect.setBackgroundResource(R.drawable.qhdcollect);
+									CommonUtil.displayToast(mContext, "收藏");
+								}
+							}
+						});
+
 					}
+				}
+				break;
+			case quit:
+				if (JsonHandler.checkResult((String) msg.obj,
+						EventDetailActivity.this)) {
+					CommonUtil.displayToast(mContext, "操作成功");
+					if (event.getIsjoined().equals("1")) {
+						// 退出
+						event.setIsjoined("0");
+
+					} else {
+						event.setIsjoined("1");
+					}
+					if (event.getIsjoined().equals("1")) {
+						toApply.setText(R.string.toapply);
+					} else {
+						toApply.setText(R.string.tonoapply);
+					}
+				} else {
+					CommonUtil.displayToast(mContext, "操作失败");
 				}
 			}
 		};

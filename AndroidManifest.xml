@@ -1182,7 +1182,6 @@
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.ChooseLocateActivity"
             android:label="@string/title_activity_choose_locate" >
-            
         </activity>
         <!-- 百度地图相关 -->
         <service
@@ -1191,6 +1190,10 @@
             android:process=":baidu" >
         </service>
         <!-- 百度地图相关end -->
+        <activity
+            android:name="com.cpstudio.zhuojiaren.MapLocateActivity"
+            android:label="@string/title_activity_map_locate" >
+        </activity>
     </application>
 
     <!-- renren sso Permission for Unit Test -->
