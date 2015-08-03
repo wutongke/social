@@ -97,7 +97,8 @@ public class QuanCreateActivity extends BaseActivity {
 	private String addRight = "0";
 	// 查看权限
 	private String seeRight = "0";
-
+	//选择图片
+	AlertDialog adl;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -293,7 +294,7 @@ public class QuanCreateActivity extends BaseActivity {
 												MsgTagVO.ZHUOMAI_PIC);
 							}
 						});
-				AlertDialog adl = new AlertDialog.Builder(
+				adl = new AlertDialog.Builder(
 						QuanCreateActivity.this).create();
 				adl.setCanceledOnTouchOutside(true);// 设置dialog外面点击则消失
 				Window w = adl.getWindow();
@@ -330,7 +331,14 @@ public class QuanCreateActivity extends BaseActivity {
 			}
 		});
 	}
-
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		if(adl!=null&&adl.isShowing()){
+			adl.dismiss();
+		}
+	}
 	private void loadData() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
 			// QuanVO quan = mFacade.getById(groupid);

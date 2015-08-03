@@ -11,10 +11,8 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -27,9 +25,8 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ImageGridAdapter;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
-import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.DateTimePickDialogUtil;
@@ -260,7 +257,12 @@ public class EditEventActivity extends BaseActivity {
 					pwh.showPopDlgOne(v, listener, R.string.info66);
 				} else {
 					View v = findViewById(R.id.event_edit_activity);
-					pwh.showPopDlgOne(v, listener, R.string.submit_error);
+					ResultVO res = JsonHandler.parseResult((String)msg.obj);
+					String out = getResources().getString(R.string.submit_error);
+					if(res.getMsg()!=null){
+						out = "\n"+res.getMsg();
+					}
+					pwh.showPopDlgOne(v, null, out);
 				}
 			}
 		};
