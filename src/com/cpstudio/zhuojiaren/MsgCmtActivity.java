@@ -25,8 +25,8 @@ public class MsgCmtActivity extends Activity {
 	private ZhuoConnHelper mConnHelper = null;
 	private String forward = "0";
 	private String content = null;
-	private String outterid = null;
-	private String userid = null;
+	private String toId = null;
+	private String toUserid = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +36,8 @@ public class MsgCmtActivity extends Activity {
 		pwh = new PopupWindows(MsgCmtActivity.this);
 		Intent i = getIntent();
 		msgid = i.getStringExtra("msgid");
-		parentid = i.getStringExtra("parentid");
-		outterid = i.getStringExtra("outterid");
-		userid = i.getStringExtra("userid");
-		after = i.getStringExtra("after");
+		toId = i.getStringExtra("toId");
+		toUserid = i.getStringExtra("toUserid");
 		initClick();
 	}
 
@@ -68,23 +66,13 @@ public class MsgCmtActivity extends Activity {
 			switch (msg.what) {
 			case MsgTagVO.PUB_INFO: {
 				if (JsonHandler.checkResult((String) msg.obj)) {
-					OnClickListener listener = new OnClickListener() {
-						@Override
-						public void onClick(View paramView) {
-							
-							Intent intent = new Intent();
-							intent.putExtra("forward", forward);
-							intent.putExtra("msgid", msgid);
-							intent.putExtra("parentid", parentid);
-							intent.putExtra("outterid", outterid);
-							intent.putExtra("userid", userid);
-							intent.putExtra("data", (String) msg.obj);
-							setResult(RESULT_OK, intent);
-							MsgCmtActivity.this.finish();
-						}
-					};
-					pwh.showPopDlgOne(findViewById(R.id.rootLayout), listener,
-							R.string.info62);
+					Intent intent = new Intent();
+					// intent.putExtra("forward", forward);
+					// intent.putExtra("msgid", msgid);
+					// intent.putExtra("userid", userid);
+					intent.putExtra("data", (String) msg.obj);
+					setResult(RESULT_OK, intent);
+					MsgCmtActivity.this.finish();
 				} else {
 					pwh.showPopDlgOne(findViewById(R.id.rootLayout), null,
 							R.string.error5);
@@ -112,10 +100,10 @@ public class MsgCmtActivity extends Activity {
 		if (cb.isChecked()) {
 			forward = "1";
 		}
-//		mConnHelper.pubCmt(msgid, parentid, content, forward, mUIHandler,
-//				, MsgCmtActivity.this, true, null, null);
-		mConnHelper.CommentTopic(mUIHandler, MsgTagVO.PUB_INFO, parentid, content);
+		// mConnHelper.pubCmt(msgid, parentid, content, forward, mUIHandler,
+		// , MsgCmtActivity.this, true, null, null);
+		mConnHelper.CommentTopic(mUIHandler, MsgTagVO.PUB_INFO, msgid, content,
+				toId, toUserid);
 	}
-
 
 }

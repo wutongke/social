@@ -33,10 +33,12 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.PicVO;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
+import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -53,7 +55,7 @@ import com.utils.ImageRectUtil;
 public class QuanziTopicListAdapter extends BaseAdapter {
 	private List<QuanTopicVO> mList = null;
 	private LayoutInflater inflater = null;
-	private LoadImage mLoadImage = new LoadImage(10);
+	private LoadImage mLoadImage = new LoadImage();
 	private Context mContext = null;
 	private int width = 720;
 	private float times = 2;
@@ -62,8 +64,9 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 	String msgid = "11";
 	Fragment fragment;
 	String groupId;
-	boolean isFollow = false;// 标志个人是否属于该圈子
-
+	BaseCodeData baseDataSet;
+	
+	int role;//“我在圈子中的身份”
 	public String getGroupId() {
 		return groupId;
 	}
@@ -72,7 +75,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		this.groupId = groupId;
 	}
 
-	public QuanziTopicListAdapter(Fragment fragment, ArrayList<QuanTopicVO> list) {
+	public QuanziTopicListAdapter(Fragment fragment, ArrayList<QuanTopicVO> list,int role) {
 		// 圈子话题的列表
 		this.mContext = fragment.getActivity();
 		this.fragment = fragment;
@@ -82,10 +85,11 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
 		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
-
+		baseDataSet=mConnHelper.getBaseDataSet();
+		this.role=role;
 	}
 
-	public QuanziTopicListAdapter(Activity activity, ArrayList<QuanTopicVO> list) {
+	public QuanziTopicListAdapter(Activity activity, ArrayList<QuanTopicVO> list,int role) {
 		// 好友动态的列表，fragment为null..与圈话题的内容一致
 		this.mContext = activity;
 		this.fragment = null;
@@ -95,12 +99,9 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
 		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
-
+		this.role=role;
 	}
 
-	public void setIsFollow(boolean flag) {
-		isFollow = flag;
-	}
 
 	@Override
 	public int getCount() {
@@ -142,7 +143,9 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 
 		String headUrl = item.getUheader();
 
-		String work = item.getPosition();
+		String work = "";
+		if(baseDataSet!=null )
+			work= ((baseDataSet.getPosition()).get(item.getPosition()-1)).getContent();
 
 		String detail = item.getContent();
 
@@ -224,7 +227,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View view) {
 
-				if (fragment != null && !isFollow) {
+				if (fragment != null && role==QuanVO.QUAN_ROLE_YOUKE) {
 					OnClickListener applyTojoinListener = new OnClickListener() {
 						@Override
 						public void onClick(View v) {

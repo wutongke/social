@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,20 +17,31 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.BaseCodeData;
+import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
 public class QuanMemberListAdapter extends BaseAdapter {
-	private List<UserVO> mList = null;
+	private List<UserNewVO> mList = null;
 	private LayoutInflater inflater = null;
 	private Map<String, Integer> map = new HashMap<String, Integer>();
 	private LoadImage mLoadImage = new LoadImage();
+	BaseCodeData baseDataSet;
+	private ZhuoConnHelper mConnHelper = null;
+	Context mContext;
 
-//	private String mSections = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	// private String mSections = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-	public QuanMemberListAdapter(Context context, ArrayList<UserVO> list) {
+	public QuanMemberListAdapter(Context context, ArrayList<UserNewVO> list) {
 		this.mList = list;
 		this.inflater = LayoutInflater.from(context);
+		this.mContext = context;
+		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
+		baseDataSet = mConnHelper.getBaseDataSet();
 	}
 
 	@Override
@@ -44,7 +56,7 @@ public class QuanMemberListAdapter extends BaseAdapter {
 
 	@Override
 	public void notifyDataSetChanged() {
-//		initLetter();
+		// initLetter();
 		super.notifyDataSetChanged();
 	}
 
@@ -64,26 +76,24 @@ public class QuanMemberListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
 		}
-//		UserVO user = mList.get(position);
-//		String userid = user.getUserid();
-//		String authorName = user.getUsername();
-//		String headUrl = user.getUheader();
-//		String work = user.getPost();
-//		String company = user.getCompany();
-//		holder.textViewRes.setText(company);
-//		String start = user.getStartletter().toUpperCase(Locale.getDefault());
-//		convertView.setTag(R.id.tag_id, userid);
-//
-//		holder.textViewStatus.setText(start);
-//		
-//		holder.nameTV.setText(authorName);
-//		holder.workTV.setText(work);
-//		holder.headIV.setImageResource(R.drawable.default_userhead);
-//		holder.headIV.setTag(headUrl);
-//		mLoadImage.addTask(headUrl, holder.headIV);
-//		mLoadImage.doTask();
-//		
+		UserNewVO user = mList.get(position);
+
+		String company="╫с©знч";
+		if(user.getCompany()!=null)
+			company=user.getCompany();
+		holder.textViewRes.setText(company);
 		
+		holder.textViewStatus.setText(QuanVO.QUAN_ROLE_NAME[0]);
+		
+		holder.nameTV.setText(user.getName());
+		String work = "null";
+		int p=user.getPosition();
+		if(baseDataSet!=null && p>=1)
+			work=((baseDataSet.getPosition()).get(p-1)).getContent();
+		holder.workTV.setText(work);
+		holder.headIV.setImageResource(R.drawable.default_userhead);
+		holder.headIV.setTag(user.getUheader());
+		mLoadImage.beginLoad(user.getUheader(), holder.headIV);
 		
 		return convertView;
 	}

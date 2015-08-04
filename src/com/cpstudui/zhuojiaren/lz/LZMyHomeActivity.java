@@ -23,7 +23,9 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.MyCollectionActivity;
 import com.cpstudio.zhuojiaren.ui.MyMoneyActivity;
@@ -48,10 +50,14 @@ public class LZMyHomeActivity extends Activity {
 	View vCallback;
 	@InjectView(R.id.llMyAbout)
 	View vAbout;
-
+	@InjectView(R.id.imageViewHead)
+	ImageView imageViewHead;
 	private ZhuoConnHelper mConnHelper = null;
 	private String mUid = null;
 	private UserFacade userFacade = null;
+	UserNewVO userInfo;
+	private LoadImage mLoadImage = new LoadImage();
+	BaseCodeData baseDataSet;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +66,7 @@ public class LZMyHomeActivity extends Activity {
 		ButterKnife.inject(this);
 		userFacade = new UserFacade(getApplicationContext());
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		baseDataSet = mConnHelper.getBaseDataSet();
 		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		initClick();
 	}
@@ -77,7 +84,16 @@ public class LZMyHomeActivity extends Activity {
 	}
 
 	private void initClick() {
-
+		imageViewHead.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(LZMyHomeActivity.this,
+						ZhuoMaiCardActivity.class);
+				i.putExtra("userid", mUid);
+				startActivity(i);
+			}
+		});
 		vPurse.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -190,75 +206,47 @@ public class LZMyHomeActivity extends Activity {
 
 	}
 
+	/**
+	 * 填充头部个人信息
+	 */
+	void fillHeadInfo() {
+		if (userInfo == null)
+			return;
+		imageViewHead.setTag(userInfo.getUheader());
+		mLoadImage.addTask(userInfo.getUheader(), imageViewHead);
+		((TextView) findViewById(R.id.textViewName))
+				.setText(userInfo.getName());
+		String work = "";
+		if (baseDataSet != null)
+			work = ((baseDataSet.getPosition()).get(userInfo.getPosition() - 1))
+					.getContent();
+
+		((TextView) findViewById(R.id.textViewContent)).setText(work);
+
+		((TextView) findViewById(R.id.textViewCompany)).setText("接口无公司信息");
+
+		if (userInfo.getGender() == 0)// 男
+			rlbg.setBackgroundResource(R.drawable.mbg6_wdzy_1);
+		else
+			rlbg.setBackgroundResource(R.drawable.mbg5_wdzy_1);
+
+	}
+
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
-				UserVO user = null;
-				if (msg.obj instanceof UserVO) {
-					user = (UserVO) msg.obj;
-				} else {
+
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					user = nljh.parseUser();
+					userInfo = nljh.parseNewUser();
+					fillHeadInfo();
 				}
-				if (null != user) {
-					String name = user.getUsername();
-					String work = user.getPost();
-					String company = user.getCompany();
-					((TextView) findViewById(R.id.textViewName)).setText(name);
-					((TextView) findViewById(R.id.textViewContent))
-							.setText(work);
-					((TextView) findViewById(R.id.textViewCompany))
-							.setText(company);
-					String url = user.getUheader();
-					String sex = user.getSex();
 
-					if (sex!=null && sex.equals("男"))
-						rlbg.setBackgroundResource(R.drawable.mbg6_wdzy_1);
-					else
-						rlbg.setBackgroundResource(R.drawable.mbg5_wdzy_1);
-
-					// String levelStr = user.getLevel();
-					// if (levelStr != null && !levelStr.equals("")) {
-					// int level = Integer.valueOf(levelStr);
-					// String[] levels = getResources().getStringArray(
-					// R.array.array_level_type);
-					// LinearLayout parent = (LinearLayout)
-					// findViewById(R.id.linearLayoutLevel);
-					// if (level >= levels.length - 1) {
-					// level = levels.length - 1;
-					// findViewById(R.id.linearLayoutBg)
-					// .setBackgroundResource(
-					// R.drawable.bg_border2);
-					// parent.removeAllViews();
-					// } else {
-					// for (int i = 0; i < level; i++) {
-					// ((ImageView) parent.getChildAt(i))
-					// .setImageResource(R.drawable.ico_level_star_on);
-					// }
-					// }
-					// ((TextView) findViewById(R.id.textViewLevel))
-					// .setText(levels[level]);
-					// }
-					ImageView iv = (ImageView) findViewById(R.id.imageViewHead);
-					iv.setTag(url);
-					final String userid = user.getUserid();
-					iv.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View paramView) {
-							Intent intent = new Intent(LZMyHomeActivity.this,
-									ZhuoMaiCardActivity.class);
-							intent.putExtra("userid", userid);
-							startActivity(intent);
-						}
-					});
-					LoadImage mLoadImage = new LoadImage(10);
-					mLoadImage.addTask(url, iv);
-					mLoadImage.doTask();
-				}
 				break;
 			}
 			case MsgTagVO.DATA_OTHER: {
@@ -272,6 +260,13 @@ public class LZMyHomeActivity extends Activity {
 			}
 		}
 	};
+
+	private void loadData() {
+		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
+		} else {
+			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, mUid);
+		}
+	}
 
 	private void loadDb() {
 		// RecordChatFacade mFacade = new

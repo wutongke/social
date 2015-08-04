@@ -20,10 +20,11 @@
     <LinearLayout
         android:id="@+id/linearLayoutBottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/bg_tab2"
+        android:background="#767475"
         android:baselineAligned="false"
+        android:gravity="center"
         android:orientation="horizontal" >
 
         <RelativeLayout

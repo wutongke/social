@@ -92,6 +92,8 @@ public class TopicCommentListAdapter extends BaseAdapter {
 				context.startActivity(i);
 			}
 		});
+		if(cmt.getToId()!=null)
+			authorName=authorName+" 回复  "+cmt.getToName();
 		holder.nameTV.setText(authorName);
 		holder.timeTV.setText(time);
 		holder.contentTV.setText(content);
@@ -101,9 +103,9 @@ public class TopicCommentListAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(mContext, UserCardActivity.class);
-				intent.putExtra("userid", userid);
-				mContext.startActivity(intent);
+//				Intent intent = new Intent(mContext, UserCardActivity.class);
+//				intent.putExtra("userid", userid);
+//				mContext.startActivity(intent);
 			}
 		});
 		mLoadImage.addTask(headUrl, holder.headIV);

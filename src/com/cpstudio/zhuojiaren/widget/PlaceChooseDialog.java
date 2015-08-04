@@ -134,7 +134,7 @@ public class PlaceChooseDialog extends AlertDialog{
 	public int getCityCode() {
 		// TODO Auto-generated method stub
 		for(City temp:cityList){
-			if(temp.getCityName().contains(chooseCity))
+			if(temp!=null && temp.getCityName().contains(chooseCity))
 				return Integer.parseInt(temp.getCityId());
 		}
 		return 1;

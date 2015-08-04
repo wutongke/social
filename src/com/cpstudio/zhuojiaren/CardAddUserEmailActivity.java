@@ -44,9 +44,9 @@ public class CardAddUserEmailActivity extends Activity {
 										.getText().toString());
 						if (((CheckBox) findViewById(R.id.checkBoxIsOpen))
 								.isChecked()) {
-							intent.putExtra(CardEditActivity.EDIT_EMAIL_STR2, "1");
+							intent.putExtra(CardEditActivity.EDIT_EMAIL_STR2, 0);
 						} else {
-							intent.putExtra(CardEditActivity.EDIT_EMAIL_STR2, "0");
+							intent.putExtra(CardEditActivity.EDIT_EMAIL_STR2, 1);
 						}
 						setResult(RESULT_OK, intent);
 						CardAddUserEmailActivity.this.finish();

@@ -1,6 +1,14 @@
 package com.cpstudio.zhuojiaren.model;
 
+import java.util.List;
+
 public class UserNewVO {
+	private String signature;//Ç©Ãû
+	private String faith;
+	private String dream;
+	private List<PicNewVO> myPic;
+	private int position;
+	private String company;
 	private String birthday;
 
 	private int isPhoneOpen;
@@ -37,7 +45,7 @@ public class UserNewVO {
 
 	private String name;
 
-	private int uheader;
+	private String uheader;
 
 	private int gender;
 
@@ -48,6 +56,78 @@ public class UserNewVO {
 	private String qq;
 
 	private int isQqOpen;
+
+	int industry;
+	private String phone;
+	
+	
+	
+	
+	public String getSignature() {
+		return signature;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
+	public String getFaith() {
+		return faith;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public void setFaith(String faith) {
+		this.faith = faith;
+	}
+
+	
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public List<PicNewVO> getMyPic() {
+		return myPic;
+	}
+
+	public void setMyPic(List<PicNewVO> myPic) {
+		this.myPic = myPic;
+	}
+
+	public String getDream() {
+		return dream;
+	}
+
+	public void setDream(String dream) {
+		this.dream = dream;
+	}
+
+	public int getIndustry() {
+		return industry;
+	}
+
+	public void setIndustry(int industry) {
+		this.industry = industry;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
 
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
@@ -193,11 +273,11 @@ public class UserNewVO {
 		return this.name;
 	}
 
-	public void setUheader(int uheader) {
+	public void setUheader(String uheader) {
 		this.uheader = uheader;
 	}
 
-	public int getUheader() {
+	public String getUheader() {
 		return this.uheader;
 	}
 

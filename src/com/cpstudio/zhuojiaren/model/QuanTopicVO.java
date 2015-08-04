@@ -13,11 +13,11 @@ public class QuanTopicVO implements Serializable{
 
 	private String uheader;
 
-	private String position;
+	private int position;
 
 	private String addtime;
 
-	private List<PicNewVO> topicPics;
+	private List<PicNewVO> topicPic;
 
 	private String userid;//·¢²¼Õß
 	
@@ -71,11 +71,11 @@ public class QuanTopicVO implements Serializable{
 		return this.uheader;
 	}
 
-	public void setPosition(String position) {
+	public void setPosition(int position) {
 		this.position = position;
 	}
 
-	public String getPosition() {
+	public int getPosition() {
 		return this.position;
 	}
 
@@ -88,10 +88,10 @@ public class QuanTopicVO implements Serializable{
 	}
 
 	public void setTopicPic(List<PicNewVO> topicPic) {
-		this.topicPics = topicPic;
+		this.topicPic = topicPic;
 	}
 
 	public List<PicNewVO> getTopicPic() {
-		return this.topicPics;
+		return this.topicPic;
 	}
 }

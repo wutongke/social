@@ -1,15 +1,11 @@
 package com.cpstudui.zhuojiaren.lz;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -35,38 +31,21 @@ import com.cpstudio.zhuojiaren.MsgCmtActivity;
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.UserSelectActivity;
-import com.cpstudio.zhuojiaren.adapter.MsgCmtListAdapter;
-import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.facade.ZhuoInfoFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.City;
-import com.cpstudio.zhuojiaren.model.CmtVO;
 import com.cpstudio.zhuojiaren.model.Comment;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
-import com.cpstudio.zhuojiaren.model.PicVO;
 import com.cpstudio.zhuojiaren.model.Praise;
-import com.cpstudio.zhuojiaren.model.Province;
-import com.cpstudio.zhuojiaren.model.QuanTopicVO;
-import com.cpstudio.zhuojiaren.model.QuanVO;
-import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.TopicDetailVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
-import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
-import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.sea_monster.network.ApiCallback;
 
-public class TopicDetailActivity extends BaseActivity implements
-		OnItemClickListener {
+public class TopicDetailActivity extends BaseActivity {
 	private ListView mListView;
 	private TopicCommentListAdapter mAdapter;
 	private ArrayList<Comment> mList = new ArrayList<Comment>();
@@ -77,7 +56,7 @@ public class TopicDetailActivity extends BaseActivity implements
 	private int mPage = 1;
 	private ZhuoConnHelper mConnHelper = null;
 	private String isCollect = "0";
-//	private ListViewFooter mListViewFooter = null;
+	// private ListViewFooter mListViewFooter = null;
 	private String uid = null;
 	private ZhuoInfoFacade mFacade = null;
 	private String myid = null;
@@ -85,7 +64,6 @@ public class TopicDetailActivity extends BaseActivity implements
 	View textViewTip;
 	TopicDetailVO topicDetail;
 	ImageView headIV;
-	List<City> cityList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +89,16 @@ public class TopicDetailActivity extends BaseActivity implements
 				R.layout.listview_header_topic_detail, null);
 		mListView.addHeaderView(mHeadView);
 		mListView.setAdapter(mAdapter);
-		mListView.setOnItemClickListener(this);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				// TODO Auto-generated method stub
+				Comment cmt = mList.get(position);
+				startCommentActivity(cmt.getToId(), cmt.getToUserid());
+			}
+		});
 		initClick();
 		loadData();
 	}
@@ -120,12 +107,6 @@ public class TopicDetailActivity extends BaseActivity implements
 		((TextView) (mHeadView.findViewById(R.id.textViewAuthorName)))
 				.setText(topicDetail.getName());
 		// 此处还需要从编号获得对应的名称
-
-		if (cityList != null) {
-			String city = cityList.get(topicDetail.getPosition()).getCityName();
-			((TextView) (mHeadView.findViewById(R.id.textViewWork)))
-					.setText(city);
-		}
 
 		((TextView) (mHeadView.findViewById(R.id.textViewRes)))
 				.setText(topicDetail.getCompany());
@@ -144,7 +125,7 @@ public class TopicDetailActivity extends BaseActivity implements
 		uid = topicDetail.getUserid();
 
 		Context context = mHeadView.getContext();
-		final List<PicNewVO> pics = topicDetail.getTopicPics();
+		final List<PicNewVO> pics = topicDetail.getTopicPic();
 		TableLayout.LayoutParams tllp = new TableLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		TableRow.LayoutParams trlp = new TableRow.LayoutParams(
@@ -198,8 +179,8 @@ public class TopicDetailActivity extends BaseActivity implements
 		// drawable.getMinimumHeight());
 		// collectBtn.setCompoundDrawables(null, drawable, null, null);
 		// }
-		fillPraiseList(topicDetail.getPraiseLists());
-		fillCommentList(topicDetail.getCommentLists());
+		fillPraiseList(topicDetail.getPraiseList());
+		fillCommentList(topicDetail.getCommentList());
 	}
 
 	private void fillCommentList(List<Comment> cmts) {
@@ -211,12 +192,12 @@ public class TopicDetailActivity extends BaseActivity implements
 			textViewTip.setVisibility(View.GONE);
 		} else {
 			textViewTip.setVisibility(View.VISIBLE);
-//			mListViewFooter.noData(false);
+			// mListViewFooter.noData(false);
 		}
 	}
 
 	private void fillPraiseList(List<Praise> praiseList) {
-		if (praiseList != null && praiseList.size() > 1) {
+		if (praiseList != null && praiseList.size() > 0) {
 			Context context = mHeadView.getContext();
 			TableLayout.LayoutParams tllp = new TableLayout.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -270,21 +251,17 @@ public class TopicDetailActivity extends BaseActivity implements
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD:
-				if (msg.obj != null) {
-					if (msg.obj instanceof TopicDetailVO) {
-						topicDetail = (TopicDetailVO) msg.obj;
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					JsonHandler nljh = new JsonHandler((String) msg.obj,
+							getApplicationContext());
+					topicDetail = nljh.parseQuanTopicDetail();
+					if (null != topicDetail) {
 						fillData();
-					} else if (!msg.obj.equals("")) {
-						JsonHandler nljh = new JsonHandler((String) msg.obj,
-								getApplicationContext());
-						topicDetail = nljh.parseQuanTopicDetail();
-						if (null != topicDetail) {
-							fillData();
-							// mFacade.saveOrUpdate(topicDetail);
-						}
+						// mFacade.saveOrUpdate(topicDetail);
 					}
-					break;
 				}
+				break;
 			case MsgTagVO.MSG_LIKE:
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
@@ -343,35 +320,6 @@ public class TopicDetailActivity extends BaseActivity implements
 					}
 				}
 				break;
-
-			case MsgTagVO.DATA_OTHER:
-				ResultVO res;
-				if (JsonHandler.checkResult((String) msg.obj, TopicDetailActivity.this)) {
-					res = JsonHandler.parseResult((String) msg.obj);
-				  
-					mConnHelper.saveObject((String) msg.obj, "citys");
-				} else {
-					return;
-				}
-				String data = res.getData();
-				Type listType = new TypeToken<ArrayList<Province>>() {
-				}.getType();
-				Gson gson = new Gson();
-				ArrayList<Province> list = gson.fromJson(data, listType);
-				if (cityList == null)
-					cityList = new ArrayList<City>();
-				for (Province temp : list) {
-					cityList.addAll(temp.getCitys());
-				}
-
-				if (cityList != null && topicDetail != null) {
-					String city = cityList.get(topicDetail.getPosition())
-							.getCityName();
-					((TextView) (mHeadView.findViewById(R.id.textViewWork)))
-							.setText(city);
-				}
-				break;
-
 			}
 		}
 	};
@@ -393,17 +341,16 @@ public class TopicDetailActivity extends BaseActivity implements
 	}
 
 	private void initClick() {
-		headIV=(ImageView) findViewById(R.id.imageViewAuthorHeader);
-				headIV.setOnClickListener(
-				new OnClickListener() {
-					@Override
-					public void onClick(View paramView) {
-						Intent intent = new Intent(TopicDetailActivity.this,
-								ZhuoMaiCardActivity.class);
-						intent.putExtra("userid", uid);
-						startActivity(intent);
-					}
-				});
+		headIV = (ImageView) findViewById(R.id.imageViewAuthorHeader);
+		headIV.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View paramView) {
+				Intent intent = new Intent(TopicDetailActivity.this,
+						ZhuoMaiCardActivity.class);
+				intent.putExtra("userid", uid);
+				startActivity(intent);
+			}
+		});
 		findViewById(R.id.buttonTabZan).setOnClickListener(
 				new OnClickListener() {
 
@@ -420,11 +367,7 @@ public class TopicDetailActivity extends BaseActivity implements
 
 					@Override
 					public void onClick(View v) {
-						Intent i = new Intent(TopicDetailActivity.this,
-								MsgCmtActivity.class);
-						i.putExtra("msgid", topicid);
-						i.putExtra("parentid", topicid);
-						startActivityForResult(i, MsgTagVO.MSG_CMT);
+						startCommentActivity(null, null);
 					}
 				});
 		findViewById(R.id.buttonTabShare).setOnClickListener(
@@ -485,9 +428,14 @@ public class TopicDetailActivity extends BaseActivity implements
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		if (arg3 != -1) {
-		}
+	void startCommentActivity(String toId, String toUserid) {
+		Intent i = new Intent(TopicDetailActivity.this, MsgCmtActivity.class);
+		i.putExtra("msgid", topicid);
+		if (toId != null)
+			i.putExtra("toId", toId);
+		if (toUserid != null)
+			i.putExtra("toUserid", toUserid);
+		startActivityForResult(i, MsgTagVO.MSG_CMT);
 	}
+
 }

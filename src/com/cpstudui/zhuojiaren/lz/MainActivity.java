@@ -33,12 +33,14 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.GoodsPicAdVO;
 import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicAdVO;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -119,9 +121,8 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
-		// mAdapter = new ZhuoUserListAdapter(MainActivity.this, mList);
-		mAdapter = new QuanziTopicListAdapter(MainActivity.this, mList);
-
+//是否和圈子话题公用一个数据结构还不一定
+		mAdapter = new QuanziTopicListAdapter(MainActivity.this, mList,1);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
@@ -356,6 +357,20 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				}
 				break;
 			}
+			case MsgTagVO.DATA_BASE: {//基础编码数据，保存到内存中\
+				ResultVO res;
+				if (JsonHandler.checkResult((String) msg.obj,getApplicationContext())) {
+					res = JsonHandler.parseResult((String) msg.obj);
+					mConnHelper.saveObject((String) msg.obj,ZhuoConnHelper.BASEDATA);
+				} else {
+					return;
+				}
+				String data = res.getData();
+				BaseCodeData dataset=JsonHandler.parseBaseCodeData(data);
+				mConnHelper.setBaseDataSet(dataset); 
+				break;
+			}
+			
 			}
 		}
 
@@ -413,6 +428,9 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	}
 
 	private void loadData() {
+		
+		mConnHelper.getBaseCodeData(mUIHandler, MsgTagVO.DATA_BASE, MainActivity.this, false, null, null);
+		
 		String url = ZhuoCommHelper.getUrlUserInfo() + "?uid="
 				+ ResHelper.getInstance(getApplicationContext()).getUserid();
 		// 加载刷新个人信息

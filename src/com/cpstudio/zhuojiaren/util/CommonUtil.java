@@ -58,8 +58,8 @@ public class CommonUtil {
 		}
 		return true;
 	}
-
 	public static String getAlpha(String str) {
+		
 		if (str == null) {
 			return "#";
 		}

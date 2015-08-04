@@ -80,7 +80,9 @@ public class JiarenActiveActivity extends Activity implements
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
-		mAdapter = new QuanziTopicListAdapter(JiarenActiveActivity.this, mList);
+// 是否和圈子话题公用一个数据结构还不一定
+		mAdapter = new QuanziTopicListAdapter(JiarenActiveActivity.this, mList,
+				1);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
@@ -151,11 +153,11 @@ public class JiarenActiveActivity extends Activity implements
 							Intent i = new Intent(JiarenActiveActivity.this,
 									UplevelActivity.class);
 							startActivity(i);
-							
+
 							// 倬脉。是否可以用旧版本中的UplevelActivity
-//							Intent i = new Intent(JiarenActiveActivity.this,
-//									ZhuoMaiActiveActivity.class);
-//							startActivity(i);
+							// Intent i = new Intent(JiarenActiveActivity.this,
+							// ZhuoMaiActiveActivity.class);
+							// startActivity(i);
 						}
 					});
 		}
@@ -284,7 +286,7 @@ public class JiarenActiveActivity extends Activity implements
 								getApplicationContext());
 						list = nljh.parseQuanTopicList();
 						if (!list.isEmpty()) {
-//							infoFacade.update(list);
+							// infoFacade.update(list);
 						}
 					}
 				}
@@ -315,7 +317,7 @@ public class JiarenActiveActivity extends Activity implements
 								getApplicationContext());
 						list = nljh.parseQuanTopicList();
 						if (!list.isEmpty()) {
-//							infoFacade.update(list);
+							// infoFacade.update(list);
 						}
 					}
 				}

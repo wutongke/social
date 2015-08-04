@@ -126,6 +126,9 @@ public class AsyncConnectHelperLZ extends AsyncTask<String, Integer, Boolean> {
 			}
 
 			jsonData = comm.getResult();
+			Log.i("AsyncConnectHelperLZ", "mUrl:"+url);
+			Log.i("AsyncConnectHelperLZ", "mNameValuePairs:"+mNameValuePairs.toString());
+			Log.i("AsyncConnectHelperLZ", "data:"+jsonData);
 			responseCode = comm.getResponseCode();
 			result = true;
 		} catch (Exception e) {

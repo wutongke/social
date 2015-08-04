@@ -41,9 +41,9 @@ public class CardAddUserBirthActivity extends Activity {
 		String birthday = i.getStringExtra(CardEditActivity.EDIT_BIRTH_STR1);
 		String birthdayopen = i
 				.getStringExtra(CardEditActivity.EDIT_BIRTH_STR2);
-		String birthdayType = i
-				.getStringExtra(CardEditActivity.EDIT_BIRTH_STR3);
-		if (birthdayopen != null && birthdayopen.equals("1")) {
+		String birthdayLunar = i
+				.getStringExtra(CardEditActivity.EDIT_BIRTH_STR3);//“ı¿˙…˙»’
+		if (birthdayopen != null && birthdayopen.equals("0")) {
 			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(true);
 		} else {
 			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(false);
@@ -62,9 +62,9 @@ public class CardAddUserBirthActivity extends Activity {
 			date = Integer.valueOf(str[2]);
 		}
 		gentBirtdayTextInfo(year, month, date);
-		if (birthdayType == null || birthdayType.equals("0")) {
+		if (birthday!=null) {
 			initNormalWheel(year, month, date);
-		} else {
+		}if(birthdayLunar!=null){
 			initChineseWheelBySolar(year, month, date);
 		}
 	}
@@ -99,24 +99,17 @@ public class CardAddUserBirthActivity extends Activity {
 						if (((CheckBox) findViewById(R.id.checkBoxIsOpen))
 								.isChecked()) {
 							intent.putExtra(CardEditActivity.EDIT_BIRTH_STR2,
-									"1");
+									1);
 						} else {
 							intent.putExtra(CardEditActivity.EDIT_BIRTH_STR2,
-									"0");
+									0);
 						}
-						if (mLunar) {
-							intent.putExtra(CardEditActivity.EDIT_BIRTH_STR3,
-									"1");
 							int[] solor = LundarToSolar.getLundarToSolar(year,
 									month, day);
-							intent.putExtra(CardEditActivity.EDIT_BIRTH_STR1,
-									solor[0] + "-" + solor[1] + "-" + solor[2]);
-						} else {
 							intent.putExtra(CardEditActivity.EDIT_BIRTH_STR3,
-									"0");
+									solor[0] + "-" + solor[1] + "-" + solor[2]);
 							intent.putExtra(CardEditActivity.EDIT_BIRTH_STR1,
 									year + "-" + month + "-" + day);
-						}
 						setResult(RESULT_OK, intent);
 						CardAddUserBirthActivity.this.finish();
 					}

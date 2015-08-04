@@ -1113,5 +1113,7 @@
     <string name="title_activity_choose_locate">ChooseLocateActivity</string>
     <string name="payback_pro">回报项目</string>
     <string name="technology">科技</string>
-
+<string name="tip_jsonerror">json解析失败</string>
+<string name="uhead_update_success">头像更新成功</string>
+    
 </resources>
