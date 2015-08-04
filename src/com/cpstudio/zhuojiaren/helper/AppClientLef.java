@@ -229,12 +229,12 @@ public class AppClientLef {
 	/**
 	 * 提交视频统计
 	 */
-	public boolean submitVedio(String Id) {
+	public boolean submitVedio(Activity activity,String Id) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("onlineid", Id));
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		String url = ZhuoCommHelper.getSubmitVisit();
-		return doPost(nameValuePairs, url, null, 0, null, url, false, null,
+		return doPost(nameValuePairs, url, null, 0, activity, url, false, null,
 				null);
 	}
 
@@ -330,13 +330,13 @@ public class AppClientLef {
 	/**
 	 * 收藏
 	 */
-	public boolean collection(String url, String idKey, String id,
+	public boolean collection(Activity acitivity,String url, String idKey, String id,
 			String stateKey, String state) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair(idKey, id));
 		nameValuePairs.add(new BasicNameValuePair(stateKey, state));
-		return doPost(nameValuePairs, url, null, 0, null, url, false, null,
+		return doPost(nameValuePairs, url, null, 0, acitivity, url, false, null,
 				null);
 	}
 	/**

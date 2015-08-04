@@ -3,12 +3,14 @@ package com.cpstudio.zhuojiaren.ui;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -231,19 +233,25 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 					return;
 				}
 				Gson gson = new Gson();
-				final CrowdFundingVO result = gson.fromJson(res.getData(),
-						CrowdFundingVO.class);
-				crowdFunding = result;
+				try {
+					crowdFunding = gson.fromJson(res.getData(), CrowdFundingVO.class);
+				} catch (Exception e) {
+					// TODO: handle exception
+					CommonUtil.displayToast(CrowdFundingDetailActivity.this,
+							R.string.data_error);
+					Log.d("Debug", "json数据出错。。。。。。。。。。。。。。");
+					return;
+				}
 				initTab();
 				tab.setVisibility(View.VISIBLE);
-				if (Integer.parseInt(result.getRemainDay()) >= 0) {
+				if (Integer.parseInt(crowdFunding.getRemainDay()) >= 0) {
 
 					state.setText("进行中");
 				} else {
 					state.setText("已完成");
 				}
-				name.setText(result.getTitle());
-				for (CrowdFundingDes temp : result.getDescription()) {
+				name.setText(crowdFunding.getTitle());
+				for (CrowdFundingDes temp : crowdFunding.getDescription()) {
 					if (temp.getType().equals("text")) {
 						addTextView(temp.getContent());
 					} else if (temp.getType().equals("text")) {
@@ -252,28 +260,28 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 				}
 
 				// 完成率
-				int aim = Integer.parseInt(result.getTargetZb());
-				int get = Integer.parseInt(result.getReach());
+				int aim = Integer.parseInt(crowdFunding.getTargetZb());
+				int get = Integer.parseInt(crowdFunding.getReach());
 				int rate = (int) (get / (float) aim * 100);
 				finishRate.setText(rate + "%");
 				setWeight(finishRateImage, (float) rate);
 				setWeight(finishDayImage, (float) (100 - rate));
-				finishDay.setText(result.getRemainDay() + "天");
-				totalRmb.setText("￥" + result.getReach());
-				aimRmb.setText("￥" + result.getTargetZb());
-				likeCount.setText(result.getLikeNum());
-				supportCount.setText(result.getSupportNum());
-				peopleName.setText(result.getName());
-				peopleCompany.setText(result.getCompany());
-				peoplePostion.setText(result.getPosition());
-				mLoadImage.beginLoad(result.getUheader(), peopleImage);
+				finishDay.setText(crowdFunding.getRemainDay() + "天");
+				totalRmb.setText("￥" + crowdFunding.getReach());
+				aimRmb.setText("￥" + crowdFunding.getTargetZb());
+				likeCount.setText(crowdFunding.getLikeNum());
+				supportCount.setText(crowdFunding.getSupportNum());
+				peopleName.setText(crowdFunding.getName());
+				peopleCompany.setText(crowdFunding.getCompany());
+				peoplePostion.setText(crowdFunding.getPosition());
+				mLoadImage.beginLoad(crowdFunding.getUheader(), peopleImage);
 
-				if (result.getIsLike().equals(CrowdFundingVO.likeOrSupport)) {
+				if (crowdFunding.getIsLike().equals(CrowdFundingVO.likeOrSupport)) {
 					likeImage.setBackgroundResource(R.drawable.zcollect);
 				} else {
 					likeImage.setBackgroundResource(R.drawable.zuncollect);
 				}
-				if (result.getIsSupport().equals(CrowdFundingVO.likeOrSupport)) {
+				if (crowdFunding.getIsSupport().equals(CrowdFundingVO.likeOrSupport)) {
 					supportImage
 							.setBackgroundResource(R.drawable.zhan2_crowd_cmt);
 				} else {
@@ -285,17 +293,17 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						appClient.collection(
+						appClient.collection((Activity)mContext,
 								ZhuoCommHelper.getLikecrowdfunding(), "id",
-								result.getId(), "", "");
-						if (result.getIsLike().equals(
+								crowdFunding.getId(), "", "");
+						if (crowdFunding.getIsLike().equals(
 								CrowdFundingVO.likeOrSupport)) {
-							result.setIsLike(CrowdFundingVO.NOlikeOrSupport);
+							crowdFunding.setIsLike(CrowdFundingVO.NOlikeOrSupport);
 							likeImage
 									.setBackgroundResource(R.drawable.zuncollect);
 
 						} else {
-							result.setIsLike(CrowdFundingVO.likeOrSupport);
+							crowdFunding.setIsLike(CrowdFundingVO.likeOrSupport);
 							likeImage
 									.setBackgroundResource(R.drawable.zcollect);
 						}

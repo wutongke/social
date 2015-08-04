@@ -3,6 +3,7 @@ package com.cpstudio.zhuojiaren.adapter;
 import java.io.IOException;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
@@ -60,13 +61,13 @@ public class AudioAdapter extends CommonAdapter<RecordVO> {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (!item.getPraise().equals(RecordVO.PRAISED)) {
-					appClient.collection(ZhuoCommHelper.getAudioColl(),
+					appClient.collection((Activity)mContext,ZhuoCommHelper.getAudioColl(),
 							"audioid", item.getId(), "praise", RecordVO.PRAISED);
 					praise.setBackgroundResource(R.drawable.jjsc2);
 					item.setPraise(RecordVO.PRAISED);
 				} else {
 					praise.setBackgroundResource(R.drawable.jjsc1);
-					appClient.collection(ZhuoCommHelper.getAudioColl(),
+					appClient.collection((Activity)mContext,ZhuoCommHelper.getAudioColl(),
 							"audioid", item.getId(), "praise", RecordVO.NOPRAISED);
 					item.setPraise(RecordVO.NOPRAISED);
 				}

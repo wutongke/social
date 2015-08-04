@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -158,7 +159,12 @@ public class EventDetailActivity extends Activity {
 							getApplicationContext());
 					detail = nljh.parseEvent();
 					event = detail;
-
+					if(event==null){
+						CommonUtil.displayToast(EventDetailActivity.this,
+								R.string.data_error);
+						Log.d("Debug", "json数据出错。。。。。。。。。。。。。。");
+						return;
+					}
 					if (event.getIsjoined().equals("1")) {
 						toApply.setText(R.string.toapply);
 					} else {
@@ -243,13 +249,13 @@ public class EventDetailActivity extends Activity {
 								if (event.isCollect()) {
 									// 取消收藏
 									collect.setBackgroundResource(R.drawable.zcollect2);
-									mConnHelper.collection(
+									mConnHelper.collection((Activity)mContext,
 											ZhuoCommHelper.getEventcollection(),
 											"activityid", eventId, "type", "0");
 									event.setIscollected("0");
 									CommonUtil.displayToast(mContext, "取消收藏");
 								} else {
-									mConnHelper.collection(
+									mConnHelper.collection((Activity)mContext,
 											ZhuoCommHelper.getEventcollection(),
 											"activityid", eventId, "type", "1");
 									event.setIscollected("1");

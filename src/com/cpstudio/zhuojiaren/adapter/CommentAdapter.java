@@ -2,6 +2,7 @@ package com.cpstudio.zhuojiaren.adapter;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -69,13 +70,13 @@ public class CommentAdapter extends CommonAdapter<CommentVO> {
 						// µãÔÞ
 						if (item.getIsPraise() != null
 								&& !item.getIsPraise().equals(CommentVO.praise)){
-							mConnHelper.collection(
+							mConnHelper.collection((Activity)mContext,
 									ZhuoCommHelper.getLikeincomment(), "id",
 									item.getId(), "isLike", CommentVO.praise);
 							item.setIsPraise(CommentVO.nopraise);
 							helper.setImageResource(R.id.ic_praise, R.drawable.zhan2_crowd_cmt);
 						}else{
-							mConnHelper.collection(
+							mConnHelper.collection((Activity)mContext,
 									ZhuoCommHelper.getLikeincomment(), "id",
 									item.getId(), "isLike", CommentVO.nopraise);
 							item.setIsPraise(CommentVO.praise);

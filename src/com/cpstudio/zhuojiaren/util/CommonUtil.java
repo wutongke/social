@@ -175,6 +175,8 @@ public class CommonUtil {
  * @return
  */
 	public static int getNetworkState(Context context) {
+		if(context==null)
+			return 2;
 		ConnectivityManager conMan = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		State mobile = conMan.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
