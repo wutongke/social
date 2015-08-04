@@ -52,5 +52,6 @@
 	    android:text="@string/crowdfunding_finish_rate"
 	    style="@style/basic_text"
 	    android:textSize="15dp"
+	    android:layout_marginRight="10dp"
 	    />
 </RelativeLayout>

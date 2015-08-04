@@ -141,25 +141,25 @@ public class GoodsDetailLActivity extends BaseActivity {
 		msg1.obj = goods;
 		msg1.sendToTarget();
 
-		CommentVO test = new CommentVO();
-		test.setContent("写的不错，加油");
-		test.setIsPraise("1");
-		test.setTime("刚刚");
-		UserVO user = new UserVO();
-		user.setUsername("张来才");
-		user.setPost("php董事");
-		user.setCompany("php902大集团");
-		test.setUser(user);
-		test.setReplyUser(user);
-		mDataList.add(test);
-		mDataList.add(test);
-		mDataList.add(test);
-		mDataList.add(test);
-		mDataList.add(test);
-		mDataList.add(test);
-		mDataList.add(test);
-		mDataList.add(test);
-		mDataList.add(test);
+//		CommentVO test = new CommentVO();
+//		test.setContent("写的不错，加油");
+//		test.setIsPraise("1");
+//		test.setTime("刚刚");
+//		UserVO user = new UserVO();
+//		user.setUsername("张来才");
+//		user.setPost("php董事");
+//		user.setCompany("php902大集团");
+//		test.setUser(user);
+//		test.setReplyUser(user);
+//		mDataList.add(test);
+//		mDataList.add(test);
+//		mDataList.add(test);
+//		mDataList.add(test);
+//		mDataList.add(test);
+//		mDataList.add(test);
+//		mDataList.add(test);
+//		mDataList.add(test);
+//		mDataList.add(test);
 		mAdapter.notifyDataSetChanged();
 	}
 

@@ -47,14 +47,15 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/tab_trainsfer" />
+                    android:src="@drawable/share_hqxq1" />
 
                 <ImageView
                     android:id="@+id/aed_collect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/aed_share"
-                    android:src="@drawable/tab_collect_off" />
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/qhdcollect" />
             </RelativeLayout>
 
             <TextView

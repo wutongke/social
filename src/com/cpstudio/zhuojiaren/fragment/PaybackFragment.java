@@ -27,7 +27,7 @@ public class PaybackFragment extends Fragment implements OverScrollController{
 	ArrayList<PayBackVO> mDataList = new ArrayList<PayBackVO>();
 	private Context mContext;
 	private boolean mCanScrollUp = false;
-
+	String crowdFundingId;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

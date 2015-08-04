@@ -11,10 +11,8 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -27,9 +25,8 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ImageGridAdapter;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
-import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.DateTimePickDialogUtil;
@@ -70,6 +67,9 @@ public class EditEventActivity extends BaseActivity {
 	// 提交的时间
 	String timeStart;
 	String timeEnd;
+	// 经纬度
+	String longitude;
+	String latitude;
 	private Context mContext;
 	// 图片
 	private int requestCode = 1;
@@ -81,8 +81,9 @@ public class EditEventActivity extends BaseActivity {
 	private ArrayList<EditText> phoneList = new ArrayList<EditText>();
 	// 从圈子主页获得 圈子id
 	private String groupeId = "1";
-	//结果提示
+	// 结果提示
 	PopupWindows pwh;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -133,6 +134,7 @@ public class EditEventActivity extends BaseActivity {
 				DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
 						EditEventActivity.this, "");
 				dateTimePicKDialog.dateTimePicKDialog(startTime);
+				timeStart = dateTimePicKDialog.getTime();
 			}
 		});
 		endTimeLayout.setOnClickListener(new OnClickListener() {
@@ -143,6 +145,7 @@ public class EditEventActivity extends BaseActivity {
 				DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
 						EditEventActivity.this, "");
 				dateTimePicKDialog.dateTimePicKDialog(endTime);
+				timeEnd = dateTimePicKDialog.getTime();
 			}
 		});
 		locateLayout.setOnClickListener(new OnClickListener() {
@@ -211,8 +214,7 @@ public class EditEventActivity extends BaseActivity {
 						contacts.append(peopleList.get(i).getText().toString()
 								+ ",");
 					else
-						contacts
-								.append(peopleList.get(i).getText().toString());
+						contacts.append(peopleList.get(i).getText().toString());
 				}
 				for (int i = phoneList.size() - 1; i >= 0; i--) {
 					if (i > 0)
@@ -233,9 +235,9 @@ public class EditEventActivity extends BaseActivity {
 				} else
 					AppClientLef.getInstance(EditEventActivity.this)
 							.createEvent(EditEventActivity.this, uiHandler,
-									MsgTagVO.PUB_INFO, groupeId, name, content,
-									contacts.toString(), timeStart, timeEnd, address,
-									phone.toString(), imageDir);
+									MsgTagVO.PUB_INFO, longitude,latitude,groupeId, name, content,
+									contacts.toString(), timeStart, timeEnd,
+									address, phone.toString(), imageDir);
 			}
 		});
 	}
@@ -253,14 +255,19 @@ public class EditEventActivity extends BaseActivity {
 				if (JsonHandler.checkResult((String) msg.obj)) {
 					View v = findViewById(R.id.event_edit_activity);
 					pwh.showPopDlgOne(v, listener, R.string.info66);
-				}else{
+				} else {
 					View v = findViewById(R.id.event_edit_activity);
-					pwh.showPopDlgOne(v, listener, R.string.submit_error);
+					ResultVO res = JsonHandler.parseResult((String)msg.obj);
+					String out = getResources().getString(R.string.submit_error);
+					if(res.getMsg()!=null){
+						out = "\n"+res.getMsg();
+					}
+					pwh.showPopDlgOne(v, null, out);
 				}
 			}
 		};
 	};
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
@@ -270,6 +277,8 @@ public class EditEventActivity extends BaseActivity {
 			imageAdatper.notifyDataSetChanged();
 		} else if (requestCode == requestLocate && resultCode == RESULT_OK) {
 			locateMore.setText(data.getStringExtra("locate"));
+			longitude = String.valueOf(data.getStringExtra("longitude"));
+			latitude = String.valueOf(data.getStringExtra("latitude"));
 		}
 	}
 

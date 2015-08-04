@@ -81,6 +81,7 @@ public class VedioActivity extends BaseActivity {
 	private AudioManager mAudioManager;
 	private int maxVolume, currentVolume;
 	private mediac vedioControl = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,21 +89,36 @@ public class VedioActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		vedio = (GrouthVedio) getIntent().getSerializableExtra("vedio");
 		activity = this;
-		//统计观看次数
+		// 统计观看次数
 		submit();
 		initTitle();
 		title.setText(R.string.grouth_online_detail);
 		function.setBackgroundResource(R.drawable.share_hqxq1);
+		
 		function.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				CustomShareBoard shareBoard = new CustomShareBoard(VedioActivity.this);
-				shareBoard.showAtLocation(VedioActivity.this.getWindow().getDecorView(),
-						Gravity.BOTTOM, 0, 0);
+				CustomShareBoard shareBoard = new CustomShareBoard(
+						VedioActivity.this);
+				shareBoard.showAtLocation(VedioActivity.this.getWindow()
+						.getDecorView(), Gravity.BOTTOM, 0, 0);
 			}
 		});
+		findViewById(R.id.activity_back).setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(android.view.View v) {
+						// TODO Auto-generated method stub
+						if (vedioPlayer != null) {
+							vedioPlayer.release();
+							vedioPlayer = null;
+						}
+						VedioActivity.this.finish();
+					}
+
+				});
 		mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		setVolum();
 	}
@@ -111,7 +127,7 @@ public class VedioActivity extends BaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		if(vedio!=null){
+		if (vedio != null) {
 			vedioName.setText(vedio.getTutorName());
 			vedioName.setText(vedio.getDuration());
 			LoadImage load = new LoadImage();
@@ -191,8 +207,7 @@ public class VedioActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				if (!init) {
 					startIV.setEnabled(false);
-					vedioPlayer
-							.setVideoPath(vedio.getVedioAddr());
+					vedioPlayer.setVideoPath(vedio.getVedioAddr());
 					vedioPlayer.setSeekListener(new VedioPlayer.SeekListener() {
 						@Override
 						public void onSeek(int msec) {
@@ -216,7 +231,8 @@ public class VedioActivity extends BaseActivity {
 									// 完成之后再设置高宽
 									Image.setVisibility(View.GONE);
 									vedioPlayer.setVisibility(View.VISIBLE);
-									frame.setLayoutParams(frame.getLayoutParams());
+									frame.setLayoutParams(frame
+											.getLayoutParams());
 									vedioPlayer.start();
 									// 初始化time
 									length.setText(Util
@@ -262,8 +278,8 @@ public class VedioActivity extends BaseActivity {
 			}
 
 			@Override
-			public void onProgressChanged(SeekBar seekBar,
-					int progress, boolean fromUser) {
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
 				// TODO Auto-generated method stub
 				if (vedioPlayer != null && fromUser)
 					vedioPlayer.seekTo(progress);
@@ -393,22 +409,15 @@ public class VedioActivity extends BaseActivity {
 
 		@Override
 		public void setAnchorView(View view) {
+			
 		}
 	}
+
 	private void submit() {
 		// TODO Auto-generated method stub
-		if(vedio!=null&&vedio.getId()!=null){
-			AppClientLef.getInstance(this).submitVedio(vedio.getId());
+		if (vedio != null && vedio.getId() != null) {
+			AppClientLef.getInstance(this).submitVedio(VedioActivity.this,
+					vedio.getId());
 		}
-	}
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		if (vedioPlayer != null) {
-			vedioPlayer.release();
-			vedioPlayer = null;
-		}
-		VedioActivity.this.finish();
 	}
 }

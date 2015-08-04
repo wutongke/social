@@ -40,6 +40,8 @@ OnMapLongClickListener, OnMapClickListener, OnGetGeoCoderResultListener{
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
 	private Button searchBtn;
+	String longitude;
+	String latitude;
 	GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +104,8 @@ OnMapLongClickListener, OnMapClickListener, OnGetGeoCoderResultListener{
 				// TODO Auto-generated method stub
 				Intent intent = new Intent();
 				intent.putExtra("locate", locateEdit.getText().toString());
+				intent.putExtra("longitude", longitude);
+				intent.putExtra("latitude", latitude);
 				setResult(RESULT_OK, intent);
 				ChooseLocateActivity.this.finish();
 			}
@@ -145,6 +149,8 @@ OnMapLongClickListener, OnMapClickListener, OnGetGeoCoderResultListener{
 						.fromResource(R.drawable.icon_marka)));
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(result
 				.getLocation()));
+		longitude = String.valueOf(result.getLocation().longitude);
+		latitude = String.valueOf(result.getLocation().latitude);
 		String strInfo = String.format("纬度：%f 经度：%f",
 				result.getLocation().latitude, result.getLocation().longitude);
 		Toast.makeText(ChooseLocateActivity.this, strInfo, Toast.LENGTH_LONG)
@@ -167,6 +173,8 @@ OnMapLongClickListener, OnMapClickListener, OnGetGeoCoderResultListener{
 						.fromResource(R.drawable.icon_marka)));
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(result
 				.getLocation()));
+		longitude = String.valueOf(result.getLocation().longitude);
+		latitude = String.valueOf(result.getLocation().latitude);
 		Toast.makeText(ChooseLocateActivity.this, result.getAddress(),
 				Toast.LENGTH_LONG).show();
 	}

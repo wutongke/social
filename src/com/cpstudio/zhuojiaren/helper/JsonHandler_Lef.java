@@ -10,10 +10,14 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.util.Log;
 
+import com.cpstudio.zhuojiaren.model.CommentVO;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
+import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.model.GrouthVisit;
+import com.cpstudio.zhuojiaren.model.IncomeVO;
 import com.cpstudio.zhuojiaren.model.LoginRes;
+import com.cpstudio.zhuojiaren.model.ProgressVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.google.gson.Gson;
@@ -133,6 +137,56 @@ public class JsonHandler_Lef {
 		return list;
 	}
 	/**
+	 * 解析评论列表
+	 * @param <T>
+	 * @param <T>
+	 */
+	public static   ArrayList<CommentVO> parseCommentList(String jsonData) {
+		ArrayList<CommentVO> list = new ArrayList<CommentVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<CommentVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<CommentVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<CommentVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					CommentVO item = (CommentVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * 解析进展列表
+	 * @param <T>
+	 * @param <T>
+	 */
+	public static   ArrayList<ProgressVO> parseProgressVOList(String jsonData) {
+		ArrayList<ProgressVO> list = new ArrayList<ProgressVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<ProgressVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<ProgressVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<ProgressVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					ProgressVO item = (ProgressVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
 	 * 解析采访列表
 	 * @param jsonData
 	 * @return
@@ -170,6 +224,48 @@ public class JsonHandler_Lef {
 				for (Iterator<CrowdFundingVO> iterator = li.iterator(); iterator
 						.hasNext();) {
 					CrowdFundingVO item = (CrowdFundingVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public static ArrayList<GoodsVO> parseGoodsVOList(String jsonData) {
+		// TODO Auto-generated method stub
+		ArrayList<GoodsVO> list = new ArrayList<GoodsVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<GoodsVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<GoodsVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<GoodsVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					GoodsVO item = (GoodsVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public static ArrayList<IncomeVO> parseIncomeVOList(String jsonData) {
+		// TODO Auto-generated method stub
+		ArrayList<IncomeVO> list = new ArrayList<IncomeVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<IncomeVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<IncomeVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<IncomeVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					IncomeVO item = (IncomeVO) iterator.next();
 					list.add(item);
 				}
 			}

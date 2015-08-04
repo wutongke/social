@@ -1,6 +1,9 @@
 package com.cpstudio.zhuojiaren.fragment;
 import java.util.ArrayList;
 
+import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
+
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,12 +15,21 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
 	public static final int TAB_REVIEWS_INDEX = 2;
 	private ArrayList<Fragment> mFragmentList = new ArrayList<Fragment>();
 	private String[]titles;
-	public MyPagerAdapter(FragmentManager fm,String[]titles) {
+	public MyPagerAdapter(FragmentManager fm,String[]titles,CrowdFundingVO crowdFundingVO) {
 		super(fm);
 		this.titles = titles;
-		mFragmentList.add(TAB_PARAMS_INDEX, new PaybackFragment());
-		mFragmentList.add(TAB_DETAILS_INDEX, new CommentFragment());
-		mFragmentList.add(TAB_REVIEWS_INDEX, new ProgressFragment());
+		Bundle bundle = new Bundle();
+		bundle.putString("id", crowdFundingVO.getId());
+		bundle.putString("isCreater", crowdFundingVO.getIsCreater());
+		PaybackFragment paybackFragment = new PaybackFragment();
+		CommentFragment commentFragment = new CommentFragment();
+		ProgressFragment progressFragment = new ProgressFragment();
+		paybackFragment.setArguments(bundle);
+		commentFragment.setArguments(bundle);
+		progressFragment.setArguments(bundle);
+		mFragmentList.add(TAB_PARAMS_INDEX, paybackFragment);
+		mFragmentList.add(TAB_DETAILS_INDEX, commentFragment);
+		mFragmentList.add(TAB_REVIEWS_INDEX, progressFragment);
 	}
 
 	@Override

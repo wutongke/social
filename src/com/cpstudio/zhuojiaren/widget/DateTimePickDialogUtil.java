@@ -118,11 +118,11 @@ public class DateTimePickDialogUtil implements OnDateChangedListener,
 
 		calendar.set(datePicker.getYear(), datePicker.getMonth(),
 				datePicker.getDayOfMonth(), timePicker.getCurrentHour(),
-				timePicker.getCurrentMinute());
+				timePicker.getCurrentMinute(),0);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyƒÍMM‘¬dd»’ HH:mm");
 
 		dateTime = sdf.format(calendar.getTime());
-		getTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").format(System.currentTimeMillis());
+		getTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(calendar.getTime());
 		ad.setTitle(dateTime);
 	}
 	public String getTime(){

@@ -23,175 +23,213 @@ public class EventVO {
 	private String viewCount;
 	private String shareCount;
 
-	private int outdate;//(是否过期 1已过期  0未过期) ,
+	private int outdate;// (是否过期 1已过期 0未过期) ,
 	private String address;
 	private String joinCount;
 	private ArrayList<PicNewVO> activityPic;
-	private boolean collected;
+	private String iscollected;
+	private String isjoined;
+	private String isowner;
+	public String getIsjoined() {
+		return isjoined;
+	}
+
+	public String getIsowner() {
+		return isowner;
+	}
+
+	public void setIsjoined(String isjoined) {
+		this.isjoined = isjoined;
+	}
+
+	public void setIsowner(String isowner) {
+		this.isowner = isowner;
+	}
+
+	public String getIscollected() {
+		return iscollected;
+	}
+
+	public void setIscollected(String iscollected) {
+		this.iscollected = iscollected;
+	}
 	// add by lz
 	boolean isSelected = false;
-    private String title;
-    
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public boolean iscollected() {
-		return collected;
-	}
-
-	public void setIscollected(boolean iscollected) {
-		this.collected = iscollected;
-	}
-
-	public String getEndtime() {
-		return endtime;
-	}
-
-	public void setEndtime(String endtime) {
-		this.endtime = endtime;
-	}
-
-	public String getContacts() {
-		return contacts;
-	}
-
-	public void setContacts(String contacts) {
-		this.contacts = contacts;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getUserid() {
-		return userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getUheader() {
-		return uheader;
-	}
-
-	public void setUheader(String uheader) {
-		this.uheader = uheader;
-	}
-
-	public String getPosition() {
-		return position;
-	}
-
-	public void setPosition(String position) {
-		this.position = position;
-	}
-
-	public String getCompany() {
-		return company;
-	}
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
-	public String getViewCount() {
-		return viewCount;
-	}
-
-	public void setViewCount(String viewCount) {
-		this.viewCount = viewCount;
-	}
-
-	public String getShareCount() {
-		return shareCount;
-	}
-
-	public void setShareCount(String shareCount) {
-		this.shareCount = shareCount;
-	}
-
-	public ArrayList<PicNewVO> getActivityPic() {
-		return activityPic;
-	}
-
-	public void setActivityPic(ArrayList<PicNewVO> activityPic) {
-		this.activityPic = activityPic;
-	}
+	private String title;
+	// 经纬度
+	private String longitude;
+	private String latitude;
 
 	public String getActivityid() {
 		return activityid;
-	}
-
-	public void setActivityid(String activityid) {
-		this.activityid = activityid;
 	}
 
 	public String getContent() {
 		return content;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
-	}
-
 	public String getStarttime() {
 		return starttime;
 	}
 
-	public void setStarttime(String starttime) {
-		this.starttime = starttime;
+	public String getEndtime() {
+		return endtime;
 	}
 
-	
+	public String getContacts() {
+		return contacts;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getUheader() {
+		return uheader;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public String getViewCount() {
+		return viewCount;
+	}
+
+	public String getShareCount() {
+		return shareCount;
+	}
+
 	public int getOutdate() {
 		return outdate;
 	}
 
-	public void setOutdate(int outdate) {
-		this.outdate = outdate;
-	}
-
-	
 	public String getAddress() {
 		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
 	}
 
 	public String getJoinCount() {
 		return joinCount;
 	}
 
-	public void setJoinCount(String joinCount) {
-		this.joinCount = joinCount;
+	public ArrayList<PicNewVO> getActivityPic() {
+		return activityPic;
 	}
+
 
 	public boolean isSelected() {
 		return isSelected;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setActivityid(String activityid) {
+		this.activityid = activityid;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
+
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
+	}
+
+	public void setContacts(String contacts) {
+		this.contacts = contacts;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setUheader(String uheader) {
+		this.uheader = uheader;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public void setViewCount(String viewCount) {
+		this.viewCount = viewCount;
+	}
+
+	public void setShareCount(String shareCount) {
+		this.shareCount = shareCount;
+	}
+
+	public void setOutdate(int outdate) {
+		this.outdate = outdate;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setJoinCount(String joinCount) {
+		this.joinCount = joinCount;
+	}
+
+	public void setActivityPic(ArrayList<PicNewVO> activityPic) {
+		this.activityPic = activityPic;
+	}
+
+
 	public void setSelected(boolean isSelected) {
 		this.isSelected = isSelected;
 	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+	public boolean  isCollect(){
+		return Integer.parseInt(iscollected)==1; 
+	}
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,15 +23,34 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
+import com.cpstudio.zhuojiaren.QuanDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.AudioAdapter;
-import com.cpstudio.zhuojiaren.adapter.CrowdFundingAdapter;
-import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
+import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
+import com.cpstudio.zhuojiaren.adapter.QuanListAdapter;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.model.GrouthVedio;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.RecordVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
+/***
+ * 思路
+ * 
+ * 装载不同的数据，可能需要注意回收 设置一个共有url，用于点选不同的选项时加载不同的数据 点选选项时，需要设置url、分页数据、handler等
+ * 
+ * 返回的数据处理，
+ * 
+ * @author lef
+ * 
+ */
 public class MyCollectionActivity extends BaseActivity {
 	@InjectView(R.id.amc_pulldownview)
 	PullDownView pullDownView;
@@ -46,11 +66,34 @@ public class MyCollectionActivity extends BaseActivity {
 	private int baseMargin = 19;
 	private Context mContext;
 
+	private String url;
+	private int handlerTag;
+	// 分页
+	private int mPage = 0;
+	private AppClientLef appClientLef;
+
+	private final int vedio = 1;
+	private final int radio = 2;
+	private final int article = 3;
+	private final int event = 4;
+	// 名片
+	private final int businessCard = 5;
+	private final int product = 6;
+	private final int quan = 7;
+	private final int topic = 8;
+	// 动态
+	private final int dynamic = 9;
+	// 人脉
+	private final int peopleBASE = 10;
+	private final int gong = 11;
+	private final int xu = 12;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_collection);
 		ButterKnife.inject(this);
+		appClientLef = AppClientLef.getInstance(this);
 		mContext = this;
 		initTitle();
 		title.setText(R.string.my_collect);
@@ -67,7 +110,7 @@ public class MyCollectionActivity extends BaseActivity {
 		pullDownView.setShowFooter(false);
 		mAdapter = new AudioAdapter(mContext, mDatas, R.layout.item_radio);
 		listView.setAdapter(mAdapter);
-		
+
 		pullDownView.setOnPullDownListener(new OnPullDownListener() {
 
 			@Override
@@ -79,7 +122,7 @@ public class MyCollectionActivity extends BaseActivity {
 			@Override
 			public void onMore() {
 				// TODO Auto-generated method stub
-				loadData();
+				// loadData();
 			}
 		});
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -97,7 +140,7 @@ public class MyCollectionActivity extends BaseActivity {
 			}
 		});
 		loadData();
-		//收藏列表，初始tablelayout
+		// 收藏列表，初始tablelayout
 		buttonList = new ArrayList<ToggleButton>();
 		LayoutInflater inflater = LayoutInflater
 				.from(MyCollectionActivity.this);
@@ -128,12 +171,14 @@ public class MyCollectionActivity extends BaseActivity {
 			 * 直接设置check不太好用，设置onclick测试可用
 			 */
 			tb.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					tb.setChecked(true);
-					initData((Integer)(v.getTag()));
+					loadData();
+					handlerTag = (Integer) (v.getTag()) + 1;
+					url = ZhuoCommHelper.collectionUrls[handlerTag - 1];
 				}
 			});
 			tb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -165,94 +210,107 @@ public class MyCollectionActivity extends BaseActivity {
 	}
 
 	private void loadData() {
-		// TODO Auto-generated method stub
-		// test
-		RecordVO g = new RecordVO();
-		g.setName("张来才");
-		g.setId("21");
-		g.setLength("12:12:13");
-		g.setUsers("张来才");
-		g.setDate("2015.6.23");
-		g.setPath("http://yinyueshiting.baidu.com/data2/music/122878621/648618151200320.mp3?xcode=f8e09d23004f8a09b123be2e4a685e68");
-		pullDownView.finishLoadData(true);
-		pullDownView.hasData();
-		mDatas.add(g);
-		mAdapter.notifyDataSetChanged();
+		if (pullDownView.startLoadData()) {
+			mDatas.clear();
+			mPage = 0;
+			mAdapter.notifyDataSetChanged();
+//			appClientLef.getVedioList(tutorId, typeId, mPage, 5, uiHandler,
+//					MsgTagVO.DATA_LOAD, GrouthListActivity.this, true, null,
+//					null);
+		}
+
 	}
-	private void initData(Integer param){
-		switch(param){
-		case 7:
-			mAdapter = new AudioAdapter(mContext,
-					mDatas, R.layout.item_radio);
-			listView.setAdapter(mAdapter);
-			listView.setOnItemClickListener(new OnItemClickListener() {
 
-				@Override
-				public void onItemClick(
-						AdapterView<?> parent,
-						View view, int position, long id) {
-					// TODO Auto-generated method stub
-					if (mAdapter != null)
-						((AudioAdapter) mAdapter)
-								.stop();
-					Intent intent = new Intent(
-							MyCollectionActivity.this,
-							AudioDetailActivity.class);
-					intent.putExtra("id",
-							mDatas.get(position - 1)
-									.getId());
-					startActivity(intent);
-				}
-			});
-			break;
-		case 6:
-			final ArrayList<CrowdFundingVO> mListDatas=new ArrayList<CrowdFundingVO>();
-			CrowdFundingVO test = new CrowdFundingVO();
-//			test.setFundingId("123");
-//			test.setName("asdf");
-//			test.setMinPrice("5");
-//			test.setMoneyGet("8000");
-			pullDownView.finishLoadData(true);
-			pullDownView.hasData();
-			mListDatas.add(test);
-			mAdapter = new CrowdFundingAdapter(mContext, mListDatas, R.layout.item_crowdfunding);
-			listView.setAdapter(mAdapter);
-			listView.setOnItemClickListener(new OnItemClickListener() {
+	private void loadMore() {
+//		appClientLef.getVedioList(tutorId, typeId, mPage, 5, uiHandler,
+//				MsgTagVO.DATA_MORE, GrouthListActivity.this, true, null, null);
+	}
 
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-					// TODO Auto-generated method stub
-					Intent intent = new Intent(MyCollectionActivity.this,CrowdFundingDetailActivity.class);
-					intent.putExtra(CrowdFundingVO.CROWDFUNDINGID,mListDatas.get(position-1).getId());
-					startActivity(intent);
-				}
-			});
-			break;
-			default:
-				mAdapter = new AudioAdapter(mContext,
-						mDatas, R.layout.item_radio);
+	Handler uiHandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			ResultVO res;
+			if (JsonHandler.checkResult((String) msg.obj,
+					MyCollectionActivity.this)) {
+				res = JsonHandler.parseResult((String) msg.obj);
+			} else {
+				return;
+			}
+			String data = res.getData();
+			switch (msg.what) {
+			case radio:
+				mAdapter = new AudioAdapter(mContext, mDatas,
+						R.layout.item_radio);
 				listView.setAdapter(mAdapter);
 				listView.setOnItemClickListener(new OnItemClickListener() {
 
 					@Override
-					public void onItemClick(
-							AdapterView<?> parent,
-							View view, int position, long id) {
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
 						// TODO Auto-generated method stub
 						if (mAdapter != null)
-							((AudioAdapter) mAdapter)
-									.stop();
-						Intent intent = new Intent(
-								MyCollectionActivity.this,
+							((AudioAdapter) mAdapter).stop();
+						Intent intent = new Intent(MyCollectionActivity.this,
 								AudioDetailActivity.class);
-						intent.putExtra("id",
-								mDatas.get(position - 1)
-										.getId());
+						intent.putExtra("id", mDatas.get(position - 1).getId());
 						startActivity(intent);
 					}
 				});
 				break;
-		}
-	}
+			case vedio:
+				final ArrayList<GrouthVedio> list = JsonHandler_Lef
+						.parseGrouthVedioList(data);
+				mAdapter = new GrouthAdapter(mContext, list,
+						R.layout.item_growth);
+				listView.setAdapter(mAdapter);
+				listView.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						// TODO Auto-generated method stub
+						Intent intent = new Intent(MyCollectionActivity.this,
+								VedioActivity.class);
+						intent.putExtra("id", list.get(position - 1).getId());
+						startActivity(intent);
+					}
+				});
+				break;
+			case quan:
+				final ArrayList<QuanVO> list2 = JsonHandler_Lef
+						.parseQuanList(data);
+				mAdapter = new QuanListAdapter(mContext, list2);
+				listView.setAdapter(mAdapter);
+				listView.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						// TODO Auto-generated method stub
+						Intent intent = new Intent(MyCollectionActivity.this,
+								QuanDetailActivity.class);
+						intent.putExtra("id", list2.get(position - 1).getGroupid());
+						startActivity(intent);
+					}
+				});
+				break;
+			default:
+				mAdapter = new AudioAdapter(mContext, mDatas,
+						R.layout.item_radio);
+				listView.setAdapter(mAdapter);
+				listView.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						// TODO Auto-generated method stub
+						if (mAdapter != null)
+							((AudioAdapter) mAdapter).stop();
+						Intent intent = new Intent(MyCollectionActivity.this,
+								AudioDetailActivity.class);
+						intent.putExtra("id", mDatas.get(position - 1).getId());
+						startActivity(intent);
+					}
+				});
+				break;
+			}
+		};
+	};
 }

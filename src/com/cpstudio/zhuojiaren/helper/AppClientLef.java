@@ -30,6 +30,7 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper.FinishCallback;
 import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.ICompleteCallback;
 import com.cpstudio.zhuojiaren.model.LoginRes;
@@ -228,12 +229,12 @@ public class AppClientLef {
 	/**
 	 * 提交视频统计
 	 */
-	public boolean submitVedio(String Id) {
+	public boolean submitVedio(Activity activity,String Id) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("onlineid", Id));
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		String url = ZhuoCommHelper.getSubmitVisit();
-		return doPost(nameValuePairs, url, null, 0, null, url, false, null,
+		return doPost(nameValuePairs, url, null, 0, activity, url, false, null,
 				null);
 	}
 
@@ -254,15 +255,15 @@ public class AppClientLef {
 	/**
 	 * 获取众筹
 	 */
-	public boolean getFundingList(int catid,int ismy,int pageNo, int pageSize, Handler handler,
-			int handlerTag, Activity activity, boolean cancelable,
-			OnCancelListener cancel, String data) {
+	public boolean getFundingList(int catid, int ismy, int pageNo,
+			int pageSize, Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
-		if(ismy>=0)
-		nameValuePairs.add(new BasicNameValuePair("ismy",ismy+""));
-		nameValuePairs.add(new BasicNameValuePair("catid",catid+""));
+		if (ismy >= 0)
+			nameValuePairs.add(new BasicNameValuePair("ismy", ismy + ""));
+		nameValuePairs.add(new BasicNameValuePair("catid", catid + ""));
 		String url = ZhuoCommHelper.getServiceFundingList();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				cancelable, cancel, data);
@@ -329,16 +330,40 @@ public class AppClientLef {
 	/**
 	 * 收藏
 	 */
-	public boolean collection(String url, String idKey, String id,
+	public boolean collection(Activity acitivity,String url, String idKey, String id,
 			String stateKey, String state) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair(idKey, id));
 		nameValuePairs.add(new BasicNameValuePair(stateKey, state));
-		return doPost(nameValuePairs, url, null, 0, null, url, false, null,
+		return doPost(nameValuePairs, url, null, 0, acitivity, url, false, null,
 				null);
 	}
-
+	/**
+	 * 发布进展
+	 */
+	public boolean pubProgress(Activity activity, Handler handler,
+			int handlerTag, String id,String content) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("id", id));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		String url = ZhuoCommHelper.getPubcrowdfundingcomment();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url, false, null,
+				null);
+	}
+	/**
+	 * 获取进展列表
+	 */
+	public boolean getProgress(Activity activity, Handler handler,
+			int handlerTag, String id) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("id", id));
+		String url = ZhuoCommHelper.getGetcrowdfundingprogress();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url, false, null,
+				null);
+	}
 	/**
 	 * 创建圈子
 	 */
@@ -386,9 +411,10 @@ public class AppClientLef {
 	 * 发布活动
 	 */
 	public boolean createEvent(Activity activity, Handler handler,
-			int handlerTag, String groupid, String title, String content,
-			String contacts, String starttime, String endtime, String address,
-			String phone, ArrayList<String> files) {
+			int handlerTag, String longitude, String latitude, String groupid,
+			String title, String content, String contacts, String starttime,
+			String endtime, String address, String phone,
+			ArrayList<String> files) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
@@ -399,11 +425,28 @@ public class AppClientLef {
 		nameValuePairs.add(new BasicNameValuePair("endtime", endtime));
 		nameValuePairs.add(new BasicNameValuePair("address", address));
 		nameValuePairs.add(new BasicNameValuePair("phone", phone));
+		nameValuePairs.add(new BasicNameValuePair("longtitude", longitude));
+		nameValuePairs.add(new BasicNameValuePair("latitude", latitude));
+		nameValuePairs.add(new BasicNameValuePair("phone", phone));
 		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
 		filesMap.put("file", files);
 		return ZhuoConnHelper.getInstance(context).doPostWithFile(filesMap,
 				nameValuePairs, ZhuoCommHelper.getAddgroupactivity(), handler,
 				handlerTag, activity, "1", false, null, null);
+	}
+
+	/**
+	 * 退出活动
+	 */
+	public boolean quitEvent(String url, String idKey, String id,
+			String stateKey, String state, Handler handler, int handlerTag,
+			Activity activity) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair(idKey, id));
+		nameValuePairs.add(new BasicNameValuePair(stateKey, state));
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
 	}
 
 	/**
@@ -426,8 +469,13 @@ public class AppClientLef {
 	 */
 	public boolean updateFilesForCrowdFunding(
 			final Map<String, ArrayList<String>> filesMap,
-			final Handler handler,
-			final int handlerTag, final Activity activity, final String tag) {
+			final Handler handler, final int handlerTag,
+			final Activity activity, final String tag) {
+		if (CommonUtil.getNetworkState(activity) == 2) {
+
+			CommonUtil.displayToast(activity, R.string.error0);
+			return false;
+		}
 		if (!mStartedTag.contains(tag) || tag == null) {
 			if (tag != null) {
 				mStartedTag.add(tag);
@@ -438,11 +486,11 @@ public class AppClientLef {
 						@Override
 						public void onReturn(Map<String, StringBuilder> map) {
 							// TODO Auto-generated method stub
-							if (tag != null) 
-							mStartedTag.remove(tag);
-							if (map == null||map.size()==0)
-								Toast.makeText(activity, "图片上传失败，请重新登录提交", Toast.LENGTH_LONG)
-										.show();
+							if (tag != null)
+								mStartedTag.remove(tag);
+							if (map == null || map.size() == 0)
+								Toast.makeText(activity, "图片上传失败，请重新登录提交",
+										Toast.LENGTH_LONG).show();
 							else if (map.size() > 0) {
 								if (handler != null) {
 									Message msg = handler
@@ -455,7 +503,7 @@ public class AppClientLef {
 					});
 			helper.execute("test");
 			return true;
-		}else{
+		} else {
 			CommonUtil.displayToast(activity, "不要重复提交");
 		}
 		return false;
@@ -470,8 +518,8 @@ public class AppClientLef {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("title", title));
-		nameValuePairs.add(new BasicNameValuePair("catid",catid ));
-		nameValuePairs.add(new BasicNameValuePair("targetZb",targetZb ));
+		nameValuePairs.add(new BasicNameValuePair("catid", catid));
+		nameValuePairs.add(new BasicNameValuePair("targetZb", targetZb));
 		nameValuePairs.add(new BasicNameValuePair("thumbPic", thumbPic));
 		nameValuePairs.add(new BasicNameValuePair("support", support));
 		nameValuePairs.add(new BasicNameValuePair("description", description));
@@ -479,11 +527,12 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				false, null, null);
 	}
+
 	/**
 	 * 获取众筹详情
 	 */
 	public boolean getCrowdFunding(Activity activity, Handler handler,
-			int handlerTag,String id) {
+			int handlerTag, String id) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("id", id));
@@ -491,6 +540,47 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				false, null, null);
 	}
+	/**
+	 * 获取众筹评论列表
+	 */
+	public boolean getCrowdFundingComment(Activity activity, Handler handler,
+			int handlerTag, String id) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("id", id));
+		String url = ZhuoCommHelper.getGetcrowdfundingcomment();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+	/**
+	 * 发布评论
+	 * 
+	 */
+	public boolean pubComment(Activity activity, Handler handler,
+			int handlerTag, String id, String content, String toId,String toUserid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("id", id));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		if (!toId.equals("-1")) {
+			nameValuePairs.add(new BasicNameValuePair("toUserid", toUserid));
+			nameValuePairs.add(new BasicNameValuePair("toId", toId));
+		}
+		String url = ZhuoCommHelper.getComment();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	public boolean getEventDetail(Activity activity, Handler handler,
+			int handlerTag, String activityid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("activityid", activityid));
+		String url = ZhuoCommHelper.getGeteventdetail();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
 	/**
 	 * 保存对象
 	 * 
@@ -1060,6 +1150,12 @@ public class AppClientLef {
 	private boolean doPost(List<NameValuePair> nameValuePairs, String url,
 			Handler handler, int handlerTag, Activity activity, String tag,
 			boolean cancelable, OnCancelListener cancel, String data) {
+		if (CommonUtil.getNetworkState(activity) == 2) {
+
+			CommonUtil.displayToast(activity, R.string.error0);
+			return false;
+		}
+
 		if (!mStartedTag.contains(tag) || tag == null) {
 			if (tag != null) {
 				mStartedTag.add(tag);
