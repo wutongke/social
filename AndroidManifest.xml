@@ -1017,6 +1017,12 @@
             android:screenOrientation="portrait" >
         </activity>
 
+        
+        <activity
+            android:name="com.cpstudui.zhuojiaren.lz.DynamicDetailActivity"
+            android:label="@string/dynamic_detail" >
+        </activity>
+        
         <!-- 融云 -->
         <!-- begin imlib request -->
 

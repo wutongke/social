@@ -33,6 +33,7 @@ import com.cpstudio.zhuojiaren.helper.AsyncConnectHelperLZ.FinishCallback;
 import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.ICompleteCallback;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.City;
+import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.Province;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.google.gson.Gson;
@@ -1326,12 +1327,20 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.modifyUserInfo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
-	
-	
-	public boolean setUserHeadImage(Activity activity, Handler mUIHandler, int tag,
-			String filePath) {
+
+	/**
+	 * 设置用户头像
+	 * 
+	 * @param activity
+	 * @param mUIHandler
+	 * @param tag
+	 * @param filePath
+	 * @return
+	 */
+	public boolean setUserHeadImage(Activity activity, Handler mUIHandler,
+			int tag, String filePath) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		ArrayList<String> fileList=new ArrayList<String>();
+		ArrayList<String> fileList = new ArrayList<String>();
 		fileList.add(filePath);
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", fileList);
@@ -1339,7 +1348,79 @@ public class ZhuoConnHelper {
 				ZhuoCommHelperLz.setUserHeadImage(), mUIHandler, tag, activity,
 				"setHeadImage", false, null, null);
 	}
-	
+
+	/**
+	 * 获得动态详情
+	 * 
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param statusid
+	 * @return
+	 */
+	public boolean getDetailDynamic(Handler mUIHandler, int handlerTag,
+			String statusid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("statusid", statusid));
+		return getFromServerByPost(ZhuoCommHelperLz.getDetailDynamic(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	public boolean getDynamicList(Handler mUIHandler, int handlerTag, int type,
+			String userid, int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs
+				.add(new BasicNameValuePair("type", String.valueOf(type)));
+		if (type == Dynamic.DYNATIC_TYPE_SB_JIAREN)
+			nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		nameValuePairs.add(new BasicNameValuePair("pageNo", String
+				.valueOf(pageNo)));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", String
+				.valueOf(pageSize)));
+		return getFromServerByPost(ZhuoCommHelperLz.getDynamicList(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	/**
+	 * 发布动态
+	 * 
+	 * @param activity
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param content
+	 * @param files
+	 * @return
+	 */
+	public boolean pubDynamic(Activity activity, Handler mUIHandler,
+			int handlerTag, String content, ArrayList<String> files) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
+		fileMap.put("file", files);
+		return doPostWithFile(fileMap, nameValuePairs,
+				ZhuoCommHelperLz.pubDynamic(), mUIHandler, handlerTag,
+				activity, "pubDynamic", false, null, null);
+	}
+
+	public boolean deleteDynamic(Handler mUIHandler, int handlerTag,
+			String statusid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("statusid", statusid));
+		return getFromServerByPost(ZhuoCommHelperLz.getDetailDynamic(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	/**
+	 * 获得基本编码数据：id和值的对应
+	 * 
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
 	public boolean getBaseCodeData(Handler handler, int handlerTag,
 			Activity activity, boolean cancelable, OnCancelListener cancel,
 			String data) {

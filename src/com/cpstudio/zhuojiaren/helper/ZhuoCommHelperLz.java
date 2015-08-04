@@ -37,6 +37,14 @@ public class ZhuoCommHelperLz {
 	private final static String MODIFY_USER_INFO = "/modifyuserinfo.do";
 	private final static String SET_UHEAD = "/setuheader.do";
 	
+	
+	
+	private final static String GET_FAMILY_STATUS_DETAIL = "/getStatusFamily.do";
+	
+	private final static String GET_LIST_FAMILY_STATUS = "/statusFamilyList.do";
+	private final static String PUB_STATUS = "/addStatusFamily.do";
+	private final static String DELETE_FAMILY_STATUS = "/deleteStatusFamily.do";
+	
 	// 未用
 	private final static String SERVICE_GET_ADINFO = "/getadinfo.do";
 
@@ -176,6 +184,33 @@ public class ZhuoCommHelperLz {
 	public static String setUserHeadImage() {
 		return SERVER + SET_UHEAD;
 	}
-	
+	/**
+	 * 获得动态详细信息
+	 * @return
+	 */
+	public static String getDetailDynamic() {
+		return SERVER + GET_FAMILY_STATUS_DETAIL;
+	}
+	/**
+	 * 获得动态列表
+	 * @return
+	 */
+	public static String getDynamicList() {
+		return SERVER + GET_LIST_FAMILY_STATUS;
+	}
+	/**
+	 * 发布动态
+	 * @return
+	 */
+	public static String pubDynamic() {
+		return SERVER + PUB_STATUS;
+	}
+	/**
+	 * 删除动态
+	 * @return
+	 */
+	public static String deleteDynamic() {
+		return SERVER + DELETE_FAMILY_STATUS;
+	}
 	
 }
