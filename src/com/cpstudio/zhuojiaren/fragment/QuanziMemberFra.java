@@ -28,6 +28,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudui.zhuojiaren.lz.QuanMemberListAdapter;
@@ -40,7 +41,7 @@ public class QuanziMemberFra extends Fragment {
 
 	private QuanMemberListAdapter mAdapter;
 	// private ArrayList<UserVO> mList = new ArrayList<UserVO>();
-	private ArrayList<UserVO> mList = new ArrayList<UserVO>();
+	private ArrayList<UserNewVO> mList = new ArrayList<UserNewVO>();
 	// 需要改
 	// private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
 	private ZhuoConnHelper mConnHelper = null;
@@ -50,7 +51,7 @@ public class QuanziMemberFra extends Fragment {
 	private Context mContext;
 	private String mLastId = null;
 	// private PopupWindows pupWindow;
-	String groupId=null;
+	String groupId = null;
 	// 主View
 	View layout;
 	private String uid = null;
@@ -79,12 +80,7 @@ public class QuanziMemberFra extends Fragment {
 		Bundle intent = getArguments();
 		mType = intent.getInt(QuanVO.QUANZIMAINTYPE);
 
-		// if (mType == QuanVO.QUANZIACTIVE)
-		// mAdapter = new ActiveListAdapter(getActivity(), activeList);
-		// else if (mType == QuanVO.QUANZITOPIC)
 		mAdapter = new QuanMemberListAdapter(getActivity(), mList);
-		// else
-		// mAdapter = new QuanMemberListAdapter(getActivity(), memberList);
 
 		RelativeLayout mFooterView = (RelativeLayout) inflater.inflate(
 				R.layout.listview_footer, null);
@@ -96,25 +92,23 @@ public class QuanziMemberFra extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(mContext,
-						ZhuoMaiCardActivity.class);
-	//需要从item中获得ID
+				Intent intent = new Intent(mContext, ZhuoMaiCardActivity.class);
+				// 需要从item中获得ID
 				intent.putExtra("userid", 1001);
 				startActivity(intent);
 			}
 
 		});
-		
-		
-	//测试，先不用	
-//		loadData();
-		
+
+		// 测试，先不用
+		// loadData();
+
 		for (int i = 0; i < 8; i++)
-			mList.add(new UserVO());
+			mList.add(new UserNewVO());
 		mAdapter.notifyDataSetChanged();
-		
-		groupId=((ZhuoQuanMainActivity)getActivity()).getGroupid();
-		
+
+		groupId = ((ZhuoQuanMainActivity) getActivity()).getGroupid();
+
 		return layout;
 	}
 
@@ -123,10 +117,8 @@ public class QuanziMemberFra extends Fragment {
 			if (data != null && !data.equals("")) {
 				JsonHandler nljh = new JsonHandler(data, getActivity()
 						.getApplicationContext());
-				
-				
-				
-				ArrayList<UserVO> list = nljh.parseTUserList();
+
+				ArrayList<UserNewVO> list = nljh.parseUserNewList();
 				if (!list.isEmpty()) {
 					mListViewFooter.hasData();
 					if (!append) {
@@ -135,7 +127,7 @@ public class QuanziMemberFra extends Fragment {
 					mList.addAll(list);
 					mAdapter.notifyDataSetChanged();
 					if (mList.size() > 0) {
-						mLastId = mList.get(mList.size() - 1).getUserid();
+						// mLastId = mList.get(mList.size() - 1).get;
 					}
 					mPage++;
 				} else {
@@ -146,7 +138,7 @@ public class QuanziMemberFra extends Fragment {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
 		@Override
@@ -166,7 +158,7 @@ public class QuanziMemberFra extends Fragment {
 				if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getActivity().getApplicationContext());
-					
+
 					UserVO user = nljh.parseUser();
 					if (null != user) {
 						UserFacade facade = new UserFacade(getActivity()
@@ -181,11 +173,8 @@ public class QuanziMemberFra extends Fragment {
 	};
 
 	private void loadData() {
-
-		
-//		// 加载刷新个人信息
-//		mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
-
+		// // 加载刷新个人信息
+		// mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
 		if (mListViewFooter.startLoading()) {
 			mList.clear();
 			mAdapter.notifyDataSetChanged();

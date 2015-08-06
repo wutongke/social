@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class CardAddUserQQActivity extends Activity {
@@ -16,11 +17,11 @@ public class CardAddUserQQActivity extends Activity {
 		setContentView(R.layout.activity_card_add_user_qq);
 		Intent i = getIntent();
 		String qq = i.getStringExtra(CardEditActivity.EDIT_QQ_STR1);
-		((TextView) findViewById(R.id.textViewQQ)).setText(qq);
-		String qqopen = i.getStringExtra(CardEditActivity.EDIT_QQ_STR2);
-		if (qqopen != null && qqopen.equals("1")) {
+		((EditText) findViewById(R.id.edtQQ)).setText(qq);
+		int qqopen = i.getIntExtra(CardEditActivity.EDIT_QQ_STR2, 0);
+		if (qqopen == 0) {
 			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(true);
-		}else{
+		} else {
 			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(false);
 		}
 		initClick();
@@ -40,13 +41,13 @@ public class CardAddUserQQActivity extends Activity {
 					public void onClick(View v) {
 						Intent i = new Intent();
 						i.putExtra(CardEditActivity.EDIT_QQ_STR1,
-								((TextView) findViewById(R.id.textViewQQ))
+								((EditText) findViewById(R.id.edtQQ))
 										.getText().toString());
 						if (((CheckBox) findViewById(R.id.checkBoxIsOpen))
 								.isChecked()) {
-							i.putExtra(CardEditActivity.EDIT_QQ_STR2, "1");
+							i.putExtra(CardEditActivity.EDIT_QQ_STR2, 0);
 						} else {
-							i.putExtra(CardEditActivity.EDIT_QQ_STR2, "0");
+							i.putExtra(CardEditActivity.EDIT_QQ_STR2, 1);
 						}
 						setResult(RESULT_OK, i);
 						CardAddUserQQActivity.this.finish();

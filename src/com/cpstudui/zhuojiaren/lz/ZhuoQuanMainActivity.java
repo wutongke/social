@@ -1,5 +1,7 @@
 package com.cpstudui.zhuojiaren.lz;
 
+import io.rong.imkit.RongIM;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,9 +94,10 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	private PopupWindows phw = null;
 	private LoadImage mLoadImage = new LoadImage(3);
 	// 不同身份，功能不同
-	private int memberType = 3;
+	private int role = QuanVO.QUAN_ROLE_YOUKE;
 	private PopupWindows pwh = null;
 	private String groupid = null;
+	private String groupName = null;
 	private ZhuoConnHelper mConnHelper = null;
 	private boolean isfollow = false;// 是否已经加入该圈子
 	private QuanFacade mFacade = null;
@@ -116,19 +119,14 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		title.setText(R.string.title_activity_zhuojiaquan_main);
 		function.setTag(0);
 		function.setBackgroundResource(R.drawable.menu_qht1);
-		// 初始化tab和viewpager
-		viewPager.setAdapter(getPagerAdapter());
-
-		tabButton.setViewPager(viewPager);
 
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		mFacade = new QuanFacade(getApplicationContext());
 		Intent i = getIntent();
 		groupid = i.getStringExtra("groupid");
 		pwh = new PopupWindows(ZhuoQuanMainActivity.this);
-		loadData();
 		initOnClick();
-
+		loadData();
 		// 圈子数据在之前版本是所有的数据都在一个请求“getUrlGroupDetail”中，新版本在主界面只获得成员数，话题数等基本信息，
 		// 之后的圈话题，圈活动，圈成员在单独的请求中获得。是否需要分页？
 	}
@@ -153,8 +151,9 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						}
 					}
 					if (null != detail) {
-						memberType = detail.getRole();
+						role = detail.getRole();
 						String name = detail.getGname();
+						groupName = name;
 						tvName.setText(name);
 						String headUrl = detail.getGheader();
 						ivGroupHeader.setTag(headUrl);
@@ -166,7 +165,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						tvMemNum.setText(detail.getMemberCount() + "");
 						// tvMemNum.setText(detail.getMemberCount());
 						tvTopicNum.setText(detail.getTopicCount() + "");
-						if (memberType != 0) {
+						if (role != 0) {
 							isfollow = true;
 						} else {
 							isfollow = false;
@@ -181,8 +180,15 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 							noticesListData.add(pub);
 							antoPubText.setList(noticesListData);
 							antoPubText.updateUI();
-							findViewById(R.id.linearLayoutBroadcast).setVisibility(View.VISIBLE);
+							findViewById(R.id.linearLayoutBroadcast)
+									.setVisibility(View.VISIBLE);
 						}
+
+						// 初始化tab和viewpager
+						viewPager.setAdapter(getPagerAdapter());
+						tabButton.setViewPager(viewPager);
+						tabButton.setVisibility(View.VISIBLE);
+
 					}
 				}
 				break;
@@ -348,12 +354,14 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				// 进入圈聊界面
-				Intent i = new Intent(ZhuoQuanMainActivity.this,
-						QuanBoardChatActivity.class);
-				i.putExtra("groupid", groupid);
-
-				startActivity(i);
+				// // 进入圈聊界面
+				// Intent i = new Intent(ZhuoQuanMainActivity.this,
+				// QuanBoardChatActivity.class);
+				// i.putExtra("groupid", groupid);
+				//
+				// startActivity(i);
+				RongIM.getInstance().startGroupChat(getApplicationContext(),
+						groupid, groupName);
 			}
 		});
 		btnJoinQuan.setOnClickListener(new OnClickListener() {
@@ -399,6 +407,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	protected Fragment addBundle(Fragment fragment, int catlog) {
 		Bundle bundle = new Bundle();
 		bundle.putInt(QuanVO.QUANZIMAINTYPE, catlog);
+		bundle.putInt(QuanVO.QUANROLE, role);
 		fragment.setArguments(bundle);
 		return fragment;
 	}

@@ -1,28 +1,60 @@
 package com.cpstudio.zhuojiaren;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.Province;
+import com.cpstudio.zhuojiaren.widget.PlaceChooseDialog;
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.Editable;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 public class CardAddUserCityActivity extends Activity {
+	@InjectView(R.id.editTextPlace)
+	EditText editTextPlace;
+	@InjectView(R.id.textViewOtherTowns)
+	EditText editTextOtherTowns;
+	@InjectView(R.id.editTextHomeTown)
+	EditText editTextHomeTown;
+
 	private static int OTHER_TOWN = 0;
+	List<Province> provList;
+	ZhuoConnHelper mConnHelper;
+	ArrayList<String> codes = new ArrayList<String>(3);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_card_add_user_city);
+		ButterKnife.inject(this);
+		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+
+		String citysStr = mConnHelper.readObject(ZhuoConnHelper.CITYS);
+		provList = JsonHandler.parseCodedCitys(citysStr);
+		// 根据provList，从编号获得城市名称
 		Intent i = getIntent();
-		String place = i.getStringExtra(CardEditActivity.EDIT_PLACE_STR1);
-		((EditText) findViewById(R.id.editTextPlace)).setText(place);
-		String othertowns = i.getStringExtra(CardEditActivity.EDIT_PLACE_STR3);
-		((TextView) findViewById(R.id.textViewOtherTowns)).setText(othertowns);
-		String hometown = i.getStringExtra(CardEditActivity.EDIT_PLACE_STR2);
-		((EditText) findViewById(R.id.editTextHomeTown)).setText(hometown);
+		int place = i.getIntExtra(CardEditActivity.EDIT_PLACE_STR1, 0);
+		editTextPlace.setText(place + "");
+		int othertowns = i.getIntExtra(CardEditActivity.EDIT_PLACE_STR2, 0);
+		editTextHomeTown.setText(othertowns + "");
+		String towns = i.getStringExtra(CardEditActivity.EDIT_PLACE_STR3);
+		editTextOtherTowns.setText(towns);
 		initClick();
+		codes.add("");codes.add("");codes.add("");
 	}
 
 	private void initClick() {
@@ -38,40 +70,93 @@ public class CardAddUserCityActivity extends Activity {
 					@Override
 					public void onClick(View v) {
 						Intent intent = new Intent();
+
 						intent.putExtra(CardEditActivity.EDIT_PLACE_STR1,
-								((EditText) findViewById(R.id.editTextPlace))
-										.getText().toString());
-						intent.putExtra(
-								CardEditActivity.EDIT_PLACE_STR3,
-								((TextView) findViewById(R.id.textViewOtherTowns))
-										.getText().toString());
-						intent.putExtra(
-								CardEditActivity.EDIT_PLACE_STR2,
-								((EditText) findViewById(R.id.editTextHomeTown))
-										.getText().toString());
+								Integer.parseInt(codes.get(0)));
+						intent.putExtra(CardEditActivity.EDIT_PLACE_STR2,
+								Integer.parseInt(codes.get(1)));
+						intent.putExtra(CardEditActivity.EDIT_PLACE_STR3,
+								codes.get(2));
 						setResult(RESULT_OK, intent);
 						CardAddUserCityActivity.this.finish();
 					}
 				});
-		findViewById(R.id.textViewOtherTowns).setOnClickListener(
-				new OnClickListener() {
+		editTextPlace.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				choosePlace(editTextPlace, 0);
+			}
+		});
+
+		editTextHomeTown.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				choosePlace(editTextHomeTown, 1);
+			}
+		});
+		editTextOtherTowns.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				choosePlace(editTextOtherTowns, 2);
+			}
+		});
+		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				CardAddUserCityActivity.this.finish();
+			}
+		});
+
+	}
+
+	void choosePlace(final EditText edtView, final int codeIndex) {
+		// TODO Auto-generated method stub
+		final PlaceChooseDialog placeChoose = new PlaceChooseDialog(
+				CardAddUserCityActivity.this,
+				AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, "北京", "北京");
+		placeChoose.setButton(DialogInterface.BUTTON_POSITIVE, "确定",
+				new DialogInterface.OnClickListener() {
+
 					@Override
-					public void onClick(View v) {
-						Intent i = new Intent(CardAddUserCityActivity.this,
-								CardAddUserCityMoreActivity.class);
-						i.putExtra("city", ((TextView) v).getText());
-						startActivityForResult(i, OTHER_TOWN);
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						String value = edtView.getText().toString();
+						if (codeIndex == 2)// 多个地点
+						{
+							if (!"".equals(value)) {
+								value = value
+										+ ","
+										+ placeChoose.getPlace().getText()
+												.toString();
+								codes.set(codeIndex, codes.get(codeIndex) + ","
+										+ placeChoose.getCityCode());
+							}
+
+							else {
+								value = placeChoose.getPlace().getText()
+										.toString();
+								codes.set(codeIndex, placeChoose.getCityCode()
+										+ "");
+							}
+						} else {
+							value = placeChoose.getPlace().getText().toString();
+							codes.set(codeIndex, placeChoose.getCityCode() + "");
+						}
+						edtView.setText(value);
+					}
+				});
+		placeChoose.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
 
 					}
 				});
+		placeChoose.setTitle(R.string.choose_place);
+		placeChoose.show();
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK && requestCode == OTHER_TOWN) {
-			String str = data.getStringExtra("city");
-			((TextView) findViewById(R.id.textViewOtherTowns)).setText(str);
-		}
-	}
 }

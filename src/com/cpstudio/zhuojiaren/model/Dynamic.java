@@ -1,15 +1,24 @@
 package com.cpstudio.zhuojiaren.model;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class QuanTopicVO implements Serializable{
-
-	private String topicid;
+public class Dynamic {
+	
+	public static final int DYNATIC_TYPE_MY_JIAREN=0;
+	public static final int DYNATIC_TYPE_SB_JIAREN=1;
+	public static final int DYNATIC_TYPE_ALL_JIAREN=2;
+	
+	private String statusid;
 
 	private String content;
 
-	private String groupid;
+	private int type;
+
+	private String shareid;
+
+	private String userid;
+
+	private String name;
 
 	private String uheader;
 
@@ -17,18 +26,14 @@ public class QuanTopicVO implements Serializable{
 
 	private String addtime;
 
-	private List<PicNewVO> topicPic;
+	private List<PicNewVO> statusPic;
 
-	private String userid;//·¢²¼Õß
-	
-	private String name;
-	
-	public void setTopicid(String topicid) {
-		this.topicid = topicid;
+	public void setStatusid(String statusid) {
+		this.statusid = statusid;
 	}
 
-	public String getTopicid() {
-		return this.topicid;
+	public String getStatusid() {
+		return this.statusid;
 	}
 
 	public void setContent(String content) {
@@ -39,12 +44,20 @@ public class QuanTopicVO implements Serializable{
 		return this.content;
 	}
 
-	public void setGroupid(String groupid) {
-		this.groupid = groupid;
+	public void setType(int type) {
+		this.type = type;
 	}
 
-	public String getGroupid() {
-		return this.groupid;
+	public int getType() {
+		return this.type;
+	}
+
+	public void setShareid(String shareid) {
+		this.shareid = shareid;
+	}
+
+	public String getShareid() {
+		return this.shareid;
 	}
 
 	public void setUserid(String userid) {
@@ -87,11 +100,11 @@ public class QuanTopicVO implements Serializable{
 		return this.addtime;
 	}
 
-	public void setTopicPic(List<PicNewVO> topicPic) {
-		this.topicPic = topicPic;
+	public void setStatusPic(List<PicNewVO> statusPic) {
+		this.statusPic = statusPic;
 	}
 
-	public List<PicNewVO> getTopicPic() {
-		return this.topicPic;
+	public List<PicNewVO> getStatusPic() {
+		return this.statusPic;
 	}
 }

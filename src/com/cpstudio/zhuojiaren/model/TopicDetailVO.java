@@ -21,11 +21,11 @@ public class TopicDetailVO {
 
 	private String company;
 
-	private List<PicNewVO> topicPics;
+	private List<PicNewVO> topicPic;
 
-	private List<Praise> praiseLists;
+	private List<Praise> praiseList;
 
-	private List<Comment> commentLists;
+	private List<Comment> commentList;
 
 	public String getCompany() {
 		return company;
@@ -35,28 +35,30 @@ public class TopicDetailVO {
 		this.company = company;
 	}
 
-	public List<PicNewVO> getTopicPics() {
-		return topicPics;
+	
+
+	public List<PicNewVO> getTopicPic() {
+		return topicPic;
 	}
 
-	public void setTopicPics(List<PicNewVO> topicPics) {
-		this.topicPics = topicPics;
+	public void setTopicPic(List<PicNewVO> topicPic) {
+		this.topicPic = topicPic;
 	}
 
-	public List<Praise> getPraiseLists() {
-		return praiseLists;
+	public List<Praise> getPraiseList() {
+		return praiseList;
 	}
 
-	public void setPraiseLists(List<Praise> praiseLists) {
-		this.praiseLists = praiseLists;
+	public void setPraiseList(List<Praise> praiseList) {
+		this.praiseList = praiseList;
 	}
 
-	public List<Comment> getCommentLists() {
-		return commentLists;
+	public List<Comment> getCommentList() {
+		return commentList;
 	}
 
-	public void setCommentLists(List<Comment> commentLists) {
-		this.commentLists = commentLists;
+	public void setCommentList(List<Comment> commentList) {
+		this.commentList = commentList;
 	}
 
 	public void setTopicid(String topicid) {

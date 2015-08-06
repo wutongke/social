@@ -33,7 +33,18 @@ public class ZhuoCommHelperLz {
 
 	private final static String GTOPIC_PRAISE = "/grouptopicpraise.do";
 	private final static String GTOPIC_COMMENT = "/grouptopiccmt.do";
-
+	private final static String GET_BASECODE_DATA = "/getbasiccode.do";
+	private final static String MODIFY_USER_INFO = "/modifyuserinfo.do";
+	private final static String SET_UHEAD = "/setuheader.do";
+	
+	
+	
+	private final static String GET_FAMILY_STATUS_DETAIL = "/getStatusFamily.do";
+	
+	private final static String GET_LIST_FAMILY_STATUS = "/statusFamilyList.do";
+	private final static String PUB_STATUS = "/addStatusFamily.do";
+	private final static String DELETE_FAMILY_STATUS = "/deleteStatusFamily.do";
+	
 	// 未用
 	private final static String SERVICE_GET_ADINFO = "/getadinfo.do";
 
@@ -53,15 +64,6 @@ public class ZhuoCommHelperLz {
 	 */
 	public static String getQuanTopicList() {
 		return SERVER + SERVICE_QUAN_TOPIC_LIST;
-	}
-
-	/**
-	 * 获得用户信息
-	 * 
-	 * @return
-	 */
-	public static String getUserInfo() {
-		return SERVER + SERVICE_GET_USER_INFO;
 	}
 
 	/**
@@ -144,6 +146,23 @@ public class ZhuoCommHelperLz {
 	}
 	
 	/**
+	 * 获得用户信息
+	 * 
+	 * @return
+	 */
+	public static String getUserInfo() {
+		return SERVER + SERVICE_GET_USER_INFO;
+	}
+	
+	/**
+	 * 获取基本编码数据(除城市以外)
+	 * @return
+	 */
+	public static String getBaseCodeData() {
+		return SERVER + GET_BASECODE_DATA;
+	}
+	
+	/**
 	 * 未用 获得广告信息
 	 * 
 	 * @return
@@ -151,4 +170,47 @@ public class ZhuoCommHelperLz {
 	public static String getAdInfo() {
 		return SERVER + SERVICE_GET_ADINFO;
 	}
+	/**
+	 * 修改用户信息
+	 * @return
+	 */
+	public static String modifyUserInfo() {
+		return SERVER + MODIFY_USER_INFO;
+	}
+	/**
+	 * 设置用户头像
+	 * @return
+	 */
+	public static String setUserHeadImage() {
+		return SERVER + SET_UHEAD;
+	}
+	/**
+	 * 获得动态详细信息
+	 * @return
+	 */
+	public static String getDetailDynamic() {
+		return SERVER + GET_FAMILY_STATUS_DETAIL;
+	}
+	/**
+	 * 获得动态列表
+	 * @return
+	 */
+	public static String getDynamicList() {
+		return SERVER + GET_LIST_FAMILY_STATUS;
+	}
+	/**
+	 * 发布动态
+	 * @return
+	 */
+	public static String pubDynamic() {
+		return SERVER + PUB_STATUS;
+	}
+	/**
+	 * 删除动态
+	 * @return
+	 */
+	public static String deleteDynamic() {
+		return SERVER + DELETE_FAMILY_STATUS;
+	}
+	
 }

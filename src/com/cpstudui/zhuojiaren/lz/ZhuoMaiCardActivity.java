@@ -3,15 +3,19 @@ package com.cpstudui.zhuojiaren.lz;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
@@ -25,10 +29,15 @@ import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.ZhuomaiActiveInfoFra;
 import com.cpstudio.zhuojiaren.fragment.ZhuomaiCardCommercyInfoFra;
 import com.cpstudio.zhuojiaren.fragment.ZhuomaiMoreInfoFra;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.BaseCodeData;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
@@ -58,6 +67,17 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	ImageView ivHeader;
 	@InjectView(R.id.textViewName)
 	TextView tvName;
+	@InjectView(R.id.textViewMemType)
+	TextView tvMemType;
+
+	@InjectView(R.id.textViewPosition)
+	TextView tvPosition;
+	@InjectView(R.id.textViewPhone)
+	TextView tvPhone;
+	@InjectView(R.id.textViewPurse)
+	TextView tvZBNum;// 倬币数
+	@InjectView(R.id.textViewht)
+	TextView tvCompany;// 倬币数
 
 	@InjectView(R.id.lt_menue)
 	View ltMenue;// 个人资料编辑菜单
@@ -88,6 +108,8 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	String userid, myid, ismy;
 	private UserFacade userFacade = null;
 	private CardMsgFacade mFacade = null;
+	UserNewVO userInfo;
+	BaseCodeData baseDataSet;
 
 	// 用于在fragment中获得groupid
 	public String getGroupid() {
@@ -124,11 +146,26 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 		// 设置个性背景图片，在个人信息里。个人可以选择更换
 		rootMainBG.setBackgroundResource(R.drawable.manbg_zmmp_1);
-
+		baseDataSet = mConnHelper.getBaseDataSet();
 		initOnClick();
-		// loadInfo();
-		// initClick();
+		loadData();
 
+	}
+
+	private void loadData() {
+		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
+			// UserNewVO quan = userFacade.getById(userid);
+			// if (quan == null) {
+			// CommonUtil.displayToast(getApplicationContext(),
+			// R.string.error0);
+			// } else {
+			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
+			// msg.obj = quan;
+			// msg.sendToTarget();
+			// }
+		} else {
+			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, userid);
+		}
 	}
 
 	private void initOnClick() {
@@ -298,28 +335,86 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		return fragment;
 	}
 
-	private void setFunctionText(int arg0) {
-		switch (arg0) {
-		// case 0:
-		// function.setText("管理");
-		// function.setTag(0);
-		// break;
-		// case 1:
-		// function.setTag(1);
-		// ImageSpan span = new ImageSpan(mContext, R.drawable.tab_good);
-		// SpannableString spanStr = new SpannableString(" ");
-		// spanStr.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-		// function.setText(spanStr);
-		// break;
-		// case 2:
-		// function.setText("筛选");
-		// function.setTag(2);
-		// break;
-		// case 3:
-		// function.setText("");
-		// function.setTag(3);
-		// break;
-		}
+	/**
+	 * 填充头部个人信息
+	 */
+	void fillHeadInfo() {
+		if (userInfo == null)
+			return;
+		mLoadImage.addTask(userInfo.getUheader(), ivHeader);
+		tvName.setText(userInfo.getName());
+		// tvPosition/tvMemType需要通过编码获得对应的名称
+		tvPosition.setText(userInfo.getCity() + "");
+
+		String work = "";
+		if (baseDataSet != null)
+			work = ((baseDataSet.getPosition()).get(userInfo.getPosition() - 1))
+					.getContent();
+		tvMemType.setText(work);
+
+		tvCompany.setText("暂无Company");
+		// 手机接口
+		tvPhone.setText("暂无phone");
+		tvZBNum.setText("暂无倬币数");
+
 	}
 
+	@SuppressLint("HandlerLeak")
+	private Handler mUIHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case MsgTagVO.DATA_LOAD: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					JsonHandler nljh = new JsonHandler((String) msg.obj,
+							getApplicationContext());
+					userInfo = nljh.parseNewUser();
+					fillHeadInfo();
+				}
+				break;
+			}
+			case MsgTagVO.PUB_INFO: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					Button buttonMsgState = (Button) findViewById(R.id.buttonMsgState);
+					String alertState = (String) buttonMsgState.getTag();
+					if (alertState.equals("1")) {
+						buttonMsgState
+								.setBackgroundResource(R.drawable.button_switch_off);
+						buttonMsgState.setTag("0");
+					} else {
+						buttonMsgState
+								.setBackgroundResource(R.drawable.button_switch_on);
+						buttonMsgState.setTag("1");
+					}
+				}
+				break;
+			}
+			case MsgTagVO.FOLLOW_QUAN: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					if (isfollow) {
+						isfollow = false;
+						pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
+								null, R.string.label_exitSuccess);
+						loadData();
+					} else {
+						pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
+								null, R.string.label_applysuccess);
+					}
+				}
+				break;
+			}
+			case MsgTagVO.MSG_FOWARD: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
+							null, R.string.label_recommandSuccess);
+				}
+				break;
+			}
+			}
+		}
+	};
 }

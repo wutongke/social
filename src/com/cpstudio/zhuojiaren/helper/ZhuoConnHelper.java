@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,6 +31,13 @@ import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelperLZ.FinishCallback;
 import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.ICompleteCallback;
+import com.cpstudio.zhuojiaren.model.BaseCodeData;
+import com.cpstudio.zhuojiaren.model.City;
+import com.cpstudio.zhuojiaren.model.Dynamic;
+import com.cpstudio.zhuojiaren.model.Province;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.qiniu.android.storage.UploadManager;
 
 /**
@@ -39,6 +47,9 @@ import com.qiniu.android.storage.UploadManager;
  * 
  */
 public class ZhuoConnHelper {
+
+	public static final String BASEDATA = "baseCodeDatas";
+	public static final String CITYS = "citys";
 	private static ZhuoConnHelper instance;
 	private String userid = null;
 	private String password = null;
@@ -52,6 +63,8 @@ public class ZhuoConnHelper {
 	String uploadFileToken;
 	String imToken;
 	Context context;
+
+	private BaseCodeData baseDataSet;
 
 	private void init(Context context) {
 		ResHelper resHelper = ResHelper.getInstance(context);
@@ -75,6 +88,14 @@ public class ZhuoConnHelper {
 		}
 
 		return instance;
+	}
+
+	public BaseCodeData getBaseDataSet() {
+		return baseDataSet;
+	}
+
+	public void setBaseDataSet(BaseCodeData baseDataSet) {
+		this.baseDataSet = baseDataSet;
 	}
 
 	public String getUserid() {
@@ -1221,15 +1242,205 @@ public class ZhuoConnHelper {
 	 * @param handlerTag
 	 * @param topicid
 	 * @param comment
+	 * @param toId
+	 *            可选 要回复的评论ID (不填则是普通评论)
+	 * @param toUserid
+	 *            可选 要回复的用户ID (不填则是普通评论)
 	 * @return
 	 */
 	public boolean CommentTopic(Handler mUIHandler, int handlerTag,
-			String topicid, String comment) {
+			String topicid, String comment, String toId, String toUserid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("topicid", topicid));
 		nameValuePairs.add(new BasicNameValuePair("comment", comment));
+		if (toId != null)
+			nameValuePairs.add(new BasicNameValuePair("toId", toId));
+		if (toUserid != null)
+			nameValuePairs.add(new BasicNameValuePair("toId", toUserid));
 		return getFromServerByPost(ZhuoCommHelperLz.topicComment(),
 				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	/**
+	 * 获得个人信息
+	 * 
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param userid
+	 *            (可选) 要查看哪个用户的信息。不填则查看自己的信息
+	 * @return
+	 */
+	public boolean getUserInfo(Handler mUIHandler, int handlerTag, String userid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		if (userid != null)
+			nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		return getFromServerByPost(ZhuoCommHelperLz.getUserInfo(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	/**
+	 * 修改用户信息
+	 * 
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param userid
+	 * @return
+	 */
+	public boolean modifyUserInfo(Handler mUIHandler, int handlerTag,
+			UserNewVO user) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("name", user.getName()));
+		nameValuePairs.add(new BasicNameValuePair("email", user.getEmail()));
+		nameValuePairs.add(new BasicNameValuePair("gender", user.getGender()
+				+ ""));
+		nameValuePairs.add(new BasicNameValuePair("married", user.getMarried()
+				+ ""));
+		nameValuePairs.add(new BasicNameValuePair("city", user.getCity() + ""));
+		nameValuePairs.add(new BasicNameValuePair("hometown", user
+				.getHometown() + ""));
+		nameValuePairs.add(new BasicNameValuePair("travelCity", user
+				.getTravelCity()));
+		nameValuePairs.add(new BasicNameValuePair("birthday", user
+				.getBirthday()));
+		nameValuePairs.add(new BasicNameValuePair("isBirthdayOpen", user
+				.getIsBirthdayOpen() + ""));
+		nameValuePairs.add(new BasicNameValuePair("birthdayLunar", user
+				.getBirthdayLunar()));
+		nameValuePairs.add(new BasicNameValuePair("constellation", user
+				.getConstellation()));
+		nameValuePairs.add(new BasicNameValuePair("zodiac", user.getZodiac()));
+		nameValuePairs.add(new BasicNameValuePair("hobby", user.getHobby()));
+		nameValuePairs.add(new BasicNameValuePair("industry", user
+				.getIndustry() + ""));
+		nameValuePairs.add(new BasicNameValuePair("position", user
+				.getPosition() + ""));
+		nameValuePairs.add(new BasicNameValuePair("isEmailOpen", user
+				.getIsEmailOpen() + ""));
+		nameValuePairs.add(new BasicNameValuePair("isPhoneOpen", user
+				.getIsPhoneOpen() + ""));
+		nameValuePairs.add(new BasicNameValuePair("qq", user.getQq()));
+		nameValuePairs.add(new BasicNameValuePair("isQqOpen", user
+				.getIsQqOpen() + ""));
+		nameValuePairs.add(new BasicNameValuePair("weixin", user.getWeixin()));
+		nameValuePairs.add(new BasicNameValuePair("isWeixinOpen", user
+				.getIsWeixinOpen() + ""));
+		return getFromServerByPost(ZhuoCommHelperLz.modifyUserInfo(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	/**
+	 * 设置用户头像
+	 * 
+	 * @param activity
+	 * @param mUIHandler
+	 * @param tag
+	 * @param filePath
+	 * @return
+	 */
+	public boolean setUserHeadImage(Activity activity, Handler mUIHandler,
+			int tag, String filePath) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		ArrayList<String> fileList = new ArrayList<String>();
+		fileList.add(filePath);
+		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
+		fileMap.put("file", fileList);
+		return doPostWithFile(fileMap, nameValuePairs,
+				ZhuoCommHelperLz.setUserHeadImage(), mUIHandler, tag, activity,
+				"setHeadImage", false, null, null);
+	}
+
+	/**
+	 * 获得动态详情
+	 * 
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param statusid
+	 * @return
+	 */
+	public boolean getDetailDynamic(Handler mUIHandler, int handlerTag,
+			String statusid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("statusid", statusid));
+		return getFromServerByPost(ZhuoCommHelperLz.getDetailDynamic(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	public boolean getDynamicList(Handler mUIHandler, int handlerTag, int type,
+			String userid, int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs
+				.add(new BasicNameValuePair("type", String.valueOf(type)));
+		if (type == Dynamic.DYNATIC_TYPE_SB_JIAREN)
+			nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		nameValuePairs.add(new BasicNameValuePair("pageNo", String
+				.valueOf(pageNo)));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", String
+				.valueOf(pageSize)));
+		return getFromServerByPost(ZhuoCommHelperLz.getDynamicList(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	/**
+	 * 发布动态
+	 * 
+	 * @param activity
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param content
+	 * @param files
+	 * @return
+	 */
+	public boolean pubDynamic(Activity activity, Handler mUIHandler,
+			int handlerTag, String content, ArrayList<String> files) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
+		fileMap.put("file", files);
+		return doPostWithFile(fileMap, nameValuePairs,
+				ZhuoCommHelperLz.pubDynamic(), mUIHandler, handlerTag,
+				activity, "pubDynamic", false, null, null);
+	}
+
+	public boolean deleteDynamic(Handler mUIHandler, int handlerTag,
+			String statusid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("statusid", statusid));
+		return getFromServerByPost(ZhuoCommHelperLz.getDetailDynamic(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	/**
+	 * 获得基本编码数据：id和值的对应
+	 * 
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
+	public boolean getBaseCodeData(Handler handler, int handlerTag,
+			Activity activity, boolean cancelable, OnCancelListener cancel,
+			String data) {
+		String res = readObject(BASEDATA);
+		if (res != null) {
+			Message msg = handler.obtainMessage(handlerTag);
+			Bundle bundle = new Bundle();
+			bundle.putString("data", data);
+			msg.setData(bundle);
+			msg.obj = res;
+			msg.sendToTarget();
+			return true;
+		} else {
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+			nameValuePairs = addUserInfoByPost(nameValuePairs);
+			nameValuePairs.add(new BasicNameValuePair("version", "0"));
+			String url = ZhuoCommHelperLz.getBaseCodeData();
+			return doPost(nameValuePairs, url, handler, handlerTag, activity,
+					url, cancelable, cancel, data);
+		}
 	}
 
 	/**
@@ -1237,7 +1448,7 @@ public class ZhuoConnHelper {
 	 */
 	public boolean getCitys(Handler handler, int handlerTag, Activity activity,
 			boolean cancelable, OnCancelListener cancel, String data) {
-		String res = readObject("citys");
+		String res = readObject(CITYS);
 		if (res != null) {
 			Message msg = handler.obtainMessage(handlerTag);
 			Bundle bundle = new Bundle();

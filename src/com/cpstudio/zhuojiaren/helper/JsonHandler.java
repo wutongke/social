@@ -13,11 +13,13 @@ import com.cpstudio.zhuojiaren.QuanDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.AboutUsVO;
 import com.cpstudio.zhuojiaren.model.AdVO;
+import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.CardMsgVO;
 import com.cpstudio.zhuojiaren.model.CmtRcmdVO;
 import com.cpstudio.zhuojiaren.model.Comment;
 import com.cpstudio.zhuojiaren.model.ContactVO;
 import com.cpstudio.zhuojiaren.model.DownloadVO;
+import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.GeoVO;
 import com.cpstudio.zhuojiaren.model.CmtVO;
@@ -26,6 +28,7 @@ import com.cpstudio.zhuojiaren.model.ImQuanVO;
 import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.PagesCmtVO;
 import com.cpstudio.zhuojiaren.model.Praise;
+import com.cpstudio.zhuojiaren.model.Province;
 import com.cpstudio.zhuojiaren.model.PushMsgVO;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.RecentVisitVO;
@@ -35,6 +38,7 @@ import com.cpstudio.zhuojiaren.model.RuleVO;
 import com.cpstudio.zhuojiaren.model.TeacherVO;
 import com.cpstudio.zhuojiaren.model.TopicDetailVO;
 import com.cpstudio.zhuojiaren.model.TotalUserVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.model.QuanUserVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
@@ -535,6 +539,27 @@ public class JsonHandler {
 		return list;
 	}
 
+	public ArrayList<UserNewVO> parseUserNewList() {
+		ArrayList<UserNewVO> list = new ArrayList<UserNewVO>();
+		try {
+			Type listType = new TypeToken<LinkedList<UserNewVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<UserNewVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<UserNewVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					UserNewVO item = (UserNewVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	public ArrayList<CmtVO> parseCmtList() {
 		ArrayList<CmtVO> list = new ArrayList<CmtVO>();
 		try {
@@ -813,6 +838,26 @@ public class JsonHandler {
 		}
 		return list;
 	}
+	public ArrayList<Dynamic> parseDynamicList() {
+		ArrayList<Dynamic> list = new ArrayList<Dynamic>();
+		try {
+			Type listType = new TypeToken<LinkedList<Dynamic>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<Dynamic> li = gson.fromJson(jsonData, listType);
+				
+				for (Iterator<Dynamic> iterator = li.iterator(); iterator
+						.hasNext();) {
+					Dynamic item = (Dynamic) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 
 	public TopicDetailVO parseQuanTopicDetail() {
 		TopicDetailVO detail = null;
@@ -824,9 +869,20 @@ public class JsonHandler {
 		}
 		return detail;
 	}
+	public Dynamic parseDynamicDetail() {
+		Dynamic detail = null;
+		try {
+			Gson gson = new Gson();
+			detail = gson.fromJson(jsonData, Dynamic.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return detail;
+	}
 
 	/**
 	 * 解析评论后返回的评论列表
+	 * 
 	 * @return
 	 */
 	public List<Comment> parseQuanTopicCommentList() {
@@ -849,8 +905,10 @@ public class JsonHandler {
 		}
 		return list;
 	}
+
 	/**
 	 * 解析点赞成功后返回的点赞列表
+	 * 
 	 * @return
 	 */
 	public List<Praise> parseQuanTopicPraiseList() {
@@ -873,4 +931,66 @@ public class JsonHandler {
 		}
 		return list;
 	}
+
+	/**
+	 * 新的获取个人用户信息
+	 * 
+	 * @return
+	 */
+	public UserNewVO parseNewUser() {
+		UserNewVO userVO = null;
+		try {
+			Gson gson = new Gson();
+			userVO = gson.fromJson(jsonData, UserNewVO.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return userVO;
+	}
+
+	public BaseCodeData parseBaseCodeData() {
+		BaseCodeData baseData = null;
+		try {
+			Gson gson = new Gson();
+			baseData = gson.fromJson(jsonData, BaseCodeData.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return baseData;
+	}
+
+	public static BaseCodeData parseBaseCodeData(String jsonData) {
+		BaseCodeData baseData = null;
+		try {
+			Gson gson = new Gson();
+			baseData = gson.fromJson(jsonData, BaseCodeData.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return baseData;
+	}
+
+	// 注意看命名是否和json中的一致
+
+	public static List<Province> parseCodedCitys(String jsonData) {
+		List<Province> list = new ArrayList<Province>();
+		try {
+			Type listType = new TypeToken<LinkedList<Province>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<Province> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<Province> iterator = li.iterator(); iterator
+						.hasNext();) {
+					Province item = (Province) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 }

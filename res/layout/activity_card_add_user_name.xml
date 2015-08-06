@@ -88,7 +88,6 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:ems="10"
-                    android:hint="@string/hint"
                     android:singleLine="true" />
             </LinearLayout>
 
@@ -146,6 +145,7 @@
                         android:id="@+id/radioSexUnknow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/mp_unknow"
                         android:visibility="gone" />
                 </RadioGroup>
             </LinearLayout>
@@ -199,6 +199,13 @@
                         android:layout_marginLeft="25dp"
                         android:paddingLeft="35dp"
                         android:text="@string/NO" />
+
+                    <RadioButton
+                        android:id="@+id/radioMarrageUnknow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mp_unknow"
+                        android:visibility="gone"  />
                 </RadioGroup>
             </LinearLayout>
         </LinearLayout>

@@ -36,7 +36,6 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
-import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudui.zhuojiaren.lz.QuanziTopicListAdapter;
 import com.cpstudui.zhuojiaren.lz.TopicDetailActivity;
@@ -52,9 +51,9 @@ public class QuanziTopicFra extends Fragment {
 	private ArrayList<QuanTopicVO> mList = new ArrayList<QuanTopicVO>();
 
 	private ZhuoConnHelper mConnHelper = null;
-	private int mPage =0;
+	private int mPage = 0;
 	private int mPageSize = 5;
-	private int mType = 5;
+	private int role = QuanVO.QUAN_ROLE_YOUKE;
 	private ListViewFooter mListViewFooter = null;
 	private Context mContext;
 	private String mLastId = null;
@@ -87,12 +86,12 @@ public class QuanziTopicFra extends Fragment {
 
 		// 加载的圈子主页类型：圈子话题，圈子互动，圈子成员
 		Bundle intent = getArguments();
-		mType = intent.getInt(QuanVO.QUANZIMAINTYPE);
+		role = intent.getInt(QuanVO.QUANROLE);
 
 		// if (mType == QuanVO.QUANZIACTIVE)
 		// mAdapter = new ActiveListAdapter(getActivity(), activeList);
 		// else if (mType == QuanVO.QUANZITOPIC)
-		mAdapter = new QuanziTopicListAdapter(this, mList);
+		mAdapter = new QuanziTopicListAdapter(this, mList, role);
 		// else
 		// mAdapter = new QuanMemberListAdapter(getActivity(), memberList);
 
@@ -107,7 +106,7 @@ public class QuanziTopicFra extends Fragment {
 					int position, long id) {
 				// 跳到话题详情页，话题详情内容用活动内容测试通过
 				Intent i = new Intent();
-				QuanTopicVO vo=mList.get(position);
+				QuanTopicVO vo = mList.get(position);
 				i.setClass(getActivity(), TopicDetailActivity.class);
 				i.putExtra("topicid", vo.getTopicid());
 				startActivity(i);
@@ -154,8 +153,6 @@ public class QuanziTopicFra extends Fragment {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
 				mListViewFooter.finishLoading();
-				// 通过返回数据判断是否属于该圈子，然后就行设置，暂时假定属于
-				mAdapter.setIsFollow(false);
 				updateItemList((String) msg.obj, true, false);
 				break;
 			}

@@ -34,6 +34,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
+import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.PicVO;
@@ -52,8 +53,8 @@ import com.utils.ImageRectUtil;
  * @author lz
  * 
  */
-public class QuanziTopicListAdapter extends BaseAdapter {
-	private List<QuanTopicVO> mList = null;
+public class DynamicListAdapter extends BaseAdapter {
+	private List<Dynamic> mList = null;
 	private LayoutInflater inflater = null;
 	private LoadImage mLoadImage = new LoadImage();
 	private Context mContext = null;
@@ -62,11 +63,11 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 	private ZhuoConnHelper mConnHelper = null;
 	private PopupWindows phw = null, phwChild;
 	String msgid = "11";
-	Fragment fragment;
 	String groupId;
 	BaseCodeData baseDataSet;
-	
-	int role;//“我在圈子中的身份”
+
+	int role;// “我在圈子中的身份”
+
 	public String getGroupId() {
 		return groupId;
 	}
@@ -75,33 +76,18 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		this.groupId = groupId;
 	}
 
-	public QuanziTopicListAdapter(Fragment fragment, ArrayList<QuanTopicVO> list,int role) {
-		// 圈子话题的列表
-		this.mContext = fragment.getActivity();
-		this.fragment = fragment;
-		this.mList = list;
-		this.inflater = LayoutInflater.from(mContext);
-		this.width = DeviceInfoUtil.getDeviceCsw(mContext);
-		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
-		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
-		this.phw = new PopupWindows((Activity) mContext);
-		baseDataSet=mConnHelper.getBaseDataSet();
-		this.role=role;
-	}
-
-	public QuanziTopicListAdapter(Activity activity, ArrayList<QuanTopicVO> list,int role) {
+	public DynamicListAdapter(Activity activity, ArrayList<Dynamic> list,
+			int role) {
 		// 好友动态的列表，fragment为null..与圈话题的内容一致
 		this.mContext = activity;
-		this.fragment = null;
 		this.mList = list;
 		this.inflater = LayoutInflater.from(mContext);
 		this.width = DeviceInfoUtil.getDeviceCsw(mContext);
 		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
 		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
-		this.role=role;
+		this.role = role;
 	}
-
 
 	@Override
 	public int getCount() {
@@ -134,8 +120,8 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
 		}
-		QuanTopicVO item = mList.get(position);
-		msgid = item.getTopicid();
+		Dynamic item = mList.get(position);
+		msgid = item.getStatusid();
 
 		final String userId = item.getUserid();
 
@@ -144,8 +130,9 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		String headUrl = item.getUheader();
 
 		String work = "";
-		if(baseDataSet!=null )
-			work= ((baseDataSet.getPosition()).get(item.getPosition()-1)).getContent();
+		if (baseDataSet != null)
+			work = ((baseDataSet.getPosition()).get(item.getPosition() - 1))
+					.getContent();
 
 		String detail = item.getContent();
 
@@ -221,74 +208,40 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		});
 		mLoadImage.addTask(headUrl, holder.headIV);
 		mLoadImage.doTask();
-		// 濞夈劍鍓伴崢鐔告降閻楀牊婀版稉顓犳畱閳ユ粍妞块崝銊拷閸掓銆冩稊鐔惰厬閻拷+"閺堝琚辨稉顏庣礉閸掑棗鍩嗘禒锝堛�鐎电娴嗛崣鎴濆敶鐎瑰湱娈戞径鍕倞閿涘牏鍋ｇ挧鐐叉嫲鐠囧嫯顔戦敍澶涚礉娴犮儱寮风�瑙勬拱濞戝牊浼呴惃鍕槱閻烇拷
 		holder.optionIV.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View view) {
 
-				if (fragment != null && role==QuanVO.QUAN_ROLE_YOUKE) {
-					OnClickListener applyTojoinListener = new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							Intent i = new Intent(mContext,
-									ApplyToJoinQuanActicvity.class);
-							i.putExtra("groupid", msgid);
-							if (fragment != null)
-								fragment.startActivity(i);
-							else
-								mContext.startActivity(i);
-							// mConnHelper.goodMsg(msgid, mHandler,
-							// MsgTagVO.MSG_LIKE,
-							// null, true, null, msgid);
-						}
-					};
-					OnClickListener noListener = new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							//
-						}
-					};
+				OnClickListener zanListener = new OnClickListener() {
 
-					phw.showPopDlg(view, R.string.label_apply,
-							R.string.label_nowno, applyTojoinListener,
-							noListener, R.string.title_topic_tip);
-				} else {
-					OnClickListener zanListener = new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						mConnHelper.goodMsg(msgid, mHandler, MsgTagVO.MSG_LIKE,
+								null, true, null, msgid);
+					}
+				};
+				OnClickListener cmtListener = new OnClickListener() {
 
-						@Override
-						public void onClick(View v) {
-							mConnHelper.goodMsg(msgid, mHandler,
-									MsgTagVO.MSG_LIKE, null, true, null, msgid);
-						}
-					};
-					OnClickListener cmtListener = new OnClickListener() {
+					@Override
+					public void onClick(View v) {
 
-						@Override
-						public void onClick(View v) {
+						Intent i = new Intent(mContext, MsgCmtActivity.class);
+						i.putExtra("msgid", msgid);
+						i.putExtra("parentid", msgid);
+						// ((Activity)
+						// mContext).startActivityForResult(i,MsgTagVO.MSG_CMT);
+						((Activity) mContext).startActivityForResult(i,
+								MsgTagVO.MSG_CMT);
 
-							Intent i = new Intent(mContext,
-									MsgCmtActivity.class);
-							i.putExtra("msgid", msgid);
-							i.putExtra("parentid", msgid);
-							// ((Activity)
-							// mContext).startActivityForResult(i,MsgTagVO.MSG_CMT);
-							if (fragment != null)
-								fragment.startActivityForResult(i,
-										Activity.RESULT_FIRST_USER);
-							else
-								((Activity) mContext).startActivityForResult(i,
-										MsgTagVO.MSG_CMT);
-
-						}
-					};
-					phw.showOptionsPop(view, times, zanListener, cmtListener);
-				}
+					}
+				};
+				phw.showOptionsPop(view, times, zanListener, cmtListener);
 			}
 		});
 
 		holder.tl.removeAllViews();
-		final List<PicNewVO> picsinner = item.getTopicPic();
+		final List<PicNewVO> picsinner = item.getStatusPic();
 		RelativeLayout.LayoutParams layoutParams = holder.rlp;
 		if (picsinner != null && picsinner.size() == 1) {
 			layoutParams = holder.rlp2;

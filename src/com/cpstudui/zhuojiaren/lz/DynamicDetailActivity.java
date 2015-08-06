@@ -37,6 +37,7 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.Comment;
+import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.Praise;
@@ -45,14 +46,14 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
-public class TopicDetailActivity extends BaseActivity {
+public class DynamicDetailActivity extends BaseActivity {
 	private ListView mListView;
 	private TopicCommentListAdapter mAdapter;
 	private ArrayList<Comment> mList = new ArrayList<Comment>();
 	private LoadImage mLoadImage = new LoadImage();
 	private View mHeadView = null;
 	private PopupWindows pwh;
-	private String topicid = null;
+	private String msgid = null;
 	private int mPage = 1;
 	private ZhuoConnHelper mConnHelper = null;
 	private String isCollect = "0";
@@ -62,7 +63,7 @@ public class TopicDetailActivity extends BaseActivity {
 	private String myid = null;
 	TextView collectBtn;
 	View textViewTip;
-	TopicDetailVO topicDetail;
+	Dynamic dynamicDetail;
 	ImageView headIV;
 
 	@Override
@@ -71,20 +72,20 @@ public class TopicDetailActivity extends BaseActivity {
 		setContentView(R.layout.activity_topic_detail);
 		initTitle();
 		ButterKnife.inject(this);
-		title.setText(R.string.title_activity_topic_detail);
+		title.setText(R.string.dynamic_detail);
 
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		mFacade = new ZhuoInfoFacade(getApplicationContext());
 		myid = ResHelper.getInstance(getApplicationContext()).getUserid();
 
 		Intent intent = getIntent();
-		topicid = intent.getStringExtra("topicid");
+		msgid = intent.getStringExtra("msgid");
 
-		pwh = new PopupWindows(TopicDetailActivity.this);
-		mAdapter = new TopicCommentListAdapter(this, mList, topicid);
+		pwh = new PopupWindows(DynamicDetailActivity.this);
+		mAdapter = new TopicCommentListAdapter(this, mList, msgid);
 		mListView = (ListView) findViewById(R.id.listViewDetail);
 		mListView.setDividerHeight(0);
-		LayoutInflater inflater = LayoutInflater.from(TopicDetailActivity.this);
+		LayoutInflater inflater = LayoutInflater.from(DynamicDetailActivity.this);
 		mHeadView = (LinearLayout) inflater.inflate(
 				R.layout.listview_header_topic_detail, null);
 		mListView.addHeaderView(mHeadView);
@@ -105,27 +106,27 @@ public class TopicDetailActivity extends BaseActivity {
 
 	public void fillData() {
 		((TextView) (mHeadView.findViewById(R.id.textViewAuthorName)))
-				.setText(topicDetail.getName());
+				.setText(dynamicDetail.getName());
 		// 此处还需要从编号获得对应的名称
 
-		((TextView) (mHeadView.findViewById(R.id.textViewRes)))
-				.setText(topicDetail.getCompany());
+//		((TextView) (mHeadView.findViewById(R.id.textViewRes)))
+//				.setText(dynamicDetail.get);
 		((TextView) (mHeadView.findViewById(R.id.textViewTime)))
-				.setText(topicDetail.getAddtime());
+				.setText(dynamicDetail.getAddtime());
 		((TextView) (mHeadView.findViewById(R.id.textViewCmtContent)))
-				.setText(topicDetail.getContent());
+				.setText(dynamicDetail.getContent());
 
-		String url = topicDetail.getUheader();
+		String url = dynamicDetail.getUheader();
 
 		headIV.setTag(url);
 		mLoadImage.addTask(url, headIV);
 
-		mHeadView.setTag(topicDetail.getTopicid());
+		mHeadView.setTag(dynamicDetail.getStatusid());
 
-		uid = topicDetail.getUserid();
+		uid = dynamicDetail.getUserid();
 
 		Context context = mHeadView.getContext();
-		final List<PicNewVO> pics = topicDetail.getTopicPic();
+		final List<PicNewVO> pics = dynamicDetail.getStatusPic();
 		TableLayout.LayoutParams tllp = new TableLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		TableRow.LayoutParams trlp = new TableRow.LayoutParams(
@@ -139,13 +140,13 @@ public class TopicDetailActivity extends BaseActivity {
 			TableRow tr = null;
 			for (int i = 0; i < pics.size(); i++) {
 				if (i % 3 == 0) {
-					tr = new TableRow(TopicDetailActivity.this);
+					tr = new TableRow(DynamicDetailActivity.this);
 					tl.addView(tr);
 				}
 				tr.setLayoutParams(tllp);
-				RelativeLayout rl = new RelativeLayout(TopicDetailActivity.this);
+				RelativeLayout rl = new RelativeLayout(DynamicDetailActivity.this);
 				rl.setLayoutParams(trlp);
-				ImageView iv = new ImageView(TopicDetailActivity.this);
+				ImageView iv = new ImageView(DynamicDetailActivity.this);
 				iv.setLayoutParams(rlp);
 				rl.addView(iv);
 				rl.setTag(pics.get(i).getPic());
@@ -155,7 +156,7 @@ public class TopicDetailActivity extends BaseActivity {
 				rl.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Intent intent = new Intent(TopicDetailActivity.this,
+						Intent intent = new Intent(DynamicDetailActivity.this,
 								PhotoViewMultiActivity.class);
 						ArrayList<String> orgs = new ArrayList<String>();
 						for (int j = 0; j < pics.size(); j++) {
@@ -179,8 +180,9 @@ public class TopicDetailActivity extends BaseActivity {
 		// drawable.getMinimumHeight());
 		// collectBtn.setCompoundDrawables(null, drawable, null, null);
 		// }
-		fillPraiseList(topicDetail.getPraiseList());
-		fillCommentList(topicDetail.getCommentList());
+//暂时没有评论和赞列表
+//		fillPraiseList(dynamicDetail.getPraiseList());
+//		fillCommentList(dynamicDetail.getCommentList());
 	}
 
 	private void fillCommentList(List<Comment> cmts) {
@@ -207,7 +209,7 @@ public class TopicDetailActivity extends BaseActivity {
 			if (tl != null)
 				tl.removeAllViews();
 			int width = (int) (40 * DeviceInfoUtil
-					.getDeviceCsd(TopicDetailActivity.this));
+					.getDeviceCsd(DynamicDetailActivity.this));
 			RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
 					width, width);
 			TableRow tr = null;
@@ -230,7 +232,7 @@ public class TopicDetailActivity extends BaseActivity {
 				rl.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Intent intent = new Intent(TopicDetailActivity.this,
+						Intent intent = new Intent(DynamicDetailActivity.this,
 								ZhuoMaiCardActivity.class);
 						intent.putExtra("userid", userid);
 						startActivity(intent);
@@ -255,8 +257,8 @@ public class TopicDetailActivity extends BaseActivity {
 						getApplicationContext())) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					topicDetail = nljh.parseQuanTopicDetail();
-					if (null != topicDetail) {
+					dynamicDetail = nljh.parseDynamicDetail();
+					if (null != dynamicDetail) {
 						fillData();
 						// mFacade.saveOrUpdate(topicDetail);
 					}
@@ -336,7 +338,7 @@ public class TopicDetailActivity extends BaseActivity {
 			// msg.sendToTarget();
 			// }
 		} else {
-			mConnHelper.getTopicDetail(mUIHandler, MsgTagVO.DATA_LOAD, topicid);
+			mConnHelper.getDetailDynamic(mUIHandler, MsgTagVO.DATA_LOAD, msgid);
 		}
 	}
 
@@ -345,7 +347,7 @@ public class TopicDetailActivity extends BaseActivity {
 		headIV.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View paramView) {
-				Intent intent = new Intent(TopicDetailActivity.this,
+				Intent intent = new Intent(DynamicDetailActivity.this,
 						ZhuoMaiCardActivity.class);
 				intent.putExtra("userid", uid);
 				startActivity(intent);
@@ -359,7 +361,7 @@ public class TopicDetailActivity extends BaseActivity {
 						// mConnHelper.goodMsg(topicid, mUIHandler,
 						// MsgTagVO.MSG_LIKE, null, true, null, null);
 						mConnHelper.praiseTopic(mUIHandler, MsgTagVO.MSG_LIKE,
-								topicid, 1);
+								msgid, 1);
 					}
 				});
 		findViewById(R.id.buttonTabCmt).setOnClickListener(
@@ -375,7 +377,7 @@ public class TopicDetailActivity extends BaseActivity {
 
 					@Override
 					public void onClick(View v) {
-						Intent i = new Intent(TopicDetailActivity.this,
+						Intent i = new Intent(DynamicDetailActivity.this,
 								UserSelectActivity.class);
 						ArrayList<String> tempids = new ArrayList<String>(1);
 						tempids.add(uid);
@@ -389,11 +391,11 @@ public class TopicDetailActivity extends BaseActivity {
 					@Override
 					public void onClick(View v) {
 						if (isCollect == null || isCollect.equals("0")) {
-							mConnHelper.collectMsg(topicid, "1", mUIHandler,
+							mConnHelper.collectMsg(msgid, "1", mUIHandler,
 									MsgTagVO.MSG_COLLECT, null, true, null,
 									null);
 						} else {
-							mConnHelper.collectMsg(topicid, "0", mUIHandler,
+							mConnHelper.collectMsg(msgid, "0", mUIHandler,
 									MsgTagVO.MSG_COLLECT, null, true, null,
 									null);
 						}
@@ -414,7 +416,7 @@ public class TopicDetailActivity extends BaseActivity {
 					}
 					useridlist = useridlist.substring(0,
 							useridlist.length() - 1);
-					mConnHelper.recommandMsg(topicid, useridlist, mUIHandler,
+					mConnHelper.recommandMsg(msgid, useridlist, mUIHandler,
 							MsgTagVO.MSG_FOWARD, null, true, null, null);
 				}
 			} else if (requestCode == MsgTagVO.MSG_CMT) {
@@ -429,8 +431,8 @@ public class TopicDetailActivity extends BaseActivity {
 	}
 
 	void startCommentActivity(String toId, String toUserid) {
-		Intent i = new Intent(TopicDetailActivity.this, MsgCmtActivity.class);
-		i.putExtra("msgid", topicid);
+		Intent i = new Intent(DynamicDetailActivity.this, MsgCmtActivity.class);
+		i.putExtra("msgid", msgid);
 		if (toId != null)
 			i.putExtra("toId", toId);
 		if (toUserid != null)

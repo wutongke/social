@@ -21,6 +21,9 @@ public class QuanVO {
 	/*
 	 * 接受某人加入圈子 角色 0-未加入 1-普通成员 2-管理员 3-圈主
 	 */
+	public final static String[] QUAN_ROLE_NAME={"非成员","普通成员","管理员","圈主"};
+	
+	public final static String QUANROLE = "quanzirole";
 	public final static int QUAN_ROLE_YOUKE = 0;
 	public final static int QUAN_ROLE_MEMBER = 1;
 	public final static int QUAN_ROLE_MANAGER = 2;

@@ -95,14 +95,14 @@
                         android:textSize="16sp" />
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/textViewPhone"
+                <EditText
+                    android:id="@+id/edtPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true" >
 
                     <requestFocus />
-                </TextView>
+                </EditText>
             </LinearLayout>
 
             <CheckBox

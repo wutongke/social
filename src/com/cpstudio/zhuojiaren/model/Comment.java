@@ -1,6 +1,10 @@
 package com.cpstudio.zhuojiaren.model;
 
 public class Comment {
+	private String id;
+	private String toId;
+	private String toUserid;
+	private String toName;
 	private String userid;
 
 	private String name;
@@ -12,6 +16,38 @@ public class Comment {
 	private String comment;
 
 	private String addtime;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getToId() {
+		return toId;
+	}
+
+	public void setToId(String toId) {
+		this.toId = toId;
+	}
+
+	public String getToUserid() {
+		return toUserid;
+	}
+
+	public void setToUserid(String toUserid) {
+		this.toUserid = toUserid;
+	}
+
+	public String getToName() {
+		return toName;
+	}
+
+	public void setToName(String toName) {
+		this.toName = toName;
+	}
 
 	public void setUserid(String userid) {
 		this.userid = userid;

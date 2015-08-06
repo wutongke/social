@@ -11,8 +11,10 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -39,8 +41,15 @@ public class CardAddUserDreamActivity extends Activity {
 		dreamTags.add("dream0");
 		initClick();
 		Intent intent = getIntent();
-		ArrayList<String> dreams = intent
-				.getStringArrayListExtra(CardEditActivity.EDIT_DREAM_STR);
+		String str = intent.getStringExtra(CardEditActivity.EDIT_DREAM_STR);
+		String strs[] = null;
+		ArrayList<String> dreams = new ArrayList<String>();
+		if (str != null) {
+			strs = str.split(",");
+
+			for (String dr : strs)
+				dreams.add(dr);
+		}
 		if (dreams != null && dreams.size() > 0) {
 			((EditText) findViewById(R.id.editText)).setText(dreams.get(0));
 			for (int i = 1; i < dreams.size(); i++) {
@@ -76,11 +85,16 @@ public class CardAddUserDreamActivity extends Activity {
 									dreamsStr.length() - 1);
 						}
 						dreamsStr += "]";
-						mConnHelper
-								.addDream(dreamsStr, mUIHandler,
-										MsgTagVO.PUB_INFO,
-										CardAddUserDreamActivity.this, true,
-										null, null);
+						Intent i = new Intent();
+						i.putExtra(CardEditActivity.EDIT_DREAM_STR,
+								dreamsStr);
+						setResult(RESULT_OK, i);
+						CardAddUserDreamActivity.this.finish();
+//						mConnHelper
+//								.addDream(dreamsStr, mUIHandler,
+//										MsgTagVO.PUB_INFO,
+//										CardAddUserDreamActivity.this, true,
+//										null, null);
 					}
 				});
 		findViewById(R.id.buttonAdd).setOnClickListener(new OnClickListener() {

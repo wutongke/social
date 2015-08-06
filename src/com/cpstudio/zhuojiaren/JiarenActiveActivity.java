@@ -24,19 +24,18 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
-import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 import com.cpstudui.zhuojiaren.lz.CardActiveNumListActivity;
+import com.cpstudui.zhuojiaren.lz.DynamicDetailActivity;
+import com.cpstudui.zhuojiaren.lz.DynamicListAdapter;
 import com.cpstudui.zhuojiaren.lz.JiarenActiveNumListActivity;
 import com.cpstudui.zhuojiaren.lz.QuanziActiveNumListActivity;
-import com.cpstudui.zhuojiaren.lz.QuanziTopicListAdapter;
-import com.cpstudui.zhuojiaren.lz.TopicDetailActivity;
 
 public class JiarenActiveActivity extends Activity implements
 		OnPullDownListener, OnItemClickListener {
@@ -45,19 +44,20 @@ public class JiarenActiveActivity extends Activity implements
 
 	// 倬家人所有的动态及谁加入倬家人，不包括话题，需求等，内容布局与话题一样
 	// 此处暂时用了圈话题的适配器，之后需要修改
-	private QuanziTopicListAdapter mAdapter;
+	private DynamicListAdapter mAdapter;
 
 	private PullDownView mPullDownView;
-	private ArrayList<QuanTopicVO> mList = new ArrayList<QuanTopicVO>();
+	private ArrayList<Dynamic> mList = new ArrayList<Dynamic>();
 	private LoadImage mLoadImage = null;
 	private PopupWindows pwh = null;
 	private String mUid = null;
-	private String mType = "0";// 原来 ：0：查看全部，1：查看资源
-								// //新的：0：插查看全部，1：所有倬家人动态，2：我关注的家人动态
+	private int mType = Dynamic.DYNATIC_TYPE_ALL_JIAREN;// 类型 0-自己的家人动态
+														// 1-指定用户的家人动态 2-所有家人动态
 	private String mLastId = "0";
 	private ZhuoConnHelper mConnHelper = null;
 	private UserFacade mFacade = null;
 	private int mPage = 1;
+	final int pageSize = 10;
 	private InfoFacade infoFacade = null;
 
 	// type==0时所有人动态，就只是动态，不包括需求，话题，活动什么的
@@ -80,13 +80,14 @@ public class JiarenActiveActivity extends Activity implements
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
-		mAdapter = new QuanziTopicListAdapter(JiarenActiveActivity.this, mList);
+		// 是否和圈子话题公用一个数据结构还不一定
+		mAdapter = new DynamicListAdapter(JiarenActiveActivity.this, mList, 1);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
 
-		mType = getIntent().getIntExtra("mType", 0) + "";
-		if (mType.equals("0") == false)
+		mType = getIntent().getIntExtra("mType", 2);
+		if (Dynamic.DYNATIC_TYPE_ALL_JIAREN != mType)
 			findViewById(R.id.ll_active_menue).setVisibility(View.GONE);
 		loadData();
 		initClick();
@@ -105,17 +106,9 @@ public class JiarenActiveActivity extends Activity implements
 					@Override
 					public void onClick(View v) {
 						pwh.showPop(findViewById(R.id.layoutJiarenActive));
-						// if (mType == "1") {
-						// mType = "0";
-						// ((Button) v).setText(R.string.label_view2);
-						// } else {
-						// mType = "1";
-						// ((Button) v).setText(R.string.label_view1);
-						// }
-						// loadData();
 					}
 				});
-		if (mType.equals("0") == true) {
+		if (Dynamic.DYNATIC_TYPE_ALL_JIAREN == mType) {
 			findViewById(R.id.textViewActiveJiaren).setOnClickListener(
 					new OnClickListener() {// 我的家人动态
 						@Override
@@ -151,11 +144,11 @@ public class JiarenActiveActivity extends Activity implements
 							Intent i = new Intent(JiarenActiveActivity.this,
 									UplevelActivity.class);
 							startActivity(i);
-							
+
 							// 倬脉。是否可以用旧版本中的UplevelActivity
-//							Intent i = new Intent(JiarenActiveActivity.this,
-//									ZhuoMaiActiveActivity.class);
-//							startActivity(i);
+							// Intent i = new Intent(JiarenActiveActivity.this,
+							// ZhuoMaiActiveActivity.class);
+							// startActivity(i);
 						}
 					});
 		}
@@ -206,7 +199,7 @@ public class JiarenActiveActivity extends Activity implements
 
 	}
 
-	private void updateItemList(ArrayList<QuanTopicVO> list, boolean refresh,
+	private void updateItemList(ArrayList<Dynamic> list, boolean refresh,
 			boolean append) {
 		if (!list.isEmpty()) {
 			mPullDownView.hasData();
@@ -216,7 +209,7 @@ public class JiarenActiveActivity extends Activity implements
 			mList.addAll(list);
 			mAdapter.notifyDataSetChanged();
 			if (mList.size() > 0) {
-				mLastId = mList.get(mList.size() - 1).getTopicid();
+				mLastId = mList.get(mList.size() - 1).getStatusid();
 			}
 			mPage++;
 		} else {
@@ -273,18 +266,18 @@ public class JiarenActiveActivity extends Activity implements
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
-				ArrayList<QuanTopicVO> list = new ArrayList<QuanTopicVO>();
+				ArrayList<Dynamic> list = new ArrayList<Dynamic>();
 				boolean loadState = false;
 				if (msg.obj instanceof ArrayList) {
-					list = (ArrayList<QuanTopicVO>) msg.obj;
+					list = (ArrayList<Dynamic>) msg.obj;
 				} else {
 					if (msg.obj != null && !msg.obj.equals("")) {
 						loadState = true;
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
-						list = nljh.parseQuanTopicList();
+						list = nljh.parseDynamicList();
 						if (!list.isEmpty()) {
-//							infoFacade.update(list);
+							// infoFacade.update(list);
 						}
 					}
 				}
@@ -298,7 +291,7 @@ public class JiarenActiveActivity extends Activity implements
 					loadState = true;
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					ArrayList<QuanTopicVO> list = nljh.parseQuanTopicList();
+					ArrayList<Dynamic> list = nljh.parseDynamicList();
 					updateItemList(list, false, false);
 				}
 				mPullDownView.RefreshComplete(loadState);
@@ -306,16 +299,16 @@ public class JiarenActiveActivity extends Activity implements
 			}
 			case MsgTagVO.DATA_MORE: {
 				mPullDownView.notifyDidMore();
-				ArrayList<QuanTopicVO> list = new ArrayList<QuanTopicVO>();
+				ArrayList<Dynamic> list = new ArrayList<Dynamic>();
 				if (msg.obj instanceof ArrayList) {
-					list = (ArrayList<QuanTopicVO>) msg.obj;
+					list = (ArrayList<Dynamic>) msg.obj;
 				} else {
 					if (msg.obj != null && !msg.obj.equals("")) {
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
-						list = nljh.parseQuanTopicList();
+						list = nljh.parseDynamicList();
 						if (!list.isEmpty()) {
-//							infoFacade.update(list);
+							// infoFacade.update(list);
 						}
 					}
 				}
@@ -363,7 +356,7 @@ public class JiarenActiveActivity extends Activity implements
 
 			// lz暂时该为话题详情，测试用
 			// i.setClass(JiarenActiveActivity.this, MsgDetailActivity.class);
-			i.setClass(JiarenActiveActivity.this, TopicDetailActivity.class);
+			i.setClass(JiarenActiveActivity.this, DynamicDetailActivity.class);
 			// lz
 			// }
 			// }
@@ -391,58 +384,46 @@ public class JiarenActiveActivity extends Activity implements
 
 	public void loadData() {
 		if (mPullDownView.startLoadData()) {
-			mList.clear();
-			mAdapter.notifyDataSetChanged();
+			// mList.clear();
+			// mAdapter.notifyDataSetChanged();
 			if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-				ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-				msg.obj = list;
-				msg.sendToTarget();
+				// ArrayList<Dynamic> list = infoFacade.getByPage(mPage);
+				// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
+				// msg.obj = list;
+				// msg.sendToTarget();
 			} else {
-				String params = ZhuoCommHelper.getUrlMsgList();
-				params += "?pageflag=" + "0";
-				params += "&reqnum=" + "10";
-				params += "&lastid=" + "0";
-				params += "&type=" + mType;
-				params += "&gongxutype=" + "0";
-				params += "&from=" + "6";
-				params += "&uid=" + mUid;
-				mConnHelper.getFromServer(params, mUIHandler,
-						MsgTagVO.DATA_LOAD);
+				mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_LOAD,
+						mType, null, mPage, pageSize);
 			}
 		}
 	}
 
 	@Override
 	public void onRefresh() {
-		String params = ZhuoCommHelper.getUrlMsgList();
-		params += "?pageflag=" + "0";
-		params += "&reqnum=" + "10";
-		params += "&lastid=" + "0";
-		params += "&type=" + mType;
-		params += "&gongxutype=" + "0";
-		params += "&from=" + "6";
-		params += "&uid=" + mUid;
-		mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_REFRESH);
+		mPage = 1;
+		loadData();
 	}
 
 	@Override
 	public void onMore() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-			Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
-			msg.obj = list;
-			msg.sendToTarget();
+			// ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
+			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
+			// msg.obj = list;
+			// msg.sendToTarget();
 		} else {
-			String params = ZhuoCommHelper.getUrlMsgList();
-			params += "?pageflag=" + "1";
-			params += "&reqnum=" + "10";
-			params += "&lastid=" + mLastId;
-			params += "&type=" + mType;
-			params += "&gongxutype=" + "0";
-			params += "&from=" + "6";
-			params += "&uid=" + mUid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
+			// String params = ZhuoCommHelper.getUrlMsgList();
+			// params += "?pageflag=" + "1";
+			// params += "&reqnum=" + "10";
+			// params += "&lastid=" + mLastId;
+			// params += "&type=" + mType;
+			// params += "&gongxutype=" + "0";
+			// params += "&from=" + "6";
+			// params += "&uid=" + mUid;
+			// mConnHelper.getFromServer(params, mUIHandler,
+			// MsgTagVO.DATA_MORE);
+			mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_MORE, mType,
+					null, mPage, pageSize);
 		}
 	}
 

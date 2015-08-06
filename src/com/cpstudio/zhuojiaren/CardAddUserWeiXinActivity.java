@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class CardAddUserWeiXinActivity extends Activity {
@@ -16,11 +17,11 @@ public class CardAddUserWeiXinActivity extends Activity {
 		setContentView(R.layout.activity_card_add_user_weixin);
 		Intent i = getIntent();
 		String weixin = i.getStringExtra(CardEditActivity.EDIT_WEIXIN_STR1);
-		((TextView) findViewById(R.id.textViewWeixin)).setText(weixin);
-		String weixinopen = i.getStringExtra(CardEditActivity.EDIT_WEIXIN_STR2);
-		if (weixinopen != null && weixinopen.equals("1")) {
+		((EditText) findViewById(R.id.edtWeixin)).setText(weixin);
+		int weixinopen = i.getIntExtra(CardEditActivity.EDIT_WEIXIN_STR2, 0);
+		if (0 == weixinopen) {
 			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(true);
-		}else{
+		} else {
 			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(false);
 		}
 		initClick();
@@ -40,13 +41,13 @@ public class CardAddUserWeiXinActivity extends Activity {
 					public void onClick(View v) {
 						Intent i = new Intent();
 						i.putExtra(CardEditActivity.EDIT_WEIXIN_STR1,
-								((TextView) findViewById(R.id.textViewWeixin))
+								((EditText) findViewById(R.id.edtWeixin))
 										.getText().toString());
 						if (((CheckBox) findViewById(R.id.checkBoxIsOpen))
 								.isChecked()) {
-							i.putExtra(CardEditActivity.EDIT_WEIXIN_STR2, "1");
+							i.putExtra(CardEditActivity.EDIT_WEIXIN_STR2, 0);
 						} else {
-							i.putExtra(CardEditActivity.EDIT_PHONE_STR2, "0");
+							i.putExtra(CardEditActivity.EDIT_PHONE_STR2, 1);
 						}
 						setResult(RESULT_OK, i);
 						CardAddUserWeiXinActivity.this.finish();

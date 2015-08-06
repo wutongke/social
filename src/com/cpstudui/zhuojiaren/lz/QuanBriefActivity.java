@@ -160,8 +160,7 @@ public class QuanBriefActivity extends BaseActivity {
 						tvMemNum.setText(detail.getMemberCount() + "");
 						tvTopicNum.setText(detail.getTopicCount() + "");
 						localCode = detail.getCity();
-						AppClientLef.getInstance(getApplicationContext())
-								.getCitys(mUIHandler, MsgTagVO.DATA_OTHER,
+						mConnHelper.getCitys(mUIHandler, MsgTagVO.DATA_OTHER,
 										QuanBriefActivity.this, true, null,
 										null);
 						if (memberType != QuanVO.QUAN_ROLE_YOUKE) {

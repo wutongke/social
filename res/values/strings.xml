@@ -1116,5 +1116,8 @@
     <string name="payback_pro">回报项目</string>
     <string name="technology">科技</string>
     <string name="title_activity_map_locate">MapLocateActivity</string>
+    <string name="tip_jsonerror">json解析失败</string>
+    <string name="uhead_update_success">头像更新成功</string>
+    <string name="dynamic_detail">动态详情</string>
 
 </resources>

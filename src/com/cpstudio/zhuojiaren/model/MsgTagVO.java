@@ -1,6 +1,12 @@
 package com.cpstudio.zhuojiaren.model;
 
 public class MsgTagVO {
+	
+	/**
+	 * 加载基础数据
+	 */
+	public static final int DATA_BASE = 77;
+	
 	/**
 	 * 初次加载首页数据
 	 */

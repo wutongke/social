@@ -17,25 +17,23 @@ public class CardAddUserNameActivity extends Activity {
 		Intent i = getIntent();
 		String name = i.getStringExtra(CardEditActivity.EDIT_NAME_STR1);
 		((EditText) findViewById(R.id.editTextName)).setText(name);
-		String sex = i.getStringExtra(CardEditActivity.EDIT_NAME_STR2);
-		String ismarry = i.getStringExtra(CardEditActivity.EDIT_NAME_STR3);
-		if (sex != null && !sex.equals("")) {
-			if (sex.equals(getString(R.string.mp_male))) {
-				((RadioButton) findViewById(R.id.radioMale)).setChecked(true);
-			} else if (sex.equals(getString(R.string.mp_female))) {
-				((RadioButton) findViewById(R.id.radioFemale)).setChecked(true);
-			} else {
-				((RadioButton) findViewById(R.id.radioSexUnknow))
-						.setChecked(true);
-			}
+		int sex = i.getIntExtra(CardEditActivity.EDIT_NAME_STR2, 0);
+		int ismarry = i.getIntExtra(CardEditActivity.EDIT_NAME_STR3, 0);
+		if (1 == sex) {
+			((RadioButton) findViewById(R.id.radioMale)).setChecked(true);
+		} else if (2 == sex) {
+			((RadioButton) findViewById(R.id.radioFemale)).setChecked(true);
 		} else {
 			((RadioButton) findViewById(R.id.radioSexUnknow)).setChecked(true);
 		}
-		if (ismarry != null && ismarry.equals("1")) {
-			((RadioButton) findViewById(R.id.radioIsmarray)).setChecked(true);
-		} else {
+
+		if (1==ismarry) {
 			((RadioButton) findViewById(R.id.radioNotmarry)).setChecked(true);
+		} else if(2==ismarry){
+			((RadioButton) findViewById(R.id.radioIsmarray)).setChecked(true);
 		}
+		else
+			((RadioButton) findViewById(R.id.radioMarrageUnknow)).setChecked(true);
 		initClick();
 	}
 
@@ -70,10 +68,10 @@ public class CardAddUserNameActivity extends Activity {
 						if (((RadioButton) findViewById(R.id.radioIsmarray))
 								.isChecked()) {
 							intent.putExtra(CardEditActivity.EDIT_NAME_STR3,
-									"1");
+									1);
 						} else {
 							intent.putExtra(CardEditActivity.EDIT_NAME_STR3,
-									"0");
+									0);
 						}
 						setResult(RESULT_OK, intent);
 						CardAddUserNameActivity.this.finish();
