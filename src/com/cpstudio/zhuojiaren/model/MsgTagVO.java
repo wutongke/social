@@ -83,4 +83,8 @@ public class MsgTagVO {
 	public static final int disolve_quan = 501;
 	public static final int out_quan = 502;
 	public static final int join_quan = 503;
+	/**
+	 * 获取服务器时间
+	 */
+	public static final int time = 600;
 }

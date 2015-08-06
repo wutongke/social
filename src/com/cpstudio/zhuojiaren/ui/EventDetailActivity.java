@@ -1,5 +1,8 @@
 package com.cpstudio.zhuojiaren.ui;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -31,9 +34,11 @@ import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.util.Util;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
 import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
+import com.google.gson.Gson;
 import com.umeng.socialize.media.UMImage;
 
 public class EventDetailActivity extends Activity {
@@ -90,6 +95,7 @@ public class EventDetailActivity extends Activity {
 	private EventVO event;
 	// 退出活动的tag
 	private final int quit = 7;
+	private long servertime;
 
 	/**
 	 * 从intent中获取id号，然后加载数据，需要区别用户身份，是否是创建人，是否是联系人，是否已经加入到活动
@@ -137,7 +143,11 @@ public class EventDetailActivity extends Activity {
 	private void loadData() {
 		mConnHelper.getEventDetail(EventDetailActivity.this, mUIHandler,
 				MsgTagVO.DATA_LOAD, eventId);
-
+//		mConnHelper.getTime(EventDetailActivity.this, mUIHandler,
+//				MsgTagVO.DATA_LOAD);
+		Message msg = mUIHandler.obtainMessage();
+		msg.what = MsgTagVO.time;
+		msg.sendToTarget();
 	}
 
 	private Handler mUIHandler = new Handler() {
@@ -155,9 +165,15 @@ public class EventDetailActivity extends Activity {
 					}
 					String data = res.getData();
 					EventVO detail = null;
-					JsonHandler nljh = new JsonHandler(data,
-							getApplicationContext());
-					detail = nljh.parseEvent();
+//					JsonHandler nljh = new JsonHandler(data,
+//							getApplicationContext());
+//					detail = nljh.parseEvent();
+					try {
+						Gson gson = new Gson();
+						detail = gson.fromJson(data, EventVO.class);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					event = detail;
 					if(event==null){
 						CommonUtil.displayToast(EventDetailActivity.this,
@@ -213,7 +229,7 @@ public class EventDetailActivity extends Activity {
 						name.setText(detail.getTitle());
 						browerCount.setText(detail.getViewCount());
 						shareCount.setText(detail.getShareCount());
-						applyCount.setText(detail.getShareCount());
+						applyCount.setText(detail.getJoinCount());
 						content.setText(detail.getContent());
 						mLoadImage.beginLoad(detail.getUheader(), peopleImage);
 						peopleCompany.setText(detail.getCompany());
@@ -234,7 +250,7 @@ public class EventDetailActivity extends Activity {
 							}
 						});
 						String contacts = detail.getContacts();
-						if (TextUtils.isEmpty(contacts)) {
+						if (!TextUtils.isEmpty(contacts)) {
 							String[] cons = contacts.split(",");
 							String[] phones = detail.getPhone().split(",");
 							for (int i = 0; i < cons.length; i++) {
@@ -248,7 +264,7 @@ public class EventDetailActivity extends Activity {
 								// TODO Auto-generated method stub
 								if (event.isCollect()) {
 									// 取消收藏
-									collect.setBackgroundResource(R.drawable.zcollect2);
+									collect.setBackgroundResource(R.drawable.qhdcollect);
 									mConnHelper.collection((Activity)mContext,
 											ZhuoCommHelper.getEventcollection(),
 											"activityid", eventId, "type", "0");
@@ -259,7 +275,7 @@ public class EventDetailActivity extends Activity {
 											ZhuoCommHelper.getEventcollection(),
 											"activityid", eventId, "type", "1");
 									event.setIscollected("1");
-									collect.setBackgroundResource(R.drawable.qhdcollect);
+									collect.setBackgroundResource(R.drawable.zcollect2);
 									CommonUtil.displayToast(mContext, "收藏");
 								}
 							}
@@ -287,6 +303,34 @@ public class EventDetailActivity extends Activity {
 				} else {
 					CommonUtil.displayToast(mContext, "操作失败");
 				}
+				break;
+			case MsgTagVO.time:
+				if (JsonHandler.checkResult((String) msg.obj,
+						EventDetailActivity.this)) {
+					servertime = 4564654321l;
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					try {
+						long millionSeconds = sdf.parse(event.getStarttime()).getTime();
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Runnable runnable = new Runnable() { 
+				        @Override 
+				        public void run() { 
+				        	servertime--; 
+				        	long[]timeLeft = Util.getTimeFromSeconds(servertime);
+				            day.setText(timeLeft[0]+"");
+							hour.setText(timeLeft[1]+"");
+							minute.setText(timeLeft[2]+"");
+							second.setText(timeLeft[3]+"");
+							mUIHandler.postDelayed(this, 1000); 
+				        } 
+				    }; 
+					mUIHandler.post(runnable);
+				} else {
+					CommonUtil.displayToast(mContext, "操作失败");
+				}
 			}
 		};
 	};
@@ -299,7 +343,7 @@ public class EventDetailActivity extends Activity {
 			nameTV.setText(name);
 		}
 		final TextView phoneTV = (TextView) view
-				.findViewById(R.id.editTextWork);
+				.findViewById(R.id.vep_phone);
 		if (null != phone) {
 			phoneTV.setText(phone);
 			phoneTV.setOnClickListener(new OnClickListener() {
@@ -316,4 +360,5 @@ public class EventDetailActivity extends Activity {
 		}
 		peopleLayout.addView(view);
 	}
+	
 }

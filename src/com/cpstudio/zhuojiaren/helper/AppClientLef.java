@@ -34,6 +34,7 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper.FinishCallback;
 import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.ICompleteCallback;
 import com.cpstudio.zhuojiaren.model.LoginRes;
+import com.cpstudio.zhuojiaren.model.ZhuoShareContent;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -229,7 +230,7 @@ public class AppClientLef {
 	/**
 	 * 提交视频统计
 	 */
-	public boolean submitVedio(Activity activity,String Id) {
+	public boolean submitVedio(Activity activity, String Id) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("onlineid", Id));
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
@@ -330,28 +331,30 @@ public class AppClientLef {
 	/**
 	 * 收藏
 	 */
-	public boolean collection(Activity acitivity,String url, String idKey, String id,
-			String stateKey, String state) {
+	public boolean collection(Activity acitivity, String url, String idKey,
+			String id, String stateKey, String state) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair(idKey, id));
 		nameValuePairs.add(new BasicNameValuePair(stateKey, state));
-		return doPost(nameValuePairs, url, null, 0, acitivity, url, false, null,
-				null);
+		return doPost(nameValuePairs, url, null, 0, acitivity, url, false,
+				null, null);
 	}
+
 	/**
 	 * 发布进展
 	 */
 	public boolean pubProgress(Activity activity, Handler handler,
-			int handlerTag, String id,String content) {
+			int handlerTag, String id, String content) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("id", id));
 		nameValuePairs.add(new BasicNameValuePair("content", content));
 		String url = ZhuoCommHelper.getPubcrowdfundingcomment();
-		return doPost(nameValuePairs, url, handler, handlerTag, activity, url, false, null,
-				null);
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
 	}
+
 	/**
 	 * 获取进展列表
 	 */
@@ -361,9 +364,10 @@ public class AppClientLef {
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("id", id));
 		String url = ZhuoCommHelper.getGetcrowdfundingprogress();
-		return doPost(nameValuePairs, url, handler, handlerTag, activity, url, false, null,
-				null);
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
 	}
+
 	/**
 	 * 创建圈子
 	 */
@@ -540,6 +544,7 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				false, null, null);
 	}
+
 	/**
 	 * 获取众筹评论列表
 	 */
@@ -552,12 +557,14 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				false, null, null);
 	}
+
 	/**
 	 * 发布评论
 	 * 
 	 */
 	public boolean pubComment(Activity activity, Handler handler,
-			int handlerTag, String id, String content, String toId,String toUserid) {
+			int handlerTag, String id, String content, String toId,
+			String toUserid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("id", id));
@@ -571,6 +578,15 @@ public class AppClientLef {
 				false, null, null);
 	}
 
+	/***
+	 * 获取活动详情
+	 * 
+	 * @param activity
+	 * @param handler
+	 * @param handlerTag
+	 * @param activityid
+	 * @return
+	 */
 	public boolean getEventDetail(Activity activity, Handler handler,
 			int handlerTag, String activityid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -579,6 +595,37 @@ public class AppClientLef {
 		String url = ZhuoCommHelper.getGeteventdetail();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				false, null, null);
+	}
+
+	/**
+	 * 分享到倬脉
+	 * 
+	 * @param activity
+	 * @param handler
+	 * @param handlerTag
+	 * @param zhuoShareContent
+	 * @return
+	 */
+	public boolean shareToZhuo(Activity activity, Handler handler,
+			int handlerTag, ZhuoShareContent zhuoShareContent) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair(zhuoShareContent.getIdName(),
+				zhuoShareContent.getId()));
+		String url = zhuoShareContent.getUrl();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 获取服务器 时间
+	 */
+	public boolean getTime(Activity activity, Handler handler, int handlerTag) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		return doPost(nameValuePairs, ZhuoCommHelper.getAddgroupactivity(),
+				handler, handlerTag, activity,
+				null, false, null, null);
 	}
 
 	/**

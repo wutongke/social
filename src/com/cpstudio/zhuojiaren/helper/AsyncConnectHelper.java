@@ -161,6 +161,7 @@ public class AsyncConnectHelper extends AsyncTask<String, Integer, Boolean> {
 				}
 			}
 			jsonData = comm.getResult();
+			Log.i("Debug","post"+mUrl+"²ÎÊý£º"+mNameValuePairs.toString());
 			Log.i("Debug",jsonData);
 			responseCode = comm.getResponseCode();
 			result = true;

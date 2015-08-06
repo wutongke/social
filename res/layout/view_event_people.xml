@@ -8,15 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ico_arrow_black"
+            android:drawableLeft="@drawable/name_pub_event"
             android:drawablePadding="5dp"
             android:text="@string/people"
             android:textColor="@color/graywhite"
@@ -31,24 +29,20 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/basic_margin"
-        android:layout_marginRight="@dimen/basic_margin"
-        android:src="@drawable/bg_border4" />
+        android:layout_height="1dp"
+        android:background="@color/graywhitem" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ico_arrow_black"
+            android:drawableLeft="@drawable/phone_pub_event"
             android:drawablePadding="5dp"
             android:text="@string/phone"
             android:textColor="@color/graywhite"
@@ -60,5 +54,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/graywhitem" />
 
 </LinearLayout>

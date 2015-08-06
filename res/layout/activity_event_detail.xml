@@ -6,6 +6,48 @@
     android:orientation="vertical"
     tools:context=".EventDetailActivity" >
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:paddingBottom="3dp" >
+
+        <TextView
+            android:id="@+id/aed_activity_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/go_back"
+            android:text="@string/label_back"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/aed_activity_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/zhuo_event_title"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/aed_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/share_hqxq1" />
+
+        <ImageView
+            android:id="@+id/aed_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/aed_share"
+            android:background="@drawable/qhdcollect" />
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,48 +57,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/black"
-                android:paddingBottom="3dp" >
-
-                <TextView
-                    android:id="@+id/aed_activity_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/backspace"
-                    android:text="@string/label_back"
-                    android:textColor="#ffffff"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/aed_activity_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center"
-                    android:text="@string/zhuo_event_title"
-                    android:textColor="#ffffff"
-                    android:textSize="20dp" />
-
-                <ImageView
-                    android:id="@+id/aed_share"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/share_hqxq1" />
-
-                <ImageView
-                    android:id="@+id/aed_collect"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/aed_share"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/qhdcollect" />
-            </RelativeLayout>
 
             <TextView
                 android:id="@+id/aed_name"
@@ -91,7 +91,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
-                    android:text="45"
                     android:textSize="18dp" />
 
                 <TextView
@@ -106,7 +105,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
-                    android:text="45"
                     android:textSize="18dp" />
 
                 <TextView
@@ -121,7 +119,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
-                    android:text="45"
                     android:textSize="18dp" />
             </LinearLayout>
 
@@ -137,19 +134,34 @@
 
             <include layout="@layout/bg_image" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:drawableLeft="@drawable/button_pub"
-                android:drawableRight="@drawable/button_pub"
                 android:gravity="center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="@string/zhuo_even_create_people"
-                android:textColor="@color/graywhite"
-                android:textSize="20dp" />
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="1dp"
+                    android:background="@color/graywhite" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/zhuo_even_create_people"
+                    android:textColor="@color/graywhite"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="1dp"
+                    android:background="@color/graywhite" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/aed_boss_layout"
@@ -157,23 +169,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:background="@color/graywhitem"
                 android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="10dp" >
 
                 <com.cpstudio.zhuojiaren.widget.RoundImageView
                     android:id="@+id/aed_people_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_marginBottom="10dp"
-                    android:src="@drawable/chat_more_option_off" />
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:id="@+id/aed_people_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_toRightOf="@+id/aed_people_image" />
 
                 <TextView
@@ -181,25 +198,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:textColor="@color/graywhite"
+                    android:textSize="18dp"
                     android:layout_toRightOf="@+id/aed_people_name" />
 
                 <TextView
                     android:id="@+id/aed_people_company"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/graywhite"
+                    android:layout_alignBottom="@+id/aed_people_image"
+                    android:textSize="18dp"
                     android:layout_alignLeft="@+id/aed_people_name"
                     android:layout_below="@+id/aed_people_name" />
 
                 <ImageView
+                    android:id="@+id/bg_bg"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="1dp"
                     android:layout_below="@+id/aed_people_image"
-                    android:src="@drawable/bg_border4" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/graywhite" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/aed_people_image"
+                    android:layout_below="@+id/bg_bg"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal" >
 
                     <TextView
@@ -214,7 +241,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/red"
+                        android:textColor="#ec76a0"
                         android:textSize="@dimen/basic_text" />
 
                     <TextView
@@ -229,7 +256,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/red"
+                        android:textColor="#ec76a0"
                         android:textSize="@dimen/basic_text" />
 
                     <TextView
@@ -244,7 +271,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/red"
+                        android:textColor="#ec76a0"
                         android:textSize="@dimen/basic_text" />
 
                     <TextView
@@ -259,7 +286,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/red"
+                        android:textColor="#ec76a0"
                         android:textSize="@dimen/basic_text" />
 
                     <TextView
@@ -283,7 +310,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ico_arrow_black"
+                    android:drawableLeft="@drawable/starttime_pub_event"
                     android:drawablePadding="5dp"
                     android:text="@string/time"
                     android:textColor="@color/graywhite"
@@ -298,10 +325,10 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="1dp"
                 android:layout_marginLeft="@dimen/basic_margin"
                 android:layout_marginRight="@dimen/basic_margin"
-                android:src="@drawable/bg_border4" />
+                android:background="@color/graywhitem" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -315,7 +342,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ico_arrow_black"
+                    android:drawableLeft="@drawable/address_pub_event"
                     android:drawablePadding="5dp"
                     android:text="@string/locate"
                     android:textColor="@color/graywhite"
@@ -330,10 +357,10 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="1dp"
                 android:layout_marginLeft="@dimen/basic_margin"
                 android:layout_marginRight="@dimen/basic_margin"
-                android:src="@drawable/bg_border4" />
+                android:background="@color/graywhitem" />
 
             <LinearLayout
                 android:id="@+id/aed_people"
@@ -359,7 +386,10 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="@string/toapply"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:layout_marginBottom="10dp"
+                 />
         </LinearLayout>
     </ScrollView>
 

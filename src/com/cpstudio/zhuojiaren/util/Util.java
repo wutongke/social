@@ -579,4 +579,12 @@ public class Util {
 		}
 		view.setText(text);
 	}
+	public static long[] getTimeFromSeconds(long seconds){
+		long[] result = new long[4];
+		result[0] = seconds/60;
+		result[1] = seconds/60/60;
+		result[2] = seconds/60/60/60;
+		result[3] = seconds/60/60/60/24;
+		return result;
+	}
 }
