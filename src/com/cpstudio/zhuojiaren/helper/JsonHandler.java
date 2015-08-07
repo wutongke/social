@@ -43,6 +43,7 @@ import com.cpstudio.zhuojiaren.model.SysMsgVO;
 import com.cpstudio.zhuojiaren.model.TeacherVO;
 import com.cpstudio.zhuojiaren.model.TopicDetailVO;
 import com.cpstudio.zhuojiaren.model.TotalUserVO;
+import com.cpstudio.zhuojiaren.model.UserEvent;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
