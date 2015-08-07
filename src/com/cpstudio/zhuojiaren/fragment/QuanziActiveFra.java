@@ -83,12 +83,7 @@ public class QuanziActiveFra extends Fragment {
 		Bundle intent = getArguments();
 		mType = intent.getInt(QuanVO.QUANZIMAINTYPE);
 
-		// if (mType == QuanVO.QUANZIACTIVE)
-		// mAdapter = new ActiveListAdapter(getActivity(), activeList);
-		// else if (mType == QuanVO.QUANZITOPIC)
 		mAdapter = new EventListAdapter(getActivity(), mList);
-		// else
-		// mAdapter = new QuanMemberListAdapter(getActivity(), memberList);
 
 		RelativeLayout mFooterView = (RelativeLayout) inflater.inflate(
 				R.layout.listview_footer, null);
@@ -175,10 +170,6 @@ public class QuanziActiveFra extends Fragment {
 			mPage = 0;
 			mConnHelper.getQuanEventList(mUIHandler, MsgTagVO.DATA_LOAD,
 					groupId, null, mPage, mPageSize);
-			// ≤‚ ‘
-//			mConnHelper.getQuanEventList(mUIHandler, MsgTagVO.DATA_LOAD,
-//					"989038385820150729150611", null, mPage, mPageSize);
-
 		}
 	}
 
@@ -186,9 +177,6 @@ public class QuanziActiveFra extends Fragment {
 		if (mListViewFooter.startLoading()) {
 			mConnHelper.getQuanEventList(mUIHandler, MsgTagVO.DATA_MORE,
 					groupId, null, mPage, mPageSize);
-			// ≤‚ ‘
-//			mConnHelper.getQuanEventList(mUIHandler, MsgTagVO.DATA_MORE,
-//					"989038385820150729150611", null, mPage, mPageSize);
 		}
 	}
 

@@ -13,7 +13,7 @@
         android:layout_marginTop="12dp"
         android:orientation="vertical" >
 
-        <com.cpstudio.zhuojiaren.widget.RoundImageView
+        <ImageView
             android:id="@+id/imageViewAuthorHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

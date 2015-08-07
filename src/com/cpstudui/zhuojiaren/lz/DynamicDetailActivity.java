@@ -85,7 +85,8 @@ public class DynamicDetailActivity extends BaseActivity {
 		mAdapter = new TopicCommentListAdapter(this, mList, msgid);
 		mListView = (ListView) findViewById(R.id.listViewDetail);
 		mListView.setDividerHeight(0);
-		LayoutInflater inflater = LayoutInflater.from(DynamicDetailActivity.this);
+		LayoutInflater inflater = LayoutInflater
+				.from(DynamicDetailActivity.this);
 		mHeadView = (LinearLayout) inflater.inflate(
 				R.layout.listview_header_topic_detail, null);
 		mListView.addHeaderView(mHeadView);
@@ -109,8 +110,8 @@ public class DynamicDetailActivity extends BaseActivity {
 				.setText(dynamicDetail.getName());
 		// 此处还需要从编号获得对应的名称
 
-//		((TextView) (mHeadView.findViewById(R.id.textViewRes)))
-//				.setText(dynamicDetail.get);
+		// ((TextView) (mHeadView.findViewById(R.id.textViewRes)))
+		// .setText(dynamicDetail.get);
 		((TextView) (mHeadView.findViewById(R.id.textViewTime)))
 				.setText(dynamicDetail.getAddtime());
 		((TextView) (mHeadView.findViewById(R.id.textViewCmtContent)))
@@ -144,7 +145,8 @@ public class DynamicDetailActivity extends BaseActivity {
 					tl.addView(tr);
 				}
 				tr.setLayoutParams(tllp);
-				RelativeLayout rl = new RelativeLayout(DynamicDetailActivity.this);
+				RelativeLayout rl = new RelativeLayout(
+						DynamicDetailActivity.this);
 				rl.setLayoutParams(trlp);
 				ImageView iv = new ImageView(DynamicDetailActivity.this);
 				iv.setLayoutParams(rlp);
@@ -163,7 +165,7 @@ public class DynamicDetailActivity extends BaseActivity {
 							orgs.add(pics.get(j).getPic());
 						}
 						intent.putStringArrayListExtra("pics", orgs);
-						intent.putExtra("pic", (String) v.getTag());
+						// intent.putExtra("pic", (String) v.getTag());
 						startActivity(intent);
 					}
 				});
@@ -181,7 +183,7 @@ public class DynamicDetailActivity extends BaseActivity {
 		// drawable.getMinimumHeight());
 		// collectBtn.setCompoundDrawables(null, drawable, null, null);
 		// }
-		
+
 		fillPraiseList(dynamicDetail.getPraiseList());
 		fillCommentList(dynamicDetail.getCommentList());
 	}
@@ -201,6 +203,8 @@ public class DynamicDetailActivity extends BaseActivity {
 
 	private void fillPraiseList(List<Praise> praiseList) {
 		if (praiseList != null && praiseList.size() > 0) {
+			findViewById(R.id.layoutGood).setVisibility(View.VISIBLE);
+			findViewById(R.id.imageViewGood).setVisibility(View.VISIBLE);
 			Context context = mHeadView.getContext();
 			TableLayout.LayoutParams tllp = new TableLayout.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -361,8 +365,8 @@ public class DynamicDetailActivity extends BaseActivity {
 					public void onClick(View v) {
 						// mConnHelper.goodMsg(topicid, mUIHandler,
 						// MsgTagVO.MSG_LIKE, null, true, null, null);
-						mConnHelper.praiseDynamic(mUIHandler, MsgTagVO.MSG_LIKE,
-								msgid, 1);
+						mConnHelper.praiseDynamic(mUIHandler,
+								MsgTagVO.MSG_LIKE, msgid, 1);
 					}
 				});
 		findViewById(R.id.buttonTabCmt).setOnClickListener(

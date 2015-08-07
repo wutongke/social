@@ -139,7 +139,7 @@ public class DynamicListAdapter extends BaseAdapter {
 		String time = item.getAddtime();
 
 		time = CommonUtil.calcTime(time);
-
+//用于activity点击时获得id
 		convertView.setTag(R.id.tag_id, msgid);
 
 		holder.nameTV.setText(authorName);
@@ -271,7 +271,7 @@ public class DynamicListAdapter extends BaseAdapter {
 								PhotoViewMultiActivity.class);
 						ArrayList<String> orgs = new ArrayList<String>();
 						for (int j = 0; j < picsinner.size(); j++) {
-							orgs.add(url);
+							orgs.add(picsinner.get(j).getPic());
 						}
 						intent.putStringArrayListExtra("pics", orgs);
 						intent.putExtra("pic", (String) v.getTag());

@@ -138,30 +138,19 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		}
 		QuanTopicVO item = mList.get(position);
 		msgid = item.getTopicid();
-
 		final String userId = item.getUserid();
-
 		String authorName = item.getName();
-
 		String headUrl = item.getUheader();
-
 		String work = "";
 		if (baseDataSet != null)
 			work = ((baseDataSet.getPosition()).get(item.getPosition() - 1))
 					.getContent();
-
 		String detail = item.getContent();
-
 		String time = item.getAddtime();
-
 		time = CommonUtil.calcTime(time);
-
 		convertView.setTag(R.id.tag_id, msgid);
-
 		holder.nameTV.setText(authorName);
-
 		holder.timeTV.setText(time);
-
 		if (work != null) {
 			holder.workTV.setText(work);
 			holder.workTV.setVisibility(View.VISIBLE);
@@ -169,43 +158,6 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 			holder.workTV.setText("");
 			holder.workTV.setVisibility(View.GONE);
 		}
-		// if (type != null && !type.equals("")) {
-		// Map<String, Object> resinfo = ZhuoCommHelper.gentResInfo(type,
-		// category, title, detail, mContext);
-		// holder.resIV.setImageResource((Integer) resinfo.get("ico"));
-		// String text = (String) resinfo.get("category")
-		// + (String) resinfo.get("title")
-		// + (String) resinfo.get("content");
-		// holder.resTV.setText(text.trim());
-		// Rect bounds = new Rect();
-		// TextPaint paint = holder.resTV.getPaint();
-		// paint.getTextBounds(text, 0, text.length(), bounds);
-		// // int width = bounds.width();
-		// // if (width / (this.width - 85 * times) > 4) {
-		// // holder.moreTV.setVisibility(View.VISIBLE);
-		// // holder.moreTV.setOnClickListener(new OnClickListener() {
-		// //
-		// // @Override
-		// // public void onClick(View view) {
-		// // TextView showTypeView = (TextView) view;
-		// // if (showTypeView.getText().equals(
-		// // mContext.getString(R.string.info2))) {
-		// // showTypeView.setText(R.string.info1);
-		// // holder.resTV.setMaxLines(4);
-		// // } else {
-		// //
-		// // showTypeView.setText(R.string.info2);
-		// // holder.resTV.setMaxLines(200);
-		// // }
-		// // }
-		// // });
-		// // } else {
-		// // holder.moreTV.setVisibility(View.GONE);
-		// // }
-		// } else {
-		// holder.resIV.setImageResource(0);
-		// holder.resTV.setText("");
-		// }
 
 		holder.resTV.setText(detail.trim());
 
@@ -223,10 +175,8 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 			}
 		});
 		mLoadImage.addTask(headUrl, holder.headIV);
-		
-		// 濞夈劍鍓伴崢鐔告降閻楀牊婀版稉顓犳畱閳ユ粍妞块崝銊拷閸掓銆冩稊鐔惰厬閻拷+"閺堝琚辨稉顏庣礉閸掑棗鍩嗘禒锝堛�鐎电娴嗛崣鎴濆敶鐎瑰湱娈戞径鍕倞閿涘牏鍋ｇ挧鐐叉嫲鐠囧嫯顔戦敍澶涚礉娴犮儱寮风�瑙勬拱濞戝牊浼呴惃鍕槱閻烇拷
-		holder.optionIV.setOnClickListener(new OnClickListener() {
 
+		holder.optionIV.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
 
@@ -241,9 +191,6 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 								fragment.startActivity(i);
 							else
 								mContext.startActivity(i);
-							// mConnHelper.goodMsg(msgid, mHandler,
-							// MsgTagVO.MSG_LIKE,
-							// null, true, null, msgid);
 						}
 					};
 					OnClickListener noListener = new OnClickListener() {
@@ -252,7 +199,6 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 							//
 						}
 					};
-
 					phw.showPopDlg(view, R.string.label_apply,
 							R.string.label_nowno, applyTojoinListener,
 							noListener, R.string.title_topic_tip);
@@ -281,7 +227,6 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 							else
 								((Activity) mContext).startActivityForResult(i,
 										MsgTagVO.MSG_CMT);
-
 						}
 					};
 					phw.showOptionsPop(view, times, zanListener, cmtListener);
@@ -320,7 +265,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 								PhotoViewMultiActivity.class);
 						ArrayList<String> orgs = new ArrayList<String>();
 						for (int j = 0; j < picsinner.size(); j++) {
-							orgs.add(url);
+							orgs.add(picsinner.get(j).getPic());
 						}
 						intent.putStringArrayListExtra("pics", orgs);
 						intent.putExtra("pic", (String) v.getTag());
@@ -329,7 +274,6 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 				});
 				tr.addView(rl);
 			}
-
 		}
 		mLoadImage.doTask();
 		return convertView;
@@ -344,37 +288,12 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 				if (JsonHandler.checkResult((String) msg.obj, mContext)) {
 					CommonUtil
 							.displayToast(mContext, R.string.label_zanSuccess);
-					// Bundle bundle = msg.getData();
-					// String id = bundle.getString("data");
-					// for (ZhuoInfoVO item : mList) {
-					// if (id != null) {
-					// if (id.equals(item.getMsgid())) {
-					// item.setGoodnum((Integer.valueOf(item
-					// .getGoodnum()) + 1) + "");
-					// } else if (item.getOrigin() != null
-					// && id.equals(item.getOrigin().getMsgid())) {
-					// item.getOrigin().setGoodnum(
-					// (Integer.valueOf(item.getOrigin()
-					// .getGoodnum()) + 1) + "");
-					// }
-					// }
-					// }
-					// notifyDataSetChanged();
 				}
 				break;
 			}
 			case MsgTagVO.MSG_DEL: {
 				if (JsonHandler.checkResult((String) msg.obj, mContext)) {
 					CommonUtil.displayToast(mContext, R.string.info12);
-					// Bundle bundle = msg.getData();
-					// String id = bundle.getString("data");
-					// for (ZhuoInfoVO item : mList) {
-					// if (id != null && id.equals(item.getMsgid())) {
-					// mList.remove(item);
-					// break;
-					// }
-					// }
-					// notifyDataSetChanged();
 				}
 			}
 			}
@@ -388,12 +307,10 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		TextView resTV;
 		ImageView resIV;
 		ImageView headIV;
-		// TextView moreTV;
 		View optionIV;
 		TableLayout tl;
 		RelativeLayout.LayoutParams rlp;
 		RelativeLayout.LayoutParams rlp2;
-
 		TableLayout.LayoutParams tllpoutter;
 		TableRow.LayoutParams trlpoutter;
 	}
@@ -408,7 +325,6 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 				(int) (50 * times));
 		holder.rlp2 = new RelativeLayout.LayoutParams((int) (114 * times),
 				(int) (114 * times));
-
 		holder.nameTV = (TextView) convertView
 				.findViewById(R.id.textViewAuthorName);
 		holder.timeTV = (TextView) convertView.findViewById(R.id.textViewTime);
@@ -419,8 +335,6 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		holder.headIV = (ImageView) convertView
 				.findViewById(R.id.imageViewAuthorHeader);
 		holder.optionIV = convertView.findViewById(R.id.optionButton);
-		// holder.moreTV = (TextView) convertView
-		// .findViewById(R.id.textViewViewMore);
 		holder.tl = (TableLayout) convertView
 				.findViewById(R.id.tableLayoutAuthorPics);
 		return holder;
