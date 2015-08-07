@@ -65,7 +65,7 @@ public class DynamicListAdapter extends BaseAdapter {
 	String msgid = "11";
 	String groupId;
 	BaseCodeData baseDataSet;
-
+	// 没用
 	int role;// “我在圈子中的身份”
 
 	public String getGroupId() {
@@ -206,8 +206,7 @@ public class DynamicListAdapter extends BaseAdapter {
 				mContext.startActivity(intent);
 			}
 		});
-		mLoadImage.addTask(headUrl, holder.headIV);
-		mLoadImage.doTask();
+		mLoadImage.beginLoad(headUrl, holder.headIV);
 		holder.optionIV.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -217,8 +216,8 @@ public class DynamicListAdapter extends BaseAdapter {
 
 					@Override
 					public void onClick(View v) {
-						mConnHelper.goodMsg(msgid, mHandler, MsgTagVO.MSG_LIKE,
-								null, true, null, msgid);
+						mConnHelper.praiseDynamic(mHandler, MsgTagVO.MSG_LIKE,
+								msgid, 1);
 					}
 				};
 				OnClickListener cmtListener = new OnClickListener() {
@@ -229,6 +228,7 @@ public class DynamicListAdapter extends BaseAdapter {
 						Intent i = new Intent(mContext, MsgCmtActivity.class);
 						i.putExtra("msgid", msgid);
 						i.putExtra("parentid", msgid);
+						i.putExtra("type", 2);
 						// ((Activity)
 						// mContext).startActivityForResult(i,MsgTagVO.MSG_CMT);
 						((Activity) mContext).startActivityForResult(i,
@@ -263,7 +263,7 @@ public class DynamicListAdapter extends BaseAdapter {
 				rl.setTag(url);
 				iv.setTag(url);
 				iv.setImageResource(R.drawable.default_image);
-				mLoadImage.addTask(url, iv);
+				mLoadImage.beginLoad(url, iv);
 				rl.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {

@@ -27,11 +27,13 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudui.zhuojiaren.lz.QuanMemberListAdapter;
+import com.cpstudui.zhuojiaren.lz.TopicDetailActivity;
 import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
 
@@ -92,23 +94,24 @@ public class QuanziMemberFra extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(mContext, ZhuoMaiCardActivity.class);
-				// 需要从item中获得ID
-				intent.putExtra("userid", 1001);
-				startActivity(intent);
+				UserNewVO user = mList.get(position);
+				if (user != null) {
+					Intent intent = new Intent(mContext,
+							ZhuoMaiCardActivity.class);
+					intent.putExtra("userid", user.getUserid());
+					startActivity(intent);
+				}
 			}
 
 		});
 
-		// 测试，先不用
-		// loadData();
-
-		for (int i = 0; i < 8; i++)
-			mList.add(new UserNewVO());
-		mAdapter.notifyDataSetChanged();
+		// for (int i = 0; i < 8; i++)
+		// mList.add(new UserNewVO());
+		// mAdapter.notifyDataSetChanged();
 
 		groupId = ((ZhuoQuanMainActivity) getActivity()).getGroupid();
-
+		// 测试，先不用
+		loadData();
 		return layout;
 	}
 
@@ -159,7 +162,7 @@ public class QuanziMemberFra extends Fragment {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getActivity().getApplicationContext());
 
-					UserVO user = nljh.parseUser();
+					UserNewVO user = nljh.parseNewUser();
 					if (null != user) {
 						UserFacade facade = new UserFacade(getActivity()
 								.getApplicationContext());
@@ -173,36 +176,29 @@ public class QuanziMemberFra extends Fragment {
 	};
 
 	private void loadData() {
-		// // 加载刷新个人信息
-		// mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
 		if (mListViewFooter.startLoading()) {
 			mList.clear();
 			mAdapter.notifyDataSetChanged();
-			mPage = 1;
-			String params = ZhuoCommHelper.getUrlGroupDetail() + "?groupid="
-					+ groupId;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD);
+			mPage = 0;
+			mConnHelper.getQuanMemberList(mUIHandler, MsgTagVO.DATA_LOAD,
+					groupId);
 		}
 	}
 
 	private void loadMore() {
-		if (mListViewFooter.startLoading()) {
-			String params = ZhuoCommHelper.getUrlMsgList();
-			params += "?pageflag=" + "1";
-			params += "&reqnum=" + "10";
-			params += "&lastid=" + mLastId;
-			params += "&type=" + "0";
-			params += "&gongxutype=" + "0";
-			params += "&from=" + "0";
-			params += "&uid=" + uid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
-		}
+		// if (mListViewFooter.startLoading()) {
+		// mList.clear();
+		// mAdapter.notifyDataSetChanged();
+		// mPage = 0;
+		// mConnHelper.getQuanMemberList(mUIHandler, MsgTagVO.DATA_LOAD,
+		// groupId);
+		// }
 	}
 
 	private OnClickListener onMoreClick = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			loadMore();
+			// loadMore();
 		}
 	};
 }

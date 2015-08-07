@@ -293,16 +293,16 @@ public class SearchMainActivity extends BaseActivity implements
 			}
 			
 			case MsgTagVO.UPDATE: {
-				if (msg.obj != null && !msg.obj.equals("")) {
-					JsonHandler nljh = new JsonHandler((String) msg.obj,
-							getApplicationContext());
-					UserVO user = nljh.parseUser();
-					if (null != user) {
-						UserFacade facade = new UserFacade(
-								getApplicationContext());
-						facade.saveOrUpdate(user);
-					}
-				}
+//				if (msg.obj != null && !msg.obj.equals("")) {
+//					JsonHandler nljh = new JsonHandler((String) msg.obj,
+//							getApplicationContext());
+//					UserVO user = nljh.parseUser();
+//					if (null != user) {
+//						UserFacade facade = new UserFacade(
+//								getApplicationContext());
+//						facade.saveOrUpdate(user);
+//					}
+//				}
 				break;
 			}
 

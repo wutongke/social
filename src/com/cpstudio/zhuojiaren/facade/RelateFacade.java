@@ -50,8 +50,8 @@ public class RelateFacade {
 		ArrayList<UserVO> li = new ArrayList<UserVO>(cursor.getCount());
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
-			li.add(mFacade.getSimpleInfoById(getByCursor(cursor)));
-			cursor.moveToNext();
+//			li.add(mFacade.getSimpleInfoById(getByCursor(cursor)));
+//			cursor.moveToNext();
 		}
 		cursor.close();
 		return li;
@@ -64,7 +64,7 @@ public class RelateFacade {
 				if (!checkExist(item.getUserid())) {
 					insert(item);
 				} else {
-					mFacade.add(item);
+//					mFacade.add(item);
 				}
 			}
 		} catch (Exception e) {
@@ -75,7 +75,7 @@ public class RelateFacade {
 	}
 
 	public long insert(UserVO item) {
-		mFacade.add(item);
+//		mFacade.add(item);
 		return dbHelper.insert(tableName, null, getFullValues(item));
 	}
 

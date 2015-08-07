@@ -22,19 +22,15 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.JiarenActiveActivity;
-import com.cpstudio.zhuojiaren.MsgCmtActivity;
-import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelperLz;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudui.zhuojiaren.lz.QuanziTopicListAdapter;
@@ -165,7 +161,7 @@ public class QuanziTopicFra extends Fragment {
 				if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getActivity().getApplicationContext());
-					UserVO user = nljh.parseUser();
+					UserNewVO user = nljh.parseNewUser();
 					if (null != user) {
 						UserFacade facade = new UserFacade(getActivity()
 								.getApplicationContext());

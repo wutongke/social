@@ -26,6 +26,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
@@ -56,7 +57,7 @@ public class JiarenActiveActivity extends Activity implements
 	private String mLastId = "0";
 	private ZhuoConnHelper mConnHelper = null;
 	private UserFacade mFacade = null;
-	private int mPage = 1;
+	private int mPage = 0;
 	final int pageSize = 10;
 	private InfoFacade infoFacade = null;
 
@@ -217,25 +218,26 @@ public class JiarenActiveActivity extends Activity implements
 		}
 	}
 
-	private void updateUserInfo(UserVO user) {
+	private void updateUserInfo(UserNewVO user) {
 		try {
 			if (null != user) {
-				String name = user.getUsername();
-				String blog = user.getActivenum();
+				String name = user.getName();
+				int blogNum = user.getStatusNum();
+				int friendNum = user.getFriendNum();
 				// String families = user.getFamilytotal();//为空
 				// 好友个数不知道从哪里取
-				String families = "" + user.getFamily().size();
+				String families = "" + friendNum;
 
 				String headurl = user.getUheader();
 
 				((TextView) findViewById(R.id.textViewUsername)).setText(name);
-				if (blog != null && families != null) {
-					((TextView) findViewById(R.id.textViewBolgnum))
-							.setText(families
-									+ getString(R.string.p_jiaren_active_families)
-									+ "~" + blog
-									+ getString(R.string.p_jiaren_active_rizhi));
-				}
+
+				((TextView) findViewById(R.id.textViewBolgnum))
+						.setText(families
+								+ getString(R.string.p_jiaren_active_families)
+								+ "~" + blogNum
+								+ getString(R.string.p_jiaren_active_rizhi));
+
 				ImageView iv = (ImageView) findViewById(R.id.imageViewUserHead);
 				iv.setOnClickListener(new OnClickListener() {
 
@@ -316,13 +318,13 @@ public class JiarenActiveActivity extends Activity implements
 				break;
 			}
 			case MsgTagVO.DATA_OTHER: {
-				UserVO user = null;
+				UserNewVO user = null;
 				if (msg.obj instanceof UserVO) {
-					user = (UserVO) msg.obj;
+					user = (UserNewVO) msg.obj;
 				} else {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					user = nljh.parseUser();
+					user = nljh.parseNewUser();
 				}
 				updateUserInfo(user);
 				break;
@@ -367,7 +369,7 @@ public class JiarenActiveActivity extends Activity implements
 
 	private void loadInfo() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			UserVO user = mFacade.getSimpleInfoById(mUid);
+			UserNewVO user = mFacade.getSimpleInfoById(mUid);
 			if (user == null) {
 				CommonUtil.displayToast(getApplicationContext(),
 						R.string.error0);
@@ -377,8 +379,7 @@ public class JiarenActiveActivity extends Activity implements
 				msg.sendToTarget();
 			}
 		} else {
-			String params = ZhuoCommHelper.getUrlUserInfo() + "?uid=" + mUid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_OTHER);
+			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_OTHER, mUid);
 		}
 	}
 
@@ -400,7 +401,7 @@ public class JiarenActiveActivity extends Activity implements
 
 	@Override
 	public void onRefresh() {
-		mPage = 1;
+		mPage = 0;
 		loadData();
 	}
 

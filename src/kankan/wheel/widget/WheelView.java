@@ -22,8 +22,6 @@ package kankan.wheel.widget;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.cpstudio.zhuojiaren.R;
-
 import kankan.wheel.widget.adapters.WheelViewAdapter;
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -38,6 +36,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 
+import com.cpstudio.zhuojiaren.R;
+
 /**
  * Numeric wheel view.
  * 
@@ -50,7 +50,7 @@ public class WheelView extends View {
 			0x00AAAAAA, 0x00AAAAAA };
 
 	/** Top and bottom items offset (to hide that) */
-	private static final int ITEM_OFFSET_PERCENT = 5;
+	private static final int ITEM_OFFSET_PERCENT = 10;
 
 	/** Left and right padding value */
 	private static final int PADDING = 10;
@@ -65,7 +65,7 @@ public class WheelView extends View {
 	private int visibleItems = DEF_VISIBLE_ITEMS;
 
 	// Item height
-	private int itemHeight = 20;
+	private int itemHeight = 0;
 
 	// Center Line
 	private Drawable centerDrawable;
@@ -470,7 +470,7 @@ public class WheelView extends View {
 			bottomShadow = new GradientDrawable(Orientation.BOTTOM_TOP,
 					SHADOWS_COLORS);
 		}
-		setBackgroundResource(R.color.white);
+		setBackgroundResource(R.drawable.bg_weel);
 	}
 
 	/**
@@ -605,7 +605,7 @@ public class WheelView extends View {
 			drawCenterRect(canvas);
 		}
 
-//		drawShadows(canvas);
+		//drawShadows(canvas);
 	}
 
 	/**

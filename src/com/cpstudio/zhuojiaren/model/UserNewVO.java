@@ -3,7 +3,7 @@ package com.cpstudio.zhuojiaren.model;
 import java.util.List;
 
 public class UserNewVO {
-	private String signature;//签名
+	private String signature;// 签名
 	private String faith;
 	private String dream;
 	private List<PicNewVO> myPic;
@@ -13,7 +13,7 @@ public class UserNewVO {
 
 	private int isPhoneOpen;
 
-	private String constellation;
+	private int  constellation;
 
 	private int hometown;
 
@@ -21,7 +21,7 @@ public class UserNewVO {
 
 	private String registerTime;
 
-	private int userType;
+	private int userType;// 0:普通用户 1:导师 2:代理商
 
 	private int city;
 
@@ -35,9 +35,7 @@ public class UserNewVO {
 
 	private int isEmailOpen;
 
-	private String zodiac;
-
-	private int isFree;
+	private int zodiac;
 
 	private String email;
 
@@ -59,10 +57,63 @@ public class UserNewVO {
 
 	int industry;
 	private String phone;
-	
-	
-	
-	
+	private String userid;
+	int isFree;// (0:收费用户 1:免费用户)
+	int role;// 我在圈子中的身份类型
+
+	String qrcode; // 二维码图片url
+	int friendNum; // (好友个数 在动态页面中使用)
+	int statusNum; // (动态/文章个数 在动态页面中使用)
+	private List<PicNewVO> photo;// (照片 对多10张)
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public String getQrcode() {
+		return qrcode;
+	}
+
+	public void setQrcode(String qrcode) {
+		this.qrcode = qrcode;
+	}
+
+	public int getFriendNum() {
+		return friendNum;
+	}
+
+	public void setFriendNum(int friendNum) {
+		this.friendNum = friendNum;
+	}
+
+	public int getStatusNum() {
+		return statusNum;
+	}
+
+	public void setStatusNum(int statusNum) {
+		this.statusNum = statusNum;
+	}
+
+	public List<PicNewVO> getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(List<PicNewVO> photo) {
+		this.photo = photo;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public int getRole() {
+		return role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
+	}
+
 	public String getSignature() {
 		return signature;
 	}
@@ -86,8 +137,6 @@ public class UserNewVO {
 	public void setFaith(String faith) {
 		this.faith = faith;
 	}
-
-	
 
 	public String getPhone() {
 		return phone;
@@ -145,11 +194,11 @@ public class UserNewVO {
 		return this.isPhoneOpen;
 	}
 
-	public void setConstellation(String constellation) {
+	public void setConstellation(int constellation) {
 		this.constellation = constellation;
 	}
 
-	public String getConstellation() {
+	public int getConstellation() {
 		return this.constellation;
 	}
 
@@ -233,11 +282,11 @@ public class UserNewVO {
 		return this.isEmailOpen;
 	}
 
-	public void setZodiac(String zodiac) {
+	public void setZodiac(int zodiac) {
 		this.zodiac = zodiac;
 	}
 
-	public String getZodiac() {
+	public int getZodiac() {
 		return this.zodiac;
 	}
 
@@ -320,7 +369,5 @@ public class UserNewVO {
 	public int getIsQqOpen() {
 		return this.isQqOpen;
 	}
-
-	
 
 }

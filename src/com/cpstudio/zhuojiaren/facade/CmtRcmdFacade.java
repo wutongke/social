@@ -116,13 +116,13 @@ public class CmtRcmdFacade {
 		CmtRcmdVO item = new CmtRcmdVO();
 		item.setId(cursor.getString(0));
 		String senderid = cursor.getString(1);
-		UserVO sender = userFacade.getSimpleInfoById(senderid);
-		item.setSender(sender);
-		String receiverid = cursor.getString(2);
-		if (null != receiverid && !receiverid.equals("")) {
-			UserVO receiver = userFacade.getSimpleInfoById(receiverid);
-			item.setReceiver(receiver);
-		}
+//		UserVO sender = userFacade.getSimpleInfoById(senderid);
+//		item.setSender(sender);
+//		String receiverid = cursor.getString(2);
+//		if (null != receiverid && !receiverid.equals("")) {
+//			UserVO receiver = userFacade.getSimpleInfoById(receiverid);
+//			item.setReceiver(receiver);
+//		}
 		item.setContent(cursor.getString(3));
 		String msgid = cursor.getString(4);
 		ZhuoInfoVO zhuoInfo = zhuoInfoFacade.getById(msgid);
@@ -137,13 +137,13 @@ public class CmtRcmdFacade {
 		ZhuoInfoFacade zhuoInfoFacade = new ZhuoInfoFacade(mContext);
 		ContentValues values = new ContentValues();
 		values.put("id", item.getId());
-		UserVO sender = item.getSender();
-		String senderid = userFacade.add(sender);
-		values.put("senderid", senderid);
-		UserVO receiver = item.getReceiver();
-		String receiverid = userFacade.add(receiver);
-		values.put("receiverid", receiverid);
-		values.put("content", item.getContent());
+//		UserVO sender = item.getSender();
+//		String senderid = userFacade.add(sender);
+//		values.put("senderid", senderid);
+//		UserVO receiver = item.getReceiver();
+//		String receiverid = userFacade.add(receiver);
+//		values.put("receiverid", receiverid);
+//		values.put("content", item.getContent());
 		ZhuoInfoVO zhuoInfo = item.getOrgin();
 		String orginid = zhuoInfo.getMsgid();
 		zhuoInfoFacade.saveOrUpdate(zhuoInfo);

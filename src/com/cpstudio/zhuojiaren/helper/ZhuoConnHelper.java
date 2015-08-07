@@ -1044,8 +1044,16 @@ public class ZhuoConnHelper {
 	 * @param type
 	 * @return
 	 */
-	public boolean getMainAdInfo(Handler mUIHandler, int tag) {
-		return getFromServerByPost(ZhuoCommHelperLz.getMainAdInfo(), null,
+	public boolean getMainInfo(Handler mUIHandler, int tag, int pubnum,
+			int statusnum) {
+
+		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+		if (pubnum > 5)
+			params.add(new BasicNameValuePair("pubnum", pubnum + ""));
+		if(statusnum>5)
+			params.add(new BasicNameValuePair("statusnum", statusnum + ""));
+
+		return getFromServerByPost(ZhuoCommHelperLz.getMainInfo(), params,
 				mUIHandler, tag);
 	}
 
@@ -1129,6 +1137,27 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
 		return getFromServerByPost(ZhuoCommHelperLz.getQuanEventList(),
+				nameValuePairs, mUIHandler, tag);
+	}
+
+	/**
+	 * 获取用户加入和创建的活动
+	 * 
+	 * @param mUIHandler
+	 * @param tag
+	 * @param userid
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	public boolean getUserEventList(Handler mUIHandler, int tag, String userid,
+			int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		if (userid != null)
+			nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
+		return getFromServerByPost(ZhuoCommHelperLz.getUserEvent(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -1235,6 +1264,15 @@ public class ZhuoConnHelper {
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
+	public boolean praiseDynamic(Handler mUIHandler, int handlerTag,
+			String statusid, int praise) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("statusid", statusid));
+		nameValuePairs.add(new BasicNameValuePair("praise", praise + ""));
+		return getFromServerByPost(ZhuoCommHelperLz.dynamicPraise(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
 	/**
 	 * 圈话题评论
 	 * 
@@ -1256,8 +1294,21 @@ public class ZhuoConnHelper {
 		if (toId != null)
 			nameValuePairs.add(new BasicNameValuePair("toId", toId));
 		if (toUserid != null)
-			nameValuePairs.add(new BasicNameValuePair("toId", toUserid));
+			nameValuePairs.add(new BasicNameValuePair("toUserid", toUserid));
 		return getFromServerByPost(ZhuoCommHelperLz.topicComment(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	public boolean CommentDynamic(Handler mUIHandler, int handlerTag,
+			String statusid, String comment, String toId, String toUserid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("statusid", statusid));
+		nameValuePairs.add(new BasicNameValuePair("comment", comment));
+		if (toId != null)
+			nameValuePairs.add(new BasicNameValuePair("toId", toId));
+		if (toUserid != null)
+			nameValuePairs.add(new BasicNameValuePair("toUserid", toUserid));
+		return getFromServerByPost(ZhuoCommHelperLz.dynamicComment(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1307,8 +1358,9 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("birthdayLunar", user
 				.getBirthdayLunar()));
 		nameValuePairs.add(new BasicNameValuePair("constellation", user
-				.getConstellation()));
-		nameValuePairs.add(new BasicNameValuePair("zodiac", user.getZodiac()));
+				.getConstellation() + ""));
+		nameValuePairs.add(new BasicNameValuePair("zodiac", user.getZodiac()
+				+ ""));
 		nameValuePairs.add(new BasicNameValuePair("hobby", user.getHobby()));
 		nameValuePairs.add(new BasicNameValuePair("industry", user
 				.getIndustry() + ""));
@@ -1402,12 +1454,35 @@ public class ZhuoConnHelper {
 				activity, "pubDynamic", false, null, null);
 	}
 
+	/**
+	 * 删除动态
+	 * 
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param statusid
+	 * @return
+	 */
 	public boolean deleteDynamic(Handler mUIHandler, int handlerTag,
 			String statusid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("statusid", statusid));
 		return getFromServerByPost(ZhuoCommHelperLz.getDetailDynamic(),
 				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	/**
+	 * 获得圈子成员列表
+	 * 
+	 * @param mUIHandler
+	 * @param tag
+	 * @param groupid
+	 * @return
+	 */
+	public boolean getQuanMemberList(Handler mUIHandler, int tag, String groupid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		return getFromServerByPost(ZhuoCommHelperLz.getGroupMemberList(),
+				nameValuePairs, mUIHandler, tag);
 	}
 
 	/**

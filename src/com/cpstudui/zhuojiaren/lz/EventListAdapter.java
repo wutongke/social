@@ -11,6 +11,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
@@ -70,9 +72,9 @@ public class EventListAdapter extends BaseAdapter {
 		holder.textViewTitle.setText(event.getTitle());
 		// time = CommonUtil.calcTime(time);
 		holder.textViewDateTime.setText(event.getStarttime());
-		if(event.getOutdate()==1 )
-		holder.textViewIsOverTime.setText("已过期");
-		else 
+		if (event.getOutdate() == 1)
+			holder.textViewIsOverTime.setText("已过期");
+		else
 			holder.textViewIsOverTime.setText("未过期");
 		holder.textViewNums.setText(event.getJoinCount() + "人报名");
 
@@ -95,6 +97,16 @@ public class EventListAdapter extends BaseAdapter {
 			holder.cbSelected.setVisibility(View.VISIBLE);
 		else
 			holder.cbSelected.setVisibility(View.GONE);
+		holder.cbSelected
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(CompoundButton arg0,
+							boolean arg1) {
+						// TODO Auto-generated method stub
+						mList.get(position).setSelected(arg1);
+					}
+				});
 		return convertView;
 	}
 

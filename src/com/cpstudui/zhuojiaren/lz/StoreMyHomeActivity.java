@@ -24,6 +24,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.CartActivity;
 import com.cpstudio.zhuojiaren.ui.GoodsCollectionActivity;
@@ -239,7 +240,7 @@ public class StoreMyHomeActivity extends BaseActivity {
 
 	private void loadInfo() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			UserVO user = userFacade.getSimpleInfoById(mUid);
+			UserNewVO user = userFacade.getSimpleInfoById(mUid);
 			if (user == null) {
 				CommonUtil.displayToast(getApplicationContext(),
 						R.string.error0);

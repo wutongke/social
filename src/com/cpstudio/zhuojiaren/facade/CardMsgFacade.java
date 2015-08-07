@@ -110,20 +110,21 @@ public class CardMsgFacade {
 	}
 
 	private CardMsgVO getByCursor(Cursor cursor) {
-		UserFacade userFacade = new UserFacade(mContext);
 		CardMsgVO item = new CardMsgVO();
-		item.setId(cursor.getString(0));
-		String senderid = cursor.getString(1);
-		UserVO sender = userFacade.getSimpleInfoById(senderid);
-		item.setSender(sender);
-		String receiverid = cursor.getString(2);
-		UserVO receiver = userFacade.getSimpleInfoById(receiverid);
-		item.setReceiver(receiver);
-		item.setLeavemsg(cursor.getString(3));
-		item.setIsopen(cursor.getString(4));
-		item.setState(cursor.getString(5));
-		item.setIsread(cursor.getString(6));
-		item.setAddtime(cursor.getString(7));
+//		UserFacade userFacade = new UserFacade(mContext);
+
+//		item.setId(cursor.getString(0));
+//		String senderid = cursor.getString(1);
+//		UserVO sender = userFacade.getSimpleInfoById(senderid);
+//		item.setSender(sender);
+//		String receiverid = cursor.getString(2);
+//		UserVO receiver = userFacade.getSimpleInfoById(receiverid);
+//		item.setReceiver(receiver);
+//		item.setLeavemsg(cursor.getString(3));
+//		item.setIsopen(cursor.getString(4));
+//		item.setState(cursor.getString(5));
+//		item.setIsread(cursor.getString(6));
+//		item.setAddtime(cursor.getString(7));
 		return item;
 	}
 
@@ -132,16 +133,16 @@ public class CardMsgFacade {
 		ContentValues values = new ContentValues();
 		values.put("id", item.getId());
 		UserVO sender = item.getSender();
-		String senderid = userFacade.add(sender);
-		values.put("senderid", senderid);
-		UserVO receiver = item.getReceiver();
-		String receiverid = userFacade.add(receiver);
-		values.put("receiverid", receiverid);
-		values.put("leavemsg", item.getLeavemsg());
-		values.put("isopen", item.getIsopen());
-		values.put("state", item.getState());
-		values.put("isread", item.getIsread());
-		values.put("addtime", item.getAddtime());
+//		String senderid = userFacade.add(sender);
+//		values.put("senderid", senderid);
+//		UserVO receiver = item.getReceiver();
+//		String receiverid = userFacade.add(receiver);
+//		values.put("receiverid", receiverid);
+//		values.put("leavemsg", item.getLeavemsg());
+//		values.put("isopen", item.getIsopen());
+//		values.put("state", item.getState());
+//		values.put("isread", item.getIsread());
+//		values.put("addtime", item.getAddtime());
 		return values;
 	}
 }

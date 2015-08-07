@@ -1,5 +1,8 @@
 package com.cpstudio.zhuojiaren;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -27,6 +30,7 @@ public class MsgCmtActivity extends Activity {
 	private String content = null;
 	private String toId = null;
 	private String toUserid = null;
+	int type = 1;// 1:评论圈话题，2：评论动态
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,7 @@ public class MsgCmtActivity extends Activity {
 		Intent i = getIntent();
 		msgid = i.getStringExtra("msgid");
 		toId = i.getStringExtra("toId");
+		type = i.getIntExtra("type", 1);
 		toUserid = i.getStringExtra("toUserid");
 		initClick();
 	}
@@ -102,8 +107,12 @@ public class MsgCmtActivity extends Activity {
 		}
 		// mConnHelper.pubCmt(msgid, parentid, content, forward, mUIHandler,
 		// , MsgCmtActivity.this, true, null, null);
-		mConnHelper.CommentTopic(mUIHandler, MsgTagVO.PUB_INFO, msgid, content,
-				toId, toUserid);
+		if (1 == type)
+			mConnHelper.CommentTopic(mUIHandler, MsgTagVO.PUB_INFO, msgid,
+					content, toId, toUserid);
+		else
+			mConnHelper.CommentDynamic(mUIHandler, MsgTagVO.PUB_INFO, msgid,
+					content, toId, toUserid);
 	}
 
 }

@@ -11,6 +11,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.JiarenActiveActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.model.Dynamic;
 
 public class JiarenActiveNumListActivity extends BaseActivity {
 	@InjectView(R.id.textViewIFocusedNum)
@@ -37,7 +38,7 @@ public class JiarenActiveNumListActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(JiarenActiveNumListActivity.this,
 						JiarenActiveActivity.class);
-				i.putExtra("mType", 2);
+				i.putExtra("mType", Dynamic.DYNATIC_TYPE_MY_JIAREN);
 				startActivity(i);
 			}
 		});
@@ -48,7 +49,7 @@ public class JiarenActiveNumListActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(JiarenActiveNumListActivity.this,
 						JiarenActiveActivity.class);
-				i.putExtra("mType", 1);
+				i.putExtra("mType", Dynamic.DYNATIC_TYPE_ALL_JIAREN);
 				startActivity(i);
 			}
 		});

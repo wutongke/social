@@ -27,6 +27,8 @@ public class CardAddUserBirthActivity extends Activity {
 	private WheelView wheel2 = null;
 	private WheelView wheel3 = null;
 	private boolean mLunar = false;
+	int constellation = 0, zodiac = 0;
+	boolean isYangli = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,7 @@ public class CardAddUserBirthActivity extends Activity {
 		String birthdayopen = i
 				.getStringExtra(CardEditActivity.EDIT_BIRTH_STR2);
 		String birthdayLunar = i
-				.getStringExtra(CardEditActivity.EDIT_BIRTH_STR3);//阴历生日
+				.getStringExtra(CardEditActivity.EDIT_BIRTH_STR3);// 阴历生日
 		if (birthdayopen != null && birthdayopen.equals("0")) {
 			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(true);
 		} else {
@@ -62,9 +64,10 @@ public class CardAddUserBirthActivity extends Activity {
 			date = Integer.valueOf(str[2]);
 		}
 		gentBirtdayTextInfo(year, month, date);
-		if (birthday!=null) {
+		if (birthday != null) {
 			initNormalWheel(year, month, date);
-		}if(birthdayLunar!=null){
+		}
+		if (birthdayLunar != null) {
 			initChineseWheelBySolar(year, month, date);
 		}
 	}
@@ -98,18 +101,20 @@ public class CardAddUserBirthActivity extends Activity {
 						Intent intent = new Intent();
 						if (((CheckBox) findViewById(R.id.checkBoxIsOpen))
 								.isChecked()) {
-							intent.putExtra(CardEditActivity.EDIT_BIRTH_STR2,
-									1);
+							intent.putExtra(CardEditActivity.EDIT_BIRTH_STR2, 1);
 						} else {
-							intent.putExtra(CardEditActivity.EDIT_BIRTH_STR2,
-									0);
+							intent.putExtra(CardEditActivity.EDIT_BIRTH_STR2, 0);
 						}
-							int[] solor = LundarToSolar.getLundarToSolar(year,
-									month, day);
-							intent.putExtra(CardEditActivity.EDIT_BIRTH_STR3,
-									solor[0] + "-" + solor[1] + "-" + solor[2]);
-							intent.putExtra(CardEditActivity.EDIT_BIRTH_STR1,
-									year + "-" + month + "-" + day);
+						intent.putExtra(CardEditActivity.EDIT_BIRTH_STR4,
+								constellation + 1);
+						intent.putExtra(CardEditActivity.EDIT_BIRTH_STR5,
+								zodiac + 1);
+						int[] solor = LundarToSolar.getLundarToSolar(year,
+								month, day);
+						intent.putExtra(CardEditActivity.EDIT_BIRTH_STR3,
+								solor[0] + "-" + solor[1] + "-" + solor[2]);
+						intent.putExtra(CardEditActivity.EDIT_BIRTH_STR1, year
+								+ "-" + month + "-" + day);
 						setResult(RESULT_OK, intent);
 						CardAddUserBirthActivity.this.finish();
 					}
@@ -118,12 +123,16 @@ public class CardAddUserBirthActivity extends Activity {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						isYangli = true;
 						int year = wheel1.getCurrentItem() + 1900;
 						int month = wheel2.getCurrentItem() + 1;
 						int day = wheel3.getCurrentItem() + 1;
 						int[] solar = LundarToSolar.getLundarToSolar(year,
 								month, day);
 						initNormalWheel(solar[0], solar[1], solar[2]);
+						year = solar[0];
+						month = solar[1];
+						day = solar[2];
 					}
 				});
 		findViewById(R.id.buttonYingli).setOnClickListener(
@@ -131,6 +140,7 @@ public class CardAddUserBirthActivity extends Activity {
 					@Override
 					public void onClick(View v) {
 						try {
+							isYangli = false;
 							int year = wheel1.getCurrentItem() + 1900;
 							int month = wheel2.getCurrentItem() + 1;
 							int day = wheel3.getCurrentItem() + 1;
@@ -145,6 +155,16 @@ public class CardAddUserBirthActivity extends Activity {
 	}
 
 	private void gentBirtdayTextInfo(int year, int month, int day) {
+
+		if (!isYangli) {
+			int[] solar = LundarToSolar.getLundarToSolar(year, month, day);
+			year = solar[0];
+			month = solar[1];
+			day = solar[2];
+			gentBirtdayTextInfo(year, month, day);
+			return;
+		}
+
 		String monthStr = month + "";
 		if (month < 10) {
 			monthStr = "0" + monthStr;
@@ -182,11 +202,12 @@ public class CardAddUserBirthActivity extends Activity {
 		Lunar myLunar = new Lunar(birth);
 		((TextView) findViewById(R.id.textViewLunar))
 				.setText(getString(R.string.mp_yilsr) + myLunar.getLunarStr());
-		((TextView) findViewById(R.id.textViewShuXiang)).setText(myLunar
-				.getAnimalsYear());
-
-		((TextView) findViewById(R.id.textViewXinzuo)).setText(Lunar
-				.getConstellation(birth.getTime()));
+		zodiac = myLunar.getAnimalsYear();
+		((TextView) findViewById(R.id.textViewShuXiang))
+				.setText(Lunar.Animals[zodiac]);
+		constellation = Lunar.getConstellation(birth.getTime());
+		((TextView) findViewById(R.id.textViewXinzuo))
+				.setText(Lunar.constellationArr[constellation]);
 
 		// 还要设置其对应的动物图片
 		// ((TextView) findViewById(R.id.textViewShuXiang))
@@ -392,8 +413,6 @@ public class CardAddUserBirthActivity extends Activity {
 					int year = wheel1.getCurrentItem() + 1900;
 					int month = wheel2.getCurrentItem();
 					int leapMonth = SolarToLundar.leapMonth(year);
-					
-//此处阴历转阳历有点问题，1990年的5月和闰五月的结果一样
 					if (month < leapMonth || leapMonth == 0) {
 						month += 1;
 					}
@@ -406,26 +425,12 @@ public class CardAddUserBirthActivity extends Activity {
 					if (day < 10) {
 						dayStr = "0" + dayStr;
 					}
-					// String text = "   " + year + "   "
-					// + getString(R.string.label_year) + "   " + monthStr
-					// + "   " + getString(R.string.label_month) + "   "
-					// + dayStr + "   " + getString(R.string.label_day);
+					String text = "   " + year + "   "
+							+ getString(R.string.label_year) + "   " + monthStr
+							+ "   " + getString(R.string.label_month) + "   "
+							+ dayStr + "   " + getString(R.string.label_day);
 					int[] solar = LundarToSolar.getLundarToSolar(year, month,
 							day);
-					
-					Calendar birth = Calendar.getInstance();
-					birth.set(solar[0], solar[1], solar[2]);
-					Lunar myLunar = new Lunar(birth);
-					((TextView) findViewById(R.id.textViewLunar))
-							.setText(getString(R.string.mp_yilsr)
-									+ myLunar.getLunarStr());
-
-					((TextView) findViewById(R.id.textViewShuXiang))
-							.setText(myLunar.getAnimalsYear());
-
-					((TextView) findViewById(R.id.textViewXinzuo))
-							.setText(Lunar.getConstellation(birth.getTime()));
-
 					String month2Str = solar[1] + "";
 					if (solar[1] < 10) {
 						month2Str = "0" + month2Str;
@@ -439,8 +444,8 @@ public class CardAddUserBirthActivity extends Activity {
 							+ month2Str + "   "
 							+ getString(R.string.label_month) + "   " + day2Str
 							+ "   " + getString(R.string.label_day);
-					// ((TextView) findViewById(R.id.textViewLunar))
-					// .setText(getString(R.string.mp_yilsr) + text);
+					((TextView) findViewById(R.id.textViewLunar))
+							.setText(getString(R.string.mp_yilsr) + text);
 					((TextView) findViewById(R.id.textViewSolar))
 							.setText(getString(R.string.mp_yalsr) + solarText);
 				}
@@ -500,5 +505,4 @@ public class CardAddUserBirthActivity extends Activity {
 		}
 		return type;
 	}
-
 }

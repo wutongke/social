@@ -28,6 +28,10 @@ public class Dynamic {
 
 	private List<PicNewVO> statusPic;
 
+	private List<Praise> praiseList;
+
+	private List<Comment> commentList;
+	
 	public void setStatusid(String statusid) {
 		this.statusid = statusid;
 	}
@@ -107,4 +111,21 @@ public class Dynamic {
 	public List<PicNewVO> getStatusPic() {
 		return this.statusPic;
 	}
+
+	public List<Praise> getPraiseList() {
+		return praiseList;
+	}
+
+	public void setPraiseList(List<Praise> praiseList) {
+		this.praiseList = praiseList;
+	}
+
+	public List<Comment> getCommentList() {
+		return commentList;
+	}
+
+	public void setCommentList(List<Comment> commentList) {
+		this.commentList = commentList;
+	}
+	
 }

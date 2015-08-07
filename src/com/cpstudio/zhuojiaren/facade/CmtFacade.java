@@ -91,11 +91,11 @@ public class CmtFacade {
 		item.setAddtime(cursor.getString(1));
 		item.setContent(cursor.getString(2));
 		String userid = cursor.getString(3);
-		UserVO user = userFacade.getSimpleInfoById(userid);
-		item.setUser(user);
-		item.setParentid(cursor.getString(4));
-		item.setMsgid(cursor.getString(5));
-		item.setLikecnt(cursor.getString(6));
+//		UserVO user = userFacade.getSimpleInfoById(userid);
+//		item.setUser(user);
+//		item.setParentid(cursor.getString(4));
+//		item.setMsgid(cursor.getString(5));
+//		item.setLikecnt(cursor.getString(6));
 		return item;
 	}
 
@@ -106,11 +106,11 @@ public class CmtFacade {
 		values.put("addtime", item.getAddtime());
 		values.put("content", item.getContent());
 		UserVO user = item.getUser();
-		String userid = userFacade.add(user);
-		values.put("userid", userid);
-		values.put("parentid", item.getParentid());
-		values.put("msgid", item.getMsgid());
-		values.put("likecnt", item.getLikecnt());
+//		String userid = userFacade.add(user);
+//		values.put("userid", userid);
+//		values.put("parentid", item.getParentid());
+//		values.put("msgid", item.getMsgid());
+//		values.put("likecnt", item.getLikecnt());
 		return values;
 	}
 }

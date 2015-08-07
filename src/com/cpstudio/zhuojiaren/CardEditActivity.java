@@ -2,6 +2,7 @@ package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -39,9 +41,15 @@ import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.PicVO;
 import com.cpstudio.zhuojiaren.model.Province;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.model.constellation;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.google.gson.JsonObject;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 public class CardEditActivity extends Activity {
 
@@ -55,8 +63,8 @@ public class CardEditActivity extends Activity {
 	@InjectView(R.id.textViewChangeHead)
 	TextView textViewChangeHead;
 
-	@InjectView(R.id.textViewEditTDCard)
-	TextView textViewEditTDCard;
+	@InjectView(R.id.ivTDCard)
+	ImageView ivTDCard;
 	@InjectView(R.id.etSignature)
 	EditText etSignature;
 	@InjectView(R.id.textViewEditNameShow)
@@ -89,6 +97,9 @@ public class CardEditActivity extends Activity {
 	public final static String EDIT_BIRTH_STR1 = "birth";// 阳历生日
 	public final static String EDIT_BIRTH_STR2 = "birthopen";
 	public final static String EDIT_BIRTH_STR3 = "birthdayLunar";// 阴历生日
+	public final static String EDIT_BIRTH_STR4 = "constellation";// 星座
+	public final static String EDIT_BIRTH_STR5 = "zodiac";// 生肖
+	
 	public final static int EDIT_PLACE = 1;
 	public final static String EDIT_PLACE_STR1 = "place";// 所在城市
 	public final static String EDIT_PLACE_STR2 = "hometown";// 家乡
@@ -142,7 +153,6 @@ public class CardEditActivity extends Activity {
 
 	private ZhuoConnHelper mConnHelper = null;
 	private ArrayList<String> dreamsList = new ArrayList<String>();
-	private ArrayList<String> localImages = new ArrayList<String>();
 	public final static String LOCAL_IMAGE = "localImage";
 	private PopupWindows pwh = null;
 	private UserFacade mFacade = null;
@@ -171,37 +181,6 @@ public class CardEditActivity extends Activity {
 
 	void updateInfo() {
 		userInfo.setSignature(etSignature.getText().toString());
-
-		Map<String, String> files = new HashMap<String, String>();
-		int imgcnt = localImages.size();
-		if (imgcnt > 0) {
-			if (localImages.size() - 1 > 0) {
-				for (int i = 0; i < localImages.size() - 1; i++) {
-					files.put("img" + i, localImages.get(i));
-				}
-			}
-			files.put("uheader", localImages.get(localImages.size() - 1));
-			imgcnt = imgcnt - 1;
-		} else {
-			// List<PicVO> picsNow = userInfo.getPics();
-			// if(picsNow.size() > 0){
-			// if(!userInfo.getUheader().equals(picsNow.get(picsNow.size()
-			// - 1).getUrl())){
-			// files.put("uheader",
-			// picsNow.get(picsNow.size() - 1).getUrl());
-			// }
-			// }
-			// delete first Image
-		}
-		if (userInfo.getBirthday() != null
-				&& !userInfo.getBirthday().equals("")
-				&& userInfo.getBirthday().indexOf("-") != -1) {
-			String[] solar = userInfo.getBirthday().split("-");
-			String constellation = ZhuoCommHelper.dayToSign(
-					CardEditActivity.this, Integer.valueOf(solar[1]),
-					Integer.valueOf(solar[2]));
-			userInfo.setConstellation(constellation);
-		}
 		mConnHelper.modifyUserInfo(mUIHandler, MsgTagVO.PUB_INFO, userInfo);
 	}
 
@@ -400,46 +379,46 @@ public class CardEditActivity extends Activity {
 			}
 		});
 
-		textViewEditImagesShow.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (userInfo != null) {
-					ArrayList<String> images = new ArrayList<String>();
-					ArrayList<String> ids = new ArrayList<String>();
-					if (userInfo.getMyPic() != null) {
-						String headUrl = null;
-						String headId = null;
-						for (int i = 0; i < userInfo.getMyPic().size(); i++) {
-							PicNewVO pic = userInfo.getMyPic().get(
-									userInfo.getMyPic().size() - 1 - i);
-							if (pic.getPic().equals(userInfo.getUheader())) {
-								headUrl = pic.getPic();
-								headId = pic.getPic();
-							} else {
-								images.add(pic.getPic());
-								ids.add(pic.getPic());
-							}
-						}
-						if (headId != null) {
-							images.add(headUrl);
-							ids.add(headId);
-						}
-					}
-					for (String localImage : localImages) {
-						images.add(localImage);
-						ids.add(LOCAL_IMAGE);
-					}
-					Intent i = new Intent(CardEditActivity.this,
-							CardAddUserImageActivity.class);
-					i.putStringArrayListExtra(EDIT_IMAGE_STR1, images);
-					i.putStringArrayListExtra(EDIT_IMAGE_STR2, ids);
-					startActivityForResult(i, EDIT_IMAGE);
-				} else {
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.error12);
-				}
-			}
-		});
+//		textViewEditImagesShow.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				if (userInfo != null) {
+//					ArrayList<String> images = new ArrayList<String>();
+//					ArrayList<String> ids = new ArrayList<String>();
+//					if (userInfo.getMyPic() != null) {
+//						String headUrl = null;
+//						String headId = null;
+//						for (int i = 0; i < userInfo.getMyPic().size(); i++) {
+//							PicNewVO pic = userInfo.getMyPic().get(
+//									userInfo.getMyPic().size() - 1 - i);
+//							if (pic.getPic().equals(userInfo.getUheader())) {
+//								headUrl = pic.getPic();
+//								headId = pic.getPic();
+//							} else {
+//								images.add(pic.getPic());
+//								ids.add(pic.getPic());
+//							}
+//						}
+//						if (headId != null) {
+//							images.add(headUrl);
+//							ids.add(headId);
+//						}
+//					}
+//					for (String localImage : localImages) {
+//						images.add(localImage);
+//						ids.add(LOCAL_IMAGE);
+//					}
+//					Intent i = new Intent(CardEditActivity.this,
+//							CardAddUserImageActivity.class);
+//					i.putStringArrayListExtra(EDIT_IMAGE_STR1, images);
+//					i.putStringArrayListExtra(EDIT_IMAGE_STR2, ids);
+//					startActivityForResult(i, EDIT_IMAGE);
+//				} else {
+//					CommonUtil.displayToast(getApplicationContext(),
+//							R.string.error12);
+//				}
+//			}
+//		});
 
 		textViewEditPhoneShow.setOnClickListener(new OnClickListener() {
 			@Override
@@ -474,21 +453,10 @@ public class CardEditActivity extends Activity {
 			}
 		});
 		// 二维码
-		textViewEditTDCard.setOnClickListener(new OnClickListener() {
+		ivTDCard.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//
-				// if (userInfo != null) {
-				// Intent i = new Intent(CardEditActivity.this,
-				// CardAddUserNameActivity.class);
-				// i.putExtra(EDIT_NAME_STR1, userInfo.getUsername());
-				// i.putExtra(EDIT_NAME_STR2, userInfo.getSex());
-				// i.putExtra(EDIT_NAME_STR3, userInfo.getIsmarry());
-				// startActivityForResult(i, EDIT_NAME);
-				// } else {
-				// CommonUtil.displayToast(getApplicationContext(),
-				// R.string.error12);
-				// }
+				// 显示二维码图片
 			}
 		});
 
@@ -549,9 +517,13 @@ public class CardEditActivity extends Activity {
 				String birth = data.getStringExtra(EDIT_BIRTH_STR1);
 				int birthopen = data.getIntExtra(EDIT_BIRTH_STR2, 0);
 				String birthdayLunar = data.getStringExtra(EDIT_BIRTH_STR3);
+				int constellation = data.getIntExtra(EDIT_BIRTH_STR4, 0);// 星座编号
+				int zodiac = data.getIntExtra(EDIT_BIRTH_STR5, 0);// 星座编号EDIT_BIRTH_STR5
 				userInfo.setBirthday(birth);
+				userInfo.setZodiac(zodiac);
 				userInfo.setBirthdayLunar(birthdayLunar);
 				userInfo.setIsBirthdayOpen(birthopen);
+				userInfo.setConstellation(constellation);
 				textViewEditBirthShow.setText(birth);
 				break;
 			case EDIT_PLACE:
@@ -608,38 +580,38 @@ public class CardEditActivity extends Activity {
 				textViewEditZymShow.setText(motto);
 				break;
 			case EDIT_IMAGE:
-				try {
-					ArrayList<String> images = data
-							.getStringArrayListExtra(EDIT_IMAGE_STR1);
-					localImages.clear();
-					localImages.addAll(images);
-					ArrayList<String> ids = data
-							.getStringArrayListExtra(EDIT_IMAGE_STR2);
-					ArrayList<PicNewVO> pics = new ArrayList<PicNewVO>();
-					if (userInfo.getMyPic() != null) {
-						PicNewVO temp = null;
-						for (PicNewVO pic : userInfo.getMyPic()) {
-							if (ids.contains(pic.getPic())) {
-								if (ids.get(ids.size() - 1)
-										.equals(pic.getPic())) {
-									temp = pic;
-								} else {
-									pics.add(pic);
-								}
-							}
-						}
-						if (temp != null) {
-							pics.add(temp);
-						}
-					}
-					userInfo.setMyPic(pics);
-					((TextView) findViewById(R.id.textViewEditImagesShow))
-							.setText(getString(R.string.mp_has)
-									+ (images.size() + ids.size())
-									+ getString(R.string.mp_imgasall));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+//				try {
+//					ArrayList<String> images = data
+//							.getStringArrayListExtra(EDIT_IMAGE_STR1);
+//					localImages.clear();
+//					localImages.addAll(images);
+//					ArrayList<String> ids = data
+//							.getStringArrayListExtra(EDIT_IMAGE_STR2);
+//					ArrayList<PicNewVO> pics = new ArrayList<PicNewVO>();
+//					if (userInfo.getMyPic() != null) {
+//						PicNewVO temp = null;
+//						for (PicNewVO pic : userInfo.getMyPic()) {
+//							if (ids.contains(pic.getPic())) {
+//								if (ids.get(ids.size() - 1)
+//										.equals(pic.getPic())) {
+//									temp = pic;
+//								} else {
+//									pics.add(pic);
+//								}
+//							}
+//						}
+//						if (temp != null) {
+//							pics.add(temp);
+//						}
+//					}
+//					userInfo.setMyPic(pics);
+//					((TextView) findViewById(R.id.textViewEditImagesShow))
+//							.setText(getString(R.string.mp_has)
+//									+ (images.size() + ids.size())
+//									+ getString(R.string.mp_imgasall));
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
 				break;
 			case EDIT_PHONE:
 				String phone = data.getStringExtra(EDIT_PHONE_STR1);
@@ -697,6 +669,11 @@ public class CardEditActivity extends Activity {
 	void fillInfo() {
 		if (userInfo == null)
 			return;
+
+		// 生成名片二维码信息图片
+		createQRImage(ivTDCard,
+				userInfo.getUserid() + "," + userInfo.getName(), 100, 100);
+
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHead);
 		// 城市是编号，还需要根据provList查询，暂不处理，是否直接从服务器获取
 		String place = userInfo.getCity() + "";
@@ -820,4 +797,37 @@ public class CardEditActivity extends Activity {
 		return super.onKeyDown(keyCode, event);
 	}
 
+	// 要转换的地址或字符串,可以是中文
+	public void createQRImage(ImageView sweepIV, String url, int w, int h) {
+		try {
+			// 判断URL合法性
+			if (url == null || "".equals(url) || url.length() < 1) {
+				return;
+			}
+			Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
+			hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+			// 图像数据转换，使用了矩阵转换
+			BitMatrix bitMatrix = new QRCodeWriter().encode(url,
+					BarcodeFormat.QR_CODE, w, h, hints);
+			int[] pixels = new int[w * h];
+			// 下面这里按照二维码的算法，逐个生成二维码的图片，
+			// 两个for循环是图片横列扫描的结果
+			for (int y = 0; y < h; y++) {
+				for (int x = 0; x < w; x++) {
+					if (bitMatrix.get(x, y)) {
+						pixels[y * w + x] = 0xff000000;
+					} else {
+						pixels[y * w + x] = 0xffffffff;
+					}
+				}
+			}
+			// 生成二维码图片的格式，使用ARGB_8888
+			Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+			bitmap.setPixels(pixels, 0, w, 0, 0, w, h);
+			// 显示到一个ImageView上面
+			sweepIV.setImageBitmap(bitmap);
+		} catch (WriterException e) {
+			e.printStackTrace();
+		}
+	}
 }
