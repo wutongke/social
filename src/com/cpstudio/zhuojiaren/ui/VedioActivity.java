@@ -71,6 +71,8 @@ public class VedioActivity extends BaseActivity {
 	TextView vedioName;
 	@InjectView(R.id.avedio_share_inspiration)
 	EditText share;
+	@InjectView(R.id.activity_function_image)
+	ImageView shareImage;
 	// 播放器初始化是否完成 保证屏幕旋转后的状态
 	boolean init = false;
 	// 是否全屏
@@ -93,9 +95,9 @@ public class VedioActivity extends BaseActivity {
 		submit();
 		initTitle();
 		title.setText(R.string.grouth_online_detail);
-		function.setBackgroundResource(R.drawable.share_hqxq1);
+		shareImage.setBackgroundResource(R.drawable.share);
 		
-		function.setOnClickListener(new OnClickListener() {
+		shareImage.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -104,6 +106,7 @@ public class VedioActivity extends BaseActivity {
 						VedioActivity.this);
 				shareBoard.showAtLocation(VedioActivity.this.getWindow()
 						.getDecorView(), Gravity.BOTTOM, 0, 0);
+//				startActivity(new Intent(VedioActivity.this,PayActivity.class));
 			}
 		});
 		findViewById(R.id.activity_back).setOnClickListener(

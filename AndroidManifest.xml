@@ -1016,8 +1016,6 @@
             android:label="@string/title_activity_vedio"
             android:screenOrientation="portrait" >
         </activity>
-
-        
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.DynamicDetailActivity"
             android:label="@string/dynamic_detail" >
@@ -1026,7 +1024,6 @@
             android:name="com.cpstudui.zhuojiaren.lz.MyActiveActivity"
             android:label="@string/active_my" >
         </activity>
-        
         <!-- 融云 -->
         <!-- begin imlib request -->
 
@@ -1204,6 +1201,44 @@
             android:name="com.cpstudio.zhuojiaren.MapLocateActivity"
             android:label="@string/title_activity_map_locate" >
         </activity>
+        <!-- 支付相关 -->
+
+        <activity
+            android:name="com.cpstudio.zhuojiaren.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.pay.ailiyue.AliPayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.PayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <receiver
+            android:name="com.cpstudio.zhuojiaren.AppRegister"
+            android:permission="com.tencent.mm.plugin.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+            </intent-filter>
+        </receiver>
+        <!-- 支付相关结束 -->
     </application>
 
     <!-- renren sso Permission for Unit Test -->

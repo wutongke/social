@@ -199,6 +199,7 @@
     <string name="group_type_8">俱乐部</string>
     <string name="group_type_9">兴趣爱好</string>
     <string name="group_type_10">其他</string>
+    <string name="errcode_unknown">未知错误</string>
     <string name="error0">网络连接失败</string>
     <string name="error1">获取图片失败</string>
     <string name="error_intent">订单生成出错，请重新提交</string>

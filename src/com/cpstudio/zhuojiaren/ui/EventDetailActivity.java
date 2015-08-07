@@ -145,9 +145,6 @@ public class EventDetailActivity extends Activity {
 				MsgTagVO.DATA_LOAD, eventId);
 //		mConnHelper.getTime(EventDetailActivity.this, mUIHandler,
 //				MsgTagVO.DATA_LOAD);
-		Message msg = mUIHandler.obtainMessage();
-		msg.what = MsgTagVO.time;
-		msg.sendToTarget();
 	}
 
 	private Handler mUIHandler = new Handler() {
@@ -237,6 +234,22 @@ public class EventDetailActivity extends Activity {
 						peoplePostion.setText(detail.getPosition());
 						time.setText(detail.getStarttime() + "-"
 								+ detail.getEndtime());
+						// µ¹¼ÆÊ±
+						servertime = Long.parseLong(detail.getLefttime());
+						Runnable runnable = new Runnable() { 
+					        @Override 
+					        public void run() { 
+					        	servertime--; 
+					        	long[]timeLeft = Util.getTimeFromSeconds(servertime);
+					            day.setText(timeLeft[0]+"");
+								hour.setText(timeLeft[1]+"");
+								minute.setText(timeLeft[2]+"");
+								second.setText(timeLeft[3]+"");
+								mUIHandler.postDelayed(this, 1000); 
+					        } 
+					    }; 
+						mUIHandler.post(runnable);
+						
 						locate.setText(detail.getAddress());
 						locate.setOnClickListener(new OnClickListener() {
 							public void onClick(View v) {
@@ -307,27 +320,7 @@ public class EventDetailActivity extends Activity {
 			case MsgTagVO.time:
 				if (JsonHandler.checkResult((String) msg.obj,
 						EventDetailActivity.this)) {
-					servertime = 4564654321l;
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-					try {
-						long millionSeconds = sdf.parse(event.getStarttime()).getTime();
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					Runnable runnable = new Runnable() { 
-				        @Override 
-				        public void run() { 
-				        	servertime--; 
-				        	long[]timeLeft = Util.getTimeFromSeconds(servertime);
-				            day.setText(timeLeft[0]+"");
-							hour.setText(timeLeft[1]+"");
-							minute.setText(timeLeft[2]+"");
-							second.setText(timeLeft[3]+"");
-							mUIHandler.postDelayed(this, 1000); 
-				        } 
-				    }; 
-					mUIHandler.post(runnable);
+					
 				} else {
 					CommonUtil.displayToast(mContext, "²Ù×÷Ê§°Ü");
 				}

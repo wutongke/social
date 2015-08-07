@@ -594,7 +594,7 @@ public class AppClientLef {
 		nameValuePairs.add(new BasicNameValuePair("activityid", activityid));
 		String url = ZhuoCommHelper.getGeteventdetail();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
-				false, null, null);
+				true, null, null);
 	}
 
 	/**
