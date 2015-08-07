@@ -119,7 +119,7 @@ public class DynamicDetailActivity extends BaseActivity {
 		String url = dynamicDetail.getUheader();
 
 		headIV.setTag(url);
-		mLoadImage.beginLoad(url, headIV);
+		mLoadImage.addTask(url, headIV);
 
 		mHeadView.setTag(dynamicDetail.getStatusid());
 

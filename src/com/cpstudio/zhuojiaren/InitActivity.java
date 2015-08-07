@@ -6,8 +6,6 @@ import io.rong.imlib.RongIMClient.ErrorCode;
 
 import java.util.HashMap;
 
-import org.androidpn.client.ServiceManager;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -46,11 +44,11 @@ public class InitActivity extends Activity {
 
 	private void init() {
 		// 单人聊
-		ImChatFacade imChatFacade = new ImChatFacade(getApplicationContext());
-		imChatFacade.updateSendState();
-		// 群聊
-		ImQuanFacade imQuanFacade = new ImQuanFacade(getApplicationContext());
-		imQuanFacade.updateSendState();
+//		ImChatFacade imChatFacade = new ImChatFacade(getApplicationContext());
+//		imChatFacade.updateSendState();
+//		// 群聊
+//		ImQuanFacade imQuanFacade = new ImQuanFacade(getApplicationContext());
+//		imQuanFacade.updateSendState();
 		start();
 	}
 

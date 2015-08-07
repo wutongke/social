@@ -146,7 +146,7 @@ public class UserFacade {
 
 	public long saveOrUpdate(UserNewVO item) {
 		String userid = item.getUserid();
-		if (getSimpleInfoById(userid) != null) {
+		if (userid != null && getSimpleInfoById(userid) != null) {
 			return update(item);
 		} else {
 			return insert(item);
@@ -236,44 +236,15 @@ public class UserFacade {
 
 	private ContentValues getFullValues(UserNewVO item) {
 		ContentValues values = new ContentValues();
-		// ProductFacade productFacade = new ProductFacade(mContext);
-		// QuanFacade quanFacade = new QuanFacade(mContext);
-		// ZhuoInfoFacade zhuoInfoFacade = new ZhuoInfoFacade(mContext);
-		// DreamFacade dreamFacade = new DreamFacade(mContext);
-		// PicFacade picFacade = new PicFacade(mContext);
 
-		// values.put("userid", item.getUserid());
-		// values.put("userpwd", item.getUserid());
-		// values.put("username", item.getUsername());
-		// values.put("uheader", item.getUheader());
-		// values.put("sex", item.getSex());
-		// values.put("hometown", item.getHometown());
-		// values.put("travel_cities", item.getTravelCities());
-		// values.put("birthday", item.getBirthday());
-		// values.put("birthday_type", item.getBirthdayType());
-		// values.put("constellation", item.getConstellation());
-		// values.put("maxim", item.getMaxim());
-		// values.put("hobby", item.getHobby());
-		// values.put("company", item.getCompany());
-		// values.put("email", item.getEmail());
-		// values.put("learn_exp", item.getLearn_exp());
-		// values.put("website", item.getWebsite());
-		// values.put("join_zhuo_date", item.getJoinZhuoDate());
-		// values.put("pinyin", item.getPinyin());
-		// values.put("startletter", item.getStartletter());
-		// values.put("level", item.getLevel());
-		// values.put("productotal", item.getProductotal());
-		// values.put("familytotal", item.getFamilytotal());
-		// values.put("grouptotal", item.getGrouptotal());
-		// values.put("isfollow", item.getIsfollow());
-		// values.put("isemailopen", item.getIsemailopen());
-		// values.put("isphoneopen", item.getIsphoneopen());
-		// values.put("isworking", item.getIsworking());
-		// values.put("isisentrepreneurship", item.getIsisentrepreneurship());
-		// values.put("ismarry", item.getIsmarry());
-		// values.put("offertotal", item.getOffertotal());
-		// values.put("lastoffer", item.getLastoffer());
-		// values.put("lastdemand", item.getLastdemand());
+		values.put("userid", item.getUserid());
+		values.put("name", item.getName());
+		values.put("uheader", item.getUheader());
+		values.put("company", item.getCompany());
+		values.put("signature", item.getSignature());
+		values.put("friendNum", item.getFriendNum());
+		values.put("statusNum", item.getStatusNum());
+		values.put("gender", item.getGender());
 		// values.put("id", item.getId());
 		// values.put("classissure", item.getClassissure());
 		// values.put("isbirthdayopen", item.getIsbirthdayopen());

@@ -89,7 +89,7 @@
                 android:layout_margin="10dp"
                 android:drawableLeft="@drawable/start_wdxx_1"
                 android:drawablePadding="5dp"
-                android:text="@string/lab_active_pub" />
+                android:text="@string/lab_active_join" />
 
             <View
                 android:layout_width="match_parent"

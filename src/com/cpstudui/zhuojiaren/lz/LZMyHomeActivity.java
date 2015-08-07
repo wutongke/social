@@ -236,15 +236,19 @@ public class LZMyHomeActivity extends Activity {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
-				if (JsonHandler.checkResult((String) msg.obj,
+				if (msg.obj instanceof UserNewVO)// 加载的本地数据
+				{
+					userInfo = (UserNewVO) msg.obj;
+					userInfo.setUserid(mUid);
+				} else if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
 					userInfo = nljh.parseNewUser();
-
-//    				userFacade.saveOrUpdate(userInfo);
-					fillHeadInfo();
+					userInfo.setUserid(mUid);
+					userFacade.saveOrUpdate(userInfo);
 				}
+				fillHeadInfo();
 				break;
 			}
 			case MsgTagVO.DATA_OTHER: {
@@ -281,17 +285,17 @@ public class LZMyHomeActivity extends Activity {
 
 	private void loadInfo() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-//			UserNewVO user = userFacade.getSimpleInfoById(mUid);
-//			if (user == null) {
-//				CommonUtil.displayToast(getApplicationContext(),
-//						R.string.error0);
-//			} else {
-//				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-//				msg.obj = user;
-//				msg.sendToTarget();
-//			}
+			UserNewVO user = userFacade.getSimpleInfoById(mUid);
+			if (user == null) {
+				CommonUtil.displayToast(getApplicationContext(),
+						R.string.error0);
+			} else {
+				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
+				msg.obj = user;
+				msg.sendToTarget();
+			}
 		} else {
-			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,mUid);
+			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, mUid);
 		}
 	}
 }
