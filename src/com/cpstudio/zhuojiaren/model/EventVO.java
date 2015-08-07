@@ -30,6 +30,7 @@ public class EventVO {
 	private String iscollected;
 	private String isjoined;
 	private String isowner;
+	private String lefttime;
 	public String getIsjoined() {
 		return isjoined;
 	}
@@ -135,6 +136,14 @@ public class EventVO {
 
 	public String getTitle() {
 		return title;
+	}
+
+	public String getLefttime() {
+		return lefttime;
+	}
+
+	public void setLefttime(String lefttime) {
+		this.lefttime = lefttime;
 	}
 
 	public String getLongitude() {
