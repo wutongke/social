@@ -3,7 +3,6 @@ package com.cpstudio.zhuojiaren.ui;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -11,6 +10,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +31,7 @@ import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.util.Util;
+import com.cpstudio.zhuojiaren.widget.CustomShareBoard;
 import com.cpstudio.zhuojiaren.widget.VedioPlayer;
 
 public class VedioActivity extends BaseActivity {
@@ -101,11 +102,11 @@ public class VedioActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-//				CustomShareBoard shareBoard = new CustomShareBoard(
-//						VedioActivity.this);
-//				shareBoard.showAtLocation(VedioActivity.this.getWindow()
-//						.getDecorView(), Gravity.BOTTOM, 0, 0);
-				startActivity(new Intent(VedioActivity.this,PayActivity.class));
+				CustomShareBoard shareBoard = new CustomShareBoard(
+						VedioActivity.this);
+				shareBoard.showAtLocation(VedioActivity.this.getWindow()
+						.getDecorView(), Gravity.BOTTOM, 0, 0);
+//				startActivity(new Intent(VedioActivity.this,PayActivity.class));
 			}
 		});
 		findViewById(R.id.activity_back).setOnClickListener(
