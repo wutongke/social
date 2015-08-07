@@ -277,6 +277,7 @@ public class QuanziFra extends Fragment {
 	public void setManager() {
 		if (mAdapter != null) {
 			mAdapter.setManagerVisible(true);
+			mAdapter.getmSelectedList().clear();
 			mAdapter.notifyDataSetChanged();
 		}
 		shareFooter.setVisibility(View.VISIBLE);
@@ -288,6 +289,7 @@ public class QuanziFra extends Fragment {
 	public void offManager() {
 		if (mAdapter != null) {
 			mAdapter.setManagerVisible(false);
+			mAdapter.getmSelectedList().clear();
 			mAdapter.notifyDataSetChanged();
 		}
 		shareFooter.setVisibility(View.GONE);

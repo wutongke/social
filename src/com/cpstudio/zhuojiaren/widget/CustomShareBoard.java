@@ -10,6 +10,8 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +20,12 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.model.ZhuoShareContent;
+import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.bean.StatusCode;
@@ -54,6 +62,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 	private UMImage image;
 	private String content;
 	private String targetUrl;
+	private ZhuoShareContent zhuoShareContent;
 
 	public CustomShareBoard(Activity activity) {
 		super(activity);
@@ -94,11 +103,11 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		} else if (id == R.id.wechat_circle) {
 			performShare(SHARE_MEDIA.WEIXIN_CIRCLE);
 		} else if (id == R.id.qq) {
-			performShare(SHARE_MEDIA.QQ);
+//			performShare(SHARE_MEDIA.QQ);
 		} else if (id == R.id.qzone) {
-			performShare(SHARE_MEDIA.QZONE);
+//			performShare(SHARE_MEDIA.QZONE);
 		} else if (id == R.id.xinlang) {
-			performShare(SHARE_MEDIA.SINA);
+//			performShare(SHARE_MEDIA.SINA);
 		} else if (id == R.id.message) {
 			performShare(SHARE_MEDIA.SMS);
 		} else if (id == R.id.copy) {
@@ -110,7 +119,25 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 			CustomShareBoard.this.dismiss();
 		}  
 		else {
-			Toast.makeText(mActivity, "倬脉", Toast.LENGTH_SHORT).show();
+			if(zhuoShareContent==null){
+				Toast.makeText(mActivity, "没有分享内容", Toast.LENGTH_SHORT).show();	
+				return;
+			}
+			AppClientLef.getInstance(mActivity).shareToZhuo(mActivity, new Handler(){
+				@Override
+				public void handleMessage(Message msg) {
+					// TODO Auto-generated method stub
+					super.handleMessage(msg);
+					if (JsonHandler.checkResult((String) msg.obj,
+							mActivity)) {
+						Toast.makeText(mActivity, "分享到倬脉", Toast.LENGTH_SHORT).show();	
+					} else {
+						CommonUtil.displayToast(mActivity, R.string.data_error);
+						return;
+					}
+				}
+			}, 1, zhuoShareContent);
+			
 		}
 	}
 
@@ -221,34 +248,6 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		mController.setShareMedia(sinaContent);
 	}
 
-	/**
-	 * 添加所有的平台</br>
-	 */
-	private void addCustomPlatforms() {
-		// 添加微信平台
-		addWXPlatform();
-		addSMS();
-		// 添加email平台
-		addEmail();
-		mController.registerListener(new SnsPostListener() {
-
-			@Override
-			public void onStart() {
-				Toast.makeText(mActivity, "share start...", 0).show();
-			}
-
-			@Override
-			public void onComplete(SHARE_MEDIA platform, int eCode,
-					SocializeEntity entity) {
-				Toast.makeText(mActivity, "code : " + eCode, 0).show();
-			}
-		});
-
-		mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN,
-				SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,
-				SHARE_MEDIA.SINA, SHARE_MEDIA.EMAIL, SHARE_MEDIA.SMS);
-		mController.openShare(mActivity, false);
-	}
 
 	/**
 	 * 添加短信平台</br>
@@ -275,8 +274,8 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 	private void addWXPlatform() {
 		// 注意：在微信授权的时候，必须传递appSecret
 		// wx967daebe835fbeac是你在微信开发平台注册应用的AppID, 这里需要替换成你注册的AppID
-		String appId = "wx967daebe835fbeac";
-		String appSecret = "5bb696d9ccd75a38c8a0bfe0675559b3";
+		String appId = "wx95c80614da3d5a6a";
+		String appSecret = "427537e09cb92d0a51c45cf10091b080";
 		// 添加微信平台
 		UMWXHandler wxHandler = new UMWXHandler(mActivity, appId, appSecret);
 		wxHandler.addToSocialSDK();
@@ -356,6 +355,14 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 
 	public void setTargetUrl(String targetUrl) {
 		this.targetUrl = targetUrl;
+	}
+
+	public ZhuoShareContent getZhuoShareContent() {
+		return zhuoShareContent;
+	}
+
+	public void setZhuoShareContent(ZhuoShareContent zhuoShareContent) {
+		this.zhuoShareContent = zhuoShareContent;
 	}
 
 }

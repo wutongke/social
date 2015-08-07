@@ -124,6 +124,11 @@ public class ZhuoCommHelper {
 	private final static String LIKECrowdFunding = "/crowdfunding/like.do";
 	private final static String getCrowdFundingComment = "/crowdfunding/commentList.do";
 	private final static String GETCROWDFUNDINGPROGRESS = "crowdfunding/progressList.do";
+	private final static String TIME = "crowdfunding/progressList.do";
+	public static String getTime() {
+		return SERVER + TIME;
+	}
+
 	// ’≤ÿ¡–±Ìurls
 	public static final String[] collectionUrls = {
 			
