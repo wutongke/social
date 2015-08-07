@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = ".db";
-	private static final int DATABASE_VERSION = 13;
+	private static final int DATABASE_VERSION = 2;
 	private static final String SQL_TABLE_IMMSGLIST = "CREATE TABLE IMMSGLIST(id TEXT PRIMARY KEY, "
 			+ "senderid TEXT NOT NULL, "
 			+ "receiverid TEXT NOT NULL, "
@@ -283,7 +283,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	
 	
-	private static final String TAG = null;
+	private static final String TAG = "DatabaseHelper";
 	private static SQLiteDatabase dbSqlite = null;
 	
 	//add by lz
@@ -362,10 +362,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(SQL_TABLE_USERDAILY);
 		db.execSQL(SQL_TABLE_RECORDLIST);
 		db.execSQL(SQL_TABLE_RECORDCHATLIST);
-		
 		db.execSQL(SQL_TABLE_NEWUSERLIST);
-		
-		
 	}
 
 	public void dropTable(SQLiteDatabase db, String tableName) {

@@ -42,7 +42,6 @@ import com.cpstudio.zhuojiaren.model.ImageRadioButton;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
-import com.cpstudio.zhuojiaren.util.Util;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;

@@ -223,7 +223,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 			}
 		});
 		mLoadImage.addTask(headUrl, holder.headIV);
-		mLoadImage.doTask();
+		
 		// 濞夈劍鍓伴崢鐔告降閻楀牊婀版稉顓犳畱閳ユ粍妞块崝銊拷閸掓銆冩稊鐔惰厬閻拷+"閺堝琚辨稉顏庣礉閸掑棗鍩嗘禒锝堛�鐎电娴嗛崣鎴濆敶鐎瑰湱娈戞径鍕倞閿涘牏鍋ｇ挧鐐叉嫲鐠囧嫯顔戦敍澶涚礉娴犮儱寮风�瑙勬拱濞戝牊浼呴惃鍕槱閻烇拷
 		holder.optionIV.setOnClickListener(new OnClickListener() {
 
@@ -312,7 +312,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 				rl.setTag(url);
 				iv.setTag(url);
 				iv.setImageResource(R.drawable.default_image);
-				mLoadImage.beginLoad(url, iv);
+				mLoadImage.addTask(url, iv);
 				rl.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -331,7 +331,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 			}
 
 		}
-
+		mLoadImage.doTask();
 		return convertView;
 	}
 

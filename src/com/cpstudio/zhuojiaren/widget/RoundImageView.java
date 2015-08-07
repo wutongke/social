@@ -114,7 +114,7 @@ public class RoundImageView extends ImageView {
 
 		Bitmap b = ((BitmapDrawable) drawable).getBitmap();
 
-		Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+		Bitmap bitmap = b.copy(Bitmap.Config.ARGB_4444, true);
 
 		if (defaultWidth == 0) {
 
@@ -249,7 +249,7 @@ public class RoundImageView extends ImageView {
 
 		scaledSrcBmp.getHeight(),
 
-		Config.ARGB_8888);
+		Config.ARGB_4444);
 
 		Canvas canvas = new Canvas(output);
 

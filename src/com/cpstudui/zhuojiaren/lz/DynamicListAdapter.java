@@ -206,7 +206,7 @@ public class DynamicListAdapter extends BaseAdapter {
 				mContext.startActivity(intent);
 			}
 		});
-		mLoadImage.beginLoad(headUrl, holder.headIV);
+		mLoadImage.addTask(headUrl, holder.headIV);
 		holder.optionIV.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -263,7 +263,7 @@ public class DynamicListAdapter extends BaseAdapter {
 				rl.setTag(url);
 				iv.setTag(url);
 				iv.setImageResource(R.drawable.default_image);
-				mLoadImage.beginLoad(url, iv);
+				mLoadImage.addTask(url, iv);
 				rl.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -282,7 +282,7 @@ public class DynamicListAdapter extends BaseAdapter {
 			}
 
 		}
-
+		mLoadImage.doTask();
 		return convertView;
 	}
 
