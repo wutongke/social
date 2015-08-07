@@ -115,80 +115,80 @@ public class ZhuoInfoFacade {
 		ZhuoInfoVO item = new ZhuoInfoVO();
 		item.setMsgid(cursor.getString(0));
 		String userid = cursor.getString(1);
-		UserVO userVO = userFacade.getSimpleInfoById(userid);
-		item.setUser(userVO);
-		item.setType(cursor.getString(2));
-		item.setCategory(cursor.getString(3));
-		item.setTitle(cursor.getString(4));
-		item.setText(cursor.getString(5));
-		item.setPosition(cursor.getString(6));
-		String tagses = cursor.getString(7);
-		ArrayList<String> tags = new ArrayList<String>();
-		if (tagses != null && !tagses.equals("")) {
-			if (tagses.indexOf(";") != -1) {
-				String[] ids = tagses.split(";");
-				for (String id : ids) {
-					tags.add(id);
-				}
-			} else {
-				tags.add(tagses);
-			}
-		}
-		item.setTags(tags);
-		item.setGoodnum(cursor.getString(8));
-		item.setCmtnum(cursor.getString(9));
-		item.setCollectnum(cursor.getString(10));
-		item.setForwardnum(cursor.getString(11));
-		String goodids = cursor.getString(12);
-		ArrayList<UserVO> goods = new ArrayList<UserVO>();
-		if (goodids != null && !goodids.equals("")) {
-			if (goodids.indexOf(";") != -1) {
-				String[] ids = goodids.split(";");
-				for (String id : ids) {
-					UserVO item2 = userFacade.getSimpleInfoById(id);
-					goods.add(item2);
-				}
-			} else {
-				UserVO item2 = userFacade.getSimpleInfoById(goodids);
-				goods.add(item2);
-			}
-		}
-		item.setGood(goods);
-		String picids = cursor.getString(13);
-		ArrayList<PicVO> pics = new ArrayList<PicVO>();
-		if (picids != null && !picids.equals("")) {
-			if (picids.indexOf(";") != -1) {
-				String[] ids = picids.split(";");
-				for (String id : ids) {
-					PicVO item2 = picFacade.getById(id);
-					pics.add(item2);
-				}
-			} else {
-				PicVO item2 = picFacade.getById(picids);
-				pics.add(item2);
-			}
-		}
-		item.setPic(pics);
-
-		String cmtids = cursor.getString(14);
-		ArrayList<CmtVO> cmts = new ArrayList<CmtVO>();
-		if (cmtids != null && !cmtids.equals("")) {
-			if (cmtids.indexOf(";") != -1) {
-				String[] ids = cmtids.split(";");
-				for (String id : ids) {
-					CmtVO item2 = cmtFacade.getById(id);
-					cmts.add(item2);
-				}
-			} else {
-				CmtVO item2 = cmtFacade.getById(cmtids);
-				cmts.add(item2);
-			}
-		}
-		item.setCmt(cmts);
-		item.setAddtime(cursor.getString(15));
-		item.setIscollect(cursor.getString(16));
-		item.setIsgood(cursor.getString(17));
-		item.setIscmt(cursor.getString(18));
+//		UserVO userVO = userFacade.getSimpleInfoById(userid);
+//		item.setUser(userVO);
+//		item.setType(cursor.getString(2));
+//		item.setCategory(cursor.getString(3));
+//		item.setTitle(cursor.getString(4));
+//		item.setText(cursor.getString(5));
+//		item.setPosition(cursor.getString(6));
+//		String tagses = cursor.getString(7);
+//		ArrayList<String> tags = new ArrayList<String>();
+//		if (tagses != null && !tagses.equals("")) {
+//			if (tagses.indexOf(";") != -1) {
+//				String[] ids = tagses.split(";");
+//				for (String id : ids) {
+//					tags.add(id);
+//				}
+//			} else {
+//				tags.add(tagses);
+//			}
+//		}
+//		item.setTags(tags);
+//		item.setGoodnum(cursor.getString(8));
+//		item.setCmtnum(cursor.getString(9));
+//		item.setCollectnum(cursor.getString(10));
+//		item.setForwardnum(cursor.getString(11));
+//		String goodids = cursor.getString(12);
+//		ArrayList<UserVO> goods = new ArrayList<UserVO>();
+//		if (goodids != null && !goodids.equals("")) {
+//			if (goodids.indexOf(";") != -1) {
+//				String[] ids = goodids.split(";");
+//				for (String id : ids) {
+//					UserVO item2 = userFacade.getSimpleInfoById(id);
+//					goods.add(item2);
+//				}
+//			} else {
+//				UserVO item2 = userFacade.getSimpleInfoById(goodids);
+//				goods.add(item2);
+//			}
+//		}
+//		item.setGood(goods);
+//		String picids = cursor.getString(13);
+//		ArrayList<PicVO> pics = new ArrayList<PicVO>();
+//		if (picids != null && !picids.equals("")) {
+//			if (picids.indexOf(";") != -1) {
+//				String[] ids = picids.split(";");
+//				for (String id : ids) {
+//					PicVO item2 = picFacade.getById(id);
+//					pics.add(item2);
+//				}
+//			} else {
+//				PicVO item2 = picFacade.getById(picids);
+//				pics.add(item2);
+//			}
+//		}
+//		item.setPic(pics);
+//
+//		String cmtids = cursor.getString(14);
+//		ArrayList<CmtVO> cmts = new ArrayList<CmtVO>();
+//		if (cmtids != null && !cmtids.equals("")) {
+//			if (cmtids.indexOf(";") != -1) {
+//				String[] ids = cmtids.split(";");
+//				for (String id : ids) {
+//					CmtVO item2 = cmtFacade.getById(id);
+//					cmts.add(item2);
+//				}
+//			} else {
+//				CmtVO item2 = cmtFacade.getById(cmtids);
+//				cmts.add(item2);
+//			}
+//		}
+//		item.setCmt(cmts);
+//		item.setAddtime(cursor.getString(15));
+//		item.setIscollect(cursor.getString(16));
+//		item.setIsgood(cursor.getString(17));
+//		item.setIscmt(cursor.getString(18));
 		return item;
 	}
 
@@ -210,8 +210,8 @@ public class ZhuoInfoFacade {
 		ContentValues values = new ContentValues();
 		values.put("msgid", item.getMsgid());
 		UserVO user = item.getUser();
-		String userid = userFacade.add(user);
-		values.put("userid", userid);
+//		String userid = userFacade.add(user);
+//		values.put("userid", userid);
 		values.put("type", item.getType());
 		values.put("category", item.getCategory());
 		values.put("title", item.getTitle());
@@ -234,8 +234,8 @@ public class ZhuoInfoFacade {
 		String goodids = "";
 		if (goods != null && goods.size() > 0) {
 			for (UserVO good : goods) {
-				String goodid = userFacade.add(good);
-				goodids += goodid + ";";
+//				String goodid = userFacade.add(good);
+//				goodids += goodid + ";";
 			}
 			goodids = goodids.substring(0, goodids.length() - 1);
 		}

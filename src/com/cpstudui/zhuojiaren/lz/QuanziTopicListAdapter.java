@@ -65,8 +65,9 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 	Fragment fragment;
 	String groupId;
 	BaseCodeData baseDataSet;
-	
-	int role;//“我在圈子中的身份”
+
+	int role;// “我在圈子中的身份”
+
 	public String getGroupId() {
 		return groupId;
 	}
@@ -75,7 +76,8 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		this.groupId = groupId;
 	}
 
-	public QuanziTopicListAdapter(Fragment fragment, ArrayList<QuanTopicVO> list,int role) {
+	public QuanziTopicListAdapter(Fragment fragment,
+			ArrayList<QuanTopicVO> list, int role) {
 		// 圈子话题的列表
 		this.mContext = fragment.getActivity();
 		this.fragment = fragment;
@@ -85,11 +87,12 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
 		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
-		baseDataSet=mConnHelper.getBaseDataSet();
-		this.role=role;
+		baseDataSet = mConnHelper.getBaseDataSet();
+		this.role = role;
 	}
 
-	public QuanziTopicListAdapter(Activity activity, ArrayList<QuanTopicVO> list,int role) {
+	public QuanziTopicListAdapter(Activity activity,
+			ArrayList<QuanTopicVO> list, int role) {
 		// 好友动态的列表，fragment为null..与圈话题的内容一致
 		this.mContext = activity;
 		this.fragment = null;
@@ -99,9 +102,8 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
 		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
-		this.role=role;
+		this.role = role;
 	}
-
 
 	@Override
 	public int getCount() {
@@ -144,8 +146,9 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		String headUrl = item.getUheader();
 
 		String work = "";
-		if(baseDataSet!=null )
-			work= ((baseDataSet.getPosition()).get(item.getPosition()-1)).getContent();
+		if (baseDataSet != null)
+			work = ((baseDataSet.getPosition()).get(item.getPosition() - 1))
+					.getContent();
 
 		String detail = item.getContent();
 
@@ -227,7 +230,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View view) {
 
-				if (fragment != null && role==QuanVO.QUAN_ROLE_YOUKE) {
+				if (fragment != null && role == QuanVO.QUAN_ROLE_YOUKE) {
 					OnClickListener applyTojoinListener = new OnClickListener() {
 						@Override
 						public void onClick(View v) {
@@ -258,8 +261,8 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 
 						@Override
 						public void onClick(View v) {
-							mConnHelper.goodMsg(msgid, mHandler,
-									MsgTagVO.MSG_LIKE, null, true, null, msgid);
+							mConnHelper.praiseTopic(mHandler,
+									MsgTagVO.MSG_LIKE, msgid, 1);
 						}
 					};
 					OnClickListener cmtListener = new OnClickListener() {
@@ -271,8 +274,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 									MsgCmtActivity.class);
 							i.putExtra("msgid", msgid);
 							i.putExtra("parentid", msgid);
-							// ((Activity)
-							// mContext).startActivityForResult(i,MsgTagVO.MSG_CMT);
+							i.putExtra("type", 1);
 							if (fragment != null)
 								fragment.startActivityForResult(i,
 										Activity.RESULT_FIRST_USER);
@@ -310,7 +312,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 				rl.setTag(url);
 				iv.setTag(url);
 				iv.setImageResource(R.drawable.default_image);
-				mLoadImage.addTask(url, iv);
+				mLoadImage.beginLoad(url, iv);
 				rl.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {

@@ -24,6 +24,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -129,17 +130,17 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 		if (null != user) {
 			String name = user.getUsername();
 			String blog = user.getActivenum();
-//			String families = user.getFamilytotal();//为空
-			String families = ""+user.getFamily().size();//为空
-			
+			// String families = user.getFamilytotal();//为空
+			String families = "" + user.getFamily().size();// 为空
+
 			String headurl = user.getUheader();
 
 			((TextView) findViewById(R.id.textViewUsername)).setText(name);
 			if (blog != null && families != null) {
 				((TextView) findViewById(R.id.textViewBolgnum))
-						.setText(families+getString(R.string.p_jiaren_active_families)
-								+ "~"
-								+ blog
+						.setText(families
+								+ getString(R.string.p_jiaren_active_families)
+								+ "~" + blog
 								+ getString(R.string.p_jiaren_active_rizhi));
 			}
 			ImageView iv = (ImageView) findViewById(R.id.imageViewUserHead);
@@ -292,7 +293,7 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 
 	private void loadInfo() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			UserVO user = userFacade.getSimpleInfoById(uid);
+			UserNewVO user = userFacade.getSimpleInfoById(uid);
 			if (user == null) {
 				CommonUtil.displayToast(getApplicationContext(),
 						R.string.error0);

@@ -169,6 +169,7 @@ public class TopicDetailActivity extends BaseActivity {
 				tr.addView(rl);
 			}
 		}
+		mLoadImage.doTask();
 		//
 		// if (isCollect != null && isCollect.equals("1")) {
 		// collectBtn = (TextView) findViewById(R.id.buttonTabCollect);
@@ -238,11 +239,11 @@ public class TopicDetailActivity extends BaseActivity {
 				});
 				tr.addView(rl);
 			}
+			mLoadImage.doTask();
 		} else {
 			findViewById(R.id.layoutGood).setVisibility(View.GONE);
 			findViewById(R.id.imageViewGood).setVisibility(View.GONE);
 		}
-		mLoadImage.doTask();
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -435,6 +436,7 @@ public class TopicDetailActivity extends BaseActivity {
 			i.putExtra("toId", toId);
 		if (toUserid != null)
 			i.putExtra("toUserid", toUserid);
+		i.putExtra("type", 1);
 		startActivityForResult(i, MsgTagVO.MSG_CMT);
 	}
 

@@ -172,18 +172,18 @@ public class ImQuanFacade {
 		if (senderid == null || senderid.equals("")) {
 			return null;
 		}
-		UserVO sender = userFacade.getSimpleInfoById(senderid);
-		item.setSender(sender);
-		item.setType(cursor.getString(2));
-		item.setContent(cursor.getString(3));
-		item.setFile(cursor.getString(4));
-		item.setIsread(cursor.getString(5));
-		String groupid = cursor.getString(6);
-		QuanVO group = quanFacade.getById(groupid);
-		item.setGroup(group);
-		item.setAddtime(cursor.getString(7));
-		item.setSavepath(cursor.getString(8));
-		item.setSecs(cursor.getString(9));
+//		UserVO sender = userFacade.getSimpleInfoById(senderid);
+//		item.setSender(sender);
+//		item.setType(cursor.getString(2));
+//		item.setContent(cursor.getString(3));
+//		item.setFile(cursor.getString(4));
+//		item.setIsread(cursor.getString(5));
+//		String groupid = cursor.getString(6);
+//		QuanVO group = quanFacade.getById(groupid);
+//		item.setGroup(group);
+//		item.setAddtime(cursor.getString(7));
+//		item.setSavepath(cursor.getString(8));
+//		item.setSecs(cursor.getString(9));
 		return item;
 	}
 
@@ -193,8 +193,8 @@ public class ImQuanFacade {
 		ContentValues values = new ContentValues();
 		values.put("id", item.getId());
 		UserVO sender = item.getSender();
-		String senderid = userFacade.add(sender);
-		values.put("senderid", senderid);
+//		String senderid = userFacade.add(sender);
+//		values.put("senderid", senderid);
 		values.put("type", item.getType());
 		values.put("content", item.getContent());
 		values.put("file", item.getFile());

@@ -1022,6 +1022,10 @@
             android:name="com.cpstudui.zhuojiaren.lz.DynamicDetailActivity"
             android:label="@string/dynamic_detail" >
         </activity>
+        <activity
+            android:name="com.cpstudui.zhuojiaren.lz.MyActiveActivity"
+            android:label="@string/active_my" >
+        </activity>
         
         <!-- 融云 -->
         <!-- begin imlib request -->

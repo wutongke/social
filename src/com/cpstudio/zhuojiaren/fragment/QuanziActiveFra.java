@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,7 +30,9 @@ import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudui.zhuojiaren.lz.EventListAdapter;
 import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
@@ -96,10 +99,9 @@ public class QuanziActiveFra extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// Intent i = new Intent(getActivity(),
-				// EventDetailActivity.class);
-				// i.putExtra("eventId", mList.get(position).getEventId());
-				// startActivity(i);
+				Intent i = new Intent(getActivity(), EventDetailActivity.class);
+				i.putExtra("eventId", mList.get(position).getActivityid());
+				startActivity(i);
 			}
 		});
 		groupId = ((ZhuoQuanMainActivity) getActivity()).getGroupid();
@@ -152,7 +154,7 @@ public class QuanziActiveFra extends Fragment {
 				if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getActivity().getApplicationContext());
-					UserVO user = nljh.parseUser();
+					UserNewVO user = nljh.parseNewUser();
 					if (null != user) {
 						UserFacade facade = new UserFacade(getActivity()
 								.getApplicationContext());

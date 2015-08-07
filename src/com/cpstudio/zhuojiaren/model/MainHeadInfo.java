@@ -1,11 +1,21 @@
 package com.cpstudio.zhuojiaren.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainHeadInfo {
 	private List<PicAdVO> admid;
 	private	List<MessagePubVO> pub;
 	private GoodsPicAdVO adtop;
+	
+	private ArrayList<Dynamic> status;
+	
+	public ArrayList<Dynamic> getStatus() {
+		return status;
+	}
+	public void setStatus(ArrayList<Dynamic> status) {
+		this.status = status;
+	}
 	public List<PicAdVO> getAdmid() {
 		return admid;
 	}

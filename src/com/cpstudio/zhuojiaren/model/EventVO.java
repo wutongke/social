@@ -3,7 +3,7 @@ package com.cpstudio.zhuojiaren.model;
 import java.util.ArrayList;
 
 public class EventVO {
-
+   private boolean sellected;//管理时用于标志是否被选中了
 	private String activityid;
 	private String content;
 
@@ -32,6 +32,14 @@ public class EventVO {
 	private String isowner;
 	public String getIsjoined() {
 		return isjoined;
+	}
+
+	public boolean isSellected() {
+		return sellected;
+	}
+
+	public void setSellected(boolean sellected) {
+		this.sellected = sellected;
 	}
 
 	public String getIsowner() {

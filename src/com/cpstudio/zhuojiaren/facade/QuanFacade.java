@@ -123,12 +123,12 @@ public class QuanFacade {
 			if (managersids.indexOf(";") != -1) {
 				String[] ids = managersids.split(";");
 				for (String id : ids) {
-					UserVO item2 = userFacade.getSimpleInfoById(id);
-					managers.add(item2);
+//					UserVO item2 = userFacade.getSimpleInfoById(id);
+//					managers.add(item2);
 				}
 			} else {
-				UserVO item2 = userFacade.getSimpleInfoById(managersids);
-				managers.add(item2);
+//				UserVO item2 = userFacade.getSimpleInfoById(managersids);
+//				managers.add(item2);
 			}
 		}
 //		item.setManagers(managers);
@@ -138,12 +138,12 @@ public class QuanFacade {
 			if (membersids.indexOf(";") != -1) {
 				String[] ids = membersids.split(";");
 				for (String id : ids) {
-					UserVO item2 = userFacade.getSimpleInfoById(id);
-					members.add(item2);
+//					UserVO item2 = userFacade.getSimpleInfoById(id);
+//					members.add(item2);
 				}
 			} else {
-				UserVO item2 = userFacade.getSimpleInfoById(membersids);
-				members.add(item2);
+//				UserVO item2 = userFacade.getSimpleInfoById(membersids);
+//				members.add(item2);
 			}
 		}
 //		item.setMembers(members);

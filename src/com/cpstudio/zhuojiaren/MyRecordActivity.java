@@ -432,15 +432,15 @@ public class MyRecordActivity extends Activity {
 								.getNowTimeStr("yyyy-MM-dd HH:mm:ss"));
 						immsg.setId(String.valueOf(System.currentTimeMillis()));
 						immsg.setIsread("1");
-						UserVO receiver = userFacade.getSimpleInfoById(id);
-						immsg.setReceiver(receiver);
-						immsg.setSavepath(item.getPath());
-						immsg.setSecs(item.getLength());
-						UserVO sender = userFacade.getMySimpleInfo();
-						immsg.setSender(sender);
-						immsg.setType("cloudvoice");
-						immsg.setContent(usernames);
-						facade.insert(immsg);
+//						UserVO receiver = userFacade.getSimpleInfoById(id);
+//						immsg.setReceiver(receiver);
+//						immsg.setSavepath(item.getPath());
+//						immsg.setSecs(item.getLength());
+//						UserVO sender = userFacade.getMySimpleInfo();
+//						immsg.setSender(sender);
+//						immsg.setType("cloudvoice");
+//						immsg.setContent(usernames);
+//						facade.insert(immsg);
 					}
 					for (int i = 0; i < mList.size(); i++) {
 						if (mList.get(i).getId().equals(forwardId)) {

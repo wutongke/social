@@ -343,6 +343,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				
 				Intent i = new Intent(ZhuoQuanMainActivity.this,
 						EditEventActivity.class);
 				i.putExtra("groupid", groupid);
@@ -360,8 +361,10 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 				// i.putExtra("groupid", groupid);
 				//
 				// startActivity(i);
-				RongIM.getInstance().startGroupChat(getApplicationContext(),
+				RongIM.getInstance().startGroupChat(ZhuoQuanMainActivity.this,
 						groupid, groupName);
+//				RongIM.getInstance().startPrivateChat(ZhuoQuanMainActivity.this,
+//						"9237", groupName);
 			}
 		});
 		btnJoinQuan.setOnClickListener(new OnClickListener() {

@@ -253,7 +253,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 					if (null != user) {
 						UserFacade facade = new UserFacade(
 								getApplicationContext());
-						facade.saveOrUpdate(user);
+//						facade.saveOrUpdate(user);
 					}
 				}
 				break;

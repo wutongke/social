@@ -119,7 +119,7 @@ public class DynamicDetailActivity extends BaseActivity {
 		String url = dynamicDetail.getUheader();
 
 		headIV.setTag(url);
-		mLoadImage.addTask(url, headIV);
+		mLoadImage.beginLoad(url, headIV);
 
 		mHeadView.setTag(dynamicDetail.getStatusid());
 
@@ -169,6 +169,7 @@ public class DynamicDetailActivity extends BaseActivity {
 				});
 				tr.addView(rl);
 			}
+			mLoadImage.doTask();
 		}
 		//
 		// if (isCollect != null && isCollect.equals("1")) {
@@ -180,9 +181,9 @@ public class DynamicDetailActivity extends BaseActivity {
 		// drawable.getMinimumHeight());
 		// collectBtn.setCompoundDrawables(null, drawable, null, null);
 		// }
-//暂时没有评论和赞列表
-//		fillPraiseList(dynamicDetail.getPraiseList());
-//		fillCommentList(dynamicDetail.getCommentList());
+		
+		fillPraiseList(dynamicDetail.getPraiseList());
+		fillCommentList(dynamicDetail.getCommentList());
 	}
 
 	private void fillCommentList(List<Comment> cmts) {
@@ -360,7 +361,7 @@ public class DynamicDetailActivity extends BaseActivity {
 					public void onClick(View v) {
 						// mConnHelper.goodMsg(topicid, mUIHandler,
 						// MsgTagVO.MSG_LIKE, null, true, null, null);
-						mConnHelper.praiseTopic(mUIHandler, MsgTagVO.MSG_LIKE,
+						mConnHelper.praiseDynamic(mUIHandler, MsgTagVO.MSG_LIKE,
 								msgid, 1);
 					}
 				});
@@ -437,6 +438,7 @@ public class DynamicDetailActivity extends BaseActivity {
 			i.putExtra("toId", toId);
 		if (toUserid != null)
 			i.putExtra("toUserid", toUserid);
+		i.putExtra("type", 2);
 		startActivityForResult(i, MsgTagVO.MSG_CMT);
 	}
 

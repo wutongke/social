@@ -44,7 +44,7 @@ public class QuanListMoreActivity extends Activity implements
 		mListView = (ListView) findViewById(R.id.listView);
 		Intent i = getIntent();
 		userid = i.getStringExtra("userid");
-		String name = mFacade.getSimpleInfoById(userid).getUsername();
+		String name = mFacade.getSimpleInfoById(userid).getName();
 		((TextView) findViewById(R.id.userNameShow)).setText(name
 				+ getString(R.string.label_quans));
 		LayoutInflater inflater = LayoutInflater

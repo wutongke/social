@@ -78,23 +78,24 @@ public class QuanMemberListAdapter extends BaseAdapter {
 		}
 		UserNewVO user = mList.get(position);
 
-		String company="接口无";
-		if(user.getCompany()!=null)
-			company=user.getCompany();
+		String company = "接口无";
+		if (user.getCompany() != null)
+			company = user.getCompany();
 		holder.textViewRes.setText(company);
-		
-		holder.textViewStatus.setText(QuanVO.QUAN_ROLE_NAME[0]);
-		
+		int role = user.getRole();
+		role = role % (QuanVO.QUAN_ROLE_NAME.length);
+		holder.textViewStatus.setText(QuanVO.QUAN_ROLE_NAME[role]);
+
 		holder.nameTV.setText(user.getName());
 		String work = "null";
-		int p=user.getPosition();
-		if(baseDataSet!=null && p>=1)
-			work=((baseDataSet.getPosition()).get(p-1)).getContent();
+		int p = user.getPosition();
+		if (baseDataSet != null && p >= 1)
+			work = ((baseDataSet.getPosition()).get(p - 1)).getContent();
 		holder.workTV.setText(work);
 		holder.headIV.setImageResource(R.drawable.default_userhead);
 		holder.headIV.setTag(user.getUheader());
 		mLoadImage.beginLoad(user.getUheader(), holder.headIV);
-		
+
 		return convertView;
 	}
 

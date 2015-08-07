@@ -32,7 +32,10 @@ public class ZhuoCommHelperLz {
 	private final static String SERVICE_GET_TOPIC_DETAIL = "/getgrouptopicdetail.do";
 
 	private final static String GTOPIC_PRAISE = "/grouptopicpraise.do";
+	private final static String DYNAMIC_PRAISE = "/statusFamilyPraise.do";
+	
 	private final static String GTOPIC_COMMENT = "/grouptopiccmt.do";
+	private final static String DYNAMIC_COMMENT = "/statusFamilyCmt.do";
 	private final static String GET_BASECODE_DATA = "/getbasiccode.do";
 	private final static String MODIFY_USER_INFO = "/modifyuserinfo.do";
 	private final static String SET_UHEAD = "/setuheader.do";
@@ -44,6 +47,15 @@ public class ZhuoCommHelperLz {
 	private final static String GET_LIST_FAMILY_STATUS = "/statusFamilyList.do";
 	private final static String PUB_STATUS = "/addStatusFamily.do";
 	private final static String DELETE_FAMILY_STATUS = "/deleteStatusFamily.do";
+	
+	private final static String GROUP_MEMBER_LIST = "/groupMemberList.do";
+	
+	/**
+	 * 用户加入的或创建的活动
+	 */
+	private final static String USER_ACTIVITY = "/getUserActivityList.do";
+	
+	
 	
 	// 未用
 	private final static String SERVICE_GET_ADINFO = "/getadinfo.do";
@@ -137,12 +149,18 @@ public class ZhuoCommHelperLz {
 	public static String topicPraise() {
 		return SERVER + GTOPIC_PRAISE;
 	}
+	public static String dynamicPraise() {
+		return SERVER + DYNAMIC_PRAISE;
+	}
 	/**
 	 * 圈话题评论
 	 * @return
 	 */
 	public static String topicComment() {
 		return SERVER + GTOPIC_COMMENT;
+	}
+	public static String dynamicComment() {
+		return SERVER + DYNAMIC_COMMENT;
 	}
 	
 	/**
@@ -211,6 +229,23 @@ public class ZhuoCommHelperLz {
 	 */
 	public static String deleteDynamic() {
 		return SERVER + DELETE_FAMILY_STATUS;
+	}
+	/**
+	 * 获取圈子成员列表
+	 * @return
+	 */
+	public static String getGroupMemberList() {
+		return SERVER + GROUP_MEMBER_LIST;
+	}
+	/**
+	 * 获取用户加入的或创建的活动
+	 */
+	public static String getUserEvent() {
+		return SERVER + USER_ACTIVITY;
+	}
+	
+	public static String getMainInfo() {
+		return SERVER + SERVICE_MAIN_IDS;
 	}
 	
 }

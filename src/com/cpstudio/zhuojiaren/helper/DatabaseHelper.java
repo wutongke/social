@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = ".db";
-	private static final int DATABASE_VERSION = 8;
+	private static final int DATABASE_VERSION = 13;
 	private static final String SQL_TABLE_IMMSGLIST = "CREATE TABLE IMMSGLIST(id TEXT PRIMARY KEY, "
 			+ "senderid TEXT NOT NULL, "
 			+ "receiverid TEXT NOT NULL, "
@@ -281,9 +281,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ "params4 TEXT, "
 			+ "params5 TEXT)";
 
+	
+	
 	private static final String TAG = null;
 	private static SQLiteDatabase dbSqlite = null;
-
+	
+	//add by lz
+	private static final String SQL_TABLE_NEWUSERLIST = "CREATE TABLE NEWUSERLIST (userid TEXT PRIMARY KEY, "
+			+ "signature TEXT, "
+			+ "faith TEXT, "
+			+ "position TEXT, "
+			+ "company TEXT, "
+			+ "birthday TEXT, "
+			+ "isPhoneOpen TEXT, "
+			+ "constellation TEXT, "
+			+ "hometown TEXT, "
+			+ "isBirthdayOpen TEXT, "
+			+ "birthdayLunar TEXT, "
+			+ "hobby TEXT, "
+			+ "registerTime TEXT, "
+			+ "userType TEXT, "
+			+ "city TEXT, "
+			+ "gender TEXT, "
+			+ "travelCity TEXT, "
+			+ "lastLoginTime TEXT, "
+			+ "qq TEXT, "
+			+ "isQqOpen TEXT, "
+			+ "industry TEXT, "
+			+ "phone TEXT, "
+			+ "isFree TEXT, "
+			+ "role TEXT, "
+			+ "qrcode TEXT, "
+			+ "dream TEXT, "
+			+ "married TEXT, "
+			+ "friendNum TEXT, "
+			+ "weixin TEXT, "
+			+ "isEmailOpen TEXT, "
+			+ "zodiac TEXT, "
+			+ "email TEXT, "
+			+ "name TEXT, "
+			+ "isWeixinOpen TEXT, "
+			+ "uheader TEXT, "
+			+ "statusNum TEXT)";
 	public DatabaseHelper(Context context, String userid) {
 		super(context, userid + DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -323,6 +362,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(SQL_TABLE_USERDAILY);
 		db.execSQL(SQL_TABLE_RECORDLIST);
 		db.execSQL(SQL_TABLE_RECORDCHATLIST);
+		
+		db.execSQL(SQL_TABLE_NEWUSERLIST);
+		
+		
 	}
 
 	public void dropTable(SQLiteDatabase db, String tableName) {
@@ -354,6 +397,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("drop table if exists USERDAILY");
 		db.execSQL("drop table if exists RECORDLIST");
 		db.execSQL("drop table if exists RECORDCHATLIST");
+		db.execSQL("drop table if exists NEWUSERLIST");
 	}
 
 	@Override
@@ -406,48 +450,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		db.beginTransaction();
 		try {
-			switch (oldVersion) {
-			case 1:
-				if (!tabbleIsExist(db, "CONTRACTLIST")) {
-					createTable(db, SQL_TABLE_CONTRACTLIST);
-				}
-				if (!tabbleIsExist(db, "FOLLOWLIST")) {
-					createTable(db, SQL_TABLE_FOLLOWLIST);
-				}
-				if (!tabbleIsExist(db, "FANLIST")) {
-					createTable(db, SQL_TABLE_FANLIST);
-				}
-			case 2:
-				if (!tabbleIsExist(db, "COLLECTLIST")) {
-					createTable(db, SQL_TABLE_COLLECTLIST);
-				}
-				if (!tabbleIsExist(db, "ACTIVELIST")) {
-					createTable(db, SQL_TABLE_ACTIVELIST);
-				}
-				if (!tabbleIsExist(db, "NEWSLIST")) {
-					createTable(db, SQL_TABLE_NEWSLIST);
-				}
-				if (!tabbleIsExist(db, "ZHUOQUANLIST")) {
-					createTable(db, SQL_TABLE_ZHUOQUANLIST);
-				}
-				if (!tabbleIsExist(db, "USERDAILY")) {
-					createTable(db, SQL_TABLE_USERDAILY);
-				}
-			case 3:
-				if (!tabbleIsExist(db, "RECORDLIST")) {
-					createTable(db, SQL_TABLE_RECORDLIST);
-				}
-			case 4:
-				if (!tabbleIsExist(db, "RECORDCHATLIST")) {
-					createTable(db, SQL_TABLE_RECORDCHATLIST);
-				}
-			case 5:
-				db.execSQL("ALTER TABLE ZHUOINFOLIST ADD COLUMN originid TEXT");
-			case 6:
-				db.execSQL("ALTER TABLE CMTLIST ADD COLUMN likecnt TEXT");
-			case 7:
-				db.execSQL("ALTER TABLE ZHUOINFOLIST ADD COLUMN forwardnum TEXT");
-			}
+//			switch (oldVersion) {
+//			case 1:
+//				if (!tabbleIsExist(db, "CONTRACTLIST")) {
+//					createTable(db, SQL_TABLE_CONTRACTLIST);
+//				}
+//				if (!tabbleIsExist(db, "FOLLOWLIST")) {
+//					createTable(db, SQL_TABLE_FOLLOWLIST);
+//				}
+//				if (!tabbleIsExist(db, "FANLIST")) {
+//					createTable(db, SQL_TABLE_FANLIST);
+//				}
+//			case 2:
+//				if (!tabbleIsExist(db, "COLLECTLIST")) {
+//					createTable(db, SQL_TABLE_COLLECTLIST);
+//				}
+//				if (!tabbleIsExist(db, "ACTIVELIST")) {
+//					createTable(db, SQL_TABLE_ACTIVELIST);
+//				}
+//				if (!tabbleIsExist(db, "NEWSLIST")) {
+//					createTable(db, SQL_TABLE_NEWSLIST);
+//				}
+//				if (!tabbleIsExist(db, "ZHUOQUANLIST")) {
+//					createTable(db, SQL_TABLE_ZHUOQUANLIST);
+//				}
+//				if (!tabbleIsExist(db, "USERDAILY")) {
+//					createTable(db, SQL_TABLE_USERDAILY);
+//				}
+//			case 3:
+//				if (!tabbleIsExist(db, "RECORDLIST")) {
+//					createTable(db, SQL_TABLE_RECORDLIST);
+//				}
+//			case 4:
+//				if (!tabbleIsExist(db, "RECORDCHATLIST")) {
+//					createTable(db, SQL_TABLE_RECORDCHATLIST);
+//				}
+//			case 5:
+//				db.execSQL("ALTER TABLE ZHUOINFOLIST ADD COLUMN originid TEXT");
+//			case 6:
+//				db.execSQL("ALTER TABLE CMTLIST ADD COLUMN likecnt TEXT");
+//			case 7:
+//				db.execSQL("ALTER TABLE ZHUOINFOLIST ADD COLUMN forwardnum TEXT");
+//			
+//			}
+			dropAll(db);
+			createAll(db);
 			db.setTransactionSuccessful();
 		} catch (Throwable ex) {
 			Log.e(TAG, ex.getMessage(), ex);

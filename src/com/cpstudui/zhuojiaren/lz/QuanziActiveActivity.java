@@ -28,6 +28,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -297,7 +298,7 @@ public class QuanziActiveActivity extends Activity implements
 
 	private void loadInfo() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			UserVO user = mFacade.getSimpleInfoById(mUid);
+			UserNewVO user = mFacade.getSimpleInfoById(mUid);
 			if (user == null) {
 				CommonUtil.displayToast(getApplicationContext(),
 						R.string.error0);

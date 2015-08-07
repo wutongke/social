@@ -220,23 +220,23 @@ public class ImChatFacade {
 		if (senderid == null || senderid.equals("")) {
 			return null;
 		}
-		UserVO sender = userFacade.getSimpleInfoById(senderid);
-		item.setSender(sender);
-		String receiverid = cursor.getString(2);
-		if (receiverid == null || receiverid.equals("")
-				|| senderid.equals(receiverid)) {
-			return null;
-		}
-		UserVO receiver = userFacade.getSimpleInfoById(receiverid);
-		item.setReceiver(receiver);
-		item.setType(cursor.getString(3));
-		item.setContent(cursor.getString(4));
-		item.setFile(cursor.getString(5));
-		item.setIsread(cursor.getString(6));
-		item.setGroupid(cursor.getString(7));
-		item.setAddtime(cursor.getString(8));
-		item.setSavepath(cursor.getString(9));
-		item.setSecs(cursor.getString(10));
+//		UserVO sender = userFacade.getSimpleInfoById(senderid);
+//		item.setSender(sender);
+//		String receiverid = cursor.getString(2);
+//		if (receiverid == null || receiverid.equals("")
+//				|| senderid.equals(receiverid)) {
+//			return null;
+//		}
+//		UserVO receiver = userFacade.getSimpleInfoById(receiverid);
+//		item.setReceiver(receiver);
+//		item.setType(cursor.getString(3));
+//		item.setContent(cursor.getString(4));
+//		item.setFile(cursor.getString(5));
+//		item.setIsread(cursor.getString(6));
+//		item.setGroupid(cursor.getString(7));
+//		item.setAddtime(cursor.getString(8));
+//		item.setSavepath(cursor.getString(9));
+//		item.setSecs(cursor.getString(10));
 		return item;
 	}
 
@@ -245,11 +245,11 @@ public class ImChatFacade {
 		ContentValues values = new ContentValues();
 		values.put("id", item.getId());
 		UserVO sender = item.getSender();
-		String senderid = userFacade.add(sender);
-		values.put("senderid", senderid);
-		UserVO receiver = item.getReceiver();
-		String receiverid = userFacade.add(receiver);
-		values.put("receiverid", receiverid);
+//		String senderid = userFacade.add(sender);
+//		values.put("senderid", senderid);
+//		UserVO receiver = item.getReceiver();
+//		String receiverid = userFacade.add(receiver);
+//		values.put("receiverid", receiverid);
 		values.put("type", item.getType());
 		values.put("content", item.getContent());
 		values.put("file", item.getFile());

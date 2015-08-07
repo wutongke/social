@@ -20,13 +20,11 @@ import com.cpstudio.zhuojiaren.UserHomeActivity;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.MyCollectionActivity;
 import com.cpstudio.zhuojiaren.ui.MyMoneyActivity;
 import com.cpstudio.zhuojiaren.ui.SettingActivity;
@@ -238,15 +236,15 @@ public class LZMyHomeActivity extends Activity {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
-
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
 					userInfo = nljh.parseNewUser();
+
+//    				userFacade.saveOrUpdate(userInfo);
 					fillHeadInfo();
 				}
-
 				break;
 			}
 			case MsgTagVO.DATA_OTHER: {
@@ -283,20 +281,17 @@ public class LZMyHomeActivity extends Activity {
 
 	private void loadInfo() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			UserVO user = userFacade.getSimpleInfoById(mUid);
-			if (user == null) {
-				CommonUtil.displayToast(getApplicationContext(),
-						R.string.error0);
-			} else {
-				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-				msg.obj = user;
-				msg.sendToTarget();
-			}
+//			UserNewVO user = userFacade.getSimpleInfoById(mUid);
+//			if (user == null) {
+//				CommonUtil.displayToast(getApplicationContext(),
+//						R.string.error0);
+//			} else {
+//				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
+//				msg.obj = user;
+//				msg.sendToTarget();
+//			}
 		} else {
-			String params = ZhuoCommHelper.getUrlUserInfo() + "?uid=" + mUid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD);
-			mConnHelper.getFromServer(ZhuoCommHelper.getUrlGetZhuoRMB(),
-					mUIHandler, MsgTagVO.DATA_OTHER);
+			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,mUid);
 		}
 	}
 }

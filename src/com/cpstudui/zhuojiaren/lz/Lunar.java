@@ -46,9 +46,8 @@ public class Lunar {
 	
 	public static final String[] constellationArr = { "水瓶座", "双鱼座", "白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座", "天秤座", "天蝎座", "射手座", "魔羯座" };
 	public static final int[] constellationEdgeDay = { 20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22 };
-	
-	
-	
+	public static final String[] Animals =  { "鼠", "牛", "虎", "兔", "龙", "蛇",
+			"马", "羊", "猴", "鸡", "狗", "猪" };
 	// ====== 传回农历 y年的总天数
 	private static int yearDays(int y) {
 		int i, sum = 348;
@@ -84,10 +83,9 @@ public class Lunar {
 	}
 
 	// ====== 传回农历 y年的生肖
-	final public String getAnimalsYear() {
-		final String[] Animals = new String[] { "鼠", "牛", "虎", "兔", "龙", "蛇",
-				"马", "羊", "猴", "鸡", "狗", "猪" };
-		return Animals[(year - 4) % 12];
+	final  public int getAnimalsYear() {
+		
+		return (year - 4) % 12;
 	}
 
 	// ====== 传入 月日的offset 传回干支, 0=甲子
@@ -212,9 +210,9 @@ public class Lunar {
 	 * 根据日期获取星座
 	 * @return
 	 */
-	public static String getConstellation(Date date) {
+	public static int getConstellation(Date date) {
 	    if (date == null) {
-	        return "";
+	        return 0;
 	    }
 	    Calendar cal = Calendar.getInstance();
 	    cal.setTime(date);
@@ -224,9 +222,9 @@ public class Lunar {
 	        month = month - 1;
 	    }
 	    if (month >= 0) {
-	        return constellationArr[month];
+	        return month;
 	    }
 	    // default to return 魔羯
-	    return constellationArr[11];
+	    return 11;
 	}
 }

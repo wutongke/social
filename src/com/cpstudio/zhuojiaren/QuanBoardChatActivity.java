@@ -55,6 +55,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.ImQuanVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
@@ -402,7 +403,7 @@ public class QuanBoardChatActivity extends BaseActivity implements
 
 	private void sendChatMsg(String type, String str, String secs) {
 		ImQuanVO immsg = new ImQuanVO();
-		UserVO sender = userFacade.getSimpleInfoById(myid);
+		UserNewVO sender = userFacade.getSimpleInfoById(myid);
 		if (sender == null) {
 			loadUserInfoBeforeAddToDB(type, str, secs, myid);
 			return;
@@ -414,7 +415,7 @@ public class QuanBoardChatActivity extends BaseActivity implements
 		}
 		String tempId = System.currentTimeMillis() + "";
 		immsg.setId(tempId);
-		immsg.setSender(sender);
+//		immsg.setSender(sender);
 		immsg.setGroup(quan);
 		immsg.setType(type);
 		immsg.setIsread("4");
@@ -437,17 +438,17 @@ public class QuanBoardChatActivity extends BaseActivity implements
 			mConnHelper.groupChat((String) null, mUIHandler, MsgTagVO.PUB_INFO,
 					null, str, type, groupid, "", true, null, tempId);
 		} else if (type.equals("card")) {
-			UserVO cardUser = userFacade.getById(str);
-			if (cardUser == null) {
-				loadUserInfoBeforeAddToDB(type, str, secs, str);
-				return;
-			}
-			str = cardUser.getUserid() + "____" + cardUser.getUsername()
-					+ "____" + cardUser.getCompany() + "____"
-					+ cardUser.getUheader();
-			immsg.setContent(str);
-			mConnHelper.groupChat("", mUIHandler, MsgTagVO.PUB_INFO, null, str,
-					type, groupid, "", true, null, tempId);
+//			UserVO cardUser = userFacade.getById(str);
+//			if (cardUser == null) {
+//				loadUserInfoBeforeAddToDB(type, str, secs, str);
+//				return;
+//			}
+//			str = cardUser.getUserid() + "____" + cardUser.getUsername()
+//					+ "____" + cardUser.getCompany() + "____"
+//					+ cardUser.getUheader();
+//			immsg.setContent(str);
+//			mConnHelper.groupChat("", mUIHandler, MsgTagVO.PUB_INFO, null, str,
+//					type, groupid, "", true, null, tempId);
 		}
 		mFacade.insert(immsg);
 		addChatAfterData(immsg);
@@ -462,7 +463,7 @@ public class QuanBoardChatActivity extends BaseActivity implements
 				JsonHandler nljh = new JsonHandler(rs, getApplicationContext());
 				UserVO user = nljh.parseUser();
 				if (null != user) {
-					userFacade.insert(user);
+//					userFacade.insert(user);
 					sendChatMsg(type, str, secs);
 				}
 				return false;

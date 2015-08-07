@@ -38,6 +38,7 @@ import com.cpstudio.zhuojiaren.model.RuleVO;
 import com.cpstudio.zhuojiaren.model.TeacherVO;
 import com.cpstudio.zhuojiaren.model.TopicDetailVO;
 import com.cpstudio.zhuojiaren.model.TotalUserVO;
+import com.cpstudio.zhuojiaren.model.UserEvent;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.model.QuanUserVO;
@@ -806,7 +807,7 @@ public class JsonHandler {
 	}
 
 	// lzlzl
-	public MainHeadInfo parseAdInfo() {
+	public MainHeadInfo parseMainInfo() {
 		MainHeadInfo data = null;
 		try {
 			Gson gson = new Gson();
@@ -838,6 +839,7 @@ public class JsonHandler {
 		}
 		return list;
 	}
+
 	public ArrayList<Dynamic> parseDynamicList() {
 		ArrayList<Dynamic> list = new ArrayList<Dynamic>();
 		try {
@@ -846,7 +848,7 @@ public class JsonHandler {
 			Gson gson = new Gson();
 			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
 				LinkedList<Dynamic> li = gson.fromJson(jsonData, listType);
-				
+
 				for (Iterator<Dynamic> iterator = li.iterator(); iterator
 						.hasNext();) {
 					Dynamic item = (Dynamic) iterator.next();
@@ -869,11 +871,23 @@ public class JsonHandler {
 		}
 		return detail;
 	}
+
 	public Dynamic parseDynamicDetail() {
 		Dynamic detail = null;
 		try {
 			Gson gson = new Gson();
 			detail = gson.fromJson(jsonData, Dynamic.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return detail;
+	}
+
+	public UserEvent parseUserEvent() {
+		UserEvent detail = null;
+		try {
+			Gson gson = new Gson();
+			detail = gson.fromJson(jsonData, UserEvent.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

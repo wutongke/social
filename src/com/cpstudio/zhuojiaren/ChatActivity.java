@@ -19,6 +19,7 @@ import com.cpstudio.zhuojiaren.helper.VoiceHelper.PlayingListener;
 import com.cpstudio.zhuojiaren.helper.VoiceHelper.RecordingListener;
 import com.cpstudio.zhuojiaren.model.ImMsgVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
@@ -104,13 +105,13 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 		boolean addCard = i.getBooleanExtra("card", false);
 		TextView title = (TextView) findViewById(R.id.userNameShow);
 		mFacade = new ImChatFacade(ChatActivity.this);
-		UserVO user = userFacade.getById(userid);
+		UserNewVO user = userFacade.getById(userid);
 		if (userid.equals("00000000000")) {
 			title.setText(getString(R.string.label_servantname));
 		} else {
 			findViewById(R.id.buttonManage).setVisibility(View.VISIBLE);
 			if (user != null) {
-				title.setText(user.getUsername());
+				title.setText(user.getName());
 			} else {//获得聊天用户的信息
 				title.setText(userid);
 				mConnHelper.getFromServer(ZhuoCommHelper.getUrlUserInfo()
@@ -213,7 +214,7 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 			case MsgTagVO.DATA_OTHER: {//获得聊天对象得信息
 				if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler jsonHandler = new JsonHandler((String) msg.obj);
-					UserVO user = jsonHandler.parseUser();
+					UserNewVO user = jsonHandler.parseNewUser();
 					if (null != user) {
 						userFacade.add(user);
 					}
@@ -440,20 +441,20 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 
 	private void sendChatMsg(String type, String str, String secs) {
 		ImMsgVO immsg = new ImMsgVO();
-		UserVO sender = userFacade.getSimpleInfoById(myid);
+		UserNewVO sender = userFacade.getSimpleInfoById(myid);
 		if (sender == null) {
 			loadUserInfoBeforeAddToDB(type, str, secs, myid);
 			return;
 		}
-		UserVO receiver = userFacade.getById(userid);
+		UserNewVO receiver = userFacade.getById(userid);
 		if (receiver == null) {
 			loadUserInfoBeforeAddToDB(type, str, secs, userid);
 			return;
 		}
 		String tempId = System.currentTimeMillis() + "";
 		immsg.setId(tempId);
-		immsg.setSender(sender);
-		immsg.setReceiver(receiver);
+//		immsg.setSender(sender);
+//		immsg.setReceiver(receiver);
 		immsg.setType(type);
 		immsg.setIsread("4");
 		immsg.setAddtime(CommonUtil.getNowTimeStr("yyyy-MM-dd HH:mm:ss"));
@@ -475,12 +476,12 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 			mConnHelper.chat((String) null, mUIHandler, MsgTagVO.PUB_INFO,
 					null, str, type, userid, "", true, null, tempId);
 		} else if (type.equals("card")) {
-			UserVO cardUser = userFacade.getById(str);
+			UserNewVO cardUser = userFacade.getById(str);
 			if (cardUser == null) {
 				loadUserInfoBeforeAddToDB(type, str, secs, str);
 				return;
 			}
-			str = cardUser.getUserid() + "____" + cardUser.getUsername()
+			str = cardUser.getUserid() + "____" + cardUser.getName()
 					+ "____" + cardUser.getCompany() + "____"
 					+ cardUser.getUheader();
 			immsg.setContent(str);
@@ -498,7 +499,7 @@ public class ChatActivity extends Activity implements OnPullDownListener,
 			@Override
 			public boolean onReturn(String rs, int responseCode) {
 				JsonHandler nljh = new JsonHandler(rs, getApplicationContext());
-				UserVO user = nljh.parseUser();
+				UserNewVO user = nljh.parseNewUser();
 				if (null != user) {
 					userFacade.insert(user);
 					sendChatMsg(type, str, secs);

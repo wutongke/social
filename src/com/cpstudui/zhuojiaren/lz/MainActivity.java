@@ -34,6 +34,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
+import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.GoodsPicAdVO;
 import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
@@ -41,6 +42,7 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicAdVO;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -83,10 +85,10 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	// ImageView idBanner;
 	private ListView mListView;
 	// lz .. private ZhuoUserListAdapter mAdapter;
-	private QuanziTopicListAdapter mAdapter;
+	private DynamicListAdapter mAdapter;
 	private PullDownView mPullDownView;
 	// 圈话题的布局与动态一样，暂时用QuanTopicVO的List和adapter
-	private ArrayList<QuanTopicVO> mList = new ArrayList<QuanTopicVO>();
+	private ArrayList<Dynamic> mList = new ArrayList<Dynamic>();
 	private String mSearchKey = null;
 	private String mLastId = null;
 	private String uid = null;
@@ -121,8 +123,8 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
-//是否和圈子话题公用一个数据结构还不一定
-		mAdapter = new QuanziTopicListAdapter(MainActivity.this, mList,1);
+		// 是否和圈子话题公用一个数据结构还不一定
+		mAdapter = new DynamicListAdapter(MainActivity.this, mList, 1);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
@@ -175,8 +177,6 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		hotImages.add(ivHot1);
 		hotImages.add(ivHot2);
 		hotImages.add(ivHot3);
-
-		loadAd();
 	}
 
 	private void initClick() {
@@ -256,7 +256,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		});
 	}
 
-	private void updateItemList(ArrayList<QuanTopicVO> list, boolean refresh,
+	private void updateItemList(ArrayList<Dynamic> list, boolean refresh,
 			boolean append) {
 		if (!list.isEmpty()) {
 			mPullDownView.hasData();
@@ -266,7 +266,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			mList.addAll(list);
 			mAdapter.notifyDataSetChanged();
 			if (mList.size() > 0) {
-				mLastId = mList.get(mList.size() - 1).getTopicid();
+				mLastId = mList.get(mList.size() - 1).getStatusid();
 			}
 			mPage++;
 		} else {
@@ -280,75 +280,67 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case MsgTagVO.DATA_LOAD: { // 加载数据（本地或网络），本地数据返回一个list,网络数据返回一个json
-				ArrayList<QuanTopicVO> list = new ArrayList<QuanTopicVO>();
-				boolean loadState = false;
-				if (msg.obj instanceof ArrayList) {// 加载的本地数据
-					list = (ArrayList<QuanTopicVO>) msg.obj;
-				} else {
-					if (msg.obj != null && !msg.obj.equals("")) {
-						loadState = true;
-						JsonHandler nljh = new JsonHandler((String) msg.obj,
-								getApplicationContext());
-						list = nljh.parseQuanTopicList();
-						if (!list.isEmpty()) {
-							// infoFacade.update(list);
-						} else if (mSearchKey != null && !mSearchKey.equals("")) {
-							CommonUtil.displayToast(getApplicationContext(),
-									R.string.error18);
-						}
-					}
-				}
-				mPullDownView.finishLoadData(loadState);
-				updateItemList(list, true, false);
-				break;
-			}
-			case MsgTagVO.DATA_REFRESH: {
-				boolean loadState = false;
-				if (msg.obj != null && !msg.obj.equals("")) {
-					loadState = true;
+			case MsgTagVO.DATA_LOAD: {
+				MainHeadInfo info = null;
+				if (msg.obj instanceof MainHeadInfo) {// 加载的本地数据
+					info = (MainHeadInfo) msg.obj;
+				} else if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					ArrayList<QuanTopicVO> list = nljh.parseQuanTopicList();
-					updateItemList(list, false, false);
-				}
-				mPullDownView.RefreshComplete(loadState);
-				break;
-			}
-			case MsgTagVO.DATA_MORE: {
-				mPullDownView.notifyDidMore();
-				ArrayList<QuanTopicVO> list = new ArrayList<QuanTopicVO>();
-				if (msg.obj instanceof ArrayList) {
-					list = (ArrayList<QuanTopicVO>) msg.obj;
-				} else {
-					if (msg.obj != null && !msg.obj.equals("")) {
-						JsonHandler nljh = new JsonHandler((String) msg.obj,
-								getApplicationContext());
-						list = nljh.parseQuanTopicList();
-						if (!list.isEmpty()) {
-							// infoFacade.update(list);
-						}
-					}
-				}
-				updateItemList(list, false, true);
-				break;
-			}
-			case MsgTagVO.DATA_OTHER: {
-				if (msg.obj != null && !msg.obj.equals("")) {
-					JsonHandler nljh = new JsonHandler((String) msg.obj,
-							getApplicationContext());
-					MainHeadInfo info = nljh.parseAdInfo();
+					info = nljh.parseMainInfo();
 					if (info != null) {
 						updateAdInfo(info);
 					}
 				}
+
+				break;
+			}
+			case MsgTagVO.DATA_REFRESH: {
+				// boolean loadState = false;
+				// if (msg.obj != null && !msg.obj.equals("")) {
+				// loadState = true;
+				// JsonHandler nljh = new JsonHandler((String) msg.obj,
+				// getApplicationContext());
+				// ArrayList<QuanTopicVO> list = nljh.parseQuanTopicList();
+				// updateItemList(list, false, false);
+				// }
+				// mPullDownView.RefreshComplete(loadState);
+				// break;
+			}
+			case MsgTagVO.DATA_MORE: {
+				// mPullDownView.notifyDidMore();
+				// ArrayList<QuanTopicVO> list = new ArrayList<QuanTopicVO>();
+				// if (msg.obj instanceof ArrayList) {
+				// list = (ArrayList<QuanTopicVO>) msg.obj;
+				// } else {
+				// if (msg.obj != null && !msg.obj.equals("")) {
+				// JsonHandler nljh = new JsonHandler((String) msg.obj,
+				// getApplicationContext());
+				// list = nljh.parseQuanTopicList();
+				// if (!list.isEmpty()) {
+				// // infoFacade.update(list);
+				// }
+				// }
+				// }
+				// updateItemList(list, false, true);
+				break;
+			}
+			case MsgTagVO.DATA_OTHER: {
+				// if (msg.obj != null && !msg.obj.equals("")) {
+				// JsonHandler nljh = new JsonHandler((String) msg.obj,
+				// getApplicationContext());
+				// MainHeadInfo info = nljh.parseAdInfo();
+				// if (info != null) {
+				// updateAdInfo(info);
+				// }
+				// }
 				break;
 			}
 			case MsgTagVO.UPDATE: {
 				if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					UserVO user = nljh.parseUser();
+					UserNewVO user = nljh.parseNewUser();
 					if (null != user) {
 						UserFacade facade = new UserFacade(
 								getApplicationContext());
@@ -357,20 +349,22 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				}
 				break;
 			}
-			case MsgTagVO.DATA_BASE: {//基础编码数据，保存到内存中\
+			case MsgTagVO.DATA_BASE: {// 基础编码数据，保存到内存中\
 				ResultVO res;
-				if (JsonHandler.checkResult((String) msg.obj,getApplicationContext())) {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
 					res = JsonHandler.parseResult((String) msg.obj);
-					mConnHelper.saveObject((String) msg.obj,ZhuoConnHelper.BASEDATA);
+					mConnHelper.saveObject((String) msg.obj,
+							ZhuoConnHelper.BASEDATA);
 				} else {
 					return;
 				}
 				String data = res.getData();
-				BaseCodeData dataset=JsonHandler.parseBaseCodeData(data);
-				mConnHelper.setBaseDataSet(dataset); 
+				BaseCodeData dataset = JsonHandler.parseBaseCodeData(data);
+				mConnHelper.setBaseDataSet(dataset);
 				break;
 			}
-			
+
 			}
 		}
 
@@ -389,18 +383,18 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	// refresh刷新加载的新的数据没有写数据库
 	@Override
 	public void onRefresh() {
-		String params = ZhuoCommHelper.getUrlMsgList();
-		params += "?pageflag=" + "0";
-		params += "&reqnum=" + "10";
-		params += "&lastid=" + "0";
-		params += "&type=" + "0";
-		if (null != mSearchKey) {
-			params += "&key=" + mSearchKey.trim();
-		}
-		params += "&gongxutype=" + "0";
-		params += "&from=" + "0";
-		params += "&uid=" + uid;
-		mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_REFRESH);
+		// String params = ZhuoCommHelper.getUrlMsgList();
+		// params += "?pageflag=" + "0";
+		// params += "&reqnum=" + "10";
+		// params += "&lastid=" + "0";
+		// params += "&type=" + "0";
+		// if (null != mSearchKey) {
+		// params += "&key=" + mSearchKey.trim();
+		// }
+		// params += "&gongxutype=" + "0";
+		// params += "&from=" + "0";
+		// params += "&uid=" + uid;
+		// mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_REFRESH);
 	}
 
 	@Override
@@ -427,43 +421,45 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		}
 	}
 
-	private void loadData() {
-		
-		mConnHelper.getBaseCodeData(mUIHandler, MsgTagVO.DATA_BASE, MainActivity.this, false, null, null);
-		
-		String url = ZhuoCommHelper.getUrlUserInfo() + "?uid="
-				+ ResHelper.getInstance(getApplicationContext()).getUserid();
-		// 加载刷新个人信息
-		mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
-		if (mPullDownView.startLoadData()) {
-			mList.clear();
-			mAdapter.notifyDataSetChanged();
-			if (CommonUtil.getNetworkState(getApplicationContext()) == 2
-					&& (mSearchKey == null || mSearchKey.equals(""))) {
-				// 获取本地数据
-				ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-				msg.obj = list;
-				msg.sendToTarget();
-			} else {
-				String params = ZhuoCommHelper.getUrlMsgList();
-				params += "?pageflag=" + "0";
-				params += "&reqnum=" + "10";
-				params += "&lastid=" + "0";
-				params += "&type=" + "0";
-				if (null != mSearchKey) {
-					params += "&key=" + mSearchKey.trim();
-				}
-				params += "&gongxutype=" + "0";
-				params += "&from=" + "0";
-				params += "&uid=" + uid;
-				mConnHelper.getFromServer(params, mUIHandler,
-						MsgTagVO.DATA_LOAD);
-			}
-		}
-	}
+	// private void loadData() {
+	//
+	// mConnHelper.getBaseCodeData(mUIHandler, MsgTagVO.DATA_BASE,
+	// MainActivity.this, false, null, null);
+	//
+	// String url = ZhuoCommHelper.getUrlUserInfo() + "?uid="
+	// + ResHelper.getInstance(getApplicationContext()).getUserid();
+	// // 加载刷新个人信息
+	// mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
+	// if (mPullDownView.startLoadData()) {
+	// mList.clear();
+	// mAdapter.notifyDataSetChanged();
+	// if (CommonUtil.getNetworkState(getApplicationContext()) == 2
+	// && (mSearchKey == null || mSearchKey.equals(""))) {
+	// // 获取本地数据
+	// ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
+	// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
+	// msg.obj = list;
+	// msg.sendToTarget();
+	// } else {
+	// String params = ZhuoCommHelper.getUrlMsgList();
+	// params += "?pageflag=" + "0";
+	// params += "&reqnum=" + "10";
+	// params += "&lastid=" + "0";
+	// params += "&type=" + "0";
+	// if (null != mSearchKey) {
+	// params += "&key=" + mSearchKey.trim();
+	// }
+	// params += "&gongxutype=" + "0";
+	// params += "&from=" + "0";
+	// params += "&uid=" + uid;
+	// mConnHelper.getFromServer(params, mUIHandler,
+	// MsgTagVO.DATA_LOAD);
+	// }
+	// }
+	// }
 
-	private void loadAd() {
+	private void loadData() {
+
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2
 				&& (mSearchKey == null || mSearchKey.equals(""))) {
 			// 获取本地数据
@@ -472,7 +468,9 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			// msg.obj = adInfo;
 			// msg.sendToTarget();
 		} else {
-			mConnHelper.getMainAdInfo(mUIHandler, MsgTagVO.DATA_OTHER);
+			mConnHelper.getBaseCodeData(mUIHandler, MsgTagVO.DATA_BASE,
+					MainActivity.this, false, null, null);
+			mConnHelper.getMainInfo(mUIHandler, MsgTagVO.DATA_LOAD, 0, 0);
 		}
 	}
 
@@ -499,32 +497,23 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		// height);
 		// bannerViewPager.setLayoutParams(params);
 
-		String[] urls = {
-				"http://img3.imgtn.bdimg.com/it/u=2628293733,2370129064&fm=21&gp=0.jpg",
-				"http://img2.imgtn.bdimg.com/it/u=2906966334,223089362&fm=21&gp=0.jpg",
-				"http://img4.imgtn.bdimg.com/it/u=1704061436,275613074&fm=21&gp=0.jpg",
-				"http://img3.imgtn.bdimg.com/it/u=1440545533,1670448902&fm=21&gp=0.jpg",
-				"http://img2.imgtn.bdimg.com/it/u=697459274,2261536128&fm=21&gp=0.jpg",
-				"http://img4.imgtn.bdimg.com/it/u=2079958976,1443524702&fm=21&gp=0.jpg",
-				"http://img3.imgtn.bdimg.com/it/u=1849853359,1757644016&fm=21&gp=0.jpg",
-				"http://img0.imgtn.bdimg.com/it/u=1703091849,1006427253&fm=21&gp=0.jpg",
-				"http://img1.imgtn.bdimg.com/it/u=3254378695,3573443632&fm=21&gp=0.jpg",
-				"http://img4.imgtn.bdimg.com/it/u=420516615,2115785755&fm=21&gp=0.jpg" };
-
 		if (hotListData != null)
 			hotListData.clear();
 		hotListData = info.getAdmid();
-		// for (int i = 0; i < 3; i++) {
-		// BeanBanner item = new BeanBanner();
-		// item.setPicUrl(urls[i + 5]);
-		// hotListData.add(item);
-		// }
 		for (int i = 0; i < 3; i++) {
 			String url = hotListData.get(i).getAdpic();
 			hotImages.get(i).setTag(url);
 			imageLoader.addTask(url, hotImages.get(i));
 		}
 		imageLoader.doTask();
+
+		ArrayList<Dynamic> list = info.getStatus();
+		boolean loadState = false;
+		if (info != null) {
+			loadState = true;
+			mPullDownView.finishLoadData(loadState);
+			updateItemList(list, true, false);
+		}
 	}
 
 }

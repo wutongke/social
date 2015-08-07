@@ -6,25 +6,103 @@
     <include layout="@layout/title_activity" />
 
     <LinearLayout
-        android:id="@+id/llMenueTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray"
         android:gravity="center" >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:drawableLeft="@drawable/start_wdxx_1"
-            android:drawablePadding="5dp"
-            android:text="@string/label_setup_active" />
+            android:layout_weight="1"
+            android:background="#747474"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tvPubActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/start_wdxx_1"
+                android:drawablePadding="5dp"
+                android:text="@string/label_setup_active" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#A6A6A6"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tvSearchActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/start_wdxx_1"
+                android:drawablePadding="5dp"
+                android:text="@string/label_setup_active" />
+        </LinearLayout>
     </LinearLayout>
 
-    <com.cpstudio.zhuojiaren.widget.PullDownView
-            android:id="@+id/pull_down_view"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#f9f9f9" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/start_wdxx_1"
+                android:drawablePadding="5dp"
+                android:text="@string/lab_active_pub" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="3dp"
+                android:background="#000000" />
+
+            <com.cpstudio.zhuojiaren.widget.PullDownView
+                android:id="@+id/pvPubed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#f9f9f9" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/start_wdxx_1"
+                android:drawablePadding="5dp"
+                android:text="@string/lab_active_pub" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="3dp"
+                android:background="#000000" />
+
+            <com.cpstudio.zhuojiaren.widget.PullDownView
+                android:id="@+id/pv_joined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#f9f9f9" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
