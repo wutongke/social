@@ -2,7 +2,6 @@ package com.cpstudio.zhuojiaren.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
@@ -10,9 +9,6 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.R.id;
-import com.cpstudio.zhuojiaren.R.layout;
-import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GrouthVisit;
 

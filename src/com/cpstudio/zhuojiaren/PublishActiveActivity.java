@@ -76,7 +76,6 @@ public class PublishActiveActivity extends Activity {
 				if (msg.obj != null && !msg.obj.equals("")) {
 					if (JsonHandler.checkResult((String) msg.obj)) {
 						OnClickListener listener = new OnClickListener() {
-
 							@Override
 							public void onClick(View v) {
 								setResult(RESULT_OK);
@@ -179,9 +178,8 @@ public class PublishActiveActivity extends Activity {
 		if (mIsh.getTags() != null) {
 			imgCnt = mIsh.getTags().size() + "";
 		}
-		mConnHelper.pubZhuoInfo(mIsh.getTags(), mUIHandler, MsgTagVO.PUB_INFO,
-				PublishActiveActivity.this, content, tag, mLocation, imgCnt,
-				"daily", true, null, null);
+		mConnHelper.pubDynamic(PublishActiveActivity.this, mUIHandler,
+				MsgTagVO.PUB_INFO, content, mIsh.getTags());
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

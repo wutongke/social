@@ -2,6 +2,7 @@ package com.cpstudui.zhuojiaren.lz;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -47,9 +48,7 @@ public class QuanBriefActivity extends BaseActivity {
 	TextView tvxxx;
 	@InjectView(R.id.imageViewCj)
 	ImageView imageViewCj;
-	
-	
-	
+
 	@InjectView(R.id.tvQunzhuName)
 	TextView tvQunzhuName;
 	@InjectView(R.id.tvGonggao)
@@ -81,6 +80,7 @@ public class QuanBriefActivity extends BaseActivity {
 	private ZhuoConnHelper mConnHelper = null;
 	private boolean isfollow = false;// 是否已经加入该圈子
 	private QuanFacade mFacade = null;
+	List<City> citys;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +95,7 @@ public class QuanBriefActivity extends BaseActivity {
 		title.setText(R.string.label_quan_brief);
 
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+
 		mFacade = new QuanFacade(getApplicationContext());
 		Intent i = getIntent();
 		groupid = i.getStringExtra("groupid");
@@ -160,9 +161,11 @@ public class QuanBriefActivity extends BaseActivity {
 						tvMemNum.setText(detail.getMemberCount() + "");
 						tvTopicNum.setText(detail.getTopicCount() + "");
 						localCode = detail.getCity();
-						mConnHelper.getCitys(mUIHandler, MsgTagVO.DATA_OTHER,
-										QuanBriefActivity.this, true, null,
-										null);
+						citys = mConnHelper.getCitys();
+						if (citys != null && localCode >= 1) {
+							tvLocal.setText(citys.get(localCode - 1)
+									.getCityName());
+						}
 						if (memberType != QuanVO.QUAN_ROLE_YOUKE) {
 							isfollow = true;
 						} else {

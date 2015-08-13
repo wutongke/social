@@ -1122,5 +1122,9 @@
     <string name="dynamic_detail">动态详情</string>
     <string name="lab_active_pub">我发起的活动</string>
     <string name="lab_active_join">我参加的活动</string>
+    <string name="no_read_message">"···"</string>
+    <string name="lab_extend">扩展</string>
+    <string name="lab_start_char">发起聊天</string>
+    <string name="lab_pub_detail">公告详情</string>
 
 </resources>

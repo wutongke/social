@@ -5,6 +5,26 @@ public class MessagePubVO {
 
 	private String id;
 
+	private String content;
+	
+	private String pubtime;
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getPubtime() {
+		return pubtime;
+	}
+
+	public void setPubtime(String pubtime) {
+		this.pubtime = pubtime;
+	}
+
 	public void setPublish(String publish) {
 		this.publish = publish;
 	}

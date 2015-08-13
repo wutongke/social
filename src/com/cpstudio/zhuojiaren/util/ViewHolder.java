@@ -9,6 +9,7 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -32,7 +33,7 @@ public class ViewHolder {
 	}
 
 	/**
-	 * 拿到�?��ViewHolder对象
+	 * 拿到到ViewHolder对象
 	 * 
 	 * @param context
 	 * @param convertView
@@ -77,8 +78,9 @@ public class ViewHolder {
 	 */
 	public ViewHolder setText(int viewId, String text) {
 		TextView view = getView(viewId);
-		if(text==null){
-			Log.d("Debug", mContext.getResources().getString(R.string.error_null));
+		if (text == null) {
+			Log.d("Debug",
+					mContext.getResources().getString(R.string.error_null));
 			view.setText("");
 		}
 		view.setText(text);
@@ -92,11 +94,18 @@ public class ViewHolder {
 	 * @param drawableId
 	 * @return
 	 */
-	public ViewHolder setImageResource(int viewId, int drawableId) {
+	public ViewHolder setImageResource(int viewId, int drawableId,
+			OnClickListener listener) {
 		ImageView view = getView(viewId);
 		view.setImageResource(drawableId);
-
+		if (listener != null)
+			view.setOnClickListener(listener);
 		return this;
+	}
+
+	public ViewHolder setImageResource(int viewId, int drawableId) {
+
+		return setImageResource(viewId, drawableId, null);
 	}
 
 	/**
@@ -134,7 +143,7 @@ public class ViewHolder {
 	 * @param drawableId
 	 * @return
 	 */
-	public ViewHolder setCheckBox(int viewId, boolean flag,int visibility) {
+	public ViewHolder setCheckBox(int viewId, boolean flag, int visibility) {
 		// 先创建，后使用
 		CheckBox cb = getView(viewId);
 		cb.setChecked(flag);

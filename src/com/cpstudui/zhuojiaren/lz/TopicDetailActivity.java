@@ -391,15 +391,8 @@ public class TopicDetailActivity extends BaseActivity {
 
 					@Override
 					public void onClick(View v) {
-						if (isCollect == null || isCollect.equals("0")) {
-							mConnHelper.collectMsg(topicid, "1", mUIHandler,
-									MsgTagVO.MSG_COLLECT, null, true, null,
-									null);
-						} else {
-							mConnHelper.collectMsg(topicid, "0", mUIHandler,
-									MsgTagVO.MSG_COLLECT, null, true, null,
-									null);
-						}
+						mConnHelper.collectTopic(mUIHandler,
+								MsgTagVO.MSG_COLLECT, topicid, 1);
 					}
 				});
 		textViewTip = findViewById(R.id.textViewTip);

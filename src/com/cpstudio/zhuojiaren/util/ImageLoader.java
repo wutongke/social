@@ -23,6 +23,7 @@ import android.widget.ImageView;
  * 
  */
 public class ImageLoader {
+	
 	/**
 	 * 图片缓存的核心类
 	 */
@@ -111,7 +112,7 @@ public class ImageLoader {
 				} catch (InterruptedException e) {
 				}
 				Looper.prepare();
-
+//这个线程运行完了之后应该不存在mPoolThreadHander了吧
 				mPoolThreadHander = new Handler() {
 					@Override
 					public void handleMessage(Message msg) {

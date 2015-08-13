@@ -5,6 +5,7 @@ import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.RongIMClient.ConnectCallback;
 import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.model.Conversation;
+import io.rong.message.ContactNotificationMessage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,6 +53,7 @@ import com.cpstudio.zhuojiaren.model.SysMsgVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ImMsgComparator;
+import com.cpstudui.zhuojiaren.lz.MainActivity;
 
 public class MsgListActivity extends FragmentActivity implements
 		OnItemClickListener {
@@ -78,7 +80,6 @@ public class MsgListActivity extends FragmentActivity implements
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(this);
 
-	
 		ViewGroup root = (ViewGroup) findViewById(R.id.ryConversationListContainer);
 		ConversationListFragment listFragment = ConversationListFragment
 				.getInstance();
@@ -91,17 +92,16 @@ public class MsgListActivity extends FragmentActivity implements
 						"false") // 设置私聊会话是否聚合显示
 				.appendQueryParameter(
 						Conversation.ConversationType.GROUP.getName(), "true")// 群组
-				.appendQueryParameter(
-						Conversation.ConversationType.DISCUSSION.getName(),
-						"false")
-				// 讨论组
-				.appendQueryParameter(
-						Conversation.ConversationType.APP_PUBLIC_SERVICE
-								.getName(),
-						"false")// 应用公众服务。
-				.appendQueryParameter(
-						Conversation.ConversationType.PUBLIC_SERVICE.getName(),
-						"false")// 公共服务号
+				// .appendQueryParameter(
+				// Conversation.ConversationType.DISCUSSION.getName(),
+				// "false")// 讨论组
+				// .appendQueryParameter(
+				// Conversation.ConversationType.APP_PUBLIC_SERVICE
+				// .getName(),
+				// "false")// 应用公众服务。
+				// .appendQueryParameter(
+				// Conversation.ConversationType.PUBLIC_SERVICE.getName(),
+				// "false")// 公共服务号
 				.appendQueryParameter(
 						Conversation.ConversationType.SYSTEM.getName(), "false")// 系统
 				.build();
@@ -113,8 +113,9 @@ public class MsgListActivity extends FragmentActivity implements
 
 		fragmentTransaction.add(R.id.ryConversationListContainer, listFragment);
 		fragmentTransaction.commit();
-//		RongIM.getInstance().startPrivateChat(MsgListActivity.this,"9237", "标题");
-		//token:1i0IMiO5dWjOuGb10l2INNGFPZgrVDszbwnCc2LVvviZzRX4y7mcfCOL7dMa+prc1m3BcXo7y7yZu7T7F6rXBg==
+		// RongIM.getInstance().startPrivateChat(MsgListActivity.this,"9237",
+		// "标题");
+		// token:1i0IMiO5dWjOuGb10l2INNGFPZgrVDszbwnCc2LVvviZzRX4y7mcfCOL7dMa+prc1m3BcXo7y7yZu7T7F6rXBg==
 	}
 
 	@Override
@@ -145,10 +146,12 @@ public class MsgListActivity extends FragmentActivity implements
 	}
 
 	private void startQuanListActivity() {
-		RongIM.getInstance().startPrivateChat(MsgListActivity.this,"9237", "标题");
-//		findViewById(R.id.textViewMsgQuanAll).setVisibility(View.GONE);
-//		Intent i = new Intent(MsgListActivity.this, MsgQuanListActivity.class);
-//		startActivity(i);
+		RongIM.getInstance().startPrivateChat(MsgListActivity.this, "9237",
+				"标题");
+		// findViewById(R.id.textViewMsgQuanAll).setVisibility(View.GONE);
+		// Intent i = new Intent(MsgListActivity.this,
+		// MsgQuanListActivity.class);
+		// startActivity(i);
 	}
 
 	private void startSysActivity() {
@@ -471,7 +474,25 @@ public class MsgListActivity extends FragmentActivity implements
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			loadData();
+
+			String action = intent.getAction();
+			// 收到好友添加的邀请
+			if (action.equals(TabContainerActivity.ACTION_DMEO_RECEIVE_MESSAGE)) {
+				boolean hasNewFriends = intent.getBooleanExtra("has_message",
+						false);
+				ContactNotificationMessage msg = intent
+						.getParcelableExtra("rongCloud");
+				// 处理
+				TextView textViewMsgAll = ((TextView) findViewById(R.id.textViewMsgCardAll));
+
+				textViewMsgAll.setVisibility(View.VISIBLE);
+				String text = msg.getUserInfo().getName()
+						+ getString(R.string.label_tomy)
+						+ getString(R.string.label_sendcard);
+				((TextView) findViewById(R.id.textViewCardMsg)).setText(text);
+			} else {
+				((TextView) findViewById(R.id.textViewCardMsg)).setText("");
+			}
 		}
 	}
 

@@ -29,6 +29,12 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * 常用工具：16进制编码与字符串转换、压缩获取指定尺寸图片、针对目标尺寸应对目标图片缩放的倍数、判断是否是手机号(正则匹配)、打印Log消息、Toast消息提示
+ * 工具millis获取时分秒、显示进度对话框
+ * @author lz
+ *
+ */
 public class Util {
 
 	private static final String TAG = "SDK_Sample.Util";
@@ -256,7 +262,7 @@ public class Util {
 
 	public static int computeSampleSize(BitmapFactory.Options options,
 
-	int minSideLength, int maxNumOfPixels) {
+	int minSideLength, int maxNumOfPixels) {//2的倍数
 
 		int initialSize = computeInitialSampleSize(options, minSideLength,
 

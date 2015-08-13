@@ -65,6 +65,8 @@ public class ZhuoConnHelper {
 	Context context;
 
 	private BaseCodeData baseDataSet;
+	private List<Province> citysOfProvince;
+	private List<City> citys;
 
 	private void init(Context context) {
 		ResHelper resHelper = ResHelper.getInstance(context);
@@ -88,6 +90,26 @@ public class ZhuoConnHelper {
 		}
 
 		return instance;
+	}
+
+	public List<City> getCitys() {
+		return citys;
+	}
+
+	public void setCitys(List<City> citys) {
+		this.citys = citys;
+	}
+
+	public List<Province> getCitysOfPrince() {
+		return citysOfProvince;
+	}
+
+	public void setCitysOfPrince(List<Province> citysOfPrince) {
+		this.citysOfProvince = citysOfPrince;
+		citys = new ArrayList<City>();
+		for (Province temp : citysOfProvince) {
+			citys.addAll(temp.getCitys());
+		}
 	}
 
 	public BaseCodeData getBaseDataSet() {
@@ -1050,10 +1072,27 @@ public class ZhuoConnHelper {
 		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
 		if (pubnum > 5)
 			params.add(new BasicNameValuePair("pubnum", pubnum + ""));
-		if(statusnum>5)
+		if (statusnum > 5)
 			params.add(new BasicNameValuePair("statusnum", statusnum + ""));
 
 		return getFromServerByPost(ZhuoCommHelperLz.getMainInfo(), params,
+				mUIHandler, tag);
+	}
+	 
+	/**
+	 * 删除活动
+	 * @param mUIHandler
+	 * @param tag
+	 * @param activityid 圈活动ID （如果为多个，以逗号分隔）
+	 * @return
+	 */
+	public boolean deleteEvents(Handler mUIHandler, int tag, String activityid) {
+		
+		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+		if (activityid !=null)
+			params.add(new BasicNameValuePair("activityid", activityid));
+		
+		return getFromServerByPost(ZhuoCommHelperLz.deleteActives(), params,
 				mUIHandler, tag);
 	}
 
@@ -1179,12 +1218,14 @@ public class ZhuoConnHelper {
 				nameValuePairs, mUIHandler, tag);
 	}
 
+	
 	/**
 	 * 加入或退出圈子
-	 * 
 	 * @param mUIHandler
 	 * @param tag
 	 * @param groupid
+	 * @param type 0取消关注  1申请关注  2接受关注
+	 * @param content
 	 * @return
 	 */
 	public boolean followGroup(Handler mUIHandler, int tag, String groupid,
@@ -1274,6 +1315,25 @@ public class ZhuoConnHelper {
 	}
 
 	/**
+	 * 赞名片
+	 * 
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param statusid
+	 * @param praise
+	 *            //0:取消赞 1:赞
+	 * @return
+	 */
+	public boolean praiseCard(Handler mUIHandler, int handlerTag,
+			String userid, int praise) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		nameValuePairs.add(new BasicNameValuePair("praise", praise + ""));
+		return getFromServerByPost(ZhuoCommHelperLz.zanCard(), nameValuePairs,
+				mUIHandler, handlerTag);
+	}
+
+	/**
 	 * 圈话题评论
 	 * 
 	 * @param mUIHandler
@@ -1326,6 +1386,15 @@ public class ZhuoConnHelper {
 		if (userid != null)
 			nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		return getFromServerByPost(ZhuoCommHelperLz.getUserInfo(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	public boolean getGonggaoDetail(Handler mUIHandler, int handlerTag,
+			String id) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		if (id != null)
+			nameValuePairs.add(new BasicNameValuePair("id", id));
+		return getFromServerByPost(ZhuoCommHelperLz.gonggaoDetail(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1471,6 +1540,43 @@ public class ZhuoConnHelper {
 	}
 
 	/**
+	 * 收藏动态
+	 * 
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param statusid
+	 * @param type
+	 *            1-加入收藏 0-取消收藏
+	 * @return
+	 */
+	public boolean collectDynamic(Handler mUIHandler, int handlerTag,
+			String statusid, int type) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("statusid", statusid));
+		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
+		return getFromServerByPost(ZhuoCommHelperLz.collectStatusFamily(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	/**
+	 * 收藏圈话题
+	 * 
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param topicid
+	 * @param type
+	 * @return
+	 */
+	public boolean collectTopic(Handler mUIHandler, int handlerTag,
+			String topicid, int type) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("topicid", topicid));
+		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
+		return getFromServerByPost(ZhuoCommHelperLz.collectTopic(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+
+	/**
 	 * 获得圈子成员列表
 	 * 
 	 * @param mUIHandler
@@ -1482,6 +1588,72 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
 		return getFromServerByPost(ZhuoCommHelperLz.getGroupMemberList(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	/**
+	 * 获得倬脉动态
+	 * @param mUIHandler
+	 * @param tag
+	 * @param groupid
+	 * @return
+	 */
+	public boolean getZhuomaiList(Handler mUIHandler, int tag,
+			int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("pageNo", String
+				.valueOf(pageNo)));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", String
+				.valueOf(pageSize)));
+		return getFromServerByPost(ZhuoCommHelperLz.getPutList(),
+				nameValuePairs, mUIHandler, tag);
+	}
+
+	/**
+	 * 与我相关的圈子动态：包括全话题和圈活动
+	 * 
+	 * @param mUIHandler
+	 * @param tag
+	 * @param type
+	 *            类型 0-全部圈子 1-我创建的圈子 2-我加入的圈子
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	public boolean getQuanStatusList(Handler mUIHandler, int tag, int type,
+			int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs
+				.add(new BasicNameValuePair("type", String.valueOf(type)));
+		nameValuePairs.add(new BasicNameValuePair("pageNo", String
+				.valueOf(pageNo)));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", String
+				.valueOf(pageSize)));
+		return getFromServerByPost(ZhuoCommHelperLz.groupStatus(),
+				nameValuePairs, mUIHandler, tag);
+	}
+
+	public boolean getFollowReqList(Handler mUIHandler, int tag) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		return getFromServerByPost(ZhuoCommHelperLz.getFollowReqList(),
+				nameValuePairs, mUIHandler, tag);
+	}
+
+	/**
+	 * 
+	 * @param mUIHandler
+	 * @param tag
+	 * @param userid
+	 *            对方用户ID （要关注的、要取消关注的、要接受的）
+	 * @param type
+	 *            0取消关注 1申请关注(交换名片) 2接受关注(接受交换名片)
+	 * @return
+	 */
+	public boolean followUser(Handler mUIHandler, int tag, String userid,
+			int type) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
+		return getFromServerByPost(ZhuoCommHelperLz.followUser(),
 				nameValuePairs, mUIHandler, tag);
 	}
 

@@ -216,12 +216,16 @@ public class LZMyHomeActivity extends Activity {
 				.setText(userInfo.getName());
 		String work = "";
 		if (baseDataSet != null)
-			work = ((baseDataSet.getPosition()).get(userInfo.getPosition() - 1))
+		{
+			int pos=userInfo.getPosition();
+			if(pos!=0)//默认为0，城市标号从1开始
+				pos--;
+			work = ((baseDataSet.getPosition()).get(pos))
 					.getContent();
-
+		}
 		((TextView) findViewById(R.id.textViewContent)).setText(work);
 
-		((TextView) findViewById(R.id.textViewCompany)).setText("接口无公司信息");
+		((TextView) findViewById(R.id.textViewCompany)).setText(userInfo.getCompany());
 
 		if (userInfo.getGender() == 0)// 男
 			rlbg.setBackgroundResource(R.drawable.mbg6_wdzy_1);
@@ -281,6 +285,7 @@ public class LZMyHomeActivity extends Activity {
 		// } else {
 		// allNum.setVisibility(View.VISIBLE);
 		// }
+
 	}
 
 	private void loadInfo() {

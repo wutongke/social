@@ -143,8 +143,14 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		String headUrl = item.getUheader();
 		String work = "";
 		if (baseDataSet != null)
-			work = ((baseDataSet.getPosition()).get(item.getPosition() - 1))
+		{
+			int pos=item.getPosition();
+			if(pos!=0)
+				pos--;
+			work = ((baseDataSet.getPosition()).get(pos))
 					.getContent();
+		}
+			
 		String detail = item.getContent();
 		String time = item.getAddtime();
 		time = CommonUtil.calcTime(time);
@@ -321,10 +327,10 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		holder.trlpoutter = new TableRow.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		holder.rlp = new RelativeLayout.LayoutParams((int) (50 * times),
-				(int) (50 * times));
-		holder.rlp2 = new RelativeLayout.LayoutParams((int) (114 * times),
-				(int) (114 * times));
+		holder.rlp = new RelativeLayout.LayoutParams((int) (60 * times),
+				(int) (60 * times));
+		holder.rlp2 = new RelativeLayout.LayoutParams((int) (100 * times),
+				(int) (100* times));
 		holder.nameTV = (TextView) convertView
 				.findViewById(R.id.textViewAuthorName);
 		holder.timeTV = (TextView) convertView.findViewById(R.id.textViewTime);

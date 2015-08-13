@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".GrouthVisitDetailActivity" >
+
+    <include layout="@layout/title_activity" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/agvd_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" 
+                    android:scaleType="centerCrop"
+                    />
+
+                <TextView
+                    android:id="@+id/agvd_name_and_order"
+                    style="@style/basic_second_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/agvd_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/graywhite" />
+
+                <include layout="@layout/bg_image" />
+
+                <TextView
+                    android:id="@+id/agvd_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:textColor="@color/graywhite" />
+            </LinearLayout>
+        </ScrollView>
+
+        
+    </RelativeLayout>
+
+</LinearLayout>

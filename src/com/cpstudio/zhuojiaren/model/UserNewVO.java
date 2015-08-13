@@ -3,6 +3,9 @@ package com.cpstudio.zhuojiaren.model;
 import java.util.List;
 
 public class UserNewVO {
+	//用户关系，对应字段relationType的去值
+	public enum USER_RELATION{RELATION_STRANGER,RELATION_FRIENDS,RELATION_MYSELF};
+	
 	private String signature;// 签名
 	private String faith;
 	private String dream;
@@ -55,6 +58,7 @@ public class UserNewVO {
 
 	private int isQqOpen;
 
+
 	int industry;
 	private String phone;
 	private String userid;
@@ -64,10 +68,23 @@ public class UserNewVO {
 	String qrcode; // 二维码图片url
 	int friendNum; // (好友个数 在动态页面中使用)
 	int statusNum; // (动态/文章个数 在动态页面中使用)
+	
+	//还需增加一个字段:mType;
+	
+	int relation;//0:陌生人。1：好友。2：自己
+	
 	private List<PicNewVO> photo;// (照片 对多10张)
 
 	public String getUserid() {
 		return userid;
+	}
+
+	public int getRelation() {
+		return relation;
+	}
+
+	public void setRelation(int relation) {
+		this.relation = relation;
 	}
 
 	public String getQrcode() {

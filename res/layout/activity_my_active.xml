@@ -43,6 +43,24 @@
                 android:drawablePadding="5dp"
                 android:text="@string/label_setup_active" />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llDelete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#A6A6A6"
+            android:visibility="gone"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tvDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/start_wdxx_1"
+                android:drawablePadding="5dp"
+                android:text="@string/label_delsel" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -104,5 +122,6 @@
                 android:background="#f9f9f9" />
         </LinearLayout>
     </LinearLayout>
+
 
 </LinearLayout>

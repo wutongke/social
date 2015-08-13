@@ -395,15 +395,8 @@ public class DynamicDetailActivity extends BaseActivity {
 
 					@Override
 					public void onClick(View v) {
-						if (isCollect == null || isCollect.equals("0")) {
-							mConnHelper.collectMsg(msgid, "1", mUIHandler,
-									MsgTagVO.MSG_COLLECT, null, true, null,
-									null);
-						} else {
-							mConnHelper.collectMsg(msgid, "0", mUIHandler,
-									MsgTagVO.MSG_COLLECT, null, true, null,
-									null);
-						}
+						mConnHelper.collectDynamic(mUIHandler,
+								MsgTagVO.MSG_COLLECT, msgid, 1);
 					}
 				});
 		textViewTip = findViewById(R.id.textViewTip);

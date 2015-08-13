@@ -24,6 +24,7 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserEvent;
 import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -36,6 +37,10 @@ public class MyActiveActivity extends BaseActivity implements
 	TextView pubView;
 	@InjectView(R.id.tvSearchActive)
 	TextView tvSearchActive;
+
+	@InjectView(R.id.llDelete)
+	View llDelete;
+
 	@InjectView(R.id.pvPubed)
 	PullDownView pvPubed;// 发布的活动
 	@InjectView(R.id.pv_joined)
@@ -167,11 +172,32 @@ public class MyActiveActivity extends BaseActivity implements
 				pvJoined.finishLoadData(loadState);
 				break;
 			}
+			case MsgTagVO.disolve_quan:
+			case MsgTagVO.out_quan: {
+				// 退出管理，重新下载数据
+				offManager();
+				loadData();
+				break;
+			}
 			}
 
 		}
 
 	};
+
+	public void offManager() {
+		if (mPubAdapter != null) {
+			mPubAdapter.setManaging(false);
+			mPubAdapter.getmSelectedList().clear();
+			mPubAdapter.notifyDataSetChanged();
+		}
+		if (mJoinAdapter != null) {
+			mJoinAdapter.setManaging(false);
+			mJoinAdapter.getmSelectedList().clear();
+			mJoinAdapter.notifyDataSetChanged();
+		}
+		llDelete.setVisibility(View.GONE);
+	}
 
 	public void onRefresh() {
 		mPage = 0;
@@ -200,10 +226,22 @@ public class MyActiveActivity extends BaseActivity implements
 				isManaging = !isManaging;
 				mPubAdapter.setManaging(isManaging);
 				mJoinAdapter.setManaging(isManaging);
-				if (isManaging)
+				if (isManaging) {
+					llDelete.setVisibility(View.VISIBLE);
 					function.setText(R.string.EXIT);
-				else
+				} else {
 					function.setText(R.string.label_manage);
+					llDelete.setVisibility(View.GONE);
+				}
+			}
+		});
+
+		llDelete.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				deleteSelected();
 			}
 		});
 
@@ -270,7 +308,33 @@ public class MyActiveActivity extends BaseActivity implements
 		// }
 		// }
 		// });
-
 	}
 
+	protected void deleteSelected() {
+		// TODO Auto-generated method stub\
+		// 解散选中的我创建的圈子
+		ArrayList<EventVO> deleteEventlist = (ArrayList<EventVO>) mPubAdapter
+				.getmSelectedList();
+		// 退出我加入的圈子
+		ArrayList<EventVO> quitEventList = (ArrayList<EventVO>) mJoinAdapter
+				.getmSelectedList();
+
+		if (deleteEventlist != null && deleteEventlist.size() > 0) {
+			StringBuilder eventids = new StringBuilder();
+			for (EventVO event : deleteEventlist) {
+				eventids.append(event.getActivityid() + ",");
+			}
+			mConnHelper.deleteEvents(mUIHandler, MsgTagVO.disolve_quan,
+					eventids.toString());
+		}
+		if (quitEventList != null && quitEventList.size() > 0) {
+			StringBuilder quitids = new StringBuilder();
+			for (EventVO event : quitEventList) {
+				quitids.append(event.getActivityid() + ",");
+			}
+			mConnHelper.followGroup(mUIHandler, MsgTagVO.out_quan,
+					quitids.toString(), QuanVO.QUAN_QUIT, "none");
+		}
+
+	}
 }

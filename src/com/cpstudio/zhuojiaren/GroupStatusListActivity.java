@@ -23,41 +23,50 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.Dynamic;
+import com.cpstudio.zhuojiaren.model.GroupStatus;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 import com.cpstudui.zhuojiaren.lz.CardActiveNumListActivity;
 import com.cpstudui.zhuojiaren.lz.DynamicDetailActivity;
-import com.cpstudui.zhuojiaren.lz.DynamicListAdapter;
 import com.cpstudui.zhuojiaren.lz.JiarenActiveNumListActivity;
+import com.cpstudui.zhuojiaren.lz.QuanStatusListAdapter;
 import com.cpstudui.zhuojiaren.lz.QuanziActiveNumListActivity;
+import com.cpstudui.zhuojiaren.lz.TopicDetailActivity;
 
-public class JiarenActiveActivity extends Activity implements
+/**
+ * 圈活动列表，包括圈话题和圈活动
+ * 
+ * @author lz
+ * 
+ */
+public class GroupStatusListActivity extends Activity implements
 		OnPullDownListener, OnItemClickListener {
 	private ListView mListView;
 	// private ZhuoInfoAdapter mAdapter;
 
-	// 倬家人所有的动态及谁加入倬家人，不包括话题，需求等，内容布局与话题一样
-	// 此处暂时用了圈话题的适配器，之后需要修改
-	private DynamicListAdapter mAdapter;
+	private QuanStatusListAdapter mAdapter;
 
 	private PullDownView mPullDownView;
-	private ArrayList<Dynamic> mList = new ArrayList<Dynamic>();
+	private ArrayList<GroupStatus> mList = new ArrayList<GroupStatus>();
 	private LoadImage mLoadImage = null;
 	private PopupWindows pwh = null;
 	private String mUid = null;
-	private int mType = Dynamic.DYNATIC_TYPE_ALL_JIAREN;// 类型 0-自己的家人动态
-														// 1-指定用户的家人动态 2-所有家人动态
+	private int mType = GroupStatus.GROUP_STATUS_TYPE_ALL;// 0-全部圈子 1-我创建的圈子
+															// 2-我加入的圈子
 	private String mLastId = "0";
 	private ZhuoConnHelper mConnHelper = null;
 	private UserFacade mFacade = null;
 	private int mPage = 1;
 	final int pageSize = 10;
-//	private InfoFacade infoFacade = null;
+
+	// private InfoFacade infoFacade = null;
 
 	// type==0时所有人动态，就只是动态，不包括需求，话题，活动什么的
 	/*
@@ -68,26 +77,25 @@ public class JiarenActiveActivity extends Activity implements
 		setContentView(R.layout.activity_jiaren_active);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		mFacade = new UserFacade(getApplicationContext());
-//		infoFacade = new InfoFacade(getApplicationContext(),
-//				InfoFacade.ACTIVELIST);
+		// infoFacade = new InfoFacade(getApplicationContext(),
+		// InfoFacade.ACTIVELIST);
 		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
-		pwh = new PopupWindows(JiarenActiveActivity.this);
+		pwh = new PopupWindows(GroupStatusListActivity.this);
 		mLoadImage = new LoadImage();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
-				R.layout.listview_header3);
+				R.layout.listview_header2);
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
 		// 是否和圈子话题公用一个数据结构还不一定
-		mAdapter = new DynamicListAdapter(JiarenActiveActivity.this, mList, 1);
+		mAdapter = new QuanStatusListAdapter(GroupStatusListActivity.this,
+				mList, 1);
 		mListView.setAdapter(mAdapter);
-		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
 
-		mType = getIntent().getIntExtra("mType", 2);
-		if (Dynamic.DYNATIC_TYPE_ALL_JIAREN != mType)
-			findViewById(R.id.ll_active_menue).setVisibility(View.GONE);
+		mType = getIntent().getIntExtra("mType", 0);
+		findViewById(R.id.ll_active_menue).setVisibility(View.GONE);
 		loadData();
 		initClick();
 	}
@@ -112,7 +120,7 @@ public class JiarenActiveActivity extends Activity implements
 					new OnClickListener() {// 我的所有家人动态
 						@Override
 						public void onClick(View v) {
-							Intent i = new Intent(JiarenActiveActivity.this,
+							Intent i = new Intent(GroupStatusListActivity.this,
 									JiarenActiveNumListActivity.class);
 							startActivity(i);
 						}
@@ -121,7 +129,7 @@ public class JiarenActiveActivity extends Activity implements
 					new OnClickListener() {// 我的名片动态
 						@Override
 						public void onClick(View v) {
-							Intent i = new Intent(JiarenActiveActivity.this,
+							Intent i = new Intent(GroupStatusListActivity.this,
 									CardActiveNumListActivity.class);
 							startActivity(i);
 						}
@@ -130,17 +138,17 @@ public class JiarenActiveActivity extends Activity implements
 					new OnClickListener() {// 我的圈子动态，圈子话题和圈子活动混合起来的
 						@Override
 						public void onClick(View v) {
-							Intent i = new Intent(JiarenActiveActivity.this,
+							Intent i = new Intent(GroupStatusListActivity.this,
 									QuanziActiveNumListActivity.class);
 							startActivity(i);
 						}
 					});
 
 			findViewById(R.id.textViewActiveZhuomai).setOnClickListener(
-					new OnClickListener() { //倬脉动态，即倬脉动态就是公告信息
+					new OnClickListener() { // 倬脉动态，即倬脉动态就是公告信息
 						@Override
 						public void onClick(View v) {
-							Intent i = new Intent(JiarenActiveActivity.this,
+							Intent i = new Intent(GroupStatusListActivity.this,
 									ZhuoMaiActiveListActivity.class);
 							startActivity(i);
 
@@ -198,7 +206,7 @@ public class JiarenActiveActivity extends Activity implements
 
 	}
 
-	private void updateItemList(ArrayList<Dynamic> list, boolean refresh,
+	private void updateItemList(ArrayList<GroupStatus> list, boolean refresh,
 			boolean append) {
 		if (!list.isEmpty()) {
 			mPullDownView.hasData();
@@ -208,7 +216,7 @@ public class JiarenActiveActivity extends Activity implements
 			mList.addAll(list);
 			mAdapter.notifyDataSetChanged();
 			if (mList.size() > 0) {
-				mLastId = mList.get(mList.size() - 1).getStatusid();
+				// mLastId = mList.get(mList.size() - 1).getStatusid();
 			}
 			mPage++;
 		} else {
@@ -241,7 +249,7 @@ public class JiarenActiveActivity extends Activity implements
 
 					@Override
 					public void onClick(View v) {
-						Intent i = new Intent(JiarenActiveActivity.this,
+						Intent i = new Intent(GroupStatusListActivity.this,
 								UserHomeActivity.class);
 						i.putExtra("userid", mUid);
 						i.putExtra("from", "home");
@@ -266,16 +274,16 @@ public class JiarenActiveActivity extends Activity implements
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
-				ArrayList<Dynamic> list = new ArrayList<Dynamic>();
+				ArrayList<GroupStatus> list = new ArrayList<GroupStatus>();
 				boolean loadState = false;
 				if (msg.obj instanceof ArrayList) {
-					list = (ArrayList<Dynamic>) msg.obj;
+					list = (ArrayList<GroupStatus>) msg.obj;
 				} else {
 					if (msg.obj != null && !msg.obj.equals("")) {
 						loadState = true;
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
-						list = nljh.parseDynamicList();
+						list = nljh.parseGroupStatusList();
 						if (!list.isEmpty()) {
 							// infoFacade.update(list);
 						}
@@ -291,7 +299,7 @@ public class JiarenActiveActivity extends Activity implements
 					loadState = true;
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					ArrayList<Dynamic> list = nljh.parseDynamicList();
+					ArrayList<GroupStatus> list = nljh.parseGroupStatusList();
 					updateItemList(list, false, false);
 				}
 				mPullDownView.RefreshComplete(loadState);
@@ -299,14 +307,14 @@ public class JiarenActiveActivity extends Activity implements
 			}
 			case MsgTagVO.DATA_MORE: {
 				mPullDownView.notifyDidMore();
-				ArrayList<Dynamic> list = new ArrayList<Dynamic>();
+				ArrayList<GroupStatus> list = new ArrayList<GroupStatus>();
 				if (msg.obj instanceof ArrayList) {
-					list = (ArrayList<Dynamic>) msg.obj;
+					list = (ArrayList<GroupStatus>) msg.obj;
 				} else {
 					if (msg.obj != null && !msg.obj.equals("")) {
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
-						list = nljh.parseDynamicList();
+						list = nljh.parseGroupStatusList();
 						if (!list.isEmpty()) {
 							// infoFacade.update(list);
 						}
@@ -336,12 +344,20 @@ public class JiarenActiveActivity extends Activity implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		if (id != -1) {
-			Intent i = new Intent();
-			i.setClass(JiarenActiveActivity.this, DynamicDetailActivity.class);
-			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
-			startActivity(i);
+		if (id == -1)
+			return;
+
+		int type = mList.get(position).getType();
+		String msgid = (String) view.getTag(R.id.tag_id);
+		Intent i = new Intent();
+		if (type == 0) {
+			i.setClass(GroupStatusListActivity.this, TopicDetailActivity.class);
+			i.putExtra("topicid", msgid);
+		} else {
+			i.setClass(GroupStatusListActivity.this, EventDetailActivity.class);
+			i.putExtra("eventId", msgid);
 		}
+		startActivity(i);
 	}
 
 	private void loadInfo() {
@@ -370,15 +386,15 @@ public class JiarenActiveActivity extends Activity implements
 				// msg.obj = list;
 				// msg.sendToTarget();
 			} else {
-				mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_LOAD,
-						mType, null, mPage, pageSize);
+				mConnHelper.getQuanStatusList(mUIHandler, MsgTagVO.DATA_LOAD,
+						mType, mPage, pageSize);
 			}
 		}
 	}
 
 	@Override
 	public void onRefresh() {
-		mPage = 0;
+		mPage = 1;
 		loadData();
 	}
 
@@ -400,8 +416,8 @@ public class JiarenActiveActivity extends Activity implements
 			// params += "&uid=" + mUid;
 			// mConnHelper.getFromServer(params, mUIHandler,
 			// MsgTagVO.DATA_MORE);
-			mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_MORE, mType,
-					null, mPage, pageSize);
+			mConnHelper.getQuanStatusList(mUIHandler, MsgTagVO.DATA_MORE,
+					mType, mPage, pageSize);
 		}
 	}
 
@@ -410,7 +426,8 @@ public class JiarenActiveActivity extends Activity implements
 			if (requestCode == MsgTagVO.DATA_REFRESH) {
 				onRefresh();
 			} else if (requestCode == MsgTagVO.MSG_CMT) {
-				Toast.makeText(JiarenActiveActivity.this, "评论成功！", 2000).show();
+				Toast.makeText(GroupStatusListActivity.this, "评论成功！", 2000)
+						.show();
 				// String forward = data.getStringExtra("forward");
 				// String msgid = data.getStringExtra("msgid");
 				// String outterid = data.getStringExtra("outterid");
@@ -454,7 +471,7 @@ public class JiarenActiveActivity extends Activity implements
 						data, false);
 				if (filePath != null) {
 					try {
-						Intent i = new Intent(JiarenActiveActivity.this,
+						Intent i = new Intent(GroupStatusListActivity.this,
 								PublishActiveActivity.class);
 						i.putExtra("filePath", filePath);
 						startActivityForResult(i, MsgTagVO.DATA_REFRESH);

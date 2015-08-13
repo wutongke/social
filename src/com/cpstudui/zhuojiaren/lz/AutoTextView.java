@@ -35,6 +35,14 @@ public class AutoTextView extends TextSwitcher implements
 	private Thread updateThread;
 	private volatile boolean stopFlag = false;
 
+	public String getCurrentId()
+	{
+		String id = null;
+		if (index >= 0 && list != null && index < list.size())
+			id = list.get(index).getId();
+		return id;
+	}
+
 	public AutoTextView(Context context) {
 		this(context, null);
 		// TODO Auto-generated constructor stub

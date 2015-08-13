@@ -46,8 +46,8 @@ public class Friend implements Serializable, IFilterModel {
 
             } else if (key >= 'a' && key <= 'z') {
                 key -= 32;
-            } else if (key == '¡ï' ) {
-                key = '¡ï';
+            } else if (key == 'â˜…' ) {
+                key = 'â˜…';
             }else {
                 key = '#';
             }

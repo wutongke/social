@@ -16,15 +16,15 @@ import android.widget.TextView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.PicVO;
-import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
+import com.cpstudio.zhuojiaren.model.Dynamic;
+import com.cpstudio.zhuojiaren.model.PicNewVO;
 
 public class ActiveListAdapter extends BaseAdapter {
-	private List<ZhuoInfoVO> mList = null;
+	private List<Dynamic> mList = null;
 	private LoadImage mLoadImage = new LoadImage();
 	private LayoutInflater inflater = null;
 
-	public ActiveListAdapter(Context context, ArrayList<ZhuoInfoVO> list) {
+	public ActiveListAdapter(Context context, ArrayList<Dynamic> list) {
 		this.mList = list;
 		this.inflater = LayoutInflater.from(context);
 	}
@@ -59,10 +59,10 @@ public class ActiveListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
 		}
-		ZhuoInfoVO zhuoinfo = mList.get(position);
-		convertView.setTag(R.id.tag_id, zhuoinfo.getMsgid());
-		convertView.setTag(R.id.tag_string, zhuoinfo.getType());
-		String text = zhuoinfo.getText();
+		Dynamic item = mList.get(position);
+		convertView.setTag(R.id.tag_id, item.getStatusid());
+		convertView.setTag(R.id.tag_string,item.getName());
+		String text = item.getContent();
 		if (text != null && !text.equals("")) {
 			holder.textViewTitle.setText(text);
 		} else {
@@ -70,7 +70,7 @@ public class ActiveListAdapter extends BaseAdapter {
 		}
 		holder.rl.removeAllViews();
 		holder.textViewAll.setText("");
-		List<PicVO> Pics = zhuoinfo.getPic();
+		List<PicNewVO> Pics = item.getStatusPic();
 		Context context = convertView.getContext();
 		if (Pics != null && Pics.size() > 0) {
 			holder.textViewAll.setText(context.getString(R.string.label_gong)
@@ -112,15 +112,15 @@ public class ActiveListAdapter extends BaseAdapter {
 			ll.setLayoutParams(rllp);
 			for (int i = 0; i < ivs.size(); i++) {
 				ImageView iv = ivs.get(i);
-				iv.setTag(Pics.get(i).getUrl());
-				mLoadImage.addTask(Pics.get(i).getUrl(), iv);
+				iv.setTag(Pics.get(i).getPic());
+				mLoadImage.addTask(Pics.get(i).getPic(), iv);
 			}
 		}
-		String place = zhuoinfo.getPosition();
+		String place = "µØµã±àºÅ£º"+item.getPosition();
 		if (null == place || place.equals("")) {
 			place = "";
 		}
-		String time = zhuoinfo.getAddtime();
+		String time = item.getAddtime();
 		if (null != time && !time.equals("") && time.indexOf("-") != -1) {
 			String month = ZhuoCommHelper.getMonthFromTime(time);
 			String date = ZhuoCommHelper.getDateFromTime(time);

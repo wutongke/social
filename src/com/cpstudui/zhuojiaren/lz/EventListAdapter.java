@@ -17,7 +17,9 @@ import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.EventVO;
+import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
+import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class EventListAdapter extends BaseAdapter {
@@ -25,6 +27,7 @@ public class EventListAdapter extends BaseAdapter {
 	private LayoutInflater inflater = null;
 	public boolean isManaging = false;
 	Context c;
+	private List<EventVO> mSelectedList = new ArrayList<EventVO>();
 
 	public EventListAdapter(Context context, ArrayList<EventVO> list) {
 		this.mList = list;
@@ -95,16 +98,28 @@ public class EventListAdapter extends BaseAdapter {
 			holder.cbSelected.setVisibility(View.VISIBLE);
 		else
 			holder.cbSelected.setVisibility(View.GONE);
-		holder.cbSelected
-				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		holder.cbSelected.setChecked(false);
+		// 设置是否选中
+		if (mSelectedList.contains(mList.get(position))) {
+			holder.cbSelected.setChecked(true);
+		} else {
+			holder.cbSelected.setChecked(false);
+		}
+		holder.cbSelected.setOnClickListener(new OnClickListener() {
 
-					@Override
-					public void onCheckedChanged(CompoundButton arg0,
-							boolean arg1) {
-						// TODO Auto-generated method stub
-						mList.get(position).setSelected(arg1);
-					}
-				});
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				if (mSelectedList.contains(mList.get(position))) {
+					holder.cbSelected.setChecked(false);
+					mSelectedList.remove(mList.get(position));
+				} else {
+					holder.cbSelected.setChecked(true);
+					mSelectedList.add(mList.get(position));
+				}
+			}
+		});
 		return convertView;
 	}
 
@@ -141,4 +156,9 @@ public class EventListAdapter extends BaseAdapter {
 
 		return holder;
 	}
+
+	public List<EventVO> getmSelectedList() {
+		return mSelectedList;
+	}
+	
 }
