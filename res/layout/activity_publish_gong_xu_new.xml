@@ -131,7 +131,9 @@
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:paddingTop="5dp"
-                    android:text="@string/info20" />
+                    android:text="@string/info20" 
+                    android:visibility="gone"
+                    />
             </LinearLayout>
             <!--
             <RelativeLayout
@@ -149,8 +151,7 @@
                     android:text="@string/label_comfirmpub"
                     android:textColor="#ffffff"
                     android:textSize="18sp" />
-            </RelativeLayout>
-            -->
+            </RelativeLayout>-->
 
             <LinearLayout
                 android:id="@+id/linearLayoutContacts"
