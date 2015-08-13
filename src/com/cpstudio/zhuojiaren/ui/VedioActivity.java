@@ -14,8 +14,10 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MediaController;
@@ -362,8 +364,9 @@ public class VedioActivity extends BaseActivity {
 									| View.SYSTEM_UI_FLAG_FULLSCREEN);
 			DisplayMetrics metric = new DisplayMetrics();
 			getWindowManager().getDefaultDisplay().getMetrics(metric);
-			VedioPlayer.getLayoutParamsBasedOnParent(frame, metric.widthPixels,
-					metric.heightPixels);
+			frame.setLayoutParams(VedioPlayer.getLayoutParamsBasedOnParent(frame, metric.widthPixels,
+					metric.heightPixels));
+//			frame.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT ,FrameLayout.LayoutParams.MATCH_PARENT ));
 			setFullScreen();
 			isFullscreen = true;
 		}
