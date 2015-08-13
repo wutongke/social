@@ -61,7 +61,7 @@ public class MyMoneyActivity extends BaseActivity {
 			}
 		};
 		bankCard.setAdapter(mAdapter);
-		loadData();
+//		loadData();
 	}
 	private void initOnclick() {
 		// TODO Auto-generated method stub

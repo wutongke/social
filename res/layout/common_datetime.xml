@@ -9,13 +9,14 @@
         android:layout_width="wrap_content"  
         android:layout_height="wrap_content"  
         android:calendarViewShown="false"
-        style="@android:style/Theme.Holo.Dialog"
+        style="@android:style/Theme.DeviceDefault.Light"
+        android:spinnersShown="true"
          />  
   
     <TimePicker  
         android:id="@+id/timepicker"  
-        style="@android:style/Theme.Holo.Dialog"
         android:layout_width="wrap_content"  
+         style="@android:style/Theme.DeviceDefault.Light"
         android:layout_height="wrap_content" />  
   
 </LinearLayout> 
