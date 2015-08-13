@@ -1,8 +1,8 @@
 package com.cpstudio.zhuojiaren;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
@@ -21,9 +21,10 @@ public class CardAddUserEmailActivity extends Activity {
 		if (emailopen != null && emailopen.equals("1")) {
 			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(true);
 		}else{
-			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(false);			
+			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(false);		
 		}
 		initClick();
+		
 	}
 
 	private void initClick() {

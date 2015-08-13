@@ -27,8 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:drawableRight="@drawable/ico_arrow_big"
-            android:maxLines="1"
-            android:text="8" />
+            android:maxLines="1" />
     </RelativeLayout>
 
     <TextView
@@ -60,7 +59,7 @@
             android:layout_alignParentRight="true"
             android:drawableRight="@drawable/ico_arrow_big"
             android:maxLines="1"
-            android:text="8" />
+             />
     </RelativeLayout>
 
     <TextView
@@ -91,7 +90,7 @@
             android:layout_alignParentRight="true"
             android:drawableRight="@drawable/ico_arrow_big"
             android:maxLines="1"
-            android:text="8" />
+            />
     </RelativeLayout>
 
     <TextView
@@ -121,8 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:drawableRight="@drawable/ico_arrow_big"
-            android:maxLines="1"
-            android:text="8" />
+            android:maxLines="1" />
     </RelativeLayout>
 
     <TextView
@@ -152,8 +150,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:drawableRight="@drawable/ico_arrow_big"
-            android:maxLines="1"
-            android:text="8" />
+            android:maxLines="1" />
     </RelativeLayout>
 
     <TextView

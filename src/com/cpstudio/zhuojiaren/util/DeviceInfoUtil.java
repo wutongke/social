@@ -129,7 +129,7 @@ public class DeviceInfoUtil {
 		return "unknown";
 	}
 
-	public static Cursor s(Context context) {
+	public static Cursor s11(Context context) {
 		try {
 			String str1 = getNetworkType(context);
 			if ((str1 != null) && (str1.equals("wifi"))) {

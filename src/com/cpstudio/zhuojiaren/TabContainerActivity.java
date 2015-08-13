@@ -1,5 +1,8 @@
 package com.cpstudio.zhuojiaren;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
+
 import java.util.ArrayList;
 
 import org.androidpn.client.Notifier;
@@ -36,9 +39,6 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.ui.GrouthActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudui.zhuojiaren.lz.LZMyHomeActivity;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.media.UMImage;
 
 @SuppressWarnings("deprecation")
 public class TabContainerActivity extends TabActivity implements
@@ -77,6 +77,21 @@ public class TabContainerActivity extends TabActivity implements
 			R.drawable.indicator_tab_ico_im, R.drawable.indicator_tab_ico_up,
 			R.drawable.indicator_tab_ico_my };
 	private String[] mTextArray = null;
+	//有用，在主activity中来监听显示未读消息
+    public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.OnReceiveUnreadCountChangedListener() {
+        @Override
+        public void onMessageIncreased(int count) {
+            if (count == 0) {
+            	numTV.setVisibility(View.GONE);
+            } else if (count > 0 && count < 100) {
+            	numTV.setVisibility(View.VISIBLE);
+            	numTV.setText(count + "");
+            } else {
+            	numTV.setVisibility(View.VISIBLE);
+            	numTV.setText(R.string.no_read_message);
+            }
+        }
+    };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +158,21 @@ public class TabContainerActivity extends TabActivity implements
 		tab.setCurrentTab(curr);
 		tvs.get(0).setTextColor(Color.GREEN);
 		tab.setOnTabChangedListener(this);
+		
+		
+		//有用，监听哪些未读消息
+        final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
+                Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
+                Conversation.ConversationType.APP_PUBLIC_SERVICE, Conversation.ConversationType.PUBLIC_SERVICE};
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener, conversationTypes);
+            }
+        }, 500);
+		
 	}
 
 	/**

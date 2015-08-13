@@ -23,10 +23,12 @@ import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.GeoVO;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
+import com.cpstudio.zhuojiaren.model.GroupStatus;
 import com.cpstudio.zhuojiaren.model.HangYeVO;
 import com.cpstudio.zhuojiaren.model.ImMsgVO;
 import com.cpstudio.zhuojiaren.model.ImQuanVO;
 import com.cpstudio.zhuojiaren.model.MainHeadInfo;
+import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.PagesCmtVO;
 import com.cpstudio.zhuojiaren.model.PlanVO;
 import com.cpstudio.zhuojiaren.model.Praise;
@@ -860,6 +862,27 @@ public class JsonHandler {
 		return list;
 	}
 
+	public ArrayList<GroupStatus> parseGroupStatusList() {
+		ArrayList<GroupStatus> list = new ArrayList<GroupStatus>();
+		try {
+			Type listType = new TypeToken<LinkedList<GroupStatus>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<GroupStatus> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<GroupStatus> iterator = li.iterator(); iterator
+						.hasNext();) {
+					GroupStatus item = (GroupStatus) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	public TopicDetailVO parseQuanTopicDetail() {
 		TopicDetailVO detail = null;
 		try {
@@ -944,6 +967,30 @@ public class JsonHandler {
 		}
 		return list;
 	}
+	/**
+	 * 倬脉动态
+	 * @return
+	 */
+	public List<MessagePubVO> parsePubMessageList() {
+		List<MessagePubVO> list = new ArrayList<MessagePubVO>();
+		try {
+			Type listType = new TypeToken<LinkedList<MessagePubVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<MessagePubVO> li = gson.fromJson(jsonData, listType);
+				
+				for (Iterator<MessagePubVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					MessagePubVO item = (MessagePubVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 
 	/**
 	 * 新的获取个人用户信息
@@ -970,6 +1017,17 @@ public class JsonHandler {
 			e.printStackTrace();
 		}
 		return baseData;
+	}
+
+	public MessagePubVO parseMessagePub() {
+		MessagePubVO msg = null;
+		try {
+			Gson gson = new Gson();
+			msg = gson.fromJson(jsonData, MessagePubVO.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
 	}
 
 	public static BaseCodeData parseBaseCodeData(String jsonData) {

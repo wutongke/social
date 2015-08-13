@@ -31,7 +31,7 @@ public class ChangeBackgroundActivity extends BaseActivity implements
 	GridView gvBackGround;
 	CommonAdapter mAdapter;
 	ArrayList<ChangeBgAVO> mList = new ArrayList<ChangeBgAVO>();
-
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

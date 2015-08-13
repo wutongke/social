@@ -40,11 +40,13 @@ import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicAdVO;
+import com.cpstudio.zhuojiaren.model.Province;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
+import com.cpstudio.zhuojiaren.ui.PubDetailActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
@@ -326,14 +328,18 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				break;
 			}
 			case MsgTagVO.DATA_OTHER: {
-				// if (msg.obj != null && !msg.obj.equals("")) {
-				// JsonHandler nljh = new JsonHandler((String) msg.obj,
-				// getApplicationContext());
-				// MainHeadInfo info = nljh.parseAdInfo();
-				// if (info != null) {
-				// updateAdInfo(info);
-				// }
-				// }
+				ResultVO res;
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					res = JsonHandler.parseResult((String) msg.obj);
+					mConnHelper.saveObject((String) msg.obj,
+							ZhuoConnHelper.CITYS);
+				} else {
+					return;
+				}
+				String data = res.getData();
+				List<Province> dataset = JsonHandler.parseCodedCitys(data);
+				mConnHelper.setCitysOfPrince(dataset);
 				break;
 			}
 			case MsgTagVO.UPDATE: {
@@ -374,7 +380,8 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		if (id != -1) {
-			Intent i = new Intent(MainActivity.this, DynamicDetailActivity.class);
+			Intent i = new Intent(MainActivity.this,
+					DynamicDetailActivity.class);
 			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
 			startActivity(i);
 		}
@@ -471,6 +478,8 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			mConnHelper.getBaseCodeData(mUIHandler, MsgTagVO.DATA_BASE,
 					MainActivity.this, false, null, null);
 			mConnHelper.getMainInfo(mUIHandler, MsgTagVO.DATA_LOAD, 0, 0);
+			mConnHelper.getCitys(mUIHandler, MsgTagVO.DATA_OTHER,
+					MainActivity.this, true, null, null);
 		}
 	}
 
@@ -491,7 +500,18 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 		antoText.setList(noticesListData);
 		antoText.updateUI();
+		antoText.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				String id = antoText.getCurrentId();
+				Intent i = new Intent(MainActivity.this,
+						PubDetailActivity.class);
+				i.putExtra("id", id);
+				startActivity(i);
+			}
+		});
 		// antoText.stopAutoText();
 		// LayoutParams params=new LayoutParams(LayoutParams.MATCH_PARENT,
 		// height);

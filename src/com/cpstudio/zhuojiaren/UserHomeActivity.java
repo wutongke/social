@@ -23,6 +23,7 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
@@ -38,15 +39,18 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 	private ListView mListView;
 	private ActiveListAdapter mAdapter;
 	private PullDownView mPullDownView;
-	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
+	private ArrayList<Dynamic> mList = new ArrayList<Dynamic>();
 	private LoadImage mLoadImage = null;
 	private PopupWindows pwh = null;
 	private int mPage = 1;
+	final int pageSize = 10;
 	private String uid = null;
 	private ZhuoConnHelper mConnHelper = null;
-	private UserInfoFacade mFacade = null;
+	// private UserInfoFacade mFacade = null;
 	private UserFacade userFacade = null;
+	private int mType = Dynamic.DYNATIC_TYPE_MY_JIAREN;// 类型 0-自己的家人动态(我的动态)
 
+	// 1-指定用户的家人动态 2-所有家人动态
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,8 +64,7 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 		} else {
 			findViewById(R.id.buttonCard).setVisibility(View.GONE);
 		}
-		mFacade = new UserInfoFacade(getApplicationContext(),
-				UserInfoFacade.USERDAILY, uid);
+		userFacade = new UserFacade(getApplicationContext());
 		userFacade = new UserFacade(getApplicationContext());
 		pwh = new PopupWindows(UserHomeActivity.this);
 		mLoadImage = new LoadImage();
@@ -111,7 +114,7 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 
 	}
 
-	private void updateItemList(ArrayList<ZhuoInfoVO> list, boolean refresh,
+	private void updateItemList(ArrayList<Dynamic> list, boolean refresh,
 			boolean append) {
 		if (!list.isEmpty()) {
 			mPullDownView.hasData();
@@ -167,18 +170,18 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
-				ArrayList<ZhuoInfoVO> list = new ArrayList<ZhuoInfoVO>();
+				ArrayList<Dynamic> list = new ArrayList<Dynamic>();
 				boolean loadState = false;
 				if (msg.obj instanceof ArrayList) {
-					list = (ArrayList<ZhuoInfoVO>) msg.obj;
+					list = (ArrayList<Dynamic>) msg.obj;
 				} else {
 					if (msg.obj != null && !msg.obj.equals("")) {
 						loadState = true;
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
-						list = nljh.parseZhuoInfoList();
+						list = nljh.parseDynamicList();
 						if (!list.isEmpty()) {
-							mFacade.update(list);
+							// infoFacade.update(list);
 						}
 					}
 				}
@@ -192,7 +195,7 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 					loadState = true;
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					ArrayList<ZhuoInfoVO> list = nljh.parseZhuoInfoList();
+					ArrayList<Dynamic> list = nljh.parseDynamicList();
 					updateItemList(list, false, false);
 				}
 				mPullDownView.RefreshComplete(loadState);
@@ -200,16 +203,16 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 			}
 			case MsgTagVO.DATA_MORE: {
 				mPullDownView.notifyDidMore();
-				ArrayList<ZhuoInfoVO> list = new ArrayList<ZhuoInfoVO>();
+				ArrayList<Dynamic> list = new ArrayList<Dynamic>();
 				if (msg.obj instanceof ArrayList) {
-					list = (ArrayList<ZhuoInfoVO>) msg.obj;
+					list = (ArrayList<Dynamic>) msg.obj;
 				} else {
 					if (msg.obj != null && !msg.obj.equals("")) {
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
-						list = nljh.parseZhuoInfoList();
+						list = nljh.parseDynamicList();
 						if (!list.isEmpty()) {
-							mFacade.update(list);
+							// infoFacade.update(list);
 						}
 					}
 				}
@@ -217,21 +220,58 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 				break;
 			}
 			case MsgTagVO.DATA_OTHER: {
-				UserVO user = null;
+				UserNewVO user = null;
 				if (msg.obj instanceof UserVO) {
-					user = (UserVO) msg.obj;
-				} else {
+					user = (UserNewVO) msg.obj;
+				} else if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					user = nljh.parseUser();
+					user = nljh.parseNewUser();
 				}
 				updateUserInfo(user);
 				break;
 			}
 			}
 		}
-
 	};
+
+	private void updateUserInfo(UserNewVO user) {
+		try {
+			if (null != user) {
+				String name = user.getName();
+				int blogNum = user.getStatusNum();
+				int friendNum = user.getFriendNum();
+				String families = "" + friendNum;
+				String headurl = user.getUheader();
+				((TextView) findViewById(R.id.textViewUsername)).setText(name);
+
+				((TextView) findViewById(R.id.textViewBolgnum))
+						.setText(families
+								+ getString(R.string.p_jiaren_active_families)
+								+ "~" + blogNum
+								+ getString(R.string.p_jiaren_active_rizhi));
+
+				ImageView iv = (ImageView) findViewById(R.id.imageViewUserHead);
+				iv.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Intent i = new Intent(UserHomeActivity.this,
+								ZhuoMaiCardActivity.class);
+						i.putExtra("userid", uid);
+						startActivity(i);
+					}
+				});
+				if (headurl != null && !headurl.equals("")) {
+					iv.setTag(headurl);
+					mLoadImage.addTask(headurl, iv);
+					mLoadImage.doTask();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -257,36 +297,38 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 	@Override
 	public void onMore() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			ArrayList<ZhuoInfoVO> list = mFacade.getByPage(mPage);
-			Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
-			msg.obj = list;
-			msg.sendToTarget();
+			// ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
+			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
+			// msg.obj = list;
+			// msg.sendToTarget();
 		} else {
-			String params = ZhuoCommHelper.getUrlMyResource();
-			params += "?uid=" + uid;
-			params += "&page=" + mPage;
-			params += "&type=" + "3";
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
+			// String params = ZhuoCommHelper.getUrlMsgList();
+			// params += "?pageflag=" + "1";
+			// params += "&reqnum=" + "10";
+			// params += "&lastid=" + mLastId;
+			// params += "&type=" + mType;
+			// params += "&gongxutype=" + "0";
+			// params += "&from=" + "6";
+			// params += "&uid=" + mUid;
+			// mConnHelper.getFromServer(params, mUIHandler,
+			// MsgTagVO.DATA_MORE);
+			mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_MORE, mType,
+					null, mPage, pageSize);
 		}
 	}
 
 	private void loadData() {
 		if (mPullDownView.startLoadData()) {
-			mList.clear();
-			mAdapter.notifyDataSetChanged();
-			mPage = 1;
+			// mList.clear();
+			// mAdapter.notifyDataSetChanged();
 			if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-				ArrayList<ZhuoInfoVO> list = mFacade.getByPage(mPage);
-				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-				msg.obj = list;
-				msg.sendToTarget();
+				// ArrayList<Dynamic> list = infoFacade.getByPage(mPage);
+				// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
+				// msg.obj = list;
+				// msg.sendToTarget();
 			} else {
-				String params = ZhuoCommHelper.getUrlMyResource();
-				params += "?uid=" + uid;
-				params += "&page=" + mPage;
-				params += "&type=" + "3";
-				mConnHelper.getFromServer(params, mUIHandler,
-						MsgTagVO.DATA_LOAD);
+				mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_LOAD,
+						mType, null, mPage, pageSize);
 			}
 		}
 	}
@@ -303,8 +345,7 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 				msg.sendToTarget();
 			}
 		} else {
-			String params = ZhuoCommHelper.getUrlUserInfo() + "?uid=" + uid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_OTHER);
+			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_OTHER, null);
 		}
 	}
 

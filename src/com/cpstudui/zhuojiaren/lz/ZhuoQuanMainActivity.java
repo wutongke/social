@@ -36,6 +36,7 @@ import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.gtype;
 import com.cpstudio.zhuojiaren.ui.EditEventActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
@@ -93,7 +94,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	private String groupName = null;
 	private ZhuoConnHelper mConnHelper = null;
 	private boolean isfollow = false;// 是否已经加入该圈子
-//	private QuanFacade mFacade = null;
+	// private QuanFacade mFacade = null;
 	private ArrayList<String> tempids = new ArrayList<String>();
 
 	// 用于在fragment中获得groupid
@@ -114,7 +115,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		function.setBackgroundResource(R.drawable.menu_qht1);
 
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-//		mFacade = new QuanFacade(getApplicationContext());
+		// mFacade = new QuanFacade(getApplicationContext());
 		Intent i = getIntent();
 		groupid = i.getStringExtra("groupid");
 		pwh = new PopupWindows(ZhuoQuanMainActivity.this);
@@ -151,12 +152,16 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						String headUrl = detail.getGheader();
 						ivGroupHeader.setTag(headUrl);
 						mLoadImage.addTask(headUrl, ivGroupHeader);
+						String gType = "未知";
+						int type = detail.getGtype();
+						List<gtype> types = mConnHelper.getBaseDataSet()
+								.getGtype();
+						if (type >= 1 && types != null && type <= types.size())
+							gType = types.get(type - 1).getContent();
 						// 圈子类型，之后要转换为编号对应的名称
-						String jj = detail.getGtype() + "";
-						if (jj != null)
-							tvTopicType.setText(jj);
+
+						tvTopicType.setText(gType);
 						tvMemNum.setText(detail.getMemberCount() + "");
-						// tvMemNum.setText(detail.getMemberCount());
 						tvTopicNum.setText(detail.getTopicCount() + "");
 						if (role != 0) {
 							isfollow = true;
@@ -233,15 +238,15 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 
 	private void loadData() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-//			QuanVO quan = mFacade.getById(groupid);
-//			if (quan == null) {
-//				CommonUtil.displayToast(getApplicationContext(),
-//						R.string.error0);
-//			} else {
-//				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-//				msg.obj = quan;
-//				msg.sendToTarget();
-//			}
+			// QuanVO quan = mFacade.getById(groupid);
+			// if (quan == null) {
+			// CommonUtil.displayToast(getApplicationContext(),
+			// R.string.error0);
+			// } else {
+			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
+			// msg.obj = quan;
+			// msg.sendToTarget();
+			// }
 		} else {
 			mConnHelper.getQuanInfo(mUIHandler, MsgTagVO.DATA_LOAD, groupid);
 		}
@@ -328,7 +333,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+
 				Intent i = new Intent(ZhuoQuanMainActivity.this,
 						EditEventActivity.class);
 				i.putExtra("groupid", groupid);
@@ -347,8 +352,8 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 				// startActivity(i);
 				RongIM.getInstance().startGroupChat(ZhuoQuanMainActivity.this,
 						groupid, groupName);
-//				RongIM.getInstance().startPrivateChat(ZhuoQuanMainActivity.this,
-//						"9237", groupName);
+				// RongIM.getInstance().startPrivateChat(ZhuoQuanMainActivity.this,
+				// "9237", groupName);
 			}
 		});
 		btnJoinQuan.setOnClickListener(new OnClickListener() {

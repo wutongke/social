@@ -9,8 +9,10 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
+import com.cpstudio.zhuojiaren.GroupStatusListActivity;
 import com.cpstudio.zhuojiaren.JiarenActiveActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.model.GroupStatus;
 
 public class QuanziActiveNumListActivity extends BaseActivity {
 	@InjectView(R.id.textViewICreatedNum)
@@ -38,8 +40,8 @@ public class QuanziActiveNumListActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(QuanziActiveNumListActivity.this,
-						QuanziActiveActivity.class);
-				i.putExtra("mType", 1);
+						GroupStatusListActivity.class);
+				i.putExtra("mType", GroupStatus.GROUP_STATUS_TYPE_CREATED);
 				startActivity(i);
 			}
 		});
@@ -49,8 +51,8 @@ public class QuanziActiveNumListActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(QuanziActiveNumListActivity.this,
-						QuanziActiveActivity.class);
-				i.putExtra("mType", 0);
+						GroupStatusListActivity.class);
+				i.putExtra("mType", GroupStatus.GROUP_STATUS_TYPE_ALL);
 				startActivity(i);
 			}
 		});
@@ -60,8 +62,8 @@ public class QuanziActiveNumListActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(QuanziActiveNumListActivity.this,
-						QuanziActiveActivity.class);
-				i.putExtra("mType", 2);
+						GroupStatusListActivity.class);
+				i.putExtra("mType", GroupStatus.GROUP_STATUS_TYPE_JOINED);
 				startActivity(i);
 			}
 		});

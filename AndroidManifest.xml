@@ -137,6 +137,14 @@
                     android:host="com.cpstudio.zhuojiaren"
                     android:pathPrefix="/conversationlist"
                     android:scheme="rong" />
+                <data
+                    android:host="com.cpstudio.zhuojiaren"
+                    android:pathPrefix="/conversationlist"
+                    android:scheme="rong" />
+                <data
+                    android:host="com.cpstudio.zhuojiaren"
+                    android:pathPrefix="/conversationgrouplist"
+                    android:scheme="rong" />
             </intent-filter>
         </activity>
         <activity
@@ -644,7 +652,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.UplevelActivity"
+            android:name="com.cpstudio.zhuojiaren.ZhuoMaiActiveListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_up_level"
             android:screenOrientation="portrait" >
@@ -842,6 +850,10 @@
             android:label="@string/title_activity_lzmy_home" >
         </activity>
         <activity
+            android:name="com.cpstudio.zhuojiaren.GroupStatusListActivity"
+            android:label="@string/title_activity_lzmy_home" >
+        </activity>
+        <activity
             android:name="com.cpstudio.zhuojiaren.ui.AudioListActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
@@ -866,11 +878,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        <activity
-            android:name="com.cpstudio.zhuojiaren.ui.IncomeDetailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
-        </activity>
+        
         <activity android:name="com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity" >
         </activity>
         <activity
@@ -1023,6 +1031,15 @@
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.MyActiveActivity"
             android:label="@string/active_my" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.LZUserSameActivity"
+            android:label="@string/active_my" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.PubDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <!-- 融云 -->
         <!-- begin imlib request -->
@@ -1231,6 +1248,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
+
         <receiver
             android:name="com.cpstudio.zhuojiaren.AppRegister"
             android:permission="com.tencent.mm.plugin.permission.SEND" >

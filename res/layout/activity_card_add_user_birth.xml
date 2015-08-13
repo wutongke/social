@@ -143,9 +143,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
-                        android:drawableRight="@drawable/ico_alert"
                         android:text="双子座"
                         android:textSize="16sp" />
+                   <!-- android:drawableRight="@drawable/ico_alert"  --> 
                 </LinearLayout>
 
                 <LinearLayout
@@ -168,7 +168,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
-                        android:drawableRight="@drawable/ico_alert"
                         android:text="猴"
                         android:textSize="16sp" />
                 </LinearLayout>

@@ -89,7 +89,9 @@ public class QuanMemberListAdapter extends BaseAdapter {
 		holder.nameTV.setText(user.getName());
 		String work = "null";
 		int p = user.getPosition();
-		if (baseDataSet != null && p >= 1)
+		if(p!=0)
+			p--;
+		if (baseDataSet != null)
 			work = ((baseDataSet.getPosition()).get(p - 1)).getContent();
 		holder.workTV.setText(work);
 		holder.headIV.setImageResource(R.drawable.default_userhead);

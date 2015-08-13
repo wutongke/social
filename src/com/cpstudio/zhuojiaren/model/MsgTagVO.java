@@ -6,6 +6,7 @@ public class MsgTagVO {
 	 * 加载基础数据
 	 */
 	public static final int DATA_BASE = 77;
+	public static final int DATA_CITYS = 78;
 	
 	/**
 	 * 初次加载首页数据

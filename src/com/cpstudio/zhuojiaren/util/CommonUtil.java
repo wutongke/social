@@ -50,6 +50,13 @@ import com.ant.liao.GifView;
 import com.cpstudio.zhuojiaren.R;
 import com.utils.CipherUtil;
 
+/**
+ * 常用工具类：字符是否为空、获得头字母、url参数与map转换、判断网络连接状态、判断wifi连接状态、字符串及文件MD5摘要
+ * 判断字符串是否纯数字、AES加密解密、提示并引导打开wifi或手机网络、获得制定格式系统时间、各种时间显示、获得SD卡状态
+ * 
+ * @author lz
+ *
+ */
 public class CommonUtil {
 
 	public static boolean isEmpty(String paramString) {
