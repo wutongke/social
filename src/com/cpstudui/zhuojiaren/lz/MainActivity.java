@@ -374,7 +374,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		if (id != -1) {
-			Intent i = new Intent(MainActivity.this, MsgDetailActivity.class);
+			Intent i = new Intent(MainActivity.this, DynamicDetailActivity.class);
 			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
 			startActivity(i);
 		}

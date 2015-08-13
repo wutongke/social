@@ -7,8 +7,6 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,25 +24,20 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseFragmentActivity;
-import com.cpstudio.zhuojiaren.QuanBoardChatActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.UserSelectActivity;
-import com.cpstudio.zhuojiaren.facade.QuanFacade;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.QuanziActiveFra;
 import com.cpstudio.zhuojiaren.fragment.QuanziMemberFra;
 import com.cpstudio.zhuojiaren.fragment.QuanziTopicFra;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.EditEventActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.util.ImageLoader;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
@@ -100,7 +93,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	private String groupName = null;
 	private ZhuoConnHelper mConnHelper = null;
 	private boolean isfollow = false;// 是否已经加入该圈子
-	private QuanFacade mFacade = null;
+//	private QuanFacade mFacade = null;
 	private ArrayList<String> tempids = new ArrayList<String>();
 
 	// 用于在fragment中获得groupid
@@ -121,7 +114,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		function.setBackgroundResource(R.drawable.menu_qht1);
 
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		mFacade = new QuanFacade(getApplicationContext());
+//		mFacade = new QuanFacade(getApplicationContext());
 		Intent i = getIntent();
 		groupid = i.getStringExtra("groupid");
 		pwh = new PopupWindows(ZhuoQuanMainActivity.this);
@@ -240,25 +233,17 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 
 	private void loadData() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			QuanVO quan = mFacade.getById(groupid);
-			if (quan == null) {
-				CommonUtil.displayToast(getApplicationContext(),
-						R.string.error0);
-			} else {
-				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-				msg.obj = quan;
-				msg.sendToTarget();
-			}
+//			QuanVO quan = mFacade.getById(groupid);
+//			if (quan == null) {
+//				CommonUtil.displayToast(getApplicationContext(),
+//						R.string.error0);
+//			} else {
+//				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
+//				msg.obj = quan;
+//				msg.sendToTarget();
+//			}
 		} else {
 			mConnHelper.getQuanInfo(mUIHandler, MsgTagVO.DATA_LOAD, groupid);
-			// mConnHelper.getQuanInfo(params, mUIHandler, MsgTagVO.DATA_LOAD,
-			// ZhuoQuanMainActivity.this, true, new OnCancelListener() {
-			//
-			// @Override
-			// public void onCancel(DialogInterface dialog) {
-			// ZhuoQuanMainActivity.this.finish();
-			// }
-			// });
 		}
 	}
 
@@ -359,7 +344,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 				// Intent i = new Intent(ZhuoQuanMainActivity.this,
 				// QuanBoardChatActivity.class);
 				// i.putExtra("groupid", groupid);
-				//
 				// startActivity(i);
 				RongIM.getInstance().startGroupChat(ZhuoQuanMainActivity.this,
 						groupid, groupName);

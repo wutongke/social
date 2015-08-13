@@ -199,6 +199,8 @@ public class TopicDetailActivity extends BaseActivity {
 
 	private void fillPraiseList(List<Praise> praiseList) {
 		if (praiseList != null && praiseList.size() > 0) {
+			findViewById(R.id.layoutGood).setVisibility(View.VISIBLE);
+			findViewById(R.id.imageViewGood).setVisibility(View.VISIBLE);
 			Context context = mHeadView.getContext();
 			TableLayout.LayoutParams tllp = new TableLayout.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);

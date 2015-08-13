@@ -340,28 +340,7 @@ public class JiarenActiveActivity extends Activity implements
 			long id) {
 		if (id != -1) {
 			Intent i = new Intent();
-			// String type = view.getTag(R.id.tag_string).toString();
-			// if (type.equals("uplevel")) {
-			// i.setClass(JiarenActiveActivity.this,
-			// UplevelDetailActivity.class);
-			// } else {
-			// boolean iszenghui = false;
-			// for (String zh : ZenghuiTypeActivity.ZENGHUI_TYPE) {
-			// if (zh.equals(type)) {
-			// i.setClass(JiarenActiveActivity.this,
-			// ZenghuiActivity.class);
-			// iszenghui = true;
-			// break;
-			// }
-			// }
-			// if (!iszenghui) {
-
-			// lz暂时该为话题详情，测试用
-			// i.setClass(JiarenActiveActivity.this, MsgDetailActivity.class);
 			i.setClass(JiarenActiveActivity.this, DynamicDetailActivity.class);
-			// lz
-			// }
-			// }
 			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
 			startActivity(i);
 		}

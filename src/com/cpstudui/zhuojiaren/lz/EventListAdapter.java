@@ -70,7 +70,6 @@ public class EventListAdapter extends BaseAdapter {
 		}
 		EventVO event = mList.get(position);
 		holder.textViewTitle.setText(event.getTitle());
-		// time = CommonUtil.calcTime(time);
 		holder.textViewDateTime.setText(event.getStarttime());
 		if (event.getOutdate() == 1)
 			holder.textViewIsOverTime.setText("已过期");
@@ -92,7 +91,6 @@ public class EventListAdapter extends BaseAdapter {
 				c.startActivity(i);
 			}
 		});
-
 		if (isManaging)
 			holder.cbSelected.setVisibility(View.VISIBLE);
 		else
