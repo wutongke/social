@@ -1,5 +1,8 @@
 package com.cpstudio.zhuojiaren.helper;
 
+import io.rong.app.model.ApiResult;
+import io.rong.imlib.model.Group;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,6 +26,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -67,7 +71,7 @@ public class ZhuoConnHelper {
 	private BaseCodeData baseDataSet;
 	private List<Province> citysOfProvince;
 	private List<City> citys;
-
+	private HashMap<String, Group> groupMap;//群组信息
 	private void init(Context context) {
 		ResHelper resHelper = ResHelper.getInstance(context);
 		this.userid = resHelper.getUserid();
@@ -88,8 +92,15 @@ public class ZhuoConnHelper {
 		if (instance.password == null || instance.password.equals("")) {
 			instance.init(mcontext);
 		}
-
 		return instance;
+	}
+
+	public HashMap<String, Group> getGroupMap() {
+		return groupMap;
+	}
+
+	public void setGroupMap(HashMap<String, Group> groupMap) {
+		this.groupMap = groupMap;
 	}
 
 	public List<City> getCitys() {
@@ -1669,6 +1680,19 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.followUser(),
 				nameValuePairs, mUIHandler, tag);
 	}
+	/**
+	 * 获取圈子信息，为融云提供
+	 * @param mUIHandler
+	 * @param tag
+	 * @param userid
+	 * @param type
+	 * @return
+	 */
+	public boolean getMyGroupList(Handler mUIHandler, int tag) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		return getFromServerByPost(ZhuoCommHelperLz.getUrlMyGroupList(),
+				nameValuePairs, mUIHandler, tag);
+	}
 
 	/**
 	 * 获得基本编码数据：id和值的对应
@@ -1808,4 +1832,28 @@ public class ZhuoConnHelper {
 			exist = true;
 		return exist;
 	}
+	
+	
+	/**
+	 * 设置群组信息提供者，当收到推送的消息表示加群成功时需要调用此
+	 * 
+	 * @param result
+	 * @param i
+	 *            0,退出；1 加入
+	 */
+	public  void setGroupMap(Group group, int i) {
+			HashMap<String, Group> groupHashMap = getGroupMap();
+			if (i == 1) {//加入群
+				if (group.getPortraitUri() != null)
+					groupHashMap.put(group.getId(), new Group(group.getId(),
+							group.getName(), group.getPortraitUri()));
+				else
+					groupHashMap.put(group.getId(), new Group(group.getId(),
+							group.getName(), null));
+			} else if (i == 0) {
+				groupHashMap.remove(group.getId());
+			}
+			setGroupMap(groupHashMap);
+	}
+
 }

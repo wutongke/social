@@ -71,7 +71,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_header"
+                android:background="@drawable/mbg5_wdzy_1"
                 android:padding="10dp" >
 
                 <ImageView

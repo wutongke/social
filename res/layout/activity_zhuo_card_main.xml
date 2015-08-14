@@ -27,13 +27,14 @@
         </android.support.v4.view.ViewPager>
 
         <LinearLayout
-            android:id="@+id/lt_menue"
+            android:id="@+id/lt_myself_menue"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
             android:background="#767475"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:visibility="gone" >
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -66,6 +67,51 @@
                     android:drawableLeft="@drawable/cardedit_zmmp_1"
                     android:minHeight="20dp"
                     android:text="@string/label_editcard"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lt_other_menue"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:background="#767475"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <Button
+                    android:id="@+id/btnSendCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/backpic_zmmp_1"
+                    android:minHeight="20dp"
+                    android:text="@string/label_sendcard"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <Button
+                    android:id="@+id/btnChat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/cardedit_zmmp_1"
+                    android:minHeight="20dp"
+                    android:text="@string/lab_start_chat"
                     android:textColor="@color/white" />
             </RelativeLayout>
         </LinearLayout>

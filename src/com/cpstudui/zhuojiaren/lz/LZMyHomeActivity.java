@@ -211,7 +211,7 @@ public class LZMyHomeActivity extends Activity {
 		if (userInfo == null)
 			return;
 		imageViewHead.setTag(userInfo.getUheader());
-		mLoadImage.addTask(userInfo.getUheader(), imageViewHead);
+		mLoadImage.beginLoad(userInfo.getUheader(), imageViewHead);
 		((TextView) findViewById(R.id.textViewName))
 				.setText(userInfo.getName());
 		String work = "";

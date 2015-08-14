@@ -50,16 +50,17 @@ public class JiarenActiveActivity extends Activity implements
 	private LoadImage mLoadImage = null;
 	private PopupWindows pwh = null;
 	private String mUid = null;
-	private int mType = Dynamic.DYNATIC_TYPE_ALL_JIAREN;// 类型 0-自己的家人动态
+	private int mType = Dynamic.DYNATIC_TYPE_MY_JIAREN;// 类型 0-自己的家人动态
 														// 1-指定用户的家人动态 2-所有家人动态
 	private String mLastId = "0";
 	private ZhuoConnHelper mConnHelper = null;
 	private UserFacade mFacade = null;
 	private int mPage = 1;
 	final int pageSize = 10;
+	final int titleIds[] = { R.string.title_active, R.string.title_active,
+			 R.string.label_active_all,R.string.label_active_i_focus};
 
 	// private InfoFacade infoFacade = null;
-
 	// type==0时所有人动态，就只是动态，不包括需求，话题，活动什么的
 	/*
 	 */
@@ -75,8 +76,14 @@ public class JiarenActiveActivity extends Activity implements
 		pwh = new PopupWindows(JiarenActiveActivity.this);
 		mLoadImage = new LoadImage();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
-		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
-				R.layout.listview_header3);
+		mType = getIntent().getIntExtra("mType", 0);
+		((TextView) findViewById(R.id.userNameShow)).setText(titleIds[mType]);
+		if (Dynamic.DYNATIC_TYPE_MY_JIAREN == mType)
+			mPullDownView.initHeaderViewAndFooterViewAndListView(this,
+					R.layout.listview_header3);
+		else
+			mPullDownView.initHeaderViewAndFooterViewAndListView(this,
+					R.layout.listview_header2);
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
@@ -85,29 +92,26 @@ public class JiarenActiveActivity extends Activity implements
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
-		mType = getIntent().getIntExtra("mType", 2);
-		if (Dynamic.DYNATIC_TYPE_ALL_JIAREN != mType)
-			findViewById(R.id.ll_active_menue).setVisibility(View.GONE);
 		loadData();
 		initClick();
 	}
 
 	@Override
 	protected void onResume() {
-		loadInfo();
+		if (Dynamic.DYNATIC_TYPE_MY_JIAREN == mType)
+			loadInfo();
 		super.onResume();
 	}
 
 	private void initClick() {
 		findViewById(R.id.buttonViewPub).setOnClickListener(
 				new OnClickListener() {
-
 					@Override
 					public void onClick(View v) {
 						pwh.showPop(findViewById(R.id.layoutJiarenActive));
 					}
 				});
-		if (Dynamic.DYNATIC_TYPE_ALL_JIAREN == mType) {
+		if (Dynamic.DYNATIC_TYPE_MY_JIAREN == mType) {
 			findViewById(R.id.textViewActiveJiaren).setOnClickListener(
 					new OnClickListener() {// 我的所有家人动态
 						@Override

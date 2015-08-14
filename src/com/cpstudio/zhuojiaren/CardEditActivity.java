@@ -99,7 +99,7 @@ public class CardEditActivity extends Activity {
 	public final static String EDIT_BIRTH_STR3 = "birthdayLunar";// 阴历生日
 	public final static String EDIT_BIRTH_STR4 = "constellation";// 星座
 	public final static String EDIT_BIRTH_STR5 = "zodiac";// 生肖
-	
+
 	public final static int EDIT_PLACE = 1;
 	public final static String EDIT_PLACE_STR1 = "place";// 所在城市
 	public final static String EDIT_PLACE_STR2 = "hometown";// 家乡
@@ -379,46 +379,46 @@ public class CardEditActivity extends Activity {
 			}
 		});
 
-//		textViewEditImagesShow.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				if (userInfo != null) {
-//					ArrayList<String> images = new ArrayList<String>();
-//					ArrayList<String> ids = new ArrayList<String>();
-//					if (userInfo.getMyPic() != null) {
-//						String headUrl = null;
-//						String headId = null;
-//						for (int i = 0; i < userInfo.getMyPic().size(); i++) {
-//							PicNewVO pic = userInfo.getMyPic().get(
-//									userInfo.getMyPic().size() - 1 - i);
-//							if (pic.getPic().equals(userInfo.getUheader())) {
-//								headUrl = pic.getPic();
-//								headId = pic.getPic();
-//							} else {
-//								images.add(pic.getPic());
-//								ids.add(pic.getPic());
-//							}
-//						}
-//						if (headId != null) {
-//							images.add(headUrl);
-//							ids.add(headId);
-//						}
-//					}
-//					for (String localImage : localImages) {
-//						images.add(localImage);
-//						ids.add(LOCAL_IMAGE);
-//					}
-//					Intent i = new Intent(CardEditActivity.this,
-//							CardAddUserImageActivity.class);
-//					i.putStringArrayListExtra(EDIT_IMAGE_STR1, images);
-//					i.putStringArrayListExtra(EDIT_IMAGE_STR2, ids);
-//					startActivityForResult(i, EDIT_IMAGE);
-//				} else {
-//					CommonUtil.displayToast(getApplicationContext(),
-//							R.string.error12);
-//				}
-//			}
-//		});
+		// textViewEditImagesShow.setOnClickListener(new OnClickListener() {
+		// @Override
+		// public void onClick(View v) {
+		// if (userInfo != null) {
+		// ArrayList<String> images = new ArrayList<String>();
+		// ArrayList<String> ids = new ArrayList<String>();
+		// if (userInfo.getMyPic() != null) {
+		// String headUrl = null;
+		// String headId = null;
+		// for (int i = 0; i < userInfo.getMyPic().size(); i++) {
+		// PicNewVO pic = userInfo.getMyPic().get(
+		// userInfo.getMyPic().size() - 1 - i);
+		// if (pic.getPic().equals(userInfo.getUheader())) {
+		// headUrl = pic.getPic();
+		// headId = pic.getPic();
+		// } else {
+		// images.add(pic.getPic());
+		// ids.add(pic.getPic());
+		// }
+		// }
+		// if (headId != null) {
+		// images.add(headUrl);
+		// ids.add(headId);
+		// }
+		// }
+		// for (String localImage : localImages) {
+		// images.add(localImage);
+		// ids.add(LOCAL_IMAGE);
+		// }
+		// Intent i = new Intent(CardEditActivity.this,
+		// CardAddUserImageActivity.class);
+		// i.putStringArrayListExtra(EDIT_IMAGE_STR1, images);
+		// i.putStringArrayListExtra(EDIT_IMAGE_STR2, ids);
+		// startActivityForResult(i, EDIT_IMAGE);
+		// } else {
+		// CommonUtil.displayToast(getApplicationContext(),
+		// R.string.error12);
+		// }
+		// }
+		// });
 
 		textViewEditPhoneShow.setOnClickListener(new OnClickListener() {
 			@Override
@@ -533,7 +533,11 @@ public class CardEditActivity extends Activity {
 				userInfo.setCity(place);
 				userInfo.setHometown(hometown);
 				userInfo.setTravelCity(othertowns);
-				textViewEditPlaceShow.setText(place + "");
+
+				if (baseDataSet != null && place >= 1
+						&& place <= baseDataSet.getPosition().size())
+					textViewEditPlaceShow.setText(baseDataSet.getPosition()
+							.get(place).getContent());
 				break;
 			case EDIT_DREAM:
 				// dreamsList = data.getStringArrayListExtra(EDIT_DREAM_STR);
@@ -580,38 +584,38 @@ public class CardEditActivity extends Activity {
 				textViewEditZymShow.setText(motto);
 				break;
 			case EDIT_IMAGE:
-//				try {
-//					ArrayList<String> images = data
-//							.getStringArrayListExtra(EDIT_IMAGE_STR1);
-//					localImages.clear();
-//					localImages.addAll(images);
-//					ArrayList<String> ids = data
-//							.getStringArrayListExtra(EDIT_IMAGE_STR2);
-//					ArrayList<PicNewVO> pics = new ArrayList<PicNewVO>();
-//					if (userInfo.getMyPic() != null) {
-//						PicNewVO temp = null;
-//						for (PicNewVO pic : userInfo.getMyPic()) {
-//							if (ids.contains(pic.getPic())) {
-//								if (ids.get(ids.size() - 1)
-//										.equals(pic.getPic())) {
-//									temp = pic;
-//								} else {
-//									pics.add(pic);
-//								}
-//							}
-//						}
-//						if (temp != null) {
-//							pics.add(temp);
-//						}
-//					}
-//					userInfo.setMyPic(pics);
-//					((TextView) findViewById(R.id.textViewEditImagesShow))
-//							.setText(getString(R.string.mp_has)
-//									+ (images.size() + ids.size())
-//									+ getString(R.string.mp_imgasall));
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
+				// try {
+				// ArrayList<String> images = data
+				// .getStringArrayListExtra(EDIT_IMAGE_STR1);
+				// localImages.clear();
+				// localImages.addAll(images);
+				// ArrayList<String> ids = data
+				// .getStringArrayListExtra(EDIT_IMAGE_STR2);
+				// ArrayList<PicNewVO> pics = new ArrayList<PicNewVO>();
+				// if (userInfo.getMyPic() != null) {
+				// PicNewVO temp = null;
+				// for (PicNewVO pic : userInfo.getMyPic()) {
+				// if (ids.contains(pic.getPic())) {
+				// if (ids.get(ids.size() - 1)
+				// .equals(pic.getPic())) {
+				// temp = pic;
+				// } else {
+				// pics.add(pic);
+				// }
+				// }
+				// }
+				// if (temp != null) {
+				// pics.add(temp);
+				// }
+				// }
+				// userInfo.setMyPic(pics);
+				// ((TextView) findViewById(R.id.textViewEditImagesShow))
+				// .setText(getString(R.string.mp_has)
+				// + (images.size() + ids.size())
+				// + getString(R.string.mp_imgasall));
+				// } catch (Exception e) {
+				// e.printStackTrace();
+				// }
 				break;
 			case EDIT_PHONE:
 				String phone = data.getStringExtra(EDIT_PHONE_STR1);

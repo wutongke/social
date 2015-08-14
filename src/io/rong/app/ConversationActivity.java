@@ -1,5 +1,6 @@
 package io.rong.app;
 
+import io.rong.imkit.RongIM;
 import io.rong.imkit.common.RongConst;
 import io.rong.imlib.model.Conversation;
 
@@ -300,7 +301,7 @@ public class ConversationActivity extends FragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-				View view = findViewById(R.id.rootLayout);
+				View view = findViewById(R.id.root_layout);
 				OnClickListener onClickListenerViewCard = new OnClickListener() {
 
 					@Override

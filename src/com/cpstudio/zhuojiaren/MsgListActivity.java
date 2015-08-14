@@ -146,8 +146,9 @@ public class MsgListActivity extends FragmentActivity implements
 	}
 
 	private void startQuanListActivity() {
-		RongIM.getInstance().startPrivateChat(MsgListActivity.this, "9237",
-				"标题");
+//		RongIM.getInstance().startPrivateChat(MsgListActivity.this, "9237",
+//				"标题");
+//		RongIM.getInstance().startGroupChat(context, targetGroupId, title);
 		// findViewById(R.id.textViewMsgQuanAll).setVisibility(View.GONE);
 		// Intent i = new Intent(MsgListActivity.this,
 		// MsgQuanListActivity.class);

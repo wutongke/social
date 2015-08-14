@@ -88,13 +88,20 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	@InjectView(R.id.textViewht)
 	TextView tvCompany;// 倬币数
 
-	@InjectView(R.id.lt_menue)
-	View ltMenue;// 个人资料编辑菜单
+	@InjectView(R.id.lt_myself_menue)
+	View ltNyselfMenue;// 个人资料编辑菜单
+	@InjectView(R.id.lt_other_menue)
+	View ltOtherMenue;// 个人资料编辑菜单
 
 	@InjectView(R.id.btnEditBG)
 	Button btnEditBG;//
 	@InjectView(R.id.btnEditCard)
-	Button btnEditCard;// 若是自己则为编辑名片，非好友则为递送名片(即申请加好友)，好友则发起聊天
+	Button btnEditCard;
+
+	@InjectView(R.id.btnSendCard)
+	Button btnSendCard;//
+	@InjectView(R.id.btnChat)
+	Button btnChat;
 	@InjectView(R.id.rootmain)
 	View rootMainBG;//
 
@@ -298,55 +305,70 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				Intent i = new Intent(ZhuoMaiCardActivity.this,
+						CardEditActivity.class);
+				startActivity(i);
+			}
+		});
+		btnSendCard.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
 				int r = userInfo.getRelation();
 				if (r == UserNewVO.USER_RELATION.RELATION_MYSELF.ordinal()
-						|| userInfo.getUserid().equals(myid)) {
-					Intent i = new Intent(ZhuoMaiCardActivity.this,
-							CardEditActivity.class);
-					startActivity(i);
-				} else if (r == UserNewVO.USER_RELATION.RELATION_FRIENDS
-						.ordinal()) {
-					if (userInfo != null)
-						RongIM.getInstance().startPrivateChat(
-								ZhuoMaiCardActivity.this, userInfo.getUserid(),
-								userInfo.getName());
-				} else {
-					// 递送名片(即添加好友)
-					ContactNotificationMessage msg = ContactNotificationMessage
-							.obtain("Request", myid, userInfo.getUserid(),
-									"请求添加好友");
-					RongIM.getInstance()
-							.getRongIMClient()
-							.sendMessage(ConversationType.PRIVATE,
-									userInfo.getUserid(), msg, "请求添加好友",
-									new SendMessageCallback() {
-
-										@Override
-										public void onSuccess(Integer arg0) {
-											// TODO Auto-generated method stub
-											mConnHelper.followUser(mUIHandler,
-													MsgTagVO.MSG_FOWARD,
-													userInfo.getUserid(), 1);
-											pwh.showPopTip(
-													findViewById(R.id.zhuomai_card),
-													null,
-													R.string.label_sendcardsuccess);
-										}
-
-										@Override
-										public void onError(Integer arg0,
-												ErrorCode arg1) {
-											// TODO Auto-generated method stub
-											Toast.makeText(
-													ZhuoMaiCardActivity.this,
-													"申请发送失败ErrorCode：" + arg1,
-													1000).show();
-										}
-									});
+						|| userInfo.getUserid().equals(myid))
+					CommonUtil.displayToast(ZhuoMaiCardActivity.this,
+							"已是好友，不需要再发送名片");
+				else {
+					sendCard();
 				}
 			}
 		});
+		btnChat.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				int r = userInfo.getRelation();
+				if (r == UserNewVO.USER_RELATION.RELATION_STRANGER.ordinal()) {
+					// 点击陌生人想与他聊天时，要提示，你们不是好友，是否递送名片，使他成为你的好友
+				}
+				RongIM.getInstance().startPrivateChat(ZhuoMaiCardActivity.this,
+						userInfo.getUserid(), userInfo.getName());
+			}
+		});
+	}
+
+	void sendCard() {
+		// 递送名片(即添加好友)
+		if (RongIM.getInstance().getRongIMClient() == null)
+			return;
+		ContactNotificationMessage msg = ContactNotificationMessage.obtain(
+				"Request", myid, userInfo.getUserid(), "请求添加好友");
+		RongIM.getInstance()
+				.getRongIMClient()
+				.sendMessage(ConversationType.PRIVATE, userInfo.getUserid(),
+						msg, "请求添加好友", new SendMessageCallback() {
+
+							@Override
+							public void onSuccess(Integer arg0) {
+								// TODO Auto-generated method stub
+								mConnHelper.followUser(mUIHandler,
+										MsgTagVO.MSG_FOWARD,
+										userInfo.getUserid(), 1);
+								pwh.showPopTip(findViewById(R.id.zhuomai_card),
+										null, R.string.label_sendcardsuccess);
+							}
+
+							@Override
+							public void onError(Integer arg0, ErrorCode arg1) {
+								// TODO Auto-generated method stub
+								Toast.makeText(ZhuoMaiCardActivity.this,
+										"申请发送失败ErrorCode：" + arg1, 1000).show();
+							}
+						});
 	}
 
 	protected void onPause() {
@@ -393,7 +415,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	void fillHeadInfo() {
 		if (userInfo == null)
 			return;
-		mLoadImage.addTask(userInfo.getUheader(), ivHeader);
+		mLoadImage.beginLoad(userInfo.getUheader(), ivHeader);
 		tvName.setText(userInfo.getName());
 		// tvPosition/tvMemType需要通过编码获得对应的名称
 		if (mConnHelper.getCitys() != null && userInfo.getCity() >= 1)
@@ -415,15 +437,11 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		tvZBNum.setText("暂无倬币数");
 		if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_MYSELF
 				.ordinal() || userInfo.getUserid().equals(myid)) {
-			String text = getResources().getString(R.string.label_editcard);
-			btnEditCard.setText(text);
-		} else if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_STRANGER
-				.ordinal()) {
-			String text = getResources().getString(R.string.label_cardsend);
-			btnEditCard.setText(text);
+			ltNyselfMenue.setVisibility(View.VISIBLE);
+			ltOtherMenue.setVisibility(View.GONE);
 		} else {
-			String text = getResources().getString(R.string.lab_start_char);
-			btnEditCard.setText(text);
+			ltNyselfMenue.setVisibility(View.GONE);
+			ltOtherMenue.setVisibility(View.VISIBLE);
 		}
 	}
 

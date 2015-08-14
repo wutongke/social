@@ -62,6 +62,9 @@ public class ZhuoCommHelperLz {
 	 */
 	private final static String USER_ACTIVITY = "/getUserActivityList.do";
 
+	//lef的
+	private final static String SERVICE_MYGROUPLIST = "/getmygroup.do";
+	
 	// 未用
 	private final static String SERVICE_GET_ADINFO = "/getadinfo.do";
 
@@ -349,5 +352,12 @@ public class ZhuoCommHelperLz {
 	}
 	public static String getMyStatusCard() {
 		return SERVER + GET_MY_STATUS_CARD;
+	}
+	/**
+	 * lef的，获取我的圈子，用来提供融云的圈子信息
+	 * @return
+	 */
+	public static String getUrlMyGroupList() {
+		return SERVER + SERVICE_MYGROUPLIST;
 	}
 }

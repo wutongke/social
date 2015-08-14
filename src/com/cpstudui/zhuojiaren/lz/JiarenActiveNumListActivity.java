@@ -38,7 +38,7 @@ public class JiarenActiveNumListActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(JiarenActiveNumListActivity.this,
 						JiarenActiveActivity.class);
-				i.putExtra("mType", Dynamic.DYNATIC_TYPE_MY_JIAREN);
+				i.putExtra("mType", Dynamic.DYNATIC_TYPE_IFOCUS_JIAREN);
 				startActivity(i);
 			}
 		});

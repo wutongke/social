@@ -460,7 +460,7 @@
     <string name="label_hello">打招呼</string>
     <string name="label_tomy">向你</string>
     <string name="label_tohe">你已向</string>
-    <string name="label_sendcard">递送名片请求加为好友</string>
+    <string name="label_sendcard">递送名片</string>
     <string name="label_acceptmycard">已把你加为好友</string>
     <string name="label_accepthecard">你已把</string>
     <string name="label_acceptcard">加为好友</string>
@@ -1124,7 +1124,7 @@
     <string name="lab_active_join">我参加的活动</string>
     <string name="no_read_message">"···"</string>
     <string name="lab_extend">扩展</string>
-    <string name="lab_start_char">发起聊天</string>
+    <string name="lab_start_chat">发起聊天</string>
     <string name="lab_pub_detail">公告详情</string>
 
 </resources>
