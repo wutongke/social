@@ -1637,6 +1637,19 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getFollowReqList(),
 				nameValuePairs, mUIHandler, tag);
 	}
+	/**
+	 * 获取赞、浏览、收藏过我名片的用户列表。
+	 * @param mUIHandler
+	 * @param tag 0-浏览过我名片的人  1-收藏过我名片的人  2-赞过我名片的人
+	 * @return
+	 */
+	public boolean getMyStatusCard(Handler mUIHandler, int tag,int type) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("type", String
+				.valueOf(type)));
+		return getFromServerByPost(ZhuoCommHelperLz.getMyStatusCard(),
+				nameValuePairs, mUIHandler, tag);
+	}
 
 	/**
 	 * 

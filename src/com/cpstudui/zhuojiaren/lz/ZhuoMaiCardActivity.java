@@ -147,10 +147,9 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		userid = i.getStringExtra("userid");
 		myid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		if (userid.equals(myid)) {
-			ismy = "1";
-			ltMenue.setVisibility(View.VISIBLE);
+			btnEditBG.setEnabled(true);
 		} else
-			ltMenue.setVisibility(View.GONE);
+			btnEditBG.setEnabled(false);
 		mLoadImage = new LoadImage();
 
 		// 设置个性背景图片，在个人信息里。个人可以选择更换
@@ -300,7 +299,8 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				int r = userInfo.getRelation();
-				if (r == UserNewVO.USER_RELATION.RELATION_MYSELF.ordinal()) {
+				if (r == UserNewVO.USER_RELATION.RELATION_MYSELF.ordinal()
+						|| userInfo.getUserid().equals(myid)) {
 					Intent i = new Intent(ZhuoMaiCardActivity.this,
 							CardEditActivity.class);
 					startActivity(i);

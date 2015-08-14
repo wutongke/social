@@ -56,6 +56,7 @@ public class ZhuoCommHelperLz {
 	private final static String GG_DETAIL = "/getpubdetail.do";
 	private final static String PUB_LIST = "/getPubList.do";
 	private final static String DEL_ACTIVE = "/deleteActivity.do";
+	private final static String GET_MY_STATUS_CARD = "/getMyStatusCard.do";
 	/**
 	 * 用户加入的或创建的活动
 	 */
@@ -345,5 +346,8 @@ public class ZhuoCommHelperLz {
 	 */
 	public static String deleteActives() {
 		return SERVER + DEL_ACTIVE;
+	}
+	public static String getMyStatusCard() {
+		return SERVER + GET_MY_STATUS_CARD;
 	}
 }
