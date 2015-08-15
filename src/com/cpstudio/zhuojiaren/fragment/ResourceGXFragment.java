@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,10 +29,20 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.CrowdFundingAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter.ImageOnclick;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.ImageRadioButton;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.ui.AudioListActivity;
 import com.cpstudio.zhuojiaren.ui.CrowdFundingListActivity;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.Util;
 import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
@@ -59,21 +70,31 @@ public class ResourceGXFragment extends Fragment {
 	private ListView mListView;
 	private ResourceGXAdapter mAdapter;
 	private TitleAdapter mTitleAdapter;
-	private ArrayList<ResourceGXVO> mListDatas = new ArrayList<ResourceGXVO>();
+	private ArrayList<ResourceGXVO> mDatas = new ArrayList<ResourceGXVO>();
 	// 用于数据筛选
 	private int type = 0;// 资源还是需求
+	// 网络请求参数
+	private int getType = 1;
 	private int item = 0;
 
 	String subType;// 过滤子类
 	String location = null;// 区域
+	// 分页
+	private int mPage = 0;
+	private AppClientLef appClientLef;
+	// 基本编码
+	private BaseCodeData baseDataSet;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		view = inflater.inflate(R.layout.fragment_resource_gx, null);
-		type = getArguments().getInt(ResourceGXVO.RESOURCEGXTYPE, 1);
+		type = getArguments().getInt(ResourceGXVO.RESOURCEGXTYPE, 0);
 		ButterKnife.inject(this, view);
+		appClientLef = AppClientLef.getInstance(getActivity());
+		baseDataSet = ZhuoConnHelper.getInstance(
+				getActivity().getApplicationContext()).getBaseDataSet();
 		initPullDownView();
 		loadData();
 		return view;
@@ -95,13 +116,13 @@ public class ResourceGXFragment extends Fragment {
 			@Override
 			public void onMore() {
 				// TODO Auto-generated method stub
-				loadData();
+				loadMore();
 			}
 		});
 		pullDownView.setShowHeader();
 		pullDownView.setShowFooter(false);
 		mListView = pullDownView.getListView();
-		mAdapter = new ResourceGXAdapter(getActivity(), mListDatas,
+		mAdapter = new ResourceGXAdapter(getActivity(), mDatas,
 				R.layout.item_resource_gx);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
@@ -114,7 +135,7 @@ public class ResourceGXFragment extends Fragment {
 						GongXuDetailActivity.class);
 				// 暂时写死，测试
 				// intent.putExtra("msgid",mListDatas.get(arg2).getMsgId());
-				intent.putExtra("msgid", "123");
+				intent.putExtra("msgid", mDatas.get(arg2-1).getSdid());
 				startActivity(intent);
 			}
 		});
@@ -126,7 +147,8 @@ public class ResourceGXFragment extends Fragment {
 			list.add(new ImageRadioButton(R.drawable.busyu, R.drawable.busyd));
 			list.add(new ImageRadioButton(R.drawable.talentu,
 					R.drawable.talentd));
-			list.add(new ImageRadioButton(R.drawable.moneyu, R.drawable.moneyd));
+			list.add(new ImageRadioButton(R.drawable.technologyu,
+					R.drawable.technologyd));
 			list.add(new ImageRadioButton(R.drawable.personu,
 					R.drawable.persond));
 			list.add(new ImageRadioButton(R.drawable.wisdomu,
@@ -139,8 +161,8 @@ public class ResourceGXFragment extends Fragment {
 					R.drawable.busyd_1));
 			list.add(new ImageRadioButton(R.drawable.talentu_1,
 					R.drawable.talentd_1));
-			list.add(new ImageRadioButton(R.drawable.moneyu_1,
-					R.drawable.moneyd_1));
+			list.add(new ImageRadioButton(R.drawable.technologyu_1,
+					R.drawable.technologyd_1));
 			list.add(new ImageRadioButton(R.drawable.personu_1,
 					R.drawable.persond_1));
 			list.add(new ImageRadioButton(R.drawable.wisdomu_1,
@@ -156,12 +178,18 @@ public class ResourceGXFragment extends Fragment {
 				// TODO Auto-generated method stub
 				int i = 0;
 				for (ImageRadioButton temp : list) {
+					i++;
 					if (btnview.equals(temp)) {
 						Util.toastMessage(getActivity(), btnview.getaImage()
 								+ "");
 						break;
 					}
-					i++;
+				}
+				// 0资源1需求
+				if (type == 0) {
+					getType = i;
+				} else if (type == 1) {
+					getType = i + 50;
 				}
 				if (item != i) {
 					mTitleAdapter.notifyDataSetChanged();
@@ -174,25 +202,25 @@ public class ResourceGXFragment extends Fragment {
 
 		gridView.setAdapter(mTitleAdapter);
 		// 跳转到某个类型的list
-		gridView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				// 重新请求数据刷新列表
-				item = position;
-				loadData();
-				// Intent intent = new
-				// Intent(getActivity(),CrowdFundingListActivity.class);
-				// if(type==ResourceGXVO.RESOURCE_FIND){
-				// intent.putExtra("type", CrowdFundingVO.typeStr[position+1]);
-				// }else if(type==CrowdFundingVO.CROWDFUNDINGQUERY){
-				// intent.putExtra("type", CrowdFundingVO.typeStr[position+3]);
-				// }
-				// startActivity(intent);
-			}
-		});
+		// gridView.setOnItemClickListener(new OnItemClickListener() {
+		//
+		// @Override
+		// public void onItemClick(AdapterView<?> parent, View view,
+		// int position, long id) {
+		// // TODO Auto-generated method stub
+		// // 重新请求数据刷新列表
+		// item = position;
+		// loadData();
+		// // Intent intent = new
+		// // Intent(getActivity(),CrowdFundingListActivity.class);
+		// // if(type==ResourceGXVO.RESOURCE_FIND){
+		// // intent.putExtra("type", CrowdFundingVO.typeStr[position+1]);
+		// // }else if(type==CrowdFundingVO.CROWDFUNDINGQUERY){
+		// // intent.putExtra("type", CrowdFundingVO.typeStr[position+3]);
+		// // }
+		// // startActivity(intent);
+		// }
+		// });
 
 		searchView = (EditText) pullDownView.findViewById(R.id.editTextSearch);
 		searchView.setOnEditorActionListener(new OnEditorActionListener() {
@@ -255,13 +283,65 @@ public class ResourceGXFragment extends Fragment {
 	}
 
 	private void loadData() {
-		// TODO Auto-generated method stub
-		// test
-		// 根据参数type和item来加载数据
-		for (int i = 0; i < 10; i++)
-			mListDatas.add(new ResourceGXVO());
-		pullDownView.finishLoadData(true);
-		pullDownView.hasData();
+		mDatas.clear();
+		mPage = 0;
 		mAdapter.notifyDataSetChanged();
+		appClientLef.getGongXuList(String.valueOf(getType), null, mPage, 5,
+				uiHandler, MsgTagVO.DATA_LOAD, getActivity(), true, null, null);
+
+	}
+
+	private void loadMore() {
+		appClientLef.getGongXuList(String.valueOf(getType), null, mPage, 5,
+				uiHandler, MsgTagVO.DATA_MORE, getActivity(), true, null, null);
+	}
+
+	Handler uiHandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case MsgTagVO.DATA_LOAD: {
+				ResultVO res;
+				if (JsonHandler.checkResult((String) msg.obj, getActivity())) {
+					res = JsonHandler.parseResult((String) msg.obj);
+				} else {
+					CommonUtil.displayToast(getActivity(), R.string.data_error);
+					return;
+				}
+				String data = res.getData();
+				updateItemList(data, true, false);
+				break;
+			}
+			case MsgTagVO.DATA_MORE: {
+				updateItemList((String) msg.obj, false, true);
+				break;
+			}
+			}
+			;
+		}
+
+	};
+
+	private void updateItemList(String data, boolean refresh, boolean append) {
+		// TODO Auto-generated method stub
+		try {
+			pullDownView.finishLoadData(true);
+			if (data != null && !data.equals("")) {
+				ArrayList<ResourceGXVO> list = JsonHandler_Lef
+						.parseResourceGXVOList(data);
+				if (!list.isEmpty()) {
+					if (!append) {
+						mDatas.clear();
+						pullDownView.hasData();
+					}
+					mDatas.addAll(list);
+					mAdapter.notifyDataSetChanged();
+					mPage++;
+				} else {
+					pullDownView.noData(true);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

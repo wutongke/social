@@ -137,6 +137,24 @@ public class AppClientLef {
 	}
 
 	/**
+	 * 获取供需
+	 */
+	public boolean getGongXuList(String type, String title, int pageNo,
+			int pageSize, Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		if (type != null)
+			nameValuePairs.add(new BasicNameValuePair("type", type));
+		if (title != null)
+			nameValuePairs.add(new BasicNameValuePair("title", title));
+		String url = ZhuoCommHelper.getGongxulist();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+	}
+
+	/**
 	 * 增加页信息
 	 * 
 	 * @param nameValuePairs
@@ -340,7 +358,16 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, null, 0, acitivity, url, false,
 				null, null);
 	}
-
+	public boolean collection(Activity acitivity, Handler handler ,int handlerTag,String url, String idKey,
+			String id, String stateKey, String state) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair(idKey, id));
+		nameValuePairs.add(new BasicNameValuePair(stateKey, state));
+		return doPost(nameValuePairs, url, handler, handlerTag, acitivity, url, false,
+				null, null);
+	}
+	
 	/**
 	 * 发布进展
 	 */
@@ -578,6 +605,26 @@ public class AppClientLef {
 				false, null, null);
 	}
 
+	/**
+	 * 发布评论
+	 */
+	public boolean commonPpubComment(Activity activity, Handler handler,
+			int handlerTag, String url, String sdid, String comment,
+			String toId, String toUserid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("sdid", sdid));
+		nameValuePairs.add(new BasicNameValuePair("comment", comment));
+		if (!toId.equals("-1")) {
+			nameValuePairs.add(new BasicNameValuePair("toUserid", toUserid));
+			nameValuePairs.add(new BasicNameValuePair("toId", toId));
+		}
+		if (url == null)
+			url = ZhuoCommHelper.getCommoncomment();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
 	/***
 	 * 获取活动详情
 	 * 
@@ -593,6 +640,25 @@ public class AppClientLef {
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("activityid", activityid));
 		String url = ZhuoCommHelper.getGeteventdetail();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				true, null, null);
+	}
+
+	/***
+	 * 供需
+	 * 
+	 * @param activity
+	 * @param handler
+	 * @param handlerTag
+	 * @param activityid
+	 * @return
+	 */
+	public boolean getGongxuDetail(Activity activity, Handler handler,
+			int handlerTag, String sdid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("sdid", sdid));
+		String url = ZhuoCommHelper.getGongxudetail();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				true, null, null);
 	}
@@ -616,6 +682,15 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				false, null, null);
 	}
+	public boolean shareRESToZhuo(Activity activity, Handler handler,
+			int handlerTag, String  sdid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("sdid",sdid));
+		String url = ZhuoCommHelper.getSHARETOZHUO();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
 
 	/**
 	 * 获取服务器 时间
@@ -624,8 +699,7 @@ public class AppClientLef {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		return doPost(nameValuePairs, ZhuoCommHelper.getAddgroupactivity(),
-				handler, handlerTag, activity,
-				null, false, null, null);
+				handler, handlerTag, activity, null, false, null, null);
 	}
 
 	/**

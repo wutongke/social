@@ -29,12 +29,16 @@ public class ResourceGXAdapter extends CommonAdapter<ResourceGXVO>{
 	public void convert(ViewHolder helper, ResourceGXVO item) {
 		// TODO Auto-generated method stub
 		ImageView image = helper.getView(R.id.irg_image);
-		TextView title = helper.getView(R.id.irg_title);
-		TextView price = helper.getView(R.id.irg_fund);
-		TextView tvImageTag = helper.getView(R.id.irg_tag);
-		image.setImageBitmap(ImageRectUtil.toRoundCorner(BitmapFactory
-				.decodeResource(mContext.getResources(),
-						R.drawable.ico_chat_pic), 10));
+//		TextView title = helper.getView(R.id.irg_title);
+//		TextView price = helper.getView(R.id.irg_fund);
+//		TextView tvImageTag = helper.getView(R.id.irg_tag);
+		helper.setText(R.id.irg_title, item.getTitle());
+		String content = item.getContent();
+		if(content.length()>33){
+			content = content.substring(0,30)+"...";
+		}
+		helper.setText(R.id.irg_fund, content);
+		mLoadImage.beginLoad(item.getPicture(), image);
 	}
 
 }

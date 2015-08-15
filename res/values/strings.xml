@@ -1126,5 +1126,6 @@
     <string name="lab_extend">扩展</string>
     <string name="lab_start_char">发起聊天</string>
     <string name="lab_pub_detail">公告详情</string>
+    <string name="title_activity_res_comment">ResCommentActivity</string>
 
 </resources>

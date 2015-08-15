@@ -124,7 +124,33 @@ public class ZhuoCommHelper {
 	private final static String LIKECrowdFunding = "/crowdfunding/like.do";
 	private final static String getCrowdFundingComment = "/crowdfunding/commentList.do";
 	private final static String GETCROWDFUNDINGPROGRESS = "crowdfunding/progressList.do";
-	private final static String TIME = "crowdfunding/progressList.do";
+	private final static String TIME = "/crowdfunding/progressList.do";
+	private final static String PUBCROWDFUNDINGCOMMENT = "/crowdfunding/createProgress.do";
+	private final static String GONGXULIST = "/supplyDemandList.do";
+	private final static String GONGXUDETAIL = "/getSupplyDemand.do";
+	private static String COMMONCOMMENT = "/supplyDemandCmt.do";
+	private static String COMMONCOLLECTION = "/collectSupplyDemand.do";
+	private static String SHARETOZHUO = "/shareSupplyDemand.do";
+	public static String getSHARETOZHUO() {
+		return SERVER + SHARETOZHUO;
+	}
+
+	public static String getCOMMONCOLLECTION() {
+		return SERVER + COMMONCOLLECTION;
+	}
+
+	public static String getCommoncomment() {
+		return SERVER + COMMONCOMMENT;
+	}
+
+	public static String getGongxudetail() {
+		return SERVER + GONGXUDETAIL;
+	}
+
+	public static String getGongxulist() {
+		return SERVER + GONGXULIST;
+	}
+
 	public static String getTime() {
 		return SERVER + TIME;
 	}
@@ -138,7 +164,6 @@ public class ZhuoCommHelper {
 		return SERVER +GETCROWDFUNDINGPROGRESS;
 	}
 
-	private final static String PUBCROWDFUNDINGCOMMENT = "/crowdfunding/createProgress.do";
 	public static String getPubcrowdfundingcomment() {
 		return SERVER +PUBCROWDFUNDINGCOMMENT;
 	}

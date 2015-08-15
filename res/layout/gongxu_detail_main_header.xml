@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:text="textViewGongxuTitle"
         android:textColor="#1c1c1c"
         android:textSize="18sp" />
 
@@ -32,7 +31,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="3dp"
-            android:text="textViewTime"
             android:textSize="13sp" />
     </LinearLayout>
 
@@ -42,18 +40,16 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_back"
         android:padding="10dp"
-        android:text="开博4年有余，回首这4年，自己的研究兴趣从最初的编程、面试、数据结构、算法，转移到最近的数据挖掘、机器学习之上，而自己在本blog上也着实花费了巨大的时间和精力"
         android:textColor="#989898"
         android:textSize="16sp" />
 
     <TableLayout
-        android:id="@+id/tableLayoutAuthorPics"
+        android:id="@+id/gongxu_tableLayoutAuthorPics"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:background="@color/gray"
         android:visibility="visible" >
     </TableLayout>
-
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

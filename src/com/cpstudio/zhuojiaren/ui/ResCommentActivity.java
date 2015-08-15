@@ -1,4 +1,4 @@
-package com.cpstudio.zhuojiaren;
+package com.cpstudio.zhuojiaren.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,35 +11,41 @@ import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.GeoVO.ResultVO;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
-public class MsgCmtActivity extends Activity {
+public class ResCommentActivity extends Activity {
 
 	private PopupWindows pwh = null;
 	private String msgid = null;
-	private String parentid = null;
 	private String after = null;
 	private ZhuoConnHelper mConnHelper = null;
-	private String forward = "0";
 	private String content = null;
 	private String toId = null;
 	private String toUserid = null;
+	private String toUserName = null;
 	int type = 1;// 1:评论圈话题，2：评论动态
-
+	EditText contentEditText;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_msg_cmt);
+		contentEditText = (EditText) findViewById(R.id.editTextContent);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		pwh = new PopupWindows(MsgCmtActivity.this);
+		pwh = new PopupWindows(ResCommentActivity.this);
 		Intent i = getIntent();
 		msgid = i.getStringExtra("msgid");
 		toId = i.getStringExtra("toId");
-		type = i.getIntExtra("type", 1);
 		toUserid = i.getStringExtra("toUserid");
+		toUserName = i.getStringExtra("toUserName");
+		if(toId!=null){
+			contentEditText.setHint("回复"+toUserName);
+		}
 		initClick();
 	}
 
@@ -49,7 +55,7 @@ public class MsgCmtActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				MsgCmtActivity.this.finish();
+				ResCommentActivity.this.finish();
 			}
 		});
 		findViewById(R.id.buttonSend).setOnClickListener(new OnClickListener() {
@@ -72,9 +78,10 @@ public class MsgCmtActivity extends Activity {
 					// intent.putExtra("forward", forward);
 					// intent.putExtra("msgid", msgid);
 					// intent.putExtra("userid", userid);
-					intent.putExtra("data", (String) msg.obj);
+					com.cpstudio.zhuojiaren.model.ResultVO res = JsonHandler.parseResult((String) msg.obj);
+					intent.putExtra("data", res.getData());
 					setResult(RESULT_OK, intent);
-					MsgCmtActivity.this.finish();
+					ResCommentActivity.this.finish();
 				} else {
 					pwh.showPopDlgOne(findViewById(R.id.rootLayout), null,
 							R.string.error5);
@@ -87,7 +94,6 @@ public class MsgCmtActivity extends Activity {
 	};
 
 	private void publish() {
-		EditText contentEditText = (EditText) findViewById(R.id.editTextContent);
 		content = contentEditText.getText().toString();
 		if (content.trim().equals("")) {
 			pwh.showPopDlgOne(findViewById(R.id.rootLayout), null,
@@ -95,21 +101,9 @@ public class MsgCmtActivity extends Activity {
 			contentEditText.requestFocus();
 			return;
 		}
-		if (after != null) {
-			content += after;
-		}
-		CheckBox cb = (CheckBox) findViewById(R.id.checkBoxZf);
-		if (cb.isChecked()) {
-			forward = "1";
-		}
-		// mConnHelper.pubCmt(msgid, parentid, content, forward, mUIHandler,
-		// , MsgCmtActivity.this, true, null, null);
-		if (1 == type)
-			mConnHelper.CommentTopic(mUIHandler, MsgTagVO.PUB_INFO, msgid,
-					content, toId, toUserid);
-		else
-			mConnHelper.CommentDynamic(mUIHandler, MsgTagVO.PUB_INFO, msgid,
-					content, toId, toUserid);
+		AppClientLef.getInstance(ResCommentActivity.this).pubComment(
+				ResCommentActivity.this, mUIHandler, MsgTagVO.PUB_INFO, msgid,
+				content, toId, toUserid);
 	}
 
 }

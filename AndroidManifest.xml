@@ -878,7 +878,6 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        
         <activity android:name="com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity" >
         </activity>
         <activity
@@ -1257,6 +1256,10 @@
             </intent-filter>
         </receiver>
         <!-- 支付相关结束 -->
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.ResCommentActivity"
+            android:label="@string/title_activity_res_comment" >
+        </activity>
     </application>
 
     <!-- renren sso Permission for Unit Test -->

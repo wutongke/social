@@ -14,9 +14,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -35,20 +38,29 @@ import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.UserSelectActivity;
 import com.cpstudio.zhuojiaren.adapter.MsgCmtListAdapter;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.CmtVO;
+import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
+import com.cpstudio.zhuojiaren.model.GeoVO.ResultVO;
+import com.cpstudio.zhuojiaren.model.Comment;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.PicVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.ui.CrowdFundingDetailActivity;
+import com.cpstudio.zhuojiaren.ui.ResCommentActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
+import com.google.gson.Gson;
 
 public class GongXuDetailActivity extends BaseActivity {
 	@InjectView(R.id.activity_function)
@@ -78,21 +90,24 @@ public class GongXuDetailActivity extends BaseActivity {
 	TextView tvComment;
 
 	private ListView mListView;
-	private MsgCmtListAdapter mAdapter;
-	private ArrayList<CmtVO> mList = new ArrayList<CmtVO>();
+	private TopicCommentListAdapter mAdapter;
+	private ArrayList<Comment> mList = new ArrayList<Comment>();
 	private LoadImage mLoadImage = new LoadImage();
 	private View mHeadView = null;
 	private String msgid = null;
 	private int mPage = 1;
-	private ZhuoConnHelper mConnHelper = null;
+	private AppClientLef mConnHelper = null;
 	private String isCollect = "0";
-	private ListViewFooter mListViewFooter = null;
+	// private ListViewFooter mListViewFooter = null;
 	private String uid = null;
 	private PopupWindows pwh;
 	// 不要本地缓存
 	// private ZhuoInfoFacade mFacade = null;
 	private String myid = null;
+	private String toId;
 	UserVO sharer;
+
+	ResourceGXVO resDetail;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,32 +115,28 @@ public class GongXuDetailActivity extends BaseActivity {
 		setContentView(R.layout.activity_gong_xu_detail);
 		initTitle();
 
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = AppClientLef.getInstance(getApplicationContext());
 		// mFacade = new ZhuoInfoFacade(getApplicationContext());
 		myid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		Intent i = getIntent();
 		msgid = i.getStringExtra("msgid");
 
-		mAdapter = new MsgCmtListAdapter(this, mList, msgid);
+		mAdapter = new TopicCommentListAdapter(GongXuDetailActivity.this,
+				mList, msgid);
 		mListView = (ListView) findViewById(R.id.listViewDetail);
 		mListView.setDividerHeight(0);
 		LayoutInflater inflater = LayoutInflater
 				.from(GongXuDetailActivity.this);
 		mHeadView = (LinearLayout) inflater.inflate(
 				R.layout.gongxu_detail_main_header, null);
-		RelativeLayout footerView = (RelativeLayout) inflater.inflate(
-				R.layout.listview_footer, null);
 		pwh = new PopupWindows(GongXuDetailActivity.this);
 		mListView.addHeaderView(mHeadView);
 		ButterKnife.inject(this);
 		title.setText(R.string.title_activity_gong_xu_detail);
-		mListView.addFooterView(footerView);
-		mListViewFooter = new ListViewFooter(footerView, onMoreClick);
 		mListView.setAdapter(mAdapter);
 
-		initClick();
-		// loadData();
-		loadCmt();
+		loadData();
+		// loadCmt();
 	}
 
 	public void loadHead(ResourceGXVO gxInfo) {
@@ -135,13 +146,21 @@ public class GongXuDetailActivity extends BaseActivity {
 		tvTitle.setText(gxInfo.getTitle());
 
 		String time = gxInfo.getAddtime();
-		time = CommonUtil.calcTime(time);
 		tvTime.setText(time);
 
-		tvContent.setText(gxInfo.getDetailContent());
+		tvContent.setText(gxInfo.getContent());
 
-		isCollect = gxInfo.getIsCollect();
-		sharer = gxInfo.getOwner();// 分享者
+		isCollect = gxInfo.getIsCollection();
+
+		sharer = new UserVO();// 分享者
+		sharer.setUsername(gxInfo.getName());
+		sharer.setPost(ZhuoConnHelper.getInstance(context).getBaseDataSet()
+				.getPosition().get(gxInfo.getPosition()).getContent());
+		sharer.setCompany(gxInfo.getCompany());
+		sharer.setUheader(gxInfo.getUheader());
+		sharer.setUserid(gxInfo.getUserid());
+		sharer.setPhone(gxInfo.getPhone());
+
 		tvName.setText(sharer.getUsername());
 		// lz不确定
 		tvWork.setText(sharer.getLevel());
@@ -149,7 +168,7 @@ public class GongXuDetailActivity extends BaseActivity {
 		// lz不确定
 		mLoadImage.addTask(sharer.getUheader(), ivHead);
 		// 填充控件内容
-		final List<PicVO> pics = gxInfo.getPic();
+		final List<PicNewVO> pics = gxInfo.getSdPic();
 		TableLayout.LayoutParams tllp = new TableLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		TableRow.LayoutParams trlp = new TableRow.LayoutParams(
@@ -159,7 +178,7 @@ public class GongXuDetailActivity extends BaseActivity {
 			float times = DeviceInfoUtil.getDeviceCsd(context);
 			RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
 					(int) (70 * times), (int) (70 * times));
-			TableLayout tl = (TableLayout) findViewById(R.id.tableLayoutPics);
+			TableLayout tl = (TableLayout) findViewById(R.id.gongxu_tableLayoutAuthorPics);
 			TableRow tr = null;
 			for (int i = 0; i < pics.size(); i++) {
 				if (i % 3 == 0) {
@@ -173,10 +192,10 @@ public class GongXuDetailActivity extends BaseActivity {
 				ImageView iv = new ImageView(GongXuDetailActivity.this);
 				iv.setLayoutParams(rlp);
 				rl.addView(iv);
-				rl.setTag(pics.get(i).getOrgurl());
-				iv.setTag(pics.get(i).getUrl());
+				rl.setTag(pics.get(i).getPic());
+				iv.setTag(pics.get(i).getPic());
 				iv.setImageResource(R.drawable.default_image);
-				mLoadImage.addTask(pics.get(i).getUrl(), iv);
+				mLoadImage.addTask(pics.get(i).getPic(), iv);
 				rl.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -184,7 +203,7 @@ public class GongXuDetailActivity extends BaseActivity {
 								PhotoViewMultiActivity.class);
 						ArrayList<String> orgs = new ArrayList<String>();
 						for (int j = 0; j < pics.size(); j++) {
-							orgs.add(pics.get(j).getOrgurl());
+							orgs.add(pics.get(j).getPic());
 						}
 						intent.putStringArrayListExtra("pics", orgs);
 						intent.putExtra("pic", (String) v.getTag());
@@ -205,24 +224,19 @@ public class GongXuDetailActivity extends BaseActivity {
 			tvCollect.setBackgroundResource(R.drawable.tab_collect_on);
 		}
 
-		List<CmtVO> cmts = gxInfo.getCmt();
+		List<Comment> cmts = gxInfo.getCommentList();
 		if (cmts != null && !cmts.isEmpty()) {
 			mList.addAll(cmts);
 			mAdapter.notifyDataSetChanged();
-		} else {
-			mListViewFooter.noData(false);
 		}
 	}
 
 	private void updateItemList(String data, boolean refresh, boolean append) {
 		try {
 			if (data != null && !data.equals("")) {
-				JsonHandler nljh = new JsonHandler(data,
-						getApplicationContext());
-				List<CmtVO> list = nljh.parsePagesCmt().getData();
+				List<Comment> list = JsonHandler_Lef.parseCommentLZList(data);
 				if (!list.isEmpty()) {
 					// textViewTip.setVisibility(View.GONE);
-					mListViewFooter.hasData();
 					if (!append) {
 						mList.clear();
 					}
@@ -232,7 +246,6 @@ public class GongXuDetailActivity extends BaseActivity {
 				} else {
 					// textViewTip.setVisibility(View.VISIBLE);
 
-					mListViewFooter.noData(!refresh);
 				}
 			}
 		} catch (Exception e) {
@@ -246,29 +259,35 @@ public class GongXuDetailActivity extends BaseActivity {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
-				if (msg.obj != null) {
-					if (msg.obj instanceof ResourceGXVO) {
-						ResourceGXVO gxinfo = (ResourceGXVO) msg.obj;
-						loadHead(gxinfo);
-					} else if (!msg.obj.equals("")) {
-						JsonHandler nljh = new JsonHandler((String) msg.obj,
-								getApplicationContext());
-						ResourceGXVO gxinfo = nljh.parseGongxuInfo();
-						if (null != gxinfo) {
-							loadHead(gxinfo);
-							// mFacade.saveOrUpdate(gxinfo);
-						}
-					}
+				com.cpstudio.zhuojiaren.model.ResultVO res;
+				if (JsonHandler.checkResult((String) msg.obj,
+						GongXuDetailActivity.this)) {
+					res = JsonHandler.parseResult((String) msg.obj);
+				} else {
+					CommonUtil.displayToast(GongXuDetailActivity.this,
+							R.string.data_error);
+					return;
 				}
+				Gson gson = new Gson();
+				try {
+					resDetail = gson
+							.fromJson(res.getData(), ResourceGXVO.class);
+					loadHead(resDetail);
+				} catch (Exception e) {
+					// TODO: handle exception
+					CommonUtil.displayToast(GongXuDetailActivity.this,
+							R.string.data_error);
+					Log.d("Debug", "json数据出错。。。。。。。。。。。。。。");
+					return;
+				}
+				initClick();
 				break;
 			}
 			case MsgTagVO.DATA_OTHER: {
-				mListViewFooter.finishLoading();
 				updateItemList((String) msg.obj, true, false);
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {
-				mListViewFooter.finishLoading();
 				updateItemList((String) msg.obj, false, true);
 				break;
 			}
@@ -277,11 +296,11 @@ public class GongXuDetailActivity extends BaseActivity {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					CommonUtil.displayToast(getApplicationContext(),
-							R.string.info10);
-					// TextView numTV = (TextView)
-					// findViewById(R.id.textViewGongXuZfNum);
-					// numTV.setText(String.valueOf(Integer.valueOf(numTV
-					// .getText().toString()) + 1));
+							"分享成功");
+				}else{
+					com.cpstudio.zhuojiaren.model.ResultVO res = JsonHandler.parseResult((String) msg.obj);
+					CommonUtil.displayToast(getApplicationContext(),
+							res.getMsg());
 				}
 				break;
 			}
@@ -331,83 +350,18 @@ public class GongXuDetailActivity extends BaseActivity {
 	};
 
 	private void loadData() {
-		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			// 不缓存本地数据
-			// ZhuoInfoVO info = mFacade.getById(msgid);
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-			// msg.obj = info;
-			// msg.sendToTarget();
-		} else {
-			String params = ZhuoCommHelper.getResourceGongxuDetail()
-					+ "?msgid=" + msgid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD,
-					GongXuDetailActivity.this, true, new OnCancelListener() {
-
-						@Override
-						public void onCancel(DialogInterface dialog) {
-							GongXuDetailActivity.this.finish();
-						}
-					});
-		}
+		mConnHelper.getGongxuDetail(GongXuDetailActivity.this, mUIHandler,
+				MsgTagVO.DATA_LOAD, msgid);
 	}
-
-	private void loadCmt() {
-		// 空的数据
-		for (int i = 0; i < 10; i++)
-			mList.add(new CmtVO());
-		mAdapter.notifyDataSetChanged();
-		// if (mListViewFooter.startLoading()) {
-		// mList.clear();
-		// mAdapter.notifyDataSetChanged();
-		// mPage = 1;
-		// String params = ZhuoCommHelper.getUrlCmtList();
-		// params += "?msgid=" + msgid;
-		// params += "&page=" + mPage;
-		// mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_OTHER);
-		// }
-	}
-
-	private void loadMore() {
-		if (mListViewFooter.startLoading()) {
-			String params = ZhuoCommHelper.getUrlCmtList();
-			params += "?msgid=" + msgid;
-			params += "&page=" + mPage;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
-		}
-	}
-
-	private OnClickListener onMoreClick = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-			loadMore();
-		}
-	};
 
 	private void initClick() {
 
-		// findViewById(R.id.buttonChat).setOnClickListener(new
-		// OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Intent i = new Intent(TopicDetailActivity.this,
-		// ChatActivity.class);
-		// i.putExtra("userid", uid);
-		// startActivity(i);
-		// }
-		// });
 		tvShare.setBackgroundResource(R.drawable.share);
 		tvShare.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(GongXuDetailActivity.this,
-						UserSelectActivity.class);
-				ArrayList<String> tempids = new ArrayList<String>(1);
-				tempids.add(uid);
-				i.putStringArrayListExtra("otherids", tempids);
-				startActivityForResult(i, MsgTagVO.MSG_FOWARD);
+				mConnHelper.shareRESToZhuo(GongXuDetailActivity.this,mUIHandler,MsgTagVO.MSG_FOWARD,msgid);
 			}
 		});
 		tvCollect.setVisibility(View.VISIBLE);
@@ -416,13 +370,29 @@ public class GongXuDetailActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
+				String type = "0";
 				if (isCollect == null || isCollect.equals("0")) {
-					mConnHelper.collectMsg(msgid, "1", mUIHandler,
-							MsgTagVO.MSG_COLLECT, null, true, null, null);
+					type = "0";
 				} else {
-					mConnHelper.collectMsg(msgid, "0", mUIHandler,
-							MsgTagVO.MSG_COLLECT, null, true, null, null);
+					type = "1";
 				}
+				mConnHelper.collection(GongXuDetailActivity.this, mUIHandler,
+						MsgTagVO.MSG_COLLECT, ZhuoCommHelper.getCOMMONCOLLECTION(),"sdid", msgid, "type", type);
+			}
+		});
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				toId = mList.get(position - 1).getId();
+				Intent i = new Intent(GongXuDetailActivity.this,
+						ResCommentActivity.class);
+				i.putExtra("msgid", msgid);
+				i.putExtra("toId", toId);
+				i.putExtra("toUserName", mList.get(position - 1).getName());
+				startActivityForResult(i, MsgTagVO.MSG_CMT);
 			}
 		});
 		tvWrite.setOnClickListener(new OnClickListener() {
@@ -439,7 +409,7 @@ public class GongXuDetailActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				// 用intent启动拨打电话
-				if (sharer==null  || sharer.getPhone() == null) {
+				if (sharer == null || sharer.getPhone() == null) {
 					Toast.makeText(GongXuDetailActivity.this, "号码为空", 1100)
 							.show();
 					return;
@@ -454,10 +424,10 @@ public class GongXuDetailActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+				toId = "-1";
 				Intent i = new Intent(GongXuDetailActivity.this,
-						MsgCmtActivity.class);
+						ResCommentActivity.class);
 				i.putExtra("msgid", msgid);
-				i.putExtra("parentid", msgid);
 				startActivityForResult(i, MsgTagVO.MSG_CMT);
 			}
 		});
@@ -479,18 +449,9 @@ public class GongXuDetailActivity extends BaseActivity {
 							MsgTagVO.MSG_FOWARD, null, true, null, null);
 				}
 			} else if (requestCode == MsgTagVO.MSG_CMT) {
-				// String forward = data.getStringExtra("forward");
-				// if (forward != null && forward.equals("1")) {
-				// TextView numTV = (TextView)
-				// findViewById(R.id.textViewGongXuZfNum);
-				// numTV.setText(String.valueOf(Integer.valueOf(numTV
-				// .getText().toString()) + 1));
-				// }
-				// TextView numTV = (TextView)
-				// findViewById(R.id.textViewGongXuCmtNum);
-				// numTV.setText(String.valueOf(Integer.valueOf(numTV.getText()
-				// .toString()) + 1));
-				loadCmt();//
+				mList = JsonHandler_Lef.parseCommentLZList(data
+						.getStringExtra("data"));
+				mAdapter.notifyDataSetChanged();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

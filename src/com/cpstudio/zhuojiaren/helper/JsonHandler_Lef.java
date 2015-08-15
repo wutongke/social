@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.util.Log;
 
+import com.cpstudio.zhuojiaren.model.Comment;
 import com.cpstudio.zhuojiaren.model.CommentVO;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
@@ -20,6 +21,7 @@ import com.cpstudio.zhuojiaren.model.LoginRes;
 import com.cpstudio.zhuojiaren.model.ProgressVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.RecordVO;
+import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -128,6 +130,56 @@ public class JsonHandler_Lef {
 				for (Iterator<RecordVO> iterator = li.iterator(); iterator
 						.hasNext();) {
 					RecordVO item = (RecordVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * 解析评论列表
+	 * @param <T>
+	 * @param <T>
+	 */
+	public static   ArrayList<Comment> parseCommentLZList(String jsonData) {
+		ArrayList<Comment> list = new ArrayList<Comment>();
+		try {
+			Type listType = new TypeToken<ArrayList<Comment>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<Comment> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<Comment> iterator = li.iterator(); iterator
+						.hasNext();) {
+					Comment item = (Comment) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * 解析列表
+	 * @param <T>
+	 * @param <T>
+	 */
+	public static   ArrayList<ResourceGXVO> parseResourceGXVOList(String jsonData) {
+		ArrayList<ResourceGXVO> list = new ArrayList<ResourceGXVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<ResourceGXVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<ResourceGXVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<ResourceGXVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					ResourceGXVO item = (ResourceGXVO) iterator.next();
 					list.add(item);
 				}
 			}
