@@ -1,6 +1,8 @@
 package com.cpstudui.zhuojiaren.lz;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient.ErrorCode;
+import io.rong.imlib.RongIMClient.OperationCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,7 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.gtype;
 import com.cpstudio.zhuojiaren.ui.EditEventActivity;
+import com.cpstudio.zhuojiaren.ui.QuanCreateActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.TabButton;
@@ -214,12 +217,13 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						getApplicationContext())) {
 					if (isfollow) {
 						isfollow = false;
-						pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
-								null, R.string.label_exitSuccess);
+						pwh.showPopTip(findViewById(R.id.root), null,
+								R.string.label_exitSuccess);
 						loadData();
 					} else {
-						pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
-								null, R.string.label_applysuccess);
+						pwh.showPopTip(findViewById(R.id.root), null,
+								R.string.label_applysuccess);
+						joinGroup(groupid, groupName);
 					}
 				}
 				break;
@@ -227,14 +231,43 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			case MsgTagVO.MSG_FOWARD: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-					pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
-							null, R.string.label_recommandSuccess);
+					pwh.showPopTip(findViewById(R.id.root), null,
+							R.string.label_recommandSuccess);
 				}
 				break;
 			}
 			}
 		}
 	};
+
+	private void joinGroup(String groupid, String groupname) {
+		// TODO Auto-generated method stub
+		/**
+		 * 加入群组。
+		 * 
+		 * @param groupId
+		 *            群组 Id。
+		 * @param groupName
+		 *            群组名称。
+		 * @param callback
+		 *            加入群组状态的回调。
+		 */
+		RongIM.getInstance().getRongIMClient()
+				.joinGroup(groupid, groupname, new OperationCallback() {
+
+					@Override
+					public void onSuccess() {
+						CommonUtil.displayToast(ZhuoQuanMainActivity.this,
+								"向融云，加入圈子成功");
+					}
+
+					@Override
+					public void onError(ErrorCode errorCode) {
+						CommonUtil.displayToast(ZhuoQuanMainActivity.this,
+								"向融云，加入圈子失败");
+					}
+				});
+	}
 
 	private void loadData() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
@@ -329,11 +362,9 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			}
 		});
 		btnPubActive.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-
 				Intent i = new Intent(ZhuoQuanMainActivity.this,
 						EditEventActivity.class);
 				i.putExtra("groupid", groupid);
@@ -341,19 +372,12 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			}
 		});
 		btnQuanChat.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				// // 进入圈聊界面
-				// Intent i = new Intent(ZhuoQuanMainActivity.this,
-				// QuanBoardChatActivity.class);
-				// i.putExtra("groupid", groupid);
-				// startActivity(i);
 				RongIM.getInstance().startGroupChat(ZhuoQuanMainActivity.this,
 						groupid, groupName);
-				// RongIM.getInstance().startPrivateChat(ZhuoQuanMainActivity.this,
-				// "9237", groupName);
 			}
 		});
 		btnJoinQuan.setOnClickListener(new OnClickListener() {

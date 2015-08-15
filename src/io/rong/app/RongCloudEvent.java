@@ -41,6 +41,7 @@ import android.view.View;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.TabContainerActivity;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 import com.sea_monster.exception.BaseException;
 import com.sea_monster.network.AbstractHttpRequest;
@@ -128,78 +129,77 @@ public final class RongCloudEvent implements
 		RongIM.getInstance().getRongIMClient()
 				.setConnectionStatusListener(this);// 设置连接状态监听器。
 
-		 //扩展功能自定义
-		 InputProvider.ExtendProvider[] provider = {
-		 new ImageInputProvider(RongContext.getInstance()),//图片
-		 new CameraInputProvider(RongContext.getInstance()),//相机
-		 new LocationInputProvider(RongContext.getInstance()),//地理位置
-		 new VoIPInputProvider(RongContext.getInstance()),// 语音通话
-		 new LZExtendProvider(RongContext.getInstance())//自定义通讯录
-		 };
-		 RongIM.getInstance().resetInputExtensionProvider(Conversation.ConversationType.PRIVATE,
-		 provider);
-
+		// 扩展功能自定义
+		InputProvider.ExtendProvider[] provider = {
+				new ImageInputProvider(RongContext.getInstance()),// 图片
+				new CameraInputProvider(RongContext.getInstance()),// 相机
+				new LocationInputProvider(RongContext.getInstance()),// 地理位置
+				new VoIPInputProvider(RongContext.getInstance()),// 语音通话
+				new LZExtendProvider(RongContext.getInstance()) // 自定义通讯录
+		};
+		RongIM.getInstance().resetInputExtensionProvider(
+				Conversation.ConversationType.PRIVATE, provider);
 
 	}
 
 	/**
-	 * 自定义 push 通知。
-	 * 如 onReceivePushMessage 返回 true 融云不会在通知栏弹出通知，需要开发者自已处理。
+	 * 自定义 push 通知。 如 onReceivePushMessage 返回 true 融云不会在通知栏弹出通知，需要开发者自已处理。
+	 * 
 	 * @param msg
 	 * @return
 	 */
-	@Override 
+	@Override
 	public boolean onReceivePushMessage(PushNotificationMessage msg) {
 		Log.d(TAG, "onReceived-onPushMessageArrive:" + msg.getContent());
 
-		
-//		PushNotificationManager.getInstance().onReceivePush(msg);
-//		Intent intent = new Intent();
-//		Uri uri;
-//
-//		intent.setAction(Intent.ACTION_VIEW);
-//
-//		Conversation.ConversationType conversationType = msg
-//				.getConversationType();
-//
-//		uri = Uri.parse("rong://" + RongContext.getInstance().getPackageName())
-//				.buildUpon().appendPath("conversationlist").build();
-//		intent.setData(uri);
-//		Log.d(TAG, "onPushMessageArrive-url:" + uri.toString());
-//
-//		Notification notification = null;
-//
-//		PendingIntent pendingIntent = PendingIntent.getActivity(
-//				RongContext.getInstance(), 0, intent,
-//				PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//		if (android.os.Build.VERSION.SDK_INT < 11) {
-//			notification = new Notification(RongContext.getInstance()
-//					.getApplicationInfo().icon, "自定义 notification",
-//					System.currentTimeMillis());
-//
-//			notification.setLatestEventInfo(RongContext.getInstance(),
-//					"自定义 title", "这是 Content:" + msg.getObjectName(),
-//					pendingIntent);
-//			notification.flags = Notification.FLAG_AUTO_CANCEL;
-//			notification.defaults = Notification.DEFAULT_SOUND;
-//		} else {
-//
-//			notification = new Notification.Builder(RongContext.getInstance())
-//					.setLargeIcon(getAppIcon())
-//					.setSmallIcon(R.drawable.ic_launcher)
-//					.setTicker("自定义 notification").setContentTitle("自定义 title")
-//					.setContentText("这是 Content:" + msg.getObjectName())
-//					.setContentIntent(pendingIntent).setAutoCancel(true)
-//					.setDefaults(Notification.DEFAULT_ALL).build();
-//
-//		}
-//
-//		NotificationManager nm = (NotificationManager) RongContext
-//				.getInstance().getSystemService(
-//						RongContext.getInstance().NOTIFICATION_SERVICE);
-//
-//		nm.notify(0, notification);
+		// PushNotificationManager.getInstance().onReceivePush(msg);
+		// Intent intent = new Intent();
+		// Uri uri;
+		//
+		// intent.setAction(Intent.ACTION_VIEW);
+		//
+		// Conversation.ConversationType conversationType = msg
+		// .getConversationType();
+		//
+		// uri = Uri.parse("rong://" +
+		// RongContext.getInstance().getPackageName())
+		// .buildUpon().appendPath("conversationlist").build();
+		// intent.setData(uri);
+		// Log.d(TAG, "onPushMessageArrive-url:" + uri.toString());
+		//
+		// Notification notification = null;
+		//
+		// PendingIntent pendingIntent = PendingIntent.getActivity(
+		// RongContext.getInstance(), 0, intent,
+		// PendingIntent.FLAG_UPDATE_CURRENT);
+		//
+		// if (android.os.Build.VERSION.SDK_INT < 11) {
+		// notification = new Notification(RongContext.getInstance()
+		// .getApplicationInfo().icon, "自定义 notification",
+		// System.currentTimeMillis());
+		//
+		// notification.setLatestEventInfo(RongContext.getInstance(),
+		// "自定义 title", "这是 Content:" + msg.getObjectName(),
+		// pendingIntent);
+		// notification.flags = Notification.FLAG_AUTO_CANCEL;
+		// notification.defaults = Notification.DEFAULT_SOUND;
+		// } else {
+		//
+		// notification = new Notification.Builder(RongContext.getInstance())
+		// .setLargeIcon(getAppIcon())
+		// .setSmallIcon(R.drawable.ic_launcher)
+		// .setTicker("自定义 notification").setContentTitle("自定义 title")
+		// .setContentText("这是 Content:" + msg.getObjectName())
+		// .setContentIntent(pendingIntent).setAutoCancel(true)
+		// .setDefaults(Notification.DEFAULT_ALL).build();
+		//
+		// }
+		//
+		// NotificationManager nm = (NotificationManager) RongContext
+		// .getInstance().getSystemService(
+		// RongContext.getInstance().NOTIFICATION_SERVICE);
+		//
+		// nm.notify(0, notification);
 		return true;
 	}
 
@@ -225,6 +225,7 @@ public final class RongCloudEvent implements
 	/**
 	 * 接收消息的监听器：OnReceiveMessageListener 的回调方法，接收到消息后执行。
 	 * 接收消息监听器的实现，所有接收到的消息、通知、状态都经由此处设置的监听器处理。包括私聊消息、讨论组消息、群组消息、聊天室消息以及各种状态。
+	 * 
 	 * @param message
 	 *            接收到的消息的实体信息。
 	 * @param left
@@ -387,8 +388,10 @@ public final class RongCloudEvent implements
 		//
 		// return DemoContext.getInstance().getUserInfoById(userId);
 		mUserInfosDao = DemoContext.getInstance(mContext).getmUserInfosDao();
-		if (mUserInfosDao==null || mUserInfosDao.getSimpleInfoById(userId) == null) {
+		if (mUserInfosDao == null
+				|| mUserInfosDao.getSimpleInfoById(userId) == null) {
 			// 数据库中不存在，网络请求
+
 		}
 
 		return DemoContext.getInstance(mContext).getUserInfoById(userId);
@@ -403,14 +406,11 @@ public final class RongCloudEvent implements
 	 */
 	@Override
 	public Group getGroupInfo(String groupId) {
-		// /**
-		// * demo 代码 开发者需替换成自己的代码。
-		// */
-		// if (DemoContext.getInstance().getGroupMap() == null)
-		// return null;
-		//
-		// return DemoContext.getInstance().getGroupMap().get(groupId);
-		return null;
+
+		if (ZhuoConnHelper.getInstance(mContext).getGroupMap() == null)
+			return null;
+
+		return ZhuoConnHelper.getInstance(mContext).getGroupMap().get(groupId);
 	}
 
 	/**
@@ -429,9 +429,9 @@ public final class RongCloudEvent implements
 			Conversation.ConversationType conversationType, UserInfo user) {
 		Log.d(TAG, "onUserPortraitClick");
 
-			Intent i = new Intent(context, ZhuoMaiCardActivity.class);
-			i.putExtra("userid", user.getUserId());
-			context.startActivity(i);
+		Intent i = new Intent(context, ZhuoMaiCardActivity.class);
+		i.putExtra("userid", user.getUserId());
+		context.startActivity(i);
 		//
 		// /**
 		// * demo 代码 开发者需替换成自己的代码。

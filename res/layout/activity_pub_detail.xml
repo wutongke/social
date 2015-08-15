@@ -24,9 +24,9 @@
                 <ImageView
                     android:id="@+id/agvd_image"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp" 
+                    android:layout_height="200dp"
                     android:scaleType="centerCrop"
-                    />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/agvd_name_and_order"
@@ -55,8 +55,6 @@
                     android:textColor="@color/graywhite" />
             </LinearLayout>
         </ScrollView>
-
-        
     </RelativeLayout>
 
 </LinearLayout>

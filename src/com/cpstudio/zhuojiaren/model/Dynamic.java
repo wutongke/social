@@ -7,7 +7,7 @@ public class Dynamic {
 	public static final int DYNATIC_TYPE_MY_JIAREN=0;
 	public static final int DYNATIC_TYPE_SB_JIAREN=1;
 	public static final int DYNATIC_TYPE_ALL_JIAREN=2;
-	
+	public static final int DYNATIC_TYPE_IFOCUS_JIAREN=3;
 	private String statusid;
 
 	private String content;

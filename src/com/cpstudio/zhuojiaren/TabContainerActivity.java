@@ -1,9 +1,15 @@
 package com.cpstudio.zhuojiaren;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.RongIMClient.ErrorCode;
+import io.rong.imlib.RongIMClient.OperationCallback;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Group;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.androidpn.client.Notifier;
 
@@ -14,9 +20,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,8 +41,11 @@ import com.cpstudio.zhuojiaren.facade.CmtRcmdFacade;
 import com.cpstudio.zhuojiaren.facade.ImChatFacade;
 import com.cpstudio.zhuojiaren.facade.ImQuanFacade;
 import com.cpstudio.zhuojiaren.facade.SysMsgFacade;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.SysApplication;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.GroupsForIM;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.ui.GrouthActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -43,7 +54,7 @@ import com.cpstudui.zhuojiaren.lz.LZMyHomeActivity;
 @SuppressWarnings("deprecation")
 public class TabContainerActivity extends TabActivity implements
 		OnTabChangeListener {
-//融云接收广播消息类型
+	// 融云接收广播消息类型
 	public static final String ACTION_DMEO_RECEIVE_MESSAGE = "action_demo_receive_message";
 	public static final String ACTION_DMEO_GROUP_MESSAGE = "action_demo_group_message";
 	public static final String ACTION_DMEO_AGREE_REQUEST = "action_demo_agree_request";
@@ -77,26 +88,28 @@ public class TabContainerActivity extends TabActivity implements
 			R.drawable.indicator_tab_ico_im, R.drawable.indicator_tab_ico_up,
 			R.drawable.indicator_tab_ico_my };
 	private String[] mTextArray = null;
-	//有用，在主activity中来监听显示未读消息
-    public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.OnReceiveUnreadCountChangedListener() {
-        @Override
-        public void onMessageIncreased(int count) {
-            if (count == 0) {
-            	numTV.setVisibility(View.GONE);
-            } else if (count > 0 && count < 100) {
-            	numTV.setVisibility(View.VISIBLE);
-            	numTV.setText(count + "");
-            } else {
-            	numTV.setVisibility(View.VISIBLE);
-            	numTV.setText(R.string.no_read_message);
-            }
-        }
-    };
+	// 有用，在主activity中来监听显示未读消息
+	public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.OnReceiveUnreadCountChangedListener() {
+		@Override
+		public void onMessageIncreased(int count) {
+			if (count == 0) {
+				numTV.setVisibility(View.GONE);
+			} else if (count > 0 && count < 100) {
+				numTV.setVisibility(View.VISIBLE);
+				numTV.setText(count + "");
+			} else {
+				numTV.setVisibility(View.VISIBLE);
+				numTV.setText(R.string.no_read_message);
+			}
+		}
+	};
+	private ZhuoConnHelper connHelper = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tab_container);
+
 		init();
 		//
 		//
@@ -138,6 +151,88 @@ public class TabContainerActivity extends TabActivity implements
 		// //mController.setShareMedia(umVideo);
 	}
 
+	private void getMyGroupSuccess(GroupsForIM groups) {
+		if (groups != null) {
+			List<Group> grouplist = new ArrayList<Group>();
+			if (groups.getCreateGroups() != null) {
+				for (int i = 0; i < groups.getCreateGroups().size(); i++) {
+					String id = groups.getCreateGroups().get(i).getGroupid();
+					String name = groups.getCreateGroups().get(i).getGname();
+					if (id == null || name == null)
+						continue;
+					if (groups.getCreateGroups().get(i).getGheader() != null) {
+						Uri uri = Uri.parse(groups.getCreateGroups().get(i)
+								.getGheader());
+						grouplist.add(new Group(id, name, uri));
+					} else {
+						grouplist.add(new Group(id, name, null));
+					}
+				}
+			}
+			if (groups.getFollowGroups() != null) {
+				for (int i = 0; i < groups.getFollowGroups().size(); i++) {
+					String id = groups.getFollowGroups().get(i).getGroupid();
+					String name = groups.getFollowGroups().get(i).getGname();
+					if (id == null || name == null)
+						continue;
+					if (groups.getFollowGroups().get(i).getGheader() != null) {
+						Uri uri = Uri.parse(groups.getFollowGroups().get(i)
+								.getGheader());
+						grouplist.add(new Group(id, name, uri));
+					} else {
+						grouplist.add(new Group(id, name, null));
+					}
+				}
+			}
+			HashMap<String, Group> groupM = new HashMap<String, Group>();
+			for (int i = 0; i < grouplist.size(); i++) {
+				groupM.put(grouplist.get(i).getId(), grouplist.get(i));
+//测试，因为之前的圈子都还未加入，先硬编码加入(TabConTainerActivity),等定义好推送的允许加入圈子后就可以加入圈子了
+				Group g = grouplist.get(i);
+				RongIM.getInstance()
+						.getRongIMClient()
+						.joinGroup(g.getId(), g.getName(),
+								new OperationCallback() {
+
+									@Override
+									public void onSuccess() {
+
+									}
+
+									@Override
+									public void onError(ErrorCode errorCode) {
+
+									}
+								});
+			}
+
+			if (ZhuoConnHelper.getInstance(getApplicationContext()) != null)
+				ZhuoConnHelper.getInstance(getApplicationContext())
+						.setGroupMap(groupM);
+
+			if (grouplist.size() > 0)
+				RongIM.getInstance()
+						.getRongIMClient()
+						.syncGroup(grouplist,
+								new RongIMClient.OperationCallback() {
+									@Override
+									public void onSuccess() {
+										Log.e("login",
+												"---syncGroup-onSuccess---");
+									}
+
+									@Override
+									public void onError(
+											RongIMClient.ErrorCode errorCode) {
+										Log.e("login",
+												"---syncGroup-onError---");
+									}
+								});
+		} else {
+			// WinToast.toast(this, groups.getCode());
+		}
+	}
+
 	private void init() {
 		ResHelper.getInstance(getApplicationContext()).setAppShow(true);
 		SysApplication.getInstance().addActivity(TabContainerActivity.this);
@@ -158,21 +253,27 @@ public class TabContainerActivity extends TabActivity implements
 		tab.setCurrentTab(curr);
 		tvs.get(0).setTextColor(Color.GREEN);
 		tab.setOnTabChangedListener(this);
-		
-		
-		//有用，监听哪些未读消息
-        final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
-                Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
-                Conversation.ConversationType.APP_PUBLIC_SERVICE, Conversation.ConversationType.PUBLIC_SERVICE};
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener, conversationTypes);
-            }
-        }, 500);
-		
+		// 有用，监听哪些未读消息
+		final Conversation.ConversationType[] conversationTypes = {
+				Conversation.ConversationType.PRIVATE,
+				Conversation.ConversationType.DISCUSSION,
+				Conversation.ConversationType.GROUP,
+				Conversation.ConversationType.SYSTEM,
+				Conversation.ConversationType.APP_PUBLIC_SERVICE,
+				Conversation.ConversationType.PUBLIC_SERVICE };
+
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				RongIM.getInstance().setOnReceiveUnreadCountChangedListener(
+						mCountListener, conversationTypes);
+			}
+		}, 500);
+		connHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		if (connHelper.getGroupMap() == null)
+			connHelper.getMyGroupList(msgHandler, MsgTagVO.DATA_OTHER);
 	}
 
 	/**
@@ -188,6 +289,7 @@ public class TabContainerActivity extends TabActivity implements
 		if (imageView != null) {
 			imageView.setImageResource(mImageResourceArray[index]);
 		}
+
 		TextView textView = (TextView) view.findViewById(R.id.tabtitle);
 		textView.setText(mTextArray[index]);
 		if (index == 2) {
@@ -231,6 +333,14 @@ public class TabContainerActivity extends TabActivity implements
 					// 清楚通知栏消息
 					Notifier notifier = new Notifier(getApplicationContext());
 					notifier.clearNotify();
+				}
+				break;
+			case MsgTagVO.DATA_OTHER:
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					JsonHandler nljh = new JsonHandler((String) msg.obj,
+							getApplicationContext());
+					getMyGroupSuccess(nljh.parseGroupsForIM());
 				}
 				break;
 			default:

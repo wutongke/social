@@ -23,8 +23,6 @@ public class CardActiveNumListActivity extends BaseActivity {
 
 	@InjectView(R.id.textZanMeNum)
 	TextView tvZanedNum;
-	@InjectView(R.id.textByMeNum)
-	TextView tvByMeNum;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,16 +77,6 @@ public class CardActiveNumListActivity extends BaseActivity {
 				Intent i = new Intent(CardActiveNumListActivity.this,
 						UserSameActivity.class);
 				i.putExtra("type", 10);
-				startActivity(i);
-			}
-		});
-		tvByMeNum.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				Intent i = new Intent(CardActiveNumListActivity.this,
-						UserSameActivity.class);
-				i.putExtra("type", 11);
 				startActivity(i);
 			}
 		});

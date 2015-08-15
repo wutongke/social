@@ -24,6 +24,7 @@ import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.GeoVO;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.GroupStatus;
+import com.cpstudio.zhuojiaren.model.GroupsForIM;
 import com.cpstudio.zhuojiaren.model.HangYeVO;
 import com.cpstudio.zhuojiaren.model.ImMsgVO;
 import com.cpstudio.zhuojiaren.model.ImQuanVO;
@@ -217,6 +218,16 @@ public class JsonHandler {
 		return quanVO;
 	}
 
+	public GroupsForIM parseGroupsForIM() {
+		GroupsForIM groupVO = null;
+		try {
+			Gson gson = new Gson();
+			groupVO = gson.fromJson(jsonData, GroupsForIM.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return groupVO;
+	}
 	/**
 	 * 解析活动详情
 	 */

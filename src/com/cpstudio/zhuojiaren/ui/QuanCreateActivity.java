@@ -1,5 +1,9 @@
 package com.cpstudio.zhuojiaren.ui;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient.ErrorCode;
+import io.rong.imlib.RongIMClient.OperationCallback;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,6 +88,7 @@ public class QuanCreateActivity extends BaseActivity {
 	private ArrayList<String> mSelectlist = new ArrayList<String>();
 	private AppClientLef mConnHelper = null;
 	private String groupid = null;
+	private String groupname = null;
 	private LoadImage mLoadImage = new LoadImage();
 	private boolean mHeadChanged = false;
 	private Context mContext;
@@ -372,6 +377,8 @@ public class QuanCreateActivity extends BaseActivity {
 							Intent intent = new Intent();
 							if (groupid != null && !groupid.equals("")) {
 								intent.putExtra("groupid", groupid);
+								//调用融云，自己加入该
+								joinGroup(groupid,groupname);
 							} else {
 								// ...
 							}
@@ -473,6 +480,7 @@ public class QuanCreateActivity extends BaseActivity {
 		EditText introTextTitle = (EditText) findViewById(R.id.editTextQuanIntro);
 		RadioGroup radios = (RadioGroup) findViewById(R.id.radioGroupType);
 		String title = editTextTitle.getText().toString();
+		groupname=title;
 		String intro = introTextTitle.getText().toString();
 		RadioButton radio = (RadioButton) findViewById(radios
 				.getCheckedRadioButtonId());
@@ -514,7 +522,27 @@ public class QuanCreateActivity extends BaseActivity {
 					mIsh2.getTags());
 
 	}
+	private void joinGroup(String groupid,String groupname) {
+		// TODO Auto-generated method stub
+		/**
+		 * 加入群组。
+		 *
+		 * @param groupId   群组 Id。
+		 * @param groupName 群组名称。
+		 * @param callback  加入群组状态的回调。
+		 */
+		RongIM.getInstance().getRongIMClient().joinGroup(groupid, groupname, new OperationCallback() {
 
+		    @Override
+		    public void onSuccess() {
+		    	CommonUtil.displayToast(QuanCreateActivity.this, "向融云，加入圈子成功");
+		    }
+		    @Override
+		    public void onError(ErrorCode errorCode) {
+		    	CommonUtil.displayToast(QuanCreateActivity.this, "向融云，加入圈子失败");
+		    }
+		});
+	}
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == MsgTagVO.ADD_USER) {

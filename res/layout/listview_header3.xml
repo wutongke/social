@@ -117,7 +117,7 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
                     android:contentDescription="@string/ico"
-                    android:scaleType="fitStart"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/default_userhead" />
             </RelativeLayout>
         </RelativeLayout>

@@ -130,29 +130,7 @@
         android:layout_marginRight="1dp"
         android:background="#d8d8d8" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:padding="15dp" >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/textByMeNum"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/label_active_by_me" />
-
-        <TextView
-            android:id="@+id/textByMeNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawableRight="@drawable/ico_arrow_big"
-            android:maxLines="1" />
-    </RelativeLayout>
-
+   
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"

@@ -1,5 +1,7 @@
 package com.cpstudui.zhuojiaren.lz;
 
+import io.rong.imlib.model.Group;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +78,7 @@ public class QuanBriefActivity extends BaseActivity {
 	// 不同身份，功能不同
 	private int memberType = 0;
 	private PopupWindows pwh = null;
-	private String groupid = null;
+	private String groupid = null, groupName = null, gheadurl = null;
 	private ZhuoConnHelper mConnHelper = null;
 	private boolean isfollow = false;// 是否已经加入该圈子
 	private QuanFacade mFacade = null;
@@ -145,12 +147,12 @@ public class QuanBriefActivity extends BaseActivity {
 					}
 					if (null != detail) {
 						memberType = detail.getRole();
-						String name = detail.getGname();
-						tvName.setText(name);
-						String headUrl = detail.getGheader();
-						ivGroupHeader.setTag(headUrl);
-
-						tvQunzhuName.setText(detail.getName());
+						groupName = detail.getGname();
+						tvName.setText(groupName);
+						gheadurl = detail.getGheader();
+						ivGroupHeader.setTag(gheadurl);
+						groupName = detail.getName();
+						tvQunzhuName.setText(groupName);
 						tvGonggao.setText(detail.getGpub());
 						tvBrief.setText(detail.getGintro());
 						// 圈子类型
@@ -221,13 +223,18 @@ public class QuanBriefActivity extends BaseActivity {
 						getApplicationContext())) {
 					if (isfollow) {
 						isfollow = false;
+						mConnHelper.setGroupMap(new Group(groupid, null, null),
+								0);
 						pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
 								null, R.string.label_exitSuccess);
-						// loadData();
 					} else {
+						isfollow = true;
+						mConnHelper.setGroupMap(new Group(groupid, groupName,
+								android.net.Uri.parse(gheadurl)), 0);
 						pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
 								null, R.string.label_applysuccess);
 					}
+					loadData();
 				}
 				break;
 

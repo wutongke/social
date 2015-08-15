@@ -182,6 +182,8 @@ public class DemoContext {
 	 */
 	public UserInfo getUserInfoById(String userId) {
 
+		if(mUserInfosDao==null)
+			return null;
 		UserNewVO user = mUserInfosDao.getSimpleInfoById(userId);
 		if (user == null)
 			return null;

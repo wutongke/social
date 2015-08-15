@@ -148,14 +148,12 @@ public class UserSameActivity extends BaseActivity implements
 		case 10:
 			title.setText(R.string.label_active_zaned_me);
 			break;
-		case 11:
-			title.setText(R.string.label_active_by_me);
 		case 12:// 我的人脉
 			title.setText(R.string.renmai_my);
 			function.setText(R.string.label_manage);
-		
-			//我的人脉不显示“收藏”
-			if(findViewById(R.id.ll_collect)!=null)
+
+			// 我的人脉不显示“收藏”
+			if (findViewById(R.id.ll_collect) != null)
 				findViewById(R.id.ll_collect).setVisibility(View.GONE);
 			function.setOnClickListener(new OnClickListener() {
 

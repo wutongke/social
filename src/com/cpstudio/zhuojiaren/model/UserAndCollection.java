@@ -16,7 +16,6 @@ public class UserAndCollection {
 	//“— ’≤ÿ
 	public static String collection = "1";
 	
-	
 	private String id;
 	private String isCollection;
 	private String distance;

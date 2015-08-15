@@ -50,15 +50,17 @@ public class JiarenActiveActivity extends Activity implements
 	private LoadImage mLoadImage = null;
 	private PopupWindows pwh = null;
 	private String mUid = null;
-	private int mType = Dynamic.DYNATIC_TYPE_ALL_JIAREN;// 类型 0-自己的家人动态
+	private int mType = Dynamic.DYNATIC_TYPE_MY_JIAREN;// 类型 0-自己的家人动态
 														// 1-指定用户的家人动态 2-所有家人动态
 	private String mLastId = "0";
 	private ZhuoConnHelper mConnHelper = null;
 	private UserFacade mFacade = null;
 	private int mPage = 1;
 	final int pageSize = 10;
-//	private InfoFacade infoFacade = null;
+	final int titleIds[] = { R.string.title_active, R.string.title_active,
+			 R.string.label_active_all,R.string.label_active_i_focus};
 
+	// private InfoFacade infoFacade = null;
 	// type==0时所有人动态，就只是动态，不包括需求，话题，活动什么的
 	/*
 	 */
@@ -68,14 +70,20 @@ public class JiarenActiveActivity extends Activity implements
 		setContentView(R.layout.activity_jiaren_active);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		mFacade = new UserFacade(getApplicationContext());
-//		infoFacade = new InfoFacade(getApplicationContext(),
-//				InfoFacade.ACTIVELIST);
+		// infoFacade = new InfoFacade(getApplicationContext(),
+		// InfoFacade.ACTIVELIST);
 		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		pwh = new PopupWindows(JiarenActiveActivity.this);
 		mLoadImage = new LoadImage();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
-		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
-				R.layout.listview_header3);
+		mType = getIntent().getIntExtra("mType", 0);
+		((TextView) findViewById(R.id.userNameShow)).setText(titleIds[mType]);
+		if (Dynamic.DYNATIC_TYPE_MY_JIAREN == mType)
+			mPullDownView.initHeaderViewAndFooterViewAndListView(this,
+					R.layout.listview_header3);
+		else
+			mPullDownView.initHeaderViewAndFooterViewAndListView(this,
+					R.layout.listview_header2);
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
@@ -84,30 +92,26 @@ public class JiarenActiveActivity extends Activity implements
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
-
-		mType = getIntent().getIntExtra("mType", 2);
-		if (Dynamic.DYNATIC_TYPE_ALL_JIAREN != mType)
-			findViewById(R.id.ll_active_menue).setVisibility(View.GONE);
 		loadData();
 		initClick();
 	}
 
 	@Override
 	protected void onResume() {
-		loadInfo();
+		if (Dynamic.DYNATIC_TYPE_MY_JIAREN == mType)
+			loadInfo();
 		super.onResume();
 	}
 
 	private void initClick() {
 		findViewById(R.id.buttonViewPub).setOnClickListener(
 				new OnClickListener() {
-
 					@Override
 					public void onClick(View v) {
 						pwh.showPop(findViewById(R.id.layoutJiarenActive));
 					}
 				});
-		if (Dynamic.DYNATIC_TYPE_ALL_JIAREN == mType) {
+		if (Dynamic.DYNATIC_TYPE_MY_JIAREN == mType) {
 			findViewById(R.id.textViewActiveJiaren).setOnClickListener(
 					new OnClickListener() {// 我的所有家人动态
 						@Override
@@ -137,7 +141,7 @@ public class JiarenActiveActivity extends Activity implements
 					});
 
 			findViewById(R.id.textViewActiveZhuomai).setOnClickListener(
-					new OnClickListener() { //倬脉动态，即倬脉动态就是公告信息
+					new OnClickListener() { // 倬脉动态，即倬脉动态就是公告信息
 						@Override
 						public void onClick(View v) {
 							Intent i = new Intent(JiarenActiveActivity.this,
@@ -328,9 +332,7 @@ public class JiarenActiveActivity extends Activity implements
 				break;
 			}
 			}
-
 		}
-
 	};
 
 	@Override
@@ -378,7 +380,7 @@ public class JiarenActiveActivity extends Activity implements
 
 	@Override
 	public void onRefresh() {
-		mPage = 0;
+		mPage = 1;
 		loadData();
 	}
 
@@ -390,16 +392,6 @@ public class JiarenActiveActivity extends Activity implements
 			// msg.obj = list;
 			// msg.sendToTarget();
 		} else {
-			// String params = ZhuoCommHelper.getUrlMsgList();
-			// params += "?pageflag=" + "1";
-			// params += "&reqnum=" + "10";
-			// params += "&lastid=" + mLastId;
-			// params += "&type=" + mType;
-			// params += "&gongxutype=" + "0";
-			// params += "&from=" + "6";
-			// params += "&uid=" + mUid;
-			// mConnHelper.getFromServer(params, mUIHandler,
-			// MsgTagVO.DATA_MORE);
 			mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_MORE, mType,
 					null, mPage, pageSize);
 		}
@@ -411,44 +403,6 @@ public class JiarenActiveActivity extends Activity implements
 				onRefresh();
 			} else if (requestCode == MsgTagVO.MSG_CMT) {
 				Toast.makeText(JiarenActiveActivity.this, "评论成功！", 2000).show();
-				// String forward = data.getStringExtra("forward");
-				// String msgid = data.getStringExtra("msgid");
-				// String outterid = data.getStringExtra("outterid");
-				// if (forward != null && forward.equals("1")) {
-				// onRefresh();
-				// } else {
-				// for (int i = 0; i < mList.size(); i++) {
-				// ZhuoInfoVO item = mList.get(i);
-				// if (msgid != null) {
-				// if (item.getMsgid().equals(msgid)
-				// && outterid == null) {
-				// if (forward != null && forward.equals("1")) {
-				// item.setForwardnum(String.valueOf(Integer
-				// .valueOf(item.getForwardnum()) + 1));
-				// }
-				// item.setCmtnum(String.valueOf(Integer
-				// .valueOf(item.getCmtnum()) + 1));
-				// mList.set(i, item);
-				// break;
-				// } else if (outterid != null
-				// && item.getOrigin() != null
-				// && item.getOrigin().getMsgid()
-				// .equals(msgid)) {
-				// if (forward != null && forward.equals("1")) {
-				// String forwardStr = String.valueOf(Integer
-				// .valueOf(item.getOrigin()
-				// .getForwardnum()) + 1);
-				// item.getOrigin().setForwardnum(forwardStr);
-				// }
-				// item.getOrigin().setCmtnum(
-				// String.valueOf(Integer.valueOf(item
-				// .getOrigin().getCmtnum()) + 1));
-				// mList.set(i, item);
-				// }
-				// }
-				// }
-				// }
-				// mAdapter.notifyDataSetChanged();
 			} else {
 				String filePath = pwh.dealPhotoReturn(requestCode, resultCode,
 						data, false);
