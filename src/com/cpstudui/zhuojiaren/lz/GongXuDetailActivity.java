@@ -6,10 +6,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
@@ -33,11 +31,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.MsgCmtActivity;
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.UserSelectActivity;
-import com.cpstudio.zhuojiaren.adapter.MsgCmtListAdapter;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
@@ -45,20 +40,14 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.CmtVO;
-import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
-import com.cpstudio.zhuojiaren.model.GeoVO.ResultVO;
 import com.cpstudio.zhuojiaren.model.Comment;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
-import com.cpstudio.zhuojiaren.model.PicVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
-import com.cpstudio.zhuojiaren.ui.CrowdFundingDetailActivity;
 import com.cpstudio.zhuojiaren.ui.ResCommentActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
-import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.google.gson.Gson;
 
@@ -190,6 +179,7 @@ public class GongXuDetailActivity extends BaseActivity {
 						GongXuDetailActivity.this);
 				rl.setLayoutParams(trlp);
 				ImageView iv = new ImageView(GongXuDetailActivity.this);
+				iv.setScaleType(ScaleType.FIT_CENTER);
 				iv.setLayoutParams(rlp);
 				rl.addView(iv);
 				rl.setTag(pics.get(i).getPic());
@@ -221,7 +211,7 @@ public class GongXuDetailActivity extends BaseActivity {
 			// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
 			// drawable.getMinimumHeight());
 			// tvCollect.setCompoundDrawables(null, drawable, null, null);
-			tvCollect.setBackgroundResource(R.drawable.tab_collect_on);
+			tvCollect.setBackgroundResource(R.drawable.dongt);
 		}
 
 		List<Comment> cmts = gxInfo.getCommentList();
@@ -295,8 +285,8 @@ public class GongXuDetailActivity extends BaseActivity {
 			case MsgTagVO.MSG_FOWARD: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-					CommonUtil.displayToast(getApplicationContext(),
-							"∑÷œÌ≥…π¶");
+					pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
+							null, R.string.label_share_success);
 				}else{
 					com.cpstudio.zhuojiaren.model.ResultVO res = JsonHandler.parseResult((String) msg.obj);
 					CommonUtil.displayToast(getApplicationContext(),
@@ -311,7 +301,7 @@ public class GongXuDetailActivity extends BaseActivity {
 					// findViewById(R.id.buttonTabCollect);
 					// TextView numTV = (TextView)
 					// findViewById(R.id.textViewGongXuCollectNum);
-					if (isCollect != null && isCollect.equals("0")) {
+					if (isCollect != null && isCollect.equals("1")) {
 						// tvCollect.setText(R.string.label_collectCancel);
 						// Drawable drawable = getResources().getDrawable(
 						// R.drawable.tab_collect_on);
@@ -320,8 +310,8 @@ public class GongXuDetailActivity extends BaseActivity {
 						// tvCollect.setCompoundDrawables(null, drawable, null,
 						// null);
 						tvCollect
-								.setBackgroundResource(R.drawable.tab_collect_on);
-						isCollect = "1";
+								.setBackgroundResource(R.drawable.dongt2);
+						isCollect = "0";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_collectSuccess);
 						// numTV.setText(String.valueOf(Integer.valueOf(numTV
@@ -335,8 +325,8 @@ public class GongXuDetailActivity extends BaseActivity {
 						// tvCollect.setCompoundDrawables(null, drawable, null,
 						// null);
 						tvCollect
-								.setBackgroundResource(R.drawable.tab_collect_off);
-						isCollect = "0";
+								.setBackgroundResource(R.drawable.dongt);
+						isCollect = "1";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_cancelCollect);
 						// numTV.setText(String.valueOf(Integer.valueOf(numTV
@@ -365,7 +355,7 @@ public class GongXuDetailActivity extends BaseActivity {
 			}
 		});
 		tvCollect.setVisibility(View.VISIBLE);
-		tvCollect.setBackgroundResource(R.drawable.tab_collect_off);
+		tvCollect.setBackgroundResource(R.drawable.dongt);
 		tvCollect.setOnClickListener(new OnClickListener() {
 
 			@Override

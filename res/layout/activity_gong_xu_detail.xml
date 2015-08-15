@@ -15,7 +15,6 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/card"
         android:layout_below="@id/lltitle"
-        android:layout_marginTop="15dp" 
         android:layout_marginBottom="15dp" >
 
         <ListView

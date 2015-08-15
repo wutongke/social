@@ -2,7 +2,9 @@ package com.cpstudio.zhuojiaren.fragment;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +20,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -135,8 +138,36 @@ public class ResourceGXFragment extends Fragment {
 						GongXuDetailActivity.class);
 				// 暂时写死，测试
 				// intent.putExtra("msgid",mListDatas.get(arg2).getMsgId());
-				intent.putExtra("msgid", mDatas.get(arg2-1).getSdid());
+				intent.putExtra("msgid", mDatas.get(arg2 - 1).getSdid());
 				startActivity(intent);
+			}
+		});
+		mListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					final int position, long id) {
+				// TODO Auto-generated method stub
+				new AlertDialog.Builder(ResourceGXFragment.this.getActivity(),
+						AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+						.setTitle("删除信息？")
+						.setPositiveButton("确定",
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										// TODO Auto-generated method stub
+										appClientLef.deleteGongxu(
+												mDatas.get(position - 1).getSdid(),
+												uiHandler, MsgTagVO.MSG_DEL,
+												getActivity());
+										mDatas.remove(position-1);
+										mAdapter.notifyDataSetChanged();
+									}
+								}).setNegativeButton("取消", null).create()
+						.show();
+				return true;
 			}
 		});
 		MyGridView gridView = (MyGridView) view.findViewById(R.id.hcd_gridview);
@@ -315,6 +346,13 @@ public class ResourceGXFragment extends Fragment {
 				updateItemList((String) msg.obj, false, true);
 				break;
 			}
+			case MsgTagVO.MSG_DEL:
+				if (JsonHandler.checkResult((String) msg.obj, getActivity())) {
+					CommonUtil.displayToast(getActivity(), "删除成功");
+				} else {
+					CommonUtil.displayToast(getActivity(), R.string.data_error);
+					return;
+				}
 			}
 			;
 		}

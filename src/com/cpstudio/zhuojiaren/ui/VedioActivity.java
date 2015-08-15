@@ -126,6 +126,16 @@ public class VedioActivity extends BaseActivity {
 				});
 		mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		setVolum();
+		if (isFullscreen) {
+			DisplayMetrics metric = new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(metric);
+			frame.setLayoutParams(VedioPlayer.getLayoutParamsBasedOnParent(
+					frame, metric.widthPixels, metric.heightPixels));
+//			frame.getLayoutParams().height =  metric.heightPixels;
+//			frame.getLayoutParams().width =  metric.widthPixels;
+//			frame.setLayoutParams(new FrameLayout.LayoutParams(
+//					metric.widthPixels, metric.heightPixels));
+		}
 	}
 
 	@Override
@@ -364,9 +374,10 @@ public class VedioActivity extends BaseActivity {
 									| View.SYSTEM_UI_FLAG_FULLSCREEN);
 			DisplayMetrics metric = new DisplayMetrics();
 			getWindowManager().getDefaultDisplay().getMetrics(metric);
-			frame.setLayoutParams(VedioPlayer.getLayoutParamsBasedOnParent(frame, metric.widthPixels,
-					metric.heightPixels));
-//			frame.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT ,FrameLayout.LayoutParams.MATCH_PARENT ));
+//			frame.setLayoutParams(VedioPlayer.getLayoutParamsBasedOnParent(frame, metric.widthPixels,
+//					metric.heightPixels));
+//			frame.setLayoutParams(new FrameLayout.LayoutParams(metric.widthPixels,
+//					metric.heightPixels));
 			setFullScreen();
 			isFullscreen = true;
 		}

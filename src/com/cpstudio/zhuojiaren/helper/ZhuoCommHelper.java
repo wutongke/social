@@ -131,6 +131,11 @@ public class ZhuoCommHelper {
 	private static String COMMONCOMMENT = "/supplyDemandCmt.do";
 	private static String COMMONCOLLECTION = "/collectSupplyDemand.do";
 	private static String SHARETOZHUO = "/shareSupplyDemand.do";
+	private static String DELETEGONGXU = "/deleteSupplyDemand.do";
+	public static String getDELETEGONGXU() {
+		return SERVER + DELETEGONGXU;
+	}
+
 	public static String getSHARETOZHUO() {
 		return SERVER + SHARETOZHUO;
 	}
@@ -157,7 +162,33 @@ public class ZhuoCommHelper {
 
 	// ’≤ÿ¡–±Ìurls
 	public static final String[] collectionUrls = {
-			
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST
 	};
 	
 	public static String getGetcrowdfundingprogress() {

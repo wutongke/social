@@ -1,12 +1,10 @@
 package com.cpstudio.zhuojiaren;
 
-import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
-import io.rong.imlib.RongIMClient.ConnectCallback;
-import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.model.Conversation;
 import io.rong.message.ContactNotificationMessage;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,11 +30,13 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.adapter.MsgUserListAdapter;
 import com.cpstudio.zhuojiaren.facade.CardMsgFacade;
@@ -53,7 +53,7 @@ import com.cpstudio.zhuojiaren.model.SysMsgVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ImMsgComparator;
-import com.cpstudui.zhuojiaren.lz.MainActivity;
+import com.umeng.socialize.utils.Log;
 
 public class MsgListActivity extends FragmentActivity implements
 		OnItemClickListener {
@@ -64,6 +64,7 @@ public class MsgListActivity extends FragmentActivity implements
 	private ImChatFacade mFacade = null;
 	private MsgReceiver msgReceiver = null;
 	private String mSearchKey = "";
+	ConversationListFragment listFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +82,7 @@ public class MsgListActivity extends FragmentActivity implements
 		mListView.setOnItemClickListener(this);
 
 		ViewGroup root = (ViewGroup) findViewById(R.id.ryConversationListContainer);
-		ConversationListFragment listFragment = ConversationListFragment
-				.getInstance();
+		listFragment = ConversationListFragment.getInstance();
 		Uri uri = Uri
 				.parse("rong://" + getApplicationInfo().packageName)
 				.buildUpon()
@@ -106,7 +106,6 @@ public class MsgListActivity extends FragmentActivity implements
 						Conversation.ConversationType.SYSTEM.getName(), "false")// 系统
 				.build();
 		listFragment.setUri(uri);
-
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager
 				.beginTransaction();
@@ -127,6 +126,52 @@ public class MsgListActivity extends FragmentActivity implements
 		msgReceiver = new MsgReceiver();
 		IntentFilter filter = new IntentFilter("com.cpstudio.chatlist");
 		registerReceiver(msgReceiver, filter);
+		// 获取其高度
+		ViewGroup root = (ViewGroup) findViewById(R.id.ryConversationListContainer);
+		ListView listFromFragment = null;
+		BaseAdapter adapterFromFragment = null;
+		Field fields[] = listFragment.getClass().getDeclaredFields();
+		Field.setAccessible(fields, true);
+		for (Field field : fields) {
+			field.setAccessible(true);
+			if (field.getName().equals("mList")) {
+				try {
+					listFromFragment = (ListView) field.get(listFragment);
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					Log.d("Debug", "");
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					Log.d("Debug", "");
+				}
+
+			} else if (field.getName().equals("mAdapter")) {
+				try {
+					adapterFromFragment = (BaseAdapter) field.get(listFragment);
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					Log.d("Debug", "");
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					Log.d("Debug", "");
+				}
+
+			}
+		}
+		if (listFromFragment != null) {
+			LinearLayout.LayoutParams lp = (LayoutParams) root
+					.getLayoutParams();
+			int totalHeight = 0;
+			for (int i = 0; i < adapterFromFragment.getCount(); i++) {
+				View listItem = adapterFromFragment.getView(i, null,
+						listFromFragment);
+				listItem.measure(0, 0);
+				totalHeight += listItem.getMeasuredHeight();
+			}
+			lp.height = totalHeight;
+			if(totalHeight>0)
+			root.setLayoutParams(lp);
+		}
 		super.onResume();
 	}
 
@@ -146,9 +191,9 @@ public class MsgListActivity extends FragmentActivity implements
 	}
 
 	private void startQuanListActivity() {
-//		RongIM.getInstance().startPrivateChat(MsgListActivity.this, "9237",
-//				"标题");
-//		RongIM.getInstance().startGroupChat(context, targetGroupId, title);
+		// RongIM.getInstance().startPrivateChat(MsgListActivity.this, "9237",
+		// "标题");
+		// RongIM.getInstance().startGroupChat(context, targetGroupId, title);
 		// findViewById(R.id.textViewMsgQuanAll).setVisibility(View.GONE);
 		// Intent i = new Intent(MsgListActivity.this,
 		// MsgQuanListActivity.class);

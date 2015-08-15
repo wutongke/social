@@ -185,6 +185,18 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				cancelable, cancel, data);
 	}
+	/***
+	 * 删除需求
+	 */
+	public boolean deleteGongxu(String sdid,  Handler handler,
+			int handlerTag, Activity activity) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("sdid", sdid));
+		String url = ZhuoCommHelper.getDisolveQuan();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				true, null, null);
+	}
 
 	/**
 	 * 退出圈子
@@ -596,7 +608,7 @@ public class AppClientLef {
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("id", id));
 		nameValuePairs.add(new BasicNameValuePair("content", content));
-		if (!toId.equals("-1")) {
+		if (toId!=null&&!toId.equals("-1")) {
 			nameValuePairs.add(new BasicNameValuePair("toUserid", toUserid));
 			nameValuePairs.add(new BasicNameValuePair("toId", toId));
 		}

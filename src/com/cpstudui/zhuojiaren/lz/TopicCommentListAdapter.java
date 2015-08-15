@@ -25,7 +25,7 @@ import android.widget.TextView;
 public class TopicCommentListAdapter extends BaseAdapter {
 	private List<Comment> mList = null;
 	private LayoutInflater inflater = null;
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage;
 	private String msgid = null;
 	private Context mContext;
 
@@ -35,6 +35,15 @@ public class TopicCommentListAdapter extends BaseAdapter {
 		this.msgid = msgid;
 		this.inflater = LayoutInflater.from(context);
 		this.mContext = context;
+		mLoadImage = new LoadImage();
+	}
+	public TopicCommentListAdapter(Context context, ArrayList<Comment> list,
+			String msgid,LoadImage loadImage) {
+		this.mList = list;
+		this.msgid = msgid;
+		this.inflater = LayoutInflater.from(context);
+		this.mContext = context;
+		this.mLoadImage = loadImage;
 	}
 
 	@Override

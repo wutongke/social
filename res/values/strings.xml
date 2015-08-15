@@ -417,6 +417,7 @@
     <string name="label_sendmsg">发消息</string>
     <string name="label_relatesetting">关系设置</string>
     <string name="label_cancelCollect">取消收藏成功</string>
+    <string name="label_share_success">分享成功</string>
     <string name="label_collectSuccess">收藏成功</string>
     <string name="label_recommandSuccess">推荐成功</string>
     <string name="label_followsendcard">关注成功，是否递送名片</string>
