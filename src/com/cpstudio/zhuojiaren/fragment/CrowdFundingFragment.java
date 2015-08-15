@@ -159,21 +159,19 @@ public class CrowdFundingFragment extends Fragment {
 		// }
 		// });
 	}
+
 	private void loadData() {
-		if (pullDownView.startLoadData()) {
-			mDatas.clear();
-			mPage = 0;
-			mAdapter.notifyDataSetChanged();
-			appClientLef.getFundingList(1,0,mPage, 5, uiHandler,
-					MsgTagVO.DATA_LOAD, getActivity(), true, null,
-					null);
-		}
+		mDatas.clear();
+		mPage = 0;
+		mAdapter.notifyDataSetChanged();
+		appClientLef.getFundingList(1, 0, mPage, 5, uiHandler,
+				MsgTagVO.DATA_LOAD, getActivity(), true, null, null);
 
 	}
 
 	private void loadMore() {
-		appClientLef.getAudioList(mPage, 5, uiHandler,
-				MsgTagVO.DATA_MORE, getActivity(), true, null, null);
+		appClientLef.getAudioList(mPage, 5, uiHandler, MsgTagVO.DATA_MORE,
+				getActivity(), true, null, null);
 	}
 
 	Handler uiHandler = new Handler() {
@@ -181,8 +179,7 @@ public class CrowdFundingFragment extends Fragment {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
 				ResultVO res;
-				if (JsonHandler.checkResult((String) msg.obj,
-						getActivity())) {
+				if (JsonHandler.checkResult((String) msg.obj, getActivity())) {
 					res = JsonHandler.parseResult((String) msg.obj);
 				} else {
 					return;
