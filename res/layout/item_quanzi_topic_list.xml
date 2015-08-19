@@ -13,13 +13,13 @@
         android:layout_marginTop="12dp"
         android:orientation="vertical" >
 
-        <ImageView
+        <com.cpstudio.zhuojiaren.widget.RoundImageView
             android:id="@+id/imageViewAuthorHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:contentDescription="@string/label_author_header"
-            android:src="@drawable/default_userhead" />
+            />
     </RelativeLayout>
 
     <LinearLayout

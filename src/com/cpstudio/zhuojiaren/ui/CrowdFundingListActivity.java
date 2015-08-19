@@ -35,9 +35,10 @@ public class CrowdFundingListActivity extends BaseActivity {
 	// ·ÖÒ³
 	private int mPage = 0;
 	private AppClientLef appClientLef;
-	
-	int typePubOrInv=-1;
-	int typeCrowd=0;
+
+	int typePubOrInv = -1;
+	int typeCrowd = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,10 +46,10 @@ public class CrowdFundingListActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		String type = getIntent().getStringExtra("type");
 		int typeId = getIntent().getIntExtra("typeid", 0);
-		if(typeId<=2){
+		if (typeId <= 2) {
 			typePubOrInv = typeId;
-		}else {
-			typeCrowd = typeId-2;
+		} else {
+			typeCrowd = typeId - 2;
 		}
 		initTitle();
 		appClientLef = AppClientLef.getInstance(this);
@@ -103,35 +104,37 @@ public class CrowdFundingListActivity extends BaseActivity {
 			mDatas.clear();
 			mPage = 0;
 			mAdapter.notifyDataSetChanged();
-			appClientLef.getFundingList(typeCrowd,typePubOrInv,mPage, 5, uiHandler,
-					MsgTagVO.DATA_LOAD, CrowdFundingListActivity.this, true, null,
-					null);
+			appClientLef.getFundingList(typeCrowd, typePubOrInv, mPage, 5,
+					uiHandler, MsgTagVO.DATA_LOAD,
+					CrowdFundingListActivity.this, true, null, null);
 		}
 
 	}
 
 	private void loadMore() {
-		appClientLef.getAudioList(mPage, 5, uiHandler,
-				MsgTagVO.DATA_MORE, CrowdFundingListActivity.this, true, null, null);
+		appClientLef.getAudioList(mPage, 5, uiHandler, MsgTagVO.DATA_MORE,
+				CrowdFundingListActivity.this, true, null, null);
 	}
 
 	Handler uiHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
+			ResultVO res;
+			if (JsonHandler.checkResult((String) msg.obj,
+					CrowdFundingListActivity.this)) {
+				res = JsonHandler.parseResult((String) msg.obj);
+			} else {
+				return;
+			}
+			String data = res.getData();
 			switch (msg.what) {
+
 			case MsgTagVO.DATA_LOAD: {
-				ResultVO res;
-				if (JsonHandler.checkResult((String) msg.obj,
-						CrowdFundingListActivity.this)) {
-					res = JsonHandler.parseResult((String) msg.obj);
-				} else {
-					return;
-				}
-				String data = res.getData();
+
 				updateItemList(data, true, false);
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {
-				updateItemList((String) msg.obj, false, true);
+				updateItemList(data, false, true);
 				break;
 			}
 			}

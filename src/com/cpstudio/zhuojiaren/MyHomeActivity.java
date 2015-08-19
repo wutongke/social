@@ -68,9 +68,9 @@ public class MyHomeActivity extends Activity {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Intent i = new Intent(MyHomeActivity.this,
-								GoodsExchangeActivity.class);
-						startActivity(i);
+//						Intent i = new Intent(MyHomeActivity.this,
+//								GoodsExchangeActivity.class);
+//						startActivity(i);
 					}
 				});
 

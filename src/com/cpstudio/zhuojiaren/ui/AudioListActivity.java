@@ -77,15 +77,7 @@ public class AudioListActivity extends BaseActivity {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
-				ResultVO res;
-				if (JsonHandler.checkResult((String) msg.obj,
-						AudioListActivity.this)) {
-					res = JsonHandler.parseResult((String) msg.obj);
-				} else {
-					return;
-				}
-				String data = res.getData();
-				updateItemList(data, true, false);
+				updateItemList((String) msg.obj, true, false);
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {
@@ -101,6 +93,14 @@ public class AudioListActivity extends BaseActivity {
 	private void updateItemList(String data, boolean refresh, boolean append) {
 		// TODO Auto-generated method stub
 		try {
+			ResultVO res;
+			if (JsonHandler.checkResult(data,
+					AudioListActivity.this)) {
+				res = JsonHandler.parseResult(data);
+			} else {
+				return;
+			}
+			data = res.getData();
 			pullDownView.finishLoadData(true);
 			if (data != null && !data.equals("")) {
 				ArrayList<RecordVO> list = JsonHandler_Lef

@@ -5,24 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GoodsVO implements Serializable{
-	private String gid;
+	private String goodsId;
 	// 商品名字
-	private String name;
+	private String goodsName;
 	// 商品价格
-	private String price;
-	private String money;
+	private String markeyPrice;
+	private String zhuoPrice;// 倬币价格(多少个)
 	// 商品图片
 	private List<PicVO> pic = new ArrayList<PicVO>();
 	// 商品首页图片
-	private PicVO firstPic;
+	private String img;
 	// 商品描述
-	private String detail;
+	private String content;
 	// 添加时间
 	private String addtime;
 
-	private String zhuobi;// 倬币价格(多少个)
-	private String goodCmtRate;// 好评百分比
-	private int payerNum;// 付款人数
+	private String commentPoint;// 好评百分比
+	private int orderNum;// 付款人数
 	// 商家名字
 	private String companyName;
 	//商家图片
@@ -33,134 +32,97 @@ public class GoodsVO implements Serializable{
 	private String isCollection;
 	//订单时候用的商品数量
 	private String goodsCount;
-
+	public String getGoodsId() {
+		return goodsId;
+	}
+	public String getGoodsName() {
+		return goodsName;
+	}
+	public String getMarkeyPrice() {
+		return markeyPrice;
+	}
+	public String getZhuoPrice() {
+		return zhuoPrice;
+	}
+	public List<PicVO> getPic() {
+		return pic;
+	}
+	public String getImg() {
+		return img;
+	}
+	public String getContent() {
+		return content;
+	}
+	public String getAddtime() {
+		return addtime;
+	}
+	public String getCommentPoint() {
+		return commentPoint;
+	}
+	public int getOrderNum() {
+		return orderNum;
+	}
+	public String getCompanyName() {
+		return companyName;
+	}
+	public PicVO getCompanyPic() {
+		return companyPic;
+	}
+	public String getCompanyDes() {
+		return companyDes;
+	}
+	public String getIsCollection() {
+		return isCollection;
+	}
 	public String getGoodsCount() {
 		return goodsCount;
 	}
-
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
+	}
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+	public void setMarkeyPrice(String markeyPrice) {
+		this.markeyPrice = markeyPrice;
+	}
+	public void setZhuoPrice(String zhuoPrice) {
+		this.zhuoPrice = zhuoPrice;
+	}
+	public void setPic(List<PicVO> pic) {
+		this.pic = pic;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public void setAddtime(String addtime) {
+		this.addtime = addtime;
+	}
+	public void setCommentPoint(String commentPoint) {
+		this.commentPoint = commentPoint;
+	}
+	public void setOrderNum(int orderNum) {
+		this.orderNum = orderNum;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+	public void setCompanyPic(PicVO companyPic) {
+		this.companyPic = companyPic;
+	}
+	public void setCompanyDes(String companyDes) {
+		this.companyDes = companyDes;
+	}
+	public void setIsCollection(String isCollection) {
+		this.isCollection = isCollection;
+	}
 	public void setGoodsCount(String goodsCount) {
 		this.goodsCount = goodsCount;
 	}
 
-	public String getGoodCmtRate() {
-		return goodCmtRate;
-	}
-
-	public void setGoodCmtRate(String goodCmtRate) {
-		this.goodCmtRate = goodCmtRate;
-	}
-
-	public int getPayerNum() {
-		return payerNum;
-	}
-
-	public void setPayerNum(int payerNum) {
-		this.payerNum = payerNum;
-	}
-
-	public String getZhuobi() {
-		return zhuobi;
-	}
-
-	public void setZhuobi(String zhuobi) {
-		this.zhuobi = zhuobi;
-	}
-
-	public String getGid() {
-		return gid;
-	}
-
-	public void setGid(String gid) {
-		this.gid = gid;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPrice() {
-		return price;
-	}
-
-	public void setPrice(String price) {
-		this.price = price;
-	}
-
-	public String getMoney() {
-		return money;
-	}
-
-	public void setMoney(String money) {
-		this.money = money;
-	}
-
-	public List<PicVO> getPic() {
-		return pic;
-	}
-
-	public void setPic(List<PicVO> pic) {
-		this.pic = pic;
-		this.firstPic=pic.get(0);
-	}
-
-	public String getDetail() {
-		return detail;
-	}
-
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}
-
-	public String getAddtime() {
-		return addtime;
-	}
-
-	public String getCompanyName() {
-		return companyName;
-	}
-
-	public String getCompanyDes() {
-		return companyDes;
-	}
-
-	public String getIsCollection() {
-		return isCollection;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-
-	public void setCompanyDes(String companyDes) {
-		this.companyDes = companyDes;
-	}
-
-	public void setIsCollection(String isCollection) {
-		this.isCollection = isCollection;
-	}
-
-	public void setAddtime(String addtime) {
-		this.addtime = addtime;
-	}
-
-	public PicVO getCompanyPic() {
-		return companyPic;
-	}
-
-	public void setCompanyPic(PicVO companyPic) {
-		this.companyPic = companyPic;
-	}
-
-	public PicVO getFirstPic() {
-		return firstPic;
-	}
-
-	public void setFirstPic(PicVO firstPic) {
-		this.firstPic = firstPic;
-	}
+	
 
 }

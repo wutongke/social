@@ -23,11 +23,13 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.StoreGoodsListAdapter;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.ui.AudioListActivity;
 import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.external.viewpagerindicator.PageIndicator;
@@ -53,7 +55,7 @@ public class StoreMainActivity extends BaseActivity implements
 			R.drawable.travel, R.drawable.city };
 	String[] tags;
 
-	private ZhuoConnHelper mConnHelper = null;
+	private AppClientLef mConnHelper = null;
 	private int mPage = 1;
 	private ListViewFooter mListViewFooter = null;
 	private StoreGoodsListAdapter mAdapter = null;
@@ -69,7 +71,7 @@ public class StoreMainActivity extends BaseActivity implements
 		function.setVisibility(View.VISIBLE);
 		title.setText(R.string.title_activity_store_main);
 		initView();
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = AppClientLef.getInstance(getApplicationContext());
 		mAdapter = new StoreGoodsListAdapter(this, mList);
 		gvGoods.setAdapter(mAdapter);
 		gvGoods.setOnItemClickListener(this);
@@ -163,20 +165,8 @@ public class StoreMainActivity extends BaseActivity implements
 				// TODO Auto-generated method stub
 
 				Intent i = new Intent(StoreMainActivity.this, classArrays[0]);
-				// if (arg2 == 3)
-				// i.putExtra("type", 1);
-				// if (arg2 == 4)
-				// i.putExtra("type", 2);
-				// if (arg2 == 5)
-				// i.putExtra("type", 3);
-				// if (arg2 == 6)
-				// i.putExtra("type", 4);
-				// if (arg2 == 7)
-				// i.putExtra("type", 5);
-				// if (arg2 == 8)
-				// i.putExtra("type", 6);
+				i.putExtra("type", arg2);
 				startActivity(i);
-
 			}
 		});
 
@@ -253,23 +243,18 @@ public class StoreMainActivity extends BaseActivity implements
 
 	}
 
-	public void loadMore() {
-		if (mListViewFooter.startLoading()) {
-			String params = ZhuoCommHelper.getUrlGetGoodsList();
-			params += "?page=" + mPage;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
-		}
+	private void loadData() {
+		mList.clear();
+		mPage = 0;
+		mAdapter.notifyDataSetChanged();
+		mConnHelper.getGoodsList(mPage, 5, mUIHandler, MsgTagVO.DATA_LOAD,
+				this, null,null,null);
+
 	}
 
-	public void loadData() {
-		if (mListViewFooter.startLoading()) {
-			mList.clear();
-			mAdapter.notifyDataSetChanged();
-			mPage = 1;
-			String params = ZhuoCommHelper.getUrlGetGoodsList();
-			params += "?page=" + mPage;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD);
-		}
+	private void loadMore() {
+		mConnHelper.getGoodsList(mPage, 5, mUIHandler, MsgTagVO.DATA_MORE,
+				this, null,null,null);
 	}
 
 	private OnClickListener onMoreClick = new OnClickListener() {
@@ -285,7 +270,7 @@ public class StoreMainActivity extends BaseActivity implements
 		if (arg3 != -1) {
 			Intent i = new Intent(StoreMainActivity.this,
 					GoodsDetailLActivity.class);
-			i.putExtra("gid", (String) arg1.getTag(R.id.tag_id));
+			i.putExtra("goodsId", mList.get(arg2).getGoodsId());
 			startActivity(i);
 		}
 	}

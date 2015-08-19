@@ -14,18 +14,26 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicVO;
+import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 
 public class GoodsCollectionActivity extends BaseActivity {
 	@InjectView(R.id.agc_categary)
@@ -37,12 +45,16 @@ public class GoodsCollectionActivity extends BaseActivity {
 	LoadImage loader = new LoadImage();
 	private CommonAdapter<GoodsVO> mAdapter;
 	private ArrayList<GoodsVO> mDataList = new ArrayList<GoodsVO>();
-
+	private AppClientLef appClient;
+	private ListViewFooter mListViewFooter = null;
+	private int mPage = 1;
+	private int type = 1;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_goods_collection);
 		ButterKnife.inject(this);
+		appClient = AppClientLef.getInstance(getApplicationContext());
 		initTitle();
 		title.setText(R.string.collection_goods);
 		initView();
@@ -57,7 +69,7 @@ public class GoodsCollectionActivity extends BaseActivity {
 					gridView.setVisibility(View.GONE);
 			}
 		});
-		loadData(0);
+		loadData(type);
 	}
 
 	private void initView() {
@@ -68,10 +80,10 @@ public class GoodsCollectionActivity extends BaseActivity {
 			@Override
 			public void convert(ViewHolder helper, final GoodsVO item) {
 				// TODO Auto-generated method stub
-				helper.setText(R.id.igc_name, item.getName());
-				loader.beginLoad(item.getFirstPic().getOrgurl(),
+				helper.setText(R.id.igc_name, item.getGoodsName());
+				loader.beginLoad(item.getImg(),
 						(ImageView) helper.getView(R.id.igc_goods_image));
-				helper.setText(R.id.igc_price, item.getPrice());
+				helper.setText(R.id.igc_price, item.getZhuoPrice());
 				helper.getView(R.id.igc_collec_image).setOnClickListener(
 						new OnClickListener() {
 
@@ -106,6 +118,18 @@ public class GoodsCollectionActivity extends BaseActivity {
 						});
 			}
 		};
+		
+		RelativeLayout mFooterView = (RelativeLayout)getLayoutInflater().inflate(
+				R.layout.listview_footer, null);
+		listView.addFooterView(mFooterView);
+		mListViewFooter = new ListViewFooter(mFooterView, new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				loadMore(type);
+			}
+		});
 		listView.setAdapter(mAdapter);
 		int[] categary = { R.string.all_catgary, R.string.phone_fee,
 				R.string.plane, R.string.movie, R.string.hotel, R.string.tea,
@@ -129,6 +153,7 @@ public class GoodsCollectionActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
+				type = position;
 				loadData(position);
 				CommonUtil.displayToast(GoodsCollectionActivity.this, position
 						+ "");
@@ -138,43 +163,57 @@ public class GoodsCollectionActivity extends BaseActivity {
 		});
 	}
 
-	private void loadData(int position) {
-		// TODO Auto-generated method stub
-		GoodsVO goods = new GoodsVO();
-		goods.setGid("1");
-		goods.setName("吉大小天鹅");
-		goods.setDetail("千百万美图阿登省就疯狂拉升的房间");
-		goods.setCompanyName("北京");
-		goods.setCompanyDes("为恶劣的高科技阿里；拉时间断开连接");
-		goods.setIsCollection("0");
-		PicVO pic = new PicVO();
-		pic.setOrgurl("http://img13.360buyimg.com/vclist/jfs/t931/269/1375027638/11748/d0421ed8/559a312fN059bda44.jpg");
-		goods.setCompanyPic(pic);
-		ArrayList<PicVO> list = new ArrayList<PicVO>();
-		list.add(pic);
-		goods.setPic(list);
-		goods.setMoney("152");
-		goods.setPrice("152");
-		goods.setZhuobi("120");
-		ArrayList<GoodsVO> result = new ArrayList<GoodsVO>();
-		result.add(goods);
-		result.add(goods);
-		result.add(goods);
-		result.add(goods);
-		result.add(goods);
-		Message msg = uiHandler.obtainMessage();
-		msg.what = result.size();
-		msg.obj = result;
-		msg.sendToTarget();
+	private void loadData(int type) {
+		if (mListViewFooter.startLoading()) {
+			mDataList.clear();
+			mPage = 0;
+			mAdapter.notifyDataSetChanged();
+			appClient.getGoodsCollectionList(mPage,10,uiHandler,MsgTagVO.DATA_LOAD,this,null);
+		}
+	}
+
+	private void loadMore(int type) {
+		if (mListViewFooter.startLoading()) {
+			appClient.getGoodsCollectionList(mPage,10,uiHandler,MsgTagVO.DATA_MORE,this,null);
+		}
 	}
 
 	Handler uiHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			if (msg.what >= 1) {
-				mDataList.clear();
-				mDataList.addAll((ArrayList<GoodsVO>) msg.obj);
-				mAdapter.notifyDataSetChanged();
+			ResultVO res;
+			if (JsonHandler.checkResult((String) msg.obj, GoodsCollectionActivity.this)) {
+				res = JsonHandler.parseResult((String) msg.obj);
+			} else {
+				CommonUtil.displayToast(GoodsCollectionActivity.this, R.string.data_error);
+				return;
+			}
+			String data = res.getData();
+			if (msg.what==MsgTagVO.DATA_LOAD) {
+				updateItemList(data, true, false);
+			}else if(msg.what ==MsgTagVO.DATA_MORE){
+				updateItemList(data, false, true);
 			}
 		};
 	};
+	private void updateItemList(String data, boolean refresh, boolean append) {
+		try {
+			mListViewFooter.finishLoading();
+			if (data != null && !data.equals("")) {
+				ArrayList<GoodsVO> list = JsonHandler_Lef.parseGoodsVOList(data);
+				if (!list.isEmpty()) {
+					mListViewFooter.hasData();
+					if (!append) {
+						mDataList.clear();
+					}
+					mDataList.addAll(list);
+					mAdapter.notifyDataSetChanged();
+					mPage++;
+				} else {
+					mListViewFooter.noData(!refresh);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

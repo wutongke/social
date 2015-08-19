@@ -26,6 +26,7 @@ import kankan.wheel.widget.adapters.WheelViewAdapter;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
@@ -470,7 +471,7 @@ public class WheelView extends View {
 			bottomShadow = new GradientDrawable(Orientation.BOTTOM_TOP,
 					SHADOWS_COLORS);
 		}
-		setBackgroundResource(R.drawable.bg_weel);
+		setBackgroundColor(Color.WHITE);
 	}
 
 	/**

@@ -57,20 +57,20 @@ public class StoreGoodsListAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
 		}
 		GoodsVO user = mList.get(position);
-		String id = user.getGid();
-		String title = user.getName();
-		String money = user.getPrice();
+		String id = user.getGoodsId();
+		String title = user.getGoodsName();
+		String money = user.getMarkeyPrice();
 		String zhuobi = "无数据";
-		if (user.getZhuobi() != null)
-			zhuobi = user.getZhuobi();
+		if (user.getZhuoPrice() != null)
+			zhuobi = user.getZhuoPrice();
 		List<PicVO> pics = user.getPic();
 		convertView.setTag(R.id.tag_id, id);
 		holder.title.setText(title);
 		holder.money.setText("市场价：" + money);
 		holder.zhuobimoney.setText("倬家币：" + zhuobi);
 		holder.image.setImageResource(R.drawable.default_image);
-		if (pics != null && pics.size() > 0) {
-			String pic = pics.get(0).getUrl();
+		if (user.getImg()!=null) {
+			String pic = user.getImg();
 			holder.image.setTag(pic);
 			mLoadImage.addTask(pic, holder.image);
 			mLoadImage.doTask();

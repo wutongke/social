@@ -26,29 +26,36 @@ public class LoadImage {
 	private Map<String, ImageView> taskMap;
 	private Callback onReturnListener = null;
 	private int round = 0;
-
+	private int height = 0;
+	private int width = 0;
 	public LoadImage(String savePath) {
-		executorService = Executors.newFixedThreadPool(10);
+		executorService = Executors.newFixedThreadPool(5);
 		memoryCache = new ImageMemoryCache();
 		fileCache = new ImageFileCache(savePath);
 		taskMap = new HashMap<String, ImageView>();
 	}
 
 	public LoadImage() {
-		executorService = Executors.newFixedThreadPool(10);
+		executorService = Executors.newFixedThreadPool(5);
 		memoryCache = new ImageMemoryCache();
 		fileCache = new ImageFileCache("zhuojiaren/userhead");
 		taskMap = new HashMap<String, ImageView>();
 	}
 
 	public LoadImage(int round) {
+		executorService = Executors.newFixedThreadPool(5);
+		memoryCache = new ImageMemoryCache();
+		fileCache = new ImageFileCache("zhuojiaren/userhead");
+		taskMap = new HashMap<String, ImageView>();
+		this.round = round;
+	}
+	public LoadImage(int round,int height,int width) {
 		executorService = Executors.newFixedThreadPool(10);
 		memoryCache = new ImageMemoryCache();
 		fileCache = new ImageFileCache("zhuojiaren/userhead");
 		taskMap = new HashMap<String, ImageView>();
 		this.round = round;
 	}
-
 	public void beginLoad(String url, ImageView img){
 		img.setTag(url);
 		addTask(url, img);
@@ -92,8 +99,14 @@ public class LoadImage {
 		if (result == null) {
 			result = fileCache.getImage(url);
 			if (result == null) {
-				//从网络获取图片
-				result = ImageGetForHttp.downloadBitmap(url, fileCache);
+				if(width!=0&&height!=0){
+					//从网络获取图片
+					result = ImageGetForHttp.downloadBitmap(url, fileCache,height,width);
+				}else{
+					//从网络获取图片
+					result = ImageGetForHttp.downloadBitmap(url, fileCache);
+				}
+				
 				if (result != null) {
 					memoryCache.addBitmapToCache(url, result);
 					fileCache.saveBmpToSd(result, url);

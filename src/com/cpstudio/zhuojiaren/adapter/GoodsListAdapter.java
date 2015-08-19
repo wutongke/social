@@ -57,9 +57,9 @@ public class GoodsListAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
 		}
 		GoodsVO user = mList.get(position);
-		String id = user.getGid();
-		String title = user.getName();
-		String money = user.getPrice();
+		String id = user.getGoodsId();
+		String title = user.getGoodsName();
+		String money = user.getZhuoPrice();
 		List<PicVO> pics = user.getPic();
 		convertView.setTag(R.id.tag_id, id);
 		holder.title.setText(title);

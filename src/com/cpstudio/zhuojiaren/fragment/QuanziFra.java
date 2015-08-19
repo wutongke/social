@@ -361,7 +361,14 @@ public class QuanziFra extends Fragment {
 			}
 			case MsgTagVO.DATA_MORE: {
 				mListViewFooter.finishLoading();
-				updateItemList((String) msg.obj, false, true);
+				ResultVO res;
+				if (JsonHandler.checkResult((String) msg.obj, getActivity())) {
+					res = JsonHandler.parseResult((String) msg.obj);
+				} else {
+					return;
+				}
+				String data = res.getData();
+				updateItemList(data, false, true);
 				break;
 			}
 			case MsgTagVO.disolve_quan:

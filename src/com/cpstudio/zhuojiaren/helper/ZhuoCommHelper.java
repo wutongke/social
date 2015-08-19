@@ -132,6 +132,21 @@ public class ZhuoCommHelper {
 	private static String COMMONCOLLECTION = "/collectSupplyDemand.do";
 	private static String SHARETOZHUO = "/shareSupplyDemand.do";
 	private static String DELETEGONGXU = "/deleteSupplyDemand.do";
+	private static String GOODSDETAIL = "/goods/goodsDetail.do";
+	private static String GOODSLIST = "/goods/goodsList.do";
+	private static String GOODSCOLLECTION = "/goods/collectList.do";
+	public static String getGOODSCOLLECTION() {
+		return SERVER + GOODSCOLLECTION;
+	}
+
+	public static String getGOODSLIST() {
+		return SERVER + GOODSLIST;
+	}
+
+	public static String getGOODSDETAIL() {
+		return SERVER + GOODSDETAIL;
+	}
+
 	public static String getDELETEGONGXU() {
 		return SERVER + DELETEGONGXU;
 	}

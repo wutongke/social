@@ -8,28 +8,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.GoodsDetailActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.adapter.StoreGoodsListAdapter;
 import com.cpstudio.zhuojiaren.adapter.TypedStoreGoodsListAdapter;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.widget.ListViewFooter;
+import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
@@ -45,8 +38,10 @@ public class GoodsTypedListActivity extends BaseActivity implements
 	RadioGroup rgSex;
 	PullDownView mPullDownView;
 	ListView mListView;
-	private ZhuoConnHelper mConnHelper = null;
+	private AppClientLef mConnHelper = null;
 	private int mPage = 1;
+	//商品类别
+	private int type = 1;
 
 	private TypedStoreGoodsListAdapter mAdapter = null;
 	private ArrayList<GoodsVO> mList = new ArrayList<GoodsVO>();
@@ -57,12 +52,17 @@ public class GoodsTypedListActivity extends BaseActivity implements
 		setContentView(R.layout.activity_goods_type_listed);
 		initTitle();
 		ButterKnife.inject(this);
+		
+		Intent intent = getIntent();
+		type = intent.getIntExtra("type", 1);
+		
+		
 		function.setVisibility(View.VISIBLE);
 		function.setText(R.string.label_filter2);
 		// 此处需要根据传过来的参数修改
 		title.setText("化妆品");
 		initView();
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = AppClientLef.getInstance(getApplicationContext());
 
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
@@ -132,23 +132,27 @@ public class GoodsTypedListActivity extends BaseActivity implements
 
 	}
 
-	public void loadData() {
-		if (mPullDownView.startLoadData()) {
-			mList.clear();
-			mAdapter.notifyDataSetChanged();
-			mPage = 1;
-			String params = ZhuoCommHelper.getUrlGetGoodsList();
-			params += "?page=" + mPage;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD);
-		}
+	private void loadData() {
+		mList.clear();
+		mPage = 0;
+		mAdapter.notifyDataSetChanged();
+		mConnHelper.getGoodsList(mPage, 5, mUIHandler, MsgTagVO.DATA_LOAD,
+				this, type+"",null,null);
+
 	}
+
+	private void loadMore() {
+		mConnHelper.getGoodsList(mPage, 5, mUIHandler, MsgTagVO.DATA_MORE,
+				this, type+"",null,null);
+	}
+
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		if (arg3 != -1) {
 			Intent i = new Intent(GoodsTypedListActivity.this,
-					GoodsDetailActivity.class);
-			i.putExtra("gid", (String) arg1.getTag(R.id.tag_id));
+					GoodsDetailLActivity.class);
+			i.putExtra("goodsId", (String) arg1.getTag(R.id.tag_id));
 			startActivity(i);
 		}
 	}
@@ -180,10 +184,6 @@ public class GoodsTypedListActivity extends BaseActivity implements
 //			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
 //		}
 //		
-		if (mPullDownView.startLoadData()) {
-			String params = ZhuoCommHelper.getUrlGetGoodsList();
-			params += "?page=" + mPage;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
-		}
+		loadMore();
 	}
 }

@@ -55,7 +55,7 @@ import com.utils.ImageRectUtil;
 public class QuanziTopicListAdapter extends BaseAdapter {
 	private List<QuanTopicVO> mList = null;
 	private LayoutInflater inflater = null;
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage = new LoadImage(0,60,60);
 	private Context mContext = null;
 	private int width = 720;
 	private float times = 2;

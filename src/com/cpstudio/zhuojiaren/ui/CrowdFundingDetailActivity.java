@@ -79,7 +79,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 	@InjectView(R.id.acfd_support_count)
 	TextView supportCount;
 	@InjectView(R.id.acfd_people_image)
-	RoundImageView peopleImage;
+	ImageView peopleImage;
 	@InjectView(R.id.acfd_people_name)
 	TextView peopleName;
 	@InjectView(R.id.acfd_people_position)

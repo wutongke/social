@@ -30,12 +30,12 @@ import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 
 public class Bee_PageAdapter extends PagerAdapter {
 	public List<BeanBanner> mListData;
-	LoadImage mLoadImage = new LoadImage(5);
+	LoadImage mLoadImage;
 	public ArrayList<View> mListView = new ArrayList<View>();
 
 	public Bee_PageAdapter(Context context, List<BeanBanner> mListData) {
 		this.mListData = mListData;
-
+		mLoadImage = new LoadImage(5);
 		for (BeanBanner beanBanner : mListData) {
 			ImageView iView = new ImageView(context);
 			String url = beanBanner.getPicUrl();
@@ -59,7 +59,32 @@ public class Bee_PageAdapter extends PagerAdapter {
 		}
 
 	}
+	public Bee_PageAdapter(Context context, List<BeanBanner> mListData,LoadImage loadImage) {
+		this.mListData = mListData;
+		mLoadImage = loadImage;
+		for (BeanBanner beanBanner : mListData) {
+			ImageView iView = new ImageView(context);
+			String url = beanBanner.getPicUrl();
+			iView.setTag(url);
+			iView.setScaleType(ScaleType.CENTER_CROP);
+			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+					LayoutParams.MATCH_PARENT);
+			iView.setLayoutParams(params);
 
+			iView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					// ��תҳ��
+				}
+			});
+			mLoadImage.addTask(url, iView);
+			mLoadImage.doTask();
+			mListView.add(iView);
+		}
+
+	}
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
 		container.removeView(mListView.get(position));

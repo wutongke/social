@@ -59,12 +59,12 @@ public class OrderItemGoodsAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
 		}
 		GoodsVO user = mList.get(position);
-		String id = user.getGid();
-		String title = user.getName();
+		String id = user.getGoodsId();
+		String title = user.getGoodsName();
 
 		String zhuobi = "无数据";
-		if (user.getZhuobi() != null)
-			zhuobi = user.getZhuobi();
+		if (user.getZhuoPrice() != null)
+			zhuobi = user.getZhuoPrice();
 		List<PicVO> pics = user.getPic();
 		convertView.setTag(R.id.tag_id, id);
 		holder.title.setText(title);
@@ -77,8 +77,8 @@ public class OrderItemGoodsAdapter extends BaseAdapter {
 			mLoadImage.doTask();
 		}
 
-		String rate = user.getGoodCmtRate();
-		int nums = user.getPayerNum();
+		String rate = user.getCommentPoint();
+		int nums = user.getOrderNum();
 		if (rate != null)
 			holder.goodCmtRate.setText("好评：" + rate);
 

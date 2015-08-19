@@ -55,8 +55,8 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 			}
 		});
 		// Ãû×Ö
-		helper.setText(R.id.icg_name, item.getName());
-		helper.setText(R.id.icg_price, item.getZhuobi());
+		helper.setText(R.id.icg_name, item.getGoodsName());
+		helper.setText(R.id.icg_price, item.getZhuoPrice());
 		final TextView goodsNum = (TextView) helper.getView(R.id.icg_num_text);
 		if (item.getGoodsCount() == null||item.getGoodsCount().isEmpty()) {
 			helper.setText(R.id.icg_num_text, "1");
@@ -127,7 +127,7 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 				tempCount=1;
 			else tempCount = Integer.parseInt(temp.getGoodsCount());
 				
-			sum+=Integer.parseInt(temp.getZhuobi())*tempCount;
+			sum+=Integer.parseInt(temp.getZhuoPrice())*tempCount;
 		}
 		return sum;
 	}

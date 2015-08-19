@@ -3,320 +3,265 @@ package com.cpstudio.zhuojiaren.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.NinePatchDrawable;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.TypedValue;
 import android.widget.ImageView;
 
 import com.cpstudio.zhuojiaren.R;
 
 /**
+ * http://blog.csdn.net/lmj623565791/article/details/41967509
  * 
- * åœ†å½¢ImageViewï¼Œå¯è®¾ç½®ï¿½?ï¿½ï¿½ä¸¤ä¸ªå®½åº¦ä¸åŒä¸”é¢œè‰²ä¸åŒçš„åœ†å½¢è¾¹æ¡†ï¿½?
+ * @author zhy
  * 
- * è®¾ç½®é¢œè‰²åœ¨xmlå¸ƒå±€æ–‡ä»¶ä¸­ç”±è‡ªå®šä¹‰å±æ€§é…ç½®å‚æ•°æŒ‡ï¿½?
  */
+public class RoundImageView extends ImageView
+{
+	/**
+	 * Í¼Æ¬µÄÀàĞÍ£¬Ô²ĞÎorÔ²½Ç
+	 */
+	private int type;
+	public static final int TYPE_CIRCLE = 0;
+	public static final int TYPE_ROUND = 1;
+	/**
+	 * Ô²½Ç´óĞ¡µÄÄ¬ÈÏÖµ
+	 */
+	private static final int BODER_RADIUS_DEFAULT = 10;
+	/**
+	 * Ô²½ÇµÄ´óĞ¡
+	 */
+	private int mBorderRadius;
 
-public class RoundImageView extends ImageView {
+	/**
+	 * »æÍ¼µÄPaint
+	 */
+	private Paint mBitmapPaint;
+	/**
+	 * Ô²½ÇµÄ°ë¾¶
+	 */
+	private int mRadius;
+	/**
+	 * 3x3 ¾ØÕó£¬Ö÷ÒªÓÃÓÚËõĞ¡·Å´ó
+	 */
+	private Matrix mMatrix;
+	/**
+	 * äÖÈ¾Í¼Ïñ£¬Ê¹ÓÃÍ¼ÏñÎª»æÖÆÍ¼ĞÎ×ÅÉ«
+	 */
+	private BitmapShader mBitmapShader;
+	/**
+	 * viewµÄ¿í¶È
+	 */
+	private int mWidth;
+	private RectF mRoundRect;
 
-	private int mBorderThickness = 0;
-
-	private Context mContext;
-
-	private int defaultColor = 0xFFFFFFFF;
-
-	// å¦‚æœåªæœ‰å…¶ä¸­ï¿½?ï¿½ï¿½æœ‰ï¿½?ï¼Œåˆ™åªç”»ï¿½?ï¿½ï¿½åœ†å½¢è¾¹æ¡†
-
-	private int mBorderOutsideColor = 0;
-
-	private int mBorderInsideColor = 0;
-
-	// æ§ä»¶é»˜è®¤é•¿ï¿½?ï¿½?
-
-	private int defaultWidth = 0;
-
-	private int defaultHeight = 0;
-
-	public RoundImageView(Context context) {
-
-		super(context);
-
-		mContext = context;
-
-	}
-
-	public RoundImageView(Context context, AttributeSet attrs) {
+	public RoundImageView(Context context, AttributeSet attrs)
+	{
 
 		super(context, attrs);
+		mMatrix = new Matrix();
+		mBitmapPaint = new Paint();
+		mBitmapPaint.setAntiAlias(true);
 
-		mContext = context;
+		TypedArray a = context.obtainStyledAttributes(attrs,
+				R.styleable.RoundImageView);
 
-		setCustomAttributes(attrs);
+		mBorderRadius = a.getDimensionPixelSize(
+				R.styleable.RoundImageView_borderRadius, (int) TypedValue
+						.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+								BODER_RADIUS_DEFAULT, getResources()
+										.getDisplayMetrics()));// Ä¬ÈÏÎª10dp
+		type = a.getInt(R.styleable.RoundImageView_type, TYPE_CIRCLE);// Ä¬ÈÏÎªCircle
 
+		a.recycle();
 	}
 
-	public RoundImageView(Context context, AttributeSet attrs, int defStyle) {
-
-		super(context, attrs, defStyle);
-
-		mContext = context;
-
-		setCustomAttributes(attrs);
-
-	}
-
-	private void setCustomAttributes(AttributeSet attrs) {
-
-		TypedArray a = mContext.obtainStyledAttributes(attrs,
-				R.styleable.roundedimageview);
-
-		mBorderThickness = a.getDimensionPixelSize(
-				R.styleable.roundedimageview_border_thickness, 0);
-
-		mBorderOutsideColor = a
-				.getColor(R.styleable.roundedimageview_border_outside_color,
-						defaultColor);
-
-		mBorderInsideColor = a.getColor(
-				R.styleable.roundedimageview_border_inside_color, defaultColor);
-
+	public RoundImageView(Context context)
+	{
+		this(context, null);
 	}
 
 	@Override
-	protected void onDraw(Canvas canvas) {
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
+	{
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
+		/**
+		 * Èç¹ûÀàĞÍÊÇÔ²ĞÎ£¬ÔòÇ¿ÖÆ¸Ä±äviewµÄ¿í¸ßÒ»ÖÂ£¬ÒÔĞ¡ÖµÎª×¼
+		 */
+		if (type == TYPE_CIRCLE)
+		{
+			mWidth = Math.min(getMeasuredWidth(), getMeasuredHeight());
+			mRadius = mWidth / 2;
+			setMeasuredDimension(mWidth, mWidth);
+		}
+
+	}
+
+	/**
+	 * ³õÊ¼»¯BitmapShader
+	 */
+	private void setUpShader()
+	{
 		Drawable drawable = getDrawable();
-
-		if (drawable == null) {
-
+		if (drawable == null)
+		{
 			return;
-
 		}
 
-		if (getWidth() == 0 || getHeight() == 0) {
+		Bitmap bmp = drawableToBitamp(drawable);
+		// ½«bmp×÷Îª×ÅÉ«Æ÷£¬¾ÍÊÇÔÚÖ¸¶¨ÇøÓòÄÚ»æÖÆbmp
+		mBitmapShader = new BitmapShader(bmp, TileMode.CLAMP, TileMode.CLAMP);
+		float scale = 1.0f;
+		if (type == TYPE_CIRCLE)
+		{
+			// ÄÃµ½bitmap¿í»ò¸ßµÄĞ¡Öµ
+			int bSize = Math.min(bmp.getWidth(), bmp.getHeight());
+			scale = mWidth * 1.0f / bSize;
 
+		} else if (type == TYPE_ROUND)
+		{
+			Log.e("TAG",
+					"b'w = " + bmp.getWidth() + " , " + "b'h = "
+							+ bmp.getHeight());
+			if (!(bmp.getWidth() == getWidth() && bmp.getHeight() == getHeight()))
+			{
+				// Èç¹ûÍ¼Æ¬µÄ¿í»òÕß¸ßÓëviewµÄ¿í¸ß²»Æ¥Åä£¬¼ÆËã³öĞèÒªËõ·ÅµÄ±ÈÀı£»Ëõ·ÅºóµÄÍ¼Æ¬µÄ¿í¸ß£¬Ò»¶¨Òª´óÓÚÎÒÃÇviewµÄ¿í¸ß£»ËùÒÔÎÒÃÇÕâÀïÈ¡´óÖµ£»
+				scale = Math.max(getWidth() * 1.0f / bmp.getWidth(),
+						getHeight() * 1.0f / bmp.getHeight());
+			}
+
+		}
+		// shaderµÄ±ä»»¾ØÕó£¬ÎÒÃÇÕâÀïÖ÷ÒªÓÃÓÚ·Å´ó»òÕßËõĞ¡
+		mMatrix.setScale(scale, scale);
+		// ÉèÖÃ±ä»»¾ØÕó
+		mBitmapShader.setLocalMatrix(mMatrix);
+		// ÉèÖÃshader
+		mBitmapPaint.setShader(mBitmapShader);
+	}
+
+	@Override
+	protected void onDraw(Canvas canvas)
+	{
+		Log.e("TAG", "onDraw");
+		if (getDrawable() == null)
+		{
 			return;
-
 		}
+		setUpShader();
 
-		this.measure(0, 0);
-
-		if (drawable.getClass() == NinePatchDrawable.class)
-
-			return;
-
-		Bitmap b = ((BitmapDrawable) drawable).getBitmap();
-
-		Bitmap bitmap = b.copy(Bitmap.Config.ARGB_4444, true);
-
-		if (defaultWidth == 0) {
-
-			defaultWidth = getWidth();
-
+		if (type == TYPE_ROUND)
+		{
+			canvas.drawRoundRect(mRoundRect, mBorderRadius, mBorderRadius,
+					mBitmapPaint);
+		} else
+		{
+			canvas.drawCircle(mRadius, mRadius, mRadius, mBitmapPaint);
+			// drawSomeThing(canvas);
 		}
+	}
 
-		if (defaultHeight == 0) {
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh)
+	{
+		super.onSizeChanged(w, h, oldw, oldh);
 
-			defaultHeight = getHeight();
-
-		}
-
-		int radius = 0;
-
-		if (mBorderInsideColor != defaultColor
-				&& mBorderOutsideColor != defaultColor) {// å®šä¹‰ç”»ä¸¤ä¸ªè¾¹æ¡†ï¼Œåˆ†åˆ«ä¸ºå¤–åœ†è¾¹æ¡†å’Œå†…åœ†è¾¹æ¡†
-
-			radius = (defaultWidth < defaultHeight ? defaultWidth
-					: defaultHeight) / 2 - 2 * mBorderThickness;
-
-			// ç”»å†…ï¿½?
-
-			drawCircleBorder(canvas, radius + mBorderThickness / 2,
-					mBorderInsideColor);
-
-			// ç”»å¤–ï¿½?
-
-			drawCircleBorder(canvas, radius + mBorderThickness
-					+ mBorderThickness / 2, mBorderOutsideColor);
-
-		} else if (mBorderInsideColor != defaultColor
-				&& mBorderOutsideColor == defaultColor) {// å®šä¹‰ç”»ä¸€ä¸ªè¾¹ï¿½?
-
-			radius = (defaultWidth < defaultHeight ? defaultWidth
-					: defaultHeight) / 2 - mBorderThickness;
-
-			drawCircleBorder(canvas, radius + mBorderThickness / 2,
-					mBorderInsideColor);
-
-		} else if (mBorderInsideColor == defaultColor
-				&& mBorderOutsideColor != defaultColor) {// å®šä¹‰ç”»ä¸€ä¸ªè¾¹ï¿½?
-
-			radius = (defaultWidth < defaultHeight ? defaultWidth
-					: defaultHeight) / 2 - mBorderThickness;
-
-			drawCircleBorder(canvas, radius + mBorderThickness / 2,
-					mBorderOutsideColor);
-
-		} else {// æ²¡æœ‰è¾¹æ¡†
-
-			radius = (defaultWidth < defaultHeight ? defaultWidth
-					: defaultHeight) / 2;
-
-		}
-
-		Bitmap roundBitmap = getCroppedRoundBitmap(bitmap, radius);
-
-		canvas.drawBitmap(roundBitmap, defaultWidth / 2 - radius, defaultHeight
-				/ 2 - radius, null);
-
+		// Ô²½ÇÍ¼Æ¬µÄ·¶Î§
+		if (type == TYPE_ROUND)
+			mRoundRect = new RectF(0, 0, w, h);
 	}
 
 	/**
+	 * drawable×ªbitmap
 	 * 
-	 * è·å–è£å‰ªåçš„åœ†å½¢å›¾ç‰‡
-	 * 
-	 * @param radiusåŠå¾„
+	 * @param drawable
+	 * @return
 	 */
-
-	public Bitmap getCroppedRoundBitmap(Bitmap bmp, int radius) {
-
-		Bitmap scaledSrcBmp;
-
-		int diameter = radius * 2;
-
-		// ä¸ºäº†é˜²æ­¢å®½é«˜ä¸ç›¸ç­‰ï¼Œé€ æˆåœ†å½¢å›¾ç‰‡å˜å½¢ï¼Œå› æ­¤æˆªå–é•¿æ–¹å½¢ä¸­å¤„äºä¸­é—´ä½ç½®æœ€å¤§çš„æ­£æ–¹å½¢å›¾ï¿½?
-
-		int bmpWidth = bmp.getWidth();
-
-		int bmpHeight = bmp.getHeight();
-
-		int squareWidth = 0, squareHeight = 0;
-
-		int x = 0, y = 0;
-
-		Bitmap squareBitmap;
-
-		if (bmpHeight > bmpWidth) {// é«˜å¤§äºå®½
-
-			squareWidth = squareHeight = bmpWidth;
-
-			x = 0;
-
-			y = (bmpHeight - bmpWidth) / 2;
-
-			// æˆªå–æ­£æ–¹å½¢å›¾ï¿½?
-
-			squareBitmap = Bitmap.createBitmap(bmp, x, y, squareWidth,
-					squareHeight);
-
-		} else if (bmpHeight < bmpWidth) {// å®½å¤§äºé«˜
-
-			squareWidth = squareHeight = bmpHeight;
-
-			x = (bmpWidth - bmpHeight) / 2;
-
-			y = 0;
-
-			squareBitmap = Bitmap.createBitmap(bmp, x, y, squareWidth,
-					squareHeight);
-
-		} else {
-
-			squareBitmap = bmp;
-
+	private Bitmap drawableToBitamp(Drawable drawable)
+	{
+		if (drawable instanceof BitmapDrawable)
+		{
+			BitmapDrawable bd = (BitmapDrawable) drawable;
+			return bd.getBitmap();
 		}
+		int w = drawable.getIntrinsicWidth();
+		int h = drawable.getIntrinsicHeight();
+		Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(bitmap);
+		drawable.setBounds(0, 0, w, h);
+		drawable.draw(canvas);
+		return bitmap;
+	}
 
-		if (squareBitmap.getWidth() != diameter
-				|| squareBitmap.getHeight() != diameter) {
+	private static final String STATE_INSTANCE = "state_instance";
+	private static final String STATE_TYPE = "state_type";
+	private static final String STATE_BORDER_RADIUS = "state_border_radius";
 
-			scaledSrcBmp = Bitmap.createScaledBitmap(squareBitmap, diameter,
-					diameter, true);
+	@Override
+	protected Parcelable onSaveInstanceState()
+	{
+		Bundle bundle = new Bundle();
+		bundle.putParcelable(STATE_INSTANCE, super.onSaveInstanceState());
+		bundle.putInt(STATE_TYPE, type);
+		bundle.putInt(STATE_BORDER_RADIUS, mBorderRadius);
+		return bundle;
+	}
 
-		} else {
-
-			scaledSrcBmp = squareBitmap;
-
+	@Override
+	protected void onRestoreInstanceState(Parcelable state)
+	{
+		if (state instanceof Bundle)
+		{
+			Bundle bundle = (Bundle) state;
+			super.onRestoreInstanceState(((Bundle) state)
+					.getParcelable(STATE_INSTANCE));
+			this.type = bundle.getInt(STATE_TYPE);
+			this.mBorderRadius = bundle.getInt(STATE_BORDER_RADIUS);
+		} else
+		{
+			super.onRestoreInstanceState(state);
 		}
-
-		Bitmap output = Bitmap.createBitmap(scaledSrcBmp.getWidth(),
-
-		scaledSrcBmp.getHeight(),
-
-		Config.ARGB_4444);
-
-		Canvas canvas = new Canvas(output);
-
-		Paint paint = new Paint();
-
-		Rect rect = new Rect(0, 0, scaledSrcBmp.getWidth(),
-				scaledSrcBmp.getHeight());
-
-		paint.setAntiAlias(true);
-
-		paint.setFilterBitmap(true);
-
-		paint.setDither(true);
-
-		canvas.drawARGB(0, 0, 0, 0);
-
-		canvas.drawCircle(scaledSrcBmp.getWidth() / 2,
-
-		scaledSrcBmp.getHeight() / 2,
-
-		scaledSrcBmp.getWidth() / 2,
-
-		paint);
-
-		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
-
-		canvas.drawBitmap(scaledSrcBmp, rect, rect, paint);
-
-		bmp = null;
-
-		squareBitmap = null;
-
-		scaledSrcBmp = null;
-
-		return output;
 
 	}
 
-	/**
-	 * 
-	 * è¾¹ç¼˜ç”»åœ†
-	 */
+	public void setBorderRadius(int borderRadius)
+	{
+		int pxVal = dp2px(borderRadius);
+		if (this.mBorderRadius != pxVal)
+		{
+			this.mBorderRadius = pxVal;
+			invalidate();
+		}
+	}
 
-	private void drawCircleBorder(Canvas canvas, int radius, int color) {
+	public void setType(int type)
+	{
+		if (this.type != type)
+		{
+			this.type = type;
+			if (this.type != TYPE_ROUND && this.type != TYPE_CIRCLE)
+			{
+				this.type = TYPE_CIRCLE;
+			}
+			requestLayout();
+		}
 
-		Paint paint = new Paint();
+	}
 
-		/* å»é”¯ï¿½?*/
-
-		paint.setAntiAlias(true);
-
-		paint.setFilterBitmap(true);
-
-		paint.setDither(true);
-
-		paint.setColor(color);
-
-		/* è®¾ç½®paintçš„ï¿½?styleï¿½?ï¿½ï¿½STROKEï¼šç©ºï¿½?*/
-
-		paint.setStyle(Paint.Style.STROKE);
-
-		/* è®¾ç½®paintçš„å¤–æ¡†å®½ï¿½?*/
-
-		paint.setStrokeWidth(mBorderThickness);
-
-		canvas.drawCircle(defaultWidth / 2, defaultHeight / 2, radius, paint);
-
+	public int dp2px(int dpVal)
+	{
+		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+				dpVal, getResources().getDisplayMetrics());
 	}
 
 }

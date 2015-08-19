@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
@@ -56,7 +57,7 @@ import com.utils.ImageRectUtil;
 public class DynamicListAdapter extends BaseAdapter {
 	private List<Dynamic> mList = null;
 	private LayoutInflater inflater = null;
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage;
 	private Context mContext = null;
 	private int width = 720;
 	private float times = 2;
@@ -79,6 +80,7 @@ public class DynamicListAdapter extends BaseAdapter {
 	public DynamicListAdapter(Activity activity, ArrayList<Dynamic> list,
 			int role) {
 		// 好友动态的列表，fragment为null..与圈话题的内容一致
+		mLoadImage = new LoadImage(0,60,60);
 		this.mContext = activity;
 		this.mList = list;
 		this.inflater = LayoutInflater.from(mContext);
@@ -88,7 +90,19 @@ public class DynamicListAdapter extends BaseAdapter {
 		this.phw = new PopupWindows((Activity) mContext);
 		this.role = role;
 	}
-
+	public DynamicListAdapter(Activity activity,LoadImage imageLoad, ArrayList<Dynamic> list,
+			int role) {
+		// 好友动态的列表，fragment为null..与圈话题的内容一致
+		this.mLoadImage = imageLoad;
+		this.mContext = activity;
+		this.mList = list;
+		this.inflater = LayoutInflater.from(mContext);
+		this.width = DeviceInfoUtil.getDeviceCsw(mContext);
+		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
+		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
+		this.phw = new PopupWindows((Activity) mContext);
+		this.role = role;
+	}
 	@Override
 	public int getCount() {
 		return mList.size();
@@ -261,6 +275,7 @@ public class DynamicListAdapter extends BaseAdapter {
 				RelativeLayout rl = new RelativeLayout(mContext);
 				rl.setLayoutParams(holder.trlpoutter);
 				ImageView iv = new ImageView(mContext);
+				iv.setScaleType(ScaleType.CENTER_INSIDE);
 				iv.setLayoutParams(layoutParams);
 				rl.addView(iv);
 				final String url = picsinner.get(i).getPic();

@@ -31,7 +31,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.GoodsDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.TypedStoreGoodsListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -40,6 +39,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
@@ -264,8 +264,8 @@ public class StoreSearchMainActivity extends BaseActivity implements
 
 			if (id != -1) {
 				Intent i = new Intent(StoreSearchMainActivity.this,
-						GoodsDetailActivity.class);
-				i.putExtra("gid", (String) view.getTag(R.id.tag_id));
+						GoodsDetailLActivity.class);
+				i.putExtra("goodsId", (String) view.getTag(R.id.tag_id));
 				startActivity(i);
 			}
 		} else {

@@ -185,11 +185,12 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				cancelable, cancel, data);
 	}
+
 	/***
 	 * 删除需求
 	 */
-	public boolean deleteGongxu(String sdid,  Handler handler,
-			int handlerTag, Activity activity) {
+	public boolean deleteGongxu(String sdid, Handler handler, int handlerTag,
+			Activity activity) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("sdid", sdid));
@@ -284,6 +285,29 @@ public class AppClientLef {
 	}
 
 	/**
+	 * 获取商品列表 参数 类型 说明 categoryid ： 商品类别id（可选） keyword ： 搜索商品关键字（可选） providerid
+	 * ： 供应商id（可选） （以上参数均不传，获取商城首页默认商品） pageNo ： 页码 pageSize ： 显示数
+	 */
+	public boolean getGoodsList(int pageNo, int pageSize, Handler handler,
+			int handlerTag, Activity activity, String categoryid,
+			String keyword, String providerid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		if (categoryid != null)
+			nameValuePairs
+					.add(new BasicNameValuePair("categoryid", categoryid));
+		if (keyword != null)
+			nameValuePairs.add(new BasicNameValuePair("keyword", keyword));
+		if (providerid != null)
+			nameValuePairs
+					.add(new BasicNameValuePair("providerid", providerid));
+		String url = ZhuoCommHelper.getGOODSLIST();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
 	 * 获取众筹
 	 */
 	public boolean getFundingList(int catid, int ismy, int pageNo,
@@ -370,16 +394,18 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, null, 0, acitivity, url, false,
 				null, null);
 	}
-	public boolean collection(Activity acitivity, Handler handler ,int handlerTag,String url, String idKey,
-			String id, String stateKey, String state) {
+
+	public boolean collection(Activity acitivity, Handler handler,
+			int handlerTag, String url, String idKey, String id,
+			String stateKey, String state) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair(idKey, id));
 		nameValuePairs.add(new BasicNameValuePair(stateKey, state));
-		return doPost(nameValuePairs, url, handler, handlerTag, acitivity, url, false,
-				null, null);
+		return doPost(nameValuePairs, url, handler, handlerTag, acitivity, url,
+				false, null, null);
 	}
-	
+
 	/**
 	 * 发布进展
 	 */
@@ -596,7 +622,26 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				false, null, null);
 	}
-
+	/**
+	 * 商品收藏列表
+	 * @param activity
+	 * @param handler
+	 * @param handlerTag
+	 * @param id
+	 * @return
+	 */
+	public boolean getGoodsCollectionList(int pageNo, int pageSize, Handler handler,
+			int handlerTag, Activity activity, String type) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		if(type!=null){
+			nameValuePairs.add(new BasicNameValuePair("type",type));
+		}
+		String url = ZhuoCommHelper.getGOODSCOLLECTION();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
 	/**
 	 * 发布评论
 	 * 
@@ -608,7 +653,7 @@ public class AppClientLef {
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("id", id));
 		nameValuePairs.add(new BasicNameValuePair("content", content));
-		if (toId!=null&&!toId.equals("-1")) {
+		if (toId != null && !toId.equals("-1")) {
 			nameValuePairs.add(new BasicNameValuePair("toUserid", toUserid));
 			nameValuePairs.add(new BasicNameValuePair("toId", toId));
 		}
@@ -676,6 +721,19 @@ public class AppClientLef {
 	}
 
 	/**
+	 * 获取商品详情
+	 */
+	public boolean getGoodsDetail(Activity activity, Handler handler,
+			int handlerTag, String goodsid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("goodsid", goodsid));
+		String url = ZhuoCommHelper.getGOODSDETAIL();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				true, null, null);
+	}
+
+	/**
 	 * 分享到倬脉
 	 * 
 	 * @param activity
@@ -694,11 +752,12 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				false, null, null);
 	}
+
 	public boolean shareRESToZhuo(Activity activity, Handler handler,
-			int handlerTag, String  sdid) {
+			int handlerTag, String sdid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
-		nameValuePairs.add(new BasicNameValuePair("sdid",sdid));
+		nameValuePairs.add(new BasicNameValuePair("sdid", sdid));
 		String url = ZhuoCommHelper.getSHARETOZHUO();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				false, null, null);

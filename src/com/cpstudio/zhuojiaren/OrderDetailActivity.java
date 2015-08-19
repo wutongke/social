@@ -64,7 +64,7 @@ public class OrderDetailActivity extends BaseActivity {
 					int position, long id) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(OrderDetailActivity.this,GoodsDetailLActivity.class);
-				intent.putExtra("goodsId", goodsList.get(position).getGid());
+//				intent.putExtra("goodsId", goodsList.get(position).getGid());
 				OrderDetailActivity.this.startActivity(intent);
 			}
 				

@@ -343,7 +343,15 @@ public class ResourceGXFragment extends Fragment {
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {
-				updateItemList((String) msg.obj, false, true);
+				ResultVO res;
+				if (JsonHandler.checkResult((String) msg.obj, getActivity())) {
+					res = JsonHandler.parseResult((String) msg.obj);
+				} else {
+					CommonUtil.displayToast(getActivity(), R.string.data_error);
+					return;
+				}
+				String data = res.getData();
+				updateItemList(data, false, true);
 				break;
 			}
 			case MsgTagVO.MSG_DEL:

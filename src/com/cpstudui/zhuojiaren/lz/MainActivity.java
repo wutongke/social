@@ -126,7 +126,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
 		// 是否和圈子话题公用一个数据结构还不一定
-		mAdapter = new DynamicListAdapter(MainActivity.this, mList, 1);
+		mAdapter = new DynamicListAdapter(MainActivity.this,mList, 1);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);

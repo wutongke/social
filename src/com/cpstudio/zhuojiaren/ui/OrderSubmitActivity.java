@@ -106,11 +106,11 @@ public class OrderSubmitActivity extends BaseActivity {
 		goodsCount.setText(String.format(getResources().getString(R.string.goods_count), goodsList.size()));
 		int count = goodsList.size();
 		if(count>=1){
-			loadImage.beginLoad(goodsList.get(0).getFirstPic().getOrgurl(), pic1);
+			loadImage.beginLoad(goodsList.get(0).getImg(), pic1);
 			if(count>=2)
-				loadImage.beginLoad(goodsList.get(1).getFirstPic().getOrgurl(), pic2);
+				loadImage.beginLoad(goodsList.get(1).getImg(), pic2);
 			if(count>=3)
-				loadImage.beginLoad(goodsList.get(2).getFirstPic().getOrgurl(), pic3);
+				loadImage.beginLoad(goodsList.get(2).getImg(), pic3);
 		}
 		goodsPrice.setText(intent.getStringExtra("goodsprice"));
 	}

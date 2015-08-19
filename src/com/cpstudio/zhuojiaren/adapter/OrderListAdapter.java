@@ -119,7 +119,7 @@ public class OrderListAdapter extends BaseAdapter {
 					int position, long id) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(mContext,GoodsDetailLActivity.class);
-				intent.putExtra("goodsId", goodsList.get(position).getGid());
+				intent.putExtra("goodsId", goodsList.get(position).getGoodsId());
 				mContext.startActivity(intent);
 			}
 		});

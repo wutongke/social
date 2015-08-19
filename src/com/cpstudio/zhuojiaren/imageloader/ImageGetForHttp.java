@@ -83,7 +83,7 @@ public class ImageGetForHttp {
 		}
 		return null;
 	}
-	public static Bitmap downloadBitmap(String url, ImageFileCache ifc, int height) {
+	public static Bitmap downloadBitmap(String url, ImageFileCache ifc, int height,int width) {
 		// final int IO_BUFFER_SIZE = 4 * 1024;
 		// AndroidHttpClient is not allowed to be used from the main thread
 		final HttpClient client = AndroidHttpClient.newInstance("Android");
@@ -117,7 +117,7 @@ public class ImageGetForHttp {
 					BitmapFactory.Options options = new BitmapFactory.Options();
 					options.inJustDecodeBounds = true;
 					BitmapFactory.decodeFile(filePath, options);
-					options.inSampleSize = calculateByHeight(options,height);
+					options.inSampleSize = calculateInSampleSize(options,width,height);
 					options.inJustDecodeBounds = false;
 					return BitmapFactory.decodeFile(filePath, options);// BitmapFactory.decodeStream(fit);
 				} finally {
@@ -143,9 +143,20 @@ public class ImageGetForHttp {
 		}
 		return null;
 	}
-	private static int calculateByHeight(BitmapFactory.Options options,int height){
-		
-		return options.outHeight/height;
+	private static int calculateInSampleSize(BitmapFactory.Options options,
+			int reqWidth, int reqHeight) {
+		// 源图片的宽度
+		int width = options.outWidth;
+		int height = options.outHeight;
+		int inSampleSize = 1;
+
+		if (width > reqWidth && height > reqHeight) {
+			// 计算出实际宽度和目标宽度的比率
+			int widthRatio = Math.round((float) width / (float) reqWidth);
+			int heightRatio = Math.round((float) width / (float) reqWidth);
+			inSampleSize = Math.max(widthRatio, heightRatio);
+		}
+		return inSampleSize;
 	}
 	private static int calculateInSampleSize(BitmapFactory.Options options) {
 		int width = options.outWidth;

@@ -69,21 +69,21 @@ public class GrouthVisitListctivity extends BaseActivity {
 
 	Handler uiHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
+			ResultVO res;
+			if (JsonHandler.checkResult((String) msg.obj,
+					GrouthVisitListctivity.this)) {
+				res = JsonHandler.parseResult((String) msg.obj);
+			} else {
+				return;
+			}
+			String data = res.getData();
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
-				ResultVO res;
-				if (JsonHandler.checkResult((String) msg.obj,
-						GrouthVisitListctivity.this)) {
-					res = JsonHandler.parseResult((String) msg.obj);
-				} else {
-					return;
-				}
-				String data = res.getData();
 				updateItemList(data, true, false);
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {
-				updateItemList((String) msg.obj, false, true);
+				updateItemList(data, false, true);
 				break;
 			}
 			}
