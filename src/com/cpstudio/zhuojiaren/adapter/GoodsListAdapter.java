@@ -60,13 +60,13 @@ public class GoodsListAdapter extends BaseAdapter {
 		String id = user.getGoodsId();
 		String title = user.getGoodsName();
 		String money = user.getZhuoPrice();
-		List<PicVO> pics = user.getPic();
+		List<String> pics = user.getPic();
 		convertView.setTag(R.id.tag_id, id);
 		holder.title.setText(title);
 		holder.money.setText(money);
 		holder.image.setImageResource(R.drawable.default_image);
 		if (pics != null && pics.size() > 0) {
-			String pic = pics.get(0).getUrl();
+			String pic = pics.get(0);
 			holder.image.setTag(pic);
 			mLoadImage.addTask(pic, holder.image);
 			mLoadImage.doTask();

@@ -222,7 +222,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 				if (goods.getPic()!=null) {
 					for (int i = 0; i < goods.getPic().size(); i++) {
 						BeanBanner item = new BeanBanner();
-						item.setPicUrl(goods.getPic().get(i).getOrgurl());
+						item.setPicUrl(goods.getPic().get(i));
 						bannerListData.add(item);
 					}
 					bannerPageAdapter = new Bee_PageAdapter(
@@ -231,14 +231,14 @@ public class GoodsDetailLActivity extends BaseActivity {
 					bannerViewPager.setCurrentItem(0);
 					bannerIndicator.setViewPager(bannerViewPager);
 				}
-				if(goods.getCompanyPic()!=null)
-				lImage.beginLoad(goods.getCompanyPic().getUrl(), companyImage);
+				if(goods.getProvider().getPic()!=null)
+				lImage.beginLoad(goods.getProvider().getPic(), companyImage);
 				
 				productName.setText(goods.getGoodsName());
 				productDes.setText(goods.getContent());
 				marketPrice.setText(goods.getMarkeyPrice());
-				company.setText(goods.getCompanyName());
-				companyDes.setText(goods.getCompanyDes());
+				company.setText(goods.getProvider().getProviderName());
+				companyDes.setText(goods.getProvider().getContent());
 				zhuoPrice.setText(goods.getZhuoPrice());
 				break;
 			case MsgTagVO.MSG_CMT:
