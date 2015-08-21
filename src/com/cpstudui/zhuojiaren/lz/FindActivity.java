@@ -28,7 +28,7 @@ import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
 public class FindActivity extends Activity {
 	private String mLocation = "";
 
-	private BaiduLocationHelper locationHelper = null;
+//	private BaiduLocationHelper locationHelper = null;
 	private ZhuoConnHelper mConnHelper = null;
 	private ArrayList<BeanNotice> noticesListData;
 
@@ -99,32 +99,32 @@ public class FindActivity extends Activity {
 
 		initClick();
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		locationHelper = new BaiduLocationHelper(getApplicationContext(),
-				mUIHandler, MsgTagVO.UPDATE_LOCAL);
+//		locationHelper = new BaiduLocationHelper(getApplicationContext(),
+//				mUIHandler, MsgTagVO.UPDATE_LOCAL);
 
 	}
 
 	@Override
 	protected void onDestroy() {
-		if (locationHelper != null) {
-			locationHelper.stopLocation();
-		}
+//		if (locationHelper != null) {
+//			locationHelper.stopLocation();
+//		}
 		super.onDestroy();
 	}
 
 	@Override
 	protected void onPause() {
-		if (locationHelper != null) {
-			locationHelper.stopLocation();
-		}
+//		if (locationHelper != null) {
+//			locationHelper.stopLocation();
+//		}
 		super.onPause();
 	}
 
 	@Override
 	protected void onResume() {
-		if (locationHelper != null) {
-			locationHelper.startLocation();
-		}
+//		if (locationHelper != null) {
+//			locationHelper.startLocation();
+//		}
 		super.onResume();
 	}
 

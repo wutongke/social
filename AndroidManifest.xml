@@ -190,6 +190,12 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.cpstudio.zhuojiaren.JiarenActiveSimpleActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_jiaren_active"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.cpstudio.zhuojiaren.MsgDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_detail"

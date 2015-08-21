@@ -74,7 +74,7 @@
                 android:background="@drawable/mbg5_wdzy_1"
                 android:padding="10dp" >
 
-                <ImageView
+                <com.cpstudio.zhuojiaren.widget.RoundImageView
                     android:id="@+id/ivHead"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
@@ -104,7 +104,6 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/bg_corners"
-                android:hint="@string/text_signature_hint"
                 android:maxLines="2"
                 android:textColor="#999999" />
 
@@ -171,13 +170,12 @@
                         android:id="@+id/ivTDCard"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ico_arrow_big"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:drawablePadding="5dp"
                         android:layout_marginRight="3dp"
+                        android:drawablePadding="5dp"
                         android:gravity="right|center_vertical"
-                         />
+                        android:src="@drawable/ico_arrow_big" />
                 </RelativeLayout>
 
                 <TextView
@@ -301,8 +299,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:padding="10dp" >
+                    android:padding="10dp"
+                    android:visibility="gone" >
 
                     <TextView
                         android:id="@+id/textViewEditFields"
@@ -514,9 +512,7 @@
                         android:singleLine="true"
                         android:textColor="#6f6f6f" />
                 </RelativeLayout>
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -525,8 +521,6 @@
                 android:background="@drawable/shape_corners2"
                 android:orientation="vertical" >
 
-
-               
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -593,7 +587,7 @@
                         android:singleLine="true"
                         android:textColor="#6f6f6f" />
                 </RelativeLayout>
-                
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -630,9 +624,8 @@
                         android:singleLine="true"
                         android:textColor="#6f6f6f" />
                 </RelativeLayout>
-                
-                
-                 <TextView
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="1dp"
@@ -668,7 +661,6 @@
                         android:singleLine="true"
                         android:textColor="#6f6f6f" />
                 </RelativeLayout>
-                
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

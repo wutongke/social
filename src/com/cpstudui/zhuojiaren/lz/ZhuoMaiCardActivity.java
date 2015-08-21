@@ -46,6 +46,7 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.Praise;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.ui.PhoneActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.TabButton;
@@ -107,7 +108,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 	private final static int USER_SELECT = 0;
 	private Context mContext;
-	// 四个fragment 方便通信
 	List<Fragment> fragments;
 
 	private PopupWindows phw = null;
@@ -138,7 +138,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		setContentView(R.layout.activity_zhuo_card_main);
 		ButterKnife.inject(this);
 		mContext = this;
-
 		tvTitle.setText(R.string.title_zhuomai_card);
 
 		// 初始化tab和viewpager
@@ -405,7 +404,9 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	protected Fragment addBundle(Fragment fragment, int catlog) {
 		Bundle bundle = new Bundle();
 		bundle.putInt(QuanVO.QUANZIMAINTYPE, catlog);
+		bundle.putString("userid", userid);
 		fragment.setArguments(bundle);
+		
 		return fragment;
 	}
 

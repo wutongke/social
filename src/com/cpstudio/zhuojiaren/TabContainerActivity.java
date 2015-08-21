@@ -45,11 +45,15 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.SysApplication;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.GroupsForIM;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.Province;
+import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.ui.GrouthActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudui.zhuojiaren.lz.LZMyHomeActivity;
+import com.cpstudui.zhuojiaren.lz.MainActivity;
 
 @SuppressWarnings("deprecation")
 public class TabContainerActivity extends TabActivity implements
@@ -187,7 +191,7 @@ public class TabContainerActivity extends TabActivity implements
 			HashMap<String, Group> groupM = new HashMap<String, Group>();
 			for (int i = 0; i < grouplist.size(); i++) {
 				groupM.put(grouplist.get(i).getId(), grouplist.get(i));
-//测试，因为之前的圈子都还未加入，先硬编码加入(TabConTainerActivity),等定义好推送的允许加入圈子后就可以加入圈子了
+				// 测试，因为之前的圈子都还未加入，先硬编码加入(TabConTainerActivity),等定义好推送的允许加入圈子后就可以加入圈子了
 				Group g = grouplist.get(i);
 				RongIM.getInstance()
 						.getRongIMClient()
@@ -272,8 +276,14 @@ public class TabContainerActivity extends TabActivity implements
 			}
 		}, 500);
 		connHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		if (connHelper.getGroupMap() == null)
+		if (connHelper.getGroupMap() == null) {
 			connHelper.getMyGroupList(msgHandler, MsgTagVO.DATA_OTHER);
+
+		}
+		connHelper.getBaseCodeData(msgHandler, MsgTagVO.DATA_BASE,
+				TabContainerActivity.this, false, null, null);
+		connHelper.getCitys(msgHandler, MsgTagVO.DATA_CITYS,
+				TabContainerActivity.this, true, null, null);
 	}
 
 	/**
@@ -343,6 +353,36 @@ public class TabContainerActivity extends TabActivity implements
 					getMyGroupSuccess(nljh.parseGroupsForIM());
 				}
 				break;
+			case MsgTagVO.DATA_CITYS: {
+				ResultVO res;
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					res = JsonHandler.parseResult((String) msg.obj);
+					connHelper.saveObject((String) msg.obj,
+							ZhuoConnHelper.CITYS);
+				} else {
+					return;
+				}
+				String data = res.getData();
+				List<Province> dataset = JsonHandler.parseCodedCitys(data);
+				connHelper.setCitysOfPrince(dataset);
+				break;
+			}
+			case MsgTagVO.DATA_BASE: {// 基础编码数据，保存到内存中\
+				ResultVO res;
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					res = JsonHandler.parseResult((String) msg.obj);
+					connHelper.saveObject((String) msg.obj,
+							ZhuoConnHelper.BASEDATA);
+				} else {
+					return;
+				}
+				String data = res.getData();
+				BaseCodeData dataset = JsonHandler.parseBaseCodeData(data);
+				connHelper.setBaseDataSet(dataset);
+				break;
+			}
 			default:
 				break;
 			}

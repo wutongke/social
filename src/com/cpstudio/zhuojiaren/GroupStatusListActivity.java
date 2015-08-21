@@ -95,7 +95,6 @@ public class GroupStatusListActivity extends Activity implements
 		mPullDownView.setShowFooter(false);
 
 		mType = getIntent().getIntExtra("mType", 0);
-		findViewById(R.id.ll_active_menue).setVisibility(View.GONE);
 		loadData();
 		initClick();
 	}

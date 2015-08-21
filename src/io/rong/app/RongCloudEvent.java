@@ -368,7 +368,6 @@ public final class RongCloudEvent implements
 	 */
 	@Override
 	public UserInfo getUserInfo(String userId) {
-
 		// 暂时注释 /**
 		// * demo 代码 开发者需替换成自己的代码。
 		// */
@@ -391,10 +390,14 @@ public final class RongCloudEvent implements
 		if (mUserInfosDao == null
 				|| mUserInfosDao.getSimpleInfoById(userId) == null) {
 			// 数据库中不存在，网络请求
-
 		}
-
-		return DemoContext.getInstance(mContext).getUserInfoById(userId);
+		UserInfo info = DemoContext.getInstance(mContext).getUserInfoById(
+				userId);
+		if (info != null)
+			Log.i("cloudevent",
+					"user:" + info.getUserId() + "," + info.getName() + ","
+							+ info.getPortraitUri());
+		return info;
 	}
 
 	/**
@@ -409,8 +412,13 @@ public final class RongCloudEvent implements
 
 		if (ZhuoConnHelper.getInstance(mContext).getGroupMap() == null)
 			return null;
-
-		return ZhuoConnHelper.getInstance(mContext).getGroupMap().get(groupId);
+		Group group = ZhuoConnHelper.getInstance(mContext).getGroupMap()
+				.get(groupId);
+		if (group != null)
+			Log.i("cloudevent",
+					"group:" + group.getId() + "," + group.getName() + ","
+							+ group.getPortraitUri());
+		return group;
 	}
 
 	/**

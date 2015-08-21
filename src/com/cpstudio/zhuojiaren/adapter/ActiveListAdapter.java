@@ -15,7 +15,9 @@ import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 
@@ -23,10 +25,13 @@ public class ActiveListAdapter extends BaseAdapter {
 	private List<Dynamic> mList = null;
 	private LoadImage mLoadImage = new LoadImage();
 	private LayoutInflater inflater = null;
+	List<City> cityList;
 
 	public ActiveListAdapter(Context context, ArrayList<Dynamic> list) {
 		this.mList = list;
 		this.inflater = LayoutInflater.from(context);
+		cityList = ZhuoConnHelper.getInstance(context.getApplicationContext())
+				.getCitys();
 	}
 
 	@Override
@@ -61,7 +66,7 @@ public class ActiveListAdapter extends BaseAdapter {
 		}
 		Dynamic item = mList.get(position);
 		convertView.setTag(R.id.tag_id, item.getStatusid());
-		convertView.setTag(R.id.tag_string,item.getName());
+		convertView.setTag(R.id.tag_string, item.getName());
 		String text = item.getContent();
 		if (text != null && !text.equals("")) {
 			holder.textViewTitle.setText(text);
@@ -116,10 +121,11 @@ public class ActiveListAdapter extends BaseAdapter {
 				mLoadImage.addTask(Pics.get(i).getPic(), iv);
 			}
 		}
-		String place = "地点编号："+item.getPosition();
-		if (null == place || place.equals("")) {
-			place = "";
-		}
+
+		String place = "地点编号：" + item.getPosition();
+		if (cityList != null && item.getPosition() >= 1
+				&& item.getPosition() <= cityList.size())
+			place = cityList.get(item.getPosition()-1).getCityName();
 		String time = item.getAddtime();
 		if (null != time && !time.equals("") && time.indexOf("-") != -1) {
 			String month = ZhuoCommHelper.getMonthFromTime(time);

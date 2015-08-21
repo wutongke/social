@@ -71,7 +71,8 @@ public class ZhuoConnHelper {
 	private BaseCodeData baseDataSet;
 	private List<Province> citysOfProvince;
 	private List<City> citys;
-	private HashMap<String, Group> groupMap;//群组信息
+	private HashMap<String, Group> groupMap;// 群组信息
+
 	private void init(Context context) {
 		ResHelper resHelper = ResHelper.getInstance(context);
 		this.userid = resHelper.getUserid();
@@ -888,6 +889,34 @@ public class ZhuoConnHelper {
 			final Activity activity, final String tag,
 			final boolean cancelable, final OnCancelListener cancel,
 			final String data) {
+		return doPostWithFile(filesMap, nameValuePairs, url, handler,
+				handlerTag, activity, tag, cancelable, cancel, null);
+	}
+
+	/**
+	 * 
+	 * @param filesMap
+	 * @param nameValuePairs
+	 * @param url
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param tag
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @param extra
+	 *            当extra不为null时，将extra的内容添加到filesMap中
+	 * @return
+	 */
+	public boolean doPostWithFile(
+			final Map<String, ArrayList<String>> filesMap,
+			final List<NameValuePair> nameValuePairs, final String url,
+			final Handler handler, final int handlerTag,
+			final Activity activity, final String tag,
+			final boolean cancelable, final OnCancelListener cancel,
+			final String data, final String extra) {
+
 		if (!mStartedTag.contains(tag) || tag == null) {
 			if (tag != null) {
 				mStartedTag.add(tag);
@@ -905,7 +934,10 @@ public class ZhuoConnHelper {
 								for (Map.Entry<String, StringBuilder> entry : map
 										.entrySet()) {
 									String key = entry.getKey();
+
 									String value = entry.getValue().toString();
+									if (extra != null)
+										value = extra + value;
 									nameValuePairs.add(new BasicNameValuePair(
 											key, value));
 								}
@@ -927,6 +959,7 @@ public class ZhuoConnHelper {
 			return true;
 		}
 		return false;
+
 	}
 
 	private boolean doGet(String url, Handler handler, int handlerTag,
@@ -1089,20 +1122,22 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getMainInfo(), params,
 				mUIHandler, tag);
 	}
-	 
+
 	/**
 	 * 删除活动
+	 * 
 	 * @param mUIHandler
 	 * @param tag
-	 * @param activityid 圈活动ID （如果为多个，以逗号分隔）
+	 * @param activityid
+	 *            圈活动ID （如果为多个，以逗号分隔）
 	 * @return
 	 */
 	public boolean deleteEvents(Handler mUIHandler, int tag, String activityid) {
-		
+
 		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-		if (activityid !=null)
+		if (activityid != null)
 			params.add(new BasicNameValuePair("activityid", activityid));
-		
+
 		return getFromServerByPost(ZhuoCommHelperLz.deleteActives(), params,
 				mUIHandler, tag);
 	}
@@ -1168,6 +1203,27 @@ public class ZhuoConnHelper {
 	}
 
 	/**
+	 * 更新个人照片
+	 * 
+	 * @param activity
+	 * @param mUIHandler
+	 * @param tag
+	 * @param groupid
+	 * @param content
+	 * @param files
+	 * @return
+	 */
+	public boolean pubPhoto(Activity activity, Handler mUIHandler, int tag,
+			String originFilekeys, ArrayList<String> files) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
+		fileMap.put("file", files);
+		return doPostWithFile(fileMap, nameValuePairs,
+				ZhuoCommHelperLz.pubPhoto(), mUIHandler, tag, activity,
+				"pubQuanTopic", false, null, null, originFilekeys);
+	}
+
+	/**
 	 * 获得圈子活动列表
 	 * 
 	 * @param mUIHandler
@@ -1229,13 +1285,14 @@ public class ZhuoConnHelper {
 				nameValuePairs, mUIHandler, tag);
 	}
 
-	
 	/**
 	 * 加入或退出圈子
+	 * 
 	 * @param mUIHandler
 	 * @param tag
 	 * @param groupid
-	 * @param type 0取消关注  1申请关注  2接受关注
+	 * @param type
+	 *            0取消关注 1申请关注 2接受关注
 	 * @param content
 	 * @return
 	 */
@@ -1535,6 +1592,40 @@ public class ZhuoConnHelper {
 	}
 
 	/**
+	 * 供需发布
+	 * 
+	 * @param activity
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param type
+	 * @param title
+	 * @param content
+	 * @param files
+	 * @param label
+	 * @param contacts
+	 * @param phone
+	 * @return
+	 */
+	public boolean pubGongxu(Activity activity, Handler mUIHandler,
+			int handlerTag, int type, String title, String content,
+			ArrayList<String> files, String label, String contacts, String phone) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+		nameValuePairs
+				.add(new BasicNameValuePair("type", String.valueOf(type)));
+		nameValuePairs.add(new BasicNameValuePair("title", title));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		nameValuePairs.add(new BasicNameValuePair("label", label));
+		nameValuePairs.add(new BasicNameValuePair("contacts", contacts));
+		nameValuePairs.add(new BasicNameValuePair("phone", phone));
+		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
+		fileMap.put("file", files);
+		return doPostWithFile(fileMap, nameValuePairs,
+				ZhuoCommHelperLz.pubGongxu(), mUIHandler, handlerTag, activity,
+				"pubDynamic", false, null, null);
+	}
+
+	/**
 	 * 删除动态
 	 * 
 	 * @param mUIHandler
@@ -1601,15 +1692,17 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getGroupMemberList(),
 				nameValuePairs, mUIHandler, tag);
 	}
+
 	/**
 	 * 获得倬脉动态
+	 * 
 	 * @param mUIHandler
 	 * @param tag
 	 * @param groupid
 	 * @return
 	 */
-	public boolean getZhuomaiList(Handler mUIHandler, int tag,
-			int pageNo, int pageSize) {
+	public boolean getZhuomaiList(Handler mUIHandler, int tag, int pageNo,
+			int pageSize) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("pageNo", String
 				.valueOf(pageNo)));
@@ -1648,16 +1741,19 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getFollowReqList(),
 				nameValuePairs, mUIHandler, tag);
 	}
+
 	/**
 	 * 获取赞、浏览、收藏过我名片的用户列表。
+	 * 
 	 * @param mUIHandler
-	 * @param tag 0-浏览过我名片的人  1-收藏过我名片的人  2-赞过我名片的人
+	 * @param tag
+	 *            0-浏览过我名片的人 1-收藏过我名片的人 2-赞过我名片的人
 	 * @return
 	 */
-	public boolean getMyStatusCard(Handler mUIHandler, int tag,int type) {
+	public boolean getMyStatusCard(Handler mUIHandler, int tag, int type) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("type", String
-				.valueOf(type)));
+		nameValuePairs
+				.add(new BasicNameValuePair("type", String.valueOf(type)));
 		return getFromServerByPost(ZhuoCommHelperLz.getMyStatusCard(),
 				nameValuePairs, mUIHandler, tag);
 	}
@@ -1680,8 +1776,10 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.followUser(),
 				nameValuePairs, mUIHandler, tag);
 	}
+
 	/**
 	 * 获取圈子信息，为融云提供
+	 * 
 	 * @param mUIHandler
 	 * @param tag
 	 * @param userid
@@ -1691,6 +1789,22 @@ public class ZhuoConnHelper {
 	public boolean getMyGroupList(Handler mUIHandler, int tag) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		return getFromServerByPost(ZhuoCommHelperLz.getUrlMyGroupList(),
+				nameValuePairs, mUIHandler, tag);
+	}
+
+	/**
+	 * 用户商务信息：供需
+	 * 
+	 * @param mUIHandler
+	 * @param tag
+	 * @param userid
+	 * @return
+	 */
+	public boolean getBusinessInfo(Handler mUIHandler, int tag, String userid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		if (userid != null)
+			nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		return getFromServerByPost(ZhuoCommHelperLz.getUserBusinessInfo(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -1749,6 +1863,69 @@ public class ZhuoConnHelper {
 			return doPost(nameValuePairs, url, handler, handlerTag, activity,
 					url, cancelable, cancel, data);
 		}
+	}
+
+	/**
+	 * 增加页信息
+	 * 
+	 * @param nameValuePairs
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	private List<NameValuePair> addPageInfo(List<NameValuePair> nameValuePairs,
+			int pageNo, int pageSize) {
+		nameValuePairs.add(new BasicNameValuePair("pageNo", String
+				.valueOf(pageNo)));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", String
+				.valueOf(pageSize)));
+		return nameValuePairs;
+	}
+
+	/**
+	 * 
+	 * @param type
+	 * @param title
+	 * @param pageNo
+	 * @param pageSize
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @param userid
+	 * @return
+	 */
+	public boolean getGongXuList(String type, String title, int pageNo,
+			int pageSize, Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data,
+			String userid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		if (type != null)
+			nameValuePairs.add(new BasicNameValuePair("type", type));
+		if (title != null)
+			nameValuePairs.add(new BasicNameValuePair("title", title));
+		if (userid != null)
+			nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		String url = ZhuoCommHelper.getGongxulist();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+	}
+
+	/***
+	 * 删除需求
+	 */
+	public boolean deleteGongxu(String sdid, Handler handler, int handlerTag,
+			Activity activity) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("sdid", sdid));
+		String url = ZhuoCommHelper.getDisolveQuan();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				true, null, null);
 	}
 
 	/**
@@ -1832,8 +2009,7 @@ public class ZhuoConnHelper {
 			exist = true;
 		return exist;
 	}
-	
-	
+
 	/**
 	 * 设置群组信息提供者，当收到推送的消息表示加群成功时需要调用此
 	 * 
@@ -1841,19 +2017,21 @@ public class ZhuoConnHelper {
 	 * @param i
 	 *            0,退出；1 加入
 	 */
-	public  void setGroupMap(Group group, int i) {
-			HashMap<String, Group> groupHashMap = getGroupMap();
-			if (i == 1) {//加入群
-				if (group.getPortraitUri() != null)
-					groupHashMap.put(group.getId(), new Group(group.getId(),
-							group.getName(), group.getPortraitUri()));
-				else
-					groupHashMap.put(group.getId(), new Group(group.getId(),
-							group.getName(), null));
-			} else if (i == 0) {
-				groupHashMap.remove(group.getId());
-			}
-			setGroupMap(groupHashMap);
+	public void setGroupMap(Group group, int i) {
+		HashMap<String, Group> groupHashMap = getGroupMap();
+		if (i == 1) {// 加入群
+			if (group.getPortraitUri() != null)
+				groupHashMap.put(
+						group.getId(),
+						new Group(group.getId(), group.getName(), group
+								.getPortraitUri()));
+			else
+				groupHashMap.put(group.getId(),
+						new Group(group.getId(), group.getName(), null));
+		} else if (i == 0) {
+			groupHashMap.remove(group.getId());
+		}
+		setGroupMap(groupHashMap);
 	}
 
 }

@@ -12,7 +12,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.cpstudui.zhuojiaren.lz.Lunar;
@@ -21,14 +23,15 @@ import com.utils.SolarToLundar;
 
 public class CardAddUserBirthActivity extends Activity {
 	private boolean scrolling = false;
-	private OnClickListener yingOnClickListener = null;
-	private OnClickListener yangOnClickListener = null;
+	// private OnClickListener yingOnClickListener = null;
+	// private OnClickListener yangOnClickListener = null;
 	private WheelView wheel1 = null;
 	private WheelView wheel2 = null;
 	private WheelView wheel3 = null;
-	private boolean mLunar = false;
+	// private boolean mLunar = false;
 	int constellation = 0, zodiac = 0;
 	boolean isYangli = true;
+	int isOpen = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +46,27 @@ public class CardAddUserBirthActivity extends Activity {
 		String birthday = i.getStringExtra(CardEditActivity.EDIT_BIRTH_STR1);
 		String birthdayopen = i
 				.getStringExtra(CardEditActivity.EDIT_BIRTH_STR2);
-		String birthdayLunar = i
-				.getStringExtra(CardEditActivity.EDIT_BIRTH_STR3);// 阴历生日
+		// String birthdayLunar = i
+		// .getStringExtra(CardEditActivity.EDIT_BIRTH_STR3);// 阴历生日
 		if (birthdayopen != null && birthdayopen.equals("0")) {
-			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(true);
+			((RadioButton) (findViewById(R.id.radioPrivate))).setChecked(true);
 		} else {
-			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(false);
+			((RadioButton) (findViewById(R.id.radioOpen))).setChecked(true);
 		}
+		((RadioGroup) this.findViewById(R.id.radioGroup))
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(RadioGroup arg0, int arg1) {
+						// TODO Auto-generated method stub
+						// 获取变更后的选中项的ID
+						int radioButtonId = arg0.getCheckedRadioButtonId();
+						if (radioButtonId == R.id.radioPrivate)
+							isOpen = 0;
+						else
+							isOpen = 1;
+					}
+				});
+
 		int year = solar.get(Calendar.YEAR);
 		int month = solar.get(Calendar.MONTH) + 1;
 		int date = solar.get(Calendar.DATE);
@@ -62,28 +79,28 @@ public class CardAddUserBirthActivity extends Activity {
 			year = Integer.valueOf(str[0]);
 			month = Integer.valueOf(str[1]);
 			date = Integer.valueOf(str[2]);
-		}
-		gentBirtdayTextInfo(year, month, date);
-		if (birthday != null) {
+
+			gentBirtdayTextInfo(year, month, date, isYangli);
 			initNormalWheel(year, month, date);
 		}
-		if (birthdayLunar != null) {
-			initChineseWheelBySolar(year, month, date);
-		}
-	}
 
-	// 阴历
-	private void initChineseWheelBySolar(int year, int month, int date) {
-		int[] lunar = new int[3];
-		try {
-			lunar = SolarToLundar.getLunar(year, month, date);
-			initChieseWheel(lunar[0], lunar[1], lunar[2]);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		// if (birthdayLunar != null) {
+		// initChineseWheelBySolar(year, month, date);
+		// }
 	}
 
 	private void initClick() {
+		findViewById(R.id.buttonOK).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				int year = wheel1.getCurrentItem() + 1900;
+				int month = wheel2.getCurrentItem() + 1;
+				int day = wheel3.getCurrentItem() + 1;
+				gentBirtdayTextInfo(year, month, day, isYangli);
+			}
+		});
+
 		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -99,12 +116,10 @@ public class CardAddUserBirthActivity extends Activity {
 						int month = wheel2.getCurrentItem() + 1;
 						int day = wheel3.getCurrentItem() + 1;
 						Intent intent = new Intent();
-						if (((CheckBox) findViewById(R.id.checkBoxIsOpen))
-								.isChecked()) {
-							intent.putExtra(CardEditActivity.EDIT_BIRTH_STR2, 1);
-						} else {
-							intent.putExtra(CardEditActivity.EDIT_BIRTH_STR2, 0);
-						}
+
+						intent.putExtra(CardEditActivity.EDIT_BIRTH_STR2,
+								isOpen);
+
 						intent.putExtra(CardEditActivity.EDIT_BIRTH_STR4,
 								constellation + 1);
 						intent.putExtra(CardEditActivity.EDIT_BIRTH_STR5,
@@ -154,14 +169,15 @@ public class CardAddUserBirthActivity extends Activity {
 				});
 	}
 
-	private void gentBirtdayTextInfo(int year, int month, int day) {
+	private void gentBirtdayTextInfo(int year, int month, int day,
+			boolean yangli) {
 
-		if (!isYangli) {
+		if (!yangli) {
 			int[] solar = LundarToSolar.getLundarToSolar(year, month, day);
 			year = solar[0];
 			month = solar[1];
 			day = solar[2];
-			gentBirtdayTextInfo(year, month, day);
+			gentBirtdayTextInfo(year, month, day, true);
 			return;
 		}
 
@@ -300,19 +316,19 @@ public class CardAddUserBirthActivity extends Activity {
 		wheel2.setCurrentItem(initMonth - 1);
 		wheel3.setCurrentItem(initDate - 1);
 
-		if (yangOnClickListener == null) {
-			yangOnClickListener = new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					int year = wheel1.getCurrentItem() + 1900;
-					int month = wheel2.getCurrentItem() + 1;
-					int day = wheel3.getCurrentItem() + 1;
-					gentBirtdayTextInfo(year, month, day);
-				}
-			};
-		}
-		findViewById(R.id.buttonOK).setOnClickListener(yangOnClickListener);
+		// if (yangOnClickListener == null) {
+		// yangOnClickListener = new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// int year = wheel1.getCurrentItem() + 1900;
+		// int month = wheel2.getCurrentItem() + 1;
+		// int day = wheel3.getCurrentItem() + 1;
+		// gentBirtdayTextInfo(year, month, day, isYangli);
+		// }
+		// };
+		// }
+		// findViewById(R.id.buttonOK).setOnClickListener(yangOnClickListener);
 
 		findViewById(R.id.buttonYingli).setBackgroundResource(
 				R.drawable.button_lunar_off);
@@ -320,7 +336,7 @@ public class CardAddUserBirthActivity extends Activity {
 				R.drawable.button_solar_on);
 		findViewById(R.id.buttonYingli).setEnabled(true);
 		findViewById(R.id.buttonYangli).setEnabled(false);
-		mLunar = false;
+//		mLunar = false;
 	}
 
 	private void initChieseWheel(int initYear, int initMonth, int initDate) {
@@ -405,53 +421,53 @@ public class CardAddUserBirthActivity extends Activity {
 		wheel2.setCurrentItem(initMonth - 1);
 		wheel3.setCurrentItem(initDate - 1);
 
-		if (yingOnClickListener == null) {
-			yingOnClickListener = new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					int year = wheel1.getCurrentItem() + 1900;
-					int month = wheel2.getCurrentItem();
-					int leapMonth = SolarToLundar.leapMonth(year);
-					if (month < leapMonth || leapMonth == 0) {
-						month += 1;
-					}
-					int day = wheel3.getCurrentItem() + 1;
-					String monthStr = month + "";
-					if (month < 10) {
-						monthStr = "0" + monthStr;
-					}
-					String dayStr = day + "";
-					if (day < 10) {
-						dayStr = "0" + dayStr;
-					}
-					String text = "   " + year + "   "
-							+ getString(R.string.label_year) + "   " + monthStr
-							+ "   " + getString(R.string.label_month) + "   "
-							+ dayStr + "   " + getString(R.string.label_day);
-					int[] solar = LundarToSolar.getLundarToSolar(year, month,
-							day);
-					String month2Str = solar[1] + "";
-					if (solar[1] < 10) {
-						month2Str = "0" + month2Str;
-					}
-					String day2Str = solar[2] + "";
-					if (solar[2] < 10) {
-						day2Str = "0" + day2Str;
-					}
-					String solarText = "   " + solar[0] + "   "
-							+ getString(R.string.label_year) + "   "
-							+ month2Str + "   "
-							+ getString(R.string.label_month) + "   " + day2Str
-							+ "   " + getString(R.string.label_day);
-					((TextView) findViewById(R.id.textViewLunar))
-							.setText(getString(R.string.mp_yilsr) + text);
-					((TextView) findViewById(R.id.textViewSolar))
-							.setText(getString(R.string.mp_yalsr) + solarText);
-				}
-			};
-		}
-		findViewById(R.id.buttonOK).setOnClickListener(yingOnClickListener);
+		// if (yingOnClickListener == null) {
+		// yingOnClickListener = new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// int year = wheel1.getCurrentItem() + 1900;
+		// int month = wheel2.getCurrentItem();
+		// int leapMonth = SolarToLundar.leapMonth(year);
+		// if (month < leapMonth || leapMonth == 0) {
+		// month += 1;
+		// }
+		// int day = wheel3.getCurrentItem() + 1;
+		// String monthStr = month + "";
+		// if (month < 10) {
+		// monthStr = "0" + monthStr;
+		// }
+		// String dayStr = day + "";
+		// if (day < 10) {
+		// dayStr = "0" + dayStr;
+		// }
+		// String text = "   " + year + "   "
+		// + getString(R.string.label_year) + "   " + monthStr
+		// + "   " + getString(R.string.label_month) + "   "
+		// + dayStr + "   " + getString(R.string.label_day);
+		// int[] solar = LundarToSolar.getLundarToSolar(year, month,
+		// day);
+		// String month2Str = solar[1] + "";
+		// if (solar[1] < 10) {
+		// month2Str = "0" + month2Str;
+		// }
+		// String day2Str = solar[2] + "";
+		// if (solar[2] < 10) {
+		// day2Str = "0" + day2Str;
+		// }
+		// String solarText = "   " + solar[0] + "   "
+		// + getString(R.string.label_year) + "   "
+		// + month2Str + "   "
+		// + getString(R.string.label_month) + "   " + day2Str
+		// + "   " + getString(R.string.label_day);
+		// ((TextView) findViewById(R.id.textViewLunar))
+		// .setText(getString(R.string.mp_yilsr) + text);
+		// ((TextView) findViewById(R.id.textViewSolar))
+		// .setText(getString(R.string.mp_yalsr) + solarText);
+		// }
+		// };
+		// }
+		// findViewById(R.id.buttonOK).setOnClickListener(yingOnClickListener);
 
 		findViewById(R.id.buttonYingli).setBackgroundResource(
 				R.drawable.button_lunar_on);
@@ -459,7 +475,7 @@ public class CardAddUserBirthActivity extends Activity {
 				R.drawable.button_solar_off);
 		findViewById(R.id.buttonYingli).setEnabled(false);
 		findViewById(R.id.buttonYangli).setEnabled(true);
-		mLunar = true;
+//		mLunar = true;
 	}
 
 	private void updateDate(WheelView wheelView, String str[]) {

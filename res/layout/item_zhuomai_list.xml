@@ -19,8 +19,9 @@
 
             <TextView
                 android:id="@+id/textViewTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text="textVi"
                 android:textColor="#1c1c1c"
                 android:textSize="18sp" />
@@ -56,9 +57,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
+                android:ems="20"
                 android:lineSpacingExtra="2dp"
                 android:singleLine="true"
-                android:ems="20"
                 android:text="textViewContent"
                 android:textColor="#585858"
                 android:textSize="16sp" />

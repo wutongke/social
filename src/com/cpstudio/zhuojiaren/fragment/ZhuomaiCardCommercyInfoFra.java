@@ -3,6 +3,8 @@ package com.cpstudio.zhuojiaren.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,34 +17,92 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.CardAddUserResourceActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.BusinessInfoVO;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.ResourceGXVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class ZhuomaiCardCommercyInfoFra extends Fragment {
 	@InjectView(R.id.tvMoreResource)
 	TextView tvMoreResource;
 	@InjectView(R.id.tvMoreNeed)
 	TextView tvMoreNeed;
+	@InjectView(R.id.textViewResourceTitle)
+	TextView textViewResourceTitle;
+	@InjectView(R.id.textViewTime)
+	TextView textViewTime;
+	@InjectView(R.id.textViewNeedTitle)
+	TextView textViewNeedTitle;
+	@InjectView(R.id.textViewNeedTime)
+	TextView textViewNeedTime;
 	@InjectView(R.id.textViewWeidian)
 	ImageView ivWeidian;
 	@InjectView(R.id.textViewVideo)
 	ImageView ivVideo;
+	@InjectView(R.id.imageViewResourcePic)
+	ImageView imageViewResourcePic;
+	@InjectView(R.id.imageViewNeedPic)
+	ImageView imageViewNeedPic;
+	private LoadImage mLoadImage = new LoadImage();
 	public final static String EDIT_RES_STR1 = "type";
 	public final static String EDIT_RES_STR2 = "userid";
 	private ZhuoConnHelper mConnHelper = null;
 
 	private Context mContext;
-	private String mLastId = null;
-	// private PopupWindows pupWindow;
-
+	BusinessInfoVO info;
 	// 主View
 	View layout;
 	private String uid = null;
-	String groupId = null;
+	Handler mUIHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			switch (msg.what) {
+			case MsgTagVO.DATA_LOAD: {
+				if (JsonHandler.checkResult((String) msg.obj, getActivity()
+						.getApplicationContext())) {
+					JsonHandler nljh = new JsonHandler((String) msg.obj,
+							getActivity().getApplicationContext());
+					info = nljh.parseBusinessInfo();
+				} else {
+					CommonUtil.displayToast(getActivity(), R.string.data_error);
+					return;
+				}
+				updateInfo();
+				break;
+			}
+			}
+		}
+
+	};
 
 	public interface functionListener {
-		//
 		public void onTypeChange(int type);
+	}
+
+	private void updateInfo() {
+		// TODO Auto-generated method stub
+		if (info == null)
+			return;
+		ResourceGXVO resource = info.getSupply();
+		if (resource != null) {
+			mLoadImage.addTask(info.getSupply().getPicture(),
+					imageViewResourcePic);
+			textViewResourceTitle.setText(resource.getTitle());
+			textViewTime.setText(resource.getAddtime());
+		}
+		ResourceGXVO need = info.getDemand();
+		if (need != null) {
+			mLoadImage.addTask(need.getPicture(), imageViewNeedPic);
+			textViewNeedTitle.setText(need.getTitle());
+			textViewNeedTime.setText(need.getAddtime());
+		}
+		mLoadImage.doTask();
 	}
 
 	@Override
@@ -56,9 +116,8 @@ public class ZhuomaiCardCommercyInfoFra extends Fragment {
 		mContext = getActivity();
 		mConnHelper = ZhuoConnHelper.getInstance(getActivity()
 				.getApplicationContext());
-
-		uid = ResHelper.getInstance(getActivity().getApplicationContext())
-				.getUserid();
+		uid = getArguments().getString("userid");
+		loadData();
 		initclick();
 		return layout;
 	}
@@ -89,7 +148,7 @@ public class ZhuomaiCardCommercyInfoFra extends Fragment {
 				// 跳转到我的资源列表
 				Intent i = new Intent(mContext,
 						CardAddUserResourceActivity.class);
-				i.putExtra(EDIT_RES_STR1, 2);
+				i.putExtra(EDIT_RES_STR1, 0);
 				i.putExtra(EDIT_RES_STR2, uid);
 				startActivity(i);
 			}
@@ -110,29 +169,10 @@ public class ZhuomaiCardCommercyInfoFra extends Fragment {
 	}
 
 	private void loadData() {
-		// String url = ZhuoCommHelper.getUrlUserInfo()
-		// + "?uid="
-		// + ResHelper.getInstance(getActivity().getApplicationContext())
-		// .getUserid();
-		//
-		// // 加载刷新个人信息
-		// mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
-		//
-		// if (mListViewFooter.startLoading()) {
-		// mList.clear();
-		// mAdapter.notifyDataSetChanged();
-		// mPage = 1;
-		// String params = ZhuoCommHelper.getUrlMsgList();
-		// params += "?pageflag=" + "0";
-		// params += "&reqnum=" + "10";
-		// params += "&lastid=" + "0";
-		// params += "&type=" + "0";
-		//
-		// params += "&gongxutype=" + "0";
-		// params += "&from=" + "0";
-		// params += "&uid=" + uid;
-		// mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD);
-		// }
+		if (CommonUtil.getNetworkState(getActivity().getApplicationContext()) == 2) {
+		} else {
+			mConnHelper.getBusinessInfo(mUIHandler, MsgTagVO.DATA_LOAD, uid);
+		}
 	}
 
 }

@@ -74,7 +74,6 @@ public class CardAddUserImageActivity extends Activity {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-
 			}
 		}).start();
 	}
@@ -91,23 +90,24 @@ public class CardAddUserImageActivity extends Activity {
 							@Override
 							public void onClick(View v) {
 								String id = (String) v.getTag();
-								mConnHelper.delheaderimg(id, mUIHandler,
-										MsgTagVO.PUB_INFO,
-										CardAddUserImageActivity.this, true,
-										null, id);
+//								mConnHelper.delheaderimg(id, mUIHandler,
+//										MsgTagVO.PUB_INFO,
+//										CardAddUserImageActivity.this, true,
+//										null, id);
 								toDelView.put(id, v);
+								mIsh.removeFromContainer(toDelView.get(id));
 							}
 						}, null);
 				mIsh.insertLocalImage(local);
 				break;
-			case MsgTagVO.PUB_INFO:
-				if (JsonHandler.checkResult((String) msg.obj,
-						getApplicationContext())) {
-					Bundle bundle = msg.getData();
-					String id = bundle.getString("data");
-					mIsh.removeFromContainer(toDelView.get(id));
-				}
-				break;
+//			case MsgTagVO.PUB_INFO:
+//				if (JsonHandler.checkResult((String) msg.obj,
+//						getApplicationContext())) {
+//					Bundle bundle = msg.getData();
+//					String id = bundle.getString("data");
+//					mIsh.removeFromContainer(toDelView.get(id));
+//				}
+//				break;
 			default:
 				break;
 			}
@@ -116,7 +116,6 @@ public class CardAddUserImageActivity extends Activity {
 
 	private void initClick() {
 		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				pwh.showPopDlg(findViewById(R.id.rootLayout),

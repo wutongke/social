@@ -1,8 +1,9 @@
 package io.rong.app;
 
-import io.rong.imkit.RongIM;
 import io.rong.imkit.common.RongConst;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Conversation.ConversationType;
+import io.rong.imlib.model.Group;
 
 import java.util.Locale;
 
@@ -15,6 +16,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -25,20 +27,24 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
+import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
 
 public class ConversationActivity extends FragmentActivity {
 	@InjectView(R.id.buttonManage)
 	Button btnManage;
+	@InjectView(R.id.userNameShow)
+	TextView tvTitle;
 	int type = 0;// 0:私聊 1：群聊
 	private PopupWindows pwh = null;
 	String myid;
-	String guestuserid;
+	String targetId;
 	UserNewVO guest = null;
 	private Button followButton;
 	private ZhuoConnHelper mConnHelper = null;
 	private Conversation.ConversationType mConversationType;
 	// 需要增加一个接口判断两人是否为好友关系
 	String tofollow = "1";// 0:已经互相关注为好友，1：还不是好友关系
+	Group group = null;
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
 		@Override
@@ -52,9 +58,10 @@ public class ConversationActivity extends FragmentActivity {
 					guest = nljh.parseNewUser();
 					if (guest != null
 							&& (guest.getRelation() == UserNewVO.USER_RELATION.RELATION_STRANGER
-									.ordinal()))
+									.ordinal())) {
 						tofollow = "1";
-					else
+						tvTitle.setText(guest.getName());
+					} else
 						tofollow = "0";
 				}
 				break;
@@ -104,19 +111,39 @@ public class ConversationActivity extends FragmentActivity {
 
 		Intent intent = getIntent();
 
+		// // push或通知过来
+		// if (intent != null && intent.getData() != null
+		// && intent.getData().getScheme().equals("rong")
+		// && intent.getData().getQueryParameter("push") != null) {
+		// // 通过intent.getData().getQueryParameter("push") 为true，判断是否是push消息
+		// if (ZhuoConnHelper.getInstance(getApplicationContext()) != null
+		// && intent.getData().getQueryParameter("push")
+		// .equals("true")) {
+		// // enterActivity(intent);
+		// } else {
+		// enterFragment(intent);
+		// }
+		// }
+
 		// push或通知过来
 		if (intent != null && intent.getData() != null
-				&& intent.getData().getScheme().equals("rong")
-				&& intent.getData().getQueryParameter("push") != null) {
+				&& intent.getData().getScheme().equals("rong")) {
 			// 通过intent.getData().getQueryParameter("push") 为true，判断是否是push消息
-			if (ZhuoConnHelper.getInstance(getApplicationContext()) != null
-					&& intent.getData().getQueryParameter("push")
+			if (intent.getData().getQueryParameter("push") == null
+					|| intent.getData().getQueryParameter("push")
 							.equals("true")) {
-				// enterActivity(intent);
-			} else {
+				String title = intent.getData().getQueryParameter("title");
+
+				if (title != null)
+					tvTitle.setText(title);
 				enterFragment(intent);
 			}
+			else
+			{
+				//push消息的处理
+			}
 		}
+
 		// else if (intent != null) {
 		// // 程序切到后台，收到消息后点击进入,会执行这里
 		// if (RongIM.getInstance() == null
@@ -143,7 +170,6 @@ public class ConversationActivity extends FragmentActivity {
 		String tag = null;
 		if (intent != null) {
 			// Fragment fragment = null;
-
 			if (intent.getExtras() != null
 					&& intent.getExtras().containsKey(RongConst.EXTRA.CONTENT)) {
 				String fragmentName = intent.getExtras().getString(
@@ -199,13 +225,19 @@ public class ConversationActivity extends FragmentActivity {
 				// actionBar.hide();//隐藏ActionBar
 				// }
 
-				myid = intent.getData().getQueryParameter("targetId");
-				guestuserid = intent.getData().getQueryParameter("targetIds");
+				targetId = intent.getData().getQueryParameter("targetId");
 				mConversationType = Conversation.ConversationType
 						.valueOf(intent.getData().getLastPathSegment()
 								.toUpperCase(Locale.getDefault()));
-				mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,
-						guestuserid);
+				if (mConversationType == ConversationType.PRIVATE)
+					mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,
+							targetId);
+				// else {
+				// group = mConnHelper.getGroupMap().get("targetId");
+				// if (group != null) {
+				// tvTitle.setText(group.getName());
+				// }
+				// }
 			}
 		}
 	}
@@ -297,6 +329,12 @@ public class ConversationActivity extends FragmentActivity {
 
 	private void initClick() {
 		// TODO Auto-generated method stub
+		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ConversationActivity.this.finish();
+			}
+		});
 		btnManage.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -308,18 +346,34 @@ public class ConversationActivity extends FragmentActivity {
 					public void onClick(View paramView) {
 						Intent i = new Intent(ConversationActivity.this,
 								ZhuoMaiCardActivity.class);
-						i.putExtra("userid", guestuserid);
+						i.putExtra("userid", targetId);
 						startActivity(i);
 					}
 				};
+				OnClickListener onClickListenerViewQuan = new OnClickListener() {
 
+					@Override
+					public void onClick(View paramView) {
+						Intent i = new Intent(ConversationActivity.this,
+								ZhuoQuanMainActivity.class);
+						i.putExtra("groupid", targetId);
+						startActivity(i);
+					}
+				};
 				int followInt = R.string.label_unfollow;
 				if (tofollow.equals("1")) {
 					followInt = R.string.label_follow;
 				}
-				pwh.showBottomPop(view,
-						new OnClickListener[] { onClickListenerViewCard },
-						new int[] { R.string.label_viewcard }, 7, "manage");
+				if (mConversationType == ConversationType.PRIVATE) {
+					pwh.showBottomPop(view,
+							new OnClickListener[] { onClickListenerViewCard },
+							new int[] { R.string.label_viewcard }, 7, "manage");
+				} else
+					pwh.showBottomPop(
+							view,
+							new OnClickListener[] { onClickListenerViewQuan },
+							new int[] { R.string.title_activity_zhuojiaquan_detail },
+							7, "manage");
 			}
 		});
 	}

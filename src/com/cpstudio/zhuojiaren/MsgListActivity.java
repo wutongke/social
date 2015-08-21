@@ -80,7 +80,10 @@ public class MsgListActivity extends FragmentActivity implements
 		mListView.addHeaderView(headView);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(this);
+		loadMessageSession();
+	}
 
+	void loadMessageSession() {
 		ViewGroup root = (ViewGroup) findViewById(R.id.ryConversationListContainer);
 		listFragment = ConversationListFragment.getInstance();
 		Uri uri = Uri
@@ -91,7 +94,7 @@ public class MsgListActivity extends FragmentActivity implements
 						Conversation.ConversationType.PRIVATE.getName(),
 						"false") // 设置私聊会话是否聚合显示
 				.appendQueryParameter(
-						Conversation.ConversationType.GROUP.getName(), "true")// 群组
+						Conversation.ConversationType.GROUP.getName(), "false")// 群组
 				// .appendQueryParameter(
 				// Conversation.ConversationType.DISCUSSION.getName(),
 				// "false")// 讨论组
@@ -109,12 +112,10 @@ public class MsgListActivity extends FragmentActivity implements
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager
 				.beginTransaction();
-
 		fragmentTransaction.add(R.id.ryConversationListContainer, listFragment);
 		fragmentTransaction.commit();
 		// RongIM.getInstance().startPrivateChat(MsgListActivity.this,"9237",
 		// "标题");
-		// token:1i0IMiO5dWjOuGb10l2INNGFPZgrVDszbwnCc2LVvviZzRX4y7mcfCOL7dMa+prc1m3BcXo7y7yZu7T7F6rXBg==
 	}
 
 	@Override
@@ -169,8 +170,8 @@ public class MsgListActivity extends FragmentActivity implements
 				totalHeight += listItem.getMeasuredHeight();
 			}
 			lp.height = totalHeight;
-			if(totalHeight>0)
-			root.setLayoutParams(lp);
+			if (totalHeight > 0)
+				root.setLayoutParams(lp);
 		}
 		super.onResume();
 	}

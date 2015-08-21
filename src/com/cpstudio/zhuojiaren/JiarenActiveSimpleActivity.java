@@ -36,25 +36,23 @@ import com.cpstudui.zhuojiaren.lz.DynamicListAdapter;
 import com.cpstudui.zhuojiaren.lz.JiarenActiveNumListActivity;
 import com.cpstudui.zhuojiaren.lz.QuanziActiveNumListActivity;
 
-public class JiarenActiveActivity extends Activity implements
+public class JiarenActiveSimpleActivity extends Activity implements
 		OnPullDownListener, OnItemClickListener {
 	private ListView mListView;
-	// private ZhuoInfoAdapter mAdapter;
-
-	// 倬家人所有的动态及谁加入倬家人，不包括话题，需求等，内容布局与话题一样
-	// 此处暂时用了圈话题的适配器，之后需要修改
 	private DynamicListAdapter mAdapter;
 	private PullDownView mPullDownView;
 	private ArrayList<Dynamic> mList = new ArrayList<Dynamic>();
 	private LoadImage mLoadImage = null;
 	private PopupWindows pwh = null;
 	private String mUid = null;
-	private int mType = Dynamic.DYNATIC_TYPE_MY_JIAREN;// 类型 0-我的家人动态
-	private String mLastId = "0";
+	private int mType = Dynamic.DYNATIC_TYPE_MY_JIAREN;// 类型 0-自己的家人动态
+														// 1-指定用户的家人动态 2-所有家人动态
 	private ZhuoConnHelper mConnHelper = null;
 	private UserFacade mFacade = null;
 	private int mPage = 0;
 	final int pageSize = 10;
+	final int titleIds[] = { R.string.title_active, R.string.title_active,
+			R.string.label_active_all, R.string.label_active_i_focus };
 
 	// private InfoFacade infoFacade = null;
 	// type==0时所有人动态，就只是动态，不包括需求，话题，活动什么的
@@ -69,17 +67,18 @@ public class JiarenActiveActivity extends Activity implements
 		// infoFacade = new InfoFacade(getApplicationContext(),
 		// InfoFacade.ACTIVELIST);
 		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
-		pwh = new PopupWindows(JiarenActiveActivity.this);
+		pwh = new PopupWindows(JiarenActiveSimpleActivity.this);
 		mLoadImage = new LoadImage();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
-		((TextView) findViewById(R.id.userNameShow))
-				.setText(R.string.title_active);
+		mType = getIntent().getIntExtra("mType", 0);
+		((TextView) findViewById(R.id.userNameShow)).setText(titleIds[mType]);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
-				R.layout.listview_header3);
+				R.layout.listview_header2);
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
-		mAdapter = new DynamicListAdapter(JiarenActiveActivity.this, mList, 1);
+		mAdapter = new DynamicListAdapter(JiarenActiveSimpleActivity.this,
+				mList, 1);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
@@ -89,8 +88,6 @@ public class JiarenActiveActivity extends Activity implements
 
 	@Override
 	protected void onResume() {
-		if (Dynamic.DYNATIC_TYPE_MY_JIAREN == mType)
-			loadInfo();
 		super.onResume();
 	}
 
@@ -100,43 +97,6 @@ public class JiarenActiveActivity extends Activity implements
 					@Override
 					public void onClick(View v) {
 						pwh.showPop(findViewById(R.id.layoutJiarenActive));
-					}
-				});
-		findViewById(R.id.textViewActiveJiaren).setOnClickListener(
-				new OnClickListener() {// 我的所有家人动态
-					@Override
-					public void onClick(View v) {
-						Intent i = new Intent(JiarenActiveActivity.this,
-								JiarenActiveNumListActivity.class);
-						startActivity(i);
-					}
-				});
-		findViewById(R.id.textViewActiveCard).setOnClickListener(
-				new OnClickListener() {// 我的名片动态
-					@Override
-					public void onClick(View v) {
-						Intent i = new Intent(JiarenActiveActivity.this,
-								CardActiveNumListActivity.class);
-						startActivity(i);
-					}
-				});
-		findViewById(R.id.textViewActiveQuanzi).setOnClickListener(
-				new OnClickListener() {// 我的圈子动态，圈子话题和圈子活动混合起来的
-					@Override
-					public void onClick(View v) {
-						Intent i = new Intent(JiarenActiveActivity.this,
-								QuanziActiveNumListActivity.class);
-						startActivity(i);
-					}
-				});
-
-		findViewById(R.id.textViewActiveZhuomai).setOnClickListener(
-				new OnClickListener() { // 倬脉动态，即倬脉动态就是公告信息
-					@Override
-					public void onClick(View v) {
-						Intent i = new Intent(JiarenActiveActivity.this,
-								ZhuoMaiActiveListActivity.class);
-						startActivity(i);
 					}
 				});
 	}
@@ -151,48 +111,11 @@ public class JiarenActiveActivity extends Activity implements
 			mList.addAll(list);
 			mAdapter.notifyDataSetChanged();
 			if (mList.size() > 0) {
-				mLastId = mList.get(mList.size() - 1).getStatusid();
+				;
 			}
 			mPage++;
 		} else {
 			mPullDownView.noData(!refresh);
-		}
-	}
-
-	private void updateUserInfo(UserNewVO user) {
-		try {
-			if (null != user) {
-				String name = user.getName();
-				int blogNum = user.getStatusNum();
-				int friendNum = user.getFriendNum();
-				String families = "" + friendNum;
-				String headurl = user.getUheader();
-				((TextView) findViewById(R.id.textViewUsername)).setText(name);
-				((TextView) findViewById(R.id.textViewBolgnum))
-						.setText(families
-								+ getString(R.string.p_jiaren_active_families)
-								+ "~" + blogNum
-								+ getString(R.string.p_jiaren_active_rizhi));
-
-				ImageView iv = (ImageView) findViewById(R.id.imageViewUserHead);
-				iv.setOnClickListener(new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						Intent i = new Intent(JiarenActiveActivity.this,
-								UserHomeActivity.class);
-						i.putExtra("userid", mUid);
-						i.putExtra("from", "home");
-						startActivity(i);
-					}
-				});
-				if (headurl != null && !headurl.equals("")) {
-					iv.setTag(headurl);
-					mLoadImage.beginLoad(headurl, iv);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -252,18 +175,6 @@ public class JiarenActiveActivity extends Activity implements
 				updateItemList(list, false, true);
 				break;
 			}
-			case MsgTagVO.DATA_OTHER: {
-				UserNewVO user = null;
-				if (msg.obj instanceof UserVO) {
-					user = (UserNewVO) msg.obj;
-				} else if (msg.obj != null && !msg.obj.equals("")) {
-					JsonHandler nljh = new JsonHandler((String) msg.obj,
-							getApplicationContext());
-					user = nljh.parseNewUser();
-				}
-				updateUserInfo(user);
-				break;
-			}
 			}
 		}
 	};
@@ -273,25 +184,10 @@ public class JiarenActiveActivity extends Activity implements
 			long id) {
 		if (id != -1) {
 			Intent i = new Intent();
-			i.setClass(JiarenActiveActivity.this, DynamicDetailActivity.class);
+			i.setClass(JiarenActiveSimpleActivity.this,
+					DynamicDetailActivity.class);
 			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
 			startActivity(i);
-		}
-	}
-
-	private void loadInfo() {
-		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			UserNewVO user = mFacade.getSimpleInfoById(mUid);
-			if (user == null) {
-				CommonUtil.displayToast(getApplicationContext(),
-						R.string.error0);
-			} else {
-				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_OTHER);
-				msg.obj = user;
-				msg.sendToTarget();
-			}
-		} else {
-			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_OTHER, mUid);
 		}
 	}
 
@@ -335,13 +231,14 @@ public class JiarenActiveActivity extends Activity implements
 			if (requestCode == MsgTagVO.DATA_REFRESH) {
 				onRefresh();
 			} else if (requestCode == MsgTagVO.MSG_CMT) {
-				Toast.makeText(JiarenActiveActivity.this, "评论成功！", 2000).show();
+				Toast.makeText(JiarenActiveSimpleActivity.this, "评论成功！", 2000)
+						.show();
 			} else {
 				String filePath = pwh.dealPhotoReturn(requestCode, resultCode,
 						data, false);
 				if (filePath != null) {
 					try {
-						Intent i = new Intent(JiarenActiveActivity.this,
+						Intent i = new Intent(JiarenActiveSimpleActivity.this,
 								PublishActiveActivity.class);
 						i.putExtra("filePath", filePath);
 						startActivityForResult(i, MsgTagVO.DATA_REFRESH);

@@ -88,8 +88,8 @@
                     android:textSize="16sp" />
             </RelativeLayout>
 
-            <EditText
-                android:id="@+id/editTextPlace"
+            <TextView
+                android:id="@+id/tvPlace"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -126,8 +126,8 @@
                     android:textSize="16sp" />
             </RelativeLayout>
 
-            <EditText
-                android:id="@+id/editTextHomeTown"
+            <TextView
+                android:id="@+id/tvTown"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -163,8 +163,8 @@
                     android:textSize="16sp" />
             </RelativeLayout>
 
-            <EditText
-                android:id="@+id/textViewOtherTowns"
+            <TextView
+                android:id="@+id/tvOtherTowns"
                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

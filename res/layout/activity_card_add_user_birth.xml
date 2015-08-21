@@ -145,7 +145,7 @@
                         android:layout_marginLeft="5dp"
                         android:text="双子座"
                         android:textSize="16sp" />
-                   <!-- android:drawableRight="@drawable/ico_alert"  --> 
+                    <!-- android:drawableRight="@drawable/ico_alert" -->
                 </LinearLayout>
 
                 <LinearLayout
@@ -172,29 +172,33 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
-                <CheckBox
-                    android:id="@+id/checkBoxIsOpen"
-                    style="@style/CPCheckBox"
+                <RadioGroup
+                    android:id="@+id/radioGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:checked="true"
-                    android:paddingLeft="35dp"
-                    android:text="@string/info41" />
+                    android:contentDescription="是否开放" >
 
-                <CheckBox
-                    android:id="@+id/checkBoxIsOpenToAll"
-                    style="@style/CPCheckBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:checked="false"
-                    android:paddingLeft="35dp"
-                    android:text="@string/info399" />
+                    <RadioButton
+                        android:id="@+id/radioPrivate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/info41" />
+
+                    <RadioButton
+                        android:id="@+id/radioOpen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="@string/info399" />
+
+
+               
+                </RadioGroup>
             </LinearLayout>
         </ScrollView>
 
-          <LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -235,7 +239,6 @@
                     android:text="@string/OK"
                     android:textColor="#ffffff"
                     android:textSize="14sp" />
-
             </RelativeLayout>
 
             <LinearLayout

@@ -1,6 +1,7 @@
 package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -24,7 +25,10 @@ import com.cpstudio.zhuojiaren.helper.BaiduLocationHelper;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.gtype;
+import com.cpstudio.zhuojiaren.model.sdtype;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.TwoLeverChooseDialog;
@@ -44,6 +48,10 @@ public class PublishResourceActivity extends BaseActivity {
 	private String mLocation = "";
 	private ZhuoConnHelper mConnHelper = null;
 	private BaiduLocationHelper locationHelper = null;
+	// 供需类型（1-50为资源信息，51-100为需求信息。见 基础-获取基础数据编码 接口文档
+	int typecode;
+	List<List<String>> subStrings;
+	List<sdtype> gtypes;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +69,33 @@ public class PublishResourceActivity extends BaseActivity {
 		initClick();
 		locationHelper = new BaiduLocationHelper(getApplicationContext(),
 				mUIHandler, MsgTagVO.UPDATE_LOCAL);
+		getCodedData();
+	}
+
+	void getCodedData() {
+		BaseCodeData baseCodeData = mConnHelper.getBaseDataSet();
+		if (baseCodeData != null) {
+			gtypes = baseCodeData.getSdtype();
+			List<String> zyList = new ArrayList<String>(), xqList = new ArrayList<String>();
+			for (sdtype item : gtypes) {
+				if (item.getId() < 51)
+					zyList.add(item.getContent());
+				else
+					xqList.add(item.getContent());
+			}
+			subStrings = new ArrayList<List<String>>();
+			subStrings.add(zyList);
+			subStrings.add(xqList);
+		}
+	}
+
+	int getCodeByName(String name) {
+		if (gtypes == null)
+			return 0;
+		for (int i = 0; i < gtypes.size(); i++)
+			if (name.equals(gtypes.get(i).getContent()))
+				return gtypes.get(i).getId();
+		return 0;
 	}
 
 	@Override
@@ -134,12 +169,12 @@ public class PublishResourceActivity extends BaseActivity {
 					public void onClick(View v) {
 
 						int type1 = R.array.share_gx;
-						int[] type2 = { R.array.share_resource_items,
-								R.array.share_need_items };
+						int[] type2 = { R.array.gongxu_main_type,
+								R.array.subtype_fund };
 						final TwoLeverChooseDialog typeChoose = new TwoLeverChooseDialog(
 								PublishResourceActivity.this,
 								AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, "分享资源",
-								"商业资源", type1, type2);
+								"商业资源", type1, subStrings);
 						typeChoose.setButton(DialogInterface.BUTTON_POSITIVE,
 								"确定", new DialogInterface.OnClickListener() {
 
@@ -153,7 +188,7 @@ public class PublishResourceActivity extends BaseActivity {
 										String array[] = content.split(" ");
 										mType = array[0];
 										mCategory = array[1];
-
+										typecode = getCodeByName(mCategory);
 										((TextView) findViewById(R.id.editTextchoiceType))
 												.setText(content);
 									}
@@ -273,9 +308,25 @@ public class PublishResourceActivity extends BaseActivity {
 		if (mIsh.getTags() != null) {
 			imgCnt = mIsh.getTags().size() + "";
 		}
-		mConnHelper.pubZhuoInfo(mIsh.getTags(), mUIHandler, MsgTagVO.PUB_INFO,
-				PublishResourceActivity.this, content, tag, mLocation, imgCnt,
-				mType, mCategory, title, true, null, null);
+		// mConnHelper.pubZhuoInfo(mIsh.getTags(), mUIHandler,
+		// MsgTagVO.PUB_INFO,
+		// PublishResourceActivity.this, content, tag, mLocation, imgCnt,
+		// mType, mCategory, title, true, null, null);
+		mConnHelper.pubGongxu(PublishResourceActivity.this, mUIHandler,
+				MsgTagVO.PUB_INFO, typecode, title, content, mIsh.getTags(),
+				tag, getItems(peopleList), getItems(phoneList));
+	}
+
+	String getItems(List<EditText> list) {
+		if (list == null || list.size() == 0)
+			return "none";
+		if (list.size() == 1)
+			return list.get(0).getText().toString().trim();
+		String str = new String();
+		for (EditText name : list) {
+			str += name.getText().toString().trim() + ",";
+		}
+		return str;
 	}
 
 	@SuppressLint("HandlerLeak")

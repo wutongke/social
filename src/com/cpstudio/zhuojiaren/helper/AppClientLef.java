@@ -137,24 +137,6 @@ public class AppClientLef {
 	}
 
 	/**
-	 * 获取供需
-	 */
-	public boolean getGongXuList(String type, String title, int pageNo,
-			int pageSize, Handler handler, int handlerTag, Activity activity,
-			boolean cancelable, OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
-		nameValuePairs = addUserInfoByPost(nameValuePairs);
-		if (type != null)
-			nameValuePairs.add(new BasicNameValuePair("type", type));
-		if (title != null)
-			nameValuePairs.add(new BasicNameValuePair("title", title));
-		String url = ZhuoCommHelper.getGongxulist();
-		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
-				cancelable, cancel, data);
-	}
-
-	/**
 	 * 增加页信息
 	 * 
 	 * @param nameValuePairs
@@ -186,18 +168,7 @@ public class AppClientLef {
 				cancelable, cancel, data);
 	}
 
-	/***
-	 * 删除需求
-	 */
-	public boolean deleteGongxu(String sdid, Handler handler, int handlerTag,
-			Activity activity) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs = addUserInfoByPost(nameValuePairs);
-		nameValuePairs.add(new BasicNameValuePair("sdid", sdid));
-		String url = ZhuoCommHelper.getDisolveQuan();
-		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
-				true, null, null);
-	}
+	
 
 	/**
 	 * 退出圈子

@@ -24,12 +24,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class CardAddUserCityActivity extends Activity {
-	@InjectView(R.id.editTextPlace)
-	EditText editTextPlace;
-	@InjectView(R.id.textViewOtherTowns)
-	EditText editTextOtherTowns;
-	@InjectView(R.id.editTextHomeTown)
-	EditText editTextHomeTown;
+	@InjectView(R.id.tvPlace)
+	TextView tvPlace;
+	@InjectView(R.id.tvTown)
+	TextView tvTown;
+	@InjectView(R.id.tvOtherTowns)
+	TextView tvOtherTowns;
 
 	private static int OTHER_TOWN = 0;
 	List<Province> provList;
@@ -48,13 +48,15 @@ public class CardAddUserCityActivity extends Activity {
 		// 根据provList，从编号获得城市名称
 		Intent i = getIntent();
 		int place = i.getIntExtra(CardEditActivity.EDIT_PLACE_STR1, 0);
-		editTextPlace.setText(place + "");
+		tvPlace.setText(place + "");
 		int othertowns = i.getIntExtra(CardEditActivity.EDIT_PLACE_STR2, 0);
-		editTextHomeTown.setText(othertowns + "");
+		tvTown.setText(othertowns + "");
 		String towns = i.getStringExtra(CardEditActivity.EDIT_PLACE_STR3);
-		editTextOtherTowns.setText(towns);
+		tvOtherTowns.setText(towns);
 		initClick();
-		codes.add("");codes.add("");codes.add("");
+		codes.add("");
+		codes.add("");
+		codes.add("");
 	}
 
 	private void initClick() {
@@ -81,23 +83,23 @@ public class CardAddUserCityActivity extends Activity {
 						CardAddUserCityActivity.this.finish();
 					}
 				});
-		editTextPlace.setOnClickListener(new OnClickListener() {
+		tvPlace.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				choosePlace(editTextPlace, 0);
+				choosePlace(tvPlace, 0);
 			}
 		});
 
-		editTextHomeTown.setOnClickListener(new OnClickListener() {
+		tvTown.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				choosePlace(editTextHomeTown, 1);
+				choosePlace(tvTown, 1);
 			}
 		});
-		editTextOtherTowns.setOnClickListener(new OnClickListener() {
+		tvOtherTowns.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				choosePlace(editTextOtherTowns, 2);
+				choosePlace(tvOtherTowns, 2);
 			}
 		});
 		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
@@ -110,14 +112,13 @@ public class CardAddUserCityActivity extends Activity {
 
 	}
 
-	void choosePlace(final EditText edtView, final int codeIndex) {
+	void choosePlace(final TextView edtView, final int codeIndex) {
 		// TODO Auto-generated method stub
 		final PlaceChooseDialog placeChoose = new PlaceChooseDialog(
 				CardAddUserCityActivity.this,
 				AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, "北京", "北京");
 		placeChoose.setButton(DialogInterface.BUTTON_POSITIVE, "确定",
 				new DialogInterface.OnClickListener() {
-
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub

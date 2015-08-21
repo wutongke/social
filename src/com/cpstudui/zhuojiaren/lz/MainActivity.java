@@ -327,21 +327,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				// updateItemList(list, false, true);
 				break;
 			}
-			case MsgTagVO.DATA_OTHER: {
-				ResultVO res;
-				if (JsonHandler.checkResult((String) msg.obj,
-						getApplicationContext())) {
-					res = JsonHandler.parseResult((String) msg.obj);
-					mConnHelper.saveObject((String) msg.obj,
-							ZhuoConnHelper.CITYS);
-				} else {
-					return;
-				}
-				String data = res.getData();
-				List<Province> dataset = JsonHandler.parseCodedCitys(data);
-				mConnHelper.setCitysOfPrince(dataset);
-				break;
-			}
+			
 			case MsgTagVO.UPDATE: {
 				if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
@@ -355,22 +341,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				}
 				break;
 			}
-			case MsgTagVO.DATA_BASE: {// 基础编码数据，保存到内存中\
-				ResultVO res;
-				if (JsonHandler.checkResult((String) msg.obj,
-						getApplicationContext())) {
-					res = JsonHandler.parseResult((String) msg.obj);
-					mConnHelper.saveObject((String) msg.obj,
-							ZhuoConnHelper.BASEDATA);
-				} else {
-					return;
-				}
-				String data = res.getData();
-				BaseCodeData dataset = JsonHandler.parseBaseCodeData(data);
-				mConnHelper.setBaseDataSet(dataset);
-				break;
-			}
-
+			
 			}
 		}
 
@@ -475,11 +446,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			// msg.obj = adInfo;
 			// msg.sendToTarget();
 		} else {
-			mConnHelper.getBaseCodeData(mUIHandler, MsgTagVO.DATA_BASE,
-					MainActivity.this, false, null, null);
 			mConnHelper.getMainInfo(mUIHandler, MsgTagVO.DATA_LOAD, 0, 0);
-			mConnHelper.getCitys(mUIHandler, MsgTagVO.DATA_OTHER,
-					MainActivity.this, true, null, null);
 		}
 	}
 

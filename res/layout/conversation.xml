@@ -41,8 +41,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
-            android:background="@drawable/zxpeo_zx_1"
-            android:text="@string/label_manage"
+            android:background="@drawable/mppeo_wdhd_1"
             android:textColor="#ffffff"
             android:textSize="14sp" />
     </RelativeLayout>

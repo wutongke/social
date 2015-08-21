@@ -14,37 +14,31 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.adapter.CrowdFundingAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter.ImageOnclick;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
-import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.ImageRadioButton;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
-import com.cpstudio.zhuojiaren.ui.AudioListActivity;
-import com.cpstudio.zhuojiaren.ui.CrowdFundingListActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.Util;
 import com.cpstudio.zhuojiaren.widget.MyGridView;
@@ -84,7 +78,7 @@ public class ResourceGXFragment extends Fragment {
 	String location = null;// 区域
 	// 分页
 	private int mPage = 0;
-	private AppClientLef appClientLef;
+	private ZhuoConnHelper appClientLef;
 	// 基本编码
 	private BaseCodeData baseDataSet;
 
@@ -95,7 +89,7 @@ public class ResourceGXFragment extends Fragment {
 		view = inflater.inflate(R.layout.fragment_resource_gx, null);
 		type = getArguments().getInt(ResourceGXVO.RESOURCEGXTYPE, 0);
 		ButterKnife.inject(this, view);
-		appClientLef = AppClientLef.getInstance(getActivity());
+		appClientLef = ZhuoConnHelper.getInstance(getActivity());
 		baseDataSet = ZhuoConnHelper.getInstance(
 				getActivity().getApplicationContext()).getBaseDataSet();
 		initPullDownView();
@@ -158,11 +152,14 @@ public class ResourceGXFragment extends Fragment {
 									public void onClick(DialogInterface dialog,
 											int which) {
 										// TODO Auto-generated method stub
-										appClientLef.deleteGongxu(
-												mDatas.get(position - 1).getSdid(),
-												uiHandler, MsgTagVO.MSG_DEL,
-												getActivity());
-										mDatas.remove(position-1);
+										appClientLef
+												.deleteGongxu(
+														mDatas.get(position - 1)
+																.getSdid(),
+														uiHandler,
+														MsgTagVO.MSG_DEL,
+														getActivity());
+										mDatas.remove(position - 1);
 										mAdapter.notifyDataSetChanged();
 									}
 								}).setNegativeButton("取消", null).create()
@@ -318,13 +315,15 @@ public class ResourceGXFragment extends Fragment {
 		mPage = 0;
 		mAdapter.notifyDataSetChanged();
 		appClientLef.getGongXuList(String.valueOf(getType), null, mPage, 5,
-				uiHandler, MsgTagVO.DATA_LOAD, getActivity(), true, null, null);
+				uiHandler, MsgTagVO.DATA_LOAD, getActivity(), true, null, null,
+				null);
 
 	}
 
 	private void loadMore() {
 		appClientLef.getGongXuList(String.valueOf(getType), null, mPage, 5,
-				uiHandler, MsgTagVO.DATA_MORE, getActivity(), true, null, null);
+				uiHandler, MsgTagVO.DATA_MORE, getActivity(), true, null, null,
+				null);
 	}
 
 	Handler uiHandler = new Handler() {
@@ -361,6 +360,7 @@ public class ResourceGXFragment extends Fragment {
 					CommonUtil.displayToast(getActivity(), R.string.data_error);
 					return;
 				}
+				break;
 			}
 			;
 		}

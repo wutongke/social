@@ -26,15 +26,14 @@
             android:text="@string/label_back"
             android:textColor="#ffffff"
             android:textSize="14sp" />
-        
+
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-
             android:textColor="@color/white" />
-        
+
         <Button
             android:id="@+id/buttonManage"
             android:layout_width="wrap_content"
@@ -42,10 +41,10 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/button_bg_black"
             android:paddingLeft="7dp"
             android:text="@string/label_manage"
-            android:layout_marginRight="10dp"
             android:textColor="#ffffff"
             android:textSize="14sp" />
     </RelativeLayout>
@@ -65,7 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00000000"
-            android:drawableLeft="@drawable/ico_alert"
+            android:drawableLeft="@drawable/write"
+            android:drawablePadding="5dp"
             android:minHeight="20dp"
             android:text="@string/title_pub_gx"
             android:textColor="@color/white" />
@@ -81,41 +81,49 @@
     </ListView>
 
     <LinearLayout
-        android:id="@+id/fql_footer"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+         android:id="@+id/fql_footer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/graywhite"
+        android:background="#767475"
+        android:gravity="center_vertical"
         android:orientation="horizontal" >
 
-        <TextView
-            android:id="@+id/fql_share"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/share"
-            android:drawablePadding="20dp"
-            android:gravity="left"
-            android:layout_gravity="center"
-            android:text="@string/share"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:layout_weight="1" >
 
-        <TextView
-            android:id="@+id/fql_delete"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/fql_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="#00000000"
+                android:drawableLeft="@drawable/share"
+                android:drawablePadding="5dp"
+                android:text="@string/share"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/trash"
-            android:drawablePadding="20dp"
-            android:gravity="left"
-            android:text="@string/label_del"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/fql_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="#00000000"
+                android:drawableLeft="@drawable/trash"
+                android:drawablePadding="5dp"
+                android:text="@string/label_del"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

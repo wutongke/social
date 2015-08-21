@@ -13,6 +13,7 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.AboutUsVO;
 import com.cpstudio.zhuojiaren.model.AdVO;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
+import com.cpstudio.zhuojiaren.model.BusinessInfoVO;
 import com.cpstudio.zhuojiaren.model.CardMsgVO;
 import com.cpstudio.zhuojiaren.model.CmtRcmdVO;
 import com.cpstudio.zhuojiaren.model.CmtVO;
@@ -228,6 +229,7 @@ public class JsonHandler {
 		}
 		return groupVO;
 	}
+
 	/**
 	 * 解析活动详情
 	 */
@@ -276,6 +278,26 @@ public class JsonHandler {
 			e.printStackTrace();
 		}
 		return gxInfoVO;
+	}
+
+	public List<ResourceGXVO> parseGongxuList() {
+		List<ResourceGXVO> list = new ArrayList<ResourceGXVO>();
+		try {
+			Type listType = new TypeToken<LinkedList<ResourceGXVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<ResourceGXVO> li = gson.fromJson(jsonData, listType);
+				for (Iterator<ResourceGXVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					ResourceGXVO item = (ResourceGXVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	public AboutUsVO parseAboutUs() {
@@ -978,8 +1000,10 @@ public class JsonHandler {
 		}
 		return list;
 	}
+
 	/**
 	 * 倬脉动态
+	 * 
 	 * @return
 	 */
 	public List<MessagePubVO> parsePubMessageList() {
@@ -990,7 +1014,7 @@ public class JsonHandler {
 			Gson gson = new Gson();
 			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
 				LinkedList<MessagePubVO> li = gson.fromJson(jsonData, listType);
-				
+
 				for (Iterator<MessagePubVO> iterator = li.iterator(); iterator
 						.hasNext();) {
 					MessagePubVO item = (MessagePubVO) iterator.next();
@@ -1017,6 +1041,17 @@ public class JsonHandler {
 			e.printStackTrace();
 		}
 		return userVO;
+	}
+
+	public BusinessInfoVO parseBusinessInfo() {
+		BusinessInfoVO info = null;
+		try {
+			Gson gson = new Gson();
+			info = gson.fromJson(jsonData, BusinessInfoVO.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return info;
 	}
 
 	public BaseCodeData parseBaseCodeData() {
