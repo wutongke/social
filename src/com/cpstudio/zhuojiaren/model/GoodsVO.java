@@ -12,7 +12,7 @@ public class GoodsVO implements Serializable{
 	private String markeyPrice;
 	private String zhuoPrice;// 倬币价格(多少个)
 	// 商品图片
-	private List<PicVO> pic = new ArrayList<PicVO>();
+	private List<String> pic = new ArrayList<String>();
 	// 商品首页图片
 	private String img;
 	// 商品描述
@@ -22,12 +22,8 @@ public class GoodsVO implements Serializable{
 
 	private String commentPoint;// 好评百分比
 	private int orderNum;// 付款人数
-	// 商家名字
-	private String companyName;
-	//商家图片
-	private PicVO companyPic;
-	// 商家描述
-	private String companyDes;
+	private ProviderVO provider;
+	private ArrayList<GoodsComment> comments;
 	// 是否收藏
 	private String isCollection;
 	//订单时候用的商品数量
@@ -44,7 +40,7 @@ public class GoodsVO implements Serializable{
 	public String getZhuoPrice() {
 		return zhuoPrice;
 	}
-	public List<PicVO> getPic() {
+	public List<String> getPic() {
 		return pic;
 	}
 	public String getImg() {
@@ -62,14 +58,11 @@ public class GoodsVO implements Serializable{
 	public int getOrderNum() {
 		return orderNum;
 	}
-	public String getCompanyName() {
-		return companyName;
+	public ProviderVO getProvider() {
+		return provider;
 	}
-	public PicVO getCompanyPic() {
-		return companyPic;
-	}
-	public String getCompanyDes() {
-		return companyDes;
+	public ArrayList<GoodsComment> getComments() {
+		return comments;
 	}
 	public String getIsCollection() {
 		return isCollection;
@@ -89,7 +82,7 @@ public class GoodsVO implements Serializable{
 	public void setZhuoPrice(String zhuoPrice) {
 		this.zhuoPrice = zhuoPrice;
 	}
-	public void setPic(List<PicVO> pic) {
+	public void setPic(List<String> pic) {
 		this.pic = pic;
 	}
 	public void setImg(String img) {
@@ -107,14 +100,11 @@ public class GoodsVO implements Serializable{
 	public void setOrderNum(int orderNum) {
 		this.orderNum = orderNum;
 	}
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	public void setProvider(ProviderVO provider) {
+		this.provider = provider;
 	}
-	public void setCompanyPic(PicVO companyPic) {
-		this.companyPic = companyPic;
-	}
-	public void setCompanyDes(String companyDes) {
-		this.companyDes = companyDes;
+	public void setComments(ArrayList<GoodsComment> comments) {
+		this.comments = comments;
 	}
 	public void setIsCollection(String isCollection) {
 		this.isCollection = isCollection;

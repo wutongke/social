@@ -65,13 +65,13 @@ public class TypedStoreGoodsListAdapter extends BaseAdapter {
 		String zhuobi = "无数据";
 		if (user.getZhuoPrice() != null)
 			zhuobi = user.getZhuoPrice();
-		List<PicVO> pics = user.getPic();
+		List<String> pics = user.getPic();
 		convertView.setTag(R.id.tag_id, id);
 		holder.title.setText(title);
 		holder.zhuobimoney.setText(zhuobi + "个");
 		holder.image.setImageResource(R.drawable.default_image);
 		if (pics != null && pics.size() > 0) {
-			String pic = pics.get(0).getUrl();
+			String pic = pics.get(0);
 			holder.image.setTag(pic);
 			mLoadImage.addTask(pic, holder.image);
 			mLoadImage.doTask();
