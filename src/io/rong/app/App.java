@@ -2,6 +2,9 @@ package io.rong.app;
 
 import java.util.concurrent.ExecutionException;
 
+import cn.trinea.android.common.service.impl.ImageSDCardCache;
+import cn.trinea.android.common.util.CacheManager;
+
 import com.baidu.mapapi.SDKInitializer;
 import com.umeng.socialize.sso.CustomHandler;
 
@@ -20,6 +23,8 @@ import io.rong.imlib.model.Conversation;
  * Created by Bob on 2015/1/30.
  */
 public class App extends Application {
+	public static final ImageSDCardCache IMAGE_SD_CACHE = CacheManager
+			.getImageSDCardCache();
 
 	@Override
 	public void onCreate() {

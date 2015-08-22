@@ -41,9 +41,13 @@ import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
+import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
+import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
+import com.cpstudui.zhuojiaren.lz.DynamicListAdapter.GridViewAdapter;
 import com.utils.ImageRectUtil;
 
 /**
@@ -55,7 +59,7 @@ import com.utils.ImageRectUtil;
 public class QuanziTopicListAdapter extends BaseAdapter {
 	private List<QuanTopicVO> mList = null;
 	private LayoutInflater inflater = null;
-	private LoadImage mLoadImage = new LoadImage(0,60,60);
+	private LoadImage mLoadImage = new LoadImage(0, 100, 100);
 	private Context mContext = null;
 	private int width = 720;
 	private float times = 2;
@@ -127,14 +131,14 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		final ViewHolder holder;
+		final ViewHolderTopic holder;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.item_quanzi_topic_list,
 					null);
 			holder = initHolder(convertView);
 			convertView.setTag(R.id.tag_view_holder, holder);
 		} else {
-			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
+			holder = (ViewHolderTopic) convertView.getTag(R.id.tag_view_holder);
 		}
 		QuanTopicVO item = mList.get(position);
 		msgid = item.getTopicid();
@@ -142,15 +146,13 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		String authorName = item.getName();
 		String headUrl = item.getUheader();
 		String work = "";
-		if (baseDataSet != null)
-		{
-			int pos=item.getPosition();
-			if(pos!=0)
+		if (baseDataSet != null) {
+			int pos = item.getPosition();
+			if (pos != 0)
 				pos--;
-			work = ((baseDataSet.getPosition()).get(pos))
-					.getContent();
+			work = ((baseDataSet.getPosition()).get(pos)).getContent();
 		}
-			
+
 		String detail = item.getContent();
 		String time = item.getAddtime();
 		time = CommonUtil.calcTime(time);
@@ -239,48 +241,19 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 				}
 			}
 		});
-
-		holder.tl.removeAllViews();
 		final List<PicNewVO> picsinner = item.getTopicPic();
-		RelativeLayout.LayoutParams layoutParams = holder.rlp;
-		if (picsinner != null && picsinner.size() == 1) {
-			layoutParams = holder.rlp2;
-		}
+		holder.gvImages.setVisibility(View.GONE);
+		// 显示图片
 		if (picsinner != null && picsinner.size() > 0) {
-			TableRow tr = null;
-			for (int i = 0; i < picsinner.size(); i++) {
-				if (i % 3 == 0) {
-					tr = new TableRow(mContext);
-					holder.tl.addView(tr);
-				}
-				tr.setLayoutParams(holder.tllpoutter);
-				RelativeLayout rl = new RelativeLayout(mContext);
-				rl.setLayoutParams(holder.trlpoutter);
-				ImageView iv = new ImageView(mContext);
-				iv.setLayoutParams(layoutParams);
-				rl.addView(iv);
-				final String url = picsinner.get(i).getPic();
-				rl.setTag(url);
-				iv.setTag(url);
-				iv.setImageResource(R.drawable.default_image);
-				mLoadImage.addTask(url, iv);
-				rl.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Intent intent = new Intent(mContext,
-								PhotoViewMultiActivity.class);
-						ArrayList<String> orgs = new ArrayList<String>();
-						for (int j = 0; j < picsinner.size(); j++) {
-							orgs.add(picsinner.get(j).getPic());
-						}
-						intent.putStringArrayListExtra("pics", orgs);
-						intent.putExtra("pic", (String) v.getTag());
-						mContext.startActivity(intent);
-					}
-				});
-				tr.addView(rl);
+			holder.gvImages.setVisibility(View.VISIBLE);
+			ArrayList<String> urls = new ArrayList<String>();
+			for (PicNewVO temp : picsinner) {
+				urls.add(temp.getPic());
 			}
+			holder.gvImages.setAdapter(new GridViewAdapter(mContext, urls,
+					R.layout.item_gridview_image));
 		}
+
 		mLoadImage.doTask();
 		return convertView;
 	}
@@ -306,7 +279,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		}
 	};
 
-	static class ViewHolder {
+	static class ViewHolderTopic {
 		TextView nameTV;
 		TextView timeTV;
 		TextView workTV;
@@ -314,23 +287,12 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		ImageView resIV;
 		ImageView headIV;
 		View optionIV;
-		TableLayout tl;
-		RelativeLayout.LayoutParams rlp;
-		RelativeLayout.LayoutParams rlp2;
-		TableLayout.LayoutParams tllpoutter;
-		TableRow.LayoutParams trlpoutter;
+		MyGridView gvImages;
+
 	}
 
-	private ViewHolder initHolder(View convertView) {
-		ViewHolder holder = new ViewHolder();
-		holder.tllpoutter = new TableLayout.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		holder.trlpoutter = new TableRow.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		holder.rlp = new RelativeLayout.LayoutParams((int) (60 * times),
-				(int) (60 * times));
-		holder.rlp2 = new RelativeLayout.LayoutParams((int) (100 * times),
-				(int) (100* times));
+	private ViewHolderTopic initHolder(View convertView) {
+		ViewHolderTopic holder = new ViewHolderTopic();
 		holder.nameTV = (TextView) convertView
 				.findViewById(R.id.textViewAuthorName);
 		holder.timeTV = (TextView) convertView.findViewById(R.id.textViewTime);
@@ -341,8 +303,48 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		holder.headIV = (ImageView) convertView
 				.findViewById(R.id.imageViewAuthorHeader);
 		holder.optionIV = convertView.findViewById(R.id.optionButton);
-		holder.tl = (TableLayout) convertView
-				.findViewById(R.id.tableLayoutAuthorPics);
+		holder.gvImages = (MyGridView) convertView
+				.findViewById(R.id.picGridView);
 		return holder;
+	}
+
+	// 多张图片
+	class GridViewAdapter extends CommonAdapter<String> {
+
+		public GridViewAdapter(Context context, List<String> mDatas,
+				int itemLayoutId) {
+			super(context, mDatas, itemLayoutId);
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		public void convert(ViewHolder helper, String item) {
+			// TODO Auto-generated method stub
+			// helper.setImageResource(R.id.gridview_image,
+			// R.drawable.ico_chat_pic);
+
+			ImageView iv = helper.getView(R.id.gridview_image);
+			// iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ico_chat_pic));
+			iv.setTag(item);
+			iv.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(mContext,
+							PhotoViewMultiActivity.class);
+					ArrayList<String> orgs = new ArrayList<String>();
+					orgs = (ArrayList<String>) mDatas;
+					intent.putStringArrayListExtra("pics", orgs);
+					intent.putExtra("pic", (String) v.getTag());
+					mContext.startActivity(intent);
+				}
+			});
+
+			mLoadImage.addTask(item,
+					(ImageView) helper.getView(R.id.gridview_image));
+			// mLoadImage.doTask();
+		}
+
 	}
 }

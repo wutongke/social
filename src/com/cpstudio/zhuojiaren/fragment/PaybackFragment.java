@@ -79,7 +79,7 @@ public class PaybackFragment extends Fragment implements OverScrollController{
 		a.add("http://img4.imgtn.bdimg.com/it/u=3355886690,291919142&fm=21&gp=0.jpg");
 		a.add("http://img5.imgtn.bdimg.com/it/u=3541372963,3063415232&fm=21&gp=0.jpg");
 		a.add("http://img3.imgtn.bdimg.com/it/u=1779627396,3712161577&fm=21&gp=0.jpg");
-//		test.setImageUrl(a);
+//		test.setPics(pics)(a);
 		PayBackVO test2 = new PayBackVO();
 		test2.setAmount("298");
 		test2.setLimit("200");

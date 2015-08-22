@@ -54,6 +54,8 @@ public class LoadImage {
 		memoryCache = new ImageMemoryCache();
 		fileCache = new ImageFileCache("zhuojiaren/userhead");
 		taskMap = new HashMap<String, ImageView>();
+		this.height = height;
+		this.width = width;
 		this.round = round;
 	}
 	public void beginLoad(String url, ImageView img){

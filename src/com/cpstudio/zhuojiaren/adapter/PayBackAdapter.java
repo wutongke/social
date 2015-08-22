@@ -23,10 +23,17 @@ import com.cpstudio.zhuojiaren.widget.MyGridView;
  *
  */
 public class PayBackAdapter extends CommonAdapter<PayBackVO>{
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage;
 	public PayBackAdapter(Context context, List<PayBackVO> mDatas,
 			int itemLayoutId) {
 		super(context, mDatas, itemLayoutId);
+		mLoadImage = new LoadImage(0,80,80);
+		// TODO Auto-generated constructor stub
+	}
+	public PayBackAdapter(Context context, List<PayBackVO> mDatas,
+			int itemLayoutId,LoadImage mLoadImage) {
+		super(context, mDatas, itemLayoutId);
+		this.mLoadImage = mLoadImage;
 		// TODO Auto-generated constructor stub
 	}
 	public void add(int position, PayBackVO item) {
@@ -53,6 +60,7 @@ public class PayBackAdapter extends CommonAdapter<PayBackVO>{
 			}
 			images.setAdapter(new GridViewAdapter(mContext, urls, R.layout.item_gridview_image));
 		}
+		mLoadImage.doTask();
 		price.setText(mContext.getResources().getString(R.string.crowdfunding_price_label2)+item.getAmount());
 		peopleCount.setText("œﬁ÷∆"+item.getLimit()+"»À");
 		des.setText(item.getIntro());
@@ -100,7 +108,7 @@ public class PayBackAdapter extends CommonAdapter<PayBackVO>{
 			});
 			
 			mLoadImage.addTask(item, (ImageView)helper.getView(R.id.gridview_image));
-			mLoadImage.doTask();
+//			mLoadImage.doTask();
 		}
 		
 	}
