@@ -19,9 +19,9 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
-            android:background="@drawable/button_top_bg_back"
+            android:background="@null"
+            android:drawableLeft="@drawable/go_back"
             android:text="@string/label_back"
-            android:paddingLeft="7dp"
             android:textColor="#ffffff"
             android:textSize="14sp" />
 
@@ -34,7 +34,6 @@
             android:layout_centerVertical="true"
             android:layout_marginBottom="42dp"
             android:layout_marginRight="10dp" />
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -61,7 +60,6 @@
             android:layout_marginBottom="20dp"
             android:orientation="horizontal" >
         </LinearLayout>
-
     </RelativeLayout>
 
 </LinearLayout>

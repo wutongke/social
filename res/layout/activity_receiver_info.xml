@@ -30,8 +30,8 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
-            android:background="@drawable/button_top_bg_back"
-            android:paddingLeft="7dp"
+            android:background="@null"
+            android:drawableLeft="@drawable/go_back"
             android:text="@string/label_back"
             android:textColor="#ffffff"
             android:textSize="14sp" />
@@ -119,7 +119,6 @@
                     android:hint="@string/hint"
                     android:singleLine="true"
                     android:textSize="18sp" />
-
             </LinearLayout>
         </LinearLayout>
 
@@ -244,7 +243,6 @@
             android:text="@string/label_submit"
             android:textColor="#ffffff"
             android:textSize="18sp" />
-
     </RelativeLayout>
 
 </LinearLayout>

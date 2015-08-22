@@ -21,6 +21,8 @@ import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.ui.AudioListActivity;
 import com.cpstudio.zhuojiaren.ui.CrowdFundingActivity;
+import com.cpstudio.zhuojiaren.ui.GrouthActivity;
+import com.cpstudio.zhuojiaren.ui.GrouthChooseActivity;
 import com.cpstudio.zhuojiaren.ui.GrouthListActivity;
 import com.cpstudio.zhuojiaren.ui.MyMoneyActivity;
 import com.cpstudio.zhuojiaren.ui.UserSameActivity;
@@ -102,7 +104,7 @@ public class Cats_PageAdapter extends PagerAdapter {
 						@Override
 						public void onClick(View v) {
 							// TODO Auto-generated method stub
-							// Ìø×ªÒ³Ãæ
+							// ï¿½ï¿½×ªÒ³ï¿½ï¿½
 							onClicked(index);
 
 						}
@@ -123,7 +125,7 @@ public class Cats_PageAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public Object instantiateItem(ViewGroup container, int position) { // è¿™ä¸ªæ–¹æ³•ç”¨æ¥å®ä¾‹åŒ–é¡µå?
+	public Object instantiateItem(ViewGroup container, int position) { // è¿™ä¸ªæ–¹æ³•ç”¨æ¥å®ä¾‹åŒ–é¡µï¿½?
 																		// container.addView(mListViews.get(position),
 		container.addView(mListView.get(position), 0); // 0);//æ·»åŠ é¡µå¡
 		return mListView.get(position);
@@ -146,11 +148,11 @@ public class Cats_PageAdapter extends PagerAdapter {
 			i = new Intent(mContext, JiarenActiveNumListActivity.class);
 			mContext.startActivity(i);
 			break;
-		case 1:// ³É³¤ÔÚÏß
+		case 1:// ï¿½É³ï¿½ï¿½ï¿½ï¿½ï¿½
 			i = new Intent(mContext, GrouthListActivity.class);
 			mContext.startActivity(i);
 			break;
-		case 2:// Ù¾ÔªÓïÒô
+		case 2:// Ù¾Ôªï¿½ï¿½ï¿½ï¿½
 			i = new Intent(mContext, AudioListActivity.class);
 			mContext.startActivity(i);
 
@@ -167,7 +169,7 @@ public class Cats_PageAdapter extends PagerAdapter {
 			mContext.startActivity(i);
 			break;
 
-		case 5:// ×ÊÔ´¹©Ğè
+		case 5:// ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½
 			i = new Intent(mContext, ResourceGXActivity.class);
 			mContext.startActivity(i);
 
@@ -181,13 +183,13 @@ public class Cats_PageAdapter extends PagerAdapter {
 			mContext.startActivity(i);
 			break;
 
-		case 8:
+		case 8://åŒè¡Œ
 			i = new Intent(mContext, UserSameActivity.class);
 			i.putExtra("type", 2);
 			mContext.startActivity(i);
 			break;
 
-		case 9:
+		case 9://åŒåŸ
 			i = new Intent(mContext, UserSameActivity.class);
 			i.putExtra("type", 1);
 			mContext.startActivity(i);
@@ -198,8 +200,9 @@ public class Cats_PageAdapter extends PagerAdapter {
 			i.putExtra("type", 4);
 			mContext.startActivity(i);
 			break;
-		case 11:
-			Toast.makeText(mContext, "Ä£ºı£¬ÍêÉÆÖĞ", 1000).show();
+		case 11://æ™ºæ…§ç²¾è¿›
+			mContext.startActivity(new Intent(mContext,
+					GrouthChooseActivity.class));
 			break;
 
 		case 12:

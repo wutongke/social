@@ -55,8 +55,10 @@ public class FindActivity extends Activity {
 
 					@Override
 					public void onClick(View v) {
+						
 						Intent i = new Intent(FindActivity.this,
-								FieldSelectUserActivity.class);
+								UserSameActivity.class);
+						i.putExtra("type", 2);
 						startActivity(i);
 					}
 				});

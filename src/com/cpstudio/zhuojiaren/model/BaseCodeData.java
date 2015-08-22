@@ -24,6 +24,16 @@ public class BaseCodeData implements Serializable {
 	private List<gtype> gtype;
 	private List<sdtype> sdtype;
 
+	private List<sdtype> teacherType;
+
+	public List<sdtype> getTeacherType() {
+		return teacherType;
+	}
+
+	public void setTeacherType(List<sdtype> teacherType) {
+		this.teacherType = teacherType;
+	}
+
 	public List<sdtype> getSdtype() {
 		return sdtype;
 	}

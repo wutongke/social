@@ -5,44 +5,46 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.R.array;
-import com.cpstudio.zhuojiaren.R.id;
-import com.cpstudio.zhuojiaren.R.layout;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.model.HangYeVO;
-import com.cpstudio.zhuojiaren.model.MsgTagVO;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.HangYeVO;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.hobby;
+import com.cpstudio.zhuojiaren.model.industry;
+import com.cpstudio.zhuojiaren.model.sdtype;
 
 public class FieldSelectUserActivity extends Activity implements
 		OnItemClickListener {
 	private ListView mListView;
 	private SimpleAdapter mAdapter;
 	List<Map<String, String>> contents = new ArrayList<Map<String, String>>();
-	//行业，兴趣，导师
+	ZhuoConnHelper mConnHelper;
+	// 行业，兴趣，导师
 	private int type = 1;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_field_select);
-		type= getIntent().getIntExtra("type", 1);
-		
+		type = getIntent().getIntExtra("type", 1);
+		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		initClick();
 		mAdapter = new SimpleAdapter(this, contents, R.layout.item_field_list,
 				new String[] { "id", "name" }, new int[] {
@@ -54,7 +56,7 @@ public class FieldSelectUserActivity extends Activity implements
 				R.layout.listview_footer2, null);
 		View head = inflater.inflate(R.layout.listview_header11, null);
 		TextView text = (TextView) head.findViewById(R.id.lh11_text);
-		switch(type){
+		switch (type) {
 		case 1:
 			text.setText(R.string.label_select_th);
 			break;
@@ -64,7 +66,7 @@ public class FieldSelectUserActivity extends Activity implements
 		case 3:
 			text.setText(R.string.label_select_direction);
 			break;
-		default :
+		default:
 			text.setText(R.string.label_select_th);
 		}
 		mListView.addHeaderView(head);
@@ -116,50 +118,98 @@ public class FieldSelectUserActivity extends Activity implements
 		findViewById(R.id.textViewLoading).setVisibility(View.VISIBLE);
 		findViewById(R.id.textViewNoData).setVisibility(View.GONE);
 		Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-		String[] fields;
-		if(type==1)
-			fields = getResources().getStringArray(
-				R.array.array_field_type);
-		else if(type ==2)
-			fields = getResources().getStringArray(
-					R.array.array_hobby);
-		else{
-			fields = getResources().getStringArray(
-					R.array.array_teacher_type);
-		}
-		StringBuffer sb = new StringBuffer();
-		sb.append("{\"code\":\"10000\",\"msg\":\"\",\"data\":[{\"name\":\"");
-		for (int i = 0; i < fields.length; i++) {
-			if (i != fields.length - 1) {
-				sb.append(fields[i]);
-				sb.append("\"},{\"name\":\"");
+		if (mConnHelper == null || mConnHelper.getBaseDataSet() == null)
+			return;
+		if (type == 1) {
+			List<industry> mList = mConnHelper.getBaseDataSet().getIndustry();
+			if (mList != null && !mList.isEmpty()) {
+				findViewById(R.id.textViewNoData).setVisibility(View.GONE);
+				for (int i = 0; i < mList.size(); i++) {
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("id", mList.get(i).getId() + "");
+					map.put("name", mList.get(i).getContent());
+					contents.add(map);
+				}
+				mAdapter.notifyDataSetChanged();
 			} else {
-				sb.append(fields[i]);
-				sb.append("\"}]}");
+				findViewById(R.id.textViewNoData).setVisibility(View.VISIBLE);
 			}
 		}
-		String data = sb.toString();
-		msg.obj = data;
-		msg.sendToTarget();
+
+		else if (type == 2) {
+			List<hobby> mList = mConnHelper.getBaseDataSet().getHobby();
+			if (mList != null && !mList.isEmpty()) {
+				findViewById(R.id.textViewNoData).setVisibility(View.GONE);
+				for (int i = 0; i < mList.size(); i++) {
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("id", mList.get(i).getId() + "");
+					map.put("name", mList.get(i).getContent());
+					contents.add(map);
+				}
+				mAdapter.notifyDataSetChanged();
+			} else {
+				findViewById(R.id.textViewNoData).setVisibility(View.VISIBLE);
+			}
+		} else {
+			List<sdtype> mList = mConnHelper.getBaseDataSet().getTeacherType();
+			if (mList != null && !mList.isEmpty()) {
+				findViewById(R.id.textViewNoData).setVisibility(View.GONE);
+				for (int i = 0; i < mList.size(); i++) {
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("id", mList.get(i).getId() + "");
+					map.put("name", mList.get(i).getContent());
+					contents.add(map);
+				}
+				mAdapter.notifyDataSetChanged();
+			} else {
+				findViewById(R.id.textViewNoData).setVisibility(View.VISIBLE);
+			}
+		}
+		// String[] fields;
+		// if(type==1)
+		// fields = getResources().getStringArray(
+		// R.array.array_field_type);
+		// else if(type ==2)
+		// fields = getResources().getStringArray(
+		// R.array.array_hobby);
+		// else{
+		// fields = getResources().getStringArray(
+		// R.array.array_teacher_type);
+		// }
+		// StringBuffer sb = new StringBuffer();
+		// sb.append("{\"code\":\"10000\",\"msg\":\"\",\"data\":[{\"name\":\"");
+		// for (int i = 0; i < fields.length; i++) {
+		// if (i != fields.length - 1) {
+		// sb.append(fields[i]);
+		// sb.append("\"},{\"name\":\"");
+		// } else {
+		// sb.append(fields[i]);
+		// sb.append("\"}]}");
+		// }
+		// }
+		// String data = sb.toString();
+		// msg.obj = data;
+		// msg.sendToTarget();
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		if (arg3 != -1) {
-//			Intent intent = new Intent(FieldSelectUserActivity.this,
-//					UserSameActivity.class);
-//			intent.putExtra("type", 2);
-//			intent.putExtra("mSearchKey", ((TextView) arg1
-//					.findViewById(R.id.textViewGroup3Name)).getText()
-//					.toString() + ":");
-//			startActivity(intent);
+			// Intent intent = new Intent(FieldSelectUserActivity.this,
+			// UserSameActivity.class);
+			// intent.putExtra("type", 2);
+			// intent.putExtra("mSearchKey", ((TextView) arg1
+			// .findViewById(R.id.textViewGroup3Name)).getText()
+			// .toString() + ":");
+			// startActivity(intent);
 			Intent intent = new Intent();
-			intent.putExtra("industry", ((TextView) arg1
+			intent.putExtra("name", ((TextView) arg1
 					.findViewById(R.id.textViewGroup3Name)).getText()
 					.toString());
+			intent.putExtra("id", ((TextView) arg1
+					.findViewById(R.id.textViewGroup3Id)).getText().toString());
 			setResult(RESULT_OK, intent);
 			FieldSelectUserActivity.this.finish();
-			
 		}
 	}
 

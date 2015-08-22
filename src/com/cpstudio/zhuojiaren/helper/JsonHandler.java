@@ -47,6 +47,7 @@ import com.cpstudio.zhuojiaren.model.SysMsgVO;
 import com.cpstudio.zhuojiaren.model.TeacherVO;
 import com.cpstudio.zhuojiaren.model.TopicDetailVO;
 import com.cpstudio.zhuojiaren.model.TotalUserVO;
+import com.cpstudio.zhuojiaren.model.UserAndCollection;
 import com.cpstudio.zhuojiaren.model.UserEvent;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
@@ -886,6 +887,29 @@ public class JsonHandler {
 				for (Iterator<Dynamic> iterator = li.iterator(); iterator
 						.hasNext();) {
 					Dynamic item = (Dynamic) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public ArrayList<UserAndCollection> parseUserCollection() {
+		ArrayList<UserAndCollection> list = new ArrayList<UserAndCollection>();
+		try {
+			Type listType = new TypeToken<LinkedList<UserAndCollection>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<UserAndCollection> li = gson.fromJson(jsonData,
+						listType);
+
+				for (Iterator<UserAndCollection> iterator = li.iterator(); iterator
+						.hasNext();) {
+					UserAndCollection item = (UserAndCollection) iterator
+							.next();
 					list.add(item);
 				}
 			}
