@@ -803,6 +803,7 @@ public class CardEditActivity extends Activity {
 							JSONObject jobj = new JSONObject(data);
 							String uheader = jobj.getString("uheader");
 							userInfo.setUheader(uheader);
+							mLoadImage.beginLoad(uheader, ivHead);
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

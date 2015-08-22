@@ -23,29 +23,21 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.MsgDetailActivity;
 import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.facade.InfoFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.GoodsPicAdVO;
 import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicAdVO;
-import com.cpstudio.zhuojiaren.model.Province;
-import com.cpstudio.zhuojiaren.model.QuanTopicVO;
-import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
-import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.ui.PubDetailActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
@@ -298,33 +290,8 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				break;
 			}
 			case MsgTagVO.DATA_REFRESH: {
-				// boolean loadState = false;
-				// if (msg.obj != null && !msg.obj.equals("")) {
-				// loadState = true;
-				// JsonHandler nljh = new JsonHandler((String) msg.obj,
-				// getApplicationContext());
-				// ArrayList<QuanTopicVO> list = nljh.parseQuanTopicList();
-				// updateItemList(list, false, false);
-				// }
-				// mPullDownView.RefreshComplete(loadState);
-				// break;
 			}
 			case MsgTagVO.DATA_MORE: {
-				// mPullDownView.notifyDidMore();
-				// ArrayList<QuanTopicVO> list = new ArrayList<QuanTopicVO>();
-				// if (msg.obj instanceof ArrayList) {
-				// list = (ArrayList<QuanTopicVO>) msg.obj;
-				// } else {
-				// if (msg.obj != null && !msg.obj.equals("")) {
-				// JsonHandler nljh = new JsonHandler((String) msg.obj,
-				// getApplicationContext());
-				// list = nljh.parseQuanTopicList();
-				// if (!list.isEmpty()) {
-				// // infoFacade.update(list);
-				// }
-				// }
-				// }
-				// updateItemList(list, false, true);
 				break;
 			}
 			
@@ -361,80 +328,11 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	// refresh刷新加载的新的数据没有写数据库
 	@Override
 	public void onRefresh() {
-		// String params = ZhuoCommHelper.getUrlMsgList();
-		// params += "?pageflag=" + "0";
-		// params += "&reqnum=" + "10";
-		// params += "&lastid=" + "0";
-		// params += "&type=" + "0";
-		// if (null != mSearchKey) {
-		// params += "&key=" + mSearchKey.trim();
-		// }
-		// params += "&gongxutype=" + "0";
-		// params += "&from=" + "0";
-		// params += "&uid=" + uid;
-		// mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_REFRESH);
 	}
 
 	@Override
 	public void onMore() {
-		if (CommonUtil.getNetworkState(getApplicationContext()) == 2
-				&& (mSearchKey == null || mSearchKey.equals(""))) {
-			ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-			Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
-			msg.obj = list;
-			msg.sendToTarget();
-		} else {
-			String params = ZhuoCommHelper.getUrlMsgList();
-			params += "?pageflag=" + "1";
-			params += "&reqnum=" + "10";
-			params += "&lastid=" + mLastId;
-			params += "&type=" + "0";
-			if (null != mSearchKey) {
-				params += "&key=" + mSearchKey.trim();
-			}
-			params += "&gongxutype=" + "0";
-			params += "&from=" + "0";
-			params += "&uid=" + uid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
-		}
 	}
-
-	// private void loadData() {
-	//
-	// mConnHelper.getBaseCodeData(mUIHandler, MsgTagVO.DATA_BASE,
-	// MainActivity.this, false, null, null);
-	//
-	// String url = ZhuoCommHelper.getUrlUserInfo() + "?uid="
-	// + ResHelper.getInstance(getApplicationContext()).getUserid();
-	// // 加载刷新个人信息
-	// mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
-	// if (mPullDownView.startLoadData()) {
-	// mList.clear();
-	// mAdapter.notifyDataSetChanged();
-	// if (CommonUtil.getNetworkState(getApplicationContext()) == 2
-	// && (mSearchKey == null || mSearchKey.equals(""))) {
-	// // 获取本地数据
-	// ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-	// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-	// msg.obj = list;
-	// msg.sendToTarget();
-	// } else {
-	// String params = ZhuoCommHelper.getUrlMsgList();
-	// params += "?pageflag=" + "0";
-	// params += "&reqnum=" + "10";
-	// params += "&lastid=" + "0";
-	// params += "&type=" + "0";
-	// if (null != mSearchKey) {
-	// params += "&key=" + mSearchKey.trim();
-	// }
-	// params += "&gongxutype=" + "0";
-	// params += "&from=" + "0";
-	// params += "&uid=" + uid;
-	// mConnHelper.getFromServer(params, mUIHandler,
-	// MsgTagVO.DATA_LOAD);
-	// }
-	// }
-	// }
 
 	private void loadData() {
 
@@ -479,10 +377,6 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				startActivity(i);
 			}
 		});
-		// antoText.stopAutoText();
-		// LayoutParams params=new LayoutParams(LayoutParams.MATCH_PARENT,
-		// height);
-		// bannerViewPager.setLayoutParams(params);
 
 		if (hotListData != null)
 			hotListData.clear();

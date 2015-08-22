@@ -1132,5 +1132,6 @@
     <string name="update_photo_success">照片更新成功</string>
     <string name="update_photo_failed">照片更新失败</string>
     <string name="code_error">编码错误</string>
+    <string name="lab_cur_item">当前选择:</string>
 
 </resources>

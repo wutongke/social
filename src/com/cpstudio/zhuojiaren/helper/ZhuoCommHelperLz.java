@@ -58,20 +58,49 @@ public class ZhuoCommHelperLz {
 	private final static String DEL_ACTIVE = "/deleteActivity.do";
 	private final static String GET_MY_STATUS_CARD = "/getMyStatusCard.do";
 	private final static String SET_PHOTO = "/setPhoto.do";
-	
-	
+
+	 private final static String ALL_JIAREN = "/getJiaren.do";
+	private final static String CITY_JIAREN = "/getJiarenByCity.do";
+	private final static String HOBBY_JIAREN = "/getJiarenByHobby.do";
+	//服务器暂未提供
+	private final static String NEAR_JIAREN = "/fujin.do";
+	private final static String INDUSTRY_JIAREN = "/getJiarenByIndustry.do";
+	private final static String TEATURE_JIAREN = "/getTeacher.do";
+
+	public static String getAllJiaren() {
+		return ALL_JIAREN;
+	}
+
+	public static String getNearJiaren() {
+		return NEAR_JIAREN;
+	}
+
+	public static String getCityJiaren() {
+		return CITY_JIAREN;
+	}
+
+	public static String getHobbyJiaren() {
+		return HOBBY_JIAREN;
+	}
+
+	public static String getIndustryJiaren() {
+		return INDUSTRY_JIAREN;
+	}
+
+	public static String getTeatureJiaren() {
+		return TEATURE_JIAREN;
+	}
+
 	/**
 	 * 用户加入的或创建的活动
 	 */
 	private final static String USER_ACTIVITY = "/getUserActivityList.do";
 
-	//lef的
+	// lef的
 	private final static String SERVICE_MYGROUPLIST = "/getmygroup.do";
 	private final static String PUB_GONGXU = "/addSupplyDemand.do";
 	private final static String USER_BUSINESS = "/getUserBusiness.do";
-	
-	
-	
+
 	// 未用
 	private final static String SERVICE_GET_ADINFO = "/getadinfo.do";
 
@@ -336,55 +365,68 @@ public class ZhuoCommHelperLz {
 	public static String zanCard() {
 		return SERVER + ZAN_CARD;
 	}
+
 	/**
 	 * 公告详情
+	 * 
 	 * @return
 	 */
 	public static String gonggaoDetail() {
 		return SERVER + GG_DETAIL;
 	}
+
 	/**
 	 * 倬脉动态列表
+	 * 
 	 * @return
 	 */
 	public static String getPutList() {
 		return SERVER + PUB_LIST;
 	}
+
 	/**
 	 * 删除活动
+	 * 
 	 * @return
 	 */
 	public static String deleteActives() {
 		return SERVER + DEL_ACTIVE;
 	}
+
 	public static String getMyStatusCard() {
 		return SERVER + GET_MY_STATUS_CARD;
 	}
-	
+
 	/**
 	 * lef的，获取我的圈子，用来提供融云的圈子信息
+	 * 
 	 * @return
 	 */
 	public static String getUrlMyGroupList() {
 		return SERVER + SERVICE_MYGROUPLIST;
 	}
-	
+
 	/**
 	 * 发布供需
+	 * 
 	 * @return
 	 */
 	public static String pubGongxu() {
 		return SERVER + PUB_GONGXU;
 	}
+
 	/**
 	 * 用户商务信息：供需
+	 * 
 	 * @return
 	 */
 	public static String getUserBusinessInfo() {
 		return SERVER + USER_BUSINESS;
 	}
+
 	/**
 	 * 上传个人相册图片
+	 * 
 	 * @return
 	 */
 	public static String pubPhoto() {

@@ -6,7 +6,9 @@
     android:orientation="vertical"
     tools:context=".UserSameActivity" >
 
-    <include layout="@layout/title_activity"/>
+    <include layout="@layout/title_activity" />
+
+
     <com.cpstudio.zhuojiaren.widget.PullDownView
         android:id="@+id/pull_down_view"
         android:layout_width="match_parent"

@@ -890,7 +890,7 @@ public class ZhuoConnHelper {
 			final boolean cancelable, final OnCancelListener cancel,
 			final String data) {
 		return doPostWithFile(filesMap, nameValuePairs, url, handler,
-				handlerTag, activity, tag, cancelable, cancel,data, null);
+				handlerTag, activity, tag, cancelable, cancel, data, null);
 	}
 
 	/**
@@ -1806,6 +1806,35 @@ public class ZhuoConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		return getFromServerByPost(ZhuoCommHelperLz.getUserBusinessInfo(),
 				nameValuePairs, mUIHandler, tag);
+	}
+
+	/**
+	 * 获得相同条件的用户，同城，同趣等
+	 * 
+	 * @param mUIHandler
+	 * @param tag
+	 * @param userid
+	 * @return
+	 */
+	public boolean getSameUser(Handler mUIHandler, int tag, int type,
+			int pageNo, int pageSize, String extraStr) {
+		String URLS[] = { ZhuoCommHelperLz.getCityJiaren(),
+				ZhuoCommHelperLz.getIndustryJiaren(),
+				ZhuoCommHelperLz.getNearJiaren(),
+				ZhuoCommHelperLz.getHobbyJiaren(),
+				ZhuoCommHelperLz.getTeatureJiaren(),
+				ZhuoCommHelperLz.getAllJiaren() };
+		String keys[] = { "city", "industry", "near(暂无)", "hobby", "tchtype",
+				"xx" };
+		if (type < 1 || type > URLS.length)
+			return false;
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		if (extraStr != null && !extraStr.equals(""))
+			nameValuePairs
+					.add(new BasicNameValuePair(keys[type - 1], extraStr));
+		return getFromServerByPost(ZhuoCommHelperLz.SERVER+URLS[type - 1], nameValuePairs, mUIHandler,
+				tag);
 	}
 
 	/**
