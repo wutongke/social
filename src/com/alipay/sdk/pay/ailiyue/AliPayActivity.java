@@ -26,13 +26,14 @@ import com.cpstudio.zhuojiaren.ui.CartActivity;
 public class AliPayActivity extends FragmentActivity {
 
 	//商户PID
-	public static final String PARTNER = "2088021294618045 ";
+	public static final String PARTNER = "2088021294618045";
 	//商户收款账号
-	public static final String SELLER = "18811781615";
+	public static final String SELLER = "zhuomai@hopechina.cc";
 	//商户私钥，pkcs8格式
-	public static final String RSA_PRIVATE = "MIICWwIBAAKBgQDPcw0RL81jw1cXTqc7ujxRrYpEyp7FyKDarBhA+i5DalcGUFewNgTCNfLZ+HaxIiX9eXyl511kX++duFXOjSmN6fPr57AJmAJIzc6+Ra4fTgiu/hdfZu6gCDLfod8Z+af5CP+MG1hzGbXRMSX/OZRMLpsTM0rbxzuLK/D072RR/QIDAQABAoGABEBIUUTYgaXcIAclmCy91bKntbctP8JXwYNrT9GQpyMDu4Zj9aF1wYEXg+36iLC5dJNLwZ6XJFpu7516bKwp4MwmKeT0FrFJHxLi+odpCGLoODYvO6fLRMOHWRtpCJBfJmIl8nO86A3o2cphx9mwQRB3pIvSmEjoLBI0amuC1AECQQD2db3I2ENuL0EqZUVVAQpI4ni56oRIfeUzkxH4cpHqdCJo0saIQjT1grTYqubNKQPTQLrwz8DE26nUU2HwULD9AkEA13q9oi6SoAsAxkj89twDTdmPltGUlcgd/ZX17aNvM6pCRJ2A0k3AjyeKSbHCLLuUd2350KewjHxJWQw0RfB1AQJAC1ePzFZnhAKYtSLD9g1+M6x4cdXhEJT6n0z9XrmnDWsaykgo6sxhM4s4V2BGDtr8WhR4heyJqoWRYzwTHcQY4QJAFIDdYn1D/m6NmFCBoYu11MaK3zL6DHaKRALs77vJbQUaYSULiPdVB0of4ntDmrYOnn6ccrpCFlwNLqf2oWEMAQJAPOJefZeLfUmwlYM7s6XhTAHdugK5hu5ef5bsONmW8t2PRHEnXnBQa0HEDQRhUHHmNZXt+vQP3r64HCirAzIwcA==";
-	//支付宝公钥
-	public static final String RSA_PUBLIC = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB";
+	public static final String RSA_PRIVATE = "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBALo+I+536G2AjfaOaZDLIVLqb+Z4p2K73JstBoco95Ax66K8OUqGZDTW918QjAVjuIPrYSei/D0yL6De6WkJlRYPSRyE87tvj7WRHVVuBw/uMcXisxanvx0xghEC26FjABOrk6j7OKDnpXum1+imuetIRo+R9tFKsqeG20ByvFHnAgMBAAECgYAPwIe7eKrQ8CmRq/Pjyjp0T93NCXFm2WrMOR+vONjPellqty7FTd6V1YSwpq6hGhEWH0dlWdSpvF/o5FGrj6LrSLuSLfOVJKcpSXNDbuCWruT7R0HBimWvSuUNItB6xODk85PAxqV87TstlA2ctUmj3AjqLVrc+tw3bVeTJCGnOQJBAOa9FEL3rrkV/R4L7jWIUsm2CsAhkStsGCslETYRLvW75Lzz8jykw9+cDqSruyPfdEqTwJ+oBoScVHHdmcb2/3UCQQDOoflQ6cGbKpwEkc0Yz8Q7i3jNoj/g8xvn0cxPgqZGfKy3cnun+zKT7KloL2AiRAkWUz49CEDJomNzn13OO9xrAkACLs++QnGYtqiKXDqIrx15Ywt+/dJNwtwHrHYZONhk4r4rO3OTN0vTFbrdu/ItSLPk8LjlycUmBASYfywxQazxAkBw9AfmnDGSUaOBt/Xml0SMzDwYJJZIsHxTp9LIsAGWzHZZvYItHFrUk+0zH5qsgIZ7JrwB/u3ziwpUXQyZPQ3LAkAkM2MX3AfHYh3ovaTquDI9Hjes6a3jaxiuITrplBBcwQPLROTo1KkfHaDfP72ernwuqSZBRPKJhQKVgNSnP00Z";
+//	public static final String RSA_PRIVATE = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBANE82aJEv8ocDgln/HDB++VewSpQbpTjRV71tWU+uZoqGoDVpBKZKfuhQ+aXVdnHD1H9LtN8YMJpInDooiotVGz2fJcS+WuGi6gFoOB5mAh9QGxKiQiaEv8XKYVRf+hUOoVoxh0Te/m5r7KKH4tF10SLKSwKrMa4wQOJgQdYQVetAgMBAAECgYBM5TUCOovVZgwOjuWqNtAxEmqg92A8XW3AIUKhy7SAIJsO3/TlVN6l+DUxCErntw09T3OnC12v9N1Qa141a+VLX/Ij3Bwy3V4HGlczX6OhfJcvsPrOfEO7uMhWiN6odd0c+OWen8iCNJzR9UAuqlzkU24A/wm8KnkVEhui4oiYDQJBAO8wLfVdGcV3R2gi9e9RkzID3pi66NcCgcCztqyqWg2zLI7SH4dEi+qFXB33UBLjouRNcDcVuJMOgj5htfLw6p8CQQDf8cH7dX3msmTiV+ui+h6EJdYWSWJHExVOVscYVnYGcLLIjsZ8L8FBo8HpvNCzeM5Hlj9L5GaGfj87Z7ZZMSYzAkEAgJpyC3vsUFzKuvYZL3y33OtxssLEUF6bryWxcXMCil0s9vmJVCyJ4iWkGsSPfCiCu6fbTvLR09e4NZxJvP7F1wJBALo3bfaLXIXZEcqlEWwUUAvS6pLdsrsnQzBBOI0kWEBCtmfPUX0yuKC8ayLRvzl92wnsBfY1lot/r1TWiOrh08ECQDDfVu3c2eA2bjTQb5DcYA+YJ7pAYBp547ImVVsOaFP99Mlsi29ko5NC9hCNI2RtA+j7CzM9pMhjjmb1+exSL/0=";
+	//支付宝公钥,是默认的值，不是从网上拿来的
+	public static final String RSA_PUBLIC = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB";
 
 
 	private static final int SDK_PAY_FLAG = 1;
@@ -42,7 +43,6 @@ public class AliPayActivity extends FragmentActivity {
 	private String fee;
 	//服务器生成的订单号
 	private String tradeId ;
-	private int flowerNum;
 	@InjectView(R.id.product_price)
 	TextView price;
 	@InjectView(R.id.product_subject)
@@ -106,10 +106,7 @@ public class AliPayActivity extends FragmentActivity {
 		Intent intent = getIntent();
 		fee = intent.getStringExtra("money");
 		tradeId = intent.getStringExtra("tradeNum");
-		flowerNum = intent.getIntExtra("flowerNum", 0);
 		price.setText(fee+"￥");
-		name.setText("鲜花");
-		des.setText("鲜花*"+flowerNum);
 	}
 
 	/**
@@ -122,7 +119,7 @@ public class AliPayActivity extends FragmentActivity {
 		/**
 		 * 测试使用
 		 */
-		String orderInfo = getOrderInfo("鲜花","鲜花*"+flowerNum, fee);
+		String orderInfo = getOrderInfo("倬脉","倬脉", fee);
 
 		// 对订单做RSA 签名
 		String sign = sign(orderInfo);

@@ -15,11 +15,11 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
 	public static final int TAB_REVIEWS_INDEX = 2;
 	private ArrayList<Fragment> mFragmentList = new ArrayList<Fragment>();
 	private String[]titles;
-	public MyPagerAdapter(FragmentManager fm,String[]titles,CrowdFundingVO crowdFundingVO) {
+	public MyPagerAdapter(FragmentManager fm,String[]titles,String id,CrowdFundingVO crowdFundingVO) {
 		super(fm);
 		this.titles = titles;
 		Bundle bundle = new Bundle();
-		bundle.putString("id", crowdFundingVO.getId());
+		bundle.putString("id", id);
 		bundle.putString("isCreater", crowdFundingVO.getIsCreater());
 		PaybackFragment paybackFragment = new PaybackFragment();
 		CommentFragment commentFragment = new CommentFragment();

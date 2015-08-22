@@ -93,7 +93,7 @@ public class CrowdFundingListActivity extends BaseActivity {
 				Intent intent = new Intent(CrowdFundingListActivity.this,
 						CrowdFundingDetailActivity.class);
 				intent.putExtra(CrowdFundingVO.CROWDFUNDINGID,
-						mDatas.get(position - 1).getId());
+						mAdapter.getItem(position).getId());
 				startActivity(intent);
 			}
 		});

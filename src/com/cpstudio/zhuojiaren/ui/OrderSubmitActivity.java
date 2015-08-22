@@ -86,29 +86,37 @@ public class OrderSubmitActivity extends BaseActivity {
 				leftMoney.setText(((Integer) msg.obj).toString());
 			} else if (msg.what == MsgTagVO.PUB_INFO) {
 				final Intent i = new Intent();
-				View view = getLayoutInflater().inflate(R.layout.pay_wey_choose, null);
-				new AlertDialog.Builder(OrderSubmitActivity.this,
-						AlertDialog.THEME_HOLO_LIGHT).setTitle("选择支付方式").setView(view)
-						.create().show();
-				view.findViewById(R.id.pay_weixin).setOnClickListener(new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						i.setClass(OrderSubmitActivity.this,PayActivity.class);
-					}
-				});
-				view.findViewById(R.id.pay_ali).setOnClickListener(new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						i.setClass(OrderSubmitActivity.this,AliPayActivity.class);
-					}
-				});
 				i.putExtra("money", "0.5");
-				i.putExtra("tradeNum", (String)msg.obj);
-				startActivity(i);
+				i.putExtra("tradeNum", (String) msg.obj);
+				View view = getLayoutInflater().inflate(
+						R.layout.pay_wey_choose, null);
+				view.findViewById(R.id.pay_weixin).setOnClickListener(
+						new OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								i.setClass(OrderSubmitActivity.this,
+										PayActivity.class);
+								i.putExtra("money", "0.5");
+								i.putExtra("tradeNum", (String) msg.obj);
+								startActivity(i);
+							}
+						});
+				view.findViewById(R.id.pay_ali).setOnClickListener(
+						new OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								i.setClass(OrderSubmitActivity.this,
+										AliPayActivity.class);
+								startActivity(i);
+							}
+						});
+				new AlertDialog.Builder(OrderSubmitActivity.this,
+						AlertDialog.THEME_HOLO_LIGHT).setTitle("选择支付方式")
+						.setView(view).create().show();
 			} else {
 				CommonUtil.displayToast(OrderSubmitActivity.this,
 						R.string.error0);
@@ -178,12 +186,12 @@ public class OrderSubmitActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				//submit to get tradeid and then fay
+				// submit to get tradeid and then fay
 				Message msg = uiHandler.obtainMessage();
 				msg.what = MsgTagVO.PUB_INFO;
 				msg.obj = "4234343543";
 				msg.sendToTarget();
-				
+
 			}
 		});
 	}

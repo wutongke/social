@@ -411,6 +411,23 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				false, null, null);
 	}
+	/**
+	 * 回报
+	 * @param activity
+	 * @param handler
+	 * @param handlerTag
+	 * @param id
+	 * @return
+	 */
+	public boolean getPayback(Activity activity, Handler handler,
+			int handlerTag, String id) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("id", id));
+		String url = ZhuoCommHelper.getPaybackList();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
 
 	/**
 	 * 创建圈子

@@ -153,7 +153,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 				.getLayoutParams();
 		params.height = mRoot.getHeight() - tab.getHeight() - 50;
 		viewPager.setLayoutParams(params);
-		mAdapter = new MyPagerAdapter(getSupportFragmentManager(), tabTitles,
+		mAdapter = new MyPagerAdapter(getSupportFragmentManager(), tabTitles,crowdFundingId,
 				crowdFunding);
 		viewPager.setAdapter(mAdapter);
 		tab.clearTab();
@@ -361,6 +361,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 		// iv.setBackgroundResource(R.color.graywhitem);
 		iv.setTextColor(color.graywhite);
 		iv.setText(text);
+		iv.setTextSize(18f);
 		des.addView(iv);
 	}
 }

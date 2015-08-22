@@ -7,10 +7,11 @@
 		<TextView
 	         android:layout_width="match_parent"
 	         android:layout_height="wrap_content"
-	         android:layout_marginTop="20dp"
 	         android:layout_marginBottom="20dp"
 	         android:gravity="center"
-	         android:textSize="18sp"
+	         android:textSize="25sp"
+	         android:textColor="@color/white"
+	         android:background="@color/black"
 	         android:text="倬脉"/>
 		<View
              android:layout_width="fill_parent"
@@ -21,14 +22,16 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+             >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="商品名称:"
-                android:textColor="#777777"
+                android:text="收款公司"
+                android:textSize="20dp"
+                android:textColor="@color/black"
                 tools:ignore="HardcodedText" />
 
             <TextView
@@ -36,8 +39,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:text="鲜花"
-                android:textSize="15sp"
+                android:text="北京倬脉网络科技有限公司"
+                android:textSize="20sp"
                 android:textColor="#333333"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
@@ -47,7 +50,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal" 
+            android:visibility="gone"
+            >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -79,7 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:text="商品价格:"
-                android:textColor="#777777"
+                android:textSize="20dp"
+                android:textColor="@color/black"
                 tools:ignore="HardcodedText" />
 
             <TextView
@@ -105,6 +111,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
+            android:background="@color/green"
             android:onClick="pay"
             android:text="支付宝支付"
             android:textSize="20sp"

@@ -20,7 +20,6 @@ import com.cpstudio.zhuojiaren.ViewOrderActivity;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -158,42 +157,18 @@ public class StoreMyHomeActivity extends BaseActivity {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
-				UserVO user = null;
+				UserNewVO user = null;
 				if (msg.obj instanceof UserVO) {
-					user = (UserVO) msg.obj;
+					user = (UserNewVO) msg.obj;
 				} else {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					user = nljh.parseUser();
+					user = nljh.parseNewUser();
 				}
 				if (null != user) {
-					String name = user.getUsername();
-					String work = user.getPost();
-					String company = user.getCompany();
+					String name = user.getName();
 					((TextView) findViewById(R.id.textViewName)).setText(name);
 					String url = user.getUheader();
-					// String levelStr = user.getLevel();
-					// if (levelStr != null && !levelStr.equals("")) {
-					// int level = Integer.valueOf(levelStr);
-					// String[] levels = getResources().getStringArray(
-					// R.array.array_level_type);
-					// LinearLayout parent = (LinearLayout)
-					// findViewById(R.id.linearLayoutLevel);
-					// if (level >= levels.length - 1) {
-					// level = levels.length - 1;
-					// findViewById(R.id.linearLayoutBg)
-					// .setBackgroundResource(
-					// R.drawable.bg_border2);
-					// parent.removeAllViews();
-					// } else {
-					// for (int i = 0; i < level; i++) {
-					// ((ImageView) parent.getChildAt(i))
-					// .setImageResource(R.drawable.ico_level_star_on);
-					// }
-					// }
-					// ((TextView) findViewById(R.id.textViewLevel))
-					// .setText(levels[level]);
-					// }
 					ImageView iv = (ImageView) findViewById(R.id.imageViewHead);
 					iv.setTag(url);
 					final String userid = user.getUserid();
@@ -207,7 +182,7 @@ public class StoreMyHomeActivity extends BaseActivity {
 							startActivity(intent);
 						}
 					});
-					LoadImage mLoadImage = new LoadImage(10);
+					LoadImage mLoadImage = LoadImage.getInstance();
 					mLoadImage.addTask(url, iv);
 					mLoadImage.doTask();
 				}
@@ -240,20 +215,8 @@ public class StoreMyHomeActivity extends BaseActivity {
 
 	private void loadInfo() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			UserNewVO user = userFacade.getSimpleInfoById(mUid);
-			if (user == null) {
-				CommonUtil.displayToast(getApplicationContext(),
-						R.string.error0);
-			} else {
-				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-				msg.obj = user;
-				msg.sendToTarget();
-			}
 		} else {
-			String params = ZhuoCommHelper.getUrlUserInfo() + "?uid=" + mUid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD);
-			mConnHelper.getFromServer(ZhuoCommHelper.getUrlGetZhuoRMB(),
-					mUIHandler, MsgTagVO.DATA_OTHER);
+			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, mUid);
 		}
 	}
 }

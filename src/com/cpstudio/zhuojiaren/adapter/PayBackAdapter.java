@@ -62,9 +62,9 @@ public class PayBackAdapter extends CommonAdapter<PayBackVO>{
 		}
 		mLoadImage.doTask();
 		price.setText(mContext.getResources().getString(R.string.crowdfunding_price_label2)+item.getAmount());
-		peopleCount.setText("限制"+item.getLimit()+"人");
+		peopleCount.setText("限制"+item.getLimits()+"人");
 		des.setText(item.getIntro());
-		supportCount.setText(item.getSupportCount()+"人支持");
+		supportCount.setText(item.getNum()+"人支持");
 		supportBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override

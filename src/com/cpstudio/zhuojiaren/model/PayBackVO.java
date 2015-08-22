@@ -9,54 +9,55 @@ import java.util.List;
  */
 public class PayBackVO {
 	String name;
-	String payBackId;
+	String cfId;
 	String amount;
-	String limit;
+	String limits;
 	String intro;
-	String supportCount;
+	String num;
 	String pics ;
-	
-	public String getPics() {
-		return pics;
-	}
-	public void setPics(String pics) {
-		this.pics = pics;
-	}
 	public String getName() {
 		return name;
 	}
-	public String getPayBackId() {
-		return payBackId;
+	public String getCfId() {
+		return cfId;
 	}
 	public String getAmount() {
 		return amount;
 	}
-	public String getLimit() {
-		return limit;
+	public String getLimits() {
+		return limits;
 	}
 	public String getIntro() {
 		return intro;
 	}
-	public String getSupportCount() {
-		return supportCount;
+	public String getNum() {
+		return num;
+	}
+	public String getPics() {
+		return pics;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public void setPayBackId(String payBackId) {
-		this.payBackId = payBackId;
+	public void setCfId(String cfId) {
+		this.cfId = cfId;
 	}
 	public void setAmount(String amount) {
 		this.amount = amount;
 	}
-	public void setLimit(String limit) {
-		this.limit = limit;
+	public void setLimits(String limits) {
+		this.limits = limits;
 	}
 	public void setIntro(String intro) {
 		this.intro = intro;
 	}
-	public void setSupportCount(String supportCount) {
-		this.supportCount = supportCount;
+	public void setNum(String num) {
+		this.num = num;
 	}
+	public void setPics(String pics) {
+		this.pics = pics;
+	}
+	
+	
 	
 }

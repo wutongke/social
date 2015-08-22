@@ -129,6 +129,7 @@ public class CommentFragment extends Fragment implements OverScrollController {
 			case MsgTagVO.PUB_INFO:
 				if (JsonHandler.checkResult((String) msg.obj, getActivity())) {
 					CommonUtil.displayToast(getActivity(), R.string.label_success);
+					commentEdit.setText("");
 				} else {
 					CommonUtil.displayToast(getActivity(), R.string.data_error);
 					return;

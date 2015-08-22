@@ -28,6 +28,16 @@ public class LoadImage {
 	private int round = 0;
 	private int height = 0;
 	private int width = 0;
+	private static LoadImage instance;
+	public static LoadImage getInstance(){
+		if(instance==null){
+			synchronized (LoadImage.class) {
+				if(instance==null)
+					instance = new LoadImage(0,200,200);
+			}
+		}
+		return instance;
+	}
 	public LoadImage(String savePath) {
 		executorService = Executors.newFixedThreadPool(5);
 		memoryCache = new ImageMemoryCache();

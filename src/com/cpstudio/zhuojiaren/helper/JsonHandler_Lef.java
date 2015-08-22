@@ -18,6 +18,7 @@ import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.model.GrouthVisit;
 import com.cpstudio.zhuojiaren.model.IncomeVO;
 import com.cpstudio.zhuojiaren.model.LoginRes;
+import com.cpstudio.zhuojiaren.model.PayBackVO;
 import com.cpstudio.zhuojiaren.model.ProgressVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.RecordVO;
@@ -230,6 +231,31 @@ public class JsonHandler_Lef {
 				for (Iterator<ProgressVO> iterator = li.iterator(); iterator
 						.hasNext();) {
 					ProgressVO item = (ProgressVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * »Ø±¨
+	 * @param jsonData
+	 * @return
+	 */
+	public static   ArrayList<PayBackVO> parsePayBackVOList(String jsonData) {
+		ArrayList<PayBackVO> list = new ArrayList<PayBackVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<PayBackVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<PayBackVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<PayBackVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					PayBackVO item = (PayBackVO) iterator.next();
 					list.add(item);
 				}
 			}

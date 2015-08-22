@@ -33,6 +33,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -120,6 +121,7 @@ public class MsgListActivity extends FragmentActivity implements
 
 	@Override
 	protected void onResume() {
+		super.onResume();
 		ResHelper.getInstance(getApplicationContext()).setMsgList(true);
 		NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.cancelAll();
@@ -166,14 +168,23 @@ public class MsgListActivity extends FragmentActivity implements
 			for (int i = 0; i < adapterFromFragment.getCount(); i++) {
 				View listItem = adapterFromFragment.getView(i, null,
 						listFromFragment);
-				listItem.measure(0, 0);
-				totalHeight += listItem.getMeasuredHeight();
+				if(listItem instanceof RelativeLayout){
+					listItem.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+				}else if(listItem instanceof LinearLayout){
+					listItem.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+				}
+				try {
+					listItem.measure(0, 0);
+					totalHeight += listItem.getMeasuredHeight();
+				} catch (Exception e) {
+					// TODO: handle exception
+					totalHeight+=listItem.getHeight();
+				}
 			}
 			lp.height = totalHeight;
 			if (totalHeight > 0)
 				root.setLayoutParams(lp);
 		}
-		super.onResume();
 	}
 
 	@Override

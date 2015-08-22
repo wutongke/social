@@ -123,7 +123,7 @@ public class ZhuoCommHelper {
 	private final static String LIKEINCOMMENT = "/crowdfunding/commentLike.do";
 	private final static String LIKECrowdFunding = "/crowdfunding/like.do";
 	private final static String getCrowdFundingComment = "/crowdfunding/commentList.do";
-	private final static String GETCROWDFUNDINGPROGRESS = "crowdfunding/progressList.do";
+	private final static String GETCROWDFUNDINGPROGRESS = "/crowdfunding/progressList.do";
 	private final static String TIME = "/crowdfunding/progressList.do";
 	private final static String PUBCROWDFUNDINGCOMMENT = "/crowdfunding/createProgress.do";
 	private final static String GONGXULIST = "/supplyDemandList.do";
@@ -136,8 +136,13 @@ public class ZhuoCommHelper {
 	private static String GOODSLIST = "/goods/goodsList.do";
 	private static String GOODSCOLLECTION = "/goods/collectList.do";
 	private static String CARTGOODSLIST = "/goods/goodCart.do";
-	private static String GoodsCollection = "/collect.do";
-	private static String GoodsAddToCart = "/addGoodsCart.do";
+	private static String GoodsCollection = "/goods/collect.do";
+	private static String GoodsAddToCart = "/goods/addGoodsCart.do";
+	private static String PaybackList = "/crowdfunding/supportList.do";
+	public static String getPaybackList() {
+		return SERVER +  PaybackList;
+	}
+
 	public static String getGoodsAddToCart() {
 		return SERVER + GoodsAddToCart;
 	}
