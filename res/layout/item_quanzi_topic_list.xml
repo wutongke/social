@@ -18,8 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:contentDescription="@string/label_author_header"
-            />
+            android:contentDescription="@string/label_author_header" />
     </RelativeLayout>
 
     <LinearLayout
@@ -38,7 +37,6 @@
                 android:id="@+id/textViewAuthorName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="textVi"
                 android:textColor="#1c1c1c"
                 android:textSize="18sp" />
 
@@ -48,7 +46,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@id/textViewAuthorName"
-                android:text="textView"
                 android:textColor="#989898"
                 android:textSize="16sp" />
 
@@ -67,7 +64,6 @@
                 android:layout_alignBottom="@+id/textViewAuthorName"
                 android:layout_marginRight="3dp"
                 android:layout_toLeftOf="@+id/optionButton"
-                android:text="textViewTime"
                 android:textSize="13sp" />
         </RelativeLayout>
 
@@ -93,18 +89,20 @@
                 android:layout_alignParentTop="true"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="4"
-                android:text="textViewRes"
                 android:textColor="#585858"
                 android:textSize="16sp" />
         </RelativeLayout>
 
-        <TableLayout
-            android:id="@+id/tableLayoutAuthorPics"
+        <com.cpstudio.zhuojiaren.widget.MyGridView
+            android:id="@+id/picGridView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible" >
-        </TableLayout>
-        
+            android:layout_height="100dip"
+            android:cacheColorHint="#00000000"
+            android:gravity="center"
+            android:listSelector="#00000000"
+            android:numColumns="3"
+            android:scrollbars="none" >
+        </com.cpstudio.zhuojiaren.widget.MyGridView>
     </LinearLayout>
 
 </LinearLayout>

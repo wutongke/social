@@ -12,13 +12,13 @@
         android:enabled="true"
         android:visibility="gone" />
 
-    <ImageView
+    <com.cpstudio.zhuojiaren.widget.RoundImageView
         android:id="@+id/izl_imageViewAuthorHeader"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:contentDescription="@string/label_author_header"
         android:paddingLeft="10dp"
-        android:src="@drawable/default_userhead" />
+        android:background="@drawable/default_userhead" />
 
     <LinearLayout
         android:layout_width="match_parent"
