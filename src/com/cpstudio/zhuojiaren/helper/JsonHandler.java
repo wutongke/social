@@ -140,7 +140,7 @@ public class JsonHandler {
 				CommonUtil.displayToast(context, result.getMsg());
 			}
 		} else {
-			CommonUtil.displayToast(context, R.string.error17);
+			CommonUtil.displayToast(context, R.string.data_error);
 		}
 		return false;
 	}

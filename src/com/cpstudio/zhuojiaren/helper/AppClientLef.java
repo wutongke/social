@@ -376,7 +376,15 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, handler, handlerTag, acitivity, url,
 				false, null, null);
 	}
-
+	public boolean GoodsAddToCart(Activity acitivity, Handler handler,
+			int handlerTag, String id) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("goodsid", id));
+		String url = ZhuoCommHelper.getGoodsAddToCart();
+		return doPost(nameValuePairs, url, handler, handlerTag, acitivity, url,
+				false, null, null);
+	}
 	/**
 	 * 发布进展
 	 */
@@ -668,6 +676,23 @@ public class AppClientLef {
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("activityid", activityid));
 		String url = ZhuoCommHelper.getGeteventdetail();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				true, null, null);
+	}
+	/**
+	 * 获取购物车信息
+	 * @param activity
+	 * @param handler
+	 * @param handlerTag
+	 * @return
+	 */
+	public boolean getCartGoodsList(Activity activity, Handler handler,
+			int handlerTag,int pageNo,
+			int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		String url = ZhuoCommHelper.getCARTGOODSLIST();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				true, null, null);
 	}

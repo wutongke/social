@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GoodsVO implements Serializable{
+	public static String collected = "0";
 	private String goodsId;
 	// ÉÌÆ·Ãû×Ö
 	private String goodsName;

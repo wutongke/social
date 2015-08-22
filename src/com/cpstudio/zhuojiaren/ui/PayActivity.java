@@ -50,12 +50,9 @@ public class PayActivity extends Activity {
 		setContentView(R.layout.pay2);
 		
 		Intent intent = getIntent();
-//		fee = intent.getStringExtra("money");
-//		tradeId = intent.getStringExtra("tradeNum");
+		fee = intent.getStringExtra("money");
+		tradeId = intent.getStringExtra("tradeNum");
 //		flowerNum = intent.getIntExtra("flowerNum", 0);
-		fee = "5";
-		tradeId = "415456465456";
-		flowerNum = 3;
 		show =(TextView)findViewById(R.id.editText_prepay_id);
 		req = new PayReq();
 		sb=new StringBuffer();
@@ -277,10 +274,10 @@ public class PayActivity extends Activity {
 			xml.append("</xml>");
            List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
 			packageParams.add(new BasicNameValuePair("appid", Constants.APP_ID));
-			packageParams.add(new BasicNameValuePair("body", "Flower"));
+			packageParams.add(new BasicNameValuePair("body", "倬脉"));
 			packageParams.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
 			packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
-			packageParams.add(new BasicNameValuePair("notify_url", "115.29.205.20:8899/tenpay/payNotifyUrl.jsp"));
+			packageParams.add(new BasicNameValuePair("notify_url", "www.baidu.com"));
 			packageParams.add(new BasicNameValuePair("out_trade_no",tradeId));
 			packageParams.add(new BasicNameValuePair("spbill_create_ip","127.0.0.1"));
 			packageParams.add(new BasicNameValuePair("total_fee", fee));

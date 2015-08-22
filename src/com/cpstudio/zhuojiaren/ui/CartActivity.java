@@ -23,12 +23,14 @@ import com.cpstudio.zhuojiaren.adapter.OrderAdapter.SelectGoodsChangeListener;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
+import com.cpstudio.zhuojiaren.model.CartVO;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.google.gson.Gson;
 
 public class CartActivity extends BaseActivity {
 	@InjectView(R.id.acart_listview)
@@ -155,14 +157,7 @@ public class CartActivity extends BaseActivity {
 	}
 
 	private void loadData() {
-		mDatas.clear();
-		mAdapter.notifyDataSetChanged();
-		// appClientLef.getFundingList(typeCrowd,typePubOrInv,mPage, 5,
-		// uiHandler,
-		// MsgTagVO.DATA_LOAD, CrowdFundingListActivity.this, true, null,
-		// null);
-		// }
-
+		appClientLef.getCartGoodsList(this,uiHandler,MsgTagVO.DATA_LOAD,0,1000);
 	}
 
 	Handler uiHandler = new Handler() {
@@ -177,7 +172,10 @@ public class CartActivity extends BaseActivity {
 					return;
 				}
 				String data = res.getData();
-				updateItemList(data, true, false);
+				CartVO cartData = new Gson().fromJson(data, CartVO.class);
+				mDatas.clear();
+				mDatas.addAll(cartData.getGoodsCartList());
+				mAdapter.notifyDataSetChanged();
 				break;
 			}
 			;
@@ -185,20 +183,4 @@ public class CartActivity extends BaseActivity {
 
 	};
 
-	private void updateItemList(String data, boolean refresh, boolean append) {
-		// TODO Auto-generated method stub
-		try {
-			if (data != null && !data.equals("")) {
-				ArrayList<GoodsVO> list = JsonHandler_Lef
-						.parseGoodsVOList(data);
-				if (!list.isEmpty()) {
-					mDatas.addAll(list);
-					mAdapter.notifyDataSetChanged();
-				} else {
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }

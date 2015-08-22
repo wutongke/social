@@ -2,6 +2,7 @@ package com.cpstudio.zhuojiaren.ui;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,10 +17,12 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.alipay.sdk.pay.ailiyue.AliPayActivity;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class OrderSubmitActivity extends BaseActivity {
@@ -50,12 +53,13 @@ public class OrderSubmitActivity extends BaseActivity {
 	@InjectView(R.id.aod_receipt_info)
 	View receiveInfo;
 	//
-	private int requestForLocate= 1;
-	//保存默认地址
+	private int requestForLocate = 1;
+	// 保存默认地址
 	SharedPreferences sp;
 	SharedPreferences.Editor editer;
 	ArrayList<GoodsVO> goodsList;
 	LoadImage loadImage = new LoadImage();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,85 +71,133 @@ public class OrderSubmitActivity extends BaseActivity {
 		initClick();
 		getleftMoney();
 	}
+
 	private void getleftMoney() {
 		// TODO Auto-generated method stub
 		Message msg = uiHandler.obtainMessage();
-		msg.what=1;
+		msg.what = 1;
 		msg.obj = 500;
 		msg.sendToTarget();
 	}
-	private Handler uiHandler = new Handler(){
-		public void handleMessage(Message msg) {
-			if(msg.what==1){
-				leftMoney.setText(((Integer)msg.obj).toString());
-			}else{
-				CommonUtil.displayToast(OrderSubmitActivity.this, R.string.error0);
+
+	private Handler uiHandler = new Handler() {
+		public void handleMessage(final Message msg) {
+			if (msg.what == MsgTagVO.DATA_LOAD) {
+				leftMoney.setText(((Integer) msg.obj).toString());
+			} else if (msg.what == MsgTagVO.PUB_INFO) {
+				final Intent i = new Intent();
+				View view = getLayoutInflater().inflate(R.layout.pay_wey_choose, null);
+				new AlertDialog.Builder(OrderSubmitActivity.this,
+						AlertDialog.THEME_HOLO_LIGHT).setTitle("选择支付方式").setView(view)
+						.create().show();
+				view.findViewById(R.id.pay_weixin).setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						i.setClass(OrderSubmitActivity.this,PayActivity.class);
+					}
+				});
+				view.findViewById(R.id.pay_ali).setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						i.setClass(OrderSubmitActivity.this,AliPayActivity.class);
+					}
+				});
+				i.putExtra("money", "0.5");
+				i.putExtra("tradeNum", (String)msg.obj);
+				startActivity(i);
+			} else {
+				CommonUtil.displayToast(OrderSubmitActivity.this,
+						R.string.error0);
 			}
 		};
 	};
+
 	private void initView() {
 		// TODO Auto-generated method stub
 		sp = getSharedPreferences("receive_goods", MODE_PRIVATE);
-		editer=sp.edit();
-		if(sp.getString("name", null)!=null){
-			String name = sp.getString("name","");
-			String phone = sp.getString("phone","");
-			String locate = sp.getString("locate","");
-			personInfo.setText(name+"  "+phone);
+		editer = sp.edit();
+		if (sp.getString("name", null) != null) {
+			String name = sp.getString("name", "");
+			String phone = sp.getString("phone", "");
+			String locate = sp.getString("locate", "");
+			personInfo.setText(name + "  " + phone);
 			locateInfo.setText(locate);
-		}else{
+		} else {
 			personInfo.setText(R.string.set_loate);
 		}
-		
-		Intent intent  = getIntent();
+
+		Intent intent = getIntent();
 		goodsList = (ArrayList<GoodsVO>) intent.getSerializableExtra("goods");
-		if(goodsList==null){
+		if (goodsList == null) {
 			CommonUtil.displayToast(this, R.string.error_intent);
 			this.finish();
 		}
-		goodsCount.setText(String.format(getResources().getString(R.string.goods_count), goodsList.size()));
+		goodsCount.setText(String.format(
+				getResources().getString(R.string.goods_count),
+				goodsList.size()));
 		int count = goodsList.size();
-		if(count>=1){
+		if (count >= 1) {
 			loadImage.beginLoad(goodsList.get(0).getImg(), pic1);
-			if(count>=2)
+			if (count >= 2)
 				loadImage.beginLoad(goodsList.get(1).getImg(), pic2);
-			if(count>=3)
+			if (count >= 3)
 				loadImage.beginLoad(goodsList.get(2).getImg(), pic3);
 		}
 		goodsPrice.setText(intent.getStringExtra("goodsprice"));
 	}
+
 	private void initClick() {
 		// TODO Auto-generated method stub
 		goodsInfoLayout.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(OrderSubmitActivity.this,CartActivity.class);
+				Intent intent = new Intent(OrderSubmitActivity.this,
+						CartActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
 			}
 		});
 		receiveInfo.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(OrderSubmitActivity.this,LocateActivity.class);
+				Intent intent = new Intent(OrderSubmitActivity.this,
+						LocateActivity.class);
 				startActivityForResult(intent, requestForLocate);
 			}
 		});
+		submitOrder.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				//submit to get tradeid and then fay
+				Message msg = uiHandler.obtainMessage();
+				msg.what = MsgTagVO.PUB_INFO;
+				msg.obj = "4234343543";
+				msg.sendToTarget();
+				
+			}
+		});
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode==RESULT_OK&&requestCode==requestForLocate){
-			String name = sp.getString("name","");
-			String phone = sp.getString("phone","");
-			String locate = sp.getString("locate","");
+		if (resultCode == RESULT_OK && requestCode == requestForLocate) {
+			String name = sp.getString("name", "");
+			String phone = sp.getString("phone", "");
+			String locate = sp.getString("locate", "");
 			editer.commit();
-			personInfo.setText(name+"  "+phone);
+			personInfo.setText(name + "  " + phone);
 			locateInfo.setText(locate);
 		}
 	}

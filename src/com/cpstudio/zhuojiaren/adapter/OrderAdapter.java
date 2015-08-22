@@ -96,7 +96,7 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 					}
 				});
 		loader.beginLoad(
-				item.getPic().get(0),
+				item.getImg(),
 				(ImageView) helper.getView(R.id.icg_goods_image));
 	}
 	public interface SelectGoodsChangeListener{
