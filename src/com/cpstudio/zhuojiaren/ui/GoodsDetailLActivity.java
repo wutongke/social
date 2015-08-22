@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -23,18 +22,17 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.adapter.CommentAdapter;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.CommentVO;
-import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
+import com.cpstudio.zhuojiaren.model.GoodsComment;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.PicVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.ScrollOverListView;
 import com.cpstudui.zhuojiaren.lz.BeanBanner;
@@ -53,10 +51,10 @@ public class GoodsDetailLActivity extends BaseActivity {
 	TextView collection;
 	// 评论列表
 	ListView mListView;
-	CommentAdapter mAdapter;
+	CommonAdapter<GoodsComment> mAdapter;
 	// 产品
 	GoodsVO goods;
-	ArrayList<CommentVO> mDataList = new ArrayList<CommentVO>();
+	ArrayList<GoodsComment> mDataList = new ArrayList<GoodsComment>();
 	// 圆点
 	private PageIndicator bannerIndicator;
 	// 头部
@@ -74,7 +72,8 @@ public class GoodsDetailLActivity extends BaseActivity {
 	private LinearLayout companyMoreInfo;
 	private AppClientLef appClient;
 	private String goodsId;
-	LoadImage lImage = new LoadImage();
+	LoadImage lImage = new LoadImage(0, 80, 80);
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -82,7 +81,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		appClient = AppClientLef.getInstance(this.getApplicationContext());
 		goodsId = getIntent().getStringExtra("goodsId");
-		if(goodsId==null){
+		if (goodsId == null) {
 			CommonUtil.displayToast(this, R.string.data_error);
 			return;
 		}
@@ -100,7 +99,8 @@ public class GoodsDetailLActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (goods.getIsCollection()!=null&&goods.getIsCollection().equals(0)) {
+				if (goods.getIsCollection() != null
+						&& !goods.getIsCollection().equals(GoodsVO.collected)) {
 					Drawable drawable = getResources().getDrawable(
 							R.drawable.zcollect2);
 					// / 这一步必须要做,否则不会显示.
@@ -115,6 +115,9 @@ public class GoodsDetailLActivity extends BaseActivity {
 							drawable.getMinimumHeight());
 					collection.setCompoundDrawables(drawable, null, null, null);
 				}
+				appClient.collection(GoodsDetailLActivity.this,
+						ZhuoCommHelper.getGoodsCollection(), "goodsid",
+						goodsId, "", "");
 			}
 		});
 		cart.setOnClickListener(new OnClickListener() {
@@ -122,9 +125,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(GoodsDetailLActivity.this,CartActivity.class);
-				intent.putExtra("goods", goods);
-				startActivity(intent);
+				appClient.GoodsAddToCart(GoodsDetailLActivity.this,uiHandler,MsgTagVO.PUB_INFO,goodsId);
 			}
 		});
 	}
@@ -138,9 +139,22 @@ public class GoodsDetailLActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.head_goods_detail);
-		
+
 		mListView = mPullDownView.getListView();
-		mAdapter = new CommentAdapter(this, mDataList, R.layout.item_comment);
+		mAdapter = new CommonAdapter<GoodsComment>(this, mDataList,
+				R.layout.item_comment) {
+
+			@Override
+			public void convert(ViewHolder helper, GoodsComment item) {
+				// TODO Auto-generated method stub
+				helper.getView(R.id.ic_reply_layout).setVisibility(View.GONE);
+				helper.getView(R.id.ic_function).setVisibility(View.GONE);
+				helper.setText(R.id.ic_people_name, item.getUserId());
+				helper.setText(R.id.ic_content, item.getContent());
+				if(item.getImg()!=null)
+				lImage.beginLoad(item.getContent(), (ImageView)helper.getView(R.id.ic_people_image));
+			}
+		};
 		mListView.setAdapter(mAdapter);
 		// 设置不能下拉刷新
 		((ScrollOverListView) mListView).showRefresh = false;
@@ -159,30 +173,6 @@ public class GoodsDetailLActivity extends BaseActivity {
 		bannerViewPager = (ViewPager) findViewById(R.id.hgd_viewpager);
 		bannerIndicator = (PageIndicator) findViewById(R.id.hgd_indicator);
 		bannerListData = new ArrayList<BeanBanner>();
-//
-//		String[] urls = {
-//				"http://img3.imgtn.bdimg.com/it/u=2628293733,2370129064&fm=21&gp=0.jpg",
-//				"http://img2.imgtn.bdimg.com/it/u=2906966334,223089362&fm=21&gp=0.jpg",
-//				"http://img4.imgtn.bdimg.com/it/u=1704061436,275613074&fm=21&gp=0.jpg",
-//				"http://img3.imgtn.bdimg.com/it/u=1440545533,1670448902&fm=21&gp=0.jpg",
-//				"http://img2.imgtn.bdimg.com/it/u=697459274,2261536128&fm=21&gp=0.jpg",
-//				"http://img4.imgtn.bdimg.com/it/u=2079958976,1443524702&fm=21&gp=0.jpg",
-//				"http://img3.imgtn.bdimg.com/it/u=1849853359,1757644016&fm=21&gp=0.jpg",
-//				"http://img0.imgtn.bdimg.com/it/u=1703091849,1006427253&fm=21&gp=0.jpg",
-//				"http://img1.imgtn.bdimg.com/it/u=3254378695,3573443632&fm=21&gp=0.jpg",
-//				"http://img4.imgtn.bdimg.com/it/u=420516615,2115785755&fm=21&gp=0.jpg" };
-//		for (int i = 0; i < 5; i++) {
-//
-//			BeanBanner item = new BeanBanner();
-//			item.setPicUrl(urls[i]);
-//			bannerListData.add(item);
-//		}
-//		
-//		bannerPageAdapter = new Bee_PageAdapter(this, bannerListData);
-//		bannerViewPager.setAdapter(bannerPageAdapter);
-//		bannerViewPager.setCurrentItem(0);
-//		bannerIndicator.setViewPager(bannerViewPager);
-		// 其他信息
 		productName = (TextView) findViewById(R.id.hgd_product_name);
 		productDes = (TextView) findViewById(R.id.hgd_product_des);
 		marketPrice = (TextView) findViewById(R.id.hgd_market_price);
@@ -217,9 +207,9 @@ public class GoodsDetailLActivity extends BaseActivity {
 					Log.d("Debug", "json数据出错。。。。。。。。。。。。。。");
 					return;
 				}
-				
+
 				bannerListData.clear();
-				if (goods.getPic()!=null) {
+				if (goods.getPic() != null) {
 					for (int i = 0; i < goods.getPic().size(); i++) {
 						BeanBanner item = new BeanBanner();
 						item.setPicUrl(goods.getPic().get(i));
@@ -231,17 +221,21 @@ public class GoodsDetailLActivity extends BaseActivity {
 					bannerViewPager.setCurrentItem(0);
 					bannerIndicator.setViewPager(bannerViewPager);
 				}
-				if(goods.getProvider().getPic()!=null)
-				lImage.beginLoad(goods.getProvider().getPic(), companyImage);
-				
+				if (goods.getProvider().getPic() != null)
+					lImage.beginLoad(goods.getProvider().getPic(), companyImage);
 				productName.setText(goods.getGoodsName());
 				productDes.setText(goods.getContent());
 				marketPrice.setText(goods.getMarkeyPrice());
+				lImage.beginLoad(goods.getProvider().getPic(), companyImage);
 				company.setText(goods.getProvider().getProviderName());
 				companyDes.setText(goods.getProvider().getContent());
 				zhuoPrice.setText(goods.getZhuoPrice());
+				// goodsComment
+				mDataList.clear();
+				mDataList.addAll(goods.getComments());
+				mAdapter.notifyDataSetChanged();
 				break;
-			case MsgTagVO.MSG_CMT:
+			case MsgTagVO.PUB_INFO:
 				if (JsonHandler.checkResult((String) msg.obj,
 						GoodsDetailLActivity.this)) {
 					res = JsonHandler.parseResult((String) msg.obj);
@@ -250,9 +244,10 @@ public class GoodsDetailLActivity extends BaseActivity {
 							R.string.data_error);
 					return;
 				}
-				ArrayList<CommentVO> temp = (ArrayList<CommentVO>) msg.obj;
-				mDataList.addAll(temp);
-				mAdapter.notifyDataSetChanged();
+				Intent i = new Intent(GoodsDetailLActivity.this,CartActivity.class);
+				startActivity(i);
+				break;
+			default:break;
 			}
 		};
 	};

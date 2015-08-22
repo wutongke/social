@@ -135,6 +135,21 @@ public class ZhuoCommHelper {
 	private static String GOODSDETAIL = "/goods/goodsDetail.do";
 	private static String GOODSLIST = "/goods/goodsList.do";
 	private static String GOODSCOLLECTION = "/goods/collectList.do";
+	private static String CARTGOODSLIST = "/goods/goodCart.do";
+	private static String GoodsCollection = "/collect.do";
+	private static String GoodsAddToCart = "/addGoodsCart.do";
+	public static String getGoodsAddToCart() {
+		return SERVER + GoodsAddToCart;
+	}
+
+	public static String getGoodsCollection() {
+		return SERVER + GoodsCollection;
+	}
+
+	public static String getCARTGOODSLIST() {
+		return SERVER + CARTGOODSLIST;
+	}
+
 	public static String getGOODSCOLLECTION() {
 		return SERVER + GOODSCOLLECTION;
 	}

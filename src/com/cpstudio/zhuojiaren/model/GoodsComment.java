@@ -6,6 +6,13 @@ public class GoodsComment {
 	String userId;
 	String content;
 	String goodsId;
+	String img;
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 	public String getId() {
 		return id;
 	}
