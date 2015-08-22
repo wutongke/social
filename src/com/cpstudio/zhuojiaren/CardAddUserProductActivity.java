@@ -38,29 +38,28 @@ public class CardAddUserProductActivity extends Activity {
 		setContentView(R.layout.activity_card_add_user_product);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		pwh = new PopupWindows(CardAddUserProductActivity.this);
-		Intent i = getIntent();
-		mProducts = i
-				.getParcelableArrayListExtra(CardEditActivity.EDIT_PRODUCT_STR);
-		linearLayout = (LinearLayout) findViewById(R.id.linearLayoutProducts);
-		EditText title = (EditText) findViewById(R.id.editTextTitle);
-		title.setTag("title0");
-		titleTags.add("title0");
-		EditText detail = (EditText) findViewById(R.id.editTextDetail);
-		detail.setTag("detail0");
-		detailTags.add("detail0");
-		EditText value = (EditText) findViewById(R.id.editTextValue);
-		value.setTag("value0");
-		valueTags.add("value0");
-		if (mProducts != null && mProducts.size() > 0) {
-			title.setText(mProducts.get(0).getTitle());
-			detail.setText(mProducts.get(0).get_desc());
-			value.setText(mProducts.get(0).get_value());
-			for (int j = 1; j < mProducts.size(); j++) {
-				addProduct(mProducts.get(j));
-			}
-		}
+//		Intent i = getIntent();
+//		mProducts = i
+//				.getParcelableArrayListExtra(CardEditActivity.EDIT_PRODUCT_STR);
+//		linearLayout = (LinearLayout) findViewById(R.id.linearLayoutProducts);
+//		EditText title = (EditText) findViewById(R.id.editTextTitle);
+//		title.setTag("title0");
+//		titleTags.add("title0");
+//		EditText detail = (EditText) findViewById(R.id.editTextDetail);
+//		detail.setTag("detail0");
+//		detailTags.add("detail0");
+//		EditText value = (EditText) findViewById(R.id.editTextValue);
+//		value.setTag("value0");
+//		valueTags.add("value0");
+//		if (mProducts != null && mProducts.size() > 0) {
+//			title.setText(mProducts.get(0).getTitle());
+//			detail.setText(mProducts.get(0).get_desc());
+//			value.setText(mProducts.get(0).get_value());
+//			for (int j = 1; j < mProducts.size(); j++) {
+//				addProduct(mProducts.get(j));
+//			}
+//		}
 		initClick();
-
 	}
 
 	private void initClick() {

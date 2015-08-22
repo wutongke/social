@@ -99,8 +99,9 @@
                     android:id="@+id/edtWeixin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:ems="10"
                     android:singleLine="true" >
-
                     <requestFocus />
                 </EditText>
             </LinearLayout>

@@ -3,6 +3,7 @@ package com.cpstudio.zhuojiaren;
 import java.util.ArrayList;
 
 import com.cpstudio.zhuojiaren.model.ProductVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,51 +23,52 @@ public class CardAddUserWorkActivity extends Activity {
 	// 新增了我的企业网站等许多内容,此外还增加了一个页面的内容"主营产品"
 	private ArrayList<String> companyTags = new ArrayList<String>();
 	private ArrayList<String> workTags = new ArrayList<String>();
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_card_add_user_work);
 		linearLayoutWorks = (LinearLayout) findViewById(R.id.linearLayoutWorks);
-		Intent intent = getIntent();
-		mProducts = intent
-				.getParcelableArrayListExtra(CardEditActivity.EDIT_PRODUCT_STR);
-		String companys = intent
-				.getStringExtra(CardEditActivity.EDIT_WORK_STR1);
-		String works = intent.getStringExtra(CardEditActivity.EDIT_WORK_STR2);
-		String isworking = intent
-				.getStringExtra(CardEditActivity.EDIT_WORK_STR3);
-		String isisentrepreneurship = intent
-				.getStringExtra(CardEditActivity.EDIT_WORK_STR4);
-		if (isisentrepreneurship != null && isisentrepreneurship.equals("1")) {
-			((RadioButton) findViewById(R.id.radioIsEntrepreneurship))
-					.setChecked(true);
-		} else {
-			((RadioButton) findViewById(R.id.radioNotEntrepreneurship))
-					.setChecked(true);
-		}
-		if (isworking != null && isworking.equals("1")) {
-			((RadioButton) findViewById(R.id.radioIsWorking)).setChecked(true);
-		} else {
-			((RadioButton) findViewById(R.id.radioNotWorking)).setChecked(true);
-		}
-		if (companys != null || works != null) {
-			try {
-				if (companys.indexOf(";") != -1) {
-					String[] company = companys.split(";");
-					String[] work = works.split(";");
-					for (int i = 0; i < company.length && i < work.length; i++) {
-						addWork(company[i], work[i]);
-					}
-				} else {
-					addWork(companys, works);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			addWork("", "");
-		}
+//		Intent intent = getIntent();
+//		mProducts = intent
+//				.getParcelableArrayListExtra(CardEditActivity.EDIT_PRODUCT_STR);
+//		String companys = intent
+//				.getStringExtra(CardEditActivity.EDIT_WORK_STR1);
+//		String works = intent.getStringExtra(CardEditActivity.EDIT_WORK_STR2);
+//		String isworking = intent
+//				.getStringExtra(CardEditActivity.EDIT_WORK_STR3);
+//		String isisentrepreneurship = intent
+//				.getStringExtra(CardEditActivity.EDIT_WORK_STR4);
+//		if (isisentrepreneurship != null && isisentrepreneurship.equals("1")) {
+//			((RadioButton) findViewById(R.id.radioIsEntrepreneurship))
+//					.setChecked(true);
+//		} else {
+//			((RadioButton) findViewById(R.id.radioNotEntrepreneurship))
+//					.setChecked(true);
+//		}
+//		if (isworking != null && isworking.equals("1")) {
+//			((RadioButton) findViewById(R.id.radioIsWorking)).setChecked(true);
+//		} else {
+//			((RadioButton) findViewById(R.id.radioNotWorking)).setChecked(true);
+//		}
+//		if (companys != null || works != null) {
+//			try {
+//				if (companys.indexOf(";") != -1) {
+//					String[] company = companys.split(";");
+//					String[] work = works.split(";");
+//					for (int i = 0; i < company.length && i < work.length; i++) {
+//						addWork(company[i], work[i]);
+//					}
+//				} else {
+//					addWork(companys, works);
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		} else {
+//			addWork("", "");
+//		}
 		initClick();
 	}
 
@@ -77,10 +79,11 @@ public class CardAddUserWorkActivity extends Activity {
 
 					@Override
 					public void onClick(View v) {
+						CommonUtil.displayToast(CardAddUserWorkActivity.this, "接口暂无数据");
 						Intent i = new Intent(CardAddUserWorkActivity.this,
 								CardAddUserProductActivity.class);
-						i.putParcelableArrayListExtra(
-								CardEditActivity.EDIT_PRODUCT_STR, mProducts);
+//						i.putParcelableArrayListExtra(
+//								CardEditActivity.EDIT_PRODUCT_STR, mProducts);
 						startActivity(i);
 					}
 				});

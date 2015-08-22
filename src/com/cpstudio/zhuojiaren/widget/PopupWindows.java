@@ -97,6 +97,8 @@ public class PopupWindows {
 	private ImageView mImageView;
 	private boolean scrolling = false;
 
+	String cropFilePath = null;
+
 	public PopupWindows(Activity activity) {
 		mResHelper = ResHelper.getInstance(activity);
 		this.mActivity = activity;
@@ -137,7 +139,8 @@ public class PopupWindows {
 									filePath = newThumbImage(bitmap, filePath);
 								} else {
 									if (crop) {
-										filePath = mResHelper.getCaptruePath();
+//										filePath = mResHelper.getCaptruePath();
+										filePath=cropFilePath;
 									} else {
 										int degree = ImageRectUtil
 												.readPictureDegree(mResHelper
@@ -167,15 +170,17 @@ public class PopupWindows {
 									.readPictureDegree(mResHelper
 											.getCaptruePath());
 							filePath = newThumbImage(
-									ImageRectUtil.rotaingBitmap(
-											degree,
+									ImageRectUtil.rotaingBitmap(degree,
 											ImageRectUtil.revitionImageSize(
-													mResHelper.getCaptruePath(),
-													640, 960)), filePath);
+													cropFilePath, 640, 960)),
+									filePath);
 						}
 					}
 				}
 				if (crop && requestCode != MsgTagVO.CAMERA_REQUEST) {
+
+					cropFilePath = mResHelper.getCaptruePath();
+
 					Uri imageUri = Uri.fromFile(new File(filePath));
 					Intent cropIntent = new Intent(
 							"com.android.camera.action.CROP");
@@ -188,7 +193,7 @@ public class PopupWindows {
 					cropIntent.putExtra("scale", true);
 					cropIntent.putExtra("noFaceDetection", true);
 					cropIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-							mResHelper.getCaptrueUri());
+							Uri.fromFile(new File(cropFilePath)));
 					cropIntent.putExtra("return-data", false);
 					cropIntent.putExtra("outputFormat",
 							Bitmap.CompressFormat.JPEG.toString());

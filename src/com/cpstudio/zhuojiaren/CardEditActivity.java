@@ -281,8 +281,8 @@ public class CardEditActivity extends Activity {
 					Intent i = new Intent(CardEditActivity.this,
 							CardAddUserCityActivity.class);
 					i.putExtra(EDIT_PLACE_STR1, userInfo.getCity());
-					i.putExtra(EDIT_PLACE_STR2, userInfo.getTravelCity());
-					i.putExtra(EDIT_PLACE_STR3, userInfo.getHometown());
+					i.putExtra(EDIT_PLACE_STR2, userInfo.getHometown());
+					i.putExtra(EDIT_PLACE_STR3, userInfo.getTravelCity());
 					startActivityForResult(i, EDIT_PLACE);
 				} else {
 					CommonUtil.displayToast(getApplicationContext(),
@@ -492,21 +492,21 @@ public class CardEditActivity extends Activity {
 		textViewEditWorkShow.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// if (userInfo != null) {
-				// Intent i = new Intent(CardEditActivity.this,
-				// CardAddUserWorkActivity.class);
-				// i.putParcelableArrayListExtra(EDIT_PRODUCT_STR,
-				// (ArrayList<ProductVO>) userInfo.getProduct());
-				// i.putExtra(EDIT_WORK_STR1, userInfo.getCompany());
-				// i.putExtra(EDIT_WORK_STR2, userInfo.getPost());
-				// i.putExtra(EDIT_WORK_STR3, userInfo.getIsworking());
-				// i.putExtra(EDIT_WORK_STR4,
-				// userInfo.getIsisentrepreneurship());
-				// startActivityForResult(i, EDIT_WORK);
-				// } else {
-				// CommonUtil.displayToast(getApplicationContext(),
-				// R.string.error12);
-				// }
+				 if (userInfo != null) {
+				 Intent i = new Intent(CardEditActivity.this,
+				 CardAddUserWorkActivity.class);
+//				 i.putParcelableArrayListExtra(EDIT_PRODUCT_STR,
+//				 (ArrayList<ProductVO>) userInfo.getProduct());
+//				 i.putExtra(EDIT_WORK_STR1, userInfo.getCompany());
+//				 i.putExtra(EDIT_WORK_STR2, userInfo.getPost());
+//				 i.putExtra(EDIT_WORK_STR3, userInfo.getIsworking());
+//				 i.putExtra(EDIT_WORK_STR4,
+//				 userInfo.getIsisentrepreneurship());
+				 startActivityForResult(i, EDIT_WORK);
+				 } else {
+				 CommonUtil.displayToast(getApplicationContext(),
+				 R.string.error12);
+				 }
 			}
 		});
 	}

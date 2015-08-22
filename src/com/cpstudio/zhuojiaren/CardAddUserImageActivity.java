@@ -8,6 +8,7 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
 import android.os.Bundle;
@@ -154,13 +155,19 @@ public class CardAddUserImageActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				mIsh.initParams();
-				pwh.showPop(findViewById(R.id.rootLayout));
+				if (mIsh.getTags() != null && mIsh.getTags().size() < 9) {
+					pwh.showPop(findViewById(R.id.rootLayout));
+				} else {
+					mIsh.getmAddButton().setVisibility(View.GONE);
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.error24);
+				}
 			}
 		});
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		String filePath = pwh.dealPhotoReturn(requestCode, resultCode, data);
+		String filePath = pwh.dealPhotoReturn(requestCode, resultCode, data,false);
 		if (filePath != null) {
 			try {
 				mIsh.insertLocalImage(filePath);

@@ -2,12 +2,14 @@ package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.Province;
 import com.cpstudio.zhuojiaren.widget.PlaceChooseDialog;
 
@@ -32,7 +34,7 @@ public class CardAddUserCityActivity extends Activity {
 	TextView tvOtherTowns;
 
 	private static int OTHER_TOWN = 0;
-	List<Province> provList;
+	List<City> cityList;
 	ZhuoConnHelper mConnHelper;
 	ArrayList<String> codes = new ArrayList<String>(3);
 
@@ -42,21 +44,60 @@ public class CardAddUserCityActivity extends Activity {
 		setContentView(R.layout.activity_card_add_user_city);
 		ButterKnife.inject(this);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-
-		String citysStr = mConnHelper.readObject(ZhuoConnHelper.CITYS);
-		provList = JsonHandler.parseCodedCitys(citysStr);
+		cityList = mConnHelper.getCitys();
 		// 根据provList，从编号获得城市名称
 		Intent i = getIntent();
 		int place = i.getIntExtra(CardEditActivity.EDIT_PLACE_STR1, 0);
-		tvPlace.setText(place + "");
 		int othertowns = i.getIntExtra(CardEditActivity.EDIT_PLACE_STR2, 0);
-		tvTown.setText(othertowns + "");
 		String towns = i.getStringExtra(CardEditActivity.EDIT_PLACE_STR3);
-		tvOtherTowns.setText(towns);
+
+		fillName(tvPlace, place);
+		fillName(tvTown, othertowns);
+		fillName(tvOtherTowns, towns);
+
 		initClick();
 		codes.add("");
 		codes.add("");
 		codes.add("");
+	}
+
+	void fillName(TextView tv, int code) {
+		if (tv == null)
+			return;
+		if (cityList == null || code < 1 || code > cityList.size())
+			tv.setText(code + "");
+		else
+			tv.setText(cityList.get(code - 1).getCityName());
+	}
+
+	void fillName(TextView tv, String codes) {
+		if (tv == null || codes == null)
+			return;
+		if (cityList == null)
+			tv.setText(codes);
+		else {
+			String text = getResources().getString(R.string.code_error);
+			String[] codeArray = codes.split(",");
+			if (codeArray == null || codeArray.length < 1) {
+				tv.setText(codes);
+				return;
+			}
+			int num = 0;
+			String tmpStr = "";
+			for (String str : codeArray) {
+				try {
+					num = Integer.parseInt(str);
+					if (num >= 1 && num <= cityList.size()) {
+						tmpStr += cityList.get(num - 1).getCityName() + ",";
+					}
+				} catch (Exception e) {
+					text = tmpStr + text + "str";
+					tv.setText(text);
+					return;
+				}
+			}
+			tv.setText(tmpStr);
+		}
 	}
 
 	private void initClick() {
@@ -73,10 +114,13 @@ public class CardAddUserCityActivity extends Activity {
 					public void onClick(View v) {
 						Intent intent = new Intent();
 
-						intent.putExtra(CardEditActivity.EDIT_PLACE_STR1,
-								Integer.parseInt(codes.get(0)));
-						intent.putExtra(CardEditActivity.EDIT_PLACE_STR2,
-								Integer.parseInt(codes.get(1)));
+						int code1 = 1, code2 = 1;
+						if (!"".equals(codes.get(0)))
+							code1 = Integer.parseInt(codes.get(0));
+						if (!"".equals(codes.get(1)))
+							code2 = Integer.parseInt(codes.get(1));
+						intent.putExtra(CardEditActivity.EDIT_PLACE_STR1, code1);
+						intent.putExtra(CardEditActivity.EDIT_PLACE_STR2, code2);
 						intent.putExtra(CardEditActivity.EDIT_PLACE_STR3,
 								codes.get(2));
 						setResult(RESULT_OK, intent);

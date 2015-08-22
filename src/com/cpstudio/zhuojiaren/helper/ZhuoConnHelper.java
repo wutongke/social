@@ -890,7 +890,7 @@ public class ZhuoConnHelper {
 			final boolean cancelable, final OnCancelListener cancel,
 			final String data) {
 		return doPostWithFile(filesMap, nameValuePairs, url, handler,
-				handlerTag, activity, tag, cancelable, cancel, null);
+				handlerTag, activity, tag, cancelable, cancel,data, null);
 	}
 
 	/**

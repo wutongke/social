@@ -2,6 +2,7 @@ package com.cpstudio.zhuojiaren.helper;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.UUID;
 
 import com.cpstudio.zhuojiaren.R;
 import com.utils.PreferenceUtil;
@@ -11,8 +12,7 @@ import android.net.Uri;
 import android.os.Environment;
 
 /**
- * 工具类，preferenceUtil相关操作，
- * 单例模式
+ * 工具类，preferenceUtil相关操作， 单例模式
  */
 public class ResHelper {
 	private static ResHelper instance;
@@ -22,13 +22,12 @@ public class ResHelper {
 	private String SDPATH;
 	private Context mContext;
 	private float times = 1;
-	
-	
-	//add by lz20150725
-	private String upLoadTokenForQiniu;//上传文件token,七牛
+
+	// add by lz20150725
+	private String upLoadTokenForQiniu;// 上传文件token,七牛
 	private String sessionForAPP;
-	private String imTokenForRongyun;//聊天与融云服务器的token
-	
+	private String imTokenForRongyun;// 聊天与融云服务器的token
+
 	/**
 	 * 当前正在聊天的对象
 	 */
@@ -67,21 +66,21 @@ public class ResHelper {
 	public final static String HEAD_PATH = "headPath";
 	public final static String DEFAULT_HEAD_PATH = "zhuojiaren/userhead/";
 
-	//add by lz
-	
+	// add by lz
+
 	public final static String SESSION = "zhuojiaren/session/";
 	public final static String UPLIOAD_TOKEN = "zhuojiaren/uploadtoken/";
-	public final static String IM_TOKEN="zhuojiaren/imtoken/";
-	
+	public final static String IM_TOKEN = "zhuojiaren/imtoken/";
+
 	private ResHelper(Context context) {
 		mContext = context;
 		SDPATH = Environment.getExternalStorageDirectory() + "/";
 		mPu = new PreferenceUtil(context, "cpzhuojiaren");
 		userid = getLoginName();
 		password = getLoginPwd();
-		sessionForAPP=getSession();
-		upLoadTokenForQiniu=getUploadToken();
-		imTokenForRongyun=getImToken();		
+		sessionForAPP = getSession();
+		upLoadTokenForQiniu = getUploadToken();
+		imTokenForRongyun = getImToken();
 	}
 
 	public String getUpLoadTokenForQiniu() {
@@ -227,7 +226,10 @@ public class ResHelper {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		path += "captrueTemp.jpg";
+		//lz 此处若不加唯一标示，则每次生成的缩率图地址一样，从而会覆盖之前的内容，只能加一张图片
+		UUID uuid = UUID.randomUUID();
+		String uniqueId = uuid.toString();
+		path += uniqueId + "captrueTemp.jpg";
 		return path;
 	}
 
@@ -282,14 +284,16 @@ public class ResHelper {
 	public void setPreference(HashMap<String, Object> hashMap) {
 		mPu.setPreference(hashMap);
 	}
-	
-	//add by lz 20150725
+
+	// add by lz 20150725
 	private String getSession() {
 		return mPu.getPreference(SESSION, "");
 	}
+
 	private String getUploadToken() {
 		return mPu.getPreference(UPLIOAD_TOKEN, "");
 	}
+
 	private String getImToken() {
 		return mPu.getPreference(IM_TOKEN, "");
 	}
@@ -305,5 +309,5 @@ public class ResHelper {
 	public void setImTokenForRongyun(String imTokenForRongyun) {
 		this.imTokenForRongyun = imTokenForRongyun;
 	}
-	
+
 }
