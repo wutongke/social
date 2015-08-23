@@ -88,7 +88,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	List<Fragment> fragments;
 
 	private PopupWindows phw = null;
-	private LoadImage mLoadImage = new LoadImage(3);
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	// 不同身份，功能不同
 	private int role = QuanVO.QUAN_ROLE_YOUKE;
 	private PopupWindows pwh = null;

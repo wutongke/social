@@ -29,7 +29,7 @@ public class QuanMemberListAdapter extends BaseAdapter {
 	private List<UserNewVO> mList = null;
 	private LayoutInflater inflater = null;
 	private Map<String, Integer> map = new HashMap<String, Integer>();
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	BaseCodeData baseDataSet;
 	private ZhuoConnHelper mConnHelper = null;
 	Context mContext;
