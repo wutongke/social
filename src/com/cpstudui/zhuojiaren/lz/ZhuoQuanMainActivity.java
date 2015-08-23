@@ -1,5 +1,5 @@
 package com.cpstudui.zhuojiaren.lz;
-
+//haha 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.RongIMClient.OperationCallback;
@@ -52,6 +52,7 @@ import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
  * 
  */
 public class ZhuoQuanMainActivity extends BaseFragmentActivity {
+	//dasdsads
 	@InjectView(R.id.azq_tab)
 	TabButton tabButton;
 	@InjectView(R.id.azq_viewpager)
