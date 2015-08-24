@@ -15,7 +15,7 @@ import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.utils.ImageRectUtil;
 
 public class CrowdFundingAdapter extends CommonAdapter<CrowdFundingVO>{
-	private LoadImage mLoadImage = new LoadImage(10);
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	private Context mContext;
 	public CrowdFundingAdapter(Context context, List<CrowdFundingVO> mDatas,
 			int itemLayoutId) {

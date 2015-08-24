@@ -81,7 +81,7 @@ public class GongXuDetailActivity extends BaseActivity {
 	private ListView mListView;
 	private TopicCommentListAdapter mAdapter;
 	private ArrayList<Comment> mList = new ArrayList<Comment>();
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage =LoadImage.getInstance();
 	private View mHeadView = null;
 	private String msgid = null;
 	private int mPage = 1;

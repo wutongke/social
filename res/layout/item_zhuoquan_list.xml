@@ -14,11 +14,11 @@
 
     <ImageView
         android:id="@+id/izl_imageViewAuthorHeader"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:contentDescription="@string/label_author_header"
         android:paddingLeft="10dp"
-        android:background="@drawable/default_userhead" />
+         />
 
     <LinearLayout
         android:layout_width="match_parent"

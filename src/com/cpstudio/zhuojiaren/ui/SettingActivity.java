@@ -2,7 +2,6 @@ package com.cpstudio.zhuojiaren.ui;
 
 import java.util.HashMap;
 
-import javax.annotation.processing.Messager;
 
 import org.androidpn.client.ServiceManager;
 

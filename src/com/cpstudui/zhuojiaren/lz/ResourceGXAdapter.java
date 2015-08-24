@@ -16,7 +16,7 @@ import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.utils.ImageRectUtil;
 
 public class ResourceGXAdapter extends CommonAdapter<ResourceGXVO>{
-	private LoadImage mLoadImage = new LoadImage(10);
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	private Context mContext;
 	public ResourceGXAdapter(Context context, List<ResourceGXVO> mDatas,
 			int itemLayoutId) {
