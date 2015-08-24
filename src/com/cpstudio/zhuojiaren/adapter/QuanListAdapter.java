@@ -99,7 +99,6 @@ public class QuanListAdapter extends BaseAdapter {
 		holder.nameTV.setText(groupname);
 		holder.memCount.setText(memCount
 				+ mContext.getString(R.string.label_qzcy));
-		holder.headIV.setImageResource(R.drawable.default_grouphead);
 		holder.headIV.setTag(headUrl);
 		if (des != null && !des.equals("")) {
 			holder.des.setText(des);

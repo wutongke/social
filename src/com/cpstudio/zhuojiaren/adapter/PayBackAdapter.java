@@ -27,7 +27,7 @@ public class PayBackAdapter extends CommonAdapter<PayBackVO>{
 	public PayBackAdapter(Context context, List<PayBackVO> mDatas,
 			int itemLayoutId) {
 		super(context, mDatas, itemLayoutId);
-		mLoadImage = new LoadImage(0,80,80);
+		mLoadImage = LoadImage.getInstance();
 		// TODO Auto-generated constructor stub
 	}
 	public PayBackAdapter(Context context, List<PayBackVO> mDatas,

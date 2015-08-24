@@ -13,7 +13,7 @@ import com.cpstudio.zhuojiaren.util.Util;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 
 public class GrouthAdapter extends CommonAdapter<GrouthVedio>{
-	LoadImage imageLoader = new LoadImage();
+	LoadImage imageLoader =LoadImage.getInstance();
 	public GrouthAdapter(Context context, List<GrouthVedio> mDatas, int itemLayoutId) {
 		super(context, mDatas, itemLayoutId);
 		// TODO Auto-generated constructor stub

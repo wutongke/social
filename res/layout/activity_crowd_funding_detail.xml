@@ -169,7 +169,6 @@
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
                         android:singleLine="true"
-                        android:text="@string/like"
                         android:textColor="@color/red" />
                 </LinearLayout>
 
@@ -195,7 +194,7 @@
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
                         android:singleLine="true"
-                        android:text="@string/support" />
+                       />
                 </LinearLayout>
             </LinearLayout>
 
@@ -317,7 +316,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginBottom="10dp"
-                    android:src="@drawable/chat_more_option_off" />
+                     />
 
                 <TextView
                     android:id="@+id/acfd_people_name"

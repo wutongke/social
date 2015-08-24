@@ -17,7 +17,7 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 
 public class OrderAdapter extends CommonAdapter<GoodsVO> {
-	LoadImage loader = new LoadImage();
+	LoadImage loader = LoadImage.getInstance();
 	ArrayList<GoodsVO> selectList = new ArrayList<GoodsVO>();
 	SelectGoodsChangeListener goodsChangeListenter;
 	
