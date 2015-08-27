@@ -35,7 +35,7 @@ public class TopicCommentListAdapter extends BaseAdapter {
 		this.msgid = msgid;
 		this.inflater = LayoutInflater.from(context);
 		this.mContext = context;
-		mLoadImage = new LoadImage();
+		mLoadImage =LoadImage.getInstance();
 	}
 	public TopicCommentListAdapter(Context context, ArrayList<Comment> list,
 			String msgid,LoadImage loadImage) {
