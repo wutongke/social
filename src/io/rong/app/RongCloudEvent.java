@@ -200,7 +200,7 @@ public final class RongCloudEvent implements
 		// RongContext.getInstance().NOTIFICATION_SERVICE);
 		//
 		// nm.notify(0, notification);
-		return true;
+		return false;
 	}
 
 	private Bitmap getAppIcon() {
@@ -230,6 +230,7 @@ public final class RongCloudEvent implements
 	 *            接收到的消息的实体信息。
 	 * @param left
 	 *            剩余未拉取消息数目。
+	 *            //	收到消息是否处理完成，true 表示走自已的处理方式，false 走融云默认处理方式。		
 	 */
 	@Override
 	public boolean onReceived(Message message, int left) {
@@ -238,6 +239,15 @@ public final class RongCloudEvent implements
 
 		if (messageContent instanceof TextMessage) {// 文本消息
 			TextMessage textMessage = (TextMessage) messageContent;
+			
+		if(((TextMessage) messageContent).getExtra()!=null)
+		{
+			handleCustomMessage((TextMessage) messageContent);
+			return true;
+		}
+			
+			
+			
 			Log.d(TAG, "onReceived-TextMessage:" + textMessage.getContent());
 		} else if (messageContent instanceof ImageMessage) {// 图片消息
 			ImageMessage imageMessage = (ImageMessage) messageContent;
@@ -287,6 +297,11 @@ public final class RongCloudEvent implements
 			Log.d(TAG, "onReceived-其他消息，自己来判断处理");
 		}
 		return false;
+	}
+//文本消息的extra字段部位空则为自定义的消息：接收到点赞，评论等的推送消息(是否能实现？)
+	private void handleCustomMessage(TextMessage messageContent) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**
