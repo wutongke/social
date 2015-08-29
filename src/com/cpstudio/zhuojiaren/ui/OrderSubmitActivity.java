@@ -89,6 +89,9 @@ public class OrderSubmitActivity extends BaseActivity {
 				i.putExtra("tradeNum", (String) msg.obj);
 				View view = getLayoutInflater().inflate(
 						R.layout.pay_wey_choose, null);
+				final AlertDialog alert = new AlertDialog.Builder(OrderSubmitActivity.this,
+						AlertDialog.THEME_HOLO_LIGHT).setTitle("选择支付方式")
+						.setView(view).create();
 				view.findViewById(R.id.pay_weixin).setOnClickListener(
 						new OnClickListener() {
 
@@ -100,6 +103,7 @@ public class OrderSubmitActivity extends BaseActivity {
 //								i.putExtra("money", "5");
 								i.putExtra("money", String.valueOf((int)(Float.parseFloat(goodsPrice.getText().toString())*100)));
 								startActivity(i);
+								alert.dismiss();
 							}
 						});
 				view.findViewById(R.id.pay_ali).setOnClickListener(
@@ -113,11 +117,11 @@ public class OrderSubmitActivity extends BaseActivity {
 //								i.putExtra("money", "0.5");
 								i.putExtra("money", String.valueOf((int)(Float.parseFloat(goodsPrice.getText().toString()))));
 								startActivity(i);
+								alert.dismiss();
 							}
 						});
-				new AlertDialog.Builder(OrderSubmitActivity.this,
-						AlertDialog.THEME_HOLO_LIGHT).setTitle("选择支付方式")
-						.setView(view).create().show();
+				alert.show();
+				
 			} else {
 				CommonUtil.displayToast(OrderSubmitActivity.this,
 						R.string.error0);

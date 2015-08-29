@@ -51,6 +51,7 @@ public class PayActivity extends Activity {
 		if(!msgApi.isWXAppInstalled()){
 			CommonUtil.displayToast(this, "没有发现微信客户端");
 			this.finish();
+			return;
 		}
 		Intent intent = getIntent();
 		fee = intent.getStringExtra("money");
@@ -96,20 +97,6 @@ public class PayActivity extends Activity {
 				genPayReq();
 			}
 		});
-	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-		MobclickAgent.onPageStart( this.getClass().getName() );
-		MobclickAgent.onResume(this);
-	}
-	
-	@Override
-	public void onPause() {
-		super.onPause();
-		MobclickAgent.onPageEnd(  this.getClass().getName() );
-		MobclickAgent.onPause(this);
 	}
 	
 	/**

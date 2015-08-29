@@ -194,7 +194,7 @@ public class TabContainerActivity extends TabActivity implements
 				groupM.put(grouplist.get(i).getId(), grouplist.get(i));
 				// 测试，因为之前的圈子都还未加入，先硬编码加入(TabConTainerActivity),等定义好推送的允许加入圈子后就可以加入圈子了
 				Group g = grouplist.get(i);
-				if(null!=RongIM.getInstance())
+				if(g!=null&&null!=RongIM.getInstance()&&RongIM.getInstance().getRongIMClient()!=null)
 				RongIM.getInstance()
 						.getRongIMClient()
 						.joinGroup(g.getId(), g.getName(),
