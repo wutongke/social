@@ -42,6 +42,7 @@ public class GoodsTypedListActivity extends BaseActivity implements
 	private int mPage = 1;
 	//商品类别
 	private int type = 1;
+	private String typeName = null;
 
 	private TypedStoreGoodsListAdapter mAdapter = null;
 	private ArrayList<GoodsVO> mList = new ArrayList<GoodsVO>();
@@ -55,12 +56,13 @@ public class GoodsTypedListActivity extends BaseActivity implements
 		
 		Intent intent = getIntent();
 		type = intent.getIntExtra("type", 1);
-		
+		typeName = intent.getStringExtra("typeName");
 		
 		function.setVisibility(View.VISIBLE);
 		function.setText(R.string.label_filter2);
 		// 此处需要根据传过来的参数修改
-		title.setText("化妆品");
+		if(typeName!=null)
+		title.setText(typeName);
 		initView();
 		mConnHelper = AppClientLef.getInstance(getApplicationContext());
 

@@ -127,10 +127,10 @@ public class GrouthActivity extends BaseActivity {
 		pullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.head_grouth_main);
 		ImageView advertisement = (ImageView) findViewById(R.id.hgm_adv);
-		new LoadImage()
-				.beginLoad(
-						"http://img0.imgtn.bdimg.com/it/u=3317101867,3739965699&fm=11&gp=0.jpg",
-						advertisement);
+//		new LoadImage()
+//				.beginLoad(
+//						"http://img0.imgtn.bdimg.com/it/u=3317101867,3739965699&fm=11&gp=0.jpg",
+//						advertisement);
 		listView = pullDownView.getListView();
 		mAdapter = new GrouthAdapter(this, mDatas, R.layout.item_growth);
 		listView.setAdapter(mAdapter);

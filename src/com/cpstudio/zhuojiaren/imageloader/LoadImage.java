@@ -73,6 +73,8 @@ public class LoadImage {
 		this.height = height;
 	}
 	public void beginLoad(String url, ImageView img){
+		if(url==null)
+			return;
 		img.setTag(url);
 		addTask(url, img);
 		doTask();

@@ -1,8 +1,5 @@
 package com.cpstudio.zhuojiaren.ui;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

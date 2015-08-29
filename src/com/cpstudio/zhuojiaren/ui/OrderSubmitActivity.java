@@ -86,7 +86,6 @@ public class OrderSubmitActivity extends BaseActivity {
 				leftMoney.setText(((Integer) msg.obj).toString());
 			} else if (msg.what == MsgTagVO.PUB_INFO) {
 				final Intent i = new Intent();
-				i.putExtra("money", "0.5");
 				i.putExtra("tradeNum", (String) msg.obj);
 				View view = getLayoutInflater().inflate(
 						R.layout.pay_wey_choose, null);
@@ -98,8 +97,8 @@ public class OrderSubmitActivity extends BaseActivity {
 								// TODO Auto-generated method stub
 								i.setClass(OrderSubmitActivity.this,
 										PayActivity.class);
-								i.putExtra("money", "0.5");
-								i.putExtra("tradeNum", (String) msg.obj);
+//								i.putExtra("money", "5");
+								i.putExtra("money", String.valueOf((int)(Float.parseFloat(goodsPrice.getText().toString())*100)));
 								startActivity(i);
 							}
 						});
@@ -111,6 +110,8 @@ public class OrderSubmitActivity extends BaseActivity {
 								// TODO Auto-generated method stub
 								i.setClass(OrderSubmitActivity.this,
 										AliPayActivity.class);
+//								i.putExtra("money", "0.5");
+								i.putExtra("money", String.valueOf((int)(Float.parseFloat(goodsPrice.getText().toString()))));
 								startActivity(i);
 							}
 						});
@@ -189,7 +190,7 @@ public class OrderSubmitActivity extends BaseActivity {
 				// submit to get tradeid and then fay
 				Message msg = uiHandler.obtainMessage();
 				msg.what = MsgTagVO.PUB_INFO;
-				msg.obj = "4234343543";
+				msg.obj = System.currentTimeMillis()+"";
 				msg.sendToTarget();
 
 			}

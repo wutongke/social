@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.wxapi.Constants;
 import com.cpstudio.zhuojiaren.wxapi.MD5;
 import com.cpstudio.zhuojiaren.wxapi.Util;
@@ -58,6 +59,10 @@ public class PayActivity extends Activity {
 		sb=new StringBuffer();
 
 		msgApi.registerApp(Constants.APP_ID);
+		if(!msgApi.isWXAppInstalled()){
+			CommonUtil.displayToast(this, "没有发现微信客户端");
+			this.finish();
+		}
 //		try {
 //			Thread.sleep(1000);
 //		} catch (InterruptedException e) {
@@ -274,7 +279,7 @@ public class PayActivity extends Activity {
 			xml.append("</xml>");
            List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
 			packageParams.add(new BasicNameValuePair("appid", Constants.APP_ID));
-			packageParams.add(new BasicNameValuePair("body", "倬脉"));
+			packageParams.add(new BasicNameValuePair("body", "ZhuoMai"));
 			packageParams.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
 			packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
 			packageParams.add(new BasicNameValuePair("notify_url", "www.baidu.com"));
