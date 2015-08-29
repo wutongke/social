@@ -1048,10 +1048,19 @@
             android:label="@string/active_my" >
         </activity>
         <activity
+            android:name="com.cpstudui.zhuojiaren.lz.CompanyDetailActivity"
+            android:label="@string/active_my" >
+        </activity>
+        <activity
+            android:name="com.cpstudui.zhuojiaren.lz.ProductDetailActivity"
+            android:label="@string/active_my" >
+        </activity>
+        <activity
             android:name="com.cpstudio.zhuojiaren.ui.PubDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
+
         <!-- 融云 -->
         <!-- begin imlib request -->
 

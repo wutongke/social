@@ -33,7 +33,7 @@
             </RelativeLayout>
 
             <EditText
-                android:id="@+id/editTextTitle"
+                android:id="@+id/edtProductName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -142,29 +142,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/image_des3" />
-
-            <com.cpstudio.zhuojiaren.widget.MyGridView
-                android:id="@+id/aee_image_layout"
+ 				<LinearLayout
+                android:id="@+id/linearLayoutPicContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:cacheColorHint="@android:color/transparent"
-                android:gravity="center"
-                android:horizontalSpacing="5dip"
-                android:listSelector="@android:color/transparent"
-                android:numColumns="3"
-                android:scrollbars="none"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="5dip" >
-            </com.cpstudio.zhuojiaren.widget.MyGridView>
-
-            <TextView
-                android:id="@+id/aee_add_image"
-                style="@style/basic_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/bg_head_add"
-                android:gravity="center_vertical" />
+                android:background="@drawable/bg_corners"
+                android:orientation="vertical" >
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

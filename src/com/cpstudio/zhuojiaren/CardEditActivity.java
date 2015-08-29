@@ -39,6 +39,7 @@ import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
+import com.cpstudui.zhuojiaren.lz.CompanyDetailActivity;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -492,21 +493,14 @@ public class CardEditActivity extends Activity {
 		textViewEditWorkShow.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				 if (userInfo != null) {
-				 Intent i = new Intent(CardEditActivity.this,
-				 CardAddUserWorkActivity.class);
-//				 i.putParcelableArrayListExtra(EDIT_PRODUCT_STR,
-//				 (ArrayList<ProductVO>) userInfo.getProduct());
-//				 i.putExtra(EDIT_WORK_STR1, userInfo.getCompany());
-//				 i.putExtra(EDIT_WORK_STR2, userInfo.getPost());
-//				 i.putExtra(EDIT_WORK_STR3, userInfo.getIsworking());
-//				 i.putExtra(EDIT_WORK_STR4,
-//				 userInfo.getIsisentrepreneurship());
-				 startActivityForResult(i, EDIT_WORK);
-				 } else {
-				 CommonUtil.displayToast(getApplicationContext(),
-				 R.string.error12);
-				 }
+				if (userInfo != null) {
+					Intent i = new Intent(CardEditActivity.this,
+							CompanyDetailActivity.class);
+					startActivityForResult(i, EDIT_WORK);
+				} else {
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.error12);
+				}
 			}
 		});
 	}
@@ -705,9 +699,12 @@ public class CardEditActivity extends Activity {
 				userInfo.getUserid() + "," + userInfo.getName(), 100, 100);
 
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHead);
-		// 城市是编号，还需要根据provList查询，暂不处理，是否直接从服务器获取
-		String place = userInfo.getCity() + "";
-		textViewEditPlaceShow.setText(place);
+		int placeId = userInfo.getCity();
+		String placeText = getString(R.string.txt_data_error);
+		if (mConnHelper.getCitys() != null && placeId >= 1
+				&& placeId <= mConnHelper.getCitys().size())
+			placeText = mConnHelper.getCitys().get(placeId - 1).getCityName();
+		textViewEditPlaceShow.setText(placeText);
 
 		textViewEditNameShow.setText(userInfo.getName());
 		List<PicNewVO> images = userInfo.getPhoto();

@@ -1134,5 +1134,10 @@
     <string name="code_error">编码错误</string>
     <string name="lab_cur_item">当前选择:</string>
     <string name="clear">清除</string>
-
+    <string name="txt_uncompleted">未完善</string>
+    <string name="txt_data_error">数组错误</string>
+    <string name="txt_edit">修改</string>
+    <string name="txt_cancel">取消修改</string>
+    <string name="txt_add">增加</string>
+    <string name="txt_save">保存</string>
 </resources>

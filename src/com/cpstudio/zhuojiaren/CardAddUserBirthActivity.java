@@ -79,11 +79,9 @@ public class CardAddUserBirthActivity extends Activity {
 			year = Integer.valueOf(str[0]);
 			month = Integer.valueOf(str[1]);
 			date = Integer.valueOf(str[2]);
-
-			gentBirtdayTextInfo(year, month, date, isYangli);
-			initNormalWheel(year, month, date);
 		}
-
+		gentBirtdayTextInfo(year, month, date, isYangli);
+		initNormalWheel(year, month, date);
 		// if (birthdayLunar != null) {
 		// initChineseWheelBySolar(year, month, date);
 		// }
@@ -336,7 +334,7 @@ public class CardAddUserBirthActivity extends Activity {
 				R.drawable.button_solar_on);
 		findViewById(R.id.buttonYingli).setEnabled(true);
 		findViewById(R.id.buttonYangli).setEnabled(false);
-//		mLunar = false;
+		// mLunar = false;
 	}
 
 	private void initChieseWheel(int initYear, int initMonth, int initDate) {
@@ -475,7 +473,7 @@ public class CardAddUserBirthActivity extends Activity {
 				R.drawable.button_solar_off);
 		findViewById(R.id.buttonYingli).setEnabled(false);
 		findViewById(R.id.buttonYangli).setEnabled(true);
-//		mLunar = true;
+		// mLunar = true;
 	}
 
 	private void updateDate(WheelView wheelView, String str[]) {

@@ -1,0 +1,369 @@
+package com.cpstudui.zhuojiaren.lz;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ListView;
+import android.widget.TextView;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+import com.cpstudio.zhuojiaren.BaseActivity;
+import com.cpstudio.zhuojiaren.CardAddUserImageActivity;
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.adapter.ImageGridAdapter;
+import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper.EditMODE;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.BaseCodeData;
+import com.cpstudio.zhuojiaren.model.City;
+import com.cpstudio.zhuojiaren.model.CompanyNewVO;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.ProductNewVO;
+import com.cpstudio.zhuojiaren.model.industry;
+import com.cpstudio.zhuojiaren.model.position;
+import com.cpstudio.zhuojiaren.util.CommonAdapter;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.widget.ImageChooseAdapter;
+import com.cpstudio.zhuojiaren.widget.PicChooseActivity;
+import com.cpstudio.zhuojiaren.widget.PlaceChooseDialog;
+import com.cpstudio.zhuojiaren.widget.PopupWindows;
+
+public class ProductDetailActivity extends BaseActivity {
+	@InjectView(R.id.edtProductName)
+	EditText edtProductName;
+
+	@InjectView(R.id.editTextDetail)
+	EditText editTextDetail; // 产品描述
+
+	@InjectView(R.id.editTextTargetClient)
+	EditText editTextTargetClient;
+	@InjectView(R.id.editTextValue)
+	EditText editTextValue;
+
+	@InjectView(R.id.btnAdd)
+	Button btnAdd;
+	@InjectView(R.id.btnModify)
+	Button btnModify;
+	@InjectView(R.id.btnDelete)
+	Button btnDelete;
+
+	@InjectView(R.id.lv_product)
+	ListView lv_product;
+	private PopupWindows pwh = null;
+	private ImageSelectHelper mIsh = null;
+	private Map<String, String> network = new HashMap<String, String>();
+	private ArrayList<String> netids = new ArrayList<String>();
+	private ArrayList<String> neturls = new ArrayList<String>();
+	private Map<String, View> toDelView = new HashMap<String, View>();
+	private ArrayList<String> local = new ArrayList<String>();
+	
+
+	private CommonAdapter<String> imageAdatper;
+	private ArrayList<String> imageDir = new ArrayList<String>();
+
+	EditMODE edtMode = EditMODE.VIEW;
+	private PopupWindows phw = null;
+	private ZhuoConnHelper mConnHelper = null;
+	CommonAdapter<ProductNewVO> mAdapter;
+	LoadImage mLoadImage = LoadImage.getInstance();
+	List<ProductNewVO> productList = new ArrayList<ProductNewVO>();
+	// BaseCodeData codeDatas;
+	ProductNewVO catchProduct = new ProductNewVO();
+	int curIndex = 0;
+	String commpanyId = "";
+	private int requestCode = 1;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_product_detail);
+		ButterKnife.inject(this);
+		initTitle();
+		function.setVisibility(View.VISIBLE);
+		function.setText(R.string.SAVE);
+		function.setBackgroundResource(R.drawable.button_save);
+		title.setText(R.string.title_activity_main_product);
+		commpanyId = getIntent().getStringExtra("commpanyId");
+		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		initOnClick();
+		loadData();
+		
+		pwh = new PopupWindows(ProductDetailActivity.this);
+		mIsh = ImageSelectHelper.getIntance(ProductDetailActivity.this,
+				R.id.linearLayoutPicContainer);
+		initSelecter();
+		//添加图片效仿增加个人照片的地方
+	}
+	private void initSelecter() {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					while (mIsh.isInit()) {
+						mIsh.initParams();
+						Thread.sleep(20);
+					}
+					Message msg = mUIHandler
+							.obtainMessage(MsgTagVO.INIT_SELECT);
+					msg.sendToTarget();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
+	}
+	private void initOnClick() {
+		// TODO Auto-generated method stub
+		mIsh.getmAddButton().setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				mIsh.initParams();
+				if (mIsh.getTags() != null && mIsh.getTags().size() < 9) {
+					pwh.showPop(findViewById(R.id.rootLayout));
+				} else {
+					mIsh.getmAddButton().setVisibility(View.GONE);
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.error24);
+				}
+			}
+		});
+		function.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (edtMode == EditMODE.VIEW)
+					return;
+				else if (edtMode == EditMODE.ADD) {
+					mConnHelper.addProduct(ProductDetailActivity.this,
+							mUIHandler, MsgTagVO.PUB_INFO, commpanyId,
+							edtProductName.getText().toString(), editTextDetail
+									.getText().toString(), editTextTargetClient
+									.getText().toString(), editTextValue
+									.getText().toString(), imageDir);
+				} else {
+					mConnHelper.updateProduct(ProductDetailActivity.this,
+							mUIHandler, MsgTagVO.UPDATE, catchProduct
+									.getProductid(), edtProductName.getText()
+									.toString(), editTextDetail.getText()
+									.toString(), editTextTargetClient.getText()
+									.toString(), editTextValue.getText()
+									.toString(), imageDir);
+				}
+			}
+		});
+		btnAdd.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				edtMode = EditMODE.ADD;
+				fillItemInfo(-1);
+				setEnable(true);
+			}
+		});
+		btnModify.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				edtMode = EditMODE.EDIT;
+				setEnable(true);
+			}
+		});
+		btnDelete.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mConnHelper.deleteProduct(mUIHandler, MsgTagVO.DATA_OTHER,
+						catchProduct.getProductid());
+			}
+		});
+
+		imageAdatper = new ImageGridAdapter(ProductDetailActivity.this,
+				imageDir, R.layout.item_grid_image2);
+	}
+
+	void clear() {
+		edtProductName.setText("");
+		editTextDetail.setText("");
+		editTextTargetClient.setText("");
+		editTextValue.setText("");
+		edtProductName.setText("");
+		// 图片
+	}
+
+	void setEnable(boolean flag) {
+		edtProductName.setEnabled(flag);
+		editTextDetail.setEnabled(flag);
+		editTextTargetClient.setEnabled(flag);
+		editTextValue.setEnabled(flag);
+		edtProductName.setEnabled(flag);
+	}
+
+	private void loadData() {
+		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
+		} else {
+			mConnHelper.getCompanyProduct(mUIHandler, MsgTagVO.DATA_LOAD,
+					commpanyId);
+		}
+	}
+
+	void fillItemInfo(int i) {
+		if (i == -1) {
+			catchProduct = new ProductNewVO();
+			clear();
+			return;
+		}
+		if (productList == null || i < 0 || i >= productList.size())
+			return;
+		ProductNewVO item = productList.get(i);
+
+		catchProduct.setComid(item.getComid());
+		catchProduct.setCustomer(item.getCustomer());
+		catchProduct.setDescription(item.getDescription());
+		catchProduct.setProduct(item.getProduct());
+		catchProduct.setProductid(item.getProductid());
+		catchProduct.setValue(item.getValue());
+		catchProduct.setProductPic(item.getProductPic());
+
+		fillNotNullData(edtProductName, item.getProduct());
+		fillNotNullData(editTextDetail, item.getDescription());
+		fillNotNullData(editTextTargetClient, item.getCustomer());
+		fillNotNullData(editTextValue, item.getValue());
+
+		setEnable(false);
+
+	}
+
+	void fillNotNullData(TextView tv, String text) {
+		if (tv != null && text != null) {
+			tv.setText(text);
+		}
+	}
+
+	@SuppressLint("HandlerLeak")
+	private Handler mUIHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case MsgTagVO.INIT_SELECT:
+				mIsh.insertNetworkImage(netids, neturls, mLoadImage,
+						new OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								String id = (String) v.getTag();
+//								mConnHelper.delheaderimg(id, mUIHandler,
+//										MsgTagVO.PUB_INFO,
+//										CardAddUserImageActivity.this, true,
+//										null, id);
+								toDelView.put(id, v);
+								mIsh.removeFromContainer(toDelView.get(id));
+							}
+						}, null);
+				mIsh.insertLocalImage(local);
+				break;
+			case MsgTagVO.DATA_LOAD:
+				if (msg.obj instanceof List<?>)// 加载的本地数据
+				{
+					// userInfo = (UserNewVO) msg.obj;
+					// userInfo.setUserid(mUid);
+					productList = (List<ProductNewVO>) msg.obj;
+				} else if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					JsonHandler nljh = new JsonHandler((String) msg.obj,
+							getApplicationContext());
+					productList.clear();
+					productList.addAll(nljh.parseProductInfoList());
+					resetListVIew();
+					fillItemInfo(productList.size());
+				}
+
+				break;
+			case MsgTagVO.DATA_OTHER:// 删除
+			case MsgTagVO.UPDATE:// 更新
+			case MsgTagVO.PUB_INFO:// 增加
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					loadData();
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.label_success);
+				} else {
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.FAILED);
+				}
+				break;
+			}
+		}
+	};
+
+	private void resetListVIew() {
+		mAdapter = new CommonAdapter<ProductNewVO>(ProductDetailActivity.this,
+				productList, R.layout.list_item_simple_text) {
+			@Override
+			public void convert(ViewHolder helper, ProductNewVO item) {
+				// TODO Auto-generated method stub
+				helper.setText(R.id.itemId, item.getProductid());
+				helper.setText(R.id.itemName, item.getProduct());
+			}
+		};
+		lv_product.setAdapter(mAdapter);
+		lv_product.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				curIndex = position;
+				fillItemInfo(position);
+				setEnable(false);
+				edtMode = EditMODE.VIEW;
+			}
+		});
+	}
+
+	/**
+	 * 动态设置listView的高度 count 总条目
+	 */
+	private void setListViewHeight(ListView listView, BaseAdapter adapter,
+			int count) {
+		int totalHeight = 0;
+		for (int i = 0; i < count; i++) {
+			View listItem = adapter.getView(i, null, listView);
+			listItem.measure(0, 0);
+			totalHeight += listItem.getMeasuredHeight();
+		}
+		ViewGroup.LayoutParams params = listView.getLayoutParams();
+		params.height = totalHeight + (listView.getDividerHeight() * count);
+		listView.setLayoutParams(params);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		
+	}
+}

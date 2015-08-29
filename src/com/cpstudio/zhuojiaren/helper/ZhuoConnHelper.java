@@ -52,6 +52,10 @@ import com.qiniu.android.storage.UploadManager;
  */
 public class ZhuoConnHelper {
 
+	public enum EditMODE {
+		VIEW, EDIT, ADD, DELETE
+	};
+
 	public static final String BASEDATA = "baseCodeDatas";
 	public static final String CITYS = "citys";
 	private static ZhuoConnHelper instance;
@@ -1874,7 +1878,8 @@ public class ZhuoConnHelper {
 	 */
 	public boolean getCompanyInfo(Handler mUIHandler, int tag, String userid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		if (userid != null)
+			nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		return getFromServerByPost(ZhuoCommHelperLz.getCompany(),
 				nameValuePairs, mUIHandler, tag);
 	}
@@ -1955,12 +1960,11 @@ public class ZhuoConnHelper {
 	 * @param homepage
 	 * @param status
 	 *            (可选)是否是主公司 1-主公司 0-普通公司
-	 * @param files
 	 * @return
 	 */
-	public boolean updateCompany(Activity activity, Handler mUIHandler,
+	public boolean updateCompany(Handler mUIHandler,
 			int tag, String comid, String company, int industry, int city,
-			int position, String homepage, int status, ArrayList<String> files) {
+			int position, String homepage, int status) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("comid", comid));
 		nameValuePairs.add(new BasicNameValuePair("company", company));
@@ -1973,16 +1977,13 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("homepage", homepage));
 		nameValuePairs.add(new BasicNameValuePair("status", String
 				.valueOf(status)));
-		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
-		fileMap.put("file", files);
-		return doPostWithFile(fileMap, nameValuePairs,
-				ZhuoCommHelperLz.updateCompany(), mUIHandler, tag, activity,
-				"updateCompany", false, null, null);
+		return getFromServerByPost(ZhuoCommHelperLz.updateCompany(),
+				nameValuePairs, mUIHandler, tag);
 	}
 
-	public boolean addCompany(Activity activity, Handler mUIHandler, int tag,
+	public boolean addCompany( Handler mUIHandler, int tag,
 			String company, int industry, int city, int position,
-			String homepage, int status, ArrayList<String> files) {
+			String homepage, int status) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("company", company));
 		nameValuePairs.add(new BasicNameValuePair("industry", String
@@ -1994,11 +1995,8 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("homepage", homepage));
 		nameValuePairs.add(new BasicNameValuePair("status", String
 				.valueOf(status)));
-		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
-		fileMap.put("file", files);
-		return doPostWithFile(fileMap, nameValuePairs,
-				ZhuoCommHelperLz.addCompany(), mUIHandler, tag, activity,
-				"updateCompany", false, null, null);
+		return getFromServerByPost(ZhuoCommHelperLz.addCompany(),
+				nameValuePairs, mUIHandler, tag);
 	}
 
 	/**

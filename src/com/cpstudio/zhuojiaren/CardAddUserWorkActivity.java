@@ -24,51 +24,50 @@ public class CardAddUserWorkActivity extends Activity {
 	private ArrayList<String> companyTags = new ArrayList<String>();
 	private ArrayList<String> workTags = new ArrayList<String>();
 	
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_card_add_user_work);
 		linearLayoutWorks = (LinearLayout) findViewById(R.id.linearLayoutWorks);
-//		Intent intent = getIntent();
-//		mProducts = intent
-//				.getParcelableArrayListExtra(CardEditActivity.EDIT_PRODUCT_STR);
-//		String companys = intent
-//				.getStringExtra(CardEditActivity.EDIT_WORK_STR1);
-//		String works = intent.getStringExtra(CardEditActivity.EDIT_WORK_STR2);
-//		String isworking = intent
-//				.getStringExtra(CardEditActivity.EDIT_WORK_STR3);
-//		String isisentrepreneurship = intent
-//				.getStringExtra(CardEditActivity.EDIT_WORK_STR4);
-//		if (isisentrepreneurship != null && isisentrepreneurship.equals("1")) {
-//			((RadioButton) findViewById(R.id.radioIsEntrepreneurship))
-//					.setChecked(true);
-//		} else {
-//			((RadioButton) findViewById(R.id.radioNotEntrepreneurship))
-//					.setChecked(true);
-//		}
-//		if (isworking != null && isworking.equals("1")) {
-//			((RadioButton) findViewById(R.id.radioIsWorking)).setChecked(true);
-//		} else {
-//			((RadioButton) findViewById(R.id.radioNotWorking)).setChecked(true);
-//		}
-//		if (companys != null || works != null) {
-//			try {
-//				if (companys.indexOf(";") != -1) {
-//					String[] company = companys.split(";");
-//					String[] work = works.split(";");
-//					for (int i = 0; i < company.length && i < work.length; i++) {
-//						addWork(company[i], work[i]);
-//					}
-//				} else {
-//					addWork(companys, works);
-//				}
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		} else {
-//			addWork("", "");
-//		}
+		Intent intent = getIntent();
+		mProducts = intent
+				.getParcelableArrayListExtra(CardEditActivity.EDIT_PRODUCT_STR);
+		String companys = intent
+				.getStringExtra(CardEditActivity.EDIT_WORK_STR1);
+		String works = intent.getStringExtra(CardEditActivity.EDIT_WORK_STR2);
+		String isworking = intent
+				.getStringExtra(CardEditActivity.EDIT_WORK_STR3);
+		String isisentrepreneurship = intent
+				.getStringExtra(CardEditActivity.EDIT_WORK_STR4);
+		if (isisentrepreneurship != null && isisentrepreneurship.equals("1")) {
+			((RadioButton) findViewById(R.id.radioIsEntrepreneurship))
+					.setChecked(true);
+		} else {
+			((RadioButton) findViewById(R.id.radioNotEntrepreneurship))
+					.setChecked(true);
+		}
+		if (isworking != null && isworking.equals("1")) {
+			((RadioButton) findViewById(R.id.radioIsWorking)).setChecked(true);
+		} else {
+			((RadioButton) findViewById(R.id.radioNotWorking)).setChecked(true);
+		}
+		if (companys != null || works != null) {
+			try {
+				if (companys.indexOf(";") != -1) {
+					String[] company = companys.split(";");
+					String[] work = works.split(";");
+					for (int i = 0; i < company.length && i < work.length; i++) {
+						addWork(company[i], work[i]);
+					}
+				} else {
+					addWork(companys, works);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			addWork("", "");
+		}
 		initClick();
 	}
 
@@ -149,21 +148,21 @@ public class CardAddUserWorkActivity extends Activity {
 	}
 
 	private void addWork(String company, String work) {
-		LayoutInflater inflater = LayoutInflater
-				.from(CardAddUserWorkActivity.this);
-		View view = inflater.inflate(R.layout.item_work_add, null);
-		EditText companyET = (EditText) view.findViewById(R.id.editTextCompany);
-		companyET.setTag("company" + companyTags.size());
-		if (null != company) {
-			companyET.setText(company);
-		}
-		EditText workET = (EditText) view.findViewById(R.id.editTextWork);
-		workET.setTag("work" + workTags.size());
-		if (null != work) {
-			workET.setText(work);
-		}
-		companyTags.add("company" + companyTags.size());
-		workTags.add("work" + workTags.size());
-		linearLayoutWorks.addView(view);
+//		LayoutInflater inflater = LayoutInflater
+//				.from(CardAddUserWorkActivity.this);
+//		View view = inflater.inflate(R.layout.item_work_add, null);
+//		EditText companyET = (EditText) view.findViewById(R.id.editTextCompany);
+//		companyET.setTag("company" + companyTags.size());
+//		if (null != company) {
+//			companyET.setText(company);
+//		}
+//		EditText workET = (EditText) view.findViewById(R.id.editTextWork);
+//		workET.setTag("work" + workTags.size());
+//		if (null != work) {
+//			workET.setText(work);
+//		}
+//		companyTags.add("company" + companyTags.size());
+//		workTags.add("work" + workTags.size());
+//		linearLayoutWorks.addView(view);
 	}
 }
