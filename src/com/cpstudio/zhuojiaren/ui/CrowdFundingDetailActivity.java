@@ -99,7 +99,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 	// tab
 	private View mRoot;
 	private MyPagerAdapter mAdapter;
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage ;
 	String[] tabTitles;
 	AppClientLef appClient;
 	private String crowdFundingId;
@@ -115,7 +115,8 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 		ButterKnife.inject(this);
 		initTitle();
 		mContext = this;
-		loadImage = new LoadImage();
+		
+		loadImage = LoadImage.getInstance();
 		crowdFundingId = getIntent().getStringExtra(
 				CrowdFundingVO.CROWDFUNDINGID);
 		title.setText(R.string.crowdfungding_detail);

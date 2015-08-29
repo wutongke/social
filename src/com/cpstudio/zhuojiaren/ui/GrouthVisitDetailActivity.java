@@ -31,7 +31,7 @@ public class GrouthVisitDetailActivity extends BaseActivity {
 		initTitle();
 		visit= (GrouthVisit) getIntent().getSerializableExtra("visit");
 		title.setText(R.string.visit_detail);
-		imageLoader = new LoadImage();
+		imageLoader = LoadImage.getInstance();
 		loadData();
 	}
 	private void loadData() {

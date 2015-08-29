@@ -12,7 +12,7 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 
 public class GrouthVisitAdapter extends CommonAdapter<GrouthVisit>{
-	LoadImage imageLoad = new LoadImage();
+	LoadImage imageLoad = LoadImage.getInstance();
 	public GrouthVisitAdapter(Context context, List<GrouthVisit> mDatas,
 			int itemLayoutId) {
 		super(context, mDatas, itemLayoutId);

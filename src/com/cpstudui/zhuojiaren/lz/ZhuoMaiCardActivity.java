@@ -6,7 +6,6 @@ import io.rong.imlib.RongIMClient.SendMessageCallback;
 import io.rong.imlib.model.Conversation.ConversationType;
 import io.rong.message.ContactNotificationMessage;
 
-import java.rmi.server.UID;
 import java.util.ArrayList;
 import java.util.List;
 

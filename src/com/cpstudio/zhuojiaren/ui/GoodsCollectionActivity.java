@@ -42,7 +42,7 @@ public class GoodsCollectionActivity extends BaseActivity {
 	ListView listView;
 	@InjectView(R.id.agc_show_categary)
 	TextView showCategary;
-	LoadImage loader = new LoadImage();
+	LoadImage loader = LoadImage.getInstance();
 	private CommonAdapter<GoodsVO> mAdapter;
 	private ArrayList<GoodsVO> mDataList = new ArrayList<GoodsVO>();
 	private AppClientLef appClient;

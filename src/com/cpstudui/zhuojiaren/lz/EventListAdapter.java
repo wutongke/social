@@ -11,16 +11,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.EventVO;
-import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
-import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class EventListAdapter extends BaseAdapter {
 	private List<EventVO> mList = null;
