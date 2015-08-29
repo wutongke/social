@@ -22,7 +22,7 @@ import android.widget.TextView;
 public class QuanListAdapter extends BaseAdapter {
 	private List<QuanVO> mList = null;
 	private LayoutInflater inflater = null;
-	private LoadImage mLoadImage = new LoadImage(50);
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	private Context mContext;
 	private List<QuanVO> mSelectedList = new ArrayList<QuanVO>();
 	private boolean managerVisible = false;
@@ -37,7 +37,7 @@ public class QuanListAdapter extends BaseAdapter {
 	public int getCount() {
 		return mList.size();
 	}
-
+	
 	@Override
 	public Object getItem(int arg0) {
 		return mList.get(arg0);
@@ -75,7 +75,6 @@ public class QuanListAdapter extends BaseAdapter {
 		else
 			holder.selectCheck.setVisibility(View.VISIBLE);
 		holder.selectCheck.setChecked(false);
-		// 设置是否选中
 		if (mSelectedList.contains(mList.get(position))) {
 			holder.selectCheck.setChecked(true);
 		} else {

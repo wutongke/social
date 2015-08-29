@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
+import com.cpstudio.zhuojiaren.JiarenActiveActivity;
 import com.cpstudio.zhuojiaren.MsgDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ZhuoNearByUserListAdatper;
@@ -38,6 +39,7 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
+import com.cpstudui.zhuojiaren.lz.DynamicDetailActivity;
 
 public class UserSameActivity extends BaseActivity implements
 		OnPullDownListener, OnItemClickListener {
@@ -153,7 +155,6 @@ public class UserSameActivity extends BaseActivity implements
 						mPage, pageSize, itemId);
 			}
 		}
-
 	}
 
 	private void updateItemList(ArrayList<UserAndCollection> list,
@@ -255,17 +256,16 @@ public class UserSameActivity extends BaseActivity implements
 				break;
 			}
 			}
-
 		}
-
 	};
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		if (id != -1) {
-			Intent i = new Intent(UserSameActivity.this,
-					MsgDetailActivity.class);
+
+			Intent i = new Intent();
+			i.setClass(UserSameActivity.this, DynamicDetailActivity.class);
 			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
 			startActivity(i);
 		}

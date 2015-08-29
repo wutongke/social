@@ -33,7 +33,7 @@ public class LoadImage {
 		if(instance==null){
 			synchronized (LoadImage.class) {
 				if(instance==null)
-					instance = new LoadImage(0,200,200);
+					instance = new LoadImage(0,80,80);
 			}
 		}
 		return instance;
@@ -67,6 +67,10 @@ public class LoadImage {
 		this.height = height;
 		this.width = width;
 		this.round = round;
+	}
+	public void setWidthAndHeight(int height,int width){
+		this.width = width;
+		this.height = height;
 	}
 	public void beginLoad(String url, ImageView img){
 		img.setTag(url);

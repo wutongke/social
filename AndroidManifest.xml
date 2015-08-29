@@ -124,6 +124,12 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.cpstudio.zhuojiaren.ui.RequestedUserSameActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_group_type2"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.cpstudio.zhuojiaren.MsgListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_msg_list"
