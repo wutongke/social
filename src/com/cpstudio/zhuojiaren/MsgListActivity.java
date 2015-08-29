@@ -18,6 +18,7 @@ import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -33,9 +34,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -66,11 +67,12 @@ public class MsgListActivity extends FragmentActivity implements
 	private MsgReceiver msgReceiver = null;
 	private String mSearchKey = "";
 	ConversationListFragment listFragment;
-
+	Handler uiHandler;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_msg_list);
+		uiHandler = new Handler();
 		mFacade = new ImChatFacade(MsgListActivity.this);
 		myid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		LayoutInflater inflater = LayoutInflater.from(MsgListActivity.this);
@@ -129,64 +131,75 @@ public class MsgListActivity extends FragmentActivity implements
 		msgReceiver = new MsgReceiver();
 		IntentFilter filter = new IntentFilter("com.cpstudio.chatlist");
 		registerReceiver(msgReceiver, filter);
-		// 获取其高度
-		ViewGroup root = (ViewGroup) findViewById(R.id.ryConversationListContainer);
-		ListView listFromFragment = null;
-		BaseAdapter adapterFromFragment = null;
-		Field fields[] = listFragment.getClass().getDeclaredFields();
-		Field.setAccessible(fields, true);
-		for (Field field : fields) {
-			field.setAccessible(true);
-			if (field.getName().equals("mList")) {
-				try {
-					listFromFragment = (ListView) field.get(listFragment);
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					Log.d("Debug", "");
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					Log.d("Debug", "");
-				}
-
-			} else if (field.getName().equals("mAdapter")) {
-				try {
-					adapterFromFragment = (BaseAdapter) field.get(listFragment);
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					Log.d("Debug", "");
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					Log.d("Debug", "");
-				}
-
-			}
-		}
-		if (listFromFragment != null) {
-			LinearLayout.LayoutParams lp = (LayoutParams) root
-					.getLayoutParams();
-			int totalHeight = 0;
-			for (int i = 0; i < adapterFromFragment.getCount(); i++) {
-				View listItem = adapterFromFragment.getView(i, null,
-						listFromFragment);
-				if(listItem instanceof RelativeLayout){
-					listItem.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-				}else if(listItem instanceof LinearLayout){
-					listItem.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-				}
-				try {
-					listItem.measure(0, 0);
-					totalHeight += listItem.getMeasuredHeight();
-				} catch (Exception e) {
-					// TODO: handle exception
-					totalHeight+=listItem.getHeight();
-				}
-			}
-			lp.height = totalHeight;
-			if (totalHeight > 0)
-				root.setLayoutParams(lp);
-		}
+		uiHandler.postDelayed(calHeight, 500);
 	}
+	Runnable calHeight = new Runnable() {
+		
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			calHeightOfFragment();
+		}
+	};
+	private void calHeightOfFragment(){
+		// 获取其高度
+				ViewGroup root = (ViewGroup) findViewById(R.id.ryConversationListContainer);
+				ListView listFromFragment = null;
+				BaseAdapter adapterFromFragment = null;
+				Field fields[] = listFragment.getClass().getDeclaredFields();
+				Field.setAccessible(fields, true);
+				for (Field field : fields) {
+					field.setAccessible(true);
+					if (field.getName().equals("mList")) {
+						try {
+							listFromFragment = (ListView) field.get(listFragment);
+						} catch (IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							Log.d("Debug", "");
+						} catch (IllegalArgumentException e) {
+							// TODO Auto-generated catch block
+							Log.d("Debug", "");
+						}
 
+					} else if (field.getName().equals("mAdapter")) {
+						try {
+							adapterFromFragment = (BaseAdapter) field.get(listFragment);
+						} catch (IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							Log.d("Debug", "");
+						} catch (IllegalArgumentException e) {
+							// TODO Auto-generated catch block
+							Log.d("Debug", "");
+						}
+
+					}
+				}
+				if (listFromFragment != null) {
+					LinearLayout.LayoutParams lp = (LayoutParams) root
+							.getLayoutParams();
+					int totalHeight = 0;
+					for (int i = 0; i < adapterFromFragment.getCount(); i++) {
+						View listItem = adapterFromFragment.getView(i, null,
+								listFromFragment);
+						if(listItem instanceof RelativeLayout){
+							listItem.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+						}else if(listItem instanceof LinearLayout){
+							listItem.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+						}
+						try {
+							listItem.measure(0, 0);
+							totalHeight += listItem.getMeasuredHeight();
+						} catch (Exception e) {
+							// TODO: handle exception
+							totalHeight+=listItem.getHeight();
+						}
+					}
+					lp.height = totalHeight;
+					if (totalHeight > 0)
+						root.setLayoutParams(lp);
+				}
+	}
+	
 	@Override
 	protected void onPause() {
 		ResHelper.getInstance(getApplicationContext()).setMsgList(false);
@@ -551,6 +564,7 @@ public class MsgListActivity extends FragmentActivity implements
 			} else {
 				((TextView) findViewById(R.id.textViewCardMsg)).setText("");
 			}
+			uiHandler.post(calHeight);
 		}
 	}
 

@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.wxapi.Constants;
 import com.cpstudio.zhuojiaren.wxapi.MD5;
 import com.cpstudio.zhuojiaren.wxapi.Util;
@@ -33,12 +34,11 @@ import com.umeng.analytics.MobclickAgent;
 
 public class PayActivity extends Activity {
 
-	private static final String TAG = "MicroMsg.SDKSample.PayActivity";
+	private static final String TAG = "PayActivity";
 	private String fee;
 	//服务器生成的订单�?
 	private String tradeId ;
 	private int flowerNum;
-	
 	PayReq req;
 	final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
 	TextView show;
@@ -48,7 +48,11 @@ public class PayActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.pay2);
-		
+		if(!msgApi.isWXAppInstalled()){
+			CommonUtil.displayToast(this, "没有发现微信客户端");
+			this.finish();
+			return;
+		}
 		Intent intent = getIntent();
 		fee = intent.getStringExtra("money");
 		tradeId = intent.getStringExtra("tradeNum");
@@ -93,20 +97,6 @@ public class PayActivity extends Activity {
 				genPayReq();
 			}
 		});
-	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-		MobclickAgent.onPageStart( this.getClass().getName() );
-		MobclickAgent.onResume(this);
-	}
-	
-	@Override
-	public void onPause() {
-		super.onPause();
-		MobclickAgent.onPageEnd(  this.getClass().getName() );
-		MobclickAgent.onPause(this);
 	}
 	
 	/**
@@ -274,7 +264,7 @@ public class PayActivity extends Activity {
 			xml.append("</xml>");
            List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
 			packageParams.add(new BasicNameValuePair("appid", Constants.APP_ID));
-			packageParams.add(new BasicNameValuePair("body", "倬脉"));
+			packageParams.add(new BasicNameValuePair("body", "ZhuoMai"));
 			packageParams.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
 			packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
 			packageParams.add(new BasicNameValuePair("notify_url", "www.baidu.com"));

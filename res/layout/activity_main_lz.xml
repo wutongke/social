@@ -46,15 +46,13 @@
 
         <Button
             android:id="@+id/buttonPlus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:background="@drawable/imenu"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
+             />
 
         <Button
             android:id="@+id/buttonSearch"
@@ -64,7 +62,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:background="@drawable/ibutton"
+            android:background="@drawable/find_textview_bg"
             android:text="@string/label_main_find"
             android:textColor="#ffffff"
             android:textSize="14sp" />

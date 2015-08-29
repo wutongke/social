@@ -98,7 +98,7 @@ public class CrowdFundingFragment extends Fragment {
 				Intent intent = new Intent(CrowdFundingFragment.this
 						.getActivity(), CrowdFundingDetailActivity.class);
 				intent.putExtra(CrowdFundingVO.CROWDFUNDINGID,
-						mDatas.get(position - 1).getId());
+						mAdapter.getItem(position-1).getId());
 				startActivity(intent);
 			}
 		});

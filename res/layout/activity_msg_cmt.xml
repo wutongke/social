@@ -19,7 +19,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="@string/title_activity_cmt"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
         <Button
@@ -56,16 +56,17 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
         android:orientation="vertical"
-        android:visibility="gone" >
+         >
 
         <EditText
             android:id="@+id/editTextContent"
             android:layout_width="match_parent"
+            android:minLines="3"
+            android:maxLines="10"
             android:layout_height="220dp"
             android:ems="10"
             android:gravity="center_vertical|top"
             android:inputType="textMultiLine" >
-
             <requestFocus />
         </EditText>
 
@@ -74,7 +75,9 @@
             style="@style/CPCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_zf" />
+            android:text="@string/label_zf" 
+            android:visibility="gone"
+            />
 
     </LinearLayout>
 

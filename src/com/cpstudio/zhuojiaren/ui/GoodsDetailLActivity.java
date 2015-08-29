@@ -232,6 +232,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 				zhuoPrice.setText(goods.getZhuoPrice());
 				// goodsComment
 				mDataList.clear();
+				if(goods.getComments()!=null)
 				mDataList.addAll(goods.getComments());
 				mAdapter.notifyDataSetChanged();
 				break;
