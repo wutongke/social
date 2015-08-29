@@ -166,7 +166,7 @@ public class GongXuDetailActivity extends BaseActivity {
 		if (pics != null && pics.size() > 0) {
 			float times = DeviceInfoUtil.getDeviceCsd(context);
 			RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
-					(int) (70 * times), (int) (70 * times));
+					(int) (60 * times), (int) (60 * times));
 			TableLayout tl = (TableLayout) findViewById(R.id.gongxu_tableLayoutAuthorPics);
 			TableRow tr = null;
 			for (int i = 0; i < pics.size(); i++) {
@@ -376,7 +376,7 @@ public class GongXuDetailActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				toId = mList.get(position - 1).getId();
+				toId = mList.get(position-1).getId();
 				Intent i = new Intent(GongXuDetailActivity.this,
 						ResCommentActivity.class);
 				i.putExtra("msgid", msgid);

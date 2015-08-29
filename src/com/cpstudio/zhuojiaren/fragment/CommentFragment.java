@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
@@ -71,6 +72,11 @@ public class CommentFragment extends Fragment implements OverScrollController {
 				replyId = id;
 				toUserId = userid;
 				commentEdit.setHint("»Ø¸´" + name);
+				commentEdit.setFocusable(true);
+				commentEdit.setFocusableInTouchMode(true);
+				commentEdit.requestFocus();
+				InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);  
+				imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);  
 			}
 		});
 		mListView.setAdapter(mAdapter);

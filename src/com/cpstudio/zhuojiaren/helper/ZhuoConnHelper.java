@@ -105,6 +105,9 @@ public class ZhuoConnHelper {
 	}
 
 	public List<City> getCitys() {
+		if(citys==null){
+			
+		}
 		return citys;
 	}
 
@@ -125,6 +128,10 @@ public class ZhuoConnHelper {
 	}
 
 	public BaseCodeData getBaseDataSet() {
+		if(baseDataSet==null){
+			String data = AppClientLef.getInstance(context).readObject("BaseSetData");
+			baseDataSet = JsonHandler.parseBaseCodeData(data);
+		}
 		return baseDataSet;
 	}
 
@@ -736,6 +743,9 @@ public class ZhuoConnHelper {
 	private boolean doPost(List<NameValuePair> nameValuePairs, String url,
 			Handler handler, int handlerTag, Activity activity, String tag,
 			boolean cancelable, OnCancelListener cancel, String data) {
+		if(instance==null){
+			instance = getInstance(activity);
+		}
 		if (!mStartedTag.contains(tag) || tag == null) {
 			if (tag != null) {
 				mStartedTag.add(tag);
@@ -1201,7 +1211,27 @@ public class ZhuoConnHelper {
 				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
 				"pubQuanTopic", false, null, null);
 	}
-
+	/**
+	 * 发布反馈意见
+	 * 
+	 * @param activity
+	 * @param mUIHandler
+	 * @param tag
+	 * @param groupid
+	 * @param content
+	 * @param files
+	 * @return
+	 */
+	public boolean pubFeedBack(Activity activity, Handler mUIHandler, int tag,
+			String groupid, String content, ArrayList<String> files) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
+		fileMap.put("file", files);
+		return doPostWithFile(fileMap, nameValuePairs,
+				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
+				"pubQuanTopic", false, null, null);
+	}
 	/**
 	 * 更新个人照片
 	 * 

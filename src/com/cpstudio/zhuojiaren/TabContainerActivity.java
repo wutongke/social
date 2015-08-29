@@ -41,6 +41,7 @@ import com.cpstudio.zhuojiaren.facade.CmtRcmdFacade;
 import com.cpstudio.zhuojiaren.facade.ImChatFacade;
 import com.cpstudio.zhuojiaren.facade.ImQuanFacade;
 import com.cpstudio.zhuojiaren.facade.SysMsgFacade;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.SysApplication;
@@ -193,6 +194,7 @@ public class TabContainerActivity extends TabActivity implements
 				groupM.put(grouplist.get(i).getId(), grouplist.get(i));
 				// 测试，因为之前的圈子都还未加入，先硬编码加入(TabConTainerActivity),等定义好推送的允许加入圈子后就可以加入圈子了
 				Group g = grouplist.get(i);
+				if(null!=RongIM.getInstance())
 				RongIM.getInstance()
 						.getRongIMClient()
 						.joinGroup(g.getId(), g.getName(),
@@ -379,6 +381,7 @@ public class TabContainerActivity extends TabActivity implements
 					return;
 				}
 				String data = res.getData();
+				AppClientLef.getInstance(getApplicationContext()).saveObject(data, "BaseSetData");
 				BaseCodeData dataset = JsonHandler.parseBaseCodeData(data);
 				connHelper.setBaseDataSet(dataset);
 				break;

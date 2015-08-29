@@ -34,12 +34,11 @@ import com.umeng.analytics.MobclickAgent;
 
 public class PayActivity extends Activity {
 
-	private static final String TAG = "MicroMsg.SDKSample.PayActivity";
+	private static final String TAG = "PayActivity";
 	private String fee;
 	//服务器生成的订单�?
 	private String tradeId ;
 	private int flowerNum;
-	
 	PayReq req;
 	final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
 	TextView show;
@@ -49,7 +48,10 @@ public class PayActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.pay2);
-		
+		if(!msgApi.isWXAppInstalled()){
+			CommonUtil.displayToast(this, "没有发现微信客户端");
+			this.finish();
+		}
 		Intent intent = getIntent();
 		fee = intent.getStringExtra("money");
 		tradeId = intent.getStringExtra("tradeNum");
@@ -59,10 +61,6 @@ public class PayActivity extends Activity {
 		sb=new StringBuffer();
 
 		msgApi.registerApp(Constants.APP_ID);
-		if(!msgApi.isWXAppInstalled()){
-			CommonUtil.displayToast(this, "没有发现微信客户端");
-			this.finish();
-		}
 //		try {
 //			Thread.sleep(1000);
 //		} catch (InterruptedException e) {

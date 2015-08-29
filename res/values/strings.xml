@@ -923,6 +923,7 @@
     <string name="title_active_join_quan">申请加入圈子</string>
     <string name="text_apply_hoin_hint">+请描述加入圈子的理由，静候群主审核</string>
     <string name="text_pub_topic_hint">+请输入话题内容</string>
+    <string name="feedbacktext">非常感谢您的关注和支持，如果您有意见请反馈给我们，我们将对倬脉进行不断优化</string>
     <string name="title_pub_topic">发布话题</string>
     <string name="image_des2">上传照片，9张以内</string>
     <string name="image_des3">产品图片，最多上传5张图片</string>
