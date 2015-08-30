@@ -120,9 +120,10 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		// 是否和圈子话题公用一个数据结构还不一定
 		mAdapter = new DynamicListAdapter(MainActivity.this,mList, 1);
 		mListView.setAdapter(mAdapter);
-		mPullDownView.setShowHeader();
+		mPullDownView.setHideHeader();
 		mPullDownView.setShowFooter(false);
-
+		mPullDownView.noFoot();
+		
 		initClick();
 		initHeadView();
 		loadData();
@@ -252,8 +253,9 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 	private void updateItemList(ArrayList<Dynamic> list, boolean refresh,
 			boolean append) {
+//		mPullDownView.noData(false);
 		if (!list.isEmpty()) {
-			mPullDownView.hasData();
+//			mPullDownView.hasData();
 			if (!append) {
 				mList.clear();
 			}
@@ -264,7 +266,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			}
 			mPage++;
 		} else {
-			mPullDownView.noData(!refresh);
+//			mPullDownView.noData(!refresh);
 		}
 	}
 
@@ -286,15 +288,11 @@ public class MainActivity extends Activity implements OnPullDownListener,
 						updateAdInfo(info);
 					}
 				}
-
 				break;
 			}
 			case MsgTagVO.DATA_REFRESH: {
-			}
-			case MsgTagVO.DATA_MORE: {
 				break;
 			}
-			
 			case MsgTagVO.UPDATE: {
 				if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
@@ -328,11 +326,9 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	// refresh刷新加载的新的数据没有写数据库
 	@Override
 	public void onRefresh() {
+		loadData();
 	}
 
-	@Override
-	public void onMore() {
-	}
 
 	private void loadData() {
 
@@ -389,12 +385,18 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		imageLoader.doTask();
 
 		ArrayList<Dynamic> list = info.getStatus();
-		boolean loadState = false;
+//		boolean loadState = false;
 		if (info != null) {
-			loadState = true;
-			mPullDownView.finishLoadData(loadState);
+//			loadState = true;
+//			mPullDownView.finishLoadData(loadState);
 			updateItemList(list, true, false);
 		}
+	}
+
+	@Override
+	public void onMore() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -47,7 +47,7 @@ public class JiarenActiveActivity extends Activity implements
 	private PullDownView mPullDownView;
 	private ArrayList<Dynamic> mList = new ArrayList<Dynamic>();
 	private LoadImage mLoadImage = null;
-	private PopupWindows pwh = null;
+	private PopupWindows pwh = null; 
 	private String mUid = null;
 	private int mType = Dynamic.DYNATIC_TYPE_MY_JIAREN;// 类型 0-我的家人动态
 	private String mLastId = "0";
@@ -223,15 +223,15 @@ public class JiarenActiveActivity extends Activity implements
 				break;
 			}
 			case MsgTagVO.DATA_REFRESH: {
-				boolean loadState = false;
-				if (msg.obj != null && !msg.obj.equals("")) {
-					loadState = true;
-					JsonHandler nljh = new JsonHandler((String) msg.obj,
-							getApplicationContext());
-					ArrayList<Dynamic> list = nljh.parseDynamicList();
-					updateItemList(list, false, false);
-				}
-				mPullDownView.RefreshComplete(loadState);
+//				boolean loadState = false;
+//				if (msg.obj != null && !msg.obj.equals("")) {
+//					loadState = true;
+//					JsonHandler nljh = new JsonHandler((String) msg.obj,
+//							getApplicationContext());
+//					ArrayList<Dynamic> list = nljh.parseDynamicList();
+//					updateItemList(list, false, false);
+//				}
+//				mPullDownView.RefreshComplete(loadState);
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {

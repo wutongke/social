@@ -29,11 +29,11 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
-             android:drawableLeft="@drawable/go_back"
             android:background="@null"
+            android:drawableLeft="@drawable/go_back"
             android:text="@string/label_back"
             android:textColor="#ffffff"
-            android:textSize="14sp" />
+            android:textSize="@dimen/basic_text" />
 
         <Button
             android:id="@+id/buttonSetting"
@@ -47,7 +47,6 @@
             android:textColor="#ffffff"
             android:textSize="14sp"
             android:visibility="visible" />
-
     </RelativeLayout>
 
     <ScrollView
@@ -107,7 +106,6 @@
                 android:orientation="vertical"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp" >
-
             </LinearLayout>
 
             <TextView

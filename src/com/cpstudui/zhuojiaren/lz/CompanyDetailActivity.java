@@ -292,7 +292,7 @@ public class CompanyDetailActivity extends BaseActivity {
 	int findCityIdByName(String name) {
 		int id = 1;
 		for (City c : cityList) {
-			if (c.getCityName().equals(name)) {
+			if (c.getCityName().contains(name)) {
 				try {
 					id = Integer.parseInt(c.getCityId());
 					break;
@@ -394,9 +394,8 @@ public class CompanyDetailActivity extends BaseActivity {
 					companyList.clear();
 					companyList.addAll(nljh.parseCompanyInfoList());
 					resetListVIew();
-					fillItemInfo(companyList.size());
+					fillItemInfo(companyList.size()-1);
 				}
-
 				break;
 			case MsgTagVO.DATA_OTHER:// 删除
 			case MsgTagVO.UPDATE:// 更新
@@ -439,22 +438,6 @@ public class CompanyDetailActivity extends BaseActivity {
 				edtMode = EditMODE.VIEW;
 			}
 		});
-	}
-
-	/**
-	 * 动态设置listView的高度 count 总条目
-	 */
-	private void setListViewHeight(ListView listView, BaseAdapter adapter,
-			int count) {
-		int totalHeight = 0;
-		for (int i = 0; i < count; i++) {
-			View listItem = adapter.getView(i, null, listView);
-			listItem.measure(0, 0);
-			totalHeight += listItem.getMeasuredHeight();
-		}
-		ViewGroup.LayoutParams params = listView.getLayoutParams();
-		params.height = totalHeight + (listView.getDividerHeight() * count);
-		listView.setLayoutParams(params);
 	}
 
 }

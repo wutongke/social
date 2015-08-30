@@ -176,7 +176,7 @@
                 android:paddingRight="10dp"
                 android:paddingTop="10dp" >
 
-                <com.cpstudio.zhuojiaren.widget.RoundRadiusImageView
+                <com.cpstudio.zhuojiaren.widget.RoundImageView
                     android:id="@+id/aed_people_image"
                     android:layout_width="60dp"
                     android:layout_height="60dp"

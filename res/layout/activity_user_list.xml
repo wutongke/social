@@ -34,7 +34,7 @@
             android:background="@null"
             android:text="@string/label_back"
             android:textColor="#ffffff"
-            android:textSize="14sp" />
+           android:textSize="@dimen/basic_text" />
     </RelativeLayout>
 
     <ListView

@@ -50,11 +50,12 @@
                     android:text="@string/label_del" />
             </LinearLayout>
 
-            <ListView
+            <com.cpstudio.zhuojiaren.widget.NestedListView
                 android:id="@+id/lv_company"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-            </ListView>
+                android:layout_height="wrap_content"
+                android:cacheColorHint="@android:color/transparent" >
+            </com.cpstudio.zhuojiaren.widget.NestedListView>
         </LinearLayout>
     </ScrollView>
 

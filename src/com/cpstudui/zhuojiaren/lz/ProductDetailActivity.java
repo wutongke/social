@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -28,6 +29,7 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.CardAddUserImageActivity;
+import com.cpstudio.zhuojiaren.CardEditActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ImageGridAdapter;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
@@ -39,6 +41,7 @@ import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.CompanyNewVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.ProductNewVO;
 import com.cpstudio.zhuojiaren.model.industry;
 import com.cpstudio.zhuojiaren.model.position;
@@ -78,10 +81,11 @@ public class ProductDetailActivity extends BaseActivity {
 	private ArrayList<String> neturls = new ArrayList<String>();
 	private Map<String, View> toDelView = new HashMap<String, View>();
 	private ArrayList<String> local = new ArrayList<String>();
-	
+
+	ArrayList<String> localImages = new ArrayList<String>();
+	ArrayList<String> urlImages = new ArrayList<String>();
 
 	private CommonAdapter<String> imageAdatper;
-	private ArrayList<String> imageDir = new ArrayList<String>();
 
 	EditMODE edtMode = EditMODE.VIEW;
 	private PopupWindows phw = null;
@@ -107,18 +111,16 @@ public class ProductDetailActivity extends BaseActivity {
 		title.setText(R.string.title_activity_main_product);
 		commpanyId = getIntent().getStringExtra("commpanyId");
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		initOnClick();
-		loadData();
-		
+
 		pwh = new PopupWindows(ProductDetailActivity.this);
 		mIsh = ImageSelectHelper.getIntance(ProductDetailActivity.this,
 				R.id.linearLayoutPicContainer);
-		initSelecter();
-		//添加图片效仿增加个人照片的地方
+		initOnClick();
+		loadData();
 	}
+
 	private void initSelecter() {
 		new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				try {
@@ -135,10 +137,10 @@ public class ProductDetailActivity extends BaseActivity {
 			}
 		}).start();
 	}
+
 	private void initOnClick() {
 		// TODO Auto-generated method stub
 		mIsh.getmAddButton().setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				mIsh.initParams();
@@ -158,20 +160,24 @@ public class ProductDetailActivity extends BaseActivity {
 				if (edtMode == EditMODE.VIEW)
 					return;
 				else if (edtMode == EditMODE.ADD) {
+					getFileStrings();
 					mConnHelper.addProduct(ProductDetailActivity.this,
 							mUIHandler, MsgTagVO.PUB_INFO, commpanyId,
 							edtProductName.getText().toString(), editTextDetail
 									.getText().toString(), editTextTargetClient
 									.getText().toString(), editTextValue
-									.getText().toString(), imageDir);
+									.getText().toString(), localImages,
+							getPhotoStr(urlImages));
 				} else {
+					getFileStrings();
 					mConnHelper.updateProduct(ProductDetailActivity.this,
 							mUIHandler, MsgTagVO.UPDATE, catchProduct
 									.getProductid(), edtProductName.getText()
 									.toString(), editTextDetail.getText()
 									.toString(), editTextTargetClient.getText()
 									.toString(), editTextValue.getText()
-									.toString(), imageDir);
+									.toString(),localImages,
+									getPhotoStr(urlImages));
 				}
 			}
 		});
@@ -201,9 +207,6 @@ public class ProductDetailActivity extends BaseActivity {
 						catchProduct.getProductid());
 			}
 		});
-
-		imageAdatper = new ImageGridAdapter(ProductDetailActivity.this,
-				imageDir, R.layout.item_grid_image2);
 	}
 
 	void clear() {
@@ -235,6 +238,14 @@ public class ProductDetailActivity extends BaseActivity {
 		if (i == -1) {
 			catchProduct = new ProductNewVO();
 			clear();
+			network.clear();
+			netids.clear();
+			neturls.clear();
+			Set<String> keySet = toDelView.keySet();
+			for (String item : keySet)
+				mIsh.removeFromContainer(toDelView.get(keySet));
+			toDelView.clear();
+			initSelecter();
 			return;
 		}
 		if (productList == null || i < 0 || i >= productList.size())
@@ -256,9 +267,21 @@ public class ProductDetailActivity extends BaseActivity {
 
 		setEnable(false);
 
+		network.clear();
+		netids.clear();
+		neturls.clear();
+
+		for (PicNewVO pic : item.getProductPic()) {
+			network.put(pic.getPic(), pic.getPic());
+			netids.add(pic.getPic());
+			neturls.add(pic.getPic());
+		}
+
+		initSelecter();
+		// 添加图片效仿增加个人照片的地方
 	}
 
-	void fillNotNullData(TextView tv, String text) {
+	void fillNotNullData(EditText tv, String text) {
 		if (tv != null && text != null) {
 			tv.setText(text);
 		}
@@ -272,14 +295,9 @@ public class ProductDetailActivity extends BaseActivity {
 			case MsgTagVO.INIT_SELECT:
 				mIsh.insertNetworkImage(netids, neturls, mLoadImage,
 						new OnClickListener() {
-
 							@Override
 							public void onClick(View v) {
 								String id = (String) v.getTag();
-//								mConnHelper.delheaderimg(id, mUIHandler,
-//										MsgTagVO.PUB_INFO,
-//										CardAddUserImageActivity.this, true,
-//										null, id);
 								toDelView.put(id, v);
 								mIsh.removeFromContainer(toDelView.get(id));
 							}
@@ -299,7 +317,7 @@ public class ProductDetailActivity extends BaseActivity {
 					productList.clear();
 					productList.addAll(nljh.parseProductInfoList());
 					resetListVIew();
-					fillItemInfo(productList.size());
+					fillItemInfo(productList.size() - 1);
 				}
 
 				break;
@@ -342,28 +360,46 @@ public class ProductDetailActivity extends BaseActivity {
 				edtMode = EditMODE.VIEW;
 			}
 		});
+
 	}
 
-	/**
-	 * 动态设置listView的高度 count 总条目
-	 */
-	private void setListViewHeight(ListView listView, BaseAdapter adapter,
-			int count) {
-		int totalHeight = 0;
-		for (int i = 0; i < count; i++) {
-			View listItem = adapter.getView(i, null, listView);
-			listItem.measure(0, 0);
-			totalHeight += listItem.getMeasuredHeight();
-		}
-		ViewGroup.LayoutParams params = listView.getLayoutParams();
-		params.height = totalHeight + (listView.getDividerHeight() * count);
-		listView.setLayoutParams(params);
-	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
+		String filePath = pwh.dealPhotoReturn(requestCode, resultCode, data,
+				false);
+		if (filePath != null) {
+			try {
+				mIsh.insertLocalImage(filePath);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		super.onActivityResult(requestCode, resultCode, data);
-		
+	}
+
+	private void getFileStrings() {
+		localImages.clear();
+		urlImages.clear();
+		for (String tag : mIsh.getTags()) {
+			if (network.containsKey(tag)) {
+				urlImages.add(tag);
+			} else {
+				localImages.add(tag);
+			}
+		}
+	}
+
+	String getPhotoStr(ArrayList<String> pics) {
+		StringBuilder sb = new StringBuilder();
+		if (pics == null || pics.size() < 1) {
+			return sb.toString();
+		}
+		for (String item : pics) {
+			sb.append(item);
+			sb.append(",");
+		}
+		return sb.toString();
 	}
 }

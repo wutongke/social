@@ -351,7 +351,11 @@ public class ImageSelectHelper implements OnClickListener {
 		}
 		resetContainer();
 	}
-	
+	public void removeAll()
+	{
+		tags.clear();
+		mContainer.removeAllViews();
+	}
 	private void resetContainer(View v) {
 		int allParent = mContainer.getChildCount();
 		for (int i = allParent - 1; i >= 0; i--) {

@@ -422,15 +422,15 @@ public class ZhuoConnHelper {
 				cancel, data);
 	}
 
-	public boolean addProduct(String products, Handler handler, int handlerTag,
-			Activity activity, boolean cancelable, OnCancelListener cancel,
-			String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("products", products));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlAddProduct(),
-				handler, handlerTag, activity, "addProduct", cancelable,
-				cancel, data);
-	}
+//	public boolean addProduct(String products, Handler handler, int handlerTag,
+//			Activity activity, boolean cancelable, OnCancelListener cancel,
+//			String data) {
+//		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+//		nameValuePairs.add(new BasicNameValuePair("products", products));
+//		return doPost(nameValuePairs, ZhuoCommHelper.getUrlAddProduct(),
+//				handler, handlerTag, activity, "addProduct", cancelable,
+//				cancel, data);
+//	}
 
 	public boolean addDream(String dreams, Handler handler, int handlerTag,
 			Activity activity, boolean cancelable, OnCancelListener cancel,
@@ -1946,7 +1946,7 @@ public class ZhuoConnHelper {
 
 	public boolean updateProduct(Activity activity, Handler mUIHandler,
 			int tag, String productid, String product, String description,
-			String customer, String value, ArrayList<String> files) {
+			String customer, String value, ArrayList<String> files,String originFilekeys) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("productid", productid));
 		nameValuePairs.add(new BasicNameValuePair("product", product));
@@ -1957,12 +1957,12 @@ public class ZhuoConnHelper {
 		fileMap.put("file", files);
 		return doPostWithFile(fileMap, nameValuePairs,
 				ZhuoCommHelperLz.updateProduct(), mUIHandler, tag, activity,
-				"updateProduct", false, null, null);
+				"updateProduct", false, null, null,originFilekeys);
 	}
 
 	public boolean addProduct(Activity activity, Handler mUIHandler, int tag,
 			String comid, String product, String description, String customer,
-			String value, ArrayList<String> files) {
+			String value, ArrayList<String> files,String originFilekeys) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("comid", comid));
 		nameValuePairs.add(new BasicNameValuePair("product", product));
@@ -1973,7 +1973,7 @@ public class ZhuoConnHelper {
 		fileMap.put("file", files);
 		return doPostWithFile(fileMap, nameValuePairs,
 				ZhuoCommHelperLz.addProduct(), mUIHandler, tag, activity,
-				"updateProduct", false, null, null);
+				"addProduct", false, null, null,originFilekeys);
 	}
 
 	/**

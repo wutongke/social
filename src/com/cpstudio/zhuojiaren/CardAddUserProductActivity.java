@@ -102,10 +102,10 @@ public class CardAddUserProductActivity extends Activity {
 							productStr += "]";
 							mProducts.addAll(productVOs);
 						}
-						mConnHelper.addProduct(productStr, mUIHandler,
-								MsgTagVO.PUB_INFO,
-								CardAddUserProductActivity.this, true, null,
-								null);
+//						mConnHelper.addProduct(productStr, mUIHandler,
+//								MsgTagVO.PUB_INFO,
+//								CardAddUserProductActivity.this, true, null,
+//								null);
 					}
 				});
 		findViewById(R.id.buttonAdd).setOnClickListener(new OnClickListener() {
