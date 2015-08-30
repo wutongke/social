@@ -276,22 +276,16 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		if (id != -1) {
-			Intent i = new Intent();
-			i.setClass(UserHomeActivity.this, MsgDetailActivity.class);
-			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
-			startActivity(i);
-		}
+//		if (id != -1) {
+//			Intent i = new Intent();
+//			i.setClass(UserHomeActivity.this, MsgDetailActivity.class);
+//			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
+//			startActivity(i);
+//		}
 	}
 
 	@Override
 	public void onRefresh() {
-		mPage = 1;
-		String params = ZhuoCommHelper.getUrlMyResource();
-		params += "?uid=" + uid;
-		params += "&page=" + mPage;
-		params += "&type=" + "3";
-		mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_REFRESH);
 	}
 
 	@Override

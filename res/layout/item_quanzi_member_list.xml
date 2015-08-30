@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:contentDescription="@string/label_author_header"
-            android:background="@drawable/default_userhead" />
+             />
     </RelativeLayout>
 
     <LinearLayout

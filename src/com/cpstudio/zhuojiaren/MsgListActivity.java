@@ -73,7 +73,6 @@ public class MsgListActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_msg_list);
 		uiHandler = new Handler();
-		mFacade = new ImChatFacade(MsgListActivity.this);
 		myid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		LayoutInflater inflater = LayoutInflater.from(MsgListActivity.this);
 		View headView = inflater.inflate(R.layout.listview_header7, null);
@@ -209,11 +208,6 @@ public class MsgListActivity extends FragmentActivity implements
 		super.onPause();
 	}
 
-	private void startCardActivity() {
-		findViewById(R.id.textViewMsgCardAll).setVisibility(View.GONE);
-		Intent i = new Intent(MsgListActivity.this, MsgCardListActivity.class);
-		startActivity(i);
-	}
 
 	private void startQuanListActivity() {
 		// RongIM.getInstance().startPrivateChat(MsgListActivity.this, "9237",
@@ -243,7 +237,7 @@ public class MsgListActivity extends FragmentActivity implements
 
 					@Override
 					public void onClick(View v) {
-						startCardActivity();
+//						startCardActivity();
 					}
 				});
 		v.findViewById(R.id.linearLayoutGroup).setOnClickListener(
@@ -271,17 +265,17 @@ public class MsgListActivity extends FragmentActivity implements
 					}
 				});
 
-		// ͨѶ¼
-		findViewById(R.id.buttonLinkList).setOnClickListener(
-				new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						Intent i = new Intent(MsgListActivity.this,
-								LinkListActivity.class);
-						startActivity(i);
-					}
-				});
+//		// ͨѶ¼
+//		findViewById(R.id.buttonLinkList).setOnClickListener(
+//				new OnClickListener() {
+//
+//					@Override
+//					public void onClick(View v) {
+//						Intent i = new Intent(MsgListActivity.this,
+//								LinkListActivity.class);
+//						startActivity(i);
+//					}
+//				});
 
 		final EditText searchView = (EditText) findViewById(R.id.editTextSearch);
 		searchView.setOnEditorActionListener(new OnEditorActionListener() {
@@ -533,12 +527,12 @@ public class MsgListActivity extends FragmentActivity implements
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		if (arg3 != -1) {
-			arg1.findViewById(R.id.textViewMsgAll).setVisibility(View.GONE);
-			Intent i = new Intent(MsgListActivity.this, ChatActivity.class);
-			i.putExtra("userid", (String) arg1.getTag(R.id.tag_id));
-			startActivity(i);
-		}
+//		if (arg3 != -1) {
+//			arg1.findViewById(R.id.textViewMsgAll).setVisibility(View.GONE);
+//			Intent i = new Intent(MsgListActivity.this, ChatActivity.class);
+//			i.putExtra("userid", (String) arg1.getTag(R.id.tag_id));
+//			startActivity(i);
+//		}
 	}
 
 	private class MsgReceiver extends BroadcastReceiver {

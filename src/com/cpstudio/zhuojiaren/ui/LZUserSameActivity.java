@@ -5,52 +5,32 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.RongIMClient.SendMessageCallback;
 import io.rong.imlib.model.Conversation.ConversationType;
-import io.rong.message.ContactNotificationMessage;
 
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.util.TimeUtils;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.TextView.OnEditorActionListener;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.MsgDetailActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.adapter.ZhuoNearByUserListAdatper;
-import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter2;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.UserAndCollection;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
-import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 public class LZUserSameActivity extends BaseActivity implements
 		OnItemClickListener {
@@ -171,12 +151,12 @@ public class LZUserSameActivity extends BaseActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		if (id != -1) {
-			Intent i = new Intent(LZUserSameActivity.this,
-					MsgDetailActivity.class);
-			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
-			startActivity(i);
-		}
+//		if (id != -1) {
+//			Intent i = new Intent(LZUserSameActivity.this,
+//					MsgDetailActivity.class);
+//			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
+//			startActivity(i);
+//		}
 	}
 
 	private void loadData() {

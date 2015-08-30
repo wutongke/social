@@ -24,8 +24,6 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.JiarenActiveActivity;
-import com.cpstudio.zhuojiaren.MsgDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ZhuoNearByUserListAdatper;
 import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter2;

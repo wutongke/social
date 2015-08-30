@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -37,7 +38,7 @@ import com.cpstudui.zhuojiaren.lz.JiarenActiveNumListActivity;
 import com.cpstudui.zhuojiaren.lz.QuanziActiveNumListActivity;
 
 public class JiarenActiveActivity extends Activity implements
-		OnPullDownListener, OnItemClickListener {
+		OnPullDownListener {
 	private ListView mListView;
 	// private ZhuoInfoAdapter mAdapter;
 
@@ -47,7 +48,7 @@ public class JiarenActiveActivity extends Activity implements
 	private PullDownView mPullDownView;
 	private ArrayList<Dynamic> mList = new ArrayList<Dynamic>();
 	private LoadImage mLoadImage = null;
-	private PopupWindows pwh = null; 
+	private PopupWindows pwh = null;
 	private String mUid = null;
 	private int mType = Dynamic.DYNATIC_TYPE_MY_JIAREN;// 类型 0-我的家人动态
 	private String mLastId = "0";
@@ -70,19 +71,34 @@ public class JiarenActiveActivity extends Activity implements
 		// InfoFacade.ACTIVELIST);
 		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		pwh = new PopupWindows(JiarenActiveActivity.this);
-		mLoadImage = new LoadImage();
+		mLoadImage = LoadImage.getInstance();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
 		((TextView) findViewById(R.id.userNameShow))
 				.setText(R.string.title_active);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.listview_header3);
 		mPullDownView.setOnPullDownListener(this);
-		mListView = mPullDownView.getListView();
-		mListView.setOnItemClickListener(this);
-		mAdapter = new DynamicListAdapter(JiarenActiveActivity.this, mList, 1);
-		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
+		mListView = mPullDownView.getListView();
+		mAdapter = new DynamicListAdapter(JiarenActiveActivity.this, mList, 1);
+		mListView.setAdapter(mAdapter);
+		mListView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				if (id != -1) {
+					Intent i = new Intent();
+					i.setClass(JiarenActiveActivity.this, DynamicDetailActivity.class);
+					i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
+					startActivity(i);
+				}
+			}
+		});
+		
 		loadData();
 		initClick();
 	}
@@ -223,15 +239,15 @@ public class JiarenActiveActivity extends Activity implements
 				break;
 			}
 			case MsgTagVO.DATA_REFRESH: {
-//				boolean loadState = false;
-//				if (msg.obj != null && !msg.obj.equals("")) {
-//					loadState = true;
-//					JsonHandler nljh = new JsonHandler((String) msg.obj,
-//							getApplicationContext());
-//					ArrayList<Dynamic> list = nljh.parseDynamicList();
-//					updateItemList(list, false, false);
-//				}
-//				mPullDownView.RefreshComplete(loadState);
+				// boolean loadState = false;
+				// if (msg.obj != null && !msg.obj.equals("")) {
+				// loadState = true;
+				// JsonHandler nljh = new JsonHandler((String) msg.obj,
+				// getApplicationContext());
+				// ArrayList<Dynamic> list = nljh.parseDynamicList();
+				// updateItemList(list, false, false);
+				// }
+				// mPullDownView.RefreshComplete(loadState);
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {
@@ -268,16 +284,16 @@ public class JiarenActiveActivity extends Activity implements
 		}
 	};
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		if (id != -1) {
-			Intent i = new Intent();
-			i.setClass(JiarenActiveActivity.this, DynamicDetailActivity.class);
-			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
-			startActivity(i);
-		}
-	}
+//	@Override
+//	public void onItemClick(AdapterView<?> parent, View view, int position,
+//			long id) {
+//		if (id != -1) {
+//			Intent i = new Intent();
+//			i.setClass(JiarenActiveActivity.this, DynamicDetailActivity.class);
+//			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
+//			startActivity(i);
+//		}
+//	}
 
 	private void loadInfo() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
