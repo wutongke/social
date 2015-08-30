@@ -37,6 +37,11 @@ public class ImageSelectHelper implements OnClickListener {
 	private ImageSelectHelper(Activity activity, int container, String filePath) {
 		this.mActivity = activity;
 		this.mContainer = (LinearLayout) activity.findViewById(container);
+		init();
+		threadInit(filePath);
+	}
+
+	void init() {
 		mTll = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -48,7 +53,6 @@ public class ImageSelectHelper implements OnClickListener {
 		((ImageView) (mAddButton.findViewById(R.id.imageViewPic)))
 				.setImageResource(R.drawable.bg_head_add);
 		ll.addView(mAddButton);
-		threadInit(filePath);
 	}
 
 	public static ImageSelectHelper getIntance(Activity activity, int container) {
@@ -121,7 +125,8 @@ public class ImageSelectHelper implements OnClickListener {
 			@Override
 			public void onClick(View v) {
 				String path = (String) v.getTag();
-				Intent intent = new Intent(mActivity, PhotoViewMultiActivity.class);
+				Intent intent = new Intent(mActivity,
+						PhotoViewMultiActivity.class);
 				ArrayList<String> orgs = new ArrayList<String>();
 				orgs.add(path);
 				intent.putStringArrayListExtra("pics", orgs);
@@ -351,11 +356,20 @@ public class ImageSelectHelper implements OnClickListener {
 		}
 		resetContainer();
 	}
-	public void removeAll()
-	{
+
+	public void clear() {
+		tags.clear();
+		if (mContainer != null)
+			mContainer.removeAllViews();
+
+		init();
+	}
+
+	public void removeAll() {
 		tags.clear();
 		mContainer.removeAllViews();
 	}
+
 	private void resetContainer(View v) {
 		int allParent = mContainer.getChildCount();
 		for (int i = allParent - 1; i >= 0; i--) {

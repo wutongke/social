@@ -157,20 +157,6 @@ public class QuanziMemberFra extends Fragment {
 				updateItemList((String) msg.obj, false, true);
 				break;
 			}
-			case MsgTagVO.UPDATE: {
-				if (msg.obj != null && !msg.obj.equals("")) {
-					JsonHandler nljh = new JsonHandler((String) msg.obj,
-							getActivity().getApplicationContext());
-
-					UserNewVO user = nljh.parseNewUser();
-					if (null != user) {
-						UserFacade facade = new UserFacade(getActivity()
-								.getApplicationContext());
-						facade.saveOrUpdate(user);
-					}
-				}
-				break;
-			}
 			}
 		}
 	};

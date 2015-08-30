@@ -53,6 +53,7 @@ import com.cpstudio.zhuojiaren.model.UserAndCollection;
 import com.cpstudio.zhuojiaren.model.UserEvent;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.model.ZMCDCount;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.model.ZhuoQuanVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -1114,6 +1115,17 @@ public class JsonHandler {
 		try {
 			Gson gson = new Gson();
 			info = gson.fromJson(jsonData, BusinessInfoVO.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return info;
+	}
+
+	public ZMCDCount parseZmCDCount() {
+		ZMCDCount info = null;
+		try {
+			Gson gson = new Gson();
+			info = gson.fromJson(jsonData, ZMCDCount.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

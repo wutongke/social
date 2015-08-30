@@ -109,8 +109,8 @@ public class ZhuoConnHelper {
 	}
 
 	public List<City> getCitys() {
-		if(citys==null){
-			
+		if (citys == null) {
+
 		}
 		return citys;
 	}
@@ -132,8 +132,9 @@ public class ZhuoConnHelper {
 	}
 
 	public BaseCodeData getBaseDataSet() {
-		if(baseDataSet==null){
-			String data = AppClientLef.getInstance(context).readObject("BaseSetData");
+		if (baseDataSet == null) {
+			String data = AppClientLef.getInstance(context).readObject(
+					"BaseSetData");
 			baseDataSet = JsonHandler.parseBaseCodeData(data);
 		}
 		return baseDataSet;
@@ -422,15 +423,16 @@ public class ZhuoConnHelper {
 				cancel, data);
 	}
 
-//	public boolean addProduct(String products, Handler handler, int handlerTag,
-//			Activity activity, boolean cancelable, OnCancelListener cancel,
-//			String data) {
-//		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-//		nameValuePairs.add(new BasicNameValuePair("products", products));
-//		return doPost(nameValuePairs, ZhuoCommHelper.getUrlAddProduct(),
-//				handler, handlerTag, activity, "addProduct", cancelable,
-//				cancel, data);
-//	}
+	// public boolean addProduct(String products, Handler handler, int
+	// handlerTag,
+	// Activity activity, boolean cancelable, OnCancelListener cancel,
+	// String data) {
+	// List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+	// nameValuePairs.add(new BasicNameValuePair("products", products));
+	// return doPost(nameValuePairs, ZhuoCommHelper.getUrlAddProduct(),
+	// handler, handlerTag, activity, "addProduct", cancelable,
+	// cancel, data);
+	// }
 
 	public boolean addDream(String dreams, Handler handler, int handlerTag,
 			Activity activity, boolean cancelable, OnCancelListener cancel,
@@ -747,7 +749,7 @@ public class ZhuoConnHelper {
 	private boolean doPost(List<NameValuePair> nameValuePairs, String url,
 			Handler handler, int handlerTag, Activity activity, String tag,
 			boolean cancelable, OnCancelListener cancel, String data) {
-		if(instance==null){
+		if (instance == null) {
 			instance = getInstance(activity);
 		}
 		if (!mStartedTag.contains(tag) || tag == null) {
@@ -944,7 +946,7 @@ public class ZhuoConnHelper {
 							if (map == null)
 								Toast.makeText(activity, "上传到七牛云失败", 1000)
 										.show();
-							else if (map.size() > 0) {
+							if (map.size() > 0) {
 								for (Map.Entry<String, StringBuilder> entry : map
 										.entrySet()) {
 									String key = entry.getKey();
@@ -955,18 +957,17 @@ public class ZhuoConnHelper {
 									nameValuePairs.add(new BasicNameValuePair(
 											key, value));
 								}
-								AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
-										addUserInfoByPost(nameValuePairs), url,
-										true, getFinishCallback(handler,
-												handlerTag, tag, data),
-										activity);
-								conn.setCancelable(cancelable);
-								if (cancelable) {
-									conn.setCancel(getCancelListener(cancel,
-											tag, conn));
-								}
-								conn.execute();
 							}
+							AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+									addUserInfoByPost(nameValuePairs), url,
+									true, getFinishCallback(handler,
+											handlerTag, tag, data), activity);
+							conn.setCancelable(cancelable);
+							if (cancelable) {
+								conn.setCancel(getCancelListener(cancel, tag,
+										conn));
+							}
+							conn.execute();
 						}
 					});
 			helper.execute("test");
@@ -1215,6 +1216,7 @@ public class ZhuoConnHelper {
 				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
 				"pubQuanTopic", false, null, null);
 	}
+
 	/**
 	 * 发布反馈意见
 	 * 
@@ -1236,6 +1238,7 @@ public class ZhuoConnHelper {
 				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
 				"pubQuanTopic", false, null, null);
 	}
+
 	/**
 	 * 更新个人照片
 	 * 
@@ -1897,6 +1900,14 @@ public class ZhuoConnHelper {
 				nameValuePairs, mUIHandler, tag);
 	}
 
+	public boolean getZMDTCount(Handler mUIHandler, int tag, String userid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		if (userid != null)
+			nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		return getFromServerByPost(ZhuoCommHelperLz.getZMDT(), nameValuePairs,
+				mUIHandler, tag);
+	}
+
 	/**
 	 * 获取公司信息
 	 * 
@@ -1946,7 +1957,8 @@ public class ZhuoConnHelper {
 
 	public boolean updateProduct(Activity activity, Handler mUIHandler,
 			int tag, String productid, String product, String description,
-			String customer, String value, ArrayList<String> files,String originFilekeys) {
+			String customer, String value, ArrayList<String> files,
+			String originFilekeys) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("productid", productid));
 		nameValuePairs.add(new BasicNameValuePair("product", product));
@@ -1957,12 +1969,12 @@ public class ZhuoConnHelper {
 		fileMap.put("file", files);
 		return doPostWithFile(fileMap, nameValuePairs,
 				ZhuoCommHelperLz.updateProduct(), mUIHandler, tag, activity,
-				"updateProduct", false, null, null,originFilekeys);
+				"updateProduct", false, null, null, originFilekeys);
 	}
 
 	public boolean addProduct(Activity activity, Handler mUIHandler, int tag,
 			String comid, String product, String description, String customer,
-			String value, ArrayList<String> files,String originFilekeys) {
+			String value, ArrayList<String> files, String originFilekeys) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("comid", comid));
 		nameValuePairs.add(new BasicNameValuePair("product", product));
@@ -1973,7 +1985,7 @@ public class ZhuoConnHelper {
 		fileMap.put("file", files);
 		return doPostWithFile(fileMap, nameValuePairs,
 				ZhuoCommHelperLz.addProduct(), mUIHandler, tag, activity,
-				"addProduct", false, null, null,originFilekeys);
+				"addProduct", false, null, null, originFilekeys);
 	}
 
 	/**
@@ -1992,9 +2004,9 @@ public class ZhuoConnHelper {
 	 *            (可选)是否是主公司 1-主公司 0-普通公司
 	 * @return
 	 */
-	public boolean updateCompany(Handler mUIHandler,
-			int tag, String comid, String company, int industry, int city,
-			int position, String homepage, int status) {
+	public boolean updateCompany(Handler mUIHandler, int tag, String comid,
+			String company, int industry, int city, int position,
+			String homepage, int status) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("comid", comid));
 		nameValuePairs.add(new BasicNameValuePair("company", company));
@@ -2011,9 +2023,8 @@ public class ZhuoConnHelper {
 				nameValuePairs, mUIHandler, tag);
 	}
 
-	public boolean addCompany( Handler mUIHandler, int tag,
-			String company, int industry, int city, int position,
-			String homepage, int status) {
+	public boolean addCompany(Handler mUIHandler, int tag, String company,
+			int industry, int city, int position, String homepage, int status) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("company", company));
 		nameValuePairs.add(new BasicNameValuePair("industry", String

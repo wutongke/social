@@ -83,6 +83,7 @@ public class ZhuoCommHelperLz {
 	
 	private final static String GET_PRODUCT = "/getComProduct.do";
 	private final static String GET_COMPANY = "/getUserCompany.do";
+	private final static String STATUS_CARD = "/viewStatusCard.do";
 	
 	public static String getAllJiaren() {
 		return ALL_JIAREN;
@@ -485,5 +486,12 @@ public class ZhuoCommHelperLz {
 	
 	public static String getCompany() {
 		return SERVER + GET_COMPANY;
+	}
+	/**
+	 * 倬脉动态的数量(被浏览等)
+	 * @return
+	 */
+	public static String getZMDT() {
+		return SERVER + STATUS_CARD;
 	}
 }

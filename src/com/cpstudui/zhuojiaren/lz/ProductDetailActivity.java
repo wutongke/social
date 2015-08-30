@@ -98,10 +98,31 @@ public class ProductDetailActivity extends BaseActivity {
 		pwh = new PopupWindows(ProductDetailActivity.this);
 		mIsh = ImageSelectHelper.getIntance(ProductDetailActivity.this,
 				R.id.linearLayoutPicContainer);
+		initISH(false);
 		initOnClick();
 		loadData();
 	}
 
+	void initISH(boolean flag)
+	{
+		if(flag)
+		mIsh.clear();
+		mIsh.getmAddButton().setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mIsh.initParams();
+				if (mIsh.getTags() != null && mIsh.getTags().size() < 9) {
+					pwh.showPop(findViewById(R.id.rootLayout));
+				} else {
+					mIsh.getmAddButton().setVisibility(View.GONE);
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.error24);
+				}
+			}
+		});
+	}
+	
+	
 	private void initSelecter() {
 		new Thread(new Runnable() {
 			@Override
@@ -123,19 +144,7 @@ public class ProductDetailActivity extends BaseActivity {
 
 	private void initOnClick() {
 		// TODO Auto-generated method stub
-		mIsh.getmAddButton().setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mIsh.initParams();
-				if (mIsh.getTags() != null && mIsh.getTags().size() < 9) {
-					pwh.showPop(findViewById(R.id.rootLayout));
-				} else {
-					mIsh.getmAddButton().setVisibility(View.GONE);
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.error24);
-				}
-			}
-		});
+		
 		function.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -218,17 +227,15 @@ public class ProductDetailActivity extends BaseActivity {
 	}
 
 	void fillItemInfo(int i) {
+		network.clear();
+		netids.clear();
+		neturls.clear();
+		toDelView.clear();
+		initISH(true);
+		initSelecter();
 		if (i == -1) {
 			catchProduct = new ProductNewVO();
 			clear();
-			network.clear();
-			netids.clear();
-			neturls.clear();
-			Set<String> keySet = toDelView.keySet();
-			for (String item : keySet)
-				mIsh.removeFromContainer(toDelView.get(keySet));
-			toDelView.clear();
-			initSelecter();
 			return;
 		}
 		if (productList == null || i < 0 || i >= productList.size())

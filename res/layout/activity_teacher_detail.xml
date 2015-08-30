@@ -58,7 +58,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:contentDescription="@string/ico"
-            android:src="@drawable/bg_teacher2" />
+             />
 
     </RelativeLayout>
 

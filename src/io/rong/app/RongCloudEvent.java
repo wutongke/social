@@ -40,6 +40,7 @@ import android.view.View;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.TabContainerActivity;
+import com.cpstudio.zhuojiaren.facade.GroupFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
@@ -69,12 +70,11 @@ public final class RongCloudEvent implements
 		RongIMClient.OnReceivePushMessageListener,
 		RongIM.ConversationListBehaviorListener, ApiCallback {
 
-	private static final String TAG = RongCloudEvent.class.getSimpleName();
+	private static final String TAG = "RongCloudEvent";
 
 	private static RongCloudEvent mRongCloudInstance;
 
 	private Context mContext;
-	private UserFacade mUserInfosDao;
 	private AbstractHttpRequest<User> getUserInfoByUserIdHttpRequest;
 
 	/**
@@ -116,7 +116,7 @@ public final class RongCloudEvent implements
 		RongIM.setConversationBehaviorListener(this);// 设置会话界面操作的监听器。
 		RongIM.setLocationProvider(this);// 设置地理位置提供者,不用位置的同学可以注掉此行代码
 		RongIM.setOnReceivePushMessageListener(this);
-		// RongIM.setPushMessageBehaviorListener(this);//自定义 push 通知。
+		RongIM.setOnReceiveMessageListener(this);
 	}
 
 	/*
@@ -229,8 +229,7 @@ public final class RongCloudEvent implements
 	 * @param message
 	 *            接收到的消息的实体信息。
 	 * @param left
-	 *            剩余未拉取消息数目。
-	 *            //	收到消息是否处理完成，true 表示走自已的处理方式，false 走融云默认处理方式。		
+	 *            剩余未拉取消息数目。 // 收到消息是否处理完成，true 表示走自已的处理方式，false 走融云默认处理方式。
 	 */
 	@Override
 	public boolean onReceived(Message message, int left) {
@@ -239,15 +238,10 @@ public final class RongCloudEvent implements
 
 		if (messageContent instanceof TextMessage) {// 文本消息
 			TextMessage textMessage = (TextMessage) messageContent;
-			
-		if(((TextMessage) messageContent).getExtra()!=null)
-		{
-			handleCustomMessage((TextMessage) messageContent);
-			return true;
-		}
-			
-			
-			
+			if (((TextMessage) messageContent).getExtra() != null) {
+				handleCustomMessage((TextMessage) messageContent);
+				return true;
+			}
 			Log.d(TAG, "onReceived-TextMessage:" + textMessage.getContent());
 		} else if (messageContent instanceof ImageMessage) {// 图片消息
 			ImageMessage imageMessage = (ImageMessage) messageContent;
@@ -298,10 +292,11 @@ public final class RongCloudEvent implements
 		}
 		return false;
 	}
-//文本消息的extra字段部位空则为自定义的消息：接收到点赞，评论等的推送消息(是否能实现？)
+
+	// 文本消息的extra字段部位空则为自定义的消息：接收到点赞，评论等的推送消息(是否能实现？)
 	private void handleCustomMessage(TextMessage messageContent) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**
@@ -383,28 +378,12 @@ public final class RongCloudEvent implements
 	 */
 	@Override
 	public UserInfo getUserInfo(String userId) {
-		// 暂时注释 /**
-		// * demo 代码 开发者需替换成自己的代码。
-		// */
-		// mUserInfosDao =
-		// DBManager.getInstance(mContext).getDaoSession().getUserInfosDao();
-		//
-		// QueryBuilder qb = mUserInfosDao.queryBuilder();
-		// qb.where(UserInfosDao.Properties.Userid.eq(userId));
-		// UserInfos userInfo =
-		// mUserInfosDao.queryBuilder().where(UserInfosDao.Properties.Userid.eq(userId)).unique();
-		//
-		// if (userInfo == null && DemoContext.getInstance() != null) {
-		// getUserInfoByUserIdHttpRequest =
-		// DemoContext.getInstance().getDemoApi().getUserInfoByUserId(userId,
-		// (ApiCallback<User>) this);
-		// }
-		//
-		// return DemoContext.getInstance().getUserInfoById(userId);
-		mUserInfosDao = DemoContext.getInstance(mContext).getmUserInfosDao();
+		UserFacade mUserInfosDao = DemoContext.getInstance(mContext)
+				.getmUserInfosDao();
 		if (mUserInfosDao == null
 				|| mUserInfosDao.getSimpleInfoById(userId) == null) {
 			// 数据库中不存在，网络请求
+			Log.i("cloudevent", (mUserInfosDao == null) + "," + "好友不存在");
 		}
 		UserInfo info = DemoContext.getInstance(mContext).getUserInfoById(
 				userId);
@@ -424,16 +403,19 @@ public final class RongCloudEvent implements
 	 */
 	@Override
 	public Group getGroupInfo(String groupId) {
-
-		if (ZhuoConnHelper.getInstance(mContext).getGroupMap() == null)
+		GroupFacade mGroupInfosDao = DemoContext.getInstance(mContext)
+				.getmGroupInfoDao();
+		if (mGroupInfosDao == null
+				|| mGroupInfosDao.getSimpleInfoById(groupId) == null) {
+			// 数据库中不存在，网络请求
 			return null;
-		Group group = ZhuoConnHelper.getInstance(mContext).getGroupMap()
-				.get(groupId);
-		if (group != null)
-			Log.i("cloudevent",
-					"group:" + group.getId() + "," + group.getName() + ","
-							+ group.getPortraitUri());
-		return group;
+		}
+		Group info = DemoContext.getInstance(mContext)
+				.getGroupInfoById(groupId);
+		if (info != null)
+			Log.i("cloudevent", "group" + info.getId() + "," + info.getName()
+					+ "," + info.getPortraitUri());
+		return info;
 	}
 
 	/**

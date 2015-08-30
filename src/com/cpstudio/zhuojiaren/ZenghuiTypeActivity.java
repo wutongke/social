@@ -28,7 +28,7 @@ public class ZenghuiTypeActivity extends Activity {
 		addGridView();
 	}
 
-	private void addGridView() {
+	private void addGridView() {/*
 		GridView gridview = (GridView) findViewById(R.id.gridViewZenghui);
 		String[] zenghuitype = getResources().getStringArray(
 				R.array.array_zenghui_type);
@@ -109,7 +109,7 @@ public class ZenghuiTypeActivity extends Activity {
 				startActivity(i);
 			}
 		});
-	}
+	*/}
 
 	private void initClick() {
 

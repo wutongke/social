@@ -144,6 +144,7 @@ public class UserFacade {
 		return userid;
 	}
 
+	//更新用户信息的地方
 	public long saveOrUpdate(UserNewVO item) {
 		String userid = item.getUserid();
 		if (userid != null && getSimpleInfoById(userid) != null) {

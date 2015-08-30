@@ -31,7 +31,11 @@ import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
-
+/**
+ * 请求交换名片的家人
+ * @author lz
+ *
+ */
 public class LZUserSameActivity extends BaseActivity implements
 		OnItemClickListener {
 	private ListView mListView;
@@ -60,7 +64,6 @@ public class LZUserSameActivity extends BaseActivity implements
 		mListView = mPullDownView.getListView();
 		mAdapter = new CommonAdapter<UserNewVO>(LZUserSameActivity.this, mList,
 				R.layout.item_carduser_list) {
-
 			@Override
 			public void convert(ViewHolder helper, final UserNewVO item) {
 				// TODO Auto-generated method stub
@@ -79,10 +82,8 @@ public class LZUserSameActivity extends BaseActivity implements
 				// CommonUtil.calcTimeToNow(time)
 				helper.setText(R.id.tvTime, item.getRegisterTime());
 				helper.setImageByUrl(R.id.izul_image, item.getUheader());
-
 				helper.setImageResource(R.id.izul_image,
 						R.drawable.cardex_zx_1, new OnClickListener() {
-
 							@Override
 							public void onClick(final View v) {
 								// TODO Auto-generated method stub
@@ -94,6 +95,8 @@ public class LZUserSameActivity extends BaseActivity implements
 		};
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowFooter(false);
+		mPullDownView.noFoot();
+		
 		loadData();
 	}
 
@@ -101,7 +104,6 @@ public class LZUserSameActivity extends BaseActivity implements
 		// 递送名片(即添加好友)
 		DeAgreedFriendRequestMessage msg = new DeAgreedFriendRequestMessage(
 				uid, "同意");
-
 		RongIM.getInstance()
 				.getRongIMClient()
 				.sendMessage(ConversationType.PRIVATE, item.getUserid(), msg,
@@ -115,7 +117,6 @@ public class LZUserSameActivity extends BaseActivity implements
 										MsgTagVO.MSG_FOWARD, item.getUserid(),
 										2);
 							}
-
 							@Override
 							public void onError(Integer arg0, ErrorCode arg1) {
 								// TODO Auto-generated
@@ -136,8 +137,11 @@ public class LZUserSameActivity extends BaseActivity implements
 						getApplicationContext())) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					mList = nljh.parseUserNewList();
+					mList.clear();
+					mList.addAll( nljh.parseUserNewList());
 					mAdapter.notifyDataSetChanged();
+					 if(mList.size()<1)
+						 mPullDownView.noData(false);
 				}
 				break;
 			}
@@ -145,7 +149,6 @@ public class LZUserSameActivity extends BaseActivity implements
 			}
 
 		}
-
 	};
 
 	@Override

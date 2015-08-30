@@ -1,5 +1,7 @@
 package com.cpstudio.zhuojiaren.helper;
 
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -281,12 +283,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ "params4 TEXT, "
 			+ "params5 TEXT)";
 
-	
-	
+	private static final String SQL_TABLE_GROUPLIST = "CREATE TABLE GROUPLIST (groupid TEXT PRIMARY KEY, "
+			+ "gname TEXT, "
+			+ "gheader TEXT, "
+			+ "gintro TEXT, "
+			+ "gpub TEXT, "
+			+ "gtype TEXT, "
+			+ "addtime TEXT, "
+			+ "memberCount TEXT, "
+			+ "topicCount TEXT, "
+			+ "lastmsgtime TEXT, "
+			+ "alert TEXT, "
+			+ "userid TEXT, "
+			+ "name TEXT, "
+			+ "uheader TEXT, "
+			+ "city TEXT, "
+			+ "followpms TEXT, "
+			+ "accesspms TEXT, " + "role TEXT)";
 	private static final String TAG = "DatabaseHelper";
 	private static SQLiteDatabase dbSqlite = null;
-	
-	//add by lz
+
+	// add by lz
 	private static final String SQL_TABLE_NEWUSERLIST = "CREATE TABLE NEWUSERLIST (userid TEXT PRIMARY KEY, "
 			+ "signature TEXT, "
 			+ "faith TEXT, "
@@ -320,9 +337,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ "zodiac TEXT, "
 			+ "email TEXT, "
 			+ "name TEXT, "
-			+ "isWeixinOpen TEXT, "
-			+ "uheader TEXT, "
-			+ "statusNum TEXT)";
+			+ "isWeixinOpen TEXT, " + "uheader TEXT, " + "statusNum TEXT)";
+
 	public DatabaseHelper(Context context, String userid) {
 		super(context, userid + DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -337,7 +353,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public void createAll(SQLiteDatabase db) {
-		db.execSQL(SQL_TABLE_USERLIST);
+		db.execSQL(SQL_TABLE_USERLIST); //有用的
 		db.execSQL(SQL_TABLE_CONTRACTLIST);
 		db.execSQL(SQL_TABLE_FOLLOWLIST);
 		db.execSQL(SQL_TABLE_FANLIST);
@@ -363,6 +379,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(SQL_TABLE_RECORDLIST);
 		db.execSQL(SQL_TABLE_RECORDCHATLIST);
 		db.execSQL(SQL_TABLE_NEWUSERLIST);
+		db.execSQL(SQL_TABLE_GROUPLIST);//有用的
+		
 	}
 
 	public void dropTable(SQLiteDatabase db, String tableName) {
@@ -395,6 +413,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("drop table if exists RECORDLIST");
 		db.execSQL("drop table if exists RECORDCHATLIST");
 		db.execSQL("drop table if exists NEWUSERLIST");
+		db.execSQL("drop table if exists GROUPLIST");
+		
 	}
 
 	@Override
@@ -447,49 +467,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		db.beginTransaction();
 		try {
-//			switch (oldVersion) {
-//			case 1:
-//				if (!tabbleIsExist(db, "CONTRACTLIST")) {
-//					createTable(db, SQL_TABLE_CONTRACTLIST);
-//				}
-//				if (!tabbleIsExist(db, "FOLLOWLIST")) {
-//					createTable(db, SQL_TABLE_FOLLOWLIST);
-//				}
-//				if (!tabbleIsExist(db, "FANLIST")) {
-//					createTable(db, SQL_TABLE_FANLIST);
-//				}
-//			case 2:
-//				if (!tabbleIsExist(db, "COLLECTLIST")) {
-//					createTable(db, SQL_TABLE_COLLECTLIST);
-//				}
-//				if (!tabbleIsExist(db, "ACTIVELIST")) {
-//					createTable(db, SQL_TABLE_ACTIVELIST);
-//				}
-//				if (!tabbleIsExist(db, "NEWSLIST")) {
-//					createTable(db, SQL_TABLE_NEWSLIST);
-//				}
-//				if (!tabbleIsExist(db, "ZHUOQUANLIST")) {
-//					createTable(db, SQL_TABLE_ZHUOQUANLIST);
-//				}
-//				if (!tabbleIsExist(db, "USERDAILY")) {
-//					createTable(db, SQL_TABLE_USERDAILY);
-//				}
-//			case 3:
-//				if (!tabbleIsExist(db, "RECORDLIST")) {
-//					createTable(db, SQL_TABLE_RECORDLIST);
-//				}
-//			case 4:
-//				if (!tabbleIsExist(db, "RECORDCHATLIST")) {
-//					createTable(db, SQL_TABLE_RECORDCHATLIST);
-//				}
-//			case 5:
-//				db.execSQL("ALTER TABLE ZHUOINFOLIST ADD COLUMN originid TEXT");
-//			case 6:
-//				db.execSQL("ALTER TABLE CMTLIST ADD COLUMN likecnt TEXT");
-//			case 7:
-//				db.execSQL("ALTER TABLE ZHUOINFOLIST ADD COLUMN forwardnum TEXT");
-//			
-//			}
+			// switch (oldVersion) {
+			// case 1:
+			// if (!tabbleIsExist(db, "CONTRACTLIST")) {
+			// createTable(db, SQL_TABLE_CONTRACTLIST);
+			// }
+			// if (!tabbleIsExist(db, "FOLLOWLIST")) {
+			// createTable(db, SQL_TABLE_FOLLOWLIST);
+			// }
+			// if (!tabbleIsExist(db, "FANLIST")) {
+			// createTable(db, SQL_TABLE_FANLIST);
+			// }
+			// case 2:
+			// if (!tabbleIsExist(db, "COLLECTLIST")) {
+			// createTable(db, SQL_TABLE_COLLECTLIST);
+			// }
+			// if (!tabbleIsExist(db, "ACTIVELIST")) {
+			// createTable(db, SQL_TABLE_ACTIVELIST);
+			// }
+			// if (!tabbleIsExist(db, "NEWSLIST")) {
+			// createTable(db, SQL_TABLE_NEWSLIST);
+			// }
+			// if (!tabbleIsExist(db, "ZHUOQUANLIST")) {
+			// createTable(db, SQL_TABLE_ZHUOQUANLIST);
+			// }
+			// if (!tabbleIsExist(db, "USERDAILY")) {
+			// createTable(db, SQL_TABLE_USERDAILY);
+			// }
+			// case 3:
+			// if (!tabbleIsExist(db, "RECORDLIST")) {
+			// createTable(db, SQL_TABLE_RECORDLIST);
+			// }
+			// case 4:
+			// if (!tabbleIsExist(db, "RECORDCHATLIST")) {
+			// createTable(db, SQL_TABLE_RECORDCHATLIST);
+			// }
+			// case 5:
+			// db.execSQL("ALTER TABLE ZHUOINFOLIST ADD COLUMN originid TEXT");
+			// case 6:
+			// db.execSQL("ALTER TABLE CMTLIST ADD COLUMN likecnt TEXT");
+			// case 7:
+			// db.execSQL("ALTER TABLE ZHUOINFOLIST ADD COLUMN forwardnum TEXT");
+			//
+			// }
 			dropAll(db);
 			createAll(db);
 			db.setTransactionSuccessful();
@@ -512,6 +532,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			getWritableDatabase();
 		}
 		return dbSqlite.insert(table, nullColumnHack, values);
+	}
+
+	public boolean insertAll(String table, String nullColumnHack,
+			List<ContentValues> values) {
+		if (dbSqlite == null) {
+			getWritableDatabase();
+		}
+		dbSqlite.beginTransaction();
+		try {
+			for (ContentValues value : values)
+				dbSqlite.insert(table, nullColumnHack, value);
+			dbSqlite.setTransactionSuccessful(); // 设置事务处理成功，不设置会自动回滚不提交
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		} finally {
+			dbSqlite.endTransaction();// 结束事务,有两种情况：commit,rollback,
+			// 事务的提交或回滚是由事务的标志决定的,如果事务的标志为True，事务就会提交，否侧回滚,默认情况下事务的标志为False
+		}
+		return true;
 	}
 
 	public int update(String table, ContentValues values, String whereClause,

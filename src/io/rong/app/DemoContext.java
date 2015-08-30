@@ -17,7 +17,9 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import com.cpstudio.zhuojiaren.facade.GroupFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
+import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 
 /**
@@ -27,14 +29,13 @@ public class DemoContext {
 
 	private static DemoContext mDemoContext;
 	public Context mContext;
-	// private DemoApi mDemoApi;
-	private HashMap<String, Group> groupMap;
 	private ArrayList<UserInfo> mUserInfos;
 	private ArrayList<UserInfo> mFriendInfos;
 	private SharedPreferences mPreferences;
 	private RongIM.LocationProvider.LocationCallback mLastLocationCallback;
 	// private UserInfosDao mUserInfosDao;
 	private UserFacade mUserInfosDao;
+	private GroupFacade mGroupInfoDao;
 
 	public UserFacade getmUserInfosDao() {
 		return mUserInfosDao;
@@ -44,7 +45,7 @@ public class DemoContext {
 		this.mUserInfosDao = mUserInfosDao;
 	}
 
-	public static DemoContext getInstance(Context context) {
+	public synchronized static DemoContext getInstance(Context context) {
 
 		if (mDemoContext == null) {
 			mDemoContext = new DemoContext(context);
@@ -60,11 +61,12 @@ public class DemoContext {
 
 		RongIM.setLocationProvider(new LocationProvider());
 
-		// mDemoApi = new DemoApi(context);
-
-		// mUserInfosDao =
-		// DBManager.getInstance(mContext).getDaoSession().getUserInfosDao();
 		mUserInfosDao = new UserFacade(mContext.getApplicationContext());
+		mGroupInfoDao = new GroupFacade(mContext.getApplicationContext());
+	}
+
+	public GroupFacade getmGroupInfoDao() {
+		return mGroupInfoDao;
 	}
 
 	public static void init(Context context) {
@@ -77,19 +79,6 @@ public class DemoContext {
 
 	public void setSharedPreferences(SharedPreferences sharedPreferences) {
 		this.mPreferences = sharedPreferences;
-	}
-
-	/**
-	 * 登陆成功后应该返回好友列表，圈子列表
-	 * 
-	 * @param groupMap
-	 */
-	public void setGroupMap(HashMap<String, Group> groupMap) {
-		this.groupMap = groupMap;
-	}
-
-	public HashMap<String, Group> getGroupMap() {
-		return groupMap;
 	}
 
 	public ArrayList<UserInfo> getUserInfos() {
@@ -155,17 +144,17 @@ public class DemoContext {
 	 * @param status
 	 *            状态
 	 */
-	public void insertOrReplaceUserInfo(UserInfo info, String status) {
-
-		UserNewVO user = new UserNewVO();
-		// user.setBirthday(birthday)
-		// UserInfos userInfos = new UserInfos();
-		// userInfos.setStatus(status);
-		// userInfos.setUsername(info.getName());
-		// userInfos.setPortrait(String.valueOf(info.getPortraitUri()));
-		// userInfos.setUserid(info.getUserId());
-		mUserInfosDao.saveOrUpdate(user);
-	}
+	// public void insertOrReplaceUserInfo(UserInfo info, String status) {
+	//
+	// UserNewVO user = new UserNewVO();
+	// // user.setBirthday(birthday)
+	// // UserInfos userInfos = new UserInfos();
+	// // userInfos.setStatus(status);
+	// // userInfos.setUsername(info.getName());
+	// // userInfos.setPortrait(String.valueOf(info.getPortraitUri()));
+	// // userInfos.setUserid(info.getUserId());
+	// mUserInfosDao.saveOrUpdate(user);
+	// }
 
 	public void insertOrReplaceUserInfoList(ArrayList<UserInfo> list,
 			String status) {
@@ -182,7 +171,7 @@ public class DemoContext {
 	 */
 	public UserInfo getUserInfoById(String userId) {
 
-		if(mUserInfosDao==null)
+		if (mUserInfosDao == null)
 			return null;
 		UserNewVO user = mUserInfosDao.getSimpleInfoById(userId);
 		if (user == null)
@@ -247,20 +236,16 @@ public class DemoContext {
 	 * @param groupid
 	 * @return
 	 */
-	public String getGroupNameById(String groupid) {
-		Group groupReturn = null;
-		if (!TextUtils.isEmpty(groupid) && groupMap != null) {
+	public Group getGroupInfoById(String groupid) {
 
-			if (groupMap.containsKey(groupid)) {
-				groupReturn = groupMap.get(groupid);
-			} else
-				return null;
-
-		}
-		if (groupReturn != null)
-			return groupReturn.getName();
-		else
+		if (mGroupInfoDao == null)
 			return null;
+		QuanVO quan = mGroupInfoDao.getSimpleInfoById(groupid);
+		if (quan == null)
+			return null;
+
+		return new Group(quan.getGroupid(), quan.getGname(), Uri.parse(quan
+				.getGheader()));
 	}
 
 	public RongIM.LocationProvider.LocationCallback getLastLocationCallback() {
