@@ -247,7 +247,7 @@
     <string name="info16">请选择广播类型</string>
     <string name="info17">好的标题是成功的开始</string>
     <string name="info18">详细资源描述</string>
-    <string name="info19">添加关键词标签 以方便检索,用；隔开</string>
+    <string name="info19">添加关键词标签 以方便检索   用；隔开</string>
     <string name="info20">获取位置. . .</string>
     <string name="info21">添加照片</string>
     <string name="info22">请输入标题</string>
@@ -1141,4 +1141,5 @@
     <string name="txt_cancel">取消修改</string>
     <string name="txt_add">增加</string>
     <string name="txt_save">保存</string>
+    <string name="txt_pub">发布</string>
 </resources>

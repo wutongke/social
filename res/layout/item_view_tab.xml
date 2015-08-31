@@ -35,7 +35,6 @@
         android:background="@drawable/bg_msg_new"
         android:gravity="center_horizontal"
         android:textColor="#ffffff"
-        
         android:visibility="gone" />
 
 </RelativeLayout>

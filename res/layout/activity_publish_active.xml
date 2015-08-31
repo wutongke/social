@@ -3,6 +3,7 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     android:orientation="vertical"
     tools:context=".PublishActiveActivity" >
 
@@ -12,7 +13,15 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_title" >
 
-       <include layout="@layout/goback_button"/>
+        <include layout="@layout/goback_button" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/label_main_pubactive"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/buttonSubmit"
@@ -22,7 +31,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
             android:background="@drawable/button_top_bg_menu"
-            android:text="@string/label_submit"
+            android:text="@string/txt_pub"
             android:textColor="#ffffff"
             android:textSize="14sp" />
     </RelativeLayout>
@@ -30,23 +39,19 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="0dp"
         android:layout_marginTop="0dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginRight="10dp"
             android:orientation="vertical" >
-
 
             <EditText
                 android:id="@+id/editTextchoiceContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_corners"
+                android:background="@null"
                 android:ems="10"
                 android:gravity="top"
                 android:hint="@string/info_pub_new"
@@ -55,36 +60,24 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:paddingTop="10dp"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/editTextchoiceTag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_corners"
-                android:ems="10"
-                android:hint="@string/info19"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:singleLine="true"
-                android:textSize="14sp" />
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:id="@+id/linearLayoutPicContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_corners"
                 android:orientation="vertical" >
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
-                android:background="#dddddd" >
+                android:background="#2e2e2e" >
 
                 <TextView
                     android:id="@+id/textViewPosInfo"
@@ -99,6 +92,20 @@
                     android:paddingTop="5dp"
                     android:text="@string/info20" />
             </LinearLayout>
+
+            <EditText
+                android:id="@+id/editTextchoiceTag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:background="#2e2e2e"
+                android:ems="10"
+                android:hint="@string/info19"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="14sp" />
         </LinearLayout>
     </ScrollView>
 
