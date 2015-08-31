@@ -311,6 +311,7 @@ public class TabContainerActivity extends TabActivity implements
 
 		TextView textView = (TextView) view.findViewById(R.id.tabtitle);
 		textView.setText(mTextArray[index]);
+		textView.setTextSize(10);
 		if (index == 2) {
 			numTV = (TextView) view.findViewById(R.id.textViewNum);
 		}

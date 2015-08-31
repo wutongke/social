@@ -20,6 +20,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+            <ImageView
+                android:id="@+id/acfd_advertisiment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/mbg5_wdzy_1" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,10 +61,10 @@
 
             <LinearLayout
                 android:id="@+id/acfd_des"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:orientation="vertical" >
             </LinearLayout>
 
@@ -193,8 +200,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
-                        android:singleLine="true"
-                       />
+                        android:singleLine="true" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -315,8 +321,7 @@
                     android:id="@+id/acfd_people_image"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_marginBottom="10dp"
-                     />
+                    android:layout_marginBottom="10dp" />
 
                 <TextView
                     android:id="@+id/acfd_people_name"
@@ -349,9 +354,8 @@
             <com.cpstudio.zhuojiaren.widget.TabButton
                 android:id="@+id/acfd_tab"
                 android:layout_width="match_parent"
-                android:layout_height="42dp" 
-                android:visibility="gone"
-                >
+                android:layout_height="42dp"
+                android:visibility="gone" >
             </com.cpstudio.zhuojiaren.widget.TabButton>
 
             <android.support.v4.view.ViewPager
