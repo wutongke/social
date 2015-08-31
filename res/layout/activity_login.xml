@@ -20,6 +20,8 @@
             android:inputType="number"
             android:maxLines="1"
             android:paddingLeft="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:singleLine="true" >
             <requestFocus />
         </EditText>
@@ -37,6 +39,8 @@
             android:hint="@string/label_password"
             android:imeActionId="@+id/login"
             android:imeOptions="actionDone"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:inputType="textPassword"
             android:maxLines="1"
             android:paddingLeft="10dp"

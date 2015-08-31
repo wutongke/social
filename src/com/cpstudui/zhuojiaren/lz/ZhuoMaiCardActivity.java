@@ -292,9 +292,10 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				// TODO Auto-generated method stub
 				if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_MYSELF
 						.ordinal()) {
-					Intent i = new Intent(ZhuoMaiCardActivity.this,
-							ChangeBackgroundActivity.class);
-					startActivity(i);
+//					Intent i = new Intent(ZhuoMaiCardActivity.this,
+//							ChangeBackgroundActivity.class);
+//					startActivity(i);
+					CommonUtil.displayToast(ZhuoMaiCardActivity.this, "ÔÝÎÞ");
 				}
 			}
 		});
@@ -401,6 +402,8 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	}
 
 	protected Fragment addBundle(Fragment fragment, int catlog) {
+		Intent i = getIntent();
+		userid = i.getStringExtra("userid");
 		Bundle bundle = new Bundle();
 		bundle.putInt(QuanVO.QUANZIMAINTYPE, catlog);
 		bundle.putString("userid", userid);

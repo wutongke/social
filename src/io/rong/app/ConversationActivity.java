@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -63,6 +64,9 @@ public class ConversationActivity extends FragmentActivity {
 						tvTitle.setText(guest.getName());
 					} else
 						tofollow = "0";
+					UserFacade facade = new UserFacade(ConversationActivity.this
+							.getApplicationContext());
+					facade.saveOrUpdate(guest);
 				}
 				break;
 			}

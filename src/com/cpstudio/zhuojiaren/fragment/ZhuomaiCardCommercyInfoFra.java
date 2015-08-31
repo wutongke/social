@@ -141,7 +141,6 @@ public class ZhuomaiCardCommercyInfoFra extends Fragment {
 			}
 		});
 		tvMoreResource.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub

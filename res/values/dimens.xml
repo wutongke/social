@@ -7,6 +7,7 @@
 	<!-- lef -->
 	<dimen name="copyright_text">10dp</dimen>
 	<dimen name="basic_text">20dp</dimen>
+	<dimen name="basic_title_text">20dp</dimen>
 	<dimen name="second_basic_text">18dp</dimen>
 	<dimen name="basic_margin">20dp</dimen>
 

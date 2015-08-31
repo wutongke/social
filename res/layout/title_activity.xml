@@ -14,6 +14,7 @@
         android:drawableLeft="@drawable/go_back"
         android:text="@string/label_back"
         android:textColor="#ffffff"
+        android:gravity="center"
         android:textSize="20dp" />
 
     <TextView
@@ -30,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
         android:layout_toLeftOf="@+id/activity_function"
-        android:gravity="center_vertical"
+       android:gravity="center"
         android:textColor="#ffffff"
         android:textSize="20dp"
         android:visibility="gone" />
@@ -39,11 +40,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:textColor="#ffffff"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+         />
     <ImageView 
         android:id="@+id/activity_function_image"
         android:layout_width="wrap_content"

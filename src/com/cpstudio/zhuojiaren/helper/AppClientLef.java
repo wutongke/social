@@ -1355,6 +1355,9 @@ public class AppClientLef {
 	private boolean doPost(List<NameValuePair> nameValuePairs, String url,
 			Handler handler, int handlerTag, Activity activity, String tag,
 			boolean cancelable, OnCancelListener cancel, String data) {
+		if(instance==null){
+			instance = AppClientLef.getInstance(activity);
+		}
 		if (CommonUtil.getNetworkState(activity) == 2) {
 
 			CommonUtil.displayToast(activity, R.string.error0);

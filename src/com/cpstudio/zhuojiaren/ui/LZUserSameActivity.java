@@ -5,53 +5,37 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.RongIMClient.SendMessageCallback;
 import io.rong.imlib.model.Conversation.ConversationType;
-import io.rong.message.ContactNotificationMessage;
 
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.util.TimeUtils;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.TextView.OnEditorActionListener;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.MsgDetailActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.adapter.ZhuoNearByUserListAdatper;
-import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter2;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.UserAndCollection;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
-import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
-
+/**
+ * 请求交换名片的家人
+ * @author lz
+ *
+ */
 public class LZUserSameActivity extends BaseActivity implements
 		OnItemClickListener {
 	private ListView mListView;
@@ -80,7 +64,6 @@ public class LZUserSameActivity extends BaseActivity implements
 		mListView = mPullDownView.getListView();
 		mAdapter = new CommonAdapter<UserNewVO>(LZUserSameActivity.this, mList,
 				R.layout.item_carduser_list) {
-
 			@Override
 			public void convert(ViewHolder helper, final UserNewVO item) {
 				// TODO Auto-generated method stub
@@ -99,10 +82,8 @@ public class LZUserSameActivity extends BaseActivity implements
 				// CommonUtil.calcTimeToNow(time)
 				helper.setText(R.id.tvTime, item.getRegisterTime());
 				helper.setImageByUrl(R.id.izul_image, item.getUheader());
-
 				helper.setImageResource(R.id.izul_image,
 						R.drawable.cardex_zx_1, new OnClickListener() {
-
 							@Override
 							public void onClick(final View v) {
 								// TODO Auto-generated method stub
@@ -114,6 +95,8 @@ public class LZUserSameActivity extends BaseActivity implements
 		};
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowFooter(false);
+		mPullDownView.noFoot();
+		
 		loadData();
 	}
 
@@ -121,7 +104,6 @@ public class LZUserSameActivity extends BaseActivity implements
 		// 递送名片(即添加好友)
 		DeAgreedFriendRequestMessage msg = new DeAgreedFriendRequestMessage(
 				uid, "同意");
-
 		RongIM.getInstance()
 				.getRongIMClient()
 				.sendMessage(ConversationType.PRIVATE, item.getUserid(), msg,
@@ -135,7 +117,6 @@ public class LZUserSameActivity extends BaseActivity implements
 										MsgTagVO.MSG_FOWARD, item.getUserid(),
 										2);
 							}
-
 							@Override
 							public void onError(Integer arg0, ErrorCode arg1) {
 								// TODO Auto-generated
@@ -156,8 +137,11 @@ public class LZUserSameActivity extends BaseActivity implements
 						getApplicationContext())) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					mList = nljh.parseUserNewList();
+					mList.clear();
+					mList.addAll( nljh.parseUserNewList());
 					mAdapter.notifyDataSetChanged();
+					 if(mList.size()<1)
+						 mPullDownView.noData(false);
 				}
 				break;
 			}
@@ -165,18 +149,17 @@ public class LZUserSameActivity extends BaseActivity implements
 			}
 
 		}
-
 	};
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		if (id != -1) {
-			Intent i = new Intent(LZUserSameActivity.this,
-					MsgDetailActivity.class);
-			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
-			startActivity(i);
-		}
+//		if (id != -1) {
+//			Intent i = new Intent(LZUserSameActivity.this,
+//					MsgDetailActivity.class);
+//			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
+//			startActivity(i);
+//		}
 	}
 
 	private void loadData() {

@@ -85,15 +85,15 @@
 	</style>
 	<style name="basic_text">
 	    <item name="android:textColor">@color/graywhite</item>
-	    <item name="android:textSize">20dp</item>
+	    <item name="android:textSize">18dp</item>
 	</style>
 	<style name="basic_text_white">
 	    <item name="android:textColor">@color/white</item>
-	    <item name="android:textSize">20dp</item>
+	    <item name="android:textSize">18dp</item>
 	</style>
 	<style name="basic_text_black">
 	    <item name="android:textColor">@color/black</item>
-	    <item name="android:textSize">20dp</item>
+	    <item name="android:textSize">18dp</item>
 	</style>
 	<style name="basic_second_text">
 	    <item name="android:textColor">@color/graywhite</item>

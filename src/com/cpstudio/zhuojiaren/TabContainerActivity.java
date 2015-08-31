@@ -1,17 +1,18 @@
 package com.cpstudio.zhuojiaren;
 
+import io.rong.app.DemoContext;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.RongIMClient.OperationCallback;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
+import io.rong.message.ContactNotificationMessage;
 
+import java.security.spec.MGF1ParameterSpec;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.androidpn.client.Notifier;
 
 import android.annotation.SuppressLint;
 import android.app.TabActivity;
@@ -36,11 +37,8 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
-import com.cpstudio.zhuojiaren.facade.CardMsgFacade;
-import com.cpstudio.zhuojiaren.facade.CmtRcmdFacade;
-import com.cpstudio.zhuojiaren.facade.ImChatFacade;
-import com.cpstudio.zhuojiaren.facade.ImQuanFacade;
-import com.cpstudio.zhuojiaren.facade.SysMsgFacade;
+import com.cpstudio.zhuojiaren.facade.GroupFacade;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.SysApplication;
@@ -49,11 +47,11 @@ import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.GroupsForIM;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.Province;
+import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.ui.GrouthActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudui.zhuojiaren.lz.LZMyHomeActivity;
-import com.cpstudui.zhuojiaren.lz.MainActivity;
 
 @SuppressWarnings("deprecation")
 public class TabContainerActivity extends TabActivity implements
@@ -158,10 +156,13 @@ public class TabContainerActivity extends TabActivity implements
 	private void getMyGroupSuccess(GroupsForIM groups) {
 		if (groups != null) {
 			List<Group> grouplist = new ArrayList<Group>();
+			final List<QuanVO> quanlist = new ArrayList<QuanVO>();
 			if (groups.getCreateGroups() != null) {
 				for (int i = 0; i < groups.getCreateGroups().size(); i++) {
-					String id = groups.getCreateGroups().get(i).getGroupid();
-					String name = groups.getCreateGroups().get(i).getGname();
+					QuanVO quna = groups.getCreateGroups().get(i);
+					quanlist.add(quna);
+					String id = quna.getGroupid();
+					String name = quna.getGname();
 					if (id == null || name == null)
 						continue;
 					if (groups.getCreateGroups().get(i).getGheader() != null) {
@@ -175,8 +176,10 @@ public class TabContainerActivity extends TabActivity implements
 			}
 			if (groups.getFollowGroups() != null) {
 				for (int i = 0; i < groups.getFollowGroups().size(); i++) {
-					String id = groups.getFollowGroups().get(i).getGroupid();
-					String name = groups.getFollowGroups().get(i).getGname();
+					QuanVO quna = groups.getFollowGroups().get(i);
+					quanlist.add(quna);
+					String id = quna.getGroupid();
+					String name = quna.getGname();
 					if (id == null || name == null)
 						continue;
 					if (groups.getFollowGroups().get(i).getGheader() != null) {
@@ -188,31 +191,27 @@ public class TabContainerActivity extends TabActivity implements
 					}
 				}
 			}
-			HashMap<String, Group> groupM = new HashMap<String, Group>();
 			for (int i = 0; i < grouplist.size(); i++) {
-				groupM.put(grouplist.get(i).getId(), grouplist.get(i));
 				// 测试，因为之前的圈子都还未加入，先硬编码加入(TabConTainerActivity),等定义好推送的允许加入圈子后就可以加入圈子了
 				Group g = grouplist.get(i);
-				RongIM.getInstance()
-						.getRongIMClient()
-						.joinGroup(g.getId(), g.getName(),
-								new OperationCallback() {
+				if (g != null && null != RongIM.getInstance()
+						&& RongIM.getInstance().getRongIMClient() != null)
+					RongIM.getInstance()
+							.getRongIMClient()
+							.joinGroup(g.getId(), g.getName(),
+									new OperationCallback() {
 
-									@Override
-									public void onSuccess() {
+										@Override
+										public void onSuccess() {
 
-									}
+										}
 
-									@Override
-									public void onError(ErrorCode errorCode) {
+										@Override
+										public void onError(ErrorCode errorCode) {
 
-									}
-								});
+										}
+									});
 			}
-
-			if (ZhuoConnHelper.getInstance(getApplicationContext()) != null)
-				ZhuoConnHelper.getInstance(getApplicationContext())
-						.setGroupMap(groupM);
 
 			if (grouplist.size() > 0)
 				RongIM.getInstance()
@@ -232,6 +231,17 @@ public class TabContainerActivity extends TabActivity implements
 												"---syncGroup-onError---");
 									}
 								});
+//异步更新圈子信息到数据库
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					GroupFacade mgfcade = DemoContext.getInstance(
+							getApplicationContext()).getmGroupInfoDao();
+					mgfcade.saveOrUpdateAll(quanlist);
+				}
+			}).start();
+
 		} else {
 			// WinToast.toast(this, groups.getCode());
 		}
@@ -278,7 +288,6 @@ public class TabContainerActivity extends TabActivity implements
 		connHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		if (connHelper.getGroupMap() == null) {
 			connHelper.getMyGroupList(msgHandler, MsgTagVO.DATA_OTHER);
-
 		}
 		connHelper.getBaseCodeData(msgHandler, MsgTagVO.DATA_BASE,
 				TabContainerActivity.this, false, null, null);
@@ -302,6 +311,7 @@ public class TabContainerActivity extends TabActivity implements
 
 		TextView textView = (TextView) view.findViewById(R.id.tabtitle);
 		textView.setText(mTextArray[index]);
+		textView.setTextSize(10);
 		if (index == 2) {
 			numTV = (TextView) view.findViewById(R.id.textViewNum);
 		}
@@ -318,33 +328,6 @@ public class TabContainerActivity extends TabActivity implements
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch (msg.what) {
-			case MsgTagVO.START_SEND:
-				ImChatFacade imChatFacade = new ImChatFacade(
-						getApplicationContext());
-				ImQuanFacade imQuanFacade = new ImQuanFacade(
-						getApplicationContext());
-				SysMsgFacade sysMsgFacade = new SysMsgFacade(
-						getApplicationContext());
-				CardMsgFacade cardMsgFacade = new CardMsgFacade(
-						getApplicationContext());
-				CmtRcmdFacade cmtRcmdFacade = new CmtRcmdFacade(
-						getApplicationContext());
-				int all = imChatFacade.getUnread().size();
-				all += imQuanFacade.getUnread().size();
-				all += sysMsgFacade.getUnread().size();
-				all += cardMsgFacade.getUnread().size();
-				all += cmtRcmdFacade.getUnread().size();
-				if (all > 0) {
-					numTV.setText(String.valueOf(all));
-					numTV.setVisibility(View.VISIBLE);
-				} else {
-					numTV.setText(String.valueOf("0"));
-					numTV.setVisibility(View.GONE);
-					// 清楚通知栏消息
-					Notifier notifier = new Notifier(getApplicationContext());
-					notifier.clearNotify();
-				}
-				break;
 			case MsgTagVO.DATA_OTHER:
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
@@ -379,6 +362,8 @@ public class TabContainerActivity extends TabActivity implements
 					return;
 				}
 				String data = res.getData();
+				AppClientLef.getInstance(getApplicationContext()).saveObject(
+						data, "BaseSetData");
 				BaseCodeData dataset = JsonHandler.parseBaseCodeData(data);
 				connHelper.setBaseDataSet(dataset);
 				break;
@@ -409,9 +394,9 @@ public class TabContainerActivity extends TabActivity implements
 	 */
 	@Override
 	protected void onResume() {
-		updateMsg();
 		msgReceiver = new MsgReceiver();
-		IntentFilter filter = new IntentFilter("com.cpstudio.chatlist");
+		IntentFilter filter = new IntentFilter(
+				TabContainerActivity.ACTION_DMEO_RECEIVE_MESSAGE);
 		registerReceiver(msgReceiver, filter);
 		super.onResume();
 	}
@@ -425,17 +410,21 @@ public class TabContainerActivity extends TabActivity implements
 	}
 
 	private class MsgReceiver extends BroadcastReceiver {
-
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			updateMsg();
-		}
-	}
+			String action = intent.getAction();
+			// 收到好友添加的邀请
+			if (action.equals(TabContainerActivity.ACTION_DMEO_RECEIVE_MESSAGE)) {
+				boolean hasNewFriends = intent.getBooleanExtra("has_message",
+						false);
+				ContactNotificationMessage msg = intent
+						.getParcelableExtra("rongCloud");
 
-	private void updateMsg() {
-		if (!(getCurrentActivity() instanceof MsgListActivity)) {
-			Message msg = msgHandler.obtainMessage(MsgTagVO.START_SEND);
-			msg.sendToTarget();
+				String text = msg.getUserInfo().getName()
+						+ getString(R.string.label_tomy)
+						+ getString(R.string.label_sendcard);
+				CommonUtil.displayToast(getApplicationContext(), text);
+			}
 		}
 	}
 

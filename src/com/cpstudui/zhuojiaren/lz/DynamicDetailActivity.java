@@ -45,6 +45,7 @@ import com.cpstudio.zhuojiaren.model.TopicDetailVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
+import com.cpstudio.zhuojiaren.widget.RoundImageView;
 
 public class DynamicDetailActivity extends BaseActivity {
 	private ListView mListView;
@@ -164,8 +165,9 @@ public class DynamicDetailActivity extends BaseActivity {
 						for (int j = 0; j < pics.size(); j++) {
 							orgs.add(pics.get(j).getPic());
 						}
+						intent.putExtra("type", "network");
 						intent.putStringArrayListExtra("pics", orgs);
-						// intent.putExtra("pic", (String) v.getTag());
+						 intent.putExtra("pic", (String) v.getTag());
 						startActivity(intent);
 					}
 				});
@@ -227,7 +229,7 @@ public class DynamicDetailActivity extends BaseActivity {
 				}
 				RelativeLayout rl = new RelativeLayout(context);
 				rl.setLayoutParams(trlp);
-				ImageView iv = new ImageView(context);
+				RoundImageView iv = new RoundImageView(context);
 				iv.setLayoutParams(rlp);
 				rl.addView(iv);
 				iv.setImageResource(R.drawable.default_userhead);

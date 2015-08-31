@@ -18,6 +18,7 @@ import com.cpstudio.zhuojiaren.model.CardMsgVO;
 import com.cpstudio.zhuojiaren.model.CmtRcmdVO;
 import com.cpstudio.zhuojiaren.model.CmtVO;
 import com.cpstudio.zhuojiaren.model.Comment;
+import com.cpstudio.zhuojiaren.model.CompanyNewVO;
 import com.cpstudio.zhuojiaren.model.ContactVO;
 import com.cpstudio.zhuojiaren.model.DownloadVO;
 import com.cpstudio.zhuojiaren.model.Dynamic;
@@ -34,6 +35,7 @@ import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.PagesCmtVO;
 import com.cpstudio.zhuojiaren.model.PlanVO;
 import com.cpstudio.zhuojiaren.model.Praise;
+import com.cpstudio.zhuojiaren.model.ProductNewVO;
 import com.cpstudio.zhuojiaren.model.Province;
 import com.cpstudio.zhuojiaren.model.PushMsgVO;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
@@ -51,6 +53,7 @@ import com.cpstudio.zhuojiaren.model.UserAndCollection;
 import com.cpstudio.zhuojiaren.model.UserEvent;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.model.ZMCDCount;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.model.ZhuoQuanVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -481,6 +484,46 @@ public class JsonHandler {
 				for (Iterator<EventVO> iterator = li.iterator(); iterator
 						.hasNext();) {
 					EventVO item = (EventVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public ArrayList<CompanyNewVO> parseCompanyInfoList() {
+		ArrayList<CompanyNewVO> list = new ArrayList<CompanyNewVO>();
+		try {
+			Type listType = new TypeToken<LinkedList<CompanyNewVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<CompanyNewVO> li = gson.fromJson(jsonData, listType);
+				for (Iterator<CompanyNewVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					CompanyNewVO item = (CompanyNewVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public ArrayList<ProductNewVO> parseProductInfoList() {
+		ArrayList<ProductNewVO> list = new ArrayList<ProductNewVO>();
+		try {
+			Type listType = new TypeToken<LinkedList<ProductNewVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<ProductNewVO> li = gson.fromJson(jsonData, listType);
+				for (Iterator<ProductNewVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					ProductNewVO item = (ProductNewVO) iterator.next();
 					list.add(item);
 				}
 			}
@@ -1072,6 +1115,17 @@ public class JsonHandler {
 		try {
 			Gson gson = new Gson();
 			info = gson.fromJson(jsonData, BusinessInfoVO.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return info;
+	}
+
+	public ZMCDCount parseZmCDCount() {
+		ZMCDCount info = null;
+		try {
+			Gson gson = new Gson();
+			info = gson.fromJson(jsonData, ZMCDCount.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

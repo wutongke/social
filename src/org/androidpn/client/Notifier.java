@@ -17,15 +17,6 @@ package org.androidpn.client;
 
 import java.util.Random;
 
-import com.cpstudio.zhuojiaren.ChatActivity;
-import com.cpstudio.zhuojiaren.MsgCardListActivity;
-import com.cpstudio.zhuojiaren.MsgQuanListActivity;
-import com.cpstudio.zhuojiaren.MsgRcmdCmtActivity;
-import com.cpstudio.zhuojiaren.MsgSysListActivity;
-import com.cpstudio.zhuojiaren.QuanBoardChatActivity;
-import com.cpstudio.zhuojiaren.RecordListActivity;
-import com.cpstudio.zhuojiaren.TabContainerActivity;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -33,6 +24,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+
+import com.cpstudio.zhuojiaren.MsgQuanListActivity;
+import com.cpstudio.zhuojiaren.MsgRcmdCmtActivity;
+import com.cpstudio.zhuojiaren.MsgSysListActivity;
+import com.cpstudio.zhuojiaren.QuanBoardChatActivity;
+import com.cpstudio.zhuojiaren.TabContainerActivity;
 
 /**
  * This class is to notify the user of messages with NotificationManager.
@@ -102,13 +99,13 @@ public class Notifier {
 		intent.putExtra("toTab", true);
 		switch (type) {
 		case TabContainerActivity.MSG_CARD:
-			intent.setClass(context, MsgCardListActivity.class);
+//			intent.setClass(context, MsgCardListActivity.class);
 			break;
 		case TabContainerActivity.MSG_CMT:
 			intent.setClass(context, MsgRcmdCmtActivity.class);
 			break;
 		case TabContainerActivity.MSG_IM:
-			intent.setClass(context, ChatActivity.class);
+//			intent.setClass(context, ChatActivity.class);
 			intent.putExtra("userid", intentId);
 			break;
 		case TabContainerActivity.MSG_LIST_QUAN:
@@ -128,7 +125,7 @@ public class Notifier {
 					TabContainerActivity.MSG_PAGE);
 			break;
 		case TabContainerActivity.MSG_CLOUD:
-			intent.setClass(context, RecordListActivity.class);
+//			intent.setClass(context, RecordListActivity.class);
 			break;
 		}
 		return intent;

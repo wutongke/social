@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:layout_height="70dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:orientation="horizontal" xmlns:app="http://schemas.android.com/apk/res/com.cpstudio.zhuojiaren">
 
     <CheckBox
         android:id="@+id/izl_select"
@@ -13,14 +17,20 @@
         android:visibility="gone" />
 
     <ImageView
+        android:layout_toRightOf="@+id/izl_select"
         android:id="@+id/izl_imageViewAuthorHeader"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:contentDescription="@string/label_author_header"
-        android:paddingLeft="10dp"
+        android:scaleType="fitCenter"
+        android:background="@drawable/zhuoquan_image_shape"
          />
 
     <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/izl_imageViewAuthorHeader"
+        android:layout_alignTop="@+id/izl_imageViewAuthorHeader"
+        android:layout_alignBottom="@+id/izl_imageViewAuthorHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
@@ -28,24 +38,27 @@
 
         <TextView
             android:id="@+id/izl_name"
-            style="@style/basic_text_black"
+            android:layout_weight="1"
+            style="@style/basic_second_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
              />
 
         <TextView
+            android:layout_weight="1"
             android:id="@+id/izl_mem_count"
-            style="@style/basic_text"
+            style="@style/basic_second_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
              />
 
         <TextView
+            android:layout_weight="1"
             android:id="@+id/izl_des"
-            style="@style/basic_text"
+            style="@style/basic_second_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
              />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

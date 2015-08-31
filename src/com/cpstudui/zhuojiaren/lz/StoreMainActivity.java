@@ -166,6 +166,7 @@ public class StoreMainActivity extends BaseActivity implements
 
 				Intent i = new Intent(StoreMainActivity.this, classArrays[0]);
 				i.putExtra("type", arg2);
+				i.putExtra("typeName", tags[arg2]);
 				startActivity(i);
 			}
 		});

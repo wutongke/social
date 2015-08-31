@@ -280,7 +280,7 @@ public class CardAddUserResourceActivity extends Activity implements
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		if (arg3 != -1) {
 			Intent i = new Intent(CardAddUserResourceActivity.this,
-					MsgDetailActivity.class);
+					GongXuDetailActivity.class);
 			i.putExtra("msgid", (String) arg1.getTag(R.id.tag_id));
 			startActivity(i);
 		}

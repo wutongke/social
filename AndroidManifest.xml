@@ -124,6 +124,12 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.cpstudio.zhuojiaren.ui.RequestedUserSameActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_group_type2"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.cpstudio.zhuojiaren.MsgListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_msg_list"
@@ -1042,10 +1048,19 @@
             android:label="@string/active_my" >
         </activity>
         <activity
+            android:name="com.cpstudui.zhuojiaren.lz.CompanyDetailActivity"
+            android:label="@string/active_my" >
+        </activity>
+        <activity
+            android:name="com.cpstudui.zhuojiaren.lz.ProductDetailActivity"
+            android:label="@string/active_my" >
+        </activity>
+        <activity
             android:name="com.cpstudio.zhuojiaren.ui.PubDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
+
         <!-- 融云 -->
         <!-- begin imlib request -->
 

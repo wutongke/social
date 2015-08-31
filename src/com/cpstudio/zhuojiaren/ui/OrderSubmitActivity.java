@@ -86,10 +86,12 @@ public class OrderSubmitActivity extends BaseActivity {
 				leftMoney.setText(((Integer) msg.obj).toString());
 			} else if (msg.what == MsgTagVO.PUB_INFO) {
 				final Intent i = new Intent();
-				i.putExtra("money", "0.5");
 				i.putExtra("tradeNum", (String) msg.obj);
 				View view = getLayoutInflater().inflate(
 						R.layout.pay_wey_choose, null);
+				final AlertDialog alert = new AlertDialog.Builder(OrderSubmitActivity.this,
+						AlertDialog.THEME_HOLO_LIGHT).setTitle("选择支付方式")
+						.setView(view).create();
 				view.findViewById(R.id.pay_weixin).setOnClickListener(
 						new OnClickListener() {
 
@@ -98,9 +100,10 @@ public class OrderSubmitActivity extends BaseActivity {
 								// TODO Auto-generated method stub
 								i.setClass(OrderSubmitActivity.this,
 										PayActivity.class);
-								i.putExtra("money", "0.5");
-								i.putExtra("tradeNum", (String) msg.obj);
+//								i.putExtra("money", "5");
+								i.putExtra("money", String.valueOf((int)(Float.parseFloat(goodsPrice.getText().toString())*100)));
 								startActivity(i);
+								alert.dismiss();
 							}
 						});
 				view.findViewById(R.id.pay_ali).setOnClickListener(
@@ -111,12 +114,14 @@ public class OrderSubmitActivity extends BaseActivity {
 								// TODO Auto-generated method stub
 								i.setClass(OrderSubmitActivity.this,
 										AliPayActivity.class);
+//								i.putExtra("money", "0.5");
+								i.putExtra("money", String.valueOf((int)(Float.parseFloat(goodsPrice.getText().toString()))));
 								startActivity(i);
+								alert.dismiss();
 							}
 						});
-				new AlertDialog.Builder(OrderSubmitActivity.this,
-						AlertDialog.THEME_HOLO_LIGHT).setTitle("选择支付方式")
-						.setView(view).create().show();
+				alert.show();
+				
 			} else {
 				CommonUtil.displayToast(OrderSubmitActivity.this,
 						R.string.error0);
@@ -189,7 +194,7 @@ public class OrderSubmitActivity extends BaseActivity {
 				// submit to get tradeid and then fay
 				Message msg = uiHandler.obtainMessage();
 				msg.what = MsgTagVO.PUB_INFO;
-				msg.obj = "4234343543";
+				msg.obj = System.currentTimeMillis()+"";
 				msg.sendToTarget();
 
 			}

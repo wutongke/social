@@ -31,7 +31,16 @@ public class PhotoViewMultiActivity extends Activity {
 		boolean start = false;
 		ArrayList<String> pics = intent.getStringArrayListExtra("pics");
 		String mType = intent.getStringExtra("type");
+		if (mType == null)
+			mType = "network";
 		String pic = intent.getStringExtra("pic");
+		if (pic == null) {
+			if (pics == null || pics.size() < 1){
+				PhotoViewMultiActivity.this.finish();
+				return;
+			}
+			pic = pics.get(0);
+		}
 		View processbar = findViewById(R.id.progressBar);
 		layout = (LinearLayout) findViewById(R.id.linearLayoutPointers);
 		LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -57,7 +66,7 @@ public class PhotoViewMultiActivity extends Activity {
 		for (int i = 0; i < pics.size(); i++) {
 			if (!pic.equals(pics.get(i))) {
 				picsNew.add(pics.get(i));
-			}else{
+			} else {
 				break;
 			}
 		}
@@ -94,5 +103,5 @@ public class PhotoViewMultiActivity extends Activity {
 			}
 		});
 	}
-	
+
 }

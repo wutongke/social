@@ -149,9 +149,9 @@ public class AudioDetailActivity extends BaseActivity {
 
 	private void loadData() {
 		// TODO Auto-generated method stub
-		new LoadImage().beginLoad(
-				"http://pic6.nipic.com/20100404/4635053_162100094928_2.jpg",
-				advertisementIamge);
+//		new LoadImage().beginLoad(
+//				"http://pic6.nipic.com/20100404/4635053_162100094928_2.jpg",
+//				advertisementIamge);
 	}
 
 	Handler uiHandler = new Handler() {

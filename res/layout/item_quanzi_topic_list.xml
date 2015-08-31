@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal" >
 
     <RelativeLayout
@@ -45,8 +46,8 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
-                android:singleLine="true"
                 android:layout_toRightOf="@id/textViewAuthorName"
+                android:singleLine="true"
                 android:textColor="#989898"
                 android:textSize="16sp" />
 
@@ -63,6 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/textViewAuthorName"
+                android:layout_alignTop="@+id/optionButton"
                 android:layout_marginRight="3dp"
                 android:layout_toLeftOf="@+id/optionButton"
                 android:textSize="13sp" />

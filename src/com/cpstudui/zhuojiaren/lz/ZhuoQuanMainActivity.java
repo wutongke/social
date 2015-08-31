@@ -1,5 +1,7 @@
 package com.cpstudui.zhuojiaren.lz;
+
 //haha 
+import io.rong.app.DemoContext;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.RongIMClient.OperationCallback;
@@ -28,6 +30,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.BaseFragmentActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.UserSelectActivity;
+import com.cpstudio.zhuojiaren.facade.GroupFacade;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.QuanziActiveFra;
 import com.cpstudio.zhuojiaren.fragment.QuanziMemberFra;
@@ -52,7 +55,7 @@ import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
  * 
  */
 public class ZhuoQuanMainActivity extends BaseFragmentActivity {
-	//dasdsads
+	// dasdsads
 	@InjectView(R.id.azq_tab)
 	TabButton tabButton;
 	@InjectView(R.id.azq_viewpager)
@@ -143,8 +146,9 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 								getApplicationContext());
 						detail = nljh.parseQuan();
 						if (null != detail) {
-							// 是否需要保存到本地
-							// mFacade.saveOrUpdate(detail);
+							GroupFacade mgfcade = DemoContext.getInstance(
+									getApplicationContext()).getmGroupInfoDao();
+							mgfcade.saveOrUpdate(detail);
 						}
 					}
 					if (null != detail) {

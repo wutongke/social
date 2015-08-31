@@ -136,12 +136,12 @@ public class MsgRcmdCmtActivity extends Activity implements OnItemClickListener 
 	@Override
 	public void onItemClick(AdapterView<?> paramAdapterView, View arg1,
 			int arg2, long arg3) {
-		if (arg3 != -1) {
-			Intent i = new Intent();
-			i.setClass(MsgRcmdCmtActivity.this, MsgDetailActivity.class);
-			i.putExtra("msgid", (String) arg1.getTag(R.id.tag_id));
-			startActivity(i);
-		}
+//		if (arg3 != -1) {
+//			Intent i = new Intent();
+//			i.setClass(MsgRcmdCmtActivity.this, MsgDetailActivity.class);
+//			i.putExtra("msgid", (String) arg1.getTag(R.id.tag_id));
+//			startActivity(i);
+//		}
 	}
 
 	@Override

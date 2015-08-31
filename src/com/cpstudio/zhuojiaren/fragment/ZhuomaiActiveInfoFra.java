@@ -3,6 +3,8 @@ package com.cpstudio.zhuojiaren.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +15,14 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.ZMCDCount;
 import com.cpstudio.zhuojiaren.ui.UserSameActivity;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudui.zhuojiaren.lz.MyActiveActivity;
 
 public class ZhuomaiActiveInfoFra extends Fragment {
@@ -45,10 +51,43 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 	// 主View
 	View layout;
 	private String uid = null;
+	ZMCDCount dataUnit;
 
 	public interface functionListener {
 		//
 		public void onTypeChange(int type);
+	}
+
+	Handler mUIHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			switch (msg.what) {
+			case MsgTagVO.DATA_LOAD: {
+				if (JsonHandler.checkResult((String) msg.obj, getActivity()
+						.getApplicationContext())) {
+					JsonHandler nljh = new JsonHandler((String) msg.obj,
+							getActivity().getApplicationContext());
+					dataUnit = nljh.parseZmCDCount();
+				} else {
+					CommonUtil.displayToast(getActivity(), R.string.data_error);
+					return;
+				}
+				updateInfo();
+				break;
+			}
+			}
+		}
+	};
+
+	private void updateInfo() {
+		// TODO Auto-generated method stub
+		if (dataUnit == null)
+			return;
+		tvViewedNum.setText(String.valueOf(dataUnit.getViewCount()));
+		tvAimedNum.setText(String.valueOf(dataUnit.getFollowCount()));
+		tvRankNum.setText(String.valueOf(dataUnit.getTop()));
+		tvZanedNum.setText(String.valueOf(dataUnit.getPraiseCount()));
 	}
 
 	@Override
@@ -62,10 +101,9 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 		mContext = getActivity();
 		mConnHelper = ZhuoConnHelper.getInstance(getActivity()
 				.getApplicationContext());
-
-		uid = ResHelper.getInstance(getActivity().getApplicationContext())
-				.getUserid();
+		uid = getArguments().getString("userid");
 		initclick();
+		loadData();
 		return layout;
 	}
 
@@ -103,29 +141,11 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 	}
 
 	private void loadData() {
-		// String url = ZhuoCommHelper.getUrlUserInfo()
-		// + "?uid="
-		// + ResHelper.getInstance(getActivity().getApplicationContext())
-		// .getUserid();
-		//
-		// // 加载刷新个人信息
-		// mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
-		//
-		// if (mListViewFooter.startLoading()) {
-		// mList.clear();
-		// mAdapter.notifyDataSetChanged();
-		// mPage = 1;
-		// String params = ZhuoCommHelper.getUrlMsgList();
-		// params += "?pageflag=" + "0";
-		// params += "&reqnum=" + "10";
-		// params += "&lastid=" + "0";
-		// params += "&type=" + "0";
-		//
-		// params += "&gongxutype=" + "0";
-		// params += "&from=" + "0";
-		// params += "&uid=" + uid;
-		// mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD);
-		// }
+		if (CommonUtil.getNetworkState(getActivity().getApplicationContext()) == 2) {
+		} else {
+			mConnHelper.getZMDTCount(mUIHandler, MsgTagVO.DATA_LOAD, uid);
+		}
+
 	}
 
 }

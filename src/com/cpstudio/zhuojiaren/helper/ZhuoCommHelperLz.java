@@ -51,7 +51,7 @@ public class ZhuoCommHelperLz {
 	private final static String COLLECT_TOPIC = "/collectTopic.do";
 	private final static String FOLLOW_USER = "/followUser.do";
 	private final static String STATUS_GROUP = "/getStatusGroup.do";
-	private final static String FOLLOEW_REQ_LIST = "/getFollowReq.do";
+	private final static String FOLLOEW_REQ_LIST = "/getFriendReq.do";
 	private final static String ZAN_CARD = "/praiseStatusCard.do";
 	private final static String GG_DETAIL = "/getpubdetail.do";
 	private final static String PUB_LIST = "/getPubList.do";
@@ -67,6 +67,24 @@ public class ZhuoCommHelperLz {
 	private final static String INDUSTRY_JIAREN = "/getJiarenByIndustry.do";
 	private final static String TEATURE_JIAREN = "/getTeacher.do";
 
+	//此接口已在FOLLOEW_REQ_LIST中
+	private final static String GET_REQ_FRIEND = "/getFriendReq.do";
+	
+	
+	
+	private final static String ADD_PRODUCT = "/addProduct.do";
+	private final static String ADD_COMPANY = "/addCompany.do";
+	
+	private final static String DELETE_PRODUCT = "/deleteProduct.do";
+	private final static String DELETE_COMPANY = "/deleteCompany.do";
+	
+	private final static String UPDATE_PRODUCT = "/updateProduct.do";
+	private final static String UPDATE_COMPANY = "/updateCompany.do";
+	
+	private final static String GET_PRODUCT = "/getComProduct.do";
+	private final static String GET_COMPANY = "/getUserCompany.do";
+	private final static String STATUS_CARD = "/viewStatusCard.do";
+	
 	public static String getAllJiaren() {
 		return ALL_JIAREN;
 	}
@@ -431,5 +449,49 @@ public class ZhuoCommHelperLz {
 	 */
 	public static String pubPhoto() {
 		return SERVER + SET_PHOTO;
+	}
+	/**
+	 * 请求交换名片的家人
+	 * @return
+	 */
+	public static String getFriendReq() {
+		return SERVER + GET_REQ_FRIEND;
+	}
+	
+	//我的企业中的公司及其产品的增删改查
+	
+	public static String addCompany() {
+		return SERVER + ADD_COMPANY;
+	}
+	public static String addProduct() {
+		return SERVER + ADD_PRODUCT;
+	}
+	public static String deleteCompany() {
+		return SERVER + DELETE_COMPANY;
+	}
+	public static String deleteProduct() {
+		return SERVER + DELETE_PRODUCT;
+	}
+	
+	public static String updateProduct() {
+		return SERVER + UPDATE_PRODUCT;
+	}
+	
+	public static String updateCompany() {
+		return SERVER + UPDATE_COMPANY;
+	}
+	public static String getProduct() {
+		return SERVER + GET_PRODUCT;
+	}
+	
+	public static String getCompany() {
+		return SERVER + GET_COMPANY;
+	}
+	/**
+	 * 倬脉动态的数量(被浏览等)
+	 * @return
+	 */
+	public static String getZMDT() {
+		return SERVER + STATUS_CARD;
 	}
 }

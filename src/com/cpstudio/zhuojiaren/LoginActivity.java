@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.androidpn.client.ServiceManager;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -313,7 +311,7 @@ public class LoginActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			new ServiceManager(LoginActivity.this).stopService();
+//			new ServiceManager(LoginActivity.this).stopService();
 			LoginActivity.this.finish();
 			System.exit(0);
 			return true;

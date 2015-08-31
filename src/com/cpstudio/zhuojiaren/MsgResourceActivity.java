@@ -268,10 +268,10 @@ public class MsgResourceActivity extends Activity implements
 	public void onItemClick(AdapterView<?> paramAdapterView, View arg1,
 			int arg2, long arg3) {
 		if (arg3 != -1) {
-			Intent i = new Intent(MsgResourceActivity.this,
-					MsgDetailActivity.class);
-			i.putExtra("msgid", (String) arg1.getTag(R.id.tag_id));
-			startActivity(i);
+//			Intent i = new Intent(MsgResourceActivity.this,
+//					MsgDetailActivity.class);
+//			i.putExtra("msgid", (String) arg1.getTag(R.id.tag_id));
+//			startActivity(i);
 		}
 	}
 	

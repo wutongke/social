@@ -6,7 +6,6 @@ import org.androidpn.client.Constants;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -31,17 +30,14 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.MsgDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter;
 import com.cpstudio.zhuojiaren.facade.InfoFacade;
-import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
@@ -357,10 +353,10 @@ public class SearchMainActivity extends BaseActivity implements
 
 			if (id != -1) {
 
-				Intent i = new Intent(SearchMainActivity.this,
-						MsgDetailActivity.class);
-				i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
-				startActivity(i);
+//				Intent i = new Intent(SearchMainActivity.this,
+//						MsgDetailActivity.class);
+//				i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
+//				startActivity(i);
 			}
 		} else {
 			mSearchKey = historyList.get(position);

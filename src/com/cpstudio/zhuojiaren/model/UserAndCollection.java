@@ -22,8 +22,10 @@ public class UserAndCollection {
 	private String uheader;
 	private int position;
 	private String company;
+	private String addtime;
 	private int isCollect;
 	private int tchtype;
+	
 	// add by lz
 	private boolean isChecked;
 
@@ -121,6 +123,14 @@ public class UserAndCollection {
 
 	public void setDistance(String distance) {
 		this.distance = distance;
+	}
+
+	public String getAddtime() {
+		return addtime;
+	}
+
+	public void setAddtime(String addtime) {
+		this.addtime = addtime;
 	}
 
 }

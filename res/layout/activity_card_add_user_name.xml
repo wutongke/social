@@ -23,20 +23,8 @@
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/buttonBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
-           android:drawableLeft="@drawable/go_back"
-            android:background="@null"
-            android:text="@string/label_back"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
-
-        <Button
+       <include layout="@layout/goback_button"/>
+<Button
             android:id="@+id/buttonSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -205,7 +193,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/mp_unknow"
-                        android:visibility="gone"  />
+                        android:visibility="gone" />
                 </RadioGroup>
             </LinearLayout>
         </LinearLayout>

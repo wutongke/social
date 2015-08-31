@@ -72,7 +72,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 	private LinearLayout companyMoreInfo;
 	private AppClientLef appClient;
 	private String goodsId;
-	LoadImage lImage = new LoadImage(0, 80, 80);
+	LoadImage lImage = LoadImage.getInstance();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -232,6 +232,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 				zhuoPrice.setText(goods.getZhuoPrice());
 				// goodsComment
 				mDataList.clear();
+				if(goods.getComments()!=null)
 				mDataList.addAll(goods.getComments());
 				mAdapter.notifyDataSetChanged();
 				break;

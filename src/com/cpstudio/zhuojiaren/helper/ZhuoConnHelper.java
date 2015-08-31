@@ -52,6 +52,10 @@ import com.qiniu.android.storage.UploadManager;
  */
 public class ZhuoConnHelper {
 
+	public enum EditMODE {
+		VIEW, EDIT, ADD, DELETE
+	};
+
 	public static final String BASEDATA = "baseCodeDatas";
 	public static final String CITYS = "citys";
 	private static ZhuoConnHelper instance;
@@ -105,6 +109,9 @@ public class ZhuoConnHelper {
 	}
 
 	public List<City> getCitys() {
+		if (citys == null) {
+
+		}
 		return citys;
 	}
 
@@ -125,6 +132,11 @@ public class ZhuoConnHelper {
 	}
 
 	public BaseCodeData getBaseDataSet() {
+		if (baseDataSet == null) {
+			String data = AppClientLef.getInstance(context).readObject(
+					"BaseSetData");
+			baseDataSet = JsonHandler.parseBaseCodeData(data);
+		}
 		return baseDataSet;
 	}
 
@@ -411,15 +423,16 @@ public class ZhuoConnHelper {
 				cancel, data);
 	}
 
-	public boolean addProduct(String products, Handler handler, int handlerTag,
-			Activity activity, boolean cancelable, OnCancelListener cancel,
-			String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("products", products));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlAddProduct(),
-				handler, handlerTag, activity, "addProduct", cancelable,
-				cancel, data);
-	}
+	// public boolean addProduct(String products, Handler handler, int
+	// handlerTag,
+	// Activity activity, boolean cancelable, OnCancelListener cancel,
+	// String data) {
+	// List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+	// nameValuePairs.add(new BasicNameValuePair("products", products));
+	// return doPost(nameValuePairs, ZhuoCommHelper.getUrlAddProduct(),
+	// handler, handlerTag, activity, "addProduct", cancelable,
+	// cancel, data);
+	// }
 
 	public boolean addDream(String dreams, Handler handler, int handlerTag,
 			Activity activity, boolean cancelable, OnCancelListener cancel,
@@ -736,6 +749,9 @@ public class ZhuoConnHelper {
 	private boolean doPost(List<NameValuePair> nameValuePairs, String url,
 			Handler handler, int handlerTag, Activity activity, String tag,
 			boolean cancelable, OnCancelListener cancel, String data) {
+		if (instance == null) {
+			instance = getInstance(activity);
+		}
 		if (!mStartedTag.contains(tag) || tag == null) {
 			if (tag != null) {
 				mStartedTag.add(tag);
@@ -930,7 +946,7 @@ public class ZhuoConnHelper {
 							if (map == null)
 								Toast.makeText(activity, "上传到七牛云失败", 1000)
 										.show();
-							else if (map.size() > 0) {
+							if (map.size() > 0) {
 								for (Map.Entry<String, StringBuilder> entry : map
 										.entrySet()) {
 									String key = entry.getKey();
@@ -941,18 +957,17 @@ public class ZhuoConnHelper {
 									nameValuePairs.add(new BasicNameValuePair(
 											key, value));
 								}
-								AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
-										addUserInfoByPost(nameValuePairs), url,
-										true, getFinishCallback(handler,
-												handlerTag, tag, data),
-										activity);
-								conn.setCancelable(cancelable);
-								if (cancelable) {
-									conn.setCancel(getCancelListener(cancel,
-											tag, conn));
-								}
-								conn.execute();
 							}
+							AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+									addUserInfoByPost(nameValuePairs), url,
+									true, getFinishCallback(handler,
+											handlerTag, tag, data), activity);
+							conn.setCancelable(cancelable);
+							if (cancelable) {
+								conn.setCancel(getCancelListener(cancel, tag,
+										conn));
+							}
+							conn.execute();
 						}
 					});
 			helper.execute("test");
@@ -1194,6 +1209,28 @@ public class ZhuoConnHelper {
 			String groupid, String content, ArrayList<String> files) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
+		fileMap.put("file", files);
+		return doPostWithFile(fileMap, nameValuePairs,
+				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
+				"pubQuanTopic", false, null, null);
+	}
+
+	/**
+	 * 发布反馈意见
+	 * 
+	 * @param activity
+	 * @param mUIHandler
+	 * @param tag
+	 * @param groupid
+	 * @param content
+	 * @param files
+	 * @return
+	 */
+	public boolean pubFeedBack(Activity activity, Handler mUIHandler, int tag,
+			String groupid, String content, ArrayList<String> files) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("content", content));
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", files);
@@ -1610,7 +1647,6 @@ public class ZhuoConnHelper {
 			int handlerTag, int type, String title, String content,
 			ArrayList<String> files, String label, String contacts, String phone) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-
 		nameValuePairs
 				.add(new BasicNameValuePair("type", String.valueOf(type)));
 		nameValuePairs.add(new BasicNameValuePair("title", title));
@@ -1833,8 +1869,175 @@ public class ZhuoConnHelper {
 		if (extraStr != null && !extraStr.equals(""))
 			nameValuePairs
 					.add(new BasicNameValuePair(keys[type - 1], extraStr));
-		return getFromServerByPost(ZhuoCommHelperLz.SERVER+URLS[type - 1], nameValuePairs, mUIHandler,
-				tag);
+		return getFromServerByPost(ZhuoCommHelperLz.SERVER + URLS[type - 1],
+				nameValuePairs, mUIHandler, tag);
+	}
+
+	/**
+	 * 获得请求交换名片的家人
+	 * 
+	 * @param mUIHandler
+	 * @param tag
+	 * @return
+	 */
+	public boolean getFriendReq(Handler mUIHandler, int tag) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		return getFromServerByPost(ZhuoCommHelperLz.getFriendReq(),
+				nameValuePairs, mUIHandler, tag);
+	}
+
+	/**
+	 * 获得公司产品
+	 * 
+	 * @param mUIHandler
+	 * @param tag
+	 * @return
+	 */
+	public boolean getCompanyProduct(Handler mUIHandler, int tag, String comid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("comid", comid));
+		return getFromServerByPost(ZhuoCommHelperLz.getProduct(),
+				nameValuePairs, mUIHandler, tag);
+	}
+
+	public boolean getZMDTCount(Handler mUIHandler, int tag, String userid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		if (userid != null)
+			nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		return getFromServerByPost(ZhuoCommHelperLz.getZMDT(), nameValuePairs,
+				mUIHandler, tag);
+	}
+
+	/**
+	 * 获取公司信息
+	 * 
+	 * @param mUIHandler
+	 * @param tag
+	 * @param userid
+	 *            (可选)不填则获取我的公司信息，填则获取指定用户的公司信息。
+	 * @return
+	 */
+	public boolean getCompanyInfo(Handler mUIHandler, int tag, String userid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		if (userid != null)
+			nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		return getFromServerByPost(ZhuoCommHelperLz.getCompany(),
+				nameValuePairs, mUIHandler, tag);
+	}
+
+	/**
+	 * 删除产品信息
+	 * 
+	 * @param mUIHandler
+	 * @param tag
+	 * @param productid
+	 * @return
+	 */
+	public boolean deleteProduct(Handler mUIHandler, int tag, String productid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("productid", productid));
+		return getFromServerByPost(ZhuoCommHelperLz.deleteProduct(),
+				nameValuePairs, mUIHandler, tag);
+	}
+
+	/**
+	 * 删除公司信息
+	 * 
+	 * @param mUIHandler
+	 * @param tag
+	 * @param comid
+	 * @return
+	 */
+	public boolean deleteCompanyInfo(Handler mUIHandler, int tag, String comid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("comid", comid));
+		return getFromServerByPost(ZhuoCommHelperLz.deleteCompany(),
+				nameValuePairs, mUIHandler, tag);
+	}
+
+	public boolean updateProduct(Activity activity, Handler mUIHandler,
+			int tag, String productid, String product, String description,
+			String customer, String value, ArrayList<String> files,
+			String originFilekeys) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("productid", productid));
+		nameValuePairs.add(new BasicNameValuePair("product", product));
+		nameValuePairs.add(new BasicNameValuePair("description", description));
+		nameValuePairs.add(new BasicNameValuePair("customer", customer));
+		nameValuePairs.add(new BasicNameValuePair("value", value));
+		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
+		fileMap.put("file", files);
+		return doPostWithFile(fileMap, nameValuePairs,
+				ZhuoCommHelperLz.updateProduct(), mUIHandler, tag, activity,
+				"updateProduct", false, null, null, originFilekeys);
+	}
+
+	public boolean addProduct(Activity activity, Handler mUIHandler, int tag,
+			String comid, String product, String description, String customer,
+			String value, ArrayList<String> files, String originFilekeys) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("comid", comid));
+		nameValuePairs.add(new BasicNameValuePair("product", product));
+		nameValuePairs.add(new BasicNameValuePair("description", description));
+		nameValuePairs.add(new BasicNameValuePair("customer", customer));
+		nameValuePairs.add(new BasicNameValuePair("value", value));
+		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
+		fileMap.put("file", files);
+		return doPostWithFile(fileMap, nameValuePairs,
+				ZhuoCommHelperLz.addProduct(), mUIHandler, tag, activity,
+				"addProduct", false, null, null, originFilekeys);
+	}
+
+	/**
+	 * 
+	 * @param activity
+	 * @param mUIHandler
+	 * @param tag
+	 * @param comid
+	 *            公司ID ,其他参数可选
+	 * @param company
+	 * @param industry
+	 * @param city
+	 * @param position
+	 * @param homepage
+	 * @param status
+	 *            (可选)是否是主公司 1-主公司 0-普通公司
+	 * @return
+	 */
+	public boolean updateCompany(Handler mUIHandler, int tag, String comid,
+			String company, int industry, int city, int position,
+			String homepage, int status) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("comid", comid));
+		nameValuePairs.add(new BasicNameValuePair("company", company));
+		nameValuePairs.add(new BasicNameValuePair("industry", String
+				.valueOf(industry)));
+		nameValuePairs
+				.add(new BasicNameValuePair("city", String.valueOf(city)));
+		nameValuePairs.add(new BasicNameValuePair("position", String
+				.valueOf(position)));
+		nameValuePairs.add(new BasicNameValuePair("homepage", homepage));
+		nameValuePairs.add(new BasicNameValuePair("status", String
+				.valueOf(status)));
+		return getFromServerByPost(ZhuoCommHelperLz.updateCompany(),
+				nameValuePairs, mUIHandler, tag);
+	}
+
+	public boolean addCompany(Handler mUIHandler, int tag, String company,
+			int industry, int city, int position, String homepage, int status) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("company", company));
+		nameValuePairs.add(new BasicNameValuePair("industry", String
+				.valueOf(industry)));
+		nameValuePairs
+				.add(new BasicNameValuePair("city", String.valueOf(city)));
+		nameValuePairs.add(new BasicNameValuePair("position", String
+				.valueOf(position)));
+		nameValuePairs.add(new BasicNameValuePair("homepage", homepage));
+		nameValuePairs.add(new BasicNameValuePair("status", String
+				.valueOf(status)));
+		return getFromServerByPost(ZhuoCommHelperLz.addCompany(),
+				nameValuePairs, mUIHandler, tag);
 	}
 
 	/**

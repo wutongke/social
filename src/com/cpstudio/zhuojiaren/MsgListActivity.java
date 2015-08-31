@@ -18,6 +18,7 @@ import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -33,9 +34,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -52,8 +53,10 @@ import com.cpstudio.zhuojiaren.model.ImMsgVO;
 import com.cpstudio.zhuojiaren.model.ImQuanVO;
 import com.cpstudio.zhuojiaren.model.SysMsgVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.ui.LZUserSameActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ImMsgComparator;
+import com.cpstudui.zhuojiaren.lz.CardActiveNumListActivity;
 import com.umeng.socialize.utils.Log;
 
 public class MsgListActivity extends FragmentActivity implements
@@ -66,12 +69,13 @@ public class MsgListActivity extends FragmentActivity implements
 	private MsgReceiver msgReceiver = null;
 	private String mSearchKey = "";
 	ConversationListFragment listFragment;
+	Handler uiHandler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_msg_list);
-		mFacade = new ImChatFacade(MsgListActivity.this);
+		uiHandler = new Handler();
 		myid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		LayoutInflater inflater = LayoutInflater.from(MsgListActivity.this);
 		View headView = inflater.inflate(R.layout.listview_header7, null);
@@ -115,8 +119,6 @@ public class MsgListActivity extends FragmentActivity implements
 				.beginTransaction();
 		fragmentTransaction.add(R.id.ryConversationListContainer, listFragment);
 		fragmentTransaction.commit();
-		// RongIM.getInstance().startPrivateChat(MsgListActivity.this,"9237",
-		// "标题");
 	}
 
 	@Override
@@ -127,8 +129,21 @@ public class MsgListActivity extends FragmentActivity implements
 		notificationManager.cancelAll();
 		loadData();
 		msgReceiver = new MsgReceiver();
-		IntentFilter filter = new IntentFilter("com.cpstudio.chatlist");
+		IntentFilter filter = new IntentFilter(TabContainerActivity.ACTION_DMEO_RECEIVE_MESSAGE);
 		registerReceiver(msgReceiver, filter);
+		uiHandler.postDelayed(calHeight, 500);
+	}
+
+	Runnable calHeight = new Runnable() {
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			calHeightOfFragment();
+		}
+	};
+
+	private void calHeightOfFragment() {
 		// 获取其高度
 		ViewGroup root = (ViewGroup) findViewById(R.id.ryConversationListContainer);
 		ListView listFromFragment = null;
@@ -168,17 +183,21 @@ public class MsgListActivity extends FragmentActivity implements
 			for (int i = 0; i < adapterFromFragment.getCount(); i++) {
 				View listItem = adapterFromFragment.getView(i, null,
 						listFromFragment);
-				if(listItem instanceof RelativeLayout){
-					listItem.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-				}else if(listItem instanceof LinearLayout){
-					listItem.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+				if (listItem instanceof RelativeLayout) {
+					listItem.setLayoutParams(new RelativeLayout.LayoutParams(
+							LayoutParams.WRAP_CONTENT,
+							LayoutParams.WRAP_CONTENT));
+				} else if (listItem instanceof LinearLayout) {
+					listItem.setLayoutParams(new LinearLayout.LayoutParams(
+							LayoutParams.WRAP_CONTENT,
+							LayoutParams.WRAP_CONTENT));
 				}
 				try {
 					listItem.measure(0, 0);
 					totalHeight += listItem.getMeasuredHeight();
 				} catch (Exception e) {
 					// TODO: handle exception
-					totalHeight+=listItem.getHeight();
+					totalHeight += listItem.getHeight();
 				}
 			}
 			lp.height = totalHeight;
@@ -194,12 +213,6 @@ public class MsgListActivity extends FragmentActivity implements
 			unregisterReceiver(msgReceiver);
 		}
 		super.onPause();
-	}
-
-	private void startCardActivity() {
-		findViewById(R.id.textViewMsgCardAll).setVisibility(View.GONE);
-		Intent i = new Intent(MsgListActivity.this, MsgCardListActivity.class);
-		startActivity(i);
 	}
 
 	private void startQuanListActivity() {
@@ -230,7 +243,9 @@ public class MsgListActivity extends FragmentActivity implements
 
 					@Override
 					public void onClick(View v) {
-						startCardActivity();
+						Intent i = new Intent(MsgListActivity.this,
+								LZUserSameActivity.class);
+						startActivity(i);
 					}
 				});
 		v.findViewById(R.id.linearLayoutGroup).setOnClickListener(
@@ -258,17 +273,17 @@ public class MsgListActivity extends FragmentActivity implements
 					}
 				});
 
-		// 通讯录
-		findViewById(R.id.buttonLinkList).setOnClickListener(
-				new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						Intent i = new Intent(MsgListActivity.this,
-								LinkListActivity.class);
-						startActivity(i);
-					}
-				});
+		// // 通讯录
+		// findViewById(R.id.buttonLinkList).setOnClickListener(
+		// new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// Intent i = new Intent(MsgListActivity.this,
+		// LinkListActivity.class);
+		// startActivity(i);
+		// }
+		// });
 
 		final EditText searchView = (EditText) findViewById(R.id.editTextSearch);
 		searchView.setOnEditorActionListener(new OnEditorActionListener() {
@@ -520,12 +535,12 @@ public class MsgListActivity extends FragmentActivity implements
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		if (arg3 != -1) {
-			arg1.findViewById(R.id.textViewMsgAll).setVisibility(View.GONE);
-			Intent i = new Intent(MsgListActivity.this, ChatActivity.class);
-			i.putExtra("userid", (String) arg1.getTag(R.id.tag_id));
-			startActivity(i);
-		}
+		// if (arg3 != -1) {
+		// arg1.findViewById(R.id.textViewMsgAll).setVisibility(View.GONE);
+		// Intent i = new Intent(MsgListActivity.this, ChatActivity.class);
+		// i.putExtra("userid", (String) arg1.getTag(R.id.tag_id));
+		// startActivity(i);
+		// }
 	}
 
 	private class MsgReceiver extends BroadcastReceiver {
@@ -551,6 +566,7 @@ public class MsgListActivity extends FragmentActivity implements
 			} else {
 				((TextView) findViewById(R.id.textViewCardMsg)).setText("");
 			}
+			uiHandler.post(calHeight);
 		}
 	}
 

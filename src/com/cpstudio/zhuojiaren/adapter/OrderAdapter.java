@@ -17,7 +17,7 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 
 public class OrderAdapter extends CommonAdapter<GoodsVO> {
-	LoadImage loader = new LoadImage();
+	LoadImage loader = LoadImage.getInstance();
 	ArrayList<GoodsVO> selectList = new ArrayList<GoodsVO>();
 	SelectGoodsChangeListener goodsChangeListenter;
 	
@@ -120,14 +120,14 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 		this.goodsChangeListenter = goodsChangeListenter;
 	}
 	public float addAllGoodsPrice(){
-		int sum = 0;
-		int tempCount=0;
+		float sum = 0;
+		float tempCount=0;
 		for(GoodsVO temp:selectList){
 			if(temp.getGoodsCount()==null||temp.getGoodsCount().isEmpty())
 				tempCount=1;
-			else tempCount = Integer.parseInt(temp.getGoodsCount());
+			else tempCount = Float.parseFloat(temp.getGoodsCount());
 				
-			sum+=Integer.parseInt(temp.getZhuoPrice())*tempCount;
+			sum+=Float.parseFloat(temp.getZhuoPrice())*tempCount;
 		}
 		return sum;
 	}

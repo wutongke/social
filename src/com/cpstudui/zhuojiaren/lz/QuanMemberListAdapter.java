@@ -95,7 +95,7 @@ public class QuanMemberListAdapter extends BaseAdapter {
 				&& p <= baseDataSet.getPosition().size())
 			work = ((baseDataSet.getPosition()).get(p - 1)).getContent();
 		holder.workTV.setText(work);
-		holder.headIV.setImageResource(R.drawable.default_userhead);
+//		holder.headIV.setImageResource(R.drawable.default_userhead);
 		holder.headIV.setTag(user.getUheader());
 		mLoadImage.beginLoad(user.getUheader(), holder.headIV);
 

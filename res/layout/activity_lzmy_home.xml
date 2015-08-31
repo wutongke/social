@@ -50,22 +50,20 @@
                 <TextView
                     android:id="@+id/textViewName"
                     android:layout_width="80dp"
-                    android:singleLine="true"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/imageViewHead"
-                    android:text="textViewName"
+                    android:singleLine="true"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/textViewContent"
-                    android:layout_width="50dp"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@id/textViewName"
-                    android:text="textView"
-                   android:textColor="@color/white"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <TextView
@@ -81,7 +79,6 @@
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:textColor="@color/white"
-                    android:text="904个"
                     android:textSize="16sp" />
 
                 <TextView
@@ -93,7 +90,6 @@
                     android:layout_marginTop="10dp"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="4"
-                    android:text="textViewRes"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
             </RelativeLayout>

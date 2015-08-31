@@ -157,19 +157,6 @@ public class QuanziTopicFra extends Fragment {
 				updateItemList((String) msg.obj, false, true);
 				break;
 			}
-			case MsgTagVO.UPDATE: {
-				if (msg.obj != null && !msg.obj.equals("")) {
-					JsonHandler nljh = new JsonHandler((String) msg.obj,
-							getActivity().getApplicationContext());
-					UserNewVO user = nljh.parseNewUser();
-					if (null != user) {
-						UserFacade facade = new UserFacade(getActivity()
-								.getApplicationContext());
-						facade.saveOrUpdate(user);
-					}
-				}
-				break;
-			}
 			}
 		}
 	};
@@ -181,8 +168,6 @@ public class QuanziTopicFra extends Fragment {
 		// + ResHelper.getInstance(getActivity().getApplicationContext())
 		// .getUserid();
 		//
-		// // 加载刷新个人信息
-		// mConnHelper.getFromServer(url, null,mUIHandler, MsgTagVO.UPDATE);
 
 		if (mListViewFooter.startLoading()) {
 			mList.clear();

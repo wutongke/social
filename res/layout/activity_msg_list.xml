@@ -33,7 +33,9 @@
             android:background="@drawable/button_top_bg_menu"
             android:text="@string/label_lisklist"
             android:textColor="#ffffff"
-            android:textSize="14sp" />
+            android:textSize="14sp" 
+            android:visibility="gone"
+            />
     </RelativeLayout>
 
     <ScrollView

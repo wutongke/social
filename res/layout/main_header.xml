@@ -149,7 +149,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
              android:scaleType="centerCrop"
-            android:src="@drawable/shopgg" />
+             />
 
         <View
             android:layout_width="2dp"
@@ -169,7 +169,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                  android:scaleType="centerCrop"
-                android:src="@drawable/shopgg2" />
+                 />
 
             <View
                 android:layout_width="match_parent"
@@ -182,7 +182,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                  android:scaleType="centerCrop"
-                android:src="@drawable/shopgg3" />
+                 />
         </LinearLayout>
     </LinearLayout>
 
