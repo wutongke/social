@@ -90,7 +90,9 @@
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:paddingTop="5dp"
-                    android:text="@string/info20" />
+                    android:textSize="14sp"
+                    android:text="@string/info20"
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <EditText
@@ -103,8 +105,9 @@
                 android:background="#2e2e2e"
                 android:ems="10"
                 android:hint="@string/info19"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:singleLine="true"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
     </ScrollView>
