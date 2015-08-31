@@ -42,6 +42,7 @@ import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.util.ImageLoader;
 import com.cpstudio.zhuojiaren.widget.OverScrollableScrollView;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
@@ -151,7 +152,8 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 	private void init() {
 		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewPager
 				.getLayoutParams();
-		params.height = mRoot.getHeight() - tab.getHeight() - 50;
+		
+		params.height = mRoot.getHeight() - tab.getHeight() - DeviceInfoUtil.dip2px(CrowdFundingDetailActivity.this, 40);
 		viewPager.setLayoutParams(params);
 		mAdapter = new MyPagerAdapter(getSupportFragmentManager(), tabTitles,crowdFundingId,
 				crowdFunding);
