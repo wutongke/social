@@ -111,7 +111,7 @@ public class Cats_PageAdapter extends PagerAdapter {
 					});
 					LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 							cellWidth, LayoutParams.WRAP_CONTENT);
-					lp.setMargins(5, 3, 5, 3);
+					lp.setMargins(5, 3, 5, 0);
 					childlinearLayou.addView(ccll, lp);
 				}
 			}
