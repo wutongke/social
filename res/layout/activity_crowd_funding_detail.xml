@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.cpstudio.zhuojiaren">
 
     <include layout="@layout/title_activity" />
 
@@ -355,6 +355,9 @@
                 android:id="@+id/acfd_tab"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
+                app:buttonSelectBackground="@color/graywhitem"
+                app:buttonBackground="#d6d6d6"
+                app:sliderSize="0dp"
                 android:visibility="gone" >
             </com.cpstudio.zhuojiaren.widget.TabButton>
 
