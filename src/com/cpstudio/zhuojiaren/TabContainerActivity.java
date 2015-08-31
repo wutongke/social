@@ -98,10 +98,10 @@ public class TabContainerActivity extends TabActivity implements
 				numTV.setVisibility(View.GONE);
 			} else if (count > 0 && count < 100) {
 				numTV.setVisibility(View.VISIBLE);
-				numTV.setText(count + "");
+//不用显示数目				numTV.setText(count + "");
 			} else {
 				numTV.setVisibility(View.VISIBLE);
-				numTV.setText(R.string.no_read_message);
+				//不用显示数目				numTV.setText(R.string.no_read_message);
 			}
 		}
 	};
