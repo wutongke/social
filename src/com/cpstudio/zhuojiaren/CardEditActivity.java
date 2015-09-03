@@ -828,6 +828,7 @@ public class CardEditActivity extends Activity {
 			// msg.sendToTarget();
 			// }
 		} else {
+			if(mConnHelper!=null )
 			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, userid);
 		}
 	}
