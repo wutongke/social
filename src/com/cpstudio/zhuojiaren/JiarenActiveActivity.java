@@ -270,7 +270,7 @@ public class JiarenActiveActivity extends Activity implements
 			}
 			case MsgTagVO.DATA_OTHER: {
 				UserNewVO user = null;
-				if (msg.obj instanceof UserVO) {
+				if (msg.obj instanceof UserNewVO) {
 					user = (UserNewVO) msg.obj;
 				} else if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
