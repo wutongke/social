@@ -71,13 +71,12 @@ public class LZMyHomeActivity extends Activity {
 
 	@Override
 	protected void onStart() {
-		loadInfo();
 		super.onStart();
 	}
 
 	@Override
 	protected void onResume() {
-		loadDb();
+		loadInfo();
 		super.onResume();
 	}
 
@@ -215,17 +214,16 @@ public class LZMyHomeActivity extends Activity {
 		((TextView) findViewById(R.id.textViewName))
 				.setText(userInfo.getName());
 		String work = "";
-		if (baseDataSet != null)
-		{
-			int pos=userInfo.getPosition();
-			if(pos!=0)//默认为0，城市标号从1开始
+		if (baseDataSet != null) {
+			int pos = userInfo.getPosition();
+			if (pos != 0)// 默认为0，城市标号从1开始
 				pos--;
-			work = ((baseDataSet.getPosition()).get(pos))
-					.getContent();
+			work = ((baseDataSet.getPosition()).get(pos)).getContent();
 		}
 		((TextView) findViewById(R.id.textViewContent)).setText(work);
 
-		((TextView) findViewById(R.id.textViewCompany)).setText(userInfo.getCompany());
+		((TextView) findViewById(R.id.textViewCompany)).setText(userInfo
+				.getCompany());
 
 		if (userInfo.getGender() == 0)// 男
 			rlbg.setBackgroundResource(R.drawable.mbg6_wdzy_1);
@@ -266,13 +264,6 @@ public class LZMyHomeActivity extends Activity {
 			}
 		}
 	};
-
-	private void loadData() {
-		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-		} else {
-			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, mUid);
-		}
-	}
 
 	private void loadDb() {
 		// RecordChatFacade mFacade = new

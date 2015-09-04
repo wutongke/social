@@ -161,7 +161,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		rootMainBG.setBackgroundResource(R.drawable.manbg_zmmp_1);
 		baseDataSet = mConnHelper.getBaseDataSet();
 		initOnClick();
-		loadData();
 	}
 
 	private void loadData() {
@@ -176,7 +175,8 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			// msg.sendToTarget();
 			// }
 		} else {
-			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, userid);
+			if (mConnHelper != null)
+				mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, userid);
 		}
 	}
 
@@ -292,9 +292,9 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				// TODO Auto-generated method stub
 				if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_MYSELF
 						.ordinal()) {
-//					Intent i = new Intent(ZhuoMaiCardActivity.this,
-//							ChangeBackgroundActivity.class);
-//					startActivity(i);
+					// Intent i = new Intent(ZhuoMaiCardActivity.this,
+					// ChangeBackgroundActivity.class);
+					// startActivity(i);
 					CommonUtil.displayToast(ZhuoMaiCardActivity.this, "ÔÝÎÞ");
 				}
 			}
@@ -408,7 +408,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		bundle.putInt(QuanVO.QUANZIMAINTYPE, catlog);
 		bundle.putString("userid", userid);
 		fragment.setArguments(bundle);
-		
+
 		return fragment;
 	}
 
@@ -515,4 +515,11 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			}
 		}
 	};
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		loadData();
+		super.onResume();
+	}
 }

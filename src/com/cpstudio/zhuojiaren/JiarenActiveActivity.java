@@ -311,6 +311,8 @@ public class JiarenActiveActivity extends Activity implements
 		}
 	}
 
+	
+	
 	public void loadData() {
 		if (mPullDownView.startLoadData()) {
 			// mList.clear();
