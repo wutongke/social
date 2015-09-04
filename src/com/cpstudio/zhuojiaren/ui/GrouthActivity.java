@@ -51,8 +51,9 @@ public class GrouthActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		appClientLef = AppClientLef.getInstance(this);
 		initTitle();
-		findViewById(R.id.activity_back).setVisibility(View.GONE);
 		title.setText(R.string.title_activity_up_level);
+		imageFunction.setBackgroundResource(R.drawable.magnifier5);
+		imageFunction.setVisibility(View.VISIBLE);
 		initPullDownView();
 		loadData();
 	}
@@ -127,6 +128,7 @@ public class GrouthActivity extends BaseActivity {
 		pullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.head_grouth_main);
 		ImageView advertisement = (ImageView) findViewById(R.id.hgm_adv);
+		LoadImage.getInstance().beginLoad("http://7xkb2a.com1.z0.glb.clouddn.com/android-gg.png", advertisement);
 //		new LoadImage()
 //				.beginLoad(
 //						"http://img0.imgtn.bdimg.com/it/u=3317101867,3739965699&fm=11&gp=0.jpg",

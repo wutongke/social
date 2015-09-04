@@ -214,6 +214,8 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 
 	private void loadData() {
 		// TODO Auto-generated method stub
+		ImageView ad = (ImageView)findViewById(R.id.acfd_advertisiment);
+		LoadImage.getInstance().beginLoad("http://7xkb2a.com1.z0.glb.clouddn.com/android-gg.png", ad);
 		appClient.getCrowdFunding(CrowdFundingDetailActivity.this, uiHandler,
 				MsgTagVO.INIT,
 				getIntent().getStringExtra(CrowdFundingVO.CROWDFUNDINGID));

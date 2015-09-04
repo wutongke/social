@@ -33,8 +33,8 @@ public class ImageMemoryCache {
 				if (size() > HARD_CACHE_CAPACITY) {
 					// Entries push-out of hard reference cache are transferred
 					// to soft reference cache
-					mSoftBitmapCache.put(eldest.getKey(),
-							new SoftReference<Bitmap>(eldest.getValue()));
+//					mSoftBitmapCache.put(eldest.getKey(),
+//							new SoftReference<Bitmap>(eldest.getValue()));
 					return true;
 				} else
 					return false;

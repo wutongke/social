@@ -23,9 +23,9 @@
             <ImageView
                 android:id="@+id/acfd_advertisiment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/mbg5_wdzy_1" />
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"
