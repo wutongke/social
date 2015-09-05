@@ -99,8 +99,8 @@ public class SearchMainActivity extends BaseActivity implements
 		mPullDownView.setHideHeader();
 		mPullDownView.setHideFooter(false);
 
-		initClick();
 		loadHistory();
+		initClick();
 		loadHotWordData();
 
 		displayHotWord("商御之道;杨思卓;大爆炸;实习;文慧桥;禽流感");
@@ -167,23 +167,25 @@ public class SearchMainActivity extends BaseActivity implements
 	}
 
 	private void loadHistory() {
+		mlvHistory = (ListView) findViewById(R.id.lvHostory);
+		historyAdapter = new ArrayAdapter<String>(SearchMainActivity.this,
+				R.layout.simple_text_item, historyList);
+		mlvHistory.setAdapter(historyAdapter);
+		mlvHistory.setOnItemClickListener(this);
 		historyList.clear();
 		if (sharedPrefs == null)
 			sharedPrefs = getSharedPreferences(
 					Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
-		if (sharedPrefs.contains(Constants.SEARCH_HISTORY)) {// 在虚拟机上运行，deviceId设置为空
+		if (sharedPrefs.contains(Constants.SEARCH_HISTORY)) {
 			String hisStr = sharedPrefs.getString(Constants.SEARCH_HISTORY, "");
 			if ("".equals(hisStr))
 				return;
 			String[] strArray = hisStr.split(";");
 			for (int i = 0; i <strArray.length ; i++)
 				historyList.add(strArray[i]);
+			historyAdapter.notifyDataSetChanged();
 		}
-		mlvHistory = (ListView) findViewById(R.id.lvHostory);
-		historyAdapter = new ArrayAdapter<String>(SearchMainActivity.this,
-				android.R.layout.simple_list_item_1, historyList);
-		mlvHistory.setAdapter(historyAdapter);
-		mlvHistory.setOnItemClickListener(this);
+		
 	}
 
 	private void saveHistory() {

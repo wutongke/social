@@ -52,7 +52,7 @@ public class GrouthActivity extends BaseActivity {
 		appClientLef = AppClientLef.getInstance(this);
 		initTitle();
 		title.setText(R.string.title_activity_up_level);
-		imageFunction.setBackgroundResource(R.drawable.magnifier5);
+		imageFunction.setBackgroundResource(R.drawable.jjglass);
 		imageFunction.setVisibility(View.VISIBLE);
 		initPullDownView();
 		loadData();
