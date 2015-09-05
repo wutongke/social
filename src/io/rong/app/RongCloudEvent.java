@@ -27,6 +27,7 @@ import io.rong.notification.PushNotificationMessage;
 
 import java.util.ArrayList;
 
+import android.R.integer;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -43,6 +44,7 @@ import com.cpstudio.zhuojiaren.TabContainerActivity;
 import com.cpstudio.zhuojiaren.facade.GroupFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudui.zhuojiaren.lz.CustomerMessageConstants;
 import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 import com.sea_monster.exception.BaseException;
 import com.sea_monster.network.AbstractHttpRequest;
@@ -296,7 +298,33 @@ public final class RongCloudEvent implements
 	// 文本消息的extra字段部位空则为自定义的消息：接收到点赞，评论等的推送消息(是否能实现？)
 	private void handleCustomMessage(TextMessage messageContent) {
 		// TODO Auto-generated method stub
+		String typeStr = messageContent.getExtra();
+		if (typeStr == null)
+			return;
+		int type = 1;
+		try {
+			type = Integer.parseInt(typeStr);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return;
+		}
+		switch (type) {
+		case CustomerMessageConstants.CMT:
 
+			break;
+		case CustomerMessageConstants.ZAN:
+			
+			break;
+		case CustomerMessageConstants.REQUEST_JOIN_QAUN:
+			
+			break;
+		case CustomerMessageConstants.SYS:
+			
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	/**
