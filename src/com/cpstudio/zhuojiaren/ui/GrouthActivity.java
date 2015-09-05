@@ -54,6 +54,7 @@ public class GrouthActivity extends BaseActivity {
 		title.setText(R.string.title_activity_up_level);
 		imageFunction.setBackgroundResource(R.drawable.jjglass);
 		imageFunction.setVisibility(View.VISIBLE);
+		findViewById(R.id.activity_back).setVisibility(View.GONE);
 		initPullDownView();
 		loadData();
 	}
