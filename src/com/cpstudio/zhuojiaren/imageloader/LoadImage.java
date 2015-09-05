@@ -79,6 +79,10 @@ public class LoadImage {
 		addTask(url, img);
 		doTask();
 	}
+	public void setHeightAndWidth(int height,int width) {
+		this.height = height;
+		this.width = width;
+	}
 	public void addTask(String url, ImageView img) {
 		if (null != url && !url.equals("")) {
 			Bitmap bitmap = memoryCache.getBitmapFromCache(url);
@@ -115,6 +119,11 @@ public class LoadImage {
 		Bitmap result;
 		result = memoryCache.getBitmapFromCache(url);
 		if (result == null) {
+			if(width>0&&height>0){
+				
+				result = fileCache.getImage(null,url,height,width);
+			}
+			else
 			result = fileCache.getImage(url);
 			if (result == null) {
 				if(width!=0&&height!=0){

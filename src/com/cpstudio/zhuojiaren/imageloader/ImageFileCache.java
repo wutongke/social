@@ -1,6 +1,7 @@
 package com.cpstudio.zhuojiaren.imageloader;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,13 +10,15 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.utils.ImageRectUtil;
-
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
+
+import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.utils.ImageRectUtil;
 
 public class ImageFileCache {
 	private final String cachdir;
@@ -37,6 +40,32 @@ public class ImageFileCache {
 			try {
 				bmp = ImageRectUtil.memoryMaxImage(path);
 			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			if (bmp == null) {
+				file.delete();
+			} else {
+				updateFileTime(path);
+				return bmp;
+			}
+		}
+
+		return null;
+
+	}
+	public Bitmap getImage(Context context,final String url,int height,int width) {
+		final String path = getDirectory() + "/" + convertUrlToFileName(url);
+		File file = new File(path);
+		if (file.exists()) {
+			Bitmap bmp = null;
+			try {
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inJustDecodeBounds = true;
+				BitmapFactory.decodeFile(path, options);
+				options.inSampleSize = ImageGetForHttp.calculateInSampleSize(options,width,height);
+				options.inJustDecodeBounds = false;
+				bmp = BitmapFactory.decodeFile(path, options);
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			if (bmp == null) {

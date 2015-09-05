@@ -143,7 +143,7 @@ public class ImageGetForHttp {
 		}
 		return null;
 	}
-	private static int calculateInSampleSize(BitmapFactory.Options options,
+	public static int calculateInSampleSize(BitmapFactory.Options options,
 			int reqWidth, int reqHeight) {
 		// Ô´Í¼Æ¬µÄ¿í¶È
 		int width = options.outWidth;
