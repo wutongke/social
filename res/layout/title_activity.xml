@@ -5,7 +5,7 @@
     android:paddingRight="10dp"
     android:background="@drawable/bg_title"
     android:gravity="center_vertical"
-    android:paddingBottom="3dp" >
+     >
 
     <TextView
         android:id="@+id/activity_back"
