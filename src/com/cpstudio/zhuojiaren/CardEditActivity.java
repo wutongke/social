@@ -632,34 +632,6 @@ public class CardEditActivity extends Activity {
 				userInfo.setIsPhoneOpen(phoneopen);
 				textViewEditPhoneShow.setText(phone);
 				break;
-
-			// case EDIT_PRODUCT:
-			// ArrayList<ProductVO> products = data
-			// .getParcelableArrayListExtra(EDIT_PRODUCT_STR);
-			// userInfo.setProduct(products);
-			// String product = "";
-			// if (product != null) {
-			// for (ProductVO productVO : products) {
-			// product += productVO.getTitle() + " ";
-			// }
-			// }
-			// ((TextView) findViewById(R.id.textViewEditProductShow))
-			// .setText(product);
-			// break;
-			// case EDIT_WORK:
-			// String company = data.getStringExtra(EDIT_WORK_STR1);
-			// String work = data.getStringExtra(EDIT_WORK_STR2);
-			// String isworking = data.getStringExtra(EDIT_WORK_STR3);
-			// String isentrepreneurship = data.getStringExtra(EDIT_WORK_STR4);
-			// userInfo.setCompany(company);
-			// userInfo.setPost(work);
-			// userInfo.setIsworking(isworking);
-			// userInfo.setIsisentrepreneurship(isentrepreneurship);
-			// company = ZhuoCommHelper.getFirst(company, ";");
-			// work = ZhuoCommHelper.getFirst(work, ";");
-			// ((TextView) findViewById(R.id.textViewEditWorkShow))
-			// .setText(company + " " + work);
-			// break;
 			default:
 				String filePath = pwh.dealPhotoReturn(requestCode, resultCode,
 						data, false);
@@ -788,9 +760,8 @@ public class CardEditActivity extends Activity {
 			case MsgTagVO.SELECT_PICTURE:
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-					// mFacade.saveOrUpdate(userInfo);
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.info10);
+					// CommonUtil.displayToast(getApplicationContext(),
+					// R.string.info10);
 					String data = JsonHandler.getSingleResult((String) msg.obj);
 					if (data == null)
 						CommonUtil.displayToast(getApplicationContext(),
@@ -807,8 +778,8 @@ public class CardEditActivity extends Activity {
 							CommonUtil.displayToast(getApplicationContext(),
 									R.string.tip_jsonerror);
 						}
-						CommonUtil.displayToast(getApplicationContext(),
-								R.string.uhead_update_success);
+						// CommonUtil.displayToast(getApplicationContext(),
+						// R.string.uhead_update_success);
 					}
 
 				}
@@ -828,8 +799,8 @@ public class CardEditActivity extends Activity {
 			// msg.sendToTarget();
 			// }
 		} else {
-			if(mConnHelper!=null )
-			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, userid);
+			if (mConnHelper != null)
+				mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, userid);
 		}
 	}
 

@@ -97,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_hot"
                     android:textSize="18sp"
-                    android:layout_margin="15dp"
+                    android:layout_margin="12dp"
                      />
 
                 <LinearLayout
@@ -123,24 +123,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="商誉指导" />
+                            android:gravity="center"/>
 
                         <TextView
                             android:id="@+id/hotword2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="商誉指导" />
+                            android:gravity="center" />
 
                         <TextView
                             android:id="@+id/hotword3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="商誉指导" />
+                            android:gravity="center" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -157,24 +154,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="商誉指导" />
+                            android:gravity="center" />
 
                         <TextView
                             android:id="@+id/hotword5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="商誉指导" />
+                            android:gravity="center" />
 
                         <TextView
                             android:id="@+id/hotword6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="商誉指导" />
+                            android:gravity="center"/>
                     </LinearLayout>
                     <!-- 加入热门推荐内容 -->
                 </LinearLayout>
@@ -191,7 +185,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_history"
                     android:textSize="18sp"
-                    android:layout_margin="15dp"
+                    android:layout_margin="12dp"
                      />
 
                 <TextView

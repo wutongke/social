@@ -130,6 +130,7 @@
                     android:drawableLeft="@drawable/mpzhuob_zmmp_1"
                     android:drawablePadding="5dp"
                     android:textColor="@color/white"
+                    android:visibility="gone"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>

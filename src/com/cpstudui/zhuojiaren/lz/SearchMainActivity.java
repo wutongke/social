@@ -103,7 +103,7 @@ public class SearchMainActivity extends BaseActivity implements
 		loadHistory();
 		loadHotWordData();
 
-		displayHotWord("商誉指导;杨思卓;大爆炸;实习;文慧桥;禽流感");
+		displayHotWord("商御之道;杨思卓;大爆炸;实习;文慧桥;禽流感");
 	}
 
 	private void initClick() {

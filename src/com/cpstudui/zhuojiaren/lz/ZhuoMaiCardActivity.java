@@ -86,7 +86,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	@InjectView(R.id.textViewPurse)
 	TextView tvZBNum;// 倬币数
 	@InjectView(R.id.textViewht)
-	TextView tvCompany;// 倬币数
+	TextView tvCompany;
 
 	@InjectView(R.id.lt_myself_menue)
 	View ltNyselfMenue;// 个人资料编辑菜单
@@ -435,9 +435,8 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		tvMemType.setText(work);
 
 		tvCompany.setText(userInfo.getCompany());
-		// 手机接口
 		tvPhone.setText(userInfo.getPhone());
-		tvZBNum.setText("暂无倬币数");
+		// tvZBNum.setText("暂无倬币数");
 		if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_MYSELF
 				.ordinal() || userInfo.getUserid().equals(myid)) {
 			ltNyselfMenue.setVisibility(View.VISIBLE);
