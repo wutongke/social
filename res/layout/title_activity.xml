@@ -4,11 +4,11 @@
     android:layout_height="wrap_content"
     android:paddingRight="10dp"
     android:background="@drawable/bg_title"
-    android:gravity="center_vertical"
      >
 
     <TextView
         android:id="@+id/activity_back"
+        android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -23,10 +23,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:textColor="#ffffff"
         android:textSize="20dp"
         android:gravity="center"/>
     <TextView
+        android:layout_centerVertical="true"
         android:id="@+id/activity_function2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,6 +39,7 @@
         android:textSize="20dp"
         android:visibility="gone" />
     <TextView
+        android:layout_centerVertical="true"
         android:id="@+id/activity_function"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,6 +51,7 @@
         android:textSize="20dp"
          />
     <ImageView 
+        android:layout_centerVertical="true"
         android:id="@+id/activity_function_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
