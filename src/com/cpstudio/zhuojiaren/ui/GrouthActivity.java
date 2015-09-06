@@ -170,7 +170,7 @@ public class GrouthActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				startActivity(new Intent(GrouthActivity.this,
-						GrouthChooseActivity.class));
+						GrouthListActivity.class));
 			}
 		});
 		findViewById(R.id.hgm_visit).setOnClickListener(new OnClickListener() {

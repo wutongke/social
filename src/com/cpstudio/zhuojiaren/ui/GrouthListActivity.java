@@ -45,6 +45,8 @@ public class GrouthListActivity extends BaseActivity {
 		setContentView(R.layout.activity_grouth_query);
 		ButterKnife.inject(this);
 		initTitle();
+		function.setBackgroundResource(R.drawable.ibutton);
+		function.setText(R.string.label_filter2);
 		tutorId = getIntent().getStringExtra("tutorId");
 		typeId = getIntent().getStringExtra("typeId");
 		title.setText(R.string.title_activity_up_level);
@@ -55,6 +57,15 @@ public class GrouthListActivity extends BaseActivity {
 
 	private void initPullDownView() {
 		// TODO Auto-generated method stub
+		function.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent(GrouthListActivity.this,GrouthChooseActivity.class));
+				GrouthListActivity.this.finish();
+			}
+		});
 		pullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.head_pull_all_no);
 		listView = pullDownView.getListView();
