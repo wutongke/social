@@ -88,7 +88,7 @@
         android:id="@+id/main_cats"
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"
-        android:layout_height="145dp" >
+        android:layout_height="120dp" >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/cats_viewpager"
@@ -140,7 +140,6 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
         android:baselineAligned="false"
         android:gravity="center"
         android:orientation="horizontal" >

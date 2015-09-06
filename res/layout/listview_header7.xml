@@ -4,12 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    
     <LinearLayout
         android:id="@+id/linearLayoutCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f9f9f9"
+        android:background="@color/white"
         android:orientation="horizontal" >
 
         <RelativeLayout
@@ -39,7 +38,6 @@
                 android:textColor="#ffffff"
                 android:textSize="10sp"
                 android:visibility="gone" />
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -78,10 +76,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/ico"
-                android:src="@drawable/ico_arrow_gray" />
-
+                android:src="@drawable/more_pub_event" />
         </RelativeLayout>
-
     </LinearLayout>
 
     <ImageView
@@ -94,7 +90,7 @@
         android:id="@+id/linearLayoutGroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f9f9f9"
+        android:background="@color/white"
         android:orientation="horizontal" >
 
         <RelativeLayout
@@ -160,10 +156,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/ico"
-                android:src="@drawable/ico_arrow_gray" />
-
+                android:src="@drawable/more_pub_event" />
         </RelativeLayout>
-
     </LinearLayout>
 
     <ImageView
@@ -176,7 +170,7 @@
         android:id="@+id/linearLayoutSys"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f9f9f9"
+        android:background="@color/white"
         android:orientation="horizontal" >
 
         <RelativeLayout
@@ -206,7 +200,6 @@
                 android:textColor="#ffffff"
                 android:textSize="10sp"
                 android:visibility="gone" />
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -227,7 +220,6 @@
                     android:textColor="#000000"
                     android:textSize="16sp" />
 
-                
                 <TextView
                     android:id="@+id/textViewSysMsg"
                     android:layout_width="wrap_content"
@@ -246,8 +238,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/ico"
-                android:src="@drawable/ico_arrow_gray" />
-
+                android:src="@drawable/more_pub_event" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -261,7 +252,7 @@
         android:id="@+id/linearLayoutCmt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f9f9f9"
+        android:background="@color/white"
         android:orientation="horizontal" >
 
         <RelativeLayout
@@ -273,9 +264,9 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_centerInParent="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_centerInParent="true"
                 android:contentDescription="@string/label_author_header"
                 android:src="@drawable/pingl_zx_1" />
 
@@ -291,7 +282,6 @@
                 android:textColor="#ffffff"
                 android:textSize="10sp"
                 android:visibility="gone" />
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -322,7 +312,6 @@
                     android:maxLines="1"
                     android:textColor="#7e7e7e"
                     android:textSize="16sp" />
-
             </LinearLayout>
 
             <ImageView
@@ -331,9 +320,14 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/ico"
-                android:src="@drawable/ico_arrow_gray" />
-
+                android:src="@drawable/more_pub_event" />
         </RelativeLayout>
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/ico"
+        android:src="@drawable/bg_border3" />
 
 </LinearLayout>

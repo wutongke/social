@@ -33,7 +33,7 @@ public class ViewHolder {
 	}
 
 	/**
-	 * 拿到到ViewHolder对象
+	 * 鎷垮埌鍒癡iewHolder瀵硅薄
 	 * 
 	 * @param context
 	 * @param convertView
@@ -55,7 +55,7 @@ public class ViewHolder {
 	}
 
 	/**
-	 * 通过控件的Id获取对于的控件，如果没有则加入views
+	 * 閫氳繃鎺т欢鐨処d鑾峰彇瀵逛簬鐨勬帶浠讹紝濡傛灉娌℃湁鍒欏姞鍏iews
 	 * 
 	 * @param viewId
 	 * @return
@@ -70,7 +70,7 @@ public class ViewHolder {
 	}
 
 	/**
-	 * 为TextView设置字符�?
+	 * 涓篢extView璁剧疆瀛楃锟�
 	 * 
 	 * @param viewId
 	 * @param text
@@ -88,7 +88,7 @@ public class ViewHolder {
 	}
 
 	/**
-	 * 为ImageView设置图片
+	 * 涓篒mageView璁剧疆鍥剧墖
 	 * 
 	 * @param viewId
 	 * @param drawableId
@@ -109,7 +109,7 @@ public class ViewHolder {
 	}
 
 	/**
-	 * 为ImageView设置图片
+	 * 涓篒mageView璁剧疆鍥剧墖
 	 * 
 	 * @param viewId
 	 * @param drawableId
@@ -122,14 +122,14 @@ public class ViewHolder {
 	}
 
 	/**
-	 * 为ImageView设置图片
+	 * 涓篒mageView璁剧疆鍥剧墖
 	 * 
 	 * @param viewId
 	 * @param drawableId
 	 * @return
 	 */
 	public ViewHolder setImageByUrl(int viewId, String url) {
-		// 先创建，后使用
+		// 鍏堝垱寤猴紝鍚庝娇鐢�
 		ImageLoader il = ImageLoader.getInstance(3, Type.LIFO);
 		il.loadImage(url, (ImageView) getView(viewId));
 		return this;
@@ -137,14 +137,14 @@ public class ViewHolder {
 
 	// add by lz
 	/**
-	 * 为CheckBox赋值
+	 * 涓篊heckBox璧嬪�
 	 * 
 	 * @param viewId
 	 * @param drawableId
 	 * @return
 	 */
 	public ViewHolder setCheckBox(int viewId, boolean flag, int visibility) {
-		// 先创建，后使用
+		// 鍏堝垱寤猴紝鍚庝娇鐢�
 		CheckBox cb = getView(viewId);
 		cb.setChecked(flag);
 		cb.setVisibility(visibility);

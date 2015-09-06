@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
@@ -45,6 +47,7 @@ public class LZUserSameActivity extends BaseActivity implements
 	private String uid = null;
 	private ZhuoConnHelper mConnHelper = null;
 	BaseCodeData baseDataSet;
+	private LoadImage mLoader = LoadImage.getInstance();
 	// add by lz
 	boolean isManaging = false;
 
@@ -81,16 +84,18 @@ public class LZUserSameActivity extends BaseActivity implements
 				helper.setText(R.id.izul_company, item.getCompany());
 				// CommonUtil.calcTimeToNow(time)
 				helper.setText(R.id.tvTime, item.getRegisterTime());
-				helper.setImageByUrl(R.id.izul_image, item.getUheader());
-				helper.setImageResource(R.id.izul_image,
-						R.drawable.cardex_zx_1, new OnClickListener() {
-							@Override
-							public void onClick(final View v) {
-								// TODO Auto-generated method stub
-								accept(item);
-								v.setEnabled(false);
-							}
-						});
+				ImageView iv = helper.getView(R.id.izul_image);
+				mLoader.beginLoad(item.getUheader(),iv);
+				//还需要继续写
+//				helper.setImageResource(R.id.izul_collect,
+//						R.drawable.cardex_zx_1, new OnClickListener() {
+//							@Override
+//							public void onClick(final View v) {
+//								// TODO Auto-generated method stub
+//								accept(item);
+//								v.setEnabled(false);
+//							}
+//						});
 			}
 		};
 		mListView.setAdapter(mAdapter);
