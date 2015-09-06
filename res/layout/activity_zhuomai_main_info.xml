@@ -63,6 +63,7 @@
             android:id="@+id/imageViewHeader"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:layout_margin="3dp"
             android:contentDescription="@string/label_author_header"
             android:src="@drawable/default_grouphead" />
 
@@ -80,8 +81,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewName"
-            android:layout_margin="5dp"
             android:layout_toRightOf="@+id/imageViewHeader"
+            android:layout_alignLeft="@id/textViewName"
             android:orientation="horizontal" >
 
             <LinearLayout
