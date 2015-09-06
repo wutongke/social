@@ -253,14 +253,6 @@ public class LZMyHomeActivity extends Activity {
 				fillHeadInfo();
 				break;
 			}
-			case MsgTagVO.DATA_OTHER: {
-				if (JsonHandler.checkResult((String) msg.obj,
-						getApplicationContext())) {
-					String rmb = JsonHandler.getSingleResult((String) msg.obj);
-					((TextView) findViewById(R.id.textViewMoney)).setText(rmb);
-				}
-				break;
-			}
 			}
 		}
 	};
