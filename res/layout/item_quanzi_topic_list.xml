@@ -36,14 +36,16 @@
 
             <TextView
                 android:id="@+id/textViewAuthorName"
-                android:layout_width="80dp"
+                android:maxWidth="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#1c1c1c"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textViewContent"
-                android:layout_width="80dp"
+                android:maxWidth="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@id/textViewAuthorName"

@@ -50,7 +50,8 @@
 
                 <TextView
                     android:id="@+id/textViewName"
-                    android:layout_width="80dp"
+                    android:maxWidth="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/imageViewHead"
                     android:singleLine="true"
@@ -59,13 +60,15 @@
 
                 <TextView
                     android:id="@+id/textViewContent"
-                    android:layout_width="70dp"
+                    android:maxWidth="70dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@id/textViewName"
+                    android:layout_alignBottom="@id/textViewName"
                     android:singleLine="true"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewMoney"
@@ -80,7 +83,7 @@
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:visibility="invisible"
-                    android:textColor="@color/white"
+                    android:textColor="@color/yellow"
                     android:textSize="16sp" />
 
                 <TextView
