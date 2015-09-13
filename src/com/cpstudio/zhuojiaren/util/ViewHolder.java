@@ -5,12 +5,14 @@ import com.cpstudio.zhuojiaren.util.ImageLoader.Type;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -100,6 +102,28 @@ public class ViewHolder {
 		view.setImageResource(drawableId);
 		if (listener != null)
 			view.setOnClickListener(listener);
+		return this;
+	}
+
+	/**
+	 * 涓篒mageView璁剧疆鍥剧墖
+	 * 
+	 * @param viewId
+	 * @param drawableId
+	 * @return
+	 */
+	public ViewHolder setButton(int viewId, String txt,int visible,
+			OnClickListener listener) {
+
+		Button view = getView(viewId);
+		if (view == null)
+			return this;
+		if (txt != null)
+			view.setText(txt);
+		if (listener != null)
+			view.setOnClickListener(listener);
+		if (visible != -1)
+			view.setVisibility(visible);
 		return this;
 	}
 

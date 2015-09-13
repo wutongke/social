@@ -304,12 +304,12 @@ public class MsgListActivity extends FragmentActivity implements
 
 	private void loadData() {
 		if (mSearchKey == null || mSearchKey.equals("")) {
-			loadQuanData();
-			loadSysMsgData();
-			loadCardData();
-			loadCmtRcmdData();
+//			loadQuanData();
+//			loadSysMsgData();
+//			loadCardData();
+//			loadCmtRcmdData();
 		}
-		loadChatData();
+//		loadChatData();
 	}
 
 	private void loadQuanData() {
@@ -391,147 +391,147 @@ public class MsgListActivity extends FragmentActivity implements
 		}
 	}
 
-	private void loadCardData() {
-		CardMsgFacade facade = new CardMsgFacade(MsgListActivity.this);
-		ArrayList<CardMsgVO> list = facade.getAllByCondition(null, null, null,
-				"addtime desc limit 0,1");
-		if (!list.isEmpty()) {
-			int unread = facade.getAllByCondition("isread = ?",
-					new String[] { "0" }, null, null).size();
-			TextView textViewMsgAll = ((TextView) findViewById(R.id.textViewMsgCardAll));
-			textViewMsgAll.setText(unread + "");
-			if (unread > 0) {
-				textViewMsgAll.setVisibility(View.VISIBLE);
-			} else {
-				textViewMsgAll.setVisibility(View.GONE);
-			}
-			((TextView) findViewById(R.id.textViewCardMsg))
-					.setText(gentCardMsg(list.get(0)));
-		} else {
-			((TextView) findViewById(R.id.textViewCardMsg)).setText("");
-		}
-	}
+//	private void loadCardData() {
+//		CardMsgFacade facade = new CardMsgFacade(MsgListActivity.this);
+//		ArrayList<CardMsgVO> list = facade.getAllByCondition(null, null, null,
+//				"addtime desc limit 0,1");
+//		if (!list.isEmpty()) {
+//			int unread = facade.getAllByCondition("isread = ?",
+//					new String[] { "0" }, null, null).size();
+//			TextView textViewMsgAll = ((TextView) findViewById(R.id.textViewMsgCardAll));
+//			textViewMsgAll.setText(unread + "");
+//			if (unread > 0) {
+//				textViewMsgAll.setVisibility(View.VISIBLE);
+//			} else {
+//				textViewMsgAll.setVisibility(View.GONE);
+//			}
+//			((TextView) findViewById(R.id.textViewCardMsg))
+//					.setText(gentCardMsg(list.get(0)));
+//		} else {
+//			((TextView) findViewById(R.id.textViewCardMsg)).setText("");
+//		}
+//	}
 
-	private void loadCmtRcmdData() {
-		CmtRcmdFacade facade = new CmtRcmdFacade(MsgListActivity.this);
-		ArrayList<CmtRcmdVO> list = facade.getAllByCondition(null, null, null,
-				"addtime desc limit 0,1");
-		if (!list.isEmpty()) {
-			int unread = facade.getAllByCondition("isread = ?",
-					new String[] { "0" }, null, null).size();
-			TextView textViewMsgAll = ((TextView) findViewById(R.id.textViewMsgCmtAll));
-			textViewMsgAll.setText(unread + "");
-			if (unread > 0) {
-				textViewMsgAll.setVisibility(View.VISIBLE);
-			} else {
-				textViewMsgAll.setVisibility(View.GONE);
-			}
-			CmtRcmdVO msg = list.get(0);
-			((TextView) findViewById(R.id.textViewGoodMsg)).setText(msg
-					.getSender().getUsername() + ":" + msg.getContent());
-		} else {
-			((TextView) findViewById(R.id.textViewGoodMsg)).setText("");
-		}
-	}
+//	private void loadCmtRcmdData() {
+//		CmtRcmdFacade facade = new CmtRcmdFacade(MsgListActivity.this);
+//		ArrayList<CmtRcmdVO> list = facade.getAllByCondition(null, null, null,
+//				"addtime desc limit 0,1");
+//		if (!list.isEmpty()) {
+//			int unread = facade.getAllByCondition("isread = ?",
+//					new String[] { "0" }, null, null).size();
+//			TextView textViewMsgAll = ((TextView) findViewById(R.id.textViewMsgCmtAll));
+//			textViewMsgAll.setText(unread + "");
+//			if (unread > 0) {
+//				textViewMsgAll.setVisibility(View.VISIBLE);
+//			} else {
+//				textViewMsgAll.setVisibility(View.GONE);
+//			}
+//			CmtRcmdVO msg = list.get(0);
+//			((TextView) findViewById(R.id.textViewGoodMsg)).setText(msg
+//					.getSender().getUsername() + ":" + msg.getContent());
+//		} else {
+//			((TextView) findViewById(R.id.textViewGoodMsg)).setText("");
+//		}
+//	}
 
-	private void loadChatData() {
-		try {
-			Map<String, ImMsgVO> map = new HashMap<String, ImMsgVO>();
-			// 未读消息数目
-			Map<String, Integer> map2 = new HashMap<String, Integer>();
-			// 可能得猜测。group by 返回的是该组中最后插入的一条元素，默认按时间顺序插入的，所以此处能选出最新的消息，但感觉不太严谨
-			// 一下的两个查询能保证保存的是接收到的每个人的最新消息么？ “addtime desc”
+//	private void loadChatData() {
+//		try {
+//			Map<String, ImMsgVO> map = new HashMap<String, ImMsgVO>();
+//			// 未读消息数目
+//			Map<String, Integer> map2 = new HashMap<String, Integer>();
+//			// 可能得猜测。group by 返回的是该组中最后插入的一条元素，默认按时间顺序插入的，所以此处能选出最新的消息，但感觉不太严谨
+//			// 一下的两个查询能保证保存的是接收到的每个人的最新消息么？ “addtime desc”
+//
+//			// 别人发送的消息,group by senderid
+//			//
+//			ArrayList<ImMsgVO> list1 = mFacade.getAllByCondition(
+//					"senderid <> ?", new String[] { myid }, "senderid",
+//					"addtime desc", mSearchKey.trim());
+//			// 我发送的消息
+//			ArrayList<ImMsgVO> list2 = mFacade.getAllByCondition(
+//					"receiverid <> ?", new String[] { myid }, "receiverid",
+//					"addtime desc", mSearchKey.trim());
+//
+//			// list1中保存的是接收到的每个人的最新消息么？
+//			for (ImMsgVO msg : list1) {
+//				map.put(msg.getSender().getUserid(), msg);
+//			}
+//			for (ImMsgVO msg : list2) {
+//				if (map.get(msg.getReceiver().getUserid()) == null) {
+//					map.put(msg.getReceiver().getUserid(), msg);
+//				} else {// 既有发送的也有接收的，选择最新的一条
+//					String time1 = map.get(msg.getReceiver().getUserid())
+//							.getAddtime();
+//					String time2 = msg.getAddtime();
+//					if (time1.compareTo(time2) < 0) {
+//						map.put(msg.getReceiver().getUserid(), msg);
+//					}
+//				}
+//			}
+//			list1.clear();
+//			list2.clear();
+//			for (String userid : map.keySet()) {
+//				int unreadCount = mFacade.getUnreadById(userid).size();
+//				if (unreadCount > 0) {// list1保存接收到的每个人的未读消息的最后一条
+//					list1.add(map.get(userid));
+//					map2.put(userid, unreadCount);
+//				} else {
+//					list2.add(map.get(userid));// list2保存已读消息的最后一条
+//					map2.put(userid, 0);
+//				}
+//			}
+//			// 按接收到的时间降序排序
+//			Collections.sort(list1, new ImMsgComparator());
+//			Collections.sort(list2, new ImMsgComparator());
+//			mList.clear();
+//			mAdapter.setUnreadCount(map2);
+//			mList.addAll(list1);
+//			mList.addAll(list2);
+//			mAdapter.notifyDataSetChanged();
+//			if (mSearchKey != null && !mSearchKey.equals("") && list1.isEmpty()
+//					&& list2.isEmpty()) {
+//				CommonUtil.displayToast(getApplicationContext(),
+//						R.string.error18);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
-			// 别人发送的消息,group by senderid
-			//
-			ArrayList<ImMsgVO> list1 = mFacade.getAllByCondition(
-					"senderid <> ?", new String[] { myid }, "senderid",
-					"addtime desc", mSearchKey.trim());
-			// 我发送的消息
-			ArrayList<ImMsgVO> list2 = mFacade.getAllByCondition(
-					"receiverid <> ?", new String[] { myid }, "receiverid",
-					"addtime desc", mSearchKey.trim());
-
-			// list1中保存的是接收到的每个人的最新消息么？
-			for (ImMsgVO msg : list1) {
-				map.put(msg.getSender().getUserid(), msg);
-			}
-			for (ImMsgVO msg : list2) {
-				if (map.get(msg.getReceiver().getUserid()) == null) {
-					map.put(msg.getReceiver().getUserid(), msg);
-				} else {// 既有发送的也有接收的，选择最新的一条
-					String time1 = map.get(msg.getReceiver().getUserid())
-							.getAddtime();
-					String time2 = msg.getAddtime();
-					if (time1.compareTo(time2) < 0) {
-						map.put(msg.getReceiver().getUserid(), msg);
-					}
-				}
-			}
-			list1.clear();
-			list2.clear();
-			for (String userid : map.keySet()) {
-				int unreadCount = mFacade.getUnreadById(userid).size();
-				if (unreadCount > 0) {// list1保存接收到的每个人的未读消息的最后一条
-					list1.add(map.get(userid));
-					map2.put(userid, unreadCount);
-				} else {
-					list2.add(map.get(userid));// list2保存已读消息的最后一条
-					map2.put(userid, 0);
-				}
-			}
-			// 按接收到的时间降序排序
-			Collections.sort(list1, new ImMsgComparator());
-			Collections.sort(list2, new ImMsgComparator());
-			mList.clear();
-			mAdapter.setUnreadCount(map2);
-			mList.addAll(list1);
-			mList.addAll(list2);
-			mAdapter.notifyDataSetChanged();
-			if (mSearchKey != null && !mSearchKey.equals("") && list1.isEmpty()
-					&& list2.isEmpty()) {
-				CommonUtil.displayToast(getApplicationContext(),
-						R.string.error18);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private String gentCardMsg(CardMsgVO msg) {
-		String state = msg.getState();
-		String receiverName = msg.getReceiver().getUsername();
-		String authorName = msg.getSender().getUsername();
-		String senderid = msg.getSender().getUserid();
-		String rs = "";
-		String cardState = "0";
-		if (senderid.equals(myid)) {
-			if (state.equals("send")) {
-				cardState = "0";
-			} else {
-				cardState = "2";
-			}
-		} else {
-			if (state.equals("send")) {
-				cardState = "1";
-			} else {
-				cardState = "3";
-			}
-		}
-		if (cardState.equals("0")) {
-			rs = getString(R.string.label_tohe) + receiverName
-					+ getString(R.string.label_sendcard);
-		} else if (cardState.equals("1")) {
-			rs = authorName + getString(R.string.label_tomy)
-					+ getString(R.string.label_sendcard);
-		} else if (cardState.equals("2")) {
-			rs = authorName + getString(R.string.label_acceptmycard);
-		} else if (cardState.equals("3")) {
-			rs = getString(R.string.label_accepthecard) + authorName
-					+ getString(R.string.label_acceptcard);
-		}
-		return rs;
-	}
+//	private String gentCardMsg(CardMsgVO msg) {
+//		String state = msg.getState();
+//		String receiverName = msg.getReceiver().getUsername();
+//		String authorName = msg.getSender().getUsername();
+//		String senderid = msg.getSender().getUserid();
+//		String rs = "";
+//		String cardState = "0";
+//		if (senderid.equals(myid)) {
+//			if (state.equals("send")) {
+//				cardState = "0";
+//			} else {
+//				cardState = "2";
+//			}
+//		} else {
+//			if (state.equals("send")) {
+//				cardState = "1";
+//			} else {
+//				cardState = "3";
+//			}
+//		}
+//		if (cardState.equals("0")) {
+//			rs = getString(R.string.label_tohe) + receiverName
+//					+ getString(R.string.label_sendcard);
+//		} else if (cardState.equals("1")) {
+//			rs = authorName + getString(R.string.label_tomy)
+//					+ getString(R.string.label_sendcard);
+//		} else if (cardState.equals("2")) {
+//			rs = authorName + getString(R.string.label_acceptmycard);
+//		} else if (cardState.equals("3")) {
+//			rs = getString(R.string.label_accepthecard) + authorName
+//					+ getString(R.string.label_acceptcard);
+//		}
+//		return rs;
+//	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {

@@ -22,12 +22,12 @@
         <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
     </style>
-    
+
     <style name="AnimBottomScaleRM" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/push_scale_rm_in</item>
         <item name="android:windowExitAnimation">@anim/push_scale_rm_out</item>
     </style>
-    
+
     <style name="AnimBottomScaleBM" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/push_scale_bm_in</item>
         <item name="android:windowExitAnimation">@anim/push_scale_bm_out</item>
@@ -37,6 +37,8 @@
         <item name="android:button">@drawable/indicator_checkbox</item>
         <item name="android:paddingLeft">30dp</item>
         <item name="android:maxHeight">10dp</item>
+       <item name="android:layout_width"> 17dp</item>
+        <item name="android:layout_height">17dp</item>
     </style>
 
     <style name="CPRadio" parent="@android:style/Widget.CompoundButton.RadioButton">
@@ -52,7 +54,7 @@
         <item name="android:clickable">true</item>
         <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
     </style>
-    
+
     <style name="CPToggleItem" parent="android:Widget">
         <item name="android:background">@drawable/button_item_toggle_bg</item>
         <item name="android:clickable">true</item>
@@ -77,9 +79,9 @@
         <item name="android:thumbOffset">0dp</item>
         <item name="android:focusable">true</item>
     </style>
-    
+
     <style name="Widget.GifMoviewView" parent="@android:style/Widget"></style>
-	<style name="margin">
+<style name="margin">
 	    <item name="android:paddingLeft">10dp</item>
 	    <item name="android:paddingRight">10dp</item>
 	</style>
@@ -108,17 +110,21 @@
 	    <item name="android:textSize">@dimen/dp12</item>
 	</style>
 	<style name="anim_popup_dir">
+
+
         <item name="android:windowEnterAnimation">@anim/slide_in</item>
         <item name="android:windowExitAnimation">@anim/slide_out</item>
     </style>
+
     <style name="NavPage">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:orientation">vertical</item>
         <item name="android:gravity">center_horizontal</item>
-         <item name="android:background">#ffffff</item> 
+        <item name="android:background">#ffffff</item>
     </style>
-     <style name="MMButton">
+
+    <style name="MMButton">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">16dp</item>
@@ -126,21 +132,43 @@
         <item name="android:minHeight">40dp</item>
         <item name="android:minWidth">40dp</item>
     </style>
-    <style name="NavPage">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:gravity">center_horizontal</item>
-         <item name="android:background">#ffffff</item> 
-    </style>
+
     <style name="MMLineButton" parent="@style/MMButton">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="MMLineActionButton" parent="@style/MMLineButton">
         <item name="android:shadowColor">#000000</item>
         <item name="android:shadowDy">1.2</item>
         <item name="android:shadowDx">1.2</item>
         <item name="android:shadowRadius">1</item>
     </style>
+
+    <style name="active_font_style">
+        <item name="android:textColor">@color/font_black</item>
+        <item name="android:textSize">@dimen/active_fontsize_14sp</item>
+    </style>
+
+    <style name="fs_zhuomaiactive_top">
+        <item name="android:textColor"> #8d8d8d</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="view_size_radio">
+        <item name="android:layout_width"> 38dp</item>
+        <item name="android:layout_height">38dp</item>
+    </style>
+
+    <style name="view_tip_top" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">#333333</item>
+        <item name="android:textColor">#999999</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">left|center_vertical</item>
+        
+    </style>
+
 </resources>

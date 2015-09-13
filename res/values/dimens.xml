@@ -14,4 +14,8 @@
 	<dimen name="dp16">16dp</dimen>
 	<dimen name="dp20">20dp</dimen>
 
+	<dimen name="active_margin_left30">30dp</dimen>
+	<dimen name="active_fontsize_14sp">14sp</dimen>
+	<!-- 图片和文字之间的距离 -->
+	<dimen name="dic_bettween">14dp</dimen>
 </resources>

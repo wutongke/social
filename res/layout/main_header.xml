@@ -87,8 +87,8 @@
     <RelativeLayout
         android:id="@+id/main_cats"
         android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_height="120dp" >
+        android:layout_height="120dp"
+        android:layout_marginTop="8dp" >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/cats_viewpager"
@@ -108,15 +108,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:background="#f1f6f2"
         android:orientation="horizontal"
-        android:background="@color/graywhitem"
         android:padding="8dp" >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            
             android:orientation="horizontal" >
 
             <ImageView
@@ -137,9 +136,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="176dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:baselineAligned="false"
         android:gravity="center"
         android:orientation="horizontal" >
@@ -149,8 +145,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-             android:scaleType="centerCrop"
-             />
+            android:scaleType="centerCrop" />
 
         <View
             android:layout_width="2dp"
@@ -169,8 +164,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                 android:scaleType="centerCrop"
-                 />
+                android:scaleType="centerCrop" />
 
             <View
                 android:layout_width="match_parent"
@@ -182,8 +176,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                 android:scaleType="centerCrop"
-                 />
+                android:scaleType="centerCrop" />
         </LinearLayout>
     </LinearLayout>
 

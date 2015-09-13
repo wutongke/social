@@ -102,7 +102,7 @@
                     android:id="@+id/textViewPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="15dp"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -152,10 +152,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewht"
+            android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/jianjie_zmmp_1"
             android:gravity="center"
-            android:textColor="@color/white"
+            android:textColor="#7c92b1"
             android:textSize="14sp" />
     </RelativeLayout>
 

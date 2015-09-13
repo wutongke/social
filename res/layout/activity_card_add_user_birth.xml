@@ -23,7 +23,7 @@
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
-        <include layout="@layout/goback_button"/>
+        <include layout="@layout/goback_button" />
 
         <Button
             android:id="@+id/buttonSubmit"
@@ -34,8 +34,7 @@
             android:layout_marginRight="8dp"
             android:background="@drawable/button_save"
             android:text="@string/label_save"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
+            android:textColor="@color/white" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -51,25 +50,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginBottom="10dp"
                 android:background="@drawable/shape_corners3"
                 android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/textViewIntro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/mp_mysr_hint"
-                    android:textColor="#999999"
-                    android:textSize="14sp" />
+                    style="@style/view_tip_top"
+                    android:text="@string/mp_mysr_hint" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
+                    android:gravity="center_vertical"
                     android:padding="12dp" >
 
                     <TextView
@@ -78,6 +71,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
+                        android:drawablePadding="10dp"
+                        android:drawableRight="@drawable/datetime"
                         android:text="@string/mp_yalsr"
                         android:textSize="16sp" />
                 </RelativeLayout>
@@ -165,24 +160,20 @@
                     android:id="@+id/radioGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:contentDescription="是否开放" >
 
                     <RadioButton
                         android:id="@+id/radioPrivate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/view_size_radio"
                         android:checked="true"
                         android:text="@string/info41" />
 
                     <RadioButton
                         android:id="@+id/radioOpen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/view_size_radio"
                         android:checked="false"
                         android:text="@string/info399" />
-
-
-               
                 </RadioGroup>
             </LinearLayout>
         </ScrollView>

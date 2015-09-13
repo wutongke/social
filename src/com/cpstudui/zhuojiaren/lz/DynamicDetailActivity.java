@@ -36,6 +36,7 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.Comment;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -66,6 +67,7 @@ public class DynamicDetailActivity extends BaseActivity {
 	View textViewTip;
 	Dynamic dynamicDetail;
 	ImageView headIV;
+	BaseCodeData baseDataSet;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +104,7 @@ public class DynamicDetailActivity extends BaseActivity {
 				startCommentActivity(cmt.getToId(), cmt.getToUserid());
 			}
 		});
+		baseDataSet = mConnHelper.getBaseDataSet();
 		initClick();
 		loadData();
 	}
@@ -111,8 +114,19 @@ public class DynamicDetailActivity extends BaseActivity {
 				.setText(dynamicDetail.getName());
 		// 此处还需要从编号获得对应的名称
 
-		// ((TextView) (mHeadView.findViewById(R.id.textViewRes)))
-		// .setText(dynamicDetail.get);
+		String work = "";
+		if (baseDataSet != null) {
+			int pos = dynamicDetail.getPosition();
+			if (pos != 0)
+				pos--;
+			work = ((baseDataSet.getPosition()).get(pos)).getContent();
+		}
+
+		((TextView) (mHeadView.findViewById(R.id.textViewWork))).setText(work);
+
+		((TextView) (mHeadView.findViewById(R.id.textViewRes)))
+				.setText(dynamicDetail.getCompany());
+
 		((TextView) (mHeadView.findViewById(R.id.textViewTime)))
 				.setText(dynamicDetail.getAddtime());
 		((TextView) (mHeadView.findViewById(R.id.textViewCmtContent)))
@@ -167,7 +181,7 @@ public class DynamicDetailActivity extends BaseActivity {
 						}
 						intent.putExtra("type", "network");
 						intent.putStringArrayListExtra("pics", orgs);
-						 intent.putExtra("pic", (String) v.getTag());
+						intent.putExtra("pic", (String) v.getTag());
 						startActivity(intent);
 					}
 				});

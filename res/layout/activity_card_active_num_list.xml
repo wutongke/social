@@ -14,6 +14,7 @@
         android:padding="15dp" >
 
         <TextView
+             style="@style/active_font_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/textViewCardRequestedNum"
@@ -45,6 +46,7 @@
         android:padding="15dp" >
 
         <TextView
+             style="@style/active_font_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/textViewViewedNum"
@@ -76,6 +78,7 @@
         android:padding="15dp" >
 
         <TextView
+             style="@style/active_font_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/textCollectedMeNum"
@@ -107,6 +110,7 @@
         android:padding="15dp" >
 
         <TextView
+             style="@style/active_font_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/textZanMeNum"
@@ -123,19 +127,6 @@
             android:maxLines="1" />
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
-        android:background="#d8d8d8" />
-
-   
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
-        android:background="#d8d8d8" />
+ 
 
 </LinearLayout>

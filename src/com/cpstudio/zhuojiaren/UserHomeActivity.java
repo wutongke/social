@@ -65,7 +65,6 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 			findViewById(R.id.buttonCard).setVisibility(View.GONE);
 		}
 		userFacade = new UserFacade(getApplicationContext());
-		userFacade = new UserFacade(getApplicationContext());
 		pwh = new PopupWindows(UserHomeActivity.this);
 		mLoadImage = new LoadImage();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);

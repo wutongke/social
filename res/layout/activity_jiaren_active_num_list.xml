@@ -10,10 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:background="#ffffff"
-        android:padding="15dp" >
+        android:padding="15dp"
+        android:gravity="center_vertical"
+        android:background="#ffffff" >
 
         <TextView
+            style="@style/active_font_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/textViewIFocusedNum"
@@ -27,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:drawableRight="@drawable/ico_arrow_big"
-            android:maxLines="1"/>
+            android:maxLines="1" />
     </RelativeLayout>
 
     <TextView
@@ -44,6 +46,7 @@
         android:padding="15dp" >
 
         <TextView
+            style="@style/active_font_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/textViewAllNum"

@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="#efefef"
+    android:orientation="vertical"
     tools:context="com.cpstudui.zhuojiaren.lz.LZMyHomeActivity" >
 
     <RelativeLayout
@@ -47,25 +47,26 @@
                     android:layout_marginRight="10dp"
                     android:contentDescription="@string/ico"
                     android:src="@drawable/default_userhead" />
-
-                <TextView
+                <TextView
                     android:id="@+id/textViewName"
-                    android:maxWidth="80dp"
+                    style="@style/basic_text_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/imageViewHead"
+                    android:maxWidth="80dp"
                     android:singleLine="true"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textViewContent"
-                    android:maxWidth="70dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/textViewName"
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@id/textViewName"
-                    android:layout_alignBottom="@id/textViewName"
+                    android:maxWidth="70dp"
                     android:singleLine="true"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
@@ -82,9 +83,9 @@
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:visibility="invisible"
-                    android:textColor="@color/yellow"
-                    android:textSize="16sp" />
+                    android:textColor="#ffd370"
+                    android:textSize="16sp"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/textViewCompany"

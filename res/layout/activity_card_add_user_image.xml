@@ -22,7 +22,7 @@
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
-       <include layout="@layout/goback_button"/>
+        <include layout="@layout/goback_button" />
 
         <Button
             android:id="@+id/buttonSubmit"
@@ -31,30 +31,28 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
-            android:background="@drawable/button_save"
+            android:background="@null"
             android:text="@string/label_save"
             android:textColor="#ffffff"
-            android:textSize="14sp" />
+            android:textSize="@dimen/basic_title_text" />
     </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp" >
+        android:background="@color/white" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginRight="10dp"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/textViewIntro"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:background="#333333"
+                android:padding="10dp"
                 android:text="@string/info30"
                 android:textColor="#999999" />
 
@@ -62,7 +60,6 @@
                 android:id="@+id/linearLayoutPicContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_corners"
                 android:orientation="vertical" >
             </LinearLayout>
         </LinearLayout>

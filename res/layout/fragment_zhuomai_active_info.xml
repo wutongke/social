@@ -11,16 +11,18 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/gray" >
+            android:layout_height="48dp"
+            android:background="#f3f3f3"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical" >
-                 <TextView
+
+                <TextView
                     android:id="@+id/tvViewedNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -28,7 +30,9 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="30" />
-                 <TextView
+
+                <TextView
+                    style="@style/fs_zhuomaiactive_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -36,12 +40,19 @@
                     android:maxLines="1"
                     android:text="@string/label_viewed" />
             </LinearLayout>
-             <LinearLayout
+
+            <TextView
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#e7e7e6" />
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical" >
-                 <TextView
+
+                <TextView
                     android:id="@+id/tvAimedNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -49,7 +60,9 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="30" />
-                 <TextView
+
+                <TextView
+                    style="@style/fs_zhuomaiactive_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -57,12 +70,19 @@
                     android:maxLines="1"
                     android:text="@string/label_aimed" />
             </LinearLayout>
-             <LinearLayout
+
+            <TextView
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#e7e7e6" />
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical" >
-                 <TextView
+
+                <TextView
                     android:id="@+id/tvZanedNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,7 +90,9 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="30" />
-                 <TextView
+
+                <TextView
+                    style="@style/fs_zhuomaiactive_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -78,12 +100,19 @@
                     android:maxLines="1"
                     android:text="@string/label_zaned" />
             </LinearLayout>
-             <LinearLayout
+
+            <TextView
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#e7e7e6" />
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical" >
-                 <TextView
+
+                <TextView
                     android:id="@+id/tvRankNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -91,7 +120,9 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="30" />
-                 <TextView
+
+                <TextView
+                    style="@style/fs_zhuomaiactive_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -99,7 +130,6 @@
                     android:maxLines="1"
                     android:text="@string/label_zhuomao_rank" />
             </LinearLayout>
-            
         </LinearLayout>
 
         <RelativeLayout
@@ -116,20 +146,14 @@
                 android:layout_centerVertical="true"
                 android:orientation="horizontal" >
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/myfriend_zmmp_1" >
-                </ImageView>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:drawableLeft="@drawable/myfriend_zmmp_1"
+                    android:drawablePadding="14dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:drawablePadding="5dp"
                     android:text="@string/renmai_my" />
             </LinearLayout>
 
@@ -141,6 +165,11 @@
                 android:drawableRight="@drawable/ico_arrow_big"
                 android:maxLines="1" />
         </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#f7f7f7" />
 
         <RelativeLayout
             android:id="@+id/llMyQuanzi"
@@ -156,17 +185,12 @@
                 android:layout_centerVertical="true"
                 android:orientation="horizontal" >
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/mytalks_zmmp_1" >
-                </ImageView>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:drawableLeft="@drawable/mytalks_zmmp_1"
+                    android:drawablePadding="14dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/quanzi_my" />
@@ -180,7 +204,10 @@
                 android:drawableRight="@drawable/ico_arrow_big"
                 android:maxLines="1" />
         </RelativeLayout>
-
+  <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#f7f7f7" />
         <RelativeLayout
             android:id="@+id/llMyActive"
             android:layout_width="match_parent"
@@ -195,17 +222,12 @@
                 android:layout_centerVertical="true"
                 android:orientation="horizontal" >
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/myactive_zmmp_1" >
-                </ImageView>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:drawableLeft="@drawable/myactive_zmmp_1"
+                    android:drawablePadding="14dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/active_my" />

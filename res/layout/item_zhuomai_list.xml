@@ -13,29 +13,29 @@
         android:layout_marginTop="15dp"
         android:orientation="vertical" >
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
             <TextView
                 android:id="@+id/textViewTitle"
-                android:layout_width="160dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_weight="1"
                 android:singleLine="true"
                 android:text="textVi"
-                android:textColor="#1c1c1c"
-                android:textSize="18sp" />
+                android:textColor="#424242" />
 
             <TextView
                 android:id="@+id/textViewTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textViewTitle"
-                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
                 android:layout_marginRight="3dp"
                 android:text="textViewTime"
                 android:textSize="13sp" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -59,9 +59,9 @@
                 android:layout_alignParentTop="true"
                 android:ems="20"
                 android:lineSpacingExtra="2dp"
-                android:singleLine="true"
+                android:maxLines="2"
                 android:text="textViewContent"
-                android:textColor="#585858"
+                android:textColor="#a6a6a6"
                 android:textSize="16sp" />
         </RelativeLayout>
 

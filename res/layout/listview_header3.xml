@@ -106,8 +106,8 @@
 
             <RelativeLayout
                 android:id="@+id/relativeLayoutUserHead"
-                android:layout_width="98dp"
-                android:layout_height="103dp"
+                android:layout_width="73dp"
+                android:layout_height="73dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/bg_header" >
 

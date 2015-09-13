@@ -11,6 +11,14 @@
         android:id="@+id/bar_title"
         layout="@layout/title_activity" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#333333"
+        android:padding="10dp"
+        android:text="@string/label_company_tip"
+        android:textColor="#999999" />
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
