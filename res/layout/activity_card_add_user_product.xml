@@ -50,13 +50,8 @@
 
             <TextView
                 android:id="@+id/textViewIntro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/info72"
-                android:textColor="#999999"
-                android:textSize="14sp" />
+                style="@style/view_tip_top"
+                android:text="@string/info72"/>
 
             <LinearLayout
                 android:id="@+id/linearLayoutProducts"

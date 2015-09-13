@@ -22,7 +22,7 @@
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
-        <include layout="@layout/goback_button"/>
+        <include layout="@layout/goback_button" />
 
         <Button
             android:id="@+id/buttonSubmit"
@@ -31,31 +31,26 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
-            android:background="@drawable/button_save"
+            android:background="@null"
             android:text="@string/label_save"
             android:textColor="#ffffff"
-            android:textSize="14sp" />
+            android:textSize="@dimen/basic_title_text" />
     </RelativeLayout>
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="#efefef" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="vertical"
-            android:padding="10dp" >
+            android:orientation="vertical" >
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="5dp"
-                android:ellipsize="end"
-                android:gravity="left|center_vertical"
-                android:text="@string/my_info_hint"
-                android:textColor="#6f6f6f" />
+                style="@style/view_tip_top"
+                android:text="@string/my_info_hint" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -89,17 +84,19 @@
             <EditText
                 android:id="@+id/etSignature"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/bg_corners"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="@string/label_signature"
                 android:maxLines="2"
-                android:textColor="#999999" />
+                android:textColor="#c9c9c9" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/shape_corners2"
                 android:orientation="vertical" >
 
@@ -126,7 +123,6 @@
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/textViewEditName"
                         android:drawablePadding="5dp"
-                        android:drawableRight="@drawable/ico_arrow_big"
                         android:ellipsize="end"
                         android:gravity="right|center_vertical"
                         android:singleLine="true"
@@ -138,7 +134,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:background="#d8d8d8" />
+                    android:background="#efefef" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -172,7 +168,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:background="#d8d8d8" />
+                    android:background="#efefef" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -209,7 +205,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:background="#d8d8d8" />
+                    android:background="#efefef" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -239,13 +235,6 @@
                         android:singleLine="true"
                         android:textColor="#6f6f6f" />
                 </RelativeLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginRight="1dp"
-                    android:background="#d8d8d8" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -277,13 +266,6 @@
                         android:text=""
                         android:textColor="#6f6f6f" />
                 </RelativeLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginRight="1dp"
-                    android:background="#d8d8d8" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -321,7 +303,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:background="#d8d8d8" />
+                    android:background="#efefef" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -358,7 +340,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:background="#d8d8d8" />
+                    android:background="#efefef" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -394,7 +376,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/shape_corners2"
                 android:orientation="vertical" >
 
@@ -433,7 +415,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:background="#d8d8d8" />
+                    android:background="#efefefef" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -470,7 +452,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:background="#d8d8d8" />
+                    android:background="#efefefef" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -506,7 +488,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/shape_corners2"
                 android:orientation="vertical" >
 
@@ -545,7 +527,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:background="#d8d8d8" />
+                    android:background="#efefefef" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -582,7 +564,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:background="#d8d8d8" />
+                    android:background="#efefefef" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -619,7 +601,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:background="#d8d8d8" />
+                    android:background="#efefefef" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"

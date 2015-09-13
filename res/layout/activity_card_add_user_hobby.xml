@@ -23,7 +23,7 @@
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
-        <include layout="@layout/goback_button"/>
+        <include layout="@layout/goback_button" />
 
         <Button
             android:id="@+id/buttonSubmit"
@@ -58,14 +58,8 @@
             </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/info46"
-                android:textColor="#999999"
-                android:textSize="14sp" />
+                style="@style/view_tip_top"
+                android:text="@string/info46" />
 
             <TableLayout
                 android:id="@+id/tableLayout"
@@ -76,11 +70,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_margin="10dp"
                 android:text="@string/label_qt"
                 android:textColor="#999999"
                 android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e9e9e9" />
 
             <EditText
                 android:id="@+id/editText"
@@ -89,7 +87,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_input"
+                android:background="@null"
                 android:hint="@string/info76"
                 android:inputType="textMultiLine"
                 android:minLines="1"

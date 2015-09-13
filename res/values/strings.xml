@@ -357,7 +357,7 @@
     <string name="label_qzcj">创建者</string>
     <string name="label_qzgl">管理员</string>
     <string name="label_qzqz">圈主</string>
-    <string name="label_qt">其他</string>
+    <string name="label_qt">其他:</string>
     <string name="label_qzcreate">创建</string>
     <string name="label_qzupdate">更新圈子</string>
     <string name="label_view2">查看资源</string>
@@ -1003,6 +1003,7 @@
     <string name="my_info_hint">真实地表达自己，让更多家人了解自己。真实和了解是建立有效人脉的关键。</string>
     <string name="title_my_info">我的资料</string>
     <string name="label_setup_active">发起活动</string>
+    <string name="label_seach_active">查询活动</string>
     <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_account">AccountActivity</string>
     <string name="title_activity_phone">PhoneActivity</string>
@@ -1128,6 +1129,7 @@
     <string name="lab_extend">扩展</string>
     <string name="lab_start_chat">发起聊天</string>
     <string name="lab_pub_detail">公告详情</string>
+     <string name="lab_zhuomaiactive_detail">倬脉动态详情</string>
     <string name="title_activity_res_comment">ResCommentActivity</string>
     <string name="selected_null">请先选中欲删除项</string>
     <string name="update_photo_success">照片更新成功</string>
@@ -1142,4 +1144,7 @@
     <string name="txt_add">增加</string>
     <string name="txt_save">保存</string>
     <string name="txt_pub">发布</string>
+      <string name="label_signature">我的签名，最多15字</string>
+      <string name="label_company_tip">请真实全面填写企业信息，以便于家人更加了解自己，发现更多合作机会，合作从了解开始。</string>
+      <string name="add_dream">添加梦想</string>
 </resources>

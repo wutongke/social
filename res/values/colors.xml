@@ -20,4 +20,6 @@
 	<color name="lightgreen">#6fb956</color>
 	<color name="transparent">#00000000</color>
 	<color name="bg">#EBEBEB</color>
+	
+	<color name="font_black">#737373</color>
 </resources>

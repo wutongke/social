@@ -45,7 +45,7 @@ public class PubDetailActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		initTitle();
 		id = getIntent().getStringExtra("id");
-		title.setText(R.string.lab_pub_detail);
+		title.setText(R.string.lab_zhuomaiactive_detail);
 		imageLoader = new LoadImage();
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		loadData();
@@ -63,7 +63,7 @@ public class PubDetailActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		if (pubMsg != null) {
 			// imageLoader.beginLoad(visit.getImageAddr(), image);
-			content.setText(pubMsg.getContent());
+			content.setText("  "+pubMsg.getContent());
 			name.setText(pubMsg.getPublish());
 			time.setText(pubMsg.getPubtime());
 		}

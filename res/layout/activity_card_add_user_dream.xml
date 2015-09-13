@@ -23,7 +23,7 @@
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
-        <include layout="@layout/goback_button"/>
+        <include layout="@layout/goback_button" />
 
         <Button
             android:id="@+id/buttonSubmit"
@@ -50,13 +50,8 @@
 
             <TextView
                 android:id="@+id/textViewIntro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/info48"
-                android:textColor="#999999"
-                android:textSize="14sp" />
+                style="@style/view_tip_top"
+                android:text="@string/info48" />
 
             <LinearLayout
                 android:id="@+id/linearLayoutDreams"
@@ -92,21 +87,26 @@
             </LinearLayout>
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_weight="1" >
+                android:layout_weight="1"
+                android:background="@drawable/mybutton" >
 
                 <Button
                     android:id="@+id/buttonAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/button_add_drame" />
+                    android:background="@null"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/zxmenu_zx_1"
+                    android:text="@string/add_dream"
+                    android:textColor="@color/white" />
             </RelativeLayout>
         </LinearLayout>
-
     </ScrollView>
 
 </LinearLayout>
