@@ -1550,6 +1550,7 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("weixin", user.getWeixin()));
 		nameValuePairs.add(new BasicNameValuePair("isWeixinOpen", user
 				.getIsWeixinOpen() + ""));
+		nameValuePairs.add(new BasicNameValuePair("signature", user.getSignature()));
 		return getFromServerByPost(ZhuoCommHelperLz.modifyUserInfo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}

@@ -77,7 +77,7 @@ public class Cats_PageAdapter extends PagerAdapter {
 				LinearLayout.LayoutParams childllp = new LinearLayout.LayoutParams(
 						LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 				if(j==1)
-					childllp.setMargins(0, 20, 0, 0);
+					childllp.setMargins(0, 30, 0, 0);
 				LinearLayout childlinearLayou = new LinearLayout(context);
 				childlinearLayou.setLayoutParams(childllp);
 				childlinearLayou.setOrientation(LinearLayout.HORIZONTAL);

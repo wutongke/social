@@ -46,6 +46,8 @@
                 android:id="@+id/izul_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="dalsjdklasjdasjd"
                 android:textColor="#1c1c1c"
                 android:textSize="18sp" />
 
@@ -53,12 +55,15 @@
                 android:id="@+id/izul_position"
                 style="@style/basic_second_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:maxLines="1"
+                android:text="dalsjdklasjdasjd" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/izul_company"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="2dp"
             android:maxLines="4"
@@ -77,15 +82,18 @@
         <TextView
             android:id="@+id/tvTime"
             style="@style/basic_second_text"
+            android:text="12分钟前"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
-        <ImageView
-            android:id="@+id/izul_collect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            
+        <Button
+            android:id="@+id/izubtn_collect"
+            android:textColor="@color/white"
+            android:text="@string/label_accept"
+            android:background="#72cb65"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
              />
     </LinearLayout>
 

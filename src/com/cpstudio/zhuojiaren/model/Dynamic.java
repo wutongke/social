@@ -24,6 +24,8 @@ public class Dynamic {
 
 	private int position;
 
+	private String company="serverÎÞ";
+	
 	private String addtime;
 
 	private List<PicNewVO> statusPic;
@@ -34,6 +36,14 @@ public class Dynamic {
 	
 	public void setStatusid(String statusid) {
 		this.statusid = statusid;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
 	public String getStatusid() {

@@ -33,10 +33,12 @@ import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
+
 /**
  * 请求交换名片的家人
+ * 
  * @author lz
- *
+ * 
  */
 public class LZUserSameActivity extends BaseActivity implements
 		OnItemClickListener {
@@ -73,35 +75,35 @@ public class LZUserSameActivity extends BaseActivity implements
 				helper.setCheckBox(R.id.isChecked, false, View.GONE);
 				helper.setText(R.id.izul_name, item.getName());
 				String position = "";
-				if (baseDataSet != null)
-				{
-					int pos=item.getPosition();
-					if(pos!=0)
+				if (baseDataSet != null) {
+					int pos = item.getPosition();
+					if (pos != 0)
 						pos--;
-					position = ((baseDataSet.getPosition()).get(pos)).getContent();
+					position = ((baseDataSet.getPosition()).get(pos))
+							.getContent();
 				}
 				helper.setText(R.id.izul_position, position);// 职位
 				helper.setText(R.id.izul_company, item.getCompany());
 				// CommonUtil.calcTimeToNow(time)
 				helper.setText(R.id.tvTime, item.getRegisterTime());
 				ImageView iv = helper.getView(R.id.izul_image);
-				mLoader.beginLoad(item.getUheader(),iv);
-				//还需要继续写
-//				helper.setImageResource(R.id.izul_collect,
-//						R.drawable.cardex_zx_1, new OnClickListener() {
-//							@Override
-//							public void onClick(final View v) {
-//								// TODO Auto-generated method stub
-//								accept(item);
-//								v.setEnabled(false);
-//							}
-//						});
+				mLoader.beginLoad(item.getUheader(), iv);
+				// 还需要继续写
+				helper.setButton(R.id.izubtn_collect, null, -1,
+						new OnClickListener() {
+							@Override
+							public void onClick(final View v) {
+								// TODO Auto-generated method stub
+								accept(item);
+								v.setEnabled(false);
+							}
+						});
 			}
 		};
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowFooter(false);
 		mPullDownView.noFoot();
-		
+
 		loadData();
 	}
 
@@ -122,6 +124,7 @@ public class LZUserSameActivity extends BaseActivity implements
 										MsgTagVO.MSG_FOWARD, item.getUserid(),
 										2);
 							}
+
 							@Override
 							public void onError(Integer arg0, ErrorCode arg1) {
 								// TODO Auto-generated
@@ -143,10 +146,10 @@ public class LZUserSameActivity extends BaseActivity implements
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
 					mList.clear();
-					mList.addAll( nljh.parseUserNewList());
+					mList.addAll(nljh.parseUserNewList());
 					mAdapter.notifyDataSetChanged();
-					 if(mList.size()<1)
-						 mPullDownView.noData(false);
+					if (mList.size() < 1)
+						mPullDownView.noData(false);
 				}
 				break;
 			}
@@ -159,12 +162,12 @@ public class LZUserSameActivity extends BaseActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-//		if (id != -1) {
-//			Intent i = new Intent(LZUserSameActivity.this,
-//					MsgDetailActivity.class);
-//			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
-//			startActivity(i);
-//		}
+		// if (id != -1) {
+		// Intent i = new Intent(LZUserSameActivity.this,
+		// MsgDetailActivity.class);
+		// i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
+		// startActivity(i);
+		// }
 	}
 
 	private void loadData() {

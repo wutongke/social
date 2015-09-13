@@ -3,7 +3,7 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f9f9f9"
+    android:background="#f1f6f2"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -71,7 +71,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_marginTop="10dp" >
 
         <com.cpstudio.zhuojiaren.widget.PullDownView
             android:id="@+id/main_pull_down_view"

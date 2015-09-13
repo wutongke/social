@@ -1144,7 +1144,11 @@
     <string name="txt_add">增加</string>
     <string name="txt_save">保存</string>
     <string name="txt_pub">发布</string>
-      <string name="label_signature">我的签名，最多15字</string>
-      <string name="label_company_tip">请真实全面填写企业信息，以便于家人更加了解自己，发现更多合作机会，合作从了解开始。</string>
-      <string name="add_dream">添加梦想</string>
+    <string name="label_signature">我的签名，最多15字</string>
+    <string name="label_company_tip">请真实全面填写企业信息，以便于家人更加了解自己，发现更多合作机会，合作从了解开始。</string>
+    <string name="add_dream">添加梦想</string>
+    <string name="lab_msglist_view_changes">查看请求与我交换名片的人</string>
+    <string name="lab_msglist_view_quan_msg">查看圈子聊天消息</string>
+    <string name="lab_msglist_view_sys_msg">查看系统发来的通知信息</string>
+    <string name="lab_msglist_view_cmt_msg">查看谁评论了我的文章，或需求信息</string>
 </resources>

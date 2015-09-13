@@ -18,42 +18,53 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.BaiduLocationHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.ui.CrowdFundingActivity;
 import com.cpstudio.zhuojiaren.ui.UserSameActivity;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class FindActivity extends Activity {
 	private String mLocation = "";
 
-//	private BaiduLocationHelper locationHelper = null;
-	private ZhuoConnHelper mConnHelper = null;
+	// private BaiduLocationHelper locationHelper = null;
 	private ArrayList<BeanNotice> noticesListData;
 
 	int[] imageIds = { R.drawable.circleu, R.drawable.resourceu,
-			R.drawable.fianceu, R.drawable.zcityu,
-			R.drawable.travelu, R.drawable.nearu,
-			R.drawable.interestu, R.drawable.teacheru,
+			R.drawable.fianceu, R.drawable.zcityu, R.drawable.travelu,
+			R.drawable.nearu, R.drawable.interestu, R.drawable.teacheru,
 			R.drawable.allu };
 
-//	Class[] classArrays = { QuanListActivity.class, MsgResourceActivity.class,
+	// Class[] classArrays = { QuanListActivity.class,
+	// MsgResourceActivity.class,
 
 	Class[] classArrays = { ZhuoQuanActivity.class, ResourceGXActivity.class,
 
-			CrowdFundingActivity.class,// 众筹
+	CrowdFundingActivity.class,// 众筹
 			UserSameActivity.class,// 同城
 			UserSameActivity.class,// 同行
 			UserSameActivity.class,// 附件
 			UserSameActivity.class,// 同趣
 			UserSameActivity.class, UserSameActivity.class };
+	private ZhuoConnHelper mConnHelper = null;
+	// private UserInfoFacade mFacade = null;
+	private UserFacade mFacade = null;
+	String uid = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_find_lz);
+		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 
+		mFacade = new UserFacade(getApplicationContext());
+		uid = mConnHelper.getUserid();
 		GridView gridview = (GridView) findViewById(R.id.gridview_procedure);
 
 		ArrayList<HashMap<String, Object>> imagelist = new ArrayList<HashMap<String, Object>>();
@@ -78,7 +89,7 @@ public class FindActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				
+
 				Intent i = new Intent(FindActivity.this, classArrays[arg2]);
 				if (arg2 == 3)
 					i.putExtra("type", 1);
@@ -96,44 +107,20 @@ public class FindActivity extends Activity {
 
 			}
 		});
-
+		loadInfo();
 		initClick();
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-//		locationHelper = new BaiduLocationHelper(getApplicationContext(),
-//				mUIHandler, MsgTagVO.UPDATE_LOCAL);
+		// locationHelper = new BaiduLocationHelper(getApplicationContext(),
+		// mUIHandler, MsgTagVO.UPDATE_LOCAL);
 
-	}
-
-	@Override
-	protected void onDestroy() {
-//		if (locationHelper != null) {
-//			locationHelper.stopLocation();
-//		}
-		super.onDestroy();
-	}
-
-	@Override
-	protected void onPause() {
-//		if (locationHelper != null) {
-//			locationHelper.stopLocation();
-//		}
-		super.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-//		if (locationHelper != null) {
-//			locationHelper.startLocation();
-//		}
-		super.onResume();
 	}
 
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
+		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-
 			case MsgTagVO.UPDATE_LOCAL: {
 				String locationinfo = (String) msg.obj;
 				if (null != locationinfo && !locationinfo.trim().equals("")) {
@@ -146,13 +133,74 @@ public class FindActivity extends Activity {
 				}
 				break;
 			}
-			default: {
+			case MsgTagVO.DATA_OTHER: {
+				UserNewVO user = null;
+				if (msg.obj instanceof UserNewVO) {
+					user = (UserNewVO) msg.obj;
+				} else if (msg.obj != null && !msg.obj.equals("")) {
+					JsonHandler nljh = new JsonHandler((String) msg.obj,
+							getApplicationContext());
+					user = nljh.parseNewUser();
+				}
 
+				int place = user.getHometown();
+
+				if (mConnHelper != null && mConnHelper.getCitys() != null
+						&& place >= 1 && place <= mConnHelper.getCitys().size())
+					((TextView) findViewById(R.id.textViewPosInfo))
+							.setText(mConnHelper.getCitys().get(place - 1)
+									.getCityName());
+				((TextView) findViewById(R.id.textViewPosInfo))
+						.setVisibility(View.VISIBLE);
+				break;
 			}
-
 			}
 		}
 	};
+
+	private void loadInfo() {
+		((TextView) findViewById(R.id.textViewPosInfo))
+				.setVisibility(View.GONE);
+		if (CommonUtil.getNetworkState(getApplicationContext()) == 2
+				&& uid != null) {
+
+			UserNewVO user = mFacade.getSimpleInfoById(uid);
+			if (user == null) {
+				CommonUtil.displayToast(getApplicationContext(),
+						R.string.error0);
+			} else {
+				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_OTHER);
+				msg.obj = user;
+				msg.sendToTarget();
+			}
+		} else {
+			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_OTHER, null);
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		// if (locationHelper != null) {
+		// locationHelper.stopLocation();
+		// }
+		super.onDestroy();
+	}
+
+	@Override
+	protected void onPause() {
+		// if (locationHelper != null) {
+		// locationHelper.stopLocation();
+		// }
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		// if (locationHelper != null) {
+		// locationHelper.startLocation();
+		// }
+		super.onResume();
+	}
 
 	private void initClick() {
 

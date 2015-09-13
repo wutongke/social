@@ -75,6 +75,7 @@ public class DynamicListAdapter extends BaseAdapter {
 		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
 		this.role = role;
+		baseDataSet = mConnHelper.getBaseDataSet();
 	}
 
 	public DynamicListAdapter(Activity activity, LoadImage imageLoad,
@@ -216,11 +217,14 @@ public class DynamicListAdapter extends BaseAdapter {
 		holder.gvImages.setVisibility(View.GONE);
 		// 显示图片
 		if (picsinner != null && picsinner.size() > 0) {
-			holder.gvImages.setVisibility(View.VISIBLE);
+
 			ArrayList<String> urls = new ArrayList<String>();
 			for (PicNewVO temp : picsinner) {
-				urls.add(temp.getPic());
+				if (temp.getPic() != null && !"".equals(temp.getPic().trim()))
+					urls.add(temp.getPic());
 			}
+			if (urls.size() > 0)
+				holder.gvImages.setVisibility(View.VISIBLE);
 			holder.gvImages.setAdapter(new GridViewAdapter(mContext, urls,
 					R.layout.item_gridview_image));
 		}
