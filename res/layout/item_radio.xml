@@ -25,6 +25,8 @@
             <TextView
                 android:id="@+id/ir_name"
                 style="@style/basic_text"
+                android:textSize="@dimen/dp16"
+                android:textColor="#909090"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -32,7 +34,7 @@
 
             <TextView
                 android:id="@+id/ir_creater"
-                style="@style/basic_second_text"
+                style="@style/basic_b3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/ir_name"
@@ -40,7 +42,7 @@
 
             <TextView
                 android:id="@+id/ir_time"
-                style="@style/basic_second_text"
+                style="@style/basic_b3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/ir_creater"
@@ -83,9 +85,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="#f9f9f9"
         android:padding="10dp" >
 
         <LinearLayout

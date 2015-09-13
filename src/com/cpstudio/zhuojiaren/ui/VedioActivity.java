@@ -35,6 +35,7 @@ import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.util.Util;
 import com.cpstudio.zhuojiaren.widget.CustomShareBoard;
 import com.cpstudio.zhuojiaren.widget.VedioPlayer;
+import com.umeng.socialize.media.UMImage;
 
 public class VedioActivity extends BaseActivity {
 	@InjectView(R.id.avedio_layout)
@@ -106,6 +107,10 @@ public class VedioActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				CustomShareBoard shareBoard = new CustomShareBoard(
 						VedioActivity.this);
+				shareBoard.setTitle("倬脉");
+				UMImage image = new UMImage(VedioActivity.this, "http://7xkb2a.com1.z0.glb.clouddn.com/android-gg.png");
+				shareBoard.setImage(image);
+				shareBoard.setContent("倬脉是一个高端社交平台");
 				shareBoard.showAtLocation(VedioActivity.this.getWindow()
 						.getDecorView(), Gravity.BOTTOM, 0, 0);
 //				startActivity(new Intent(VedioActivity.this,PayActivity.class));
@@ -144,7 +149,7 @@ public class VedioActivity extends BaseActivity {
 		super.onResume();
 		if (vedio != null) {
 			vedioName.setText(vedio.getTutorName());
-			vedioName.setText(vedio.getDuration());
+			vedioTime.setText(vedio.getCrtDate());
 			LoadImage load = new LoadImage();
 			load.beginLoad(vedio.getImageAddr(), Image);
 		}

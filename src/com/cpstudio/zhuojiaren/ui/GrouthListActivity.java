@@ -99,6 +99,7 @@ public class GrouthListActivity extends BaseActivity {
 		});
 		pullDownView.setShowHeader();
 		pullDownView.setShowFooter(false);
+//		pullDownView.setHideFooter(true);
 	}
 
 	private void loadData() {

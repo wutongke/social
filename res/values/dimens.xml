@@ -10,5 +10,8 @@
 	<dimen name="basic_title_text">20dp</dimen>
 	<dimen name="second_basic_text">18dp</dimen>
 	<dimen name="basic_margin">20dp</dimen>
+	<dimen name="dp12">12dp</dimen>
+	<dimen name="dp16">16dp</dimen>
+	<dimen name="dp20">20dp</dimen>
 
 </resources>

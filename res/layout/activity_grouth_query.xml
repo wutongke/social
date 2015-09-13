@@ -2,14 +2,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-     >
+    android:orientation="vertical" >
 
     <include layout="@layout/title_activity" />
+
+    <include layout="@layout/search_layout" />
 
     <com.cpstudio.zhuojiaren.widget.PullDownView
         android:id="@+id/agq_pulldown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <include>
+    </include>
 
 </LinearLayout>
