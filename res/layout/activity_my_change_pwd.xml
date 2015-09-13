@@ -55,7 +55,7 @@
                 android:hint="@string/info57"
                 android:inputType="textPassword"
                 android:singleLine="true"
-                android:textSize="18sp" />
+                android:textSize="14dp" />
         </LinearLayout>
 
         <TextView
@@ -94,7 +94,7 @@
                 android:hint="@string/error14"
                 android:inputType="textPassword"
                 android:singleLine="true"
-                android:textSize="18sp" />
+                android:textSize="14dp" />
         </LinearLayout>
 
         <TextView
@@ -134,7 +134,7 @@
                 android:hint="@string/info59"
                 android:inputType="textPassword"
                 android:singleLine="true"
-                android:textSize="18sp" />
+                android:textSize="14dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -162,7 +162,7 @@
             android:padding="10dp"
             android:text="@string/label_save"
             android:textColor="#ffffff"
-            android:textSize="18sp" />
+            android:textSize="14dp" />
     </RelativeLayout>
 
 </LinearLayout>

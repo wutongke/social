@@ -2,21 +2,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/black"
+    android:orientation="vertical"
     tools:context=".MyMoneyActivity" >
 
-    <include layout="@layout/title_activity" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:paddingRight="10dp" >
+
+        <TextView
+            android:id="@+id/activity_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/go_back"
+            android:gravity="center"
+            android:text="@string/label_back"
+            android:textColor="#ffffff"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/activity_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/activity_function2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/activity_function"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/activity_function"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/activity_function_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/rmb_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/corners_m1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_margin="10dp"
+        android:visibility="gone"
         android:padding="20dp" >
 
         <TextView
@@ -43,11 +103,11 @@
         android:id="@+id/zhuo_bi_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/corners_m2"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_margin="10dp"
         android:padding="20dp" >
 
         <TextView
@@ -69,20 +129,21 @@
             android:textColor="@color/white"
             android:textSize="30dp" />
     </LinearLayout>
-	<ListView 
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:id="@+id/band_card"
-	    android:cacheColorHint="@color/transparent"
-	    ></ListView>
-	<Button
-	    android:id="@+id/add_bank_card"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:background="@color/black"
-	    android:padding="10dp"
-	    style="@style/basic_text"
-	    android:text="@string/add_bank_card"
-	     />
-	
+
+    <ListView
+        android:id="@+id/band_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="@color/transparent" >
+    </ListView>
+
+    <Button
+        android:id="@+id/add_bank_card"
+        style="@style/basic_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:padding="10dp"
+        android:text="@string/add_bank_card" />
+
 </LinearLayout>
