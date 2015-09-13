@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -38,6 +39,7 @@ import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicAdVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
 import com.cpstudio.zhuojiaren.ui.PubDetailActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
@@ -45,6 +47,7 @@ import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 import com.external.viewpagerindicator.PageIndicator;
+import com.umeng.socialize.media.UMImage;
 
 public class MainActivity extends Activity implements OnPullDownListener,
 		OnItemClickListener {
@@ -235,8 +238,8 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 					@Override
 					public void onClick(View v) {
-						Toast.makeText(MainActivity.this, "完善中...", 2000)
-								.show();
+//						Toast.makeText(MainActivity.this, "完善中...", 2000)
+//								.show();
 						// 此处应该是以微信等其他第三方方式邀请朋友
 						// Intent i = new Intent(MainActivity.this,
 						// UserSelectActivity.class);
@@ -244,6 +247,15 @@ public class MainActivity extends Activity implements OnPullDownListener,
 						// tempids.add(uid);
 						// i.putStringArrayListExtra("otherids", tempids);
 						// startActivity(i);
+						com.cpstudio.zhuojiaren.widget.CustomShareBoard shareBoard = new com.cpstudio.zhuojiaren.widget.CustomShareBoard(
+								MainActivity.this);
+						shareBoard.setTitle("倬脉");
+						UMImage image = new UMImage(MainActivity.this, "http://7xkb2a.com1.z0.glb.clouddn.com/android-gg.png");
+						shareBoard.setImage(image);
+						shareBoard.setContent("倬脉是一个高端社交平台");
+						shareBoard.showAtLocation(MainActivity.this
+								.getWindow().getDecorView(),
+								Gravity.BOTTOM, 0, 0);
 					}
 				};
 				phw.showAddOptionsPop(v, times, pubListener, inviteListener);

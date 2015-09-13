@@ -8,6 +8,7 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -23,6 +24,9 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.widget.CustomShareBoard;
+import com.cpstudui.zhuojiaren.lz.MainActivity;
+import com.umeng.socialize.media.UMImage;
 
 public class AudioDetailActivity extends BaseActivity {
 	@InjectView(R.id.aad_duration)
@@ -54,11 +58,14 @@ public class AudioDetailActivity extends BaseActivity {
 		initTitle();
 		record = (RecordVO) getIntent().getSerializableExtra("audio");
 		title.setText(R.string.zhuo_audio);
+		imageFunction.setBackgroundResource(R.drawable.share);
+		imageFunction.setVisibility(View.VISIBLE);
 		mId = getIntent().getStringExtra("id");
 		playImage.setBackgroundResource(R.drawable.jjplay);
 		playImage2.setBackgroundResource(R.drawable.jjplay3);
 		loadData();
 		initOnclick();
+		
 	}
 
 	@Override
@@ -71,6 +78,22 @@ public class AudioDetailActivity extends BaseActivity {
 
 	private void initOnclick() {
 		// TODO Auto-generated method stub
+		imageFunction.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				CustomShareBoard shareBoard = new CustomShareBoard(
+						AudioDetailActivity.this);
+				shareBoard.setTitle("倬脉");
+				UMImage image = new UMImage(AudioDetailActivity.this, "http://7xkb2a.com1.z0.glb.clouddn.com/android-gg.png");
+				shareBoard.setImage(image);
+				shareBoard.setContent("倬脉是一个高端社交平台");
+				shareBoard.showAtLocation(AudioDetailActivity.this.getWindow()
+						.getDecorView(), Gravity.BOTTOM, 0, 0);
+//				startActivity(new Intent(VedioActivity.this,PayActivity.class));
+			}
+		});
 		playImage.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -152,6 +175,8 @@ public class AudioDetailActivity extends BaseActivity {
 //		new LoadImage().beginLoad(
 //				"http://pic6.nipic.com/20100404/4635053_162100094928_2.jpg",
 //				advertisementIamge);
+		ImageView advertisement = (ImageView) findViewById(R.id.hgm_adv);
+		LoadImage.getInstance().beginLoad("http://7xkb2a.com1.z0.glb.clouddn.com/android-gg.png", advertisement);
 	}
 
 	Handler uiHandler = new Handler() {

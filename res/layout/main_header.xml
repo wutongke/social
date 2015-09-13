@@ -88,8 +88,8 @@
         android:id="@+id/main_cats"
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"
-        android:layout_height="125dp" >
-
+        android:layout_height="120dp" >
+d
         <android.support.v4.view.ViewPager
             android:id="@+id/cats_viewpager"
             android:layout_width="match_parent"
