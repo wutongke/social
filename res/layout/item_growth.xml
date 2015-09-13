@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="80dp"
     android:orientation="horizontal"
     android:paddingLeft="10dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
     android:paddingRight="10dp" >
 
     <ImageView
         android:id="@+id/ig_grouth_image"
-        android:layout_width="100dp"
-        android:layout_height="70dp"
+        android:layout_width="108dp"
+        android:layout_height="62dp"
         android:scaleType="centerCrop" />
 
     <LinearLayout
@@ -25,8 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="text"
-            android:textSize="16dp"
-            android:textColor="@color/graywhite" />
+            android:textSize="12dp"
+            android:textColor="@color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/jjhow"
                 android:drawablePadding="5dp"
+                android:textColor="@color/textColor2"
                 android:text="text" />
 
             <TextView
@@ -50,6 +53,7 @@
                 android:layout_marginLeft="20dp"
                 android:drawableLeft="@drawable/jjclock"
                 android:drawablePadding="5dp"
+                android:textColor="@color/textColor2"
                 android:text="text" />
         </LinearLayout>
     </LinearLayout>

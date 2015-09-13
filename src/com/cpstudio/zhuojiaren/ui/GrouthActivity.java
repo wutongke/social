@@ -151,6 +151,7 @@ public class GrouthActivity extends BaseActivity {
 		});
 		pullDownView.setShowHeader();
 		pullDownView.setShowFooter(false);
+		pullDownView.setHideFooter(true);
 		pullDownView.setOnPullDownListener(new OnPullDownListener() {
 
 			@Override
