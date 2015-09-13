@@ -37,6 +37,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.color;
 
 /**
  * Draws circles (one for each view). The current view position is filled and
@@ -45,7 +46,7 @@ import com.cpstudio.zhuojiaren.R;
 public class CirclePageIndicator extends View implements PageIndicator {
     private static final int INVALID_POINTER = -1;
 
-    private float mRadius;
+    private float mRadius=8;
     private final Paint mPaintPageFill = new Paint(ANTI_ALIAS_FLAG);
     private final Paint mPaintStroke = new Paint(ANTI_ALIAS_FLAG);
     private final Paint mPaintFill = new Paint(ANTI_ALIAS_FLAG);
@@ -99,7 +100,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
         mPaintStroke.setColor(a.getColor(R.styleable.CirclePageIndicator_strokeColor, defaultStrokeColor));
         mPaintStroke.setStrokeWidth(a.getDimension(R.styleable.CirclePageIndicator_strokeWidth, defaultStrokeWidth));
         mPaintFill.setStyle(Style.FILL);
-        mPaintFill.setColor(a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor));
+        mPaintFill.setColor(color.lightgreen);
+//        mPaintFill.setColor(a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor));
 //        mRadius = a.getDimension(R.styleable.CirclePageIndicator_radius, defaultRadius);
 //        mSnap = a.getBoolean(R.styleable.CirclePageIndicator_snap, defaultSnap);
 

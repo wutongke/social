@@ -84,20 +84,22 @@
             <EditText
                 android:id="@+id/etSignature"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@null"
                 android:gravity="center"
                 android:hint="@string/label_signature"
                 android:maxLines="2"
+                android:minLines="2"
                 android:textColor="#c9c9c9" />
+
+            <!-- android:background="@drawable/shape_corners2" -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/shape_corners2"
+                android:background="@color/white"
                 android:orientation="vertical" >
 
                 <RelativeLayout
@@ -376,8 +378,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/shape_corners2"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
                 android:orientation="vertical" >
 
                 <RelativeLayout
@@ -488,8 +490,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/shape_corners2"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
                 android:orientation="vertical" >
 
                 <RelativeLayout

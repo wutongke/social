@@ -30,6 +30,7 @@ import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.view.Gravity;
 import android.view.View;
@@ -75,10 +76,12 @@ public class Cats_PageAdapter extends PagerAdapter {
 			for (int j = 0; j < 2; j++) {
 				LinearLayout.LayoutParams childllp = new LinearLayout.LayoutParams(
 						LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+				if(j==1)
+					childllp.setMargins(0, 20, 0, 0);
 				LinearLayout childlinearLayou = new LinearLayout(context);
 				childlinearLayou.setLayoutParams(childllp);
 				childlinearLayou.setOrientation(LinearLayout.HORIZONTAL);
-
+				
 				linearLayout.addView(childlinearLayou);
 
 				final int base = i * 8 + j * 4;
