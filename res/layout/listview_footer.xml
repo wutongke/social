@@ -14,6 +14,7 @@
         android:layout_centerInParent="true"
         android:background="@color/white"
         android:gravity="center"
+        android:textColor="@color/graywhite"
         android:visibility="visible" />
 
     <ProgressBar
