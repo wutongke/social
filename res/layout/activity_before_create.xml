@@ -62,7 +62,7 @@
             android:textColor="#486538"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
-            android:background="@drawable/shape_conors"
+            android:background="@drawable/shape_conors2"
             android:text="@string/begin_create"
             />
     </LinearLayout>

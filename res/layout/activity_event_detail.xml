@@ -36,8 +36,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/share_hqxq1" />
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/share" />
 
         <ImageView
             android:id="@+id/aed_collect"
@@ -45,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/aed_share"
-            android:background="@drawable/qhdcollect" />
+            android:background="@drawable/dongt" />
     </RelativeLayout>
 
     <ScrollView
