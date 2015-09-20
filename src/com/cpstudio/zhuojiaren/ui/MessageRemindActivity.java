@@ -1,6 +1,8 @@
 package com.cpstudio.zhuojiaren.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,12 +35,20 @@ public class MessageRemindActivity extends BaseActivity {
 	ImageView vibrate;
 	private ZhuoConnHelper mConnHelper = null;
 	private String isAlert = "1";
+	int soundStatus = 1;
+	int vibrateStatus = 1;
+	SharedPreferences sp ;
+	SharedPreferences.Editor editor;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_messaeg_remind);
 		ButterKnife.inject(this);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		sp=getSharedPreferences("remind", Context.MODE_PRIVATE);
+		editor = sp.edit();
+		soundStatus = sp.getInt("sound", 1);
+		vibrateStatus = sp.getInt("vibrate", 1);
 		initTitle();
 		TextView goBack = (TextView)findViewById(R.id.activity_back);
 		goBack.setText(R.string.new_message);
@@ -54,13 +64,49 @@ public class MessageRemindActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				if (isAlert.equals("0")) {
 					isAlert = "1";
-					messageRemind.setBackgroundResource(R.drawable.open);
+					messageRemind.setBackgroundResource(R.drawable.opencheck);
 				} else {
 					isAlert = "0";
-					messageRemind.setBackgroundResource(R.drawable.closed);
+					messageRemind.setBackgroundResource(R.drawable.closecheck);
 				}
 				mConnHelper.updateConfig(mUIHandler, MsgTagVO.PUB_INFO,
 						null, isAlert, false, null, null);
+			}
+		});
+		sound.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(soundStatus==1){
+					soundStatus=0;
+					editor.putInt("sound", 0);
+					editor.commit();
+					sound.setBackgroundResource(R.drawable.closecheck);
+				}else{
+					editor.putInt("sound", 1);
+					editor.commit();
+					soundStatus=1;
+					sound.setBackgroundResource(R.drawable.opencheck);
+				}
+			}
+		});
+		vibrate.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(vibrateStatus==1){
+					vibrateStatus=0;
+					editor.putInt("vibrate", 0);
+					editor.commit();
+					vibrate.setBackgroundResource(R.drawable.closecheck);
+				}else{
+					editor.putInt("vibrate", 1);
+					editor.commit();
+					vibrateStatus=1;
+					vibrate.setBackgroundResource(R.drawable.opencheck);
+				}
 			}
 		});
 	}

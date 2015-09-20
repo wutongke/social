@@ -11,6 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:gravity="center" >
 
         <ImageView
@@ -42,12 +43,13 @@
 
     <TextView
         android:id="@+id/ap_phone_des"
-        style="@style/basic_second_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
+        style="@style/basic_second_text"
+	    android:textColor="#bdbdbd"
         android:text="@string/phone_des" />
 
     <Button

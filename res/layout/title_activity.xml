@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:drawableLeft="@drawable/go_back"
+        android:drawablePadding="3dp"
         android:text="@string/label_back"
         android:textColor="#ffffff"
         android:gravity="center"

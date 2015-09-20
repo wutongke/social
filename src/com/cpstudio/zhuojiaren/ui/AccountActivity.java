@@ -63,8 +63,8 @@ public class AccountActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent (mContext,TextEditActivity.class);
-				intent.putExtra("edtiText", "");
+				Intent intent = new Intent (mContext,ZhuoNameEditActivity.class);
+				intent.putExtra("edtiText", "±à¼­Ù¾ÂöºÅ");
 				startActivityForResult(intent, zhuoR);
 			}
 		};

@@ -28,10 +28,8 @@
             android:id="@+id/ae_email_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawablePadding="10dp"
-            android:drawableRight="@drawable/ico_arrow_gray"
             android:gravity="left|center_vertical"
-            android:textColor="@color/graywhitem"
+            android:textColor="#333333"
             android:textSize="15dp" />
     </LinearLayout>
 
@@ -42,6 +40,7 @@
 
     <TextView
         style="@style/basic_second_text"
+	    android:textColor="#bdbdbd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"

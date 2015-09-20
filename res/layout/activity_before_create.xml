@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:layout_marginBottom="10dp"
-            android:textSize="20dp"
+            android:textSize="16dp"
             />
         <Button 
             android:id="@+id/before_btn"
@@ -26,10 +26,11 @@
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:textSize="20dp"
+            android:textSize="16dp"
+             android:textColor="#486538"
             android:paddingLeft="35dp"
             android:paddingRight="35dp"
-            android:background="@color/lightgreen"
+            android:background="@drawable/shape_conors"
             android:text="@string/before_create"
             />
     </LinearLayout>
@@ -48,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="16dp"
             android:layout_marginBottom="10dp"
             />
         <Button 
@@ -57,10 +58,11 @@
             android:layout_height="wrap_content"
            android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:textSize="20dp"
+            android:textSize="16dp"
+            android:textColor="#486538"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
-            android:background="@color/yellow"
+            android:background="@drawable/shape_conors"
             android:text="@string/begin_create"
             />
     </LinearLayout>

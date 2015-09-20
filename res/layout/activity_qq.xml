@@ -13,6 +13,8 @@
 	    >
 	    <ImageView 
 	        android:id="@+id/aq_qq_image"
+	        android:layout_marginTop="27dp"
+	        android:layout_marginBottom="16dp"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:background="@drawable/set_szqq"
@@ -46,6 +48,7 @@
 	    android:layout_marginRight="20dp"
 	    android:text="@string/qq_des"
 	    style="@style/basic_second_text"
+	    android:textColor="#bdbdbd"
 	    />
 	
 	<Button 

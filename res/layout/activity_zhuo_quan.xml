@@ -5,13 +5,18 @@
     android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.cpstudio.zhuojiaren">
 	<include layout="@layout/title_activity"/>
     <com.cpstudio.zhuojiaren.widget.TabButton
+        android:background="@drawable/color_shape"
         android:id="@+id/azq_tab"
         android:layout_width="match_parent"
          android:layout_height="42dp" 
-         app:textColor="@color/black"
-         app:slecttextColor="@color/graywhite"
+         app:textColor="#6e6e6e"
+         app:slecttextColor="#5c5c5c"
          app:sliderColor="@color/white"
          app:sliderSize="0dp"
+         app:buttonSelectBackground="#f1f1f1"
+         app:buttonBackground="#00000000"
+         app:dividerSize="40dp"
+         app:dividerColor="@color/black"
          >
     </com.cpstudio.zhuojiaren.widget.TabButton>
 
