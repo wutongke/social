@@ -87,7 +87,7 @@ public class ZhuoUserListAdapter2 extends CommonAdapter<UserAndCollection> {
 		// add by lz
 		helper.setCheckBox(R.id.isChecked, false, isManageing ? View.VISIBLE
 				: View.GONE);
-
+		helper.getConvertView().setTag(R.id.tag_id,item.getUserid() );
 		loadImage.beginLoad(item.getUheader(), iv);
 	}
 }

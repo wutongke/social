@@ -1,11 +1,13 @@
 package com.cpstudui.zhuojiaren.lz;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.androidpn.client.Constants;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -31,20 +33,20 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter;
-import com.cpstudio.zhuojiaren.facade.InfoFacade;
+import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter2;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
+import com.cpstudio.zhuojiaren.model.SearchHotKeyWord;
+import com.cpstudio.zhuojiaren.model.UserAndCollection;
+import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
 public class SearchMainActivity extends BaseActivity implements
-		OnPullDownListener, OnItemClickListener {
+		OnPullDownListener {
 	@InjectView(R.id.search_pull_down_view)
 	PullDownView mPullDownView;
 	@InjectView(R.id.searchLayout)
@@ -53,23 +55,27 @@ public class SearchMainActivity extends BaseActivity implements
 	ViewGroup hotwordsLayout;
 	@InjectView(R.id.search_input)
 	EditText searchView;
+	@InjectView(R.id.hotLayout)
+	View hotView;
 
 	private ListView mListView;
 	private ListView mlvHistory;
 	ArrayAdapter<String> historyAdapter;
 
-	private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
-	ZhuoUserListAdapter mAdapter;
+	private ArrayList<UserAndCollection> mList = new ArrayList<UserAndCollection>();
+	private CommonAdapter mAdapter;
+
 	ArrayList<String> historyList = new ArrayList<String>();
-	String[] hotWords;
+	// String[] hotWords;
 	String mLastId;
 	private SharedPreferences sharedPrefs;
 
 	String uid = null;
 	String mSearchKey = null;
 	private ZhuoConnHelper mConnHelper = null;
-	private InfoFacade infoFacade = null;
-	private int mPage = 1;
+	// private InfoFacade infoFacade = null;
+	private int mPage = 0;
+	private int mPageNum = 5;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,28 +88,44 @@ public class SearchMainActivity extends BaseActivity implements
 		// WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		infoFacade = new InfoFacade(getApplicationContext(),
-				InfoFacade.NEWSLIST);
+		// infoFacade = new InfoFacade(getApplicationContext(),
+		// InfoFacade.NEWSLIST);
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
 
-		mPullDownView.setOnPullDownListener(this);
-
-		// 必须设置头，因为mListView是在initHeaderViewAndFooterViewAndListView中初始化的
+		mPullDownView = (PullDownView) findViewById(R.id.search_pull_down_view);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
-				R.layout.listview_header2);
+				R.layout.listview_header);
 
+		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
-		mListView.setOnItemClickListener(this);
-		mAdapter = new ZhuoUserListAdapter(SearchMainActivity.this, mList);
+		
+		mAdapter = new ZhuoUserListAdapter2(SearchMainActivity.this, mList,
+				R.layout.item_zhuouser_list2, mUIHandler);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setHideHeader();
 		mPullDownView.setHideFooter(false);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+
+				searchLayout.setVisibility(View.VISIBLE);
+				mPullDownView.setVisibility(View.GONE);
+				if (id != -1) {
+					Intent i = new Intent();
+					i.setClass(SearchMainActivity.this,
+							ZhuoMaiCardActivity.class);
+					i.putExtra("userid",(String)view.getTag(R.id.tag_id));
+					startActivity(i);
+				}
+
+			}
+		});
 		loadHistory();
 		initClick();
 		loadHotWordData();
-
-		displayHotWord("商御之道;杨思卓;大爆炸;实习;文慧桥;禽流感");
 	}
 
 	private void initClick() {
@@ -171,7 +193,18 @@ public class SearchMainActivity extends BaseActivity implements
 		historyAdapter = new ArrayAdapter<String>(SearchMainActivity.this,
 				R.layout.simple_text_item, historyList);
 		mlvHistory.setAdapter(historyAdapter);
-		mlvHistory.setOnItemClickListener(this);
+		mlvHistory.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				if (position >= 1) {
+					mSearchKey = historyList.get(position - 1);
+				}
+				loadData();
+			}
+		});
 		historyList.clear();
 		if (sharedPrefs == null)
 			sharedPrefs = getSharedPreferences(
@@ -181,11 +214,11 @@ public class SearchMainActivity extends BaseActivity implements
 			if ("".equals(hisStr))
 				return;
 			String[] strArray = hisStr.split(";");
-			for (int i = 0; i <strArray.length ; i++)
+			for (int i = 0; i < strArray.length; i++)
 				historyList.add(strArray[i]);
 			historyAdapter.notifyDataSetChanged();
 		}
-		
+
 	}
 
 	private void saveHistory() {
@@ -205,8 +238,8 @@ public class SearchMainActivity extends BaseActivity implements
 		editor.commit();
 	}
 
-	private void updateItemList(ArrayList<ZhuoInfoVO> list, boolean refresh,
-			boolean append) {
+	private void updateItemList(ArrayList<UserAndCollection> list,
+			boolean refresh, boolean append) {
 		if (!list.isEmpty()) {
 			mPullDownView.hasData();
 			if (!append) {
@@ -214,9 +247,9 @@ public class SearchMainActivity extends BaseActivity implements
 			}
 			mList.addAll(list);
 			mAdapter.notifyDataSetChanged();
-			if (mList.size() > 0) {
-				mLastId = mList.get(mList.size() - 1).getMsgid();
-			}
+			// if (mList.size() > 0) {
+			// mLastId = mList.get(mList.size() - 1).getMsgid();
+			// }
 			mPage++;
 		} else {
 			mPullDownView.noData(!refresh);
@@ -237,18 +270,18 @@ public class SearchMainActivity extends BaseActivity implements
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: { // 加载数据（本地或网络），本地数据返回一个list,网络数据返回一个json
-				ArrayList<ZhuoInfoVO> list = new ArrayList<ZhuoInfoVO>();
+				ArrayList<UserAndCollection> list = new ArrayList<UserAndCollection>();
 				boolean loadState = false;
 				if (msg.obj instanceof ArrayList) {// 加载的本地数据
-					list = (ArrayList<ZhuoInfoVO>) msg.obj;
+					list = (ArrayList<UserAndCollection>) msg.obj;
 				} else {
 					if (msg.obj != null && !msg.obj.equals("")) {
 						loadState = true;
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
-						list = nljh.parseZhuoInfoList();
+						list = nljh.parseUserCollection();
 						if (!list.isEmpty()) {
-							infoFacade.update(list);
+							// infoFacade.update(list);
 						} else if (mSearchKey != null && !mSearchKey.equals("")) {
 							CommonUtil.displayToast(getApplicationContext(),
 									R.string.error18);
@@ -265,42 +298,43 @@ public class SearchMainActivity extends BaseActivity implements
 					loadState = true;
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-					ArrayList<ZhuoInfoVO> list = nljh.parseZhuoInfoList();
-					updateItemList(list, false, false);
+					ArrayList<UserAndCollection> list = nljh
+							.parseUserCollection();
+					updateItemList(list, true, false);
 				}
 				mPullDownView.RefreshComplete(loadState);
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {
 				mPullDownView.notifyDidMore();
-				ArrayList<ZhuoInfoVO> list = new ArrayList<ZhuoInfoVO>();
+				ArrayList<UserAndCollection> list = new ArrayList<UserAndCollection>();
 				if (msg.obj instanceof ArrayList) {
-					list = (ArrayList<ZhuoInfoVO>) msg.obj;
+					list = (ArrayList<UserAndCollection>) msg.obj;
 				} else {
 					if (msg.obj != null && !msg.obj.equals("")) {
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
-						list = nljh.parseZhuoInfoList();
-						if (!list.isEmpty()) {
-							infoFacade.update(list);
-						}
+						list = nljh.parseUserCollection();
+						// if (!list.isEmpty()) {
+						// infoFacade.update(list);
+						// }
 					}
 				}
 				updateItemList(list, false, true);
 				break;
 			}
-			
+
 			case MsgTagVO.UPDATE: {
-//				if (msg.obj != null && !msg.obj.equals("")) {
-//					JsonHandler nljh = new JsonHandler((String) msg.obj,
-//							getApplicationContext());
-//					UserVO user = nljh.parseUser();
-//					if (null != user) {
-//						UserFacade facade = new UserFacade(
-//								getApplicationContext());
-//						facade.saveOrUpdate(user);
-//					}
-//				}
+				// if (msg.obj != null && !msg.obj.equals("")) {
+				// JsonHandler nljh = new JsonHandler((String) msg.obj,
+				// getApplicationContext());
+				// UserVO user = nljh.parseUser();
+				// if (null != user) {
+				// UserFacade facade = new UserFacade(
+				// getApplicationContext());
+				// facade.saveOrUpdate(user);
+				// }
+				// }
 				break;
 			}
 
@@ -309,34 +343,36 @@ public class SearchMainActivity extends BaseActivity implements
 				if (msg.obj != null && !msg.obj.equals("")) {
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
-
-					// 共六个热词，以";"隔开
-					String words = nljh.getSingleKeyValue("HOT_WORDS");
-					displayHotWord(words);
+					ArrayList<SearchHotKeyWord> datas = nljh.parseHotWords();
+					// // 共六个热词，以";"隔开
+					// String words = nljh.getSingleKeyValue("HOT_WORDS");
+					// displayHotWord(words);
+					if (datas != null && datas.size() > 0) {
+						displayHotWord(datas);
+					}
 				}
 				break;
 			}
 		}
 	};
 
-	private void displayHotWord(String words) {
+	private void displayHotWord(List<SearchHotKeyWord> datas) {
 		// TODO Auto-generated method stub
 
 		int[] ids = { R.id.hotword1, R.id.hotword2, R.id.hotword3,
 				R.id.hotword4, R.id.hotword5, R.id.hotword6 };
-
-		hotWords = words.split(";");
-
-		for (int i = 0; i < hotWords.length && i < ids.length; i++) {
+		hotView.setVisibility(View.VISIBLE);
+		for (int i = 0; i < datas.size() && i < ids.length; i++) {
 			final TextView tv = (TextView) findViewById(ids[i]);
 			if (tv == null)
 				continue;
-			tv.setText(hotWords[i]);
+			tv.setText(datas.get(i).getKeyword());
+			tv.setTag(datas.get(i).getKeyword());
 			tv.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					mSearchKey = tv.getText().toString();
+					mSearchKey = (String) tv.getTag();
 					searchView.setText(mSearchKey);
 					loadData();
 				}
@@ -346,64 +382,23 @@ public class SearchMainActivity extends BaseActivity implements
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-
-		if (view == mPullDownView) {
-			searchLayout.setVisibility(View.VISIBLE);
-			mPullDownView.setVisibility(View.GONE);
-
-			if (id != -1) {
-
-//				Intent i = new Intent(SearchMainActivity.this,
-//						MsgDetailActivity.class);
-//				i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
-//				startActivity(i);
-			}
-		} else {
-			mSearchKey = historyList.get(position);
-			loadData();
-		}
-	}
-
-	// refresh刷新加载的新的数据没有写数据库
-	@Override
 	public void onRefresh() {
-		String params = ZhuoCommHelper.getUrlMsgList();
-		params += "?pageflag=" + "0";
-		params += "&reqnum=" + "10";
-		params += "&lastid=" + "0";
-		params += "&type=" + "0";
-		if (null != mSearchKey) {
-			params += "&key=" + mSearchKey.trim();
-		}
-		params += "&gongxutype=" + "0";
-		params += "&from=" + "0";
-		params += "&uid=" + uid;
-		mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_REFRESH);
+		mPage = 0;
+		mConnHelper.getSearchContent(mUIHandler, MsgTagVO.DATA_REFRESH,
+				mSearchKey, mPage, mPageNum);
 	}
 
 	@Override
 	public void onMore() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2
 				&& (mSearchKey == null || mSearchKey.equals(""))) {
-			ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-			Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
-			msg.obj = list;
-			msg.sendToTarget();
+			// ArrayList<UserAndCollection> list = infoFacade.getByPage(mPage);
+			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
+			// msg.obj = list;
+			// msg.sendToTarget();
 		} else {
-			String params = ZhuoCommHelper.getUrlMsgList();
-			params += "?pageflag=" + "1";
-			params += "&reqnum=" + "10";
-			params += "&lastid=" + mLastId;
-			params += "&type=" + "0";
-			if (null != mSearchKey) {
-				params += "&key=" + mSearchKey.trim();
-			}
-			params += "&gongxutype=" + "0";
-			params += "&from=" + "0";
-			params += "&uid=" + uid;
-			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
+			mConnHelper.getSearchContent(mUIHandler, MsgTagVO.DATA_MORE,
+					mSearchKey, mPage, mPageNum);
 		}
 	}
 
@@ -411,54 +406,34 @@ public class SearchMainActivity extends BaseActivity implements
 	 * 获取推荐热词数据
 	 */
 	private void loadHotWordData() {
-		// return ;
-		String url = ZhuoCommHelper.getHotWords();
-
-		// 加载刷新个人信息
-		mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.HOT_WORD);
-
-		// if (CommonUtil.getNetworkState(getApplicationContext()) == 2
-		// && (mSearchKey == null || mSearchKey.equals(""))) {
-
+		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
+		} else {
+			mConnHelper.getHotKey(mUIHandler, MsgTagVO.HOT_WORD);
+		}
 	}
 
 	private void loadData() {
 		searchLayout.setVisibility(View.GONE);
 		mPullDownView.setVisibility(View.VISIBLE);
 		if (!mSearchKey.trim().equals("")) {
-			historyList.add(0,mSearchKey);
+			historyList.add(0, mSearchKey);
 			historyAdapter.notifyDataSetChanged();
 		}
 
-		String url = ZhuoCommHelper.getUrlUserInfo() + "?uid="
-				+ ResHelper.getInstance(getApplicationContext()).getUserid();
-
-		// 加载刷新个人信息
-		mConnHelper.getFromServer(url, mUIHandler, MsgTagVO.UPDATE);
-		if (mPullDownView.startLoadData()) {
+		if (!mPullDownView.startLoadData()) {
 			mList.clear();
 			mAdapter.notifyDataSetChanged();
 			if (CommonUtil.getNetworkState(getApplicationContext()) == 2
 					&& (mSearchKey == null || mSearchKey.equals(""))) {
-				// 获取本地数据
-				ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-				msg.obj = list;
-				msg.sendToTarget();
+				// // 获取本地数据
+				// ArrayList<UserAndCollection> list =
+				// infoFacade.getByPage(mPage);
+				// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
+				// msg.obj = list;
+				// msg.sendToTarget();
 			} else {
-				String params = ZhuoCommHelper.getUrlMsgList();
-				params += "?pageflag=" + "0";
-				params += "&reqnum=" + "10";
-				params += "&lastid=" + "0";
-				params += "&type=" + "0";
-				if (null != mSearchKey) {
-					params += "&key=" + mSearchKey.trim();
-				}
-				params += "&gongxutype=" + "0";
-				params += "&from=" + "0";
-				params += "&uid=" + uid;
-				mConnHelper.getFromServer(params, mUIHandler,
-						MsgTagVO.DATA_LOAD);
+				mConnHelper.getSearchContent(mUIHandler, MsgTagVO.DATA_LOAD,
+						mSearchKey, mPage, mPageNum);
 			}
 		}
 	}

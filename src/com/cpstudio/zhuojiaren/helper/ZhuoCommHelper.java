@@ -18,8 +18,6 @@ public class ZhuoCommHelper {
 	public final static String SERVER = SERVER_PREFIX + SERVER_IP + SERVER_PORT
 			+ SERVER_APP;
 
-	// lz
-	private final static String SERVICE_HOT_WORDS = "/hot_words";
 	private final static String SERVICE_RESOURCE_GONGXU_DETAIL = "/resource_gongxu_detail";
 
 	private final static String DISOLVE_QUAN = "/grouprelease.do";
@@ -609,10 +607,6 @@ public class ZhuoCommHelper {
 		return SERVER + SERVICE_ANDROIDNAME;
 	}
 
-	// lz
-	public static String getHotWords() {
-		return SERVER + SERVICE_HOT_WORDS;
-	}
 
 	public static String getResourceGongxuDetail() {
 		return SERVER + SERVICE_RESOURCE_GONGXU_DETAIL;

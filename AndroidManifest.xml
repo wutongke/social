@@ -1062,6 +1062,11 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.MyFriendActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
 
         <!-- 融云 -->
         <!-- begin imlib request -->

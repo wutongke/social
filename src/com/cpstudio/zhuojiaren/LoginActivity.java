@@ -164,8 +164,8 @@ public class LoginActivity extends Activity {
 					connHelper.setUploadFileToken(res.getQiniuToken());
 					connHelper.setImToken(res.getRongyunToken());
 					mResHelper.setUserid(mUid);
-					// 获取群组消息
-					connHelper.getMyGroupList(mUIHandler, MsgTagVO.DATA_OTHER);
+//					// 获取群组信息，TabContainerActivity中进行
+//					connHelper.getMyGroupList(mUIHandler, MsgTagVO.DATA_OTHER);
 					if (mPwdView.getText().toString().equals("000000") && first) {
 						OnClickListener ok = new OnClickListener() {
 							@Override
@@ -188,20 +188,16 @@ public class LoginActivity extends Activity {
 					mPwdView.requestFocus();
 				}
 				break;
-			case MsgTagVO.DATA_OTHER:
-				if (JsonHandler.checkResult((String) msg.obj,
-						getApplicationContext())) {
-					JsonHandler nljh = new JsonHandler((String) msg.obj,
-							getApplicationContext());
-					getMyGroupSuccess(nljh.parseGroupsForIM());
-				}
-				break;
+//			case MsgTagVO.DATA_OTHER:
+//				if (JsonHandler.checkResult((String) msg.obj,
+//						getApplicationContext())) {
+//					JsonHandler nljh = new JsonHandler((String) msg.obj,
+//							getApplicationContext());
+//					getMyGroupSuccess(nljh.parseGroupsForIM());
+//				}
+//				break;
 			case MsgTagVO.START_SEND:
 				String token = mResHelper.getImTokenForRongyun();
-				// 之后需删除，暂测试用
-				// token =
-				// "Py74UXPT8qhWh2FBRCIcMTFjiRWti9Q/V/JbvRGji8CEHe0b5wf8iw2NE/ATk8uhgGu1XTpqtsG7e1/c1dAylg==";
-				// token="1i0IMiO5dWjOuGb10l2INNGFPZgrVDszbwnCc2LVvviZzRX4y7mcfCOL7dMa+prc1m3BcXo7y7yZu7T7F6rXBg==";
 
 				RongIM.connect(token, new ConnectCallback() {
 
@@ -233,71 +229,71 @@ public class LoginActivity extends Activity {
 			}
 		}
 	};
-
-	private void getMyGroupSuccess(GroupsForIM groups) {
-		if (groups != null) {
-			List<Group> grouplist = new ArrayList<Group>();
-			if (groups.getCreateGroups() != null) {
-				for (int i = 0; i < groups.getCreateGroups().size(); i++) {
-					String id = groups.getCreateGroups().get(i).getGroupid();
-					String name = groups.getCreateGroups().get(i).getGname();
-					if (id == null || name == null)
-						continue;
-					if (groups.getCreateGroups().get(i).getGheader() != null) {
-						Uri uri = Uri.parse(groups.getCreateGroups().get(i)
-								.getGheader());
-						grouplist.add(new Group(id, name, uri));
-					} else {
-						grouplist.add(new Group(id, name, null));
-					}
-				}
-			}
-			if (groups.getFollowGroups() != null) {
-				for (int i = 0; i < groups.getFollowGroups().size(); i++) {
-					String id = groups.getFollowGroups().get(i).getGroupid();
-					String name = groups.getFollowGroups().get(i).getGname();
-					if (id == null || name == null)
-						continue;
-					if (groups.getFollowGroups().get(i).getGheader() != null) {
-						Uri uri = Uri.parse(groups.getFollowGroups().get(i)
-								.getGheader());
-						grouplist.add(new Group(id, name, uri));
-					} else {
-						grouplist.add(new Group(id, name, null));
-					}
-				}
-			}
-			HashMap<String, Group> groupM = new HashMap<String, Group>();
-			for (int i = 0; i < grouplist.size(); i++) {
-				groupM.put(grouplist.get(i).getId(), grouplist.get(i));
-			}
-
-			if (ZhuoConnHelper.getInstance(getApplicationContext()) != null)
-				ZhuoConnHelper.getInstance(getApplicationContext())
-						.setGroupMap(groupM);
-
-			if (grouplist.size() > 0)
-				RongIM.getInstance()
-						.getRongIMClient()
-						.syncGroup(grouplist,
-								new RongIMClient.OperationCallback() {
-									@Override
-									public void onSuccess() {
-										Log.e("login",
-												"---syncGroup-onSuccess---");
-									}
-
-									@Override
-									public void onError(
-											RongIMClient.ErrorCode errorCode) {
-										Log.e("login",
-												"---syncGroup-onError---");
-									}
-								});
-		} else {
-			// WinToast.toast(this, groups.getCode());
-		}
-	}
+//
+//	private void getMyGroupSuccess(GroupsForIM groups) {
+//		if (groups != null) {
+//			List<Group> grouplist = new ArrayList<Group>();
+//			if (groups.getCreateGroups() != null) {
+//				for (int i = 0; i < groups.getCreateGroups().size(); i++) {
+//					String id = groups.getCreateGroups().get(i).getGroupid();
+//					String name = groups.getCreateGroups().get(i).getGname();
+//					if (id == null || name == null)
+//						continue;
+//					if (groups.getCreateGroups().get(i).getGheader() != null) {
+//						Uri uri = Uri.parse(groups.getCreateGroups().get(i)
+//								.getGheader());
+//						grouplist.add(new Group(id, name, uri));
+//					} else {
+//						grouplist.add(new Group(id, name, null));
+//					}
+//				}
+//			}
+//			if (groups.getFollowGroups() != null) {
+//				for (int i = 0; i < groups.getFollowGroups().size(); i++) {
+//					String id = groups.getFollowGroups().get(i).getGroupid();
+//					String name = groups.getFollowGroups().get(i).getGname();
+//					if (id == null || name == null)
+//						continue;
+//					if (groups.getFollowGroups().get(i).getGheader() != null) {
+//						Uri uri = Uri.parse(groups.getFollowGroups().get(i)
+//								.getGheader());
+//						grouplist.add(new Group(id, name, uri));
+//					} else {
+//						grouplist.add(new Group(id, name, null));
+//					}
+//				}
+//			}
+//			HashMap<String, Group> groupM = new HashMap<String, Group>();
+//			for (int i = 0; i < grouplist.size(); i++) {
+//				groupM.put(grouplist.get(i).getId(), grouplist.get(i));
+//			}
+//
+//			if (ZhuoConnHelper.getInstance(getApplicationContext()) != null)
+//				ZhuoConnHelper.getInstance(getApplicationContext())
+//						.setGroupMap(groupM);
+//
+//			if (grouplist.size() > 0)
+//				RongIM.getInstance()
+//						.getRongIMClient()
+//						.syncGroup(grouplist,
+//								new RongIMClient.OperationCallback() {
+//									@Override
+//									public void onSuccess() {
+//										Log.e("login",
+//												"---syncGroup-onSuccess---");
+//									}
+//
+//									@Override
+//									public void onError(
+//											RongIMClient.ErrorCode errorCode) {
+//										Log.e("login",
+//												"---syncGroup-onError---");
+//									}
+//								});
+//		} else {
+//			// WinToast.toast(this, groups.getCode());
+//		}
+//	}
 
 	private void startService() {
 		Message msg = mUIHandler.obtainMessage(MsgTagVO.START_SEND);

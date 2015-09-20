@@ -58,7 +58,7 @@ public class UserNewVO {
 
 	private int isQqOpen;
 
-
+	private String addtime;
 	int industry;
 	private String phone;
 	private String userid;
@@ -77,6 +77,14 @@ public class UserNewVO {
 
 	public String getUserid() {
 		return userid;
+	}
+
+	public String getAddtime() {
+		return addtime;
+	}
+
+	public void setAddtime(String addtime) {
+		this.addtime = addtime;
 	}
 
 	public int getRelation() {

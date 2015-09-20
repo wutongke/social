@@ -34,7 +34,6 @@
             android:text="@string/label_lisklist"
             android:textColor="#ffffff"
             android:textSize="14sp" 
-            android:visibility="gone"
             />
     </RelativeLayout>
 

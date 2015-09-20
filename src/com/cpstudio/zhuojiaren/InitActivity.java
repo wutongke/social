@@ -15,8 +15,6 @@ import android.os.Message;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
-import com.cpstudio.zhuojiaren.facade.ImChatFacade;
-import com.cpstudio.zhuojiaren.facade.ImQuanFacade;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;

@@ -247,6 +247,9 @@ public class TabContainerActivity extends TabActivity implements
 		}
 	}
 
+	
+	
+	
 	private void init() {
 		ResHelper.getInstance(getApplicationContext()).setAppShow(true);
 		SysApplication.getInstance().addActivity(TabContainerActivity.this);

@@ -25,7 +25,6 @@ public class UserAndCollection {
 	private String addtime;
 	private int isCollect;
 	private int tchtype;
-	
 	// add by lz
 	private boolean isChecked;
 

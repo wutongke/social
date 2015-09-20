@@ -85,6 +85,10 @@ public class ZhuoCommHelperLz {
 	private final static String GET_COMPANY = "/getUserCompany.do";
 	private final static String STATUS_CARD = "/viewStatusCard.do";
 	
+	private final static String GET_HOT_KEY = "/hotKeyword.do";
+	private final static String PORTAL_SEARCH = "/portalSearch.do";
+	private final static String FRIENDS_LIST = "/getFriend.do";
+	
 	public static String getAllJiaren() {
 		return ALL_JIAREN;
 	}
@@ -494,4 +498,14 @@ public class ZhuoCommHelperLz {
 	public static String getZMDT() {
 		return SERVER + STATUS_CARD;
 	}
+	public static String getHotKey() {
+		return SERVER + GET_HOT_KEY;
+	}
+	public static String getPortalSearch() {
+		return SERVER + PORTAL_SEARCH;
+	}
+	public static String getMyFriends() {
+		return SERVER + FRIENDS_LIST;
+	}
+	
 }

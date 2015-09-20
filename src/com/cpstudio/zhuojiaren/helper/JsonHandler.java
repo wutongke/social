@@ -45,6 +45,7 @@ import com.cpstudio.zhuojiaren.model.RecentVisitVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.RuleVO;
+import com.cpstudio.zhuojiaren.model.SearchHotKeyWord;
 import com.cpstudio.zhuojiaren.model.SysMsgVO;
 import com.cpstudio.zhuojiaren.model.TeacherVO;
 import com.cpstudio.zhuojiaren.model.TopicDetailVO;
@@ -1110,6 +1111,30 @@ public class JsonHandler {
 		return userVO;
 	}
 
+	
+	public ArrayList<SearchHotKeyWord> parseHotWords() {
+		ArrayList<SearchHotKeyWord> list = new ArrayList<SearchHotKeyWord>();
+		try {
+			Type listType = new TypeToken<LinkedList<SearchHotKeyWord>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<SearchHotKeyWord> li = gson.fromJson(jsonData,
+						listType);
+
+				for (Iterator<SearchHotKeyWord> iterator = li.iterator(); iterator
+						.hasNext();) {
+					SearchHotKeyWord item = (SearchHotKeyWord) iterator
+							.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	public BusinessInfoVO parseBusinessInfo() {
 		BusinessInfoVO info = null;
 		try {

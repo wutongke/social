@@ -38,6 +38,7 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 import com.cpstudui.zhuojiaren.lz.DynamicDetailActivity;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 public class UserSameActivity extends BaseActivity implements
 		OnPullDownListener, OnItemClickListener {
@@ -263,8 +264,8 @@ public class UserSameActivity extends BaseActivity implements
 		if (id != -1) {
 
 			Intent i = new Intent();
-			i.setClass(UserSameActivity.this, DynamicDetailActivity.class);
-			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
+			i.setClass(UserSameActivity.this, ZhuoMaiCardActivity.class);
+			i.putExtra("userid", mList.get(position).getUserid());
 			startActivity(i);
 		}
 	}

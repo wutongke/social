@@ -2024,6 +2024,54 @@ public class ZhuoConnHelper {
 				nameValuePairs, mUIHandler, tag);
 	}
 
+	
+	
+	/**
+	 * 获取搜索热词
+	 * @param mUIHandler
+	 * @param tag
+	 * @return
+	 */
+	public boolean getHotKey(Handler mUIHandler, int tag) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		return getFromServerByPost(ZhuoCommHelperLz.getHotKey(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	/**
+	 * 根据关键词检索用户。 关键词可以为名字，公司名，职位。
+	 * @param mUIHandler
+	 * @param tag
+	 * @param keyword
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	public boolean getSearchContent(Handler mUIHandler, int tag,String keyword,int pageNo,
+			int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("keyword", keyword));
+		nameValuePairs.add(new BasicNameValuePair("pageNo", String
+				.valueOf(pageNo)));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", String
+				.valueOf(pageSize)));
+		return getFromServerByPost(ZhuoCommHelperLz.getPortalSearch(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	/**
+	 * 获取我的好友列表
+	 * @param mUIHandler
+	 * @param tag
+	 * @return
+	 */
+	public boolean getMyFriends(Handler mUIHandler, int tag) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		
+		return getFromServerByPost(ZhuoCommHelperLz.getMyFriends(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	
+	
+	
 	public boolean addCompany(Handler mUIHandler, int tag, String company,
 			int industry, int city, int position, String homepage, int status) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
