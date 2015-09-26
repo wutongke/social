@@ -43,17 +43,15 @@
                     android:id="@+id/textViewAuthorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="AuthorName"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/detail_name_text_size" />
 
                 <TextView
                     android:id="@+id/textViewWork"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="Work"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/detail_position_text_size" />
             </LinearLayout>
 
             <RelativeLayout
@@ -77,9 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:text="textViewRes"
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/detail_company_text_size" />
             </RelativeLayout>
 
             <LinearLayout
@@ -102,8 +98,7 @@
                         android:id="@+id/textViewTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="textViewTime"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/detail_name_text_size" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -129,9 +124,8 @@
             android:id="@+id/textViewCmtContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="textViewCmtContent"
             android:textColor="#6a6a6a"
-            android:textSize="16sp" />
+            android:textSize="@dimen/detail_content_text_size" />
 
         <TableLayout
             android:id="@+id/tableLayoutPics"
@@ -200,6 +194,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/talk_hqxq1"
                 android:text="@string/label_cmt"
+                android:drawablePadding="@dimen/dic_bettween"
                 android:textColor="#6a6a6a"
                 android:textSize="16sp" />
             <!--

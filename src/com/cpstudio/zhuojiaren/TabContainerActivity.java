@@ -33,6 +33,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.Toast;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.ui.GrouthActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudui.zhuojiaren.lz.CustomerMessageFactory;
 import com.cpstudui.zhuojiaren.lz.LZMyHomeActivity;
 
 @SuppressWarnings("deprecation")
@@ -60,7 +62,7 @@ public class TabContainerActivity extends TabActivity implements
 	public static final String ACTION_DMEO_RECEIVE_MESSAGE = "action_demo_receive_message";
 	public static final String ACTION_DMEO_GROUP_MESSAGE = "action_demo_group_message";
 	public static final String ACTION_DMEO_AGREE_REQUEST = "action_demo_agree_request";
-
+	public static final String ACTION_SYS_MSG = "action_demo_sys_message";
 	private TextView numTV = null;
 	public final static int MAIN_PAGE = 0;
 	public final static int ACTIVE_PAGE = 1;
@@ -98,10 +100,10 @@ public class TabContainerActivity extends TabActivity implements
 				numTV.setVisibility(View.GONE);
 			} else if (count > 0 && count < 100) {
 				numTV.setVisibility(View.VISIBLE);
-//不用显示数目				numTV.setText(count + "");
+				// 不用显示数目 numTV.setText(count + "");
 			} else {
 				numTV.setVisibility(View.VISIBLE);
-				//不用显示数目				numTV.setText(R.string.no_read_message);
+				// 不用显示数目 numTV.setText(R.string.no_read_message);
 			}
 		}
 	};
@@ -113,6 +115,11 @@ public class TabContainerActivity extends TabActivity implements
 		setContentView(R.layout.activity_tab_container);
 
 		init();
+		msgReceiver = new MsgReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ACTION_DMEO_RECEIVE_MESSAGE);
+		filter.addAction(ACTION_SYS_MSG);
+		registerReceiver(msgReceiver, filter);
 		//
 		//
 		//
@@ -191,27 +198,27 @@ public class TabContainerActivity extends TabActivity implements
 					}
 				}
 			}
-			for (int i = 0; i < grouplist.size(); i++) {
-				// 测试，因为之前的圈子都还未加入，先硬编码加入(TabConTainerActivity),等定义好推送的允许加入圈子后就可以加入圈子了
-				Group g = grouplist.get(i);
-				if (g != null && null != RongIM.getInstance()
-						&& RongIM.getInstance().getRongIMClient() != null)
-					RongIM.getInstance()
-							.getRongIMClient()
-							.joinGroup(g.getId(), g.getName(),
-									new OperationCallback() {
-
-										@Override
-										public void onSuccess() {
-
-										}
-
-										@Override
-										public void onError(ErrorCode errorCode) {
-
-										}
-									});
-			}
+//			for (int i = 0; i < grouplist.size(); i++) {
+//				// 测试，因为之前的圈子都还未加入，先硬编码加入(TabConTainerActivity),等定义好推送的允许加入圈子后就可以加入圈子了
+//				Group g = grouplist.get(i);
+//				if (g != null && null != RongIM.getInstance()
+//						&& RongIM.getInstance().getRongIMClient() != null)
+//					RongIM.getInstance()
+//							.getRongIMClient()
+//							.joinGroup(g.getId(), g.getName(),
+//									new OperationCallback() {
+//
+//										@Override
+//										public void onSuccess() {
+//
+//										}
+//
+//										@Override
+//										public void onError(ErrorCode errorCode) {
+//
+//										}
+//									});
+//			}
 
 			if (grouplist.size() > 0)
 				RongIM.getInstance()
@@ -231,11 +238,11 @@ public class TabContainerActivity extends TabActivity implements
 												"---syncGroup-onError---");
 									}
 								});
-//异步更新圈子信息到数据库
+			// 异步更新圈子信息到数据库
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
+					// TODO Auto-genrated method stub
 					GroupFacade mgfcade = DemoContext.getInstance(
 							getApplicationContext()).getmGroupInfoDao();
 					mgfcade.saveOrUpdateAll(quanlist);
@@ -247,9 +254,6 @@ public class TabContainerActivity extends TabActivity implements
 		}
 	}
 
-	
-	
-	
 	private void init() {
 		ResHelper.getInstance(getApplicationContext()).setAppShow(true);
 		SysApplication.getInstance().addActivity(TabContainerActivity.this);
@@ -397,19 +401,22 @@ public class TabContainerActivity extends TabActivity implements
 	 */
 	@Override
 	protected void onResume() {
-		msgReceiver = new MsgReceiver();
-		IntentFilter filter = new IntentFilter(
-				TabContainerActivity.ACTION_DMEO_RECEIVE_MESSAGE);
-		registerReceiver(msgReceiver, filter);
+
 		super.onResume();
 	}
 
 	@Override
 	protected void onPause() {
+		super.onPause();
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
 		if (msgReceiver != null) {
 			unregisterReceiver(msgReceiver);
 		}
-		super.onPause();
+		super.onDestroy();
 	}
 
 	private class MsgReceiver extends BroadcastReceiver {
@@ -427,6 +434,29 @@ public class TabContainerActivity extends TabActivity implements
 						+ getString(R.string.label_tomy)
 						+ getString(R.string.label_sendcard);
 				CommonUtil.displayToast(getApplicationContext(), text);
+			} else {
+				String data = intent.getStringExtra("json");
+				Toast.makeText(getApplicationContext(), data, 1000).show();
+				int type = intent.getIntExtra("type", -1);
+				if (type == -1)
+					return;
+				switch (type) {
+				case CustomerMessageFactory.CMT:
+
+					break;
+				case CustomerMessageFactory.ZAN:
+
+					break;
+				case CustomerMessageFactory.REQUEST_JOIN_QAUN:
+
+					break;
+				case CustomerMessageFactory.SYS:
+
+					break;
+
+				default:
+					break;
+				}
 			}
 		}
 	}

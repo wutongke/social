@@ -7,31 +7,7 @@
     android:orientation="vertical"
     tools:context=".JiarenActiveActivity" >
 
-    <RelativeLayout
-        android:id="@+id/userNameShowParent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_title" >
-
-        <TextView
-            android:id="@+id/userNameShow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="@string/title_active"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/buttonViewPub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/iwrite" />
-    </RelativeLayout>
+    <include layout="@layout/title_activity" />
 
     <LinearLayout
         android:id="@+id/layoutJiarenActive"

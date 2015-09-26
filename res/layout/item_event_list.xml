@@ -22,8 +22,7 @@
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:padding="10dp"
-            android:text="标题"
-            android:textSize="24sp" />
+            android:textSize="@dimen/name_text_size" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,7 +42,7 @@
                 android:id="@+id/textViewDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2015-02-31 12:35:20" />
+                android:textSize="@dimen/time_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,7 +63,7 @@
                 android:id="@+id/textViewPlace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="西土城路10号" />
+                android:textSize="@dimen/time_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -89,8 +88,7 @@
                 android:layout_height="30dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_border"
-                android:gravity="center"
-                android:text="15人报名" />
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/textViewDetail"
@@ -99,7 +97,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_border"
                 android:gravity="center"
-                android:text="查看詳情"
+                android:text="@string/label_view_detail"
                 android:textColor="@color/green" />
         </LinearLayout>
     </LinearLayout>

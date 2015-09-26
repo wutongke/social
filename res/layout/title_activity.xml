@@ -2,20 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingRight="10dp"
     android:background="@drawable/bg_title"
-     >
+    android:paddingRight="10dp" >
 
     <TextView
         android:id="@+id/activity_back"
-        android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:drawableLeft="@drawable/go_back"
+        android:gravity="center"
         android:text="@string/label_back"
         android:textColor="#ffffff"
-        android:gravity="center"
         android:textSize="16dp" />
 
     <TextView
@@ -24,39 +23,41 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:gravity="center"
         android:textColor="#ffffff"
-        android:textSize="20dp"
-        android:gravity="center"/>
+        android:textSize="20dp" />
+
     <TextView
-        android:layout_centerVertical="true"
         android:id="@+id/activity_function2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
         android:layout_toLeftOf="@+id/activity_function"
-       android:gravity="center"
+        android:gravity="center"
         android:textColor="#ffffff"
         android:textSize="20dp"
         android:visibility="gone" />
+
     <TextView
-        android:layout_centerVertical="true"
         android:id="@+id/activity_function"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:gravity="center"
-        android:textColor="#ffffff"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:textSize="20dp"
-         />
-    <ImageView 
-        android:layout_centerVertical="true"
+        android:textColor="#ffffff"
+        android:textSize="20dp" />
+
+    <ImageView
         android:id="@+id/activity_function_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        />
+        android:layout_centerVertical="true"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="20dp" />
 
 </RelativeLayout>

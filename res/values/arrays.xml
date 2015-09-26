@@ -649,4 +649,9 @@
 	    <item >化妆品</item>
 	    <item >全部</item>
 	</string-array>
+<string-array name="quan_active_types">
+	    <item >倬脉全部的圈子动态</item>
+	    <item >我创建的圈子动态</item>
+	    <item >我加入的圈子动态</item>
+	</string-array>
 </resources>

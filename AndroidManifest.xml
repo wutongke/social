@@ -143,14 +143,6 @@
 
                 <data
                     android:host="com.cpstudio.zhuojiaren"
-                    android:pathPrefix="/conversationlist"
-                    android:scheme="rong" />
-                <data
-                    android:host="com.cpstudio.zhuojiaren"
-                    android:pathPrefix="/conversationlist"
-                    android:scheme="rong" />
-                <data
-                    android:host="com.cpstudio.zhuojiaren"
                     android:pathPrefix="/conversationgrouplist"
                     android:scheme="rong" />
             </intent-filter>
@@ -985,6 +977,18 @@
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.StoreMyHomeActivity"
             android:label="@string/title_activity_store_main" >
+        </activity>
+        <activity
+            android:name="com.cpstudui.zhuojiaren.lz.QuanChatListActivity"
+            android:label="@string/title_activity_store_main" >
+             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.cpstudio.zhuojiaren"
+                    android:pathPrefix="/conversationlist"
+                    android:scheme="rong" />
+            </intent-filter>
         </activity>
 
         <meta-data

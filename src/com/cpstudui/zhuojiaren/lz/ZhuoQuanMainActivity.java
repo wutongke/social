@@ -83,7 +83,9 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	View btnPubTopic;
 	@InjectView(R.id.btnJoinQuan)
 	View btnJoinQuan;
-
+	@InjectView(R.id.activity_function_image)
+	ImageView ivFunSimply;
+	
 	@InjectView(R.id.btnQuanChat)
 	View btnQuanChat;
 	private final static int USER_SELECT = 0;
@@ -117,9 +119,10 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		mContext = this;
 		initTitle();
 		title.setText(R.string.title_activity_zhuojiaquan_main);
-		function.setTag(0);
-		function.setBackgroundResource(R.drawable.menu_qht1);
-
+//		function.setTag(0);
+//		function.setBackgroundResource(R.drawable.menu_qht1);
+		ivFunSimply.setTag(0);
+		ivFunSimply.setImageResource(R.drawable.menu_qht1);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		// mFacade = new QuanFacade(getApplicationContext());
 		Intent i = getIntent();
@@ -312,7 +315,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 
 			}
 		});
-		function.setOnClickListener(new OnClickListener() {
+		ivFunSimply.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {

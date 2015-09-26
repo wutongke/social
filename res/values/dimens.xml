@@ -17,5 +17,17 @@
 	<dimen name="active_margin_left30">30dp</dimen>
 	<dimen name="active_fontsize_14sp">14sp</dimen>
 	<!-- 图片和文字之间的距离 -->
-	<dimen name="dic_bettween">14dp</dimen>
+	<dimen name="dic_bettween">13dp</dimen>
+	<dimen name="name_text_size">13sp</dimen>
+	<dimen name="company_text_size">10sp</dimen>
+	<dimen name="content_text_size">12sp</dimen>
+	<dimen name="position_text_size">10sp</dimen>
+	<dimen name="time_text_size">10sp</dimen>
+	
+	<dimen name="detail_name_text_size">15sp</dimen>
+	<dimen name="detail_company_text_size">12sp</dimen>
+	<dimen name="detail_content_text_size">14sp</dimen>
+	<dimen name="detail_position_text_size">12sp</dimen>
+	<dimen name="detail_time_text_size">12sp</dimen>
+	
 </resources>

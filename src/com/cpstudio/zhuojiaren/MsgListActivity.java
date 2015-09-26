@@ -49,6 +49,7 @@ import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.LZUserSameActivity;
 import com.cpstudio.zhuojiaren.ui.MyFriendActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudui.zhuojiaren.lz.QuanChatListActivity;
 import com.umeng.socialize.utils.Log;
 
 public class MsgListActivity extends FragmentActivity implements
@@ -90,8 +91,8 @@ public class MsgListActivity extends FragmentActivity implements
 				.appendQueryParameter(
 						Conversation.ConversationType.PRIVATE.getName(),
 						"false") // 设置私聊会话是否聚合显示
-				.appendQueryParameter(
-						Conversation.ConversationType.GROUP.getName(), "false")// 群组
+				// .appendQueryParameter(
+				// Conversation.ConversationType.GROUP.getName(), "false")// 群组
 				// .appendQueryParameter(
 				// Conversation.ConversationType.DISCUSSION.getName(),
 				// "false")// 讨论组
@@ -213,9 +214,8 @@ public class MsgListActivity extends FragmentActivity implements
 		// "标题");
 		// RongIM.getInstance().startGroupChat(context, targetGroupId, title);
 		// findViewById(R.id.textViewMsgQuanAll).setVisibility(View.GONE);
-		// Intent i = new Intent(MsgListActivity.this,
-		// MsgQuanListActivity.class);
-		// startActivity(i);
+		Intent i = new Intent(MsgListActivity.this, QuanChatListActivity.class);
+		startActivity(i);
 	}
 
 	private void startSysActivity() {
@@ -233,7 +233,6 @@ public class MsgListActivity extends FragmentActivity implements
 	private void initHeadViewEvent(View v) {
 		v.findViewById(R.id.linearLayoutCard).setOnClickListener(
 				new OnClickListener() {
-
 					@Override
 					public void onClick(View v) {
 						Intent i = new Intent(MsgListActivity.this,

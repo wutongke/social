@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -26,7 +28,6 @@ import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
@@ -39,6 +40,12 @@ import com.cpstudui.zhuojiaren.lz.QuanziActiveNumListActivity;
 
 public class JiarenActiveActivity extends Activity implements
 		OnPullDownListener {
+	@InjectView(R.id.activity_function_image)
+	ImageView ivPub;
+	@InjectView(R.id.activity_back)
+	TextView tvBack;
+	@InjectView(R.id.activity_title)
+	TextView tvTitle;
 	private ListView mListView;
 	// private ZhuoInfoAdapter mAdapter;
 
@@ -65,6 +72,7 @@ public class JiarenActiveActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jiaren_active);
+		ButterKnife.inject(this);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		mFacade = new UserFacade(getApplicationContext());
 		// infoFacade = new InfoFacade(getApplicationContext(),
@@ -73,8 +81,8 @@ public class JiarenActiveActivity extends Activity implements
 		pwh = new PopupWindows(JiarenActiveActivity.this);
 		mLoadImage = LoadImage.getInstance();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
-		((TextView) findViewById(R.id.userNameShow))
-				.setText(R.string.title_active);
+		tvBack.setVisibility(View.GONE);
+		tvTitle.setText(R.string.title_active);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.listview_header3);
 		mPullDownView.setOnPullDownListener(this);
@@ -111,7 +119,8 @@ public class JiarenActiveActivity extends Activity implements
 	}
 
 	private void initClick() {
-		findViewById(R.id.buttonViewPub).setOnClickListener(
+		ivPub.setImageResource(R.drawable.iwrite);
+		ivPub.setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {

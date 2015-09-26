@@ -98,7 +98,7 @@ public class LZExtendProvider extends InputProvider.ExtendProvider {
 
 			String showMessage = contact[0] + "\n" + contact[1];
 			final TextMessage content = TextMessage.obtain(showMessage);
-
+			
 			if (RongIM.getInstance().getRongIMClient() != null)
 				RongIM.getInstance()
 						.getRongIMClient()

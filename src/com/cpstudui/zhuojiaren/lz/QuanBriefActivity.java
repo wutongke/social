@@ -72,6 +72,8 @@ public class QuanBriefActivity extends BaseActivity {
 	View ltMember;// 成员操作菜单
 	@InjectView(R.id.lt_youke_menue)
 	View ltYouke;// 非成员操作菜单
+	@InjectView(R.id.activity_function_image)
+	ImageView ivFun;
 	int localCode = -1;
 	private PopupWindows phw = null;
 	private LoadImage mLoadImage = new LoadImage();
@@ -91,8 +93,10 @@ public class QuanBriefActivity extends BaseActivity {
 
 		initTitle();
 		// 是管理员的时候才出现此菜单
-		function.setVisibility(View.GONE);
-		function.setBackgroundResource(R.drawable.fabu_wdhd_1);
+		ivFun.setVisibility(View.GONE);
+//		function.setVisibility(View.GONE);
+//		function.setBackgroundResource(R.drawable.fabu_wdhd_1);
+		ivFun.setImageResource(R.drawable.fabu_wdhd_1);
 		ButterKnife.inject(this);
 		title.setText(R.string.label_quan_brief);
 
@@ -174,8 +178,8 @@ public class QuanBriefActivity extends BaseActivity {
 							isfollow = false;
 						}
 						if (memberType >= QuanVO.QUAN_ROLE_MANAGER) {
-							function.setVisibility(View.VISIBLE);
-							function.setOnClickListener(new OnClickListener() {
+							ivFun.setVisibility(View.VISIBLE);
+							ivFun.setOnClickListener(new OnClickListener() {
 								@Override
 								public void onClick(View arg0) {
 									// TODO Auto-generated method stub

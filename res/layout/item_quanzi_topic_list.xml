@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:maxWidth="80dp"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/name_text_size" />
 
             <TextView
                 android:id="@+id/textViewContent"
@@ -52,7 +52,7 @@
                 android:maxWidth="80dp"
                 android:singleLine="true"
                 android:textColor="#585858"
-                android:textSize="12sp" />
+                android:textSize="@dimen/position_text_size" />
 
             <ImageView
                 android:id="@+id/optionButton"
@@ -70,7 +70,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="3dp"
                 android:layout_toLeftOf="@+id/optionButton"
-                android:textSize="13sp" />
+                android:textSize="@dimen/time_text_size" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -97,7 +97,7 @@
                 android:lineSpacingExtra="2dp"
                 android:maxLines="4"
                 android:textColor="#585858"
-                android:textSize="16sp" />
+                android:textSize="@dimen/content_text_size" />
         </RelativeLayout>
 
         <com.cpstudio.zhuojiaren.widget.MyGridView

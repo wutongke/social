@@ -62,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:textColor="#000000"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/name_text_size" />
 
                     <TextView
                         android:id="@+id/textViewTime"
@@ -71,7 +71,7 @@
                         android:layout_alignParentRight="true"
                         android:maxLines="1"
                         android:textColor="#7e7e7e"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/time_text_size" />
                 </RelativeLayout>
 
                 <TextView
@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#6a6a6a"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/content_text_size" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"

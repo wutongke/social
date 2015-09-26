@@ -1,5 +1,6 @@
 package com.cpstudio.zhuojiaren;
 
+import io.rong.app.RongCloudEvent;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient.ConnectCallback;
 import io.rong.imlib.RongIMClient.ErrorCode;
@@ -42,11 +43,13 @@ public class InitActivity extends Activity {
 
 	private void init() {
 		// 单人聊
-//		ImChatFacade imChatFacade = new ImChatFacade(getApplicationContext());
-//		imChatFacade.updateSendState();
-//		// 群聊
-//		ImQuanFacade imQuanFacade = new ImQuanFacade(getApplicationContext());
-//		imQuanFacade.updateSendState();
+		// ImChatFacade imChatFacade = new
+		// ImChatFacade(getApplicationContext());
+		// imChatFacade.updateSendState();
+		// // 群聊
+		// ImQuanFacade imQuanFacade = new
+		// ImQuanFacade(getApplicationContext());
+		// imQuanFacade.updateSendState();
 		start();
 	}
 
@@ -94,10 +97,11 @@ public class InitActivity extends Activity {
 			case MsgTagVO.PUB_INFO:
 				// 登陆是否成功
 				if (JsonHandler.checkResult((String) msg.obj)) {
-					LoginRes res = JsonHandler_Lef.parseLoginRes(
-							InitActivity.this, JsonHandler.parseResult((String) msg.obj)
-									.getData());
-					AppClientLef.getInstance(InitActivity.this).refreshUserInfo(res);
+					LoginRes res = JsonHandler_Lef
+							.parseLoginRes(InitActivity.this, JsonHandler
+									.parseResult((String) msg.obj).getData());
+					AppClientLef.getInstance(InitActivity.this)
+							.refreshUserInfo(res);
 					startService();
 					goActivity(TabContainerActivity.class);
 				} else {
@@ -106,10 +110,11 @@ public class InitActivity extends Activity {
 				break;
 			// 登陆成功后会启动聊天后台服务(NotificationService)以接收推送消息
 			case MsgTagVO.START_SEND:
-				ResHelper mResHelper = ResHelper.getInstance(getApplicationContext());
-				String token=mResHelper.getImTokenForRongyun();
-				//之后需删除，暂测试用
-				
+				ResHelper mResHelper = ResHelper
+						.getInstance(getApplicationContext());
+				String token = mResHelper.getImTokenForRongyun();
+				// 之后需删除，暂测试用
+
 				RongIM.connect(token, new ConnectCallback() {
 
 					@Override
@@ -120,22 +125,24 @@ public class InitActivity extends Activity {
 
 					@Override
 					public void onSuccess(String arg0) {
-						Toast.makeText(InitActivity.this,
-								"connect onSuccess", Toast.LENGTH_SHORT).show();
+						Toast.makeText(InitActivity.this, "connect onSuccess",
+								Toast.LENGTH_SHORT).show();
+						RongCloudEvent.getInstance().setOtherListener();
+
 					}
 
 					@Override
 					public void onTokenIncorrect() {
 						// TODO Auto-generated method stub
-						Toast.makeText(InitActivity.this,
-								"onTokenIncorrect", Toast.LENGTH_SHORT).show();
+						Toast.makeText(InitActivity.this, "onTokenIncorrect",
+								Toast.LENGTH_SHORT).show();
 					}
 				});
-				
-//				ServiceManager serviceManager = new ServiceManager(
-//						getApplicationContext());
-//				serviceManager.setNotificationIcon(R.drawable.newmsg);
-//				serviceManager.startService();
+
+				// ServiceManager serviceManager = new ServiceManager(
+				// getApplicationContext());
+				// serviceManager.setNotificationIcon(R.drawable.newmsg);
+				// serviceManager.startService();
 				break;
 			default:
 				break;

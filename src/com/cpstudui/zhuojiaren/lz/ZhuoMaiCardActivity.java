@@ -30,7 +30,6 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.CardEditActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.facade.CardMsgFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.ZhuomaiActiveInfoFra;
@@ -42,10 +41,8 @@ import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.Praise;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
-import com.cpstudio.zhuojiaren.ui.PhoneActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.TabButton;
@@ -122,7 +119,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 	String userid, myid, ismy;
 	private UserFacade userFacade = null;
-	private CardMsgFacade mFacade = null;
 	UserNewVO userInfo;
 	BaseCodeData baseDataSet;
 
@@ -145,7 +141,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		tabButton.setViewPager(viewPager);
 
 		userFacade = new UserFacade(ZhuoMaiCardActivity.this);
-		mFacade = new CardMsgFacade(ZhuoMaiCardActivity.this);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		pwh = new PopupWindows(ZhuoMaiCardActivity.this);
 		Intent i = getIntent();

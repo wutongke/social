@@ -6,6 +6,7 @@ public class GroupStatus {
 	public final static int GROUP_STATUS_TYPE_ALL=0; 
 	public final static int GROUP_STATUS_TYPE_CREATED=1; 
 	public final static int GROUP_STATUS_TYPE_JOINED=2; 
+	
 	private int type;
 	private EventVO groupActivity;
 	private QuanTopicVO groupTopic;

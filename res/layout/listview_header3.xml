@@ -3,6 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#f9f9f9"
     android:orientation="vertical" >
 
     <!-- 内容 -->
@@ -63,25 +64,25 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/v_bg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_active"
+        android:layout_height="160dp"
         android:orientation="vertical" >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="110dp" >
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_active" >
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@+id/relativeLayoutUserHead"
-                android:orientation="vertical"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="120dp"
+                android:paddingBottom="10dp"
                 android:paddingRight="10dp" >
 
                 <TextView
@@ -103,67 +104,69 @@
                     android:textColor="#ffffff"
                     android:textSize="12sp" />
             </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relativeLayoutUserHead"
-                android:layout_width="73dp"
-                android:layout_height="73dp"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/bg_header" >
-
-                <ImageView
-                    android:id="@+id/imageViewUserHead"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:contentDescription="@string/ico"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/default_userhead" />
-            </RelativeLayout>
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_active_menue"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/relativeLayoutUserHead"
+            android:layout_width="73dp"
+            android:layout_height="73dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/bg_header" >
+
+            <ImageView
+                android:id="@+id/imageViewUserHead"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:contentDescription="@string/ico"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_userhead" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_active_menue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f9f9f9"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp" >
+
+        <TextView
+            android:id="@+id/textViewActiveJiaren"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="#f9f9f9"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp" >
+            android:layout_weight="1"
+            android:drawableTop="@drawable/jiarenactive_bg"
+            android:gravity="center" />
 
-            <TextView
-                android:id="@+id/textViewActiveJiaren"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/jiarenactive_bg"
-                android:gravity="center" />
+        <TextView
+            android:id="@+id/textViewActiveCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/card_bg"
+            android:gravity="center" />
 
-            <TextView
-                android:id="@+id/textViewActiveCard"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/card_bg"
-                android:gravity="center" />
+        <TextView
+            android:id="@+id/textViewActiveQuanzi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/quanziactive_bg"
+            android:gravity="center" />
 
-            <TextView
-                android:id="@+id/textViewActiveQuanzi"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/quanziactive_bg"
-                android:gravity="center" />
-
-            <TextView
-                android:id="@+id/textViewActiveZhuomai"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/zhuomai_bg"
-                android:gravity="center" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/textViewActiveZhuomai"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/zhuomai_bg"
+            android:gravity="center" />
     </LinearLayout>
 
 </LinearLayout>

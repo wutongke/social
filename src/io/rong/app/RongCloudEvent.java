@@ -2,15 +2,12 @@ package io.rong.app;
 
 import io.rong.app.message.DeAgreedFriendRequestMessage;
 import io.rong.app.model.User;
-import io.rong.imkit.PushNotificationManager;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.model.UIConversation;
 import io.rong.imkit.widget.provider.CameraInputProvider;
 import io.rong.imkit.widget.provider.ImageInputProvider;
 import io.rong.imkit.widget.provider.InputProvider;
-import io.rong.imkit.widget.provider.LocationInputProvider;
-import io.rong.imkit.widget.provider.VoIPInputProvider;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
@@ -27,24 +24,17 @@ import io.rong.notification.PushNotificationMessage;
 
 import java.util.ArrayList;
 
-import android.R.integer;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
-import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.TabContainerActivity;
 import com.cpstudio.zhuojiaren.facade.GroupFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudui.zhuojiaren.lz.CustomerMessageConstants;
+import com.cpstudui.zhuojiaren.lz.CustomerMessageFactory;
 import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 import com.sea_monster.exception.BaseException;
 import com.sea_monster.network.AbstractHttpRequest;
@@ -135,9 +125,9 @@ public final class RongCloudEvent implements
 		InputProvider.ExtendProvider[] provider = {
 				new ImageInputProvider(RongContext.getInstance()),// 图片
 				new CameraInputProvider(RongContext.getInstance()),// 相机
-				new LocationInputProvider(RongContext.getInstance()),// 地理位置
-				new VoIPInputProvider(RongContext.getInstance()),// 语音通话
-				new LZExtendProvider(RongContext.getInstance()) // 自定义通讯录
+				// new LocationInputProvider(RongContext.getInstance()),// 地理位置
+				// new VoIPInputProvider(RongContext.getInstance()),// 语音通话
+				// new LZExtendProvider(RongContext.getInstance()) // 自定义通讯录
 		};
 		RongIM.getInstance().resetInputExtensionProvider(
 				Conversation.ConversationType.PRIVATE, provider);
@@ -237,7 +227,7 @@ public final class RongCloudEvent implements
 	public boolean onReceived(Message message, int left) {
 
 		MessageContent messageContent = message.getContent();
-
+		
 		if (messageContent instanceof TextMessage) {// 文本消息
 			TextMessage textMessage = (TextMessage) messageContent;
 			if (((TextMessage) messageContent).getExtra() != null) {
@@ -308,23 +298,12 @@ public final class RongCloudEvent implements
 			// TODO: handle exception
 			return;
 		}
-		switch (type) {
-		case CustomerMessageConstants.CMT:
-
-			break;
-		case CustomerMessageConstants.ZAN:
-			
-			break;
-		case CustomerMessageConstants.REQUEST_JOIN_QAUN:
-			
-			break;
-		case CustomerMessageConstants.SYS:
-			
-			break;
-
-		default:
-			break;
-		}
+		
+		Intent in = new Intent();
+		in.setAction(TabContainerActivity.ACTION_SYS_MSG);
+		in.putExtra("json", messageContent);
+		in.putExtra("type",type);
+		mContext.sendBroadcast(in);
 	}
 
 	/**

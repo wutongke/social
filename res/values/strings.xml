@@ -1151,4 +1151,5 @@
     <string name="lab_msglist_view_quan_msg">查看圈子聊天消息</string>
     <string name="lab_msglist_view_sys_msg">查看系统发来的通知信息</string>
     <string name="lab_msglist_view_cmt_msg">查看谁评论了我的文章，或需求信息</string>
+   
 </resources>

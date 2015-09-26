@@ -58,9 +58,9 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		init();
 		//×Ô¶¯µÇÂ¼
-		mUidView.setText("15106936602");
-		mPwdView.setText("123456");
-		login();
+//		mUidView.setText("15106936602");
+//		mPwdView.setText("123456");
+//		login();
 	}
 
 	private void init() {

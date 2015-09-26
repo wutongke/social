@@ -16,16 +16,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.GroupStatus;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
@@ -33,11 +33,7 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-import com.cpstudui.zhuojiaren.lz.CardActiveNumListActivity;
-import com.cpstudui.zhuojiaren.lz.DynamicDetailActivity;
-import com.cpstudui.zhuojiaren.lz.JiarenActiveNumListActivity;
 import com.cpstudui.zhuojiaren.lz.QuanStatusListAdapter;
-import com.cpstudui.zhuojiaren.lz.QuanziActiveNumListActivity;
 import com.cpstudui.zhuojiaren.lz.TopicDetailActivity;
 
 /**
@@ -48,6 +44,13 @@ import com.cpstudui.zhuojiaren.lz.TopicDetailActivity;
  */
 public class GroupStatusListActivity extends Activity implements
 		OnPullDownListener, OnItemClickListener {
+	@InjectView(R.id.activity_function_image)
+	ImageView ivPub;
+	@InjectView(R.id.activity_back)
+	TextView tvBack;
+	@InjectView(R.id.activity_title)
+	TextView tvTitle;
+
 	private ListView mListView;
 	// private ZhuoInfoAdapter mAdapter;
 
@@ -60,9 +63,9 @@ public class GroupStatusListActivity extends Activity implements
 	private String mUid = null;
 	private int mType = GroupStatus.GROUP_STATUS_TYPE_ALL;// 0-全部圈子 1-我创建的圈子
 															// 2-我加入的圈子
+	String[] titleArray;
 	private String mLastId = "0";
 	private ZhuoConnHelper mConnHelper = null;
-	private UserFacade mFacade = null;
 	private int mPage = 1;
 	final int pageSize = 10;
 
@@ -75,10 +78,9 @@ public class GroupStatusListActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jiaren_active);
+		ButterKnife.inject(this);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		mFacade = new UserFacade(getApplicationContext());
-		// infoFacade = new InfoFacade(getApplicationContext(),
-		// InfoFacade.ACTIVELIST);
+
 		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		pwh = new PopupWindows(GroupStatusListActivity.this);
 		mLoadImage = new LoadImage();
@@ -93,28 +95,40 @@ public class GroupStatusListActivity extends Activity implements
 				mList, 1);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowFooter(false);
-
 		mType = getIntent().getIntExtra("mType", 0);
+		titleArray = getResources().getStringArray(R.array.quan_active_types);
+		if (titleArray != null && titleArray.length > 0) {
+			mType = mType % titleArray.length;
+			tvTitle.setText(titleArray[mType]);
+		}
 		loadData();
 		initClick();
 	}
 
 	@Override
 	protected void onResume() {
-		loadInfo();
 		super.onResume();
 	}
 
 	private void initClick() {
-		findViewById(R.id.buttonViewPub).setOnClickListener(
-				new OnClickListener() {
 
-					@Override
-					public void onClick(View v) {
-						pwh.showPop(findViewById(R.id.layoutJiarenActive));
-					}
-				});
+		tvBack.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				GroupStatusListActivity.this.finish();
+			}
+		});
+
+		ivPub.setImageResource(R.drawable.iwrite);
+		ivPub.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				pwh.showPop(findViewById(R.id.layoutJiarenActive));
+			}
+		});
 	}
 
 	private void updateItemList(ArrayList<GroupStatus> list, boolean refresh,
@@ -271,21 +285,6 @@ public class GroupStatusListActivity extends Activity implements
 		startActivity(i);
 	}
 
-	private void loadInfo() {
-		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			UserNewVO user = mFacade.getSimpleInfoById(mUid);
-			if (user == null) {
-				CommonUtil.displayToast(getApplicationContext(),
-						R.string.error0);
-			} else {
-				Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_OTHER);
-				msg.obj = user;
-				msg.sendToTarget();
-			}
-		} else {
-			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_OTHER, mUid);
-		}
-	}
 
 	public void loadData() {
 		if (mPullDownView.startLoadData()) {
