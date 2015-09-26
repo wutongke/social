@@ -100,6 +100,8 @@ public class DynamicDetailActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
 				// TODO Auto-generated method stub
+				if(mList.size()<=0)
+					return;
 				Comment cmt = mList.get(position);
 				startCommentActivity(cmt.getToId(), cmt.getToUserid());
 			}

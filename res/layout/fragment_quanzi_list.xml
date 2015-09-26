@@ -5,14 +5,14 @@
 
     <RelativeLayout
         android:id="@+id/rel2"
+        android:background="@drawable/color_shape2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <RadioGroup
             android:id="@+id/fql_my_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/graywhitem"
+            android:layout_height="104dp"
             android:orientation="horizontal"
             android:gravity="center_horizontal"
             android:visibility="gone" >
@@ -20,7 +20,8 @@
             <RadioButton
                 android:id="@+id/fql_my_create"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:button="@null"
                 android:background="@drawable/imageview_selector" />
 
@@ -28,6 +29,7 @@
                 android:id="@+id/fql_my_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="50dp"
                 android:button="@null"
                 android:background="@drawable/imageview_selector2" />

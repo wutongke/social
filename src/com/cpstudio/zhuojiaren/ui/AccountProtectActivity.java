@@ -36,10 +36,10 @@ public class AccountProtectActivity extends BaseActivity {
 				//ÍøÂç²¿·Ö
 				if(open!=null&&open.equals("1")){
 					open="0";
-					swit.setBackgroundResource(R.drawable.closed);
+					swit.setBackgroundResource(R.drawable.closecheck);
 				}
 				else{
-					swit.setBackgroundResource(R.drawable.open);
+					swit.setBackgroundResource(R.drawable.opencheck);
 					open="1";
 				} 
 					

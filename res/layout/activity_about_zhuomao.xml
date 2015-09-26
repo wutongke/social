@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#efefef"
+    android:background="@color/white"
     android:orientation="vertical" >
 
     <include
@@ -26,6 +26,8 @@
         android:layout_weight="1"
         android:background="@drawable/textview_bg"
         android:padding="10dp"
+        android:textColor="#6b6b6b"
+        android:textSize="14dp"
         android:text="@string/text_about_zm" />
 
     <TextView
@@ -36,7 +38,7 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center|bottom"
         android:text="@string/company_copyright"
-        android:textColor="@color/graywhite"
-        android:textSize="15dp" />
+        android:textColor="#a5a5a5"
+        android:textSize="14dp" />
 
 </LinearLayout>

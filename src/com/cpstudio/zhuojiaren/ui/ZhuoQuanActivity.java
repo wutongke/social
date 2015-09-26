@@ -22,6 +22,8 @@ import com.cpstudio.zhuojiaren.fragment.QuanziCreateFra;
 import com.cpstudio.zhuojiaren.fragment.QuanziFra;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 
@@ -50,6 +52,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 		title.setText(R.string.title_activity_zhuojiaquan);
 		// 设置初始值 0 管理，1搜索，2筛选，3退出
 		function.setTag(0);
+		function.setTextSize(14);
 		function.setBackgroundResource(R.drawable.ibutton);
 		function.setText(R.string.label_manage);
 		// 初始化tab和viewpager
@@ -68,6 +71,11 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
 				setFunctionText(arg0);
+				if(arg0==3){
+					function.setVisibility(View.GONE);
+				}else{
+					function.setVisibility(View.VISIBLE);
+				}
 			}
 
 			@Override

@@ -12,6 +12,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:drawableLeft="@drawable/go_back"
+        android:drawablePadding="3dp"
         android:gravity="center"
         android:text="@string/label_back"
         android:textColor="#ffffff"
@@ -57,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:scaleType="centerCrop"
-        android:layout_marginRight="20dp" />
+        android:layout_marginRight="20dp"
+        android:scaleType="centerCrop" />
 
 </RelativeLayout>

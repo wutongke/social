@@ -868,7 +868,7 @@
     <string name="out_login">退出登录</string>
     <string name="zhuo_login">倬脉登录号</string>
     <string name="phone_number">手机号</string>
-    <string name="qq_number">QQ号</string>
+    <string name="qq_number">编辑QQ号</string>
     <string name="bang_qq">绑定QQ号</string>
     <string name="email">邮箱地址</string>
     <string name="zhuo_password">倬脉密码</string>
@@ -1129,7 +1129,7 @@
     <string name="lab_extend">扩展</string>
     <string name="lab_start_chat">发起聊天</string>
     <string name="lab_pub_detail">公告详情</string>
-     <string name="lab_zhuomaiactive_detail">倬脉动态详情</string>
+    <string name="lab_zhuomaiactive_detail">倬脉动态详情</string>
     <string name="title_activity_res_comment">ResCommentActivity</string>
     <string name="selected_null">请先选中欲删除项</string>
     <string name="update_photo_success">照片更新成功</string>
@@ -1151,5 +1151,7 @@
     <string name="lab_msglist_view_quan_msg">查看圈子聊天消息</string>
     <string name="lab_msglist_view_sys_msg">查看系统发来的通知信息</string>
     <string name="lab_msglist_view_cmt_msg">查看谁评论了我的文章，或需求信息</string>
-   
+
+    <string name="title_activity_zhuo_name_edit">ZhuoNameEditActivity</string>
+
 </resources>

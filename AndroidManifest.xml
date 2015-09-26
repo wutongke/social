@@ -54,12 +54,16 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
-            
         </activity>
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.ZhuoNameEditActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
@@ -88,7 +92,6 @@
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait" >
         </activity>
-        
         <activity
             android:name="com.cpstudio.zhuojiaren.TabContainerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -691,10 +694,12 @@
                 <action android:name="org.androidpn.client.NotificationService" />
             </intent-filter>
         </service>
-        <!-- <service
+        <!--
+             <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" /> -->
+            android:process=":remote" />
+        -->
         <service
             android:name="com.cpstudio.zhuojiaren.service.ImService"
             android:exported="false" >
@@ -981,9 +986,11 @@
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.QuanChatListActivity"
             android:label="@string/title_activity_store_main" >
-             <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.cpstudio.zhuojiaren"
                     android:pathPrefix="/conversationlist"
