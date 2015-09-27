@@ -2,42 +2,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     android:orientation="vertical" >
 
     <include layout="@layout/title_activity" />
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black" >
+        android:layout_height="43dp"
+        android:background="@drawable/searchbg"
+        >
 
         <EditText
             android:id="@+id/search_input"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/searchbg"
+            android:gravity="center"
+            android:layout_centerInParent="true"
             android:focusable="false"
-            android:hint="@string/label_main_searchHint"
+            android:hint="@string/label_main_searchHint2"
             android:imeOptions="actionSearch"
-            android:paddingLeft="35dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:singleLine="true"
-            android:textSize="16sp" />
+            android:textSize="16sp" 
+            android:background="@null"/>
 
         <ImageView
+            android:layout_toLeftOf="@+id/search_input"
             android:id="@+id/search_search"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:padding="10dp"
-            android:src="@drawable/searcher_new_search_icon" />
-    </FrameLayout>
+            android:layout_alignBottom="@+id/search_input"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="3dp"
+            android:src="@drawable/magnifier5" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/main_cats"
         android:layout_width="match_parent"
-        android:layout_height="110dp" >
+        android:background="@color/white"
+        android:layout_height="130dp" >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/ads_viewpager"
@@ -58,20 +63,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="10dp"
+        android:padding="10dp"
         android:gravity="center"
         android:horizontalSpacing="10dp"
         android:listSelector="@drawable/indicator_list"
+        android:background="@color/white"
         android:numColumns="5"
         android:verticalSpacing="10dp" >
     </GridView>
 
     <GridView
         android:id="@+id/gv_goods"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="10dp"
+        android:padding="10dp"
         android:gravity="center"
         android:horizontalSpacing="10dp"
         android:listSelector="@drawable/indicator_list"
@@ -82,19 +89,22 @@
     <RelativeLayout
         android:id="@+id/layoutFooter"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:background="@color/white"
         android:paddingTop="5dp" >
 
         <TextView
             android:id="@+id/textViewFooterButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@drawable/button_view_more"
+            
             android:gravity="center"
+            android:padding="3dp"
+            android:text="更多"
             android:visibility="visible" />
 
         <ProgressBar

@@ -3,24 +3,38 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f9f9f9"
+    android:background="#ececec"
     android:orientation="vertical" >
 
-    <include layout="@layout/title_activity" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/userNameShowParent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginRight="8dp"
         android:background="@drawable/bg_title" >
 
-        <FrameLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/activity_back"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/buttonPlus"
-            android:layout_toRightOf="@+id/buttonSearch" >
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/go_back"
+            android:drawablePadding="3dp"
+            android:gravity="center"
+            android:text="@string/label_back"
+            android:textColor="#ffffff"
+            android:textSize="16dp" />
 
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            >
+	
             <EditText
                 android:id="@+id/search_input"
                 android:layout_width="match_parent"
@@ -28,7 +42,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/searchbg"
-                android:hint="@string/label_main_searchHint"
+                android:hint="@string/label_main_searchHint2"
                 android:imeOptions="actionSearch"
                 android:paddingLeft="35dp"
                 android:paddingRight="10dp"
@@ -41,37 +55,25 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:padding="10dp"
-                android:src="@drawable/searcher_new_search_icon" />
+                android:src="@drawable/magnifier5_zx_1" />
+            
         </FrameLayout>
 
         <Button
-            android:id="@+id/buttonPlus"
+            android:id="@+id/buttonSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:background="@drawable/button_top_bg_menu"
-            android:text="@string/label_plus"
-            android:textColor="#ffffff"
+            android:text="搜索"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/white"
+           	android:background="@null"
             android:textSize="14sp"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/buttonSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/button_top_bg_menu"
-            android:text="@string/label_main_find"
-            android:textColor="#ffffff"
-            android:textSize="14sp"
-            android:visibility="gone" />
-    </RelativeLayout>
+             />
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -84,20 +86,25 @@
             android:layout_height="match_parent"
             android:background="@color/vpi__background_holo_light"
             android:orientation="vertical"
-            android:padding="10dp" >
+            android:paddingTop="10dp" >
 
             <RelativeLayout
                 android:id="@+id/historyLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
-                <TextView
+
+                <TextView
                     android:id="@+id/tvDeleteHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:background="@color/white"
                     android:gravity="center_horizontal"
+                    android:padding="8dp"
                     android:text="@string/delete_history"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#a6a6a6"
+                    android:textSize="16dp" />
 
                 <ListView
                     android:id="@+id/lvHostory"

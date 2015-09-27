@@ -22,13 +22,16 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:text="华为最新款"
-        android:textColor="@color/gray" />
+        android:textSize="10dp"
+        android:textColor="#a6a6a6" />
 
     <TextView
         android:id="@+id/tvPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textSize="@dimen/dp12"
+        android:textStyle="normal"
         android:text="市场价：300元" />
 
     <TextView
@@ -37,6 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="倬币：200"
-        android:textColor="@color/red" />
+        android:textStyle="normal"
+        android:textSize="@dimen/dp12"
+        android:textColor="#d04242" />
 
 </LinearLayout>

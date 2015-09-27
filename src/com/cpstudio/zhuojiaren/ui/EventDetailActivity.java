@@ -113,7 +113,14 @@ public class EventDetailActivity extends Activity {
 
 	private void initOnclick() {
 		// TODO Auto-generated method stub
-
+		goBack.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				EventDetailActivity.this.finish();
+			}
+		});
 		bossLayout.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -229,7 +236,7 @@ public class EventDetailActivity extends Activity {
 						peopleCompany.setText(detail.getCompany());
 						peopleName.setText(detail.getName());
 						peoplePostion.setText(detail.getPosition());
-						time.setText(detail.getStarttime() + "-"
+						time.setText(detail.getStarttime() + "\n"
 								+ detail.getEndtime());
 						// µ¹¼ÆÊ±
 						servertime = Long.parseLong(detail.getLefttime());
@@ -238,10 +245,10 @@ public class EventDetailActivity extends Activity {
 					        public void run() { 
 					        	servertime--; 
 					        	long[]timeLeft = Util.getTimeFromSeconds(servertime);
-					            day.setText(timeLeft[0]+"");
-								hour.setText(timeLeft[1]+"");
-								minute.setText(timeLeft[2]+"");
-								second.setText(timeLeft[3]+"");
+					            day.setText(timeLeft[3]+"");
+								hour.setText(timeLeft[2]+"");
+								minute.setText(timeLeft[1]+"");
+								second.setText(timeLeft[0]+"");
 								mUIHandler.postDelayed(this, 1000); 
 					        } 
 					    }; 

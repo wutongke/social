@@ -210,10 +210,10 @@
                 android:textSize="15dp" />
         </LinearLayout>
     </LinearLayout>
-	<DrawableCenterTextView 
+	<com.cpstudio.zhuojiaren.widget.DrawableCenterTextView 
 	    android:id="@+id/hide"
 	    android:layout_below="@+id/second"
-	    android:layout_width="match_parent"
+	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:padding="10dp"
 	    android:drawableLeft="@drawable/messagesend"
@@ -221,6 +221,6 @@
 	    android:text="隐藏"
 	    android:textColor="#ffffff"
 	    android:textSize="20dp"
-	    android:gravity="center"
+	    android:layout_centerHorizontal="true"
 	    />
 </RelativeLayout>

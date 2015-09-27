@@ -18,7 +18,7 @@
             android:drawablePadding="5dp"
             android:text="@string/people"
             android:textColor="@color/graywhite"
-            android:textSize="@dimen/basic_text" />
+            android:textSize="@dimen/dp16" />
 
         <TextView
             android:id="@+id/vep_people"
@@ -46,7 +46,7 @@
             android:drawablePadding="5dp"
             android:text="@string/phone"
             android:textColor="@color/graywhite"
-            android:textSize="@dimen/basic_text" />
+            android:textSize="@dimen/dp16" />
 
         <TextView
             android:id="@+id/vep_phone"

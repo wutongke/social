@@ -2285,6 +2285,8 @@ public class ZhuoConnHelper {
 	 */
 	private boolean isExistDataCache(String cachefile) {
 		boolean exist = false;
+		if(context==null)
+			return exist;
 		File data = context.getFileStreamPath(cachefile);
 		if (data.exists())
 			exist = true;

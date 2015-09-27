@@ -27,7 +27,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/graywhitem"
-                android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >
@@ -38,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center_vertical"
                     android:layout_marginTop="8dp"
-                    android:background="@color/white"
+                    android:layout_marginLeft="36dp"
                     android:orientation="vertical" >
                 </LinearLayout>
 
@@ -46,6 +45,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:textSize="14dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#676767"
                     android:text="@string/choose_image" />
             </LinearLayout>
 
@@ -57,8 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal" >
@@ -70,6 +72,8 @@
                     android:layout_gravity="center_vertical"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
+                    android:textSize="14dp"
+                    android:textColor="#5b5b5b"
                     android:text="@string/project_name" />
 
                 <EditText
@@ -84,6 +88,8 @@
                     android:paddingRight="15dp"
                     android:paddingTop="10dp"
                     android:singleLine="true"
+                    style="@style/basic_14_676767"
+                    android:background="@drawable/edit_corners"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -94,8 +100,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal" >
@@ -107,7 +113,9 @@
                     android:layout_gravity="center_vertical"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:text="@string/project_name" />
+                    android:textSize="14dp"
+                    android:textColor="#5b5b5b"
+                    android:text="项目类别" />
 				<TextView
 				    android:id="@+id/apcf_type"
 				    style="@style/basic_text"
@@ -117,6 +125,8 @@
 				    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:textSize="14dp"
+                    android:textColor="#5b5b5b"
                     android:text="@string/technology"
                     android:drawableRight="@drawable/dtmore_dt_1"
                     />
@@ -127,21 +137,23 @@
             <TextView
                 android:id="@+id/apcf_project_des"
                 style="@style/basic_text"
+                android:paddingTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="@string/des"
-                android:textColor="@color/black" />
+                android:textSize="14dp"
+                android:textColor="#5b5b5b" />
 
             <EditText
                 android:id="@+id/apcf_des_edit"
-                style="@style/basic_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:gravity="top"
                 android:minHeight="100dp"
-                android:textSize="18dp" >
+                android:background="@drawable/edit_corners"
+                style="@style/basic_14_676767">
             </EditText>
 
             <include layout="@layout/bg_image" />
@@ -216,6 +228,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -229,19 +242,22 @@
 
                 <EditText
                     android:id="@+id/apcf_aim_price_zhuo"
+                    android:background="@drawable/edit_corners"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
+                    android:padding="5dp"
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:inputType="number"
                     android:minWidth="200dp"
-                    android:textSize="18dp" />
+                    android:textSize="14dp" />
 
                 <TextView
                     style="@style/basic_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
+                    android:layout_marginLeft="14dp"
                     android:text="@string/zhuo_bi1" />
             </LinearLayout>
 

@@ -5,13 +5,15 @@
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:orientation="vertical" >
     <ImageView 
         android:id="@+id/icf_image"
         android:layout_alignParentLeft="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="96dp"
+        android:layout_height="60dp"
         android:src="@drawable/ico_fan"
+        android:scaleType="centerCrop"
         />
 	<TextView 
 	    android:id="@+id/icf_name"
@@ -19,19 +21,29 @@
 	    android:layout_height="wrap_content"
 	    android:layout_toRightOf="@+id/icf_image"
 	    android:layout_marginLeft="10dp"
+	    android:maxLines="2"
 	    android:text="asd"
 	    android:gravity="center_vertical"
 	    style="@style/basic_text"
+	    />
+	<ImageView 
+	    android:id="@+id/zhuo_bi_image"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBottom="@+id/icf_price"
+	    android:src="@drawable/cart_szhuob2"
+	     android:layout_alignLeft="@+id/icf_name"
+	     android:paddingBottom="2dp"
 	    />
 	<TextView 
 	    android:id="@+id/icf_price"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_below="@+id/icf_name"
-	    android:layout_alignLeft="@+id/icf_name"
-	    android:text="12"
+	    android:layout_toRightOf="@+id/zhuo_bi_image"
+	    android:text="11"
 	    android:textColor="@color/red"
-	    android:textSize="20dp"
+	    android:textSize="18dp"
 	    />
 	<TextView 
 	    android:layout_alignBottom="@+id/icf_price"
@@ -40,8 +52,9 @@
 	    android:layout_height="wrap_content"
 	    android:text="@string/crowdfunding_price_label"
 	    android:textColor="@color/orange"
-	    android:textSize="18dp"
+	    android:textSize="13dp"
 	    android:layout_marginLeft="5dp"
+	    android:paddingBottom="2dp"
 	    />
 	<TextView 
 	    android:id="@+id/icf_Finish_rate"
@@ -50,8 +63,8 @@
 	    android:layout_alignParentRight="true"
 	    android:layout_alignBottom="@+id/icf_price"
 	    android:text="@string/crowdfunding_finish_rate"
-	    style="@style/basic_text"
-	    android:textSize="15dp"
+	    android:textColor="#969696"
+	    android:textSize="12dp"
 	    android:layout_marginRight="10dp"
 	    />
 </RelativeLayout>

@@ -22,7 +22,8 @@ import android.widget.TextView;
 public class QuanListAdapter extends BaseAdapter {
 	private List<QuanVO> mList = null;
 	private LayoutInflater inflater = null;
-	private LoadImage mLoadImage = new LoadImage(10, 60, 60);
+	private LoadImage mLoadImage = new LoadImage(13, 60, 60);
+	
 	private Context mContext;
 	private List<QuanVO> mSelectedList = new ArrayList<QuanVO>();
 	private boolean managerVisible = false;
@@ -103,8 +104,14 @@ public class QuanListAdapter extends BaseAdapter {
 			holder.des.setText(des);
 			holder.des.setVisibility(View.VISIBLE);
 		}
-		mLoadImage.addTask(headUrl, holder.headIV);
-		mLoadImage.doTask();
+		holder.headIV.setImageResource(R.drawable.myfriend_zmmp_1);
+		if(headUrl!=null&&!headUrl.equals("")){
+			holder.headIV.setTag(headUrl);
+			mLoadImage.addTask(headUrl, holder.headIV);
+			mLoadImage.doTask();
+		}else{
+			holder.headIV.setImageResource(R.drawable.myfriend_zmmp_1);
+		}
 		return convertView;
 	}
 

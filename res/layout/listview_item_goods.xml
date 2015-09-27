@@ -6,6 +6,7 @@
 
     <ImageView
         android:id="@+id/ivPic"
+        android:layout_marginLeft="8dp"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
@@ -26,7 +27,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text="华为最新款"
-            android:textColor="@color/gray" />
+            android:textColor="@color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -39,8 +40,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/szhuob2"
+                android:drawablePadding="5dp"
                 android:text="200个"
-                android:textColor="@color/red" />
+                android:textColor="#e45914" />
         </LinearLayout>
 
         <LinearLayout
@@ -53,6 +55,7 @@
                 android:id="@+id/tvGoodCmtRate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                 android:textColor="@color/gray"
                 android:text="好评:90%" />
 
             <TextView
@@ -60,6 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                 android:textColor="@color/gray"
                 android:text="3214人付款" />
         </LinearLayout>
     </LinearLayout>

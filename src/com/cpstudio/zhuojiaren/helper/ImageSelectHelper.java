@@ -43,7 +43,7 @@ public class ImageSelectHelper implements OnClickListener {
 
 	void init() {
 		mTll = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT);
 		LinearLayout ll = new LinearLayout(mActivity);
 		ll.setLayoutParams(mTll);
@@ -51,7 +51,7 @@ public class ImageSelectHelper implements OnClickListener {
 		inflater = LayoutInflater.from(mActivity);
 		mAddButton = inflater.inflate(R.layout.item_image_add, null);
 		((ImageView) (mAddButton.findViewById(R.id.imageViewPic)))
-				.setImageResource(R.drawable.bg_head_add);
+				.setImageResource(R.drawable.addpic);
 		ll.addView(mAddButton);
 	}
 

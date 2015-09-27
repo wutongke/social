@@ -74,6 +74,8 @@ public class PublishCrowdFundingActivity extends BaseActivity {
 	@InjectView(R.id.apcf_type)
 	TextView crowdFundingType;
 	int type = 1;
+	//回报项目index
+	private int index = 1;
 	String[] crowdFundingTypeStr;
 	// title图片是否改变
 	private boolean mHeadChanged = false;
@@ -287,6 +289,8 @@ public class PublishCrowdFundingActivity extends BaseActivity {
 		View view = getLayoutInflater().inflate(R.layout.item_payback_add,
 				null);
 		payBackViewList.add(view);
+		TextView name = (TextView)view.findViewById(R.id.payback_name);
+		name.setText("回报项目"+index++);
 		TextView addImage = (TextView) view.findViewById(R.id.ipba_add_image);
 		GridView imageGrid = (GridView) view
 				.findViewById(R.id.ipba_image_layout);

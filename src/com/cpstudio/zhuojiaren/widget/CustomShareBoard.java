@@ -84,6 +84,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		rootView.findViewById(R.id.copy).setOnClickListener(this);
 		rootView.findViewById(R.id.zhuo_share).setOnClickListener(this);
 		rootView.findViewById(R.id.xinlang).setOnClickListener(this);
+		rootView.findViewById(R.id.hide).setOnClickListener(this);
 		setContentView(rootView);
 		setWidth(LayoutParams.MATCH_PARENT);
 		setHeight(LayoutParams.WRAP_CONTENT);

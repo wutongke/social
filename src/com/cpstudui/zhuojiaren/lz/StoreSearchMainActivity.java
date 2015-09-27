@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.androidpn.client.Constants;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,6 +31,7 @@ import android.widget.TextView.OnEditorActionListener;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.baidu.mapapi.map.Stroke;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.TypedStoreGoodsListAdapter;
@@ -49,7 +51,7 @@ import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
  * @author lz
  * 
  */
-public class StoreSearchMainActivity extends BaseActivity implements
+public class StoreSearchMainActivity extends Activity implements
 		OnPullDownListener, OnItemClickListener {
 	@InjectView(R.id.search_pull_down_view)
 	PullDownView mPullDownView;
@@ -84,8 +86,6 @@ public class StoreSearchMainActivity extends BaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_store_search_lz);
 		ButterKnife.inject(this);
-		initTitle();
-		title.setText(R.string.label_searchUserHint);
 		// getWindow().setSoftInputMode(
 		// WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -113,6 +113,14 @@ public class StoreSearchMainActivity extends BaseActivity implements
 
 	private void initClick() {
 		// TODO Auto-generated method stub
+		findViewById(R.id.activity_back).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				StoreSearchMainActivity.this.finish();
+			}
+		});
 		searchView.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override

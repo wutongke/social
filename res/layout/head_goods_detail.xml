@@ -66,7 +66,7 @@
             android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="25dp"
             android:src="@drawable/more_pub_event"
             android:layout_alignParentRight="true"
             />
@@ -74,7 +74,7 @@
     <ImageView 
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/bg"
+        android:background="#cccccc"
         />
     <LinearLayout 
         android:layout_marginBottom="10dp"
@@ -114,13 +114,13 @@
             style="@style/basic_text"
             android:textSize="15dp"
             android:layout_marginLeft="20dp"
-            android:textColor="#A25155"
+            android:textColor="#d04242"
             />
         <TextView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:textColor="#A25155"
+            android:textColor="#d04242"
             android:textSize="20dp"
             android:id="@+id/hgd_zhuo_price"
             />

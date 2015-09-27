@@ -102,14 +102,14 @@ public class GoodsDetailLActivity extends BaseActivity {
 				if (goods.getIsCollection() != null
 						&& !goods.getIsCollection().equals(GoodsVO.collected)) {
 					Drawable drawable = getResources().getDrawable(
-							R.drawable.zcollect2);
+							R.drawable.dongt2);
 					// / 这一步必须要做,否则不会显示.
 					drawable.setBounds(0, 0, drawable.getMinimumWidth(),
 							drawable.getMinimumHeight());
 					collection.setCompoundDrawables(drawable, null, null, null);
 				} else {
 					Drawable drawable = getResources().getDrawable(
-							R.drawable.zuncollect2);
+							R.drawable.dongt);
 					// / 这一步必须要做,否则不会显示.
 					drawable.setBounds(0, 0, drawable.getMinimumWidth(),
 							drawable.getMinimumHeight());
@@ -189,6 +189,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 			ResultVO res;
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD:
+				mPullDownView.finishLoadData(true);
 				if (JsonHandler.checkResult((String) msg.obj,
 						GoodsDetailLActivity.this)) {
 					res = JsonHandler.parseResult((String) msg.obj);

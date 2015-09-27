@@ -60,6 +60,7 @@
             android:id="@+id/fql_list"
             android:layout_width="match_parent"
             android:cacheColorHint="@android:color/transparent"
+            android:listSelector="@color/white"
             android:layout_height="wrap_content" >
         </ListView>
 

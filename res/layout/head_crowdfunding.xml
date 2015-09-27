@@ -7,9 +7,9 @@
 	</include>
     <com.cpstudio.zhuojiaren.widget.MyGridView
         android:id="@+id/hcd_gridview"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:cacheColorHint="@android:color/transparent"
         android:listSelector="@android:color/transparent"
         android:gravity="center"
@@ -19,5 +19,10 @@
         android:stretchMode="columnWidth"
         android:verticalSpacing="5dip" >
     </com.cpstudio.zhuojiaren.widget.MyGridView>
+    <ImageView 
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/graywhitem"
+        />
 
 </LinearLayout>
