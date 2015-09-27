@@ -54,6 +54,11 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.MainActivity"
@@ -80,11 +85,6 @@
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.MainActivity"
@@ -698,7 +698,7 @@
              <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" />
+            android:process=":remote" />
         -->
         <service
             android:name="com.cpstudio.zhuojiaren.service.ImService"
@@ -729,9 +729,14 @@
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.BaseFragmentActivity"
+             android:screenOrientation="portrait"
             android:label="@string/title_activity_base_fragment" >
         </activity>
-
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ViewOrderActivity"
+             android:screenOrientation="portrait"
+            >
+        </activity>
         <!-- lzlz -->
 
         <activity

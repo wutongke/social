@@ -102,6 +102,7 @@ public class GoodsTypedListActivity extends BaseActivity implements
 	private Handler mUIHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
+			mPullDownView.finishLoadData(true);
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
 				updateItemList((String) msg.obj, true, false);

@@ -36,8 +36,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center_vertical"
+                    android:layout_marginLeft="36dp"
                     android:layout_marginTop="8dp"
-                    android:background="@color/white"
                     android:orientation="vertical" >
                 </LinearLayout>
 
@@ -48,12 +48,6 @@
                     android:text="@string/label_qztp" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/ico"
-                android:src="@drawable/bg_border3" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,6 +55,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
                 android:background="@color/white"
                 android:orientation="horizontal" >
 
@@ -70,7 +66,7 @@
                     android:layout_gravity="center_vertical"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    style="@style/basic_text_black"
+                    style="@style/basic_text_5b5b5b"
                     android:text="@string/label_qzmc" />
 
                 <EditText
@@ -92,10 +88,11 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:contentDescription="@string/ico"
-                android:src="@drawable/bg_border3" />
+                android:background="@color/graywhitem" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -104,6 +101,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
                 android:background="@color/white"
                 android:orientation="horizontal" >
 
@@ -111,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    style="@style/basic_text_black"
+                    style="@style/basic_text_5b5b5b"
                     android:text="@string/label_qzlb" />
 
                 <TextView
@@ -132,10 +131,11 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:contentDescription="@string/ico"
-                android:src="@drawable/bg_border3" />
+                android:background="@color/graywhitem" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -144,6 +144,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
                 android:background="@color/white"
                 android:orientation="horizontal" >
 
@@ -151,7 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    style="@style/basic_text_black"
+                    style="@style/basic_text_5b5b5b"
                     android:text="@string/label_qzlc" />
 
                 <TextView
@@ -173,10 +175,11 @@
             
             
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:contentDescription="@string/ico"
-                android:src="@drawable/bg_border3" />
+                android:background="@color/graywhitem" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -185,12 +188,14 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
                 android:orientation="vertical" >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/basic_text_black"
+                    style="@style/basic_text_5b5b5b"
                     android:text="@string/label_gonggao" />
 
                 <EditText
@@ -206,15 +211,17 @@
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:paddingTop="10dp"
+                    android:textColor="#5b5b5b"
                     android:textSize="14sp" />
             </LinearLayout>
             
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:contentDescription="@string/ico"
-                android:src="@drawable/bg_border3" />
+                android:background="@color/graywhitem" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -223,12 +230,14 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
                 android:orientation="vertical" >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/basic_text_black"
+                    style="@style/basic_text_5b5b5b"
                     android:text="@string/label_qzjj" />
 
                 <EditText
@@ -245,14 +254,16 @@
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:paddingTop="10dp"
+                    android:textColor="#5b5b5b"
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+           <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:contentDescription="@string/ico"
-                android:src="@drawable/bg_border3" />
+                android:background="@color/graywhitem" />
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -274,6 +285,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/add_quanzi_right_1"
+                    android:textColor="#5b5b5b"
                     android:textSize="@dimen/second_basic_text" />
 
                 <RadioButton
@@ -281,6 +293,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/add_quanzi_right_2"
+                    android:textColor="#5b5b5b"
                     android:textSize="@dimen/second_basic_text" />
             </RadioGroup>
 
@@ -304,6 +317,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/add_quanzi_right_1"
+                    android:textColor="#5b5b5b"
                     android:textSize="@dimen/second_basic_text" />
 
                 <RadioButton
@@ -311,6 +325,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/add_quanzi_right_2"
+                    android:textColor="#5b5b5b"
                     android:textSize="@dimen/second_basic_text" />
             </RadioGroup>
 

@@ -105,6 +105,7 @@ public class CrowdFundingFragment extends Fragment {
 		MyGridView gridView = (MyGridView) view.findViewById(R.id.hcd_gridview);
 		final ArrayList<ImageRadioButton> list = new ArrayList<ImageRadioButton>();
 		if (type == CrowdFundingVO.CROWDFUNDINGMY) {
+			gridView.setNumColumns(2);
 			list.add(new ImageRadioButton(R.drawable.startucrowd,
 					R.drawable.startdcrowd));
 			list.add(new ImageRadioButton(R.drawable.investucrowd,

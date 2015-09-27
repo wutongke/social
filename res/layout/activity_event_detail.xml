@@ -19,7 +19,7 @@
             android:drawableLeft="@drawable/go_back"
             android:text="@string/label_back"
             android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/aed_activity_title"
@@ -37,7 +37,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
-            android:layout_centerVertical="true"
             android:background="@drawable/share" />
 
         <ImageView
@@ -57,25 +56,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/aed_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/graywhitem"
+                android:background="#f0f0f0"
                 android:gravity="center_horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="20dp"
                 android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/basic_text" />
+                android:textColor="#575757"
+                android:textSize="@dimen/dp16" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#f0f0f0"
                 android:layout_marginBottom="20dp"
-                android:background="@color/graywhitem"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:paddingBottom="20dp" >
@@ -85,6 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:text="@string/browse"
+                    android:textColor="#848484"
                     android:textSize="15dp" />
 
                 <TextView
@@ -92,13 +93,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
-                    android:textSize="18dp" />
+                    android:textColor="#848484"
+                    android:textSize="15dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:text="@string/share"
+                    android:textColor="#848484"
                     android:textSize="15dp" />
 
                 <TextView
@@ -106,13 +109,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
-                    android:textSize="18dp" />
+                    android:textColor="#848484"
+                    android:textSize="15dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:text="@string/apply"
+                    android:textColor="#848484"
                     android:textSize="15dp" />
 
                 <TextView
@@ -120,7 +125,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
-                    android:textSize="18dp" />
+                    android:textColor="#848484"
+                    android:textSize="15dp" />
             </LinearLayout>
 
             <TextView
@@ -128,10 +134,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/basic_text" />
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:textColor="#565656"
+                android:textSize="@dimen/dp16" />
 
             <include layout="@layout/bg_image" />
 
@@ -156,7 +162,7 @@
                     android:paddingTop="10dp"
                     android:text="@string/zhuo_even_create_people"
                     android:textColor="@color/graywhite"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/dp16" />
 
                 <ImageView
                     android:layout_width="80dp"
@@ -170,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@color/graywhitem"
+                android:background="#f0f0f0"
                 android:gravity="center_horizontal"
                 android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
@@ -181,7 +187,9 @@
                     android:id="@+id/aed_people_image"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginBottom="10dp"
+                    android:src="@drawable/people"
                     android:layout_marginTop="10dp" />
 
                 <TextView
@@ -189,8 +197,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
+                    android:textColor="#6a6a6a"
+                    android:textSize="@dimen/dp16"
+                    android:text="aa"
                     android:layout_marginBottom="5dp"
                     android:layout_toRightOf="@+id/aed_people_image" />
 
@@ -207,7 +216,7 @@
                     android:id="@+id/aed_people_company"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/graywhite"
+                    android:textColor="#959595"
                     android:layout_alignBottom="@+id/aed_people_image"
                     android:textSize="18dp"
                     android:layout_alignLeft="@+id/aed_people_name"
@@ -235,7 +244,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/zhuo_event_time"
                         android:textColor="@color/graywhite"
-                        android:textSize="@dimen/basic_text" />
+                        android:textSize="@dimen/dp16" />
 
                     <TextView
                         android:id="@+id/aed_time_day"
@@ -243,14 +252,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:textColor="#ec76a0"
-                        android:textSize="@dimen/basic_text" />
+                        android:textSize="@dimen/dp16" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="天"
                         android:textColor="@color/graywhite"
-                        android:textSize="@dimen/second_basic_text" />
+                        android:textSize="@dimen/dp12" />
 
                     <TextView
                         android:id="@+id/aed_time_hour"
@@ -258,14 +267,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:textColor="#ec76a0"
-                        android:textSize="@dimen/basic_text" />
+                        android:textSize="@dimen/dp16" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="小时"
                         android:textColor="@color/graywhite"
-                        android:textSize="@dimen/second_basic_text" />
+                        android:textSize="@dimen/dp12" />
 
                     <TextView
                         android:id="@+id/aed_time_minute"
@@ -273,14 +282,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:textColor="#ec76a0"
-                        android:textSize="@dimen/basic_text" />
+                        android:textSize="@dimen/dp16" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="分"
                         android:textColor="@color/graywhite"
-                        android:textSize="@dimen/second_basic_text" />
+                        android:textSize="@dimen/dp12" />
 
                     <TextView
                         android:id="@+id/aed_time_second"
@@ -288,14 +297,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:textColor="#ec76a0"
-                        android:textSize="@dimen/basic_text" />
+                        android:textSize="@dimen/dp16" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="秒"
                         android:textColor="@color/graywhite"
-                        android:textSize="@dimen/second_basic_text" />
+                        android:textSize="@dimen/dp12" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -315,11 +324,12 @@
                     android:drawablePadding="5dp"
                     android:text="@string/time"
                     android:textColor="@color/graywhite"
-                    android:textSize="@dimen/basic_text" />
+                    android:textSize="@dimen/dp16" />
 
                 <TextView
                     android:id="@+id/aed_time"
                     style="@style/basic_text"
+                    android:padding="3dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -347,11 +357,12 @@
                     android:drawablePadding="5dp"
                     android:text="@string/locate"
                     android:textColor="@color/graywhite"
-                    android:textSize="@dimen/basic_text" />
+                    android:textSize="@dimen/dp16" />
 
                 <TextView
                     android:id="@+id/aed_locate"
                     style="@style/basic_text"
+                    android:padding="3dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -388,7 +399,7 @@
                 android:padding="10dp"
                 android:text="@string/toapply"
                 android:textColor="@color/white"
-                android:textSize="20dp"
+                android:textSize="@dimen/dp16"
                 android:layout_marginBottom="10dp"
                  />
         </LinearLayout>

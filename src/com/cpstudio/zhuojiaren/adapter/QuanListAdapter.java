@@ -22,7 +22,8 @@ import android.widget.TextView;
 public class QuanListAdapter extends BaseAdapter {
 	private List<QuanVO> mList = null;
 	private LayoutInflater inflater = null;
-	private LoadImage mLoadImage = new LoadImage(10, 60, 60);
+	private LoadImage mLoadImage = new LoadImage(13, 60, 60);
+	
 	private Context mContext;
 	private List<QuanVO> mSelectedList = new ArrayList<QuanVO>();
 	private boolean managerVisible = false;

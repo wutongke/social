@@ -56,7 +56,7 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:textSize="@dimen/dptitle" />
 
         <ImageView
             android:id="@+id/activity_function_image"
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="@dimen/dptitle" />
     </RelativeLayout>
 
     <LinearLayout

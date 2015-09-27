@@ -6,12 +6,14 @@
     
 	<!-- lef -->
 	<dimen name="copyright_text">10dp</dimen>
-	<dimen name="basic_text">20dp</dimen>
+	<dimen name="basic_text">16dp</dimen>
 	<dimen name="basic_title_text">20dp</dimen>
-	<dimen name="second_basic_text">18dp</dimen>
+	<dimen name="second_basic_text">14dp</dimen>
 	<dimen name="basic_margin">20dp</dimen>
 	<dimen name="dp12">12dp</dimen>
+	<dimen name="dp14">14dp</dimen>
 	<dimen name="dp16">16dp</dimen>
+	<dimen name="dptitle">16dp</dimen>
 	<dimen name="dp20">20dp</dimen>
 
 	<dimen name="active_margin_left30">30dp</dimen>

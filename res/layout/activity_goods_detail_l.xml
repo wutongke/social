@@ -13,10 +13,12 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom"
         android:layout_below="@+id/agd_layout" >
     </com.cpstudio.zhuojiaren.widget.PullDownView>
 
     <LinearLayout
+        android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -29,9 +31,10 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:background="@color/graywhite"
-            android:drawableLeft="@drawable/zuncollect2"
+            android:drawableLeft="@drawable/dongt"
             android:singleLine="true"
             android:drawablePadding="5dp"
+            android:gravity="bottom"
             android:padding="10dp"
             android:text="@string/label_collect"
             android:textColor="@color/white" />
@@ -48,6 +51,7 @@
             android:padding="10dp"
             android:singleLine="true"
             android:text="@string/cart_count"
+            android:gravity="bottom"
             android:visibility="gone"
             android:textColor="@color/white" />
 
@@ -57,6 +61,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:gravity="bottom"
             android:background="@color/pink2"
             android:drawableLeft="@drawable/shopcar"
             android:drawablePadding="5dp"
