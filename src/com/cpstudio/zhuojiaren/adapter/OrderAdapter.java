@@ -95,9 +95,13 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 							goodsChangeListenter.onGoodsChange(addAllGoodsPrice(),selectList.size());
 					}
 				});
+		if(item.getImg()!=null)
 		loader.beginLoad(
 				item.getImg(),
 				(ImageView) helper.getView(R.id.icg_goods_image));
+		else{
+			helper.getView(R.id.icg_goods_image).setBackgroundResource(R.drawable.myfriend_zmmp_1);
+		}
 	}
 	public interface SelectGoodsChangeListener{
 		//商品价格总额和商品数量总额
