@@ -86,6 +86,7 @@ public class LoadImage {
 	public void addTask(String url, ImageView img) {
 		if (null != url && !url.equals("")) {
 			Bitmap bitmap = memoryCache.getBitmapFromCache(url);
+			img.setTag(url);
 			if (bitmap != null) {
 				img.setImageBitmap(ImageRectUtil.toRoundCorner(bitmap, round));
 			} else {
