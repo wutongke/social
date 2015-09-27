@@ -24,7 +24,6 @@
         android:layout_height="70dp"
         android:contentDescription="@string/label_author_header"
         android:scaleType="fitCenter"
-        android:background="@drawable/zhuoquan_image_shape"
          />
 
     <LinearLayout
