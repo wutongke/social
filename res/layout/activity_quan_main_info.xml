@@ -19,8 +19,8 @@
 
         <ImageView
             android:id="@+id/imageViewGroupHeader"
-            android:layout_width="106dp"
-            android:layout_height="106dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:contentDescription="@string/label_author_header"
             android:src="@drawable/default_grouphead" />
 
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_margin="10dp"
+            android:layout_margin="13dp"
             android:orientation="vertical" >
 
             <TextView
@@ -36,8 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="卓卖技术"
-                android:textColor="#000000"
-                android:textSize="20sp" />
+                android:textColor="#676767"
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_qzcy"
-                        android:textColor="#6a6a6a"
+                        android:textColor="#676767"
                         android:textSize="14sp" />
 
                     <TextView
@@ -63,7 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="23个"
-                        android:textColor="#6a6a6a"
+                        android:textColor="#676767"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -78,7 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_qzht"
-                        android:textColor="#6a6a6a"
+                        android:textColor="#676767"
                         android:textSize="14sp" />
 
                     <TextView
@@ -86,7 +86,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="23个"
-                        android:textColor="#6a6a6a"
+                        android:textColor="#676767"
                         android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="领先技术交流圈"
-                android:textColor="#6a6a6a"
+                android:textColor="#676767"
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
@@ -115,12 +115,14 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
 
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/gonggao"
             android:layout_toLeftOf="@+id/at_pub"
-            android:src="@drawable/searcher_new_search_icon" >
-        </ImageView>
+             android:textColor="#a1a3a5"
+                android:textSize="14sp"
+             />
     </RelativeLayout>
 
 </RelativeLayout>

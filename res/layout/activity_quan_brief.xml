@@ -48,7 +48,7 @@
                     android:textColor="#6a6a6a"
                     android:textSize="14sp" />
 
-                <ImageView
+                <com.cpstudio.zhuojiaren.widget.RoundImageView
                     android:id="@+id/imageViewCj"
                     android:layout_width="46dp"
                     android:layout_height="46dp"
@@ -74,7 +74,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:contentDescription="@string/ico"
-                    android:src="@drawable/ico_arrow_org" />
+                    android:src="@drawable/ico_arrow_big" />
             </RelativeLayout>
 
             <ImageView
@@ -226,6 +226,7 @@
                 android:drawableLeft="@drawable/collect_hqxq1"
                 android:minHeight="20dp"
                 android:background="@null"
+                android:drawablePadding="@dimen/dic_bettween"
                 android:text="@string/label_quit_quan"
                 android:textColor="@color/white" />
         </LinearLayout>

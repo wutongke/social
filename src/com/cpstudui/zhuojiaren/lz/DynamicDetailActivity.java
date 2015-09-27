@@ -7,7 +7,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -163,6 +162,7 @@ public class DynamicDetailActivity extends BaseActivity {
 			gvImages.setAdapter(gv);
 			gv.notifyDataSetChanged();
 		}
+		
 		mLoadImage.doTask();
 
 		fillPraiseList(dynamicDetail.getPraiseList());

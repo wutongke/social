@@ -4,6 +4,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.RongIMClient.SendMessageCallback;
 import io.rong.imlib.model.Conversation.ConversationType;
+import io.rong.imlib.model.UserInfo;
 import io.rong.message.ContactNotificationMessage;
 
 import java.util.ArrayList;
@@ -82,6 +83,8 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	TextView tvPhone;
 	@InjectView(R.id.textViewPurse)
 	TextView tvZBNum;// 倬币数
+	@InjectView(R.id.textViewNote)
+	TextView tvSignature;// 倬币数
 	@InjectView(R.id.textViewht)
 	TextView tvCompany;
 
@@ -341,6 +344,10 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			return;
 		ContactNotificationMessage msg = ContactNotificationMessage.obtain(
 				"Request", myid, userInfo.getUserid(), "请求添加好友");
+		io.rong.imlib.model.UserInfo info=new UserInfo(null);
+		info.setName(userInfo.getName());
+		info.setUserId(userInfo.getUserid());
+		msg.setUserInfo(info);
 		RongIM.getInstance()
 				.getRongIMClient()
 				.sendMessage(ConversationType.PRIVATE, userInfo.getUserid(),
@@ -413,6 +420,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	void fillHeadInfo() {
 		if (userInfo == null)
 			return;
+		tvSignature.setText(userInfo.getSignature());
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHeader);
 		tvName.setText(userInfo.getName());
 		// tvPosition/tvMemType需要通过编码获得对应的名称

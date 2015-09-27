@@ -54,6 +54,7 @@
             android:maxLines="10"
             android:layout_height="220dp"
             android:ems="10"
+            android:background="@drawable/edittext_bg"
             android:gravity="center_vertical|top"
             android:inputType="textMultiLine" >
             <requestFocus />

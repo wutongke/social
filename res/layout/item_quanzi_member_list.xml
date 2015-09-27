@@ -51,6 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
+                 android:layout_alignBottom="@id/textViewAuthorName"
                 android:layout_toRightOf="@id/textViewAuthorName"
                 android:textColor="#989898"
                 android:textSize="@dimen/position_text_size" />

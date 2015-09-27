@@ -61,6 +61,7 @@
                         android:background="#00000000"
                         android:drawableLeft="@drawable/write_qht1"
                         android:minHeight="20dp"
+                        android:drawablePadding="@dimen/dic_bettween"
                         android:text="@string/label_pub_topic"
                         android:textColor="@color/white" />
                 </RelativeLayout>
@@ -79,6 +80,7 @@
                         android:drawableLeft="@drawable/activity_qht1"
                         android:minHeight="20dp"
                         android:text="@string/label_pub_active"
+                        android:drawablePadding="@dimen/dic_bettween"
                         android:textColor="@color/white" />
                 </RelativeLayout>
 
@@ -95,6 +97,7 @@
                         android:background="#00000000"
                         android:drawableLeft="@drawable/talk_qht1"
                         android:minHeight="20dp"
+                        android:drawablePadding="@dimen/dic_bettween"
                         android:text="@string/label_qzql"
                         android:textColor="@color/white" />
                 </RelativeLayout>
@@ -116,6 +119,7 @@
                     android:drawableLeft="@drawable/addpeople"
                     android:minHeight="20dp"
                     android:text="@string/label_join_quan"
+                    android:drawablePadding="@dimen/dic_bettween"
                     android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>

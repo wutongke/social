@@ -90,14 +90,14 @@ public class QuanBriefActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_quan_brief);
-
+		ButterKnife.inject(this);
 		initTitle();
 		// 是管理员的时候才出现此菜单
 		ivFun.setVisibility(View.GONE);
-//		function.setVisibility(View.GONE);
-//		function.setBackgroundResource(R.drawable.fabu_wdhd_1);
+		// function.setVisibility(View.GONE);
+		// function.setBackgroundResource(R.drawable.fabu_wdhd_1);
 		ivFun.setImageResource(R.drawable.fabu_wdhd_1);
-		ButterKnife.inject(this);
+
 		title.setText(R.string.label_quan_brief);
 
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());

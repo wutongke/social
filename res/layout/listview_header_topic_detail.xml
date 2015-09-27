@@ -126,13 +126,7 @@
             android:layout_height="wrap_content"
             android:textColor="#6a6a6a"
             android:textSize="@dimen/detail_content_text_size" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#6a6a6a"
-            android:text="@dimen/detail_content_text_size" />
        
-        
         <com.cpstudio.zhuojiaren.widget.MyGridView
             android:id="@+id/picGridView"
             android:layout_marginTop="12dp"

@@ -11,6 +11,6 @@
     android:paddingLeft="7dp"
     android:text="@string/label_back"
     android:textColor="#ffffff"
-    android:textSize="@dimen/basic_title_text" >
+    android:textSize="@dimen/second_basic_text" >
 
 </Button>
