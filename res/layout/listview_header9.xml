@@ -60,26 +60,25 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <LinearLayout
+     <RelativeLayout
+        android:id="@+id/v_bg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="160dp"
         android:orientation="vertical" >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-             android:background="@drawable/bg_active"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="105dp" >
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_active" >
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@+id/relativeLayoutUserHead"
-                android:orientation="vertical"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="120dp"
+                android:paddingBottom="10dp"
                 android:paddingRight="10dp" >
 
                 <TextView
@@ -88,6 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
+                    android:layout_marginTop="10dp"
                     android:textColor="#ffffff"
                     android:textSize="18sp" />
 
@@ -99,23 +99,28 @@
                     android:layout_below="@+id/textViewUsername"
                     android:textColor="#ffffff"
                     android:textSize="12sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relativeLayoutUserHead"
-                android:layout_width="106dp"
-                android:layout_height="106dp"
-                android:layout_alignParentRight="true" >
-
-                <ImageView
-                    android:id="@+id/imageViewUserHead"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/ico"
-                    android:src="@drawable/default_userhead" />
             </RelativeLayout>
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutUserHead"
+            android:layout_width="73dp"
+            android:layout_height="73dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/bg_header" >
+
+            <ImageView
+                android:id="@+id/imageViewUserHead"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:contentDescription="@string/ico"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_userhead" />
+        </RelativeLayout>
+    </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -165,9 +170,6 @@
                     android:text="@string/info28"
                     android:textColor="#a7a7a7"
                     android:textSize="16sp" />
-
             </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>
-
 </LinearLayout>

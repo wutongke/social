@@ -51,7 +51,7 @@ import com.utils.ImageRectUtil;
 public class QuanStatusListAdapter extends BaseAdapter {
 	private List<GroupStatus> mList = null;
 	private LayoutInflater inflater = null;
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	private Context mContext = null;
 	private int width = 720;
 	private float times = 2;

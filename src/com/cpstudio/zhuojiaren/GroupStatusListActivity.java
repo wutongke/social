@@ -272,7 +272,7 @@ public class GroupStatusListActivity extends Activity implements
 		if (id == -1)
 			return;
 
-		int type = mList.get(position).getType();
+		int type = mList.get(position-1).getType();
 		String msgid = (String) view.getTag(R.id.tag_id);
 		Intent i = new Intent();
 		if (type == 0) {

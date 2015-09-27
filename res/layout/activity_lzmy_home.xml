@@ -37,67 +37,74 @@
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
                 android:background="@drawable/mbg6_wdzy_1"
-                android:gravity="center"
                 android:padding="20dp" >
 
                 <com.cpstudio.zhuojiaren.widget.RoundImageView
                     android:id="@+id/imageViewHead"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="20dp"
                     android:contentDescription="@string/ico"
                     android:src="@drawable/default_userhead" />
-                <TextView
-                    android:id="@+id/textViewName"
-                    style="@style/basic_text_white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/imageViewHead"
-                    android:maxWidth="80dp"
-                    android:singleLine="true"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textViewContent"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/textViewName"
-                    android:layout_marginLeft="3dp"
-                    android:layout_toRightOf="@id/textViewName"
-                    android:maxWidth="70dp"
-                    android:singleLine="true"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/textViewMoney"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:drawableLeft="@drawable/zhuob5_wdhd_1"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:textColor="#ffd370"
-                    android:textSize="16sp"
-                    android:visibility="invisible" />
+                    android:layout_toRightOf="@id/imageViewHead">
 
-                <TextView
-                    android:id="@+id/textViewCompany"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/textViewName"
-                    android:layout_below="@id/textViewName"
-                    android:layout_marginTop="10dp"
-                    android:lineSpacingExtra="2dp"
-                    android:maxLines="4"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    <LinearLayout
+                        android:id="@+id/llup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/textViewName"
+                            style="@style/basic_text_white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxWidth="80dp"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/detail_name_text_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textViewContent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:layout_weight="1"
+                            android:maxWidth="70dp"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/detail_position_text_size" />
+
+                        <TextView
+                            android:id="@+id/textViewMoney"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:drawableLeft="@drawable/zhuob5_wdhd_1"
+                            android:drawablePadding="5dp"
+                            android:maxLines="1"
+                            android:visibility="invisible"
+                            android:textColor="#ffd370"
+                            android:textSize="@dimen/detail_time_text_size" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textViewCompany"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/llup"
+                        android:layout_marginTop="10dp"
+                        android:lineSpacingExtra="2dp"
+                        android:maxLines="4"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/detail_name_text_size" />
+                </RelativeLayout>
             </RelativeLayout>
 
             <RelativeLayout
