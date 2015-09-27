@@ -1154,5 +1154,6 @@
     <string name="lab_msglist_view_cmt_msg">查看谁评论了我的文章，或需求信息</string>
 
     <string name="title_activity_zhuo_name_edit">ZhuoNameEditActivity</string>
-
+ <string name="mygong">我的资源</string>
+    <string name="myxu">我的需求</string>
 </resources>

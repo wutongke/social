@@ -32,7 +32,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="4dp"
         android:layout_marginRight="8dp"
-        android:background="@drawable/bg_msg_new"
+        android:background="@drawable/red_circle"
         android:gravity="center_horizontal"
         android:textColor="#ffffff"
         android:visibility="gone" />

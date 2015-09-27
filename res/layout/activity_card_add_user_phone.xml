@@ -84,6 +84,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:singleLine="true" >
+
                     <requestFocus />
                 </EditText>
             </LinearLayout>
@@ -107,6 +108,7 @@
                 android:checked="false"
                 android:paddingLeft="35dp"
                 android:text="@string/info399" />
+
         </LinearLayout>
     </ScrollView>
 

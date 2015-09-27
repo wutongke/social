@@ -43,9 +43,8 @@
                 android:id="@+id/textViewAuthorName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="textVi"
                 android:textColor="#1c1c1c"
-                android:textSize="18sp" />
+                android:textSize="@dimen/name_text_size" />
 
             <TextView
                 android:id="@+id/textViewContent"
@@ -53,9 +52,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@id/textViewAuthorName"
-                android:text="textView"
                 android:textColor="#989898"
-                android:textSize="16sp" />
+                android:textSize="@dimen/position_text_size" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -73,9 +71,8 @@
                 android:layout_alignParentTop="true"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="4"
-                android:text="textViewRes"
                 android:textColor="#585858"
-                android:textSize="16sp" />
+                android:textSize="@dimen/company_text_size" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -85,8 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:text="群主"
         android:layout_margin="10dp"
-        android:textSize="20sp" />
+        android:textSize="@dimen/name_text_size" />
 
 </RelativeLayout>

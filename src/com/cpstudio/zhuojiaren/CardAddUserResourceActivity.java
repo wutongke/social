@@ -32,13 +32,17 @@ import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudui.zhuojiaren.lz.GongXuDetailActivity;
 import com.cpstudui.zhuojiaren.lz.MyResListAdapterListAdapter;
 
-public class CardAddUserResourceActivity extends Activity implements
+public class CardAddUserResourceActivity extends  BaseActivity implements
 		OnItemClickListener {
-	@InjectView(R.id.tvTitle)
+	@InjectView(R.id.activity_title)
 	TextView tvTitle;
-
-	@InjectView(R.id.buttonManage)
-	TextView buttonManage;
+	@InjectView(R.id.activity_back)
+	TextView tvBack;
+	@InjectView(R.id.activity_function)
+	TextView tvManage;
+	
+//	@InjectView(R.id.buttonManage)
+//	TextView buttonManage;
 
 	@InjectView(R.id.fql_footer)
 	View fql_footer;
@@ -72,9 +76,11 @@ public class CardAddUserResourceActivity extends Activity implements
 		userid = i.getStringExtra(CardEditActivity.EDIT_RES_STR2);
 
 		if (mType == 0)
-			tvTitle.setText(R.string.mp_mygong);
+			tvTitle.setText(R.string.mygong);
 		else
-			tvTitle.setText(R.string.mp_myxu);
+			tvTitle.setText(R.string.myxu);
+		
+		
 		mListView = (ListView) findViewById(R.id.listView);
 		mAdapter = new MyResListAdapterListAdapter(
 				CardAddUserResourceActivity.this, mList);
@@ -88,9 +94,11 @@ public class CardAddUserResourceActivity extends Activity implements
 		mListView.setOnItemClickListener(this);
 		loadData();
 		initClick();
+		tvManage.setBackgroundResource(R.drawable.button_bg_black);
+		tvManage.setText(getString(R.string.label_manage));
 		// 当打开的不是我自己的名片时需要隐藏管理按钮
 		if (userid != myId) {
-			buttonManage.setVisibility(View.GONE);
+			tvManage.setVisibility(View.GONE);
 			fql_footer.setVisibility(View.GONE);
 			lt_pub_res.setVisibility(View.GONE);
 			isManaging = false;
@@ -106,7 +114,7 @@ public class CardAddUserResourceActivity extends Activity implements
 	}
 
 	private void initClick() {
-		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
+		tvBack.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -114,15 +122,15 @@ public class CardAddUserResourceActivity extends Activity implements
 			}
 		});
 
-		buttonManage.setOnClickListener(new OnClickListener() {
+		tvManage.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				isManaging = !isManaging;
 				mAdapter.setManaging(isManaging);
 				if (isManaging) {
-					buttonManage.setText(R.string.EXIT);
+					tvManage.setText(R.string.EXIT);
 				} else {
-					buttonManage.setText(R.string.label_manage);
+					tvManage.setText(R.string.label_manage);
 				}
 			}
 		});

@@ -41,15 +41,20 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.Praise;
 import com.cpstudio.zhuojiaren.model.TopicDetailVO;
+import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
+import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
+import com.cpstudio.zhuojiaren.widget.RoundImageView;
+import com.cpstudui.zhuojiaren.lz.DynamicListAdapter.GridViewAdapter;
 
 public class TopicDetailActivity extends BaseActivity {
 	private ListView mListView;
 	private TopicCommentListAdapter mAdapter;
 	private ArrayList<Comment> mList = new ArrayList<Comment>();
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	private View mHeadView = null;
 	private PopupWindows pwh;
 	private String topicid = null;
@@ -126,60 +131,25 @@ public class TopicDetailActivity extends BaseActivity {
 
 		Context context = mHeadView.getContext();
 		final List<PicNewVO> pics = topicDetail.getTopicPic();
-		TableLayout.LayoutParams tllp = new TableLayout.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		TableRow.LayoutParams trlp = new TableRow.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		trlp.setMargins(0, 0, 10, 10);
+
+		MyGridView gvImages = (MyGridView) mHeadView
+				.findViewById(R.id.picGridView);
+		gvImages.setVisibility(View.GONE);
 		if (pics != null && pics.size() > 0) {
-			float times = DeviceInfoUtil.getDeviceCsd(context);
-			RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
-					(int) (70 * times), (int) (70 * times));
-			TableLayout tl = (TableLayout) findViewById(R.id.tableLayoutPics);
-			TableRow tr = null;
-			for (int i = 0; i < pics.size(); i++) {
-				if (i % 3 == 0) {
-					tr = new TableRow(TopicDetailActivity.this);
-					tl.addView(tr);
-				}
-				tr.setLayoutParams(tllp);
-				RelativeLayout rl = new RelativeLayout(TopicDetailActivity.this);
-				rl.setLayoutParams(trlp);
-				ImageView iv = new ImageView(TopicDetailActivity.this);
-				iv.setLayoutParams(rlp);
-				rl.addView(iv);
-				rl.setTag(pics.get(i).getPic());
-				iv.setTag(pics.get(i).getPic());
-				iv.setImageResource(R.drawable.default_image);
-				mLoadImage.addTask(pics.get(i).getPic(), iv);
-				rl.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Intent intent = new Intent(TopicDetailActivity.this,
-								PhotoViewMultiActivity.class);
-						ArrayList<String> orgs = new ArrayList<String>();
-						for (int j = 0; j < pics.size(); j++) {
-							orgs.add(pics.get(j).getPic());
-						}
-						intent.putStringArrayListExtra("pics", orgs);
-						intent.putExtra("pic", (String) v.getTag());
-						startActivity(intent);
-					}
-				});
-				tr.addView(rl);
+
+			ArrayList<String> urls = new ArrayList<String>();
+			for (PicNewVO temp : pics) {
+				if (temp.getPic() != null && !"".equals(temp.getPic().trim()))
+					urls.add(temp.getPic());
 			}
+			if (urls.size() > 0)
+				gvImages.setVisibility(View.VISIBLE);
+			GridViewAdapter gv=new GridViewAdapter(context, urls,
+					R.layout.item_gridview_image);
+			gvImages.setAdapter(gv);
+			gv.notifyDataSetChanged();
 		}
 		mLoadImage.doTask();
-		//
-		// if (isCollect != null && isCollect.equals("1")) {
-		// collectBtn = (TextView) findViewById(R.id.buttonTabCollect);
-		// collectBtn.setText(R.string.label_collectCancel);
-		// Drawable drawable = getResources().getDrawable(
-		// R.drawable.tab_collect_on);
-		// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-		// drawable.getMinimumHeight());
-		// collectBtn.setCompoundDrawables(null, drawable, null, null);
-		// }
 		fillPraiseList(topicDetail.getPraiseList());
 		fillCommentList(topicDetail.getCommentList());
 	}
@@ -206,13 +176,15 @@ public class TopicDetailActivity extends BaseActivity {
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			TableRow.LayoutParams trlp = new TableRow.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			
 			TableLayout tl = (TableLayout) findViewById(R.id.tableLayoutGood);
 			if (tl != null)
 				tl.removeAllViews();
-			int width = (int) (40 * DeviceInfoUtil
+			int width = (int) (30 * DeviceInfoUtil
 					.getDeviceCsd(TopicDetailActivity.this));
 			RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
 					width, width);
+			rlp.setMargins(10, 0, 10, 0);
 			TableRow tr = null;
 			for (int i = 0; i < praiseList.size(); i++) {
 				Praise praise = praiseList.get(i);
@@ -223,7 +195,7 @@ public class TopicDetailActivity extends BaseActivity {
 				}
 				RelativeLayout rl = new RelativeLayout(context);
 				rl.setLayoutParams(trlp);
-				ImageView iv = new ImageView(context);
+				ImageView iv = new RoundImageView(context);
 				iv.setLayoutParams(rlp);
 				rl.addView(iv);
 				iv.setImageResource(R.drawable.default_userhead);
@@ -290,31 +262,29 @@ public class TopicDetailActivity extends BaseActivity {
 			case MsgTagVO.MSG_COLLECT:
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-					// TextView collectBtn = (TextView)
-					// findViewById(R.id.buttonTabCollect);
-					// TextView numTV = (TextView)
-					// findViewById(R.id.textViewGongXuCollectNum);
+//					TextView collectBtn = (TextView) findViewById(R.id.buttonTabCollect);
+//					TextView numTV = (TextView) findViewById(R.id.textViewGongXuCollectNum);
 					if (isCollect != null && isCollect.equals("0")) {
-						collectBtn.setText(R.string.label_collectCancel);
-						Drawable drawable = getResources().getDrawable(
-								R.drawable.tab_collect_on);
-						drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-								drawable.getMinimumHeight());
-						collectBtn.setCompoundDrawables(null, drawable, null,
-								null);
+//						collectBtn.setText(R.string.label_collectCancel);
+//						Drawable drawable = getResources().getDrawable(
+//								R.drawable.tab_collect_on);
+//						drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+//								drawable.getMinimumHeight());
+//						collectBtn.setCompoundDrawables(null, drawable, null,
+//								null);
 						isCollect = "1";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_collectSuccess);
 						// numTV.setText(String.valueOf(Integer.valueOf(numTV
 						// .getText().toString()) + 1));
 					} else {
-						collectBtn.setText(R.string.label_collect);
-						Drawable drawable = getResources().getDrawable(
-								R.drawable.tab_collect_off);
-						drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-								drawable.getMinimumHeight());
-						collectBtn.setCompoundDrawables(null, drawable, null,
-								null);
+//						collectBtn.setText(R.string.label_collect);
+//						Drawable drawable = getResources().getDrawable(
+//								R.drawable.tab_collect_off);
+//						drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+//								drawable.getMinimumHeight());
+//						collectBtn.setCompoundDrawables(null, drawable, null,
+//								null);
 						isCollect = "0";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_cancelCollect);
@@ -386,7 +356,8 @@ public class TopicDetailActivity extends BaseActivity {
 						startActivityForResult(i, MsgTagVO.MSG_FOWARD);
 					}
 				});
-		findViewById(R.id.buttonTabCollect).setOnClickListener(
+		collectBtn = (TextView) findViewById(R.id.buttonTabCollect);
+		collectBtn.setOnClickListener(
 				new OnClickListener() {
 
 					@Override
@@ -435,4 +406,42 @@ public class TopicDetailActivity extends BaseActivity {
 		startActivityForResult(i, MsgTagVO.MSG_CMT);
 	}
 
+	// ¶àÕÅÍ¼Æ¬
+	class GridViewAdapter extends CommonAdapter<String> {
+
+		public GridViewAdapter(Context context, List<String> mDatas,
+				int itemLayoutId) {
+			super(context, mDatas, itemLayoutId);
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		public void convert(ViewHolder helper, String item) {
+			// TODO Auto-generated method stub
+			// helper.setImageResource(R.id.gridview_image,
+			// R.drawable.ico_chat_pic);
+
+			ImageView iv = helper.getView(R.id.gridview_image);
+			// iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ico_chat_pic));
+			iv.setTag(item);
+			iv.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(mContext,
+							PhotoViewMultiActivity.class);
+					ArrayList<String> orgs = new ArrayList<String>();
+					orgs = (ArrayList<String>) mDatas;
+					intent.putStringArrayListExtra("pics", orgs);
+					intent.putExtra("pic", (String) v.getTag());
+					mContext.startActivity(intent);
+				}
+			});
+			mLoadImage.addTask(item,
+					(ImageView) helper.getView(R.id.gridview_image));
+			// mLoadImage.doTask();
+		}
+
+	}
 }

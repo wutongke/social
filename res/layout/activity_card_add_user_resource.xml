@@ -7,42 +7,17 @@
     android:orientation="vertical"
     tools:context=".CardAddUserResourceActivity" >
 
-    <RelativeLayout
-        android:id="@+id/userNameShowParent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/bg_title" >
-
-        <include layout="@layout/goback_button"/>
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/buttonManage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/button_bg_black"
-            android:paddingLeft="7dp"
-            android:text="@string/label_manage"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
-    </RelativeLayout>
-
+    
+    <include
+        android:id="@+id/lltitle"
+        layout="@layout/title_activity" />
+    
+  
     <RelativeLayout
         android:id="@+id/lt_pub_res"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/userNameShowParent"
+        android:layout_below="@+id/lltitle"
         android:background="@color/gray"
         android:gravity="center"
         android:orientation="horizontal"
