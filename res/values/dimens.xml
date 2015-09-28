@@ -32,4 +32,5 @@
 	<dimen name="detail_position_text_size">12sp</dimen>
 	<dimen name="detail_time_text_size">12sp</dimen>
 	
+	<dimen name="drawable_text">10sp</dimen>
 </resources>

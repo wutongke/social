@@ -53,7 +53,7 @@ public class DynamicDetailActivity extends BaseActivity {
 	private ListView mListView;
 	private TopicCommentListAdapter mAdapter;
 	private ArrayList<Comment> mList = new ArrayList<Comment>();
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	private View mHeadView = null;
 	private PopupWindows pwh;
 	private String msgid = null;
@@ -232,7 +232,6 @@ public class DynamicDetailActivity extends BaseActivity {
 			findViewById(R.id.layoutGood).setVisibility(View.GONE);
 			findViewById(R.id.imageViewGood).setVisibility(View.GONE);
 		}
-		mLoadImage.doTask();
 	}
 
 	@SuppressLint("HandlerLeak")

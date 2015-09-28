@@ -41,6 +41,7 @@
                 android:drawableTop="@drawable/share_hqxq1"
                 android:gravity="center_horizontal"
                 android:text="@string/label_share"
+                android:textSize="@dimen/drawable_text"
                 android:textColor="#ffffff" />
         </RelativeLayout>
 
@@ -58,6 +59,7 @@
                 android:drawableTop="@drawable/zhan2_hqxq1"
                 android:gravity="center"
                 android:text="@string/label_good"
+                android:textSize="@dimen/drawable_text"
                 android:textColor="#ffffff" />
         </RelativeLayout>
 
@@ -75,6 +77,7 @@
                 android:drawableTop="@drawable/collect_hqxq1"
                 android:gravity="center_horizontal"
                 android:text="@string/label_collect"
+                android:textSize="@dimen/drawable_text"
                 android:textColor="#ffffff" />
         </RelativeLayout>
 
@@ -92,6 +95,7 @@
                 android:drawableTop="@drawable/write_qht1"
                 android:gravity="center_horizontal"
                 android:text="@string/label_cmt"
+                android:textSize="@dimen/drawable_text"
                 android:textColor="#ffffff" />
         </RelativeLayout>
     </LinearLayout>

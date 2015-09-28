@@ -198,27 +198,28 @@ public class TabContainerActivity extends TabActivity implements
 					}
 				}
 			}
-//			for (int i = 0; i < grouplist.size(); i++) {
-//				// 测试，因为之前的圈子都还未加入，先硬编码加入(TabConTainerActivity),等定义好推送的允许加入圈子后就可以加入圈子了
-//				Group g = grouplist.get(i);
-//				if (g != null && null != RongIM.getInstance()
-//						&& RongIM.getInstance().getRongIMClient() != null)
-//					RongIM.getInstance()
-//							.getRongIMClient()
-//							.joinGroup(g.getId(), g.getName(),
-//									new OperationCallback() {
-//
-//										@Override
-//										public void onSuccess() {
-//
-//										}
-//
-//										@Override
-//										public void onError(ErrorCode errorCode) {
-//
-//										}
-//									});
-//			}
+			// for (int i = 0; i < grouplist.size(); i++) {
+			// //
+			// 测试，因为之前的圈子都还未加入，先硬编码加入(TabConTainerActivity),等定义好推送的允许加入圈子后就可以加入圈子了
+			// Group g = grouplist.get(i);
+			// if (g != null && null != RongIM.getInstance()
+			// && RongIM.getInstance().getRongIMClient() != null)
+			// RongIM.getInstance()
+			// .getRongIMClient()
+			// .joinGroup(g.getId(), g.getName(),
+			// new OperationCallback() {
+			//
+			// @Override
+			// public void onSuccess() {
+			//
+			// }
+			//
+			// @Override
+			// public void onError(ErrorCode errorCode) {
+			//
+			// }
+			// });
+			// }
 
 			if (grouplist.size() > 0)
 				RongIM.getInstance()
@@ -429,11 +430,12 @@ public class TabContainerActivity extends TabActivity implements
 						false);
 				ContactNotificationMessage msg = intent
 						.getParcelableExtra("rongCloud");
-
-				String text = msg.getUserInfo().getName()
-						+ getString(R.string.label_tomy)
-						+ getString(R.string.label_sendcard);
-				CommonUtil.displayToast(getApplicationContext(), text);
+				if (msg.getUserInfo() != null) {
+					String text = msg.getUserInfo().getName()
+							+ getString(R.string.label_tomy)
+							+ getString(R.string.label_sendcard);
+					CommonUtil.displayToast(getApplicationContext(), text);
+				}
 			} else {
 				String data = intent.getStringExtra("json");
 				Toast.makeText(getApplicationContext(), data, 1000).show();

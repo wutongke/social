@@ -26,14 +26,11 @@
 
     <TextView
         android:id="@+id/textViewNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tabicon"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="4dp"
-        android:layout_marginRight="8dp"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_alignTop="@+id/tabicon"
+        android:layout_toRightOf="@+id/tabicon"
         android:background="@drawable/red_circle"
-        android:gravity="center_horizontal"
         android:textColor="#ffffff"
         android:visibility="gone" />
 

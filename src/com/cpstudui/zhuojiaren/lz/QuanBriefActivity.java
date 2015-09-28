@@ -96,7 +96,7 @@ public class QuanBriefActivity extends BaseActivity {
 		ivFun.setVisibility(View.GONE);
 		// function.setVisibility(View.GONE);
 		// function.setBackgroundResource(R.drawable.fabu_wdhd_1);
-		ivFun.setImageResource(R.drawable.fabu_wdhd_1);
+		ivFun.setImageResource(R.drawable.write);
 
 		title.setText(R.string.label_quan_brief);
 
