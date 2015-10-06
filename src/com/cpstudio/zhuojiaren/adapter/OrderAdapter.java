@@ -100,7 +100,7 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 				item.getImg(),
 				(ImageView) helper.getView(R.id.icg_goods_image));
 		else{
-			helper.getView(R.id.icg_goods_image).setBackgroundResource(R.drawable.myfriend_zmmp_1);
+			((ImageView)helper.getView(R.id.icg_goods_image)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.shopcar2_wode_1));
 		}
 	}
 	public interface SelectGoodsChangeListener{
