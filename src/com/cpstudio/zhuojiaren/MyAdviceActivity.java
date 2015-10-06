@@ -56,7 +56,6 @@ public class MyAdviceActivity extends BaseActivity {
 		findViewById(R.id.feedbacktext).setVisibility(View.VISIBLE);
 		title.setText("·´À¡");
 		pwh = new PopupWindows(MyAdviceActivity.this);
-		title.setText(R.string.title_pub_topic);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		groupid=getIntent().getStringExtra("groupid");

@@ -75,8 +75,8 @@
 	    android:layout_marginRight="20dp"
 	    android:textColor="@color/white"
 	    android:background="#959595"
-	    android:padding="15dp"
+	    android:padding="8dp"
 	    android:text="@string/out_login"
-	    android:textSize="20dp"
+	    android:textSize="15dp"
 	    />
 </LinearLayout>
