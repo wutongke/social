@@ -239,6 +239,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 				Gson gson = new Gson();
 				try {
 					crowdFunding = gson.fromJson(res.getData(), CrowdFundingVO.class);
+					findViewById(R.id.bg_view).setVisibility(View.GONE);
 				} catch (Exception e) {
 					// TODO: handle exception
 					CommonUtil.displayToast(CrowdFundingDetailActivity.this,
