@@ -124,9 +124,9 @@ public final class RongCloudEvent implements
 		InputProvider.ExtendProvider[] provider = {
 				new ImageInputProvider(RongContext.getInstance()),// 图片
 				new CameraInputProvider(RongContext.getInstance()),// 相机
-				// new LocationInputProvider(RongContext.getInstance()),// 地理位置
-				// new VoIPInputProvider(RongContext.getInstance()),// 语音通话
-				// new LZExtendProvider(RongContext.getInstance()) // 自定义通讯录
+		// new LocationInputProvider(RongContext.getInstance()),// 地理位置
+		// new VoIPInputProvider(RongContext.getInstance()),// 语音通话
+		// new LZExtendProvider(RongContext.getInstance()) // 自定义通讯录
 		};
 		RongIM.getInstance().resetInputExtensionProvider(
 				Conversation.ConversationType.PRIVATE, provider);
@@ -226,7 +226,7 @@ public final class RongCloudEvent implements
 	public boolean onReceived(Message message, int left) {
 
 		MessageContent messageContent = message.getContent();
-		
+
 		if (messageContent instanceof TextMessage) {// 文本消息
 			TextMessage textMessage = (TextMessage) messageContent;
 			if (((TextMessage) messageContent).getExtra() != null) {
@@ -278,13 +278,9 @@ public final class RongCloudEvent implements
 			in.putExtra("rongCloud", contactContentMessage);
 			in.putExtra("has_message", true);
 			mContext.sendBroadcast(in);
+			return true;
 		} else {
 			Log.d(TAG, "onReceived-其他消息，自己来判断处理");
-			Intent in = new Intent();
-			in.setAction(TabContainerActivity.ACTION_SYS_MSG);
-			in.putExtra("message", messageContent);
-			in.putExtra("has_message", true);
-			mContext.sendBroadcast(in);
 		}
 		return false;
 	}
@@ -302,11 +298,11 @@ public final class RongCloudEvent implements
 			// TODO: handle exception
 			return;
 		}
-		
+
 		Intent in = new Intent();
 		in.setAction(TabContainerActivity.ACTION_SYS_MSG);
 		in.putExtra("json", messageContent);
-		in.putExtra("type",type);
+		in.putExtra("type", type);
 		mContext.sendBroadcast(in);
 	}
 
@@ -324,9 +320,8 @@ public final class RongCloudEvent implements
 		// }
 		Intent in = new Intent();
 		in.setAction(TabContainerActivity.ACTION_DMEO_AGREE_REQUEST);
-		in.putExtra("AGREE_REQUEST", true);
+		in.putExtra("userid", deAgreedFriendRequestMessage.getFriendId());
 		mContext.sendBroadcast(in);
-
 	}
 
 	@Override

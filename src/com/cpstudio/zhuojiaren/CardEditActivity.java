@@ -192,7 +192,7 @@ public class CardEditActivity extends Activity {
 			// }
 			// delete first Image
 		}
-
+		
 		userInfo.setSignature(etSignature.getText().toString());
 		mConnHelper.modifyUserInfo(mUIHandler, MsgTagVO.PUB_INFO, userInfo);
 	}

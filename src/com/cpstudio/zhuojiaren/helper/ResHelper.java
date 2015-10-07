@@ -232,6 +232,21 @@ public class ResHelper {
 		path += uniqueId + "captrueTemp.jpg";
 		return path;
 	}
+	
+	public Uri getSureCaptrueUri() {
+		return Uri.fromFile(new File(getSureCaptruePath()));
+	}
+	
+	public String getSureCaptruePath() {
+		String path = SDPATH
+				+ mPu.getPreference(IMAGE_PATH, DEFAULT_IMAGE_PATH);
+		File dir = new File(path);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		path += "captrueTemp.jpg";
+		return path;
+	}
 
 	public String getHeadPath() {
 		String path = SDPATH + mPu.getPreference(HEAD_PATH, DEFAULT_HEAD_PATH);

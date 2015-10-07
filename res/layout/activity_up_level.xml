@@ -6,24 +6,8 @@
     android:background="#f9f9f9"
     android:orientation="vertical"
     tools:context=".ZhuoMaiActiveListActivity" >
-
-    <RelativeLayout
-        android:id="@+id/userNameShowParent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_title" >
-
-        <TextView
-            android:id="@+id/userNameShow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="@string/label_active_zhuomai"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
-    </RelativeLayout>
-
+ <include layout="@layout/title_activity" />
+  
    
 
     <!-- TextView

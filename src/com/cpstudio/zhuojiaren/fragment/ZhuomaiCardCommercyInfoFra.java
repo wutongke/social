@@ -92,18 +92,17 @@ public class ZhuomaiCardCommercyInfoFra extends Fragment {
 			return;
 		ResourceGXVO resource = info.getSupply();
 		if (resource != null) {
-			mLoadImage.addTask(info.getSupply().getPicture(),
+			mLoadImage.beginLoad(resource.getPicture(),
 					imageViewResourcePic);
 			textViewResourceTitle.setText(resource.getTitle());
 			textViewTime.setText(resource.getAddtime());
 		}
 		ResourceGXVO need = info.getDemand();
 		if (need != null) {
-			mLoadImage.addTask(need.getPicture(), imageViewNeedPic);
+			mLoadImage.beginLoad(need.getPicture(), imageViewNeedPic);
 			textViewNeedTitle.setText(need.getTitle());
 			textViewNeedTime.setText(need.getAddtime());
 		}
-		mLoadImage.doTask();
 	}
 
 	@Override

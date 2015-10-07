@@ -44,11 +44,13 @@ import com.cpstudio.zhuojiaren.facade.SysMsgFacade;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.model.ImMsgVO;
 import com.cpstudio.zhuojiaren.model.ImQuanVO;
+import com.cpstudio.zhuojiaren.model.ReqQuanVO;
 import com.cpstudio.zhuojiaren.model.SysMsgVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.LZUserSameActivity;
 import com.cpstudio.zhuojiaren.ui.MyFriendActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudui.zhuojiaren.lz.CustomerMessageFactory;
 import com.cpstudui.zhuojiaren.lz.QuanChatListActivity;
 import com.umeng.socialize.utils.Log;
 
@@ -84,7 +86,10 @@ public class MsgListActivity extends FragmentActivity implements
 		IntentFilter filter = new IntentFilter(
 				TabContainerActivity.ACTION_DMEO_RECEIVE_MESSAGE);
 		filter.addAction(TabContainerActivity.ACTION_SYS_MSG);
+		filter.addAction(TabContainerActivity.ACTION_DMEO_AGREE_REQUEST);
+		filter.addAction(TabContainerActivity.ACTION_DMEO_GROUP_MESSAGE);
 		registerReceiver(msgReceiver, filter);
+
 	}
 
 	void loadMessageSession() {
@@ -578,16 +583,55 @@ public class MsgListActivity extends FragmentActivity implements
 						false);
 				ContactNotificationMessage msg = intent
 						.getParcelableExtra("rongCloud");
-				// 处理
-				TextView textViewMsgAll = ((TextView) findViewById(R.id.textViewMsgCardAll));
 
-				textViewMsgAll.setVisibility(View.VISIBLE);
-				String text = msg.getUserInfo().getName()
-						+ getString(R.string.label_tomy)
-						+ getString(R.string.label_sendcard);
-				((TextView) findViewById(R.id.textViewCardMsg)).setText(text);
+				if (msg != null) {
+					// 处理
+					findViewById(R.id.textViewMsgCardAll).setVisibility(
+							View.VISIBLE);
+					String sourceid = msg.getSourceUserId();
+					String text = msg.getMessage()
+							+ getString(R.string.label_tomy)
+							+ getString(R.string.label_sendcard);
+					((TextView) findViewById(R.id.textViewCardMsg))
+							.setText(text);
+				}
+			} else if (action
+					.equals(TabContainerActivity.ACTION_DMEO_AGREE_REQUEST)) {
+
+			} else if (action.equals(TabContainerActivity.ACTION_SYS_MSG)) {
+				int type = intent.getIntExtra("type", -1);
+				String jsonStr = intent.getStringExtra("json");
+				if (type == -1 && jsonStr != null)
+					return;
+				switch (type) {
+				case CustomerMessageFactory.CMT:
+
+					break;
+				case CustomerMessageFactory.ZAN:
+
+					break;
+				case CustomerMessageFactory.REQUEST_JOIN_QAUN:
+					ReqQuanVO vo = CustomerMessageFactory.getInstance()
+							.parseReqQuan(jsonStr);
+					if (vo != null) {
+						findViewById(R.id.textViewMsgReqQuanAll).setVisibility(
+								View.VISIBLE);
+						String text = vo.getUsername()
+								+ getString(R.string.label_applyjoin)
+								+ vo.getGroupname();
+						((TextView) findViewById(R.id.textViewReqQuan))
+								.setText(text);
+					}
+					break;
+				case CustomerMessageFactory.SYS:
+
+					break;
+
+				default:
+					break;
+				}
 			} else {
-				((TextView) findViewById(R.id.textViewCardMsg)).setText("");
+				// ((TextView) findViewById(R.id.textViewCardMsg)).setText("");
 			}
 			uiHandler.post(calHeight);
 		}

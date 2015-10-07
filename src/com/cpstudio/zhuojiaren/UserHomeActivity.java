@@ -78,9 +78,16 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
+		
+		initClick();
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
 		loadData();
 		loadInfo();
-		initClick();
+		super.onResume();
 	}
 
 	private void initClick() {
@@ -351,7 +358,6 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 			i.putExtra("filePath", filePath);
 			startActivity(i);
 		}
-
 	}
 
 }

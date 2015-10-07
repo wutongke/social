@@ -59,12 +59,18 @@ import com.cpstudui.zhuojiaren.lz.LZMyHomeActivity;
 public class TabContainerActivity extends TabActivity implements
 		OnTabChangeListener {
 	// 融云接收广播消息类型
-	//添加好友的广播
+	// 添加好友的广播
 	public static final String ACTION_DMEO_RECEIVE_MESSAGE = "action_demo_receive_message";
-	
+
+	/**
+	 * 同意加入圈子
+	 */
 	public static final String ACTION_DMEO_GROUP_MESSAGE = "action_demo_group_message";
+	/**
+	 * 同意添加好友
+	 */
 	public static final String ACTION_DMEO_AGREE_REQUEST = "action_demo_agree_request";
-	//自定义的内容，点赞等
+	// 自定义的内容，点赞等
 	public static final String ACTION_SYS_MSG = "action_demo_sys_message";
 	private TextView numTV = null;
 	public final static int MAIN_PAGE = 0;
@@ -122,6 +128,9 @@ public class TabContainerActivity extends TabActivity implements
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(ACTION_DMEO_RECEIVE_MESSAGE);
 		filter.addAction(ACTION_SYS_MSG);
+		filter.addAction(ACTION_DMEO_AGREE_REQUEST);
+		filter.addAction(ACTION_DMEO_GROUP_MESSAGE);
+		
 		registerReceiver(msgReceiver, filter);
 		//
 		//
@@ -426,21 +435,36 @@ public class TabContainerActivity extends TabActivity implements
 	private class MsgReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-//			numTV.setVisibility(View.VISIBLE);
+			numTV.setVisibility(View.VISIBLE);
 			String action = intent.getAction();
 			// 收到好友添加的邀请
-			if (action.equals(TabContainerActivity.ACTION_DMEO_RECEIVE_MESSAGE)) {
+			if (action.equals(ACTION_DMEO_RECEIVE_MESSAGE)) {
 				boolean hasNewFriends = intent.getBooleanExtra("has_message",
 						false);
 				ContactNotificationMessage msg = intent
 						.getParcelableExtra("rongCloud");
-				if (msg.getUserInfo() != null) {
-					String text = msg.getUserInfo().getName()
+
+				if (msg != null) {
+					String sourceid = msg.getSourceUserId();
+					String text = sourceid
 							+ getString(R.string.label_tomy)
 							+ getString(R.string.label_sendcard);
 					CommonUtil.displayToast(getApplicationContext(), text);
 				}
-			} else {
+			}
+			else if(action.equals(ACTION_DMEO_AGREE_REQUEST)){
+				String text=intent.getStringExtra("userid");
+				if(text!=null)
+				{
+					text+="同意添加好友！";
+				    CommonUtil.displayToast(getApplicationContext(), text); 
+				} 
+			}
+			else if(action.equals(TabContainerActivity.ACTION_DMEO_GROUP_MESSAGE))
+			{
+				
+			}
+			else {
 				String data = intent.getStringExtra("json");
 				Toast.makeText(getApplicationContext(), data, 1000).show();
 				int type = intent.getIntExtra("type", -1);

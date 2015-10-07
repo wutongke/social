@@ -91,6 +91,10 @@ public class ZhuoCommHelperLz {
 	
 	private final static String QUAN_REQ_USER_LIST = "/groupFollowReqUser.do";
 	
+	private final static String MAKE_FRIENDS = "/makeFriend.do";
+	
+	
+	
 	public static String getAllJiaren() {
 		return ALL_JIAREN;
 	}
@@ -515,6 +519,13 @@ public class ZhuoCommHelperLz {
 	 */
 	public static String getReqQuanUsers() {
 		return SERVER + QUAN_REQ_USER_LIST;
+	}
+	/**
+	 * 与好友关系相关
+	 * @return
+	 */
+	public static String makeFriends() {
+		return SERVER + MAKE_FRIENDS;
 	}
 	
 }

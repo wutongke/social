@@ -33,6 +33,7 @@ import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.ui.QuanCreateActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.util.ImageLoader;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -76,7 +77,8 @@ public class QuanBriefActivity extends BaseActivity {
 	ImageView ivFun;
 	int localCode = -1;
 	private PopupWindows phw = null;
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage =  LoadImage.getInstance();
+	
 	// 不同身份，功能不同
 	private int memberType = 0;
 	private PopupWindows pwh = null;
@@ -187,14 +189,13 @@ public class QuanBriefActivity extends BaseActivity {
 											QuanBriefActivity.this,
 											QuanCreateActivity.class);
 									intent.putExtra("groupid", groupid);
-									startActivity(intent);
+									startActivityForResult(intent, 1);
 								}
 							});
 						}
 						changeType(isfollow);
-						mLoadImage.addTask(detail.getGheader(), ivGroupHeader);
-						mLoadImage.addTask(detail.getUheader(), imageViewCj);
-						mLoadImage.doTask();
+						mLoadImage.beginLoad(detail.getGheader(), ivGroupHeader);
+						mLoadImage.beginLoad(detail.getUheader(), imageViewCj);
 					}
 				}
 				break;
@@ -247,14 +248,20 @@ public class QuanBriefActivity extends BaseActivity {
 			}
 		}
 	};
-
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK) {
+			loadData();
+		}
+	}
 	private void initOnClick() {
 		// TODO Auto-generated method stub
 		btnJoinQuan.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				mConnHelper.followGroup(mUIHandler, MsgTagVO.FOLLOW_QUAN,
-						groupid, QuanVO.QUAN_JOIN, "");
+						groupid, QuanVO.QUAN_JOIN,null, "");
 			}
 		});
 
@@ -266,7 +273,7 @@ public class QuanBriefActivity extends BaseActivity {
 					public void onClick(View v) {
 						mConnHelper.followGroup(mUIHandler,
 								MsgTagVO.FOLLOW_QUAN, groupid,
-								QuanVO.QUAN_QUIT, "");
+								QuanVO.QUAN_QUIT,null, "");
 					}
 				}, null, R.string.info13);
 			}

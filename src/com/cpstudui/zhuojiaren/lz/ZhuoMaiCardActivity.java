@@ -319,7 +319,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 					CommonUtil.displayToast(ZhuoMaiCardActivity.this,
 							"已是好友，不需要再发送名片");
 				else {
-					mConnHelper.followUser(mUIHandler, MsgTagVO.MSG_FOWARD,
+					mConnHelper.makeFriends(mUIHandler, MsgTagVO.MSG_FOWARD,
 							userInfo.getUserid(), 1);
 				}
 			}
@@ -347,17 +347,17 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		if (userInfo.getUserid() == null)
 			return;
 		ContactNotificationMessage msg = ContactNotificationMessage.obtain(
-				"Request", myid, userInfo.getUserid(), "请求添加好友");
+				"Request", myid, userInfo.getUserid(), userInfo.getName());
 
 		io.rong.imlib.model.UserInfo info = new UserInfo(userInfo.getUserid(),
 				userInfo.getName(), Uri.parse(userInfo.getUheader()));
 		info.setName(userInfo.getName());
 		info.setUserId(userInfo.getUserid());
-		msg.setUserInfo(info);
+		msg.setUserInfo(info);//对方接受到的仍然为null
 		RongIM.getInstance()
-				.getRongIMClient()
+				.getRongIMClient()//接受到的content固定为"请求加为好友，有用的只有id"
 				.sendMessage(ConversationType.PRIVATE, userInfo.getUserid(),
-						msg, "请求添加好友", new SendMessageCallback() {
+						msg, userInfo.getName(), new SendMessageCallback() {
 							@Override
 							public void onSuccess(Integer arg0) {
 								// TODO Auto-generated method stub
@@ -498,10 +498,11 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 						getApplicationContext())) {
 					sendCard();
 				} else {
+					sendCard();
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.FAILED);
 				}
-
+				
 				break;
 			}
 			}

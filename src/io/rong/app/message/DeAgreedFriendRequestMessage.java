@@ -74,9 +74,9 @@ public class DeAgreedFriendRequestMessage extends MessageContent {
     }
 
     /**
-     * æ„é€ å‡½æ•°ã€‚
+     * ¹¹Ôìº¯Êı¡£
      *
-     * @param in åˆå§‹åŒ–ä¼ å…¥çš„ Parcelã€‚
+     * @param in ³õÊ¼»¯´«ÈëµÄ Parcel¡£
      */
     public DeAgreedFriendRequestMessage(Parcel in) {
         setFriendId(ParcelUtils.readFromParcel(in));
@@ -85,7 +85,7 @@ public class DeAgreedFriendRequestMessage extends MessageContent {
     }
 
     /**
-     * è¯»å–æ¥å£ï¼Œç›®çš„æ˜¯è¦ä»Parcelä¸­æ„é€ ä¸€ä¸ªå®ç°äº†Parcelableçš„ç±»çš„å®ä¾‹å¤„ç†ã€‚
+     * ¶ÁÈ¡½Ó¿Ú£¬Ä¿µÄÊÇÒª´ÓParcelÖĞ¹¹ÔìÒ»¸öÊµÏÖÁËParcelableµÄÀàµÄÊµÀı´¦Àí¡£
      */
     public static final Creator<DeAgreedFriendRequestMessage> CREATOR = new Creator<DeAgreedFriendRequestMessage>() {
 

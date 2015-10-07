@@ -1334,11 +1334,13 @@ public class ZhuoConnHelper {
 	 * @return
 	 */
 	public boolean followGroup(Handler mUIHandler, int tag, String groupid,
-			int type, String content) {
+			int type,String userid, String content) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
 		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
 		nameValuePairs.add(new BasicNameValuePair("content", content));
+		if(userid!=null)
+			nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		return getFromServerByPost(ZhuoCommHelperLz.manageQuanPermit(),
 				nameValuePairs, mUIHandler, tag);
 	}
@@ -1802,7 +1804,7 @@ public class ZhuoConnHelper {
 	 * @param userid
 	 *            对方用户ID （要关注的、要取消关注的、要接受的）
 	 * @param type
-	 *            0取消关注 1申请关注(交换名片) 2接受关注(接受交换名片)
+	 *            0取消关注(取消收藏)  1关注(收藏)
 	 * @return
 	 */
 	public boolean followUser(Handler mUIHandler, int tag, String userid,
@@ -1811,6 +1813,28 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
 		return getFromServerByPost(ZhuoCommHelperLz.followUser(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	/**
+	 *  申请添加好友=递送名片；接受好友请求=交换名片。
+		如果对方接受名片交换请求（接受好友添加请求）则成为好友关系。
+		注意：好友关系由应用服务器来维护。使用融云发送ContactNotificationMessage联系人好友通知消息后，调用此接口通知应用服务器进行相应的好友关系处理。
+		流程：
+		1.调用申请添加好友接口(type=1)，在应用服务器建立相应的关联。
+		2.通过融云的好友添加通知向对方发送一个通知。
+		3.对方点接受，调用接受好友添加接口(type=2)。
+	 * @param mUIHandler
+	 * @param tag
+	 * @param userid
+	 * @param type 0删除好友  1申请添加好友(递送名片)  2接受添加请求(交换名片)
+	 * @return
+	 */
+	public boolean makeFriends(Handler mUIHandler, int tag, String userid,
+			int type) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
+		return getFromServerByPost(ZhuoCommHelperLz.makeFriends(),
 				nameValuePairs, mUIHandler, tag);
 	}
 	

@@ -1,5 +1,6 @@
 package com.cpstudio.zhuojiaren.ui;
 
+import io.rong.app.DemoContext;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.RongIMClient.OperationCallback;
@@ -25,7 +26,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -38,6 +38,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.QuanMngActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.facade.GroupFacade;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -89,7 +90,7 @@ public class QuanCreateActivity extends BaseActivity {
 	private AppClientLef mConnHelper = null;
 	private String groupid = null;
 	private String groupname = null;
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	private boolean mHeadChanged = false;
 	private Context mContext;
 	private int typeQuanzi = 0;
@@ -102,8 +103,10 @@ public class QuanCreateActivity extends BaseActivity {
 	private String addRight = "0";
 	// 查看权限
 	private String seeRight = "0";
-	//选择图片
+	// 选择图片
 	AlertDialog adl;
+	QuanVO quanNew = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -117,8 +120,16 @@ public class QuanCreateActivity extends BaseActivity {
 		initTitle();
 		title.setText(R.string.title_activity_create_quan);
 		function.setText(R.string.finish);
-		mConnHelper.getCitys(mUIHandler, MsgTagVO.DATA_OTHER, (Activity) mContext, true, null,
-				null);
+		mConnHelper.getCitys(mUIHandler, MsgTagVO.DATA_OTHER,
+				(Activity) mContext, true, null, null);
+
+		mIsh = ImageSelectHelper.getIntance(QuanCreateActivity.this,
+				R.id.linearLayoutManagerContainer);
+
+		mIsh2 = ImageSelectHelper.getIntance(QuanCreateActivity.this,
+				R.id.linearLayoutPicContainer);
+		mIsh.initParams();
+		mIsh2.initParams();
 		Intent i = getIntent();
 		groupid = i.getStringExtra("groupid");
 		if (null != groupid && !groupid.equals("")) {
@@ -126,11 +137,7 @@ public class QuanCreateActivity extends BaseActivity {
 			title.setText(R.string.title_activity_quan_update);
 		}
 		pwh = new PopupWindows(QuanCreateActivity.this);
-		mIsh = ImageSelectHelper.getIntance(QuanCreateActivity.this,
-				R.id.linearLayoutManagerContainer);
 
-		mIsh2 = ImageSelectHelper.getIntance(QuanCreateActivity.this,
-				R.id.linearLayoutPicContainer);
 		initClick();
 	}
 
@@ -299,8 +306,7 @@ public class QuanCreateActivity extends BaseActivity {
 												MsgTagVO.ZHUOMAI_PIC);
 							}
 						});
-				adl = new AlertDialog.Builder(
-						QuanCreateActivity.this).create();
+				adl = new AlertDialog.Builder(QuanCreateActivity.this).create();
 				adl.setCanceledOnTouchOutside(true);// 设置dialog外面点击则消失
 				Window w = adl.getWindow();
 				WindowManager.LayoutParams lp = w.getAttributes();
@@ -336,14 +342,16 @@ public class QuanCreateActivity extends BaseActivity {
 			}
 		});
 	}
+
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		if(adl!=null&&adl.isShowing()){
+		if (adl != null && adl.isShowing()) {
 			adl.dismiss();
 		}
 	}
+
 	private void loadData() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
 			// QuanVO quan = mFacade.getById(groupid);
@@ -370,28 +378,40 @@ public class QuanCreateActivity extends BaseActivity {
 			case MsgTagVO.PUB_INFO: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
+
 					OnClickListener listener = new OnClickListener() {
 
 						@Override
 						public void onClick(View paramView) {
-							Intent intent = new Intent();
+
 							if (groupid != null && !groupid.equals("")) {
-								intent.putExtra("groupid", groupid);
-								//调用融云，自己加入该
-								joinGroup(groupid,groupname);
+
 							} else {
-								// ...
+
 							}
-							setResult(RESULT_OK, intent);
-							QuanCreateActivity.this.finish();
+
 						}
 					};
 					View v = findViewById(R.id.rootLayout);
+
+					Intent intent = new Intent();
+
 					if (groupid != null && !groupid.equals("")) {
-						pwh.showPopDlgOne(v, listener, R.string.info67);
+						pwh.showPopDlgOne(v, null, R.string.info67);
 					} else {
-						pwh.showPopDlgOne(v, listener, R.string.info66);
+						ResultVO result = JsonHandler
+								.parseResult((String) msg.obj);
+						final String id = result.getData();
+						quanNew.setGroupid(id);
+
+						intent.putExtra("groupid", id);
+
+						// 调用融云，自己加入该
+						joinGroup(id, groupname);
+						pwh.showPopDlgOne(v, null, R.string.info66);
 					}
+					setResult(RESULT_OK, intent);
+					QuanCreateActivity.this.finish();
 				}
 				break;
 			}
@@ -408,12 +428,12 @@ public class QuanCreateActivity extends BaseActivity {
 				}.getType();
 				Gson gson = new Gson();
 				ArrayList<Province> list = gson.fromJson(data, listType);
-				if(cityList==null)
-					cityList=new ArrayList<City>();
+				if (cityList == null)
+					cityList = new ArrayList<City>();
 				for (Province temp : list) {
 					cityList.addAll(temp.getCitys());
 				}
-				if (cityList != null && locateCode!=null) {
+				if (cityList != null && locateCode != null) {
 					int index = Integer.parseInt(locateCode);
 					if (cityList != null)
 						quanLocationView.setText(cityList.get(index)
@@ -457,6 +477,16 @@ public class QuanCreateActivity extends BaseActivity {
 						else
 							addQuanRight2.setChecked(true);
 						// 头像显示：：：？？？
+//						String head = detail.getGheader();
+//
+//						if (head != null) {
+//							try {
+//								mIsh2.updateNetworkImage(head,mLoadImage,"mew");
+//								mHeadChanged = false;
+//							} catch (Exception e) {
+//								e.printStackTrace();
+//							}
+//						}
 					}
 				}
 				break;
@@ -480,7 +510,7 @@ public class QuanCreateActivity extends BaseActivity {
 		EditText introTextTitle = (EditText) findViewById(R.id.editTextQuanIntro);
 		RadioGroup radios = (RadioGroup) findViewById(R.id.radioGroupType);
 		String title = editTextTitle.getText().toString();
-		groupname=title;
+		groupname = title;
 		String intro = introTextTitle.getText().toString();
 		RadioButton radio = (RadioButton) findViewById(radios
 				.getCheckedRadioButtonId());
@@ -515,34 +545,65 @@ public class QuanCreateActivity extends BaseActivity {
 							locateCode, addRight, seeRight, pub,
 							mIsh2.getTags());
 		else
-			// 加上pub
+		// 加上pub
+		{
+			quanNew = new QuanVO();
+			quanNew.setGname(title);
+			quanNew.setCity(Integer.parseInt(locateCode));
+			quanNew.setGintro(intro);
+			quanNew.setGtype(typeQuanzi);
+			if (mIsh2.getTags() != null && mIsh2.getTags().size() > 0)
+				quanNew.setGheader(mIsh2.getTags().get(0));
 			mConnHelper.createQuan(QuanCreateActivity.this, mUIHandler,
 					MsgTagVO.PUB_INFO, title, intro,
 					String.valueOf(typeQuanzi), locateCode, addRight, seeRight,
 					mIsh2.getTags());
-
+		}
 	}
-	private void joinGroup(String groupid,String groupname) {
+
+	private void joinGroup(String groupid, String groupname) {
 		// TODO Auto-generated method stub
 		/**
 		 * 加入群组。
-		 *
-		 * @param groupId   群组 Id。
-		 * @param groupName 群组名称。
-		 * @param callback  加入群组状态的回调。
+		 * 
+		 * @param groupId
+		 *            群组 Id。
+		 * @param groupName
+		 *            群组名称。
+		 * @param callback
+		 *            加入群组状态的回调。
 		 */
-		RongIM.getInstance().getRongIMClient().joinGroup(groupid, groupname, new OperationCallback() {
+		RongIM.getInstance().getRongIMClient()
+				.joinGroup(groupid, groupname, new OperationCallback() {
 
-		    @Override
-		    public void onSuccess() {
-		    	CommonUtil.displayToast(QuanCreateActivity.this, "向融云，加入圈子成功");
-		    }
-		    @Override
-		    public void onError(ErrorCode errorCode) {
-		    	CommonUtil.displayToast(QuanCreateActivity.this, "向融云，加入圈子失败");
-		    }
-		});
+					@Override
+					public void onSuccess() {
+						CommonUtil.displayToast(QuanCreateActivity.this,
+								"向融云，加入圈子成功");
+						// 异步更新圈子信息到数据库
+						if (quanNew != null) {
+							new Thread(new Runnable() {
+								@Override
+								public void run() {
+									// TODO Auto-genrated method stub
+									GroupFacade mgfcade = DemoContext
+											.getInstance(
+													getApplicationContext())
+											.getmGroupInfoDao();
+									mgfcade.add(quanNew);
+								}
+							}).start();
+						}
+					}
+
+					@Override
+					public void onError(ErrorCode errorCode) {
+						CommonUtil.displayToast(QuanCreateActivity.this,
+								"向融云，加入圈子失败");
+					}
+				});
 	}
+
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == MsgTagVO.ADD_USER) {

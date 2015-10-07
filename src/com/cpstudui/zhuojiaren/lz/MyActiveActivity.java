@@ -333,7 +333,7 @@ public class MyActiveActivity extends BaseActivity implements
 				quitids.append(event.getActivityid() + ",");
 			}
 			mConnHelper.followGroup(mUIHandler, MsgTagVO.out_quan,
-					quitids.toString(), QuanVO.QUAN_QUIT, "none");
+					quitids.toString(), QuanVO.QUAN_QUIT,null, "none");
 		}
 
 	}

@@ -164,7 +164,7 @@ public class PopupWindows {
 						}
 					} else {
 						if (crop) {
-							filePath = mResHelper.getCaptruePath();
+							filePath = mResHelper.getSureCaptruePath();
 						} else {
 							int degree = ImageRectUtil
 									.readPictureDegree(mResHelper
@@ -172,7 +172,7 @@ public class PopupWindows {
 							filePath = newThumbImage(
 									ImageRectUtil.rotaingBitmap(degree,
 											ImageRectUtil.revitionImageSize(
-													cropFilePath, 640, 960)),
+													mResHelper.getSureCaptruePath(), 640, 960)),
 									filePath);
 						}
 					}
@@ -252,7 +252,7 @@ public class PopupWindows {
 				if (state.equals(Environment.MEDIA_MOUNTED)) {
 					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 					intent.putExtra(MediaStore.EXTRA_OUTPUT,
-							mResHelper.getCaptrueUri());
+							mResHelper.getSureCaptrueUri());
 					mActivity.startActivityForResult(intent,
 							MsgTagVO.SELECT_CAMER);
 				} else {

@@ -28,7 +28,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:textColor="#ffffff"
-            android:textSize="@dimen/dptitle" />
+            android:textSize="15sp" />
 
         <ImageView
             android:id="@+id/activity_function2"

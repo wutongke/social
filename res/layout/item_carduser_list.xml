@@ -32,6 +32,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="15dp"
@@ -49,14 +50,14 @@
                 android:maxLines="1"
                 android:text="dalsjdklasjdasjd"
                 android:textColor="#1c1c1c"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/izul_position"
                 style="@style/basic_second_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="14dp"
                 android:maxLines="1"
                 android:text="dalsjdklasjdasjd" />
         </LinearLayout>
@@ -67,8 +68,9 @@
             android:layout_height="wrap_content"
             android:lineSpacingExtra="2dp"
             android:maxLines="4"
+            android:text="dalsjdklasjdasjd"
             android:textColor="#585858"
-            android:textSize="16sp" />
+            android:textSize="13sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -82,19 +84,20 @@
         <TextView
             android:id="@+id/tvTime"
             style="@style/basic_second_text"
-            android:text="12分钟前"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="12分钟前" />
 
         <Button
             android:id="@+id/izubtn_collect"
-            android:textColor="@color/white"
-            android:text="@string/label_accept"
-            android:background="#72cb65"
             android:layout_width="70dp"
             android:layout_height="30dp"
-            android:layout_marginTop="8dp"
-             />
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="5dp"
+            android:background="#72cb65"
+            android:text="@string/label_accept"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>

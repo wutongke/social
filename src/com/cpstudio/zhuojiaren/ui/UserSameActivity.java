@@ -152,6 +152,8 @@ public class UserSameActivity extends BaseActivity implements
 			} else {
 				mConnHelper.getSameUser(mUIHandler, MsgTagVO.DATA_LOAD, type,
 						mPage, pageSize, itemId);
+				if(type==8 || type==9 || type==10)
+					mConnHelper.getMyStatusCard(mUIHandler,MsgTagVO.DATA_LOAD,type-8);
 			}
 		}
 	}
@@ -284,6 +286,7 @@ public class UserSameActivity extends BaseActivity implements
 			// msg.obj = list;
 			// msg.sendToTarget();
 		} else {
+			if(type!=8 && type!=9 && type!=10)
 			mConnHelper.getSameUser(mUIHandler, MsgTagVO.DATA_MORE, type,
 					mPage, pageSize, itemId);
 		}

@@ -180,7 +180,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						tvTopicType.setText(gType);
 						tvMemNum.setText(detail.getMemberCount() + "");
 						tvTopicNum.setText(detail.getTopicCount() + "");
-						if (role != QuanVO.QUAN_ROLE_NOTMEMBER) {
+						if (role >= QuanVO.QUAN_ROLE_MEMBER) {
 							isfollow = true;
 						} else {
 							isfollow = false;
@@ -276,6 +276,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 								pwh.showPopTip(findViewById(R.id.zhuomai_card),
 										null, R.string.label_applysuccess);
 							}
+
 							@Override
 							public void onError(Integer arg0, ErrorCode arg1) {
 								// TODO Auto-generated method stub
@@ -401,7 +402,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			@Override
 			public void onClick(View v) {
 				mConnHelper.followGroup(mUIHandler, MsgTagVO.FOLLOW_QUAN,
-						groupid, QuanVO.QUAN_JOIN, "");
+						groupid, QuanVO.QUAN_JOIN, null, "");
 			}
 		});
 	}

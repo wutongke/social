@@ -2,9 +2,11 @@ package com.cpstudio.zhuojiaren.ui;
 
 import io.rong.app.message.DeAgreedFriendRequestMessage;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.RongIMClient.OperationCallback;
 import io.rong.imlib.RongIMClient.SendMessageCallback;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Conversation.ConversationType;
 
 import java.util.ArrayList;
@@ -92,7 +94,13 @@ public class LZUserSameActivity extends BaseActivity implements
 							.getContent();
 				}
 				helper.setText(R.id.izul_position, position);// 职位
-				helper.setText(R.id.izul_company, item.getCompany());
+				if (type == 0)
+					helper.setText(R.id.izul_company, item.getCompany());
+				else {
+					if (item.getGname() != null)
+						helper.setText(R.id.izul_company,
+								"请求加入圈子：" + item.getGname());
+				}
 				// CommonUtil.calcTimeToNow(time)
 				helper.setText(R.id.tvTime, item.getRegisterTime());
 				ImageView iv = helper.getView(R.id.izul_image);
@@ -112,7 +120,6 @@ public class LZUserSameActivity extends BaseActivity implements
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowFooter(false);
 		mPullDownView.noFoot();
-
 		loadData();
 	}
 
@@ -120,30 +127,36 @@ public class LZUserSameActivity extends BaseActivity implements
 		if (0 == type)// 同意添加好友
 		{
 			// 递送名片(即添加好友)
-			DeAgreedFriendRequestMessage msg = new DeAgreedFriendRequestMessage(
-					uid, "同意");
-			RongIM.getInstance()
-					.getRongIMClient()
-					.sendMessage(ConversationType.PRIVATE, item.getUserid(),
-							msg, "同意", new SendMessageCallback() {
+			final DeAgreedFriendRequestMessage msg = new DeAgreedFriendRequestMessage(
+					item.getUserid(), "agree");
+			// msg.setUserInfo(userInfo);
+			if (RongIM.getInstance() != null) {
+				// 发送一条添加成功的自定义消息，此条消息不会在ui上展示
+				RongIM.getInstance()
+						.getRongIMClient()
+						.sendMessage(ConversationType.PRIVATE,
+								item.getUserid(), msg, null,
+								new SendMessageCallback() {
+									@Override
+									public void onSuccess(Integer arg0) {
+										// TODO Auto-generated
+										// method stub
+										mConnHelper.makeFriends(mUIHandler,
+												MsgTagVO.MSG_FOWARD,
+												item.getUserid(), 2);
+									}
 
-								@Override
-								public void onSuccess(Integer arg0) {
-									// TODO Auto-generated
-									// method stub
-									mConnHelper.followUser(mUIHandler,
-											MsgTagVO.MSG_FOWARD,
-											item.getUserid(), 2);
-								}
-
-								@Override
-								public void onError(Integer arg0, ErrorCode arg1) {
-									// TODO Auto-generated
-									// method stub
-									Toast.makeText(LZUserSameActivity.this,
-											"ErrorCode：" + arg1, 1000).show();
-								}
-							});
+									@Override
+									public void onError(Integer arg0,
+											ErrorCode arg1) {
+										// TODO Auto-generated
+										// method stub
+										Toast.makeText(LZUserSameActivity.this,
+												"ErrorCode：" + arg1, 1000)
+												.show();
+									}
+								});
+			}
 		} else // 同意加入圈子
 		{
 			if (item.getGroupid() == null || item.getGname() == null)
@@ -168,7 +181,8 @@ public class LZUserSameActivity extends BaseActivity implements
 									mConnHelper.followGroup(mUIHandler,
 											MsgTagVO.FOLLOW_QUAN,
 											item.getGroupid(),
-											QuanVO.QUAN_PERMIT, "agree");
+											QuanVO.QUAN_PERMIT,
+											item.getUserid(), "agree");
 									CommonUtil.displayToast(
 											LZUserSameActivity.this,
 											"向融云，加入圈子成功");
@@ -205,7 +219,8 @@ public class LZUserSameActivity extends BaseActivity implements
 			case MsgTagVO.FOLLOW_QUAN: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-					CommonUtil.displayToast(getApplicationContext(), R.string.join_quan_success);
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.join_quan_success);
 				}
 				break;
 			}

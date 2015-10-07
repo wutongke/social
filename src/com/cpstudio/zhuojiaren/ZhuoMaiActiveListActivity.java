@@ -26,7 +26,7 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 
-public class ZhuoMaiActiveListActivity extends Activity implements
+public class ZhuoMaiActiveListActivity extends BaseActivity implements
 		OnItemClickListener {
 
 	private ListView mListView;
@@ -40,6 +40,9 @@ public class ZhuoMaiActiveListActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_up_level);
+		initTitle();
+		title.setText(R.string.label_active_zhuomai);
+
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		mAdapter = new CommonAdapter<MessagePubVO>(
 				ZhuoMaiActiveListActivity.this, mList,
