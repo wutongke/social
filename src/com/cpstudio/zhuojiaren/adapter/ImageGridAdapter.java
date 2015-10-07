@@ -26,7 +26,7 @@ public class ImageGridAdapter extends CommonAdapter<String>{
 		// TODO Auto-generated method stub
 		helper.setImageResource(R.id.igi_image, R.drawable.pictures_no);
 		mLoadImage.beginLoad(item, (ImageView)helper.getView(R.id.igi_image));
-//		helper.setImageByUrl(R.id.igi_image, item);
+		helper.setImageByUrl(R.id.igi_image, item);
 	}
 
 	

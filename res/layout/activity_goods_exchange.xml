@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:background="@color/white"
+                android:background="#00000000"
                 android:gravity="center"
                 android:padding="3dp"
                 android:text="更多"

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginRight="8dp"
+        android:paddingRight="8dp"
         android:background="@drawable/bg_title" >
 
         <TextView
@@ -51,10 +51,10 @@
 
             <ImageView
                 android:id="@+id/search_search"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
-                android:padding="10dp"
+                android:layout_marginLeft="10dp"
                 android:src="@drawable/magnifier5_zx_1" />
             
         </FrameLayout>

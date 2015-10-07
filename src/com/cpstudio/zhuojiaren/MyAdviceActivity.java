@@ -54,8 +54,8 @@ public class MyAdviceActivity extends BaseActivity {
 		initTitle();
 		etContent.setHint("请填写您的反馈意见");
 		findViewById(R.id.feedbacktext).setVisibility(View.VISIBLE);
+		title.setText("反馈");
 		pwh = new PopupWindows(MyAdviceActivity.this);
-		title.setText(R.string.title_pub_topic);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		groupid=getIntent().getStringExtra("groupid");

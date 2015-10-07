@@ -26,6 +26,9 @@
         android:layout_height="220dp"
         android:ems="10"
         android:background="@null"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="15sp"
         android:gravity="center_vertical|top"
         android:hint="@string/text_pub_topic_hint"
         android:inputType="textMultiLine" />

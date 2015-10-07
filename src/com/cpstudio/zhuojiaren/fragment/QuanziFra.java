@@ -117,6 +117,8 @@ public class QuanziFra extends Fragment {
 					String groupid = (String) view.getTag(R.id.tag_id);
 					Intent i = new Intent(mContext, ZhuoQuanMainActivity.class);
 					i.putExtra("groupid", groupid);
+					//点击更多是出错
+					if(groupid!=null)
 					startActivity(i);
 				}
 			}
