@@ -7,6 +7,12 @@
     android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.cpstudio.zhuojiaren">
 
     <include layout="@layout/title_activity" />
+    <View 
+        android:id="@+id/bg_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        />
 
     <com.cpstudio.zhuojiaren.widget.OverScrollableScrollView
         android:id="@+id/acfd_scrollview"
