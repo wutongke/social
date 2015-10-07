@@ -317,7 +317,6 @@ public class ResourceGXFragment extends Fragment {
 		appClientLef.getGongXuList(String.valueOf(getType), null, mPage, 5,
 				uiHandler, MsgTagVO.DATA_LOAD, getActivity(), true, null, null,
 				null);
-
 	}
 
 	private void loadMore() {

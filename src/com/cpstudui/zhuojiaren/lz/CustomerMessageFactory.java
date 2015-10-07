@@ -45,13 +45,14 @@ public class CustomerMessageFactory {
 		return instance;
 	}
 	
-	public TextMessage getReqQuanMsg(String userid,String username,String groupid)
+	public TextMessage getReqQuanMsg(String userid,String username,String groupid,String groupname)
 	{
 		JSONObject jobj=new JSONObject();
 		try {
 			jobj.put("userid", userid);
 			jobj.put("username", username);
 			jobj.put("groupid", groupid);
+			jobj.put("groupname", groupname);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

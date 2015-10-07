@@ -59,9 +59,12 @@ import com.cpstudui.zhuojiaren.lz.LZMyHomeActivity;
 public class TabContainerActivity extends TabActivity implements
 		OnTabChangeListener {
 	// 融云接收广播消息类型
+	//添加好友的广播
 	public static final String ACTION_DMEO_RECEIVE_MESSAGE = "action_demo_receive_message";
+	
 	public static final String ACTION_DMEO_GROUP_MESSAGE = "action_demo_group_message";
 	public static final String ACTION_DMEO_AGREE_REQUEST = "action_demo_agree_request";
+	//自定义的内容，点赞等
 	public static final String ACTION_SYS_MSG = "action_demo_sys_message";
 	private TextView numTV = null;
 	public final static int MAIN_PAGE = 0;
@@ -423,6 +426,7 @@ public class TabContainerActivity extends TabActivity implements
 	private class MsgReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
+//			numTV.setVisibility(View.VISIBLE);
 			String action = intent.getAction();
 			// 收到好友添加的邀请
 			if (action.equals(TabContainerActivity.ACTION_DMEO_RECEIVE_MESSAGE)) {

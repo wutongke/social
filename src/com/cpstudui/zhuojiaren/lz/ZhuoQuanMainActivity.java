@@ -5,6 +5,11 @@ import io.rong.app.DemoContext;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.RongIMClient.OperationCallback;
+import io.rong.imlib.RongIMClient.SendMessageCallback;
+import io.rong.imlib.model.UserInfo;
+import io.rong.imlib.model.Conversation.ConversationType;
+import io.rong.message.ContactNotificationMessage;
+import io.rong.message.TextMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +17,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,6 +30,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -85,18 +92,18 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	View btnJoinQuan;
 	@InjectView(R.id.activity_function_image)
 	ImageView ivFunSimply;
-	
+
 	@InjectView(R.id.btnQuanChat)
 	View btnQuanChat;
 	private final static int USER_SELECT = 0;
 	private Context mContext;
 	// 四个fragment 方便通信
 	List<Fragment> fragments;
-
+	QuanVO detail;
 	private PopupWindows phw = null;
 	private LoadImage mLoadImage = LoadImage.getInstance();
 	// 不同身份，功能不同
-	private int role = QuanVO.QUAN_ROLE_YOUKE;
+	private int role = QuanVO.QUAN_ROLE_NOTMEMBER;
 	private PopupWindows pwh = null;
 	private String groupid = null;
 	private String groupName = null;
@@ -119,8 +126,8 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		mContext = this;
 		initTitle();
 		title.setText(R.string.title_activity_zhuojiaquan_main);
-//		function.setTag(0);
-//		function.setBackgroundResource(R.drawable.menu_qht1);
+		// function.setTag(0);
+		// function.setBackgroundResource(R.drawable.menu_qht1);
 		ivFunSimply.setTag(0);
 		ivFunSimply.setImageResource(R.drawable.menu_qht1);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
@@ -141,7 +148,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
 				if (msg.obj != null && !msg.obj.equals("")) {
-					QuanVO detail = null;
+					detail = null;
 					if (msg.obj instanceof QuanVO) {
 						detail = (QuanVO) msg.obj;
 					} else {
@@ -173,7 +180,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						tvTopicType.setText(gType);
 						tvMemNum.setText(detail.getMemberCount() + "");
 						tvTopicNum.setText(detail.getTopicCount() + "");
-						if (role != 0) {
+						if (role != QuanVO.QUAN_ROLE_NOTMEMBER) {
 							isfollow = true;
 						} else {
 							isfollow = false;
@@ -228,9 +235,11 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 								R.string.label_exitSuccess);
 						loadData();
 					} else {
-						pwh.showPopTip(findViewById(R.id.root), null,
-								R.string.label_applysuccess);
-						joinGroup(groupid, groupName);
+						// pwh.showPopTip(findViewById(R.id.root), null,
+						// R.string.label_applysuccess);
+						// 申请加入成功后应通过融云推送申请消息到圈主
+						sendReqQuan();
+
 					}
 				}
 				break;
@@ -247,33 +256,33 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		}
 	};
 
-	private void joinGroup(String groupid, String groupname) {
-		// TODO Auto-generated method stub
-		/**
-		 * 加入群组。
-		 * 
-		 * @param groupId
-		 *            群组 Id。
-		 * @param groupName
-		 *            群组名称。
-		 * @param callback
-		 *            加入群组状态的回调。
-		 */
-		RongIM.getInstance().getRongIMClient()
-				.joinGroup(groupid, groupname, new OperationCallback() {
-
-					@Override
-					public void onSuccess() {
-						CommonUtil.displayToast(ZhuoQuanMainActivity.this,
-								"向融云，加入圈子成功");
-					}
-
-					@Override
-					public void onError(ErrorCode errorCode) {
-						CommonUtil.displayToast(ZhuoQuanMainActivity.this,
-								"向融云，加入圈子失败");
-					}
-				});
+	void sendReqQuan() {
+		if (RongIM.getInstance().getRongIMClient() == null)
+			return;
+		if (mConnHelper.getUserid() == null)
+			return;
+		TextMessage reqMsg = CustomerMessageFactory.getInstance()
+				.getReqQuanMsg(mConnHelper.getUserid(), "XX", groupid,
+						groupName);
+		String pushMsg = mConnHelper.getUserid() + "请求加入圈子：" + groupName + "(+"
+				+ groupid + ")";
+		RongIM.getInstance()
+				.getRongIMClient()
+				.sendMessage(ConversationType.PRIVATE, detail.getUserid(),
+						reqMsg, pushMsg, new SendMessageCallback() {
+							@Override
+							public void onSuccess(Integer arg0) {
+								// TODO Auto-generated method stub
+								pwh.showPopTip(findViewById(R.id.zhuomai_card),
+										null, R.string.label_applysuccess);
+							}
+							@Override
+							public void onError(Integer arg0, ErrorCode arg1) {
+								// TODO Auto-generated method stub
+								Toast.makeText(ZhuoQuanMainActivity.this,
+										"申请发送失败ErrorCode：" + arg1, 1000).show();
+							}
+						});
 	}
 
 	private void loadData() {

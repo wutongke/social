@@ -56,6 +56,7 @@
                 android:drawableLeft="@drawable/messagesend"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
+                android:drawablePadding="@dimen/dic_bettween"
                 android:text="@string/write_to_it"
                 android:textColor="#ffffff" />
         </RelativeLayout>
@@ -74,6 +75,7 @@
                 android:drawableLeft="@drawable/phone"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
+                android:drawablePadding="@dimen/dic_bettween"
                 android:text="@string/call_it"
                 android:textColor="@color/green" />
         </RelativeLayout>

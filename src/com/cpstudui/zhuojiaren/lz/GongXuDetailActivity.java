@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,10 +41,12 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.Comment;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.ResCommentActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -86,6 +89,7 @@ public class GongXuDetailActivity extends BaseActivity {
 	private String msgid = null;
 	private int mPage = 1;
 	private AppClientLef mConnHelper = null;
+	private  ZhuoConnHelper mConnHelperlz= null;
 	private String isCollect = "0";
 	// private ListViewFooter mListViewFooter = null;
 	private String uid = null;
@@ -94,10 +98,10 @@ public class GongXuDetailActivity extends BaseActivity {
 	// private ZhuoInfoFacade mFacade = null;
 	private String myid = null;
 	private String toId;
-	UserVO sharer;
+	UserNewVO sharer;
 
 	ResourceGXVO resDetail;
-
+	BaseCodeData baseDataSet;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -105,15 +109,18 @@ public class GongXuDetailActivity extends BaseActivity {
 		initTitle();
 
 		mConnHelper = AppClientLef.getInstance(getApplicationContext());
+		mConnHelperlz=ZhuoConnHelper.getInstance(getApplicationContext());
 		// mFacade = new ZhuoInfoFacade(getApplicationContext());
 		myid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		Intent i = getIntent();
 		msgid = i.getStringExtra("msgid");
 
 		mAdapter = new TopicCommentListAdapter(GongXuDetailActivity.this,
-				mList, msgid);
+				mList, msgid,Color.GRAY);
+		
 		mListView = (ListView) findViewById(R.id.listViewDetail);
 		mListView.setDividerHeight(0);
+		baseDataSet = mConnHelperlz.getBaseDataSet();
 		LayoutInflater inflater = LayoutInflater
 				.from(GongXuDetailActivity.this);
 		mHeadView = (LinearLayout) inflater.inflate(
@@ -123,9 +130,8 @@ public class GongXuDetailActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		title.setText(R.string.title_activity_gong_xu_detail);
 		mListView.setAdapter(mAdapter);
-
 		loadData();
-		// loadCmt();
+		
 	}
 
 	public void loadHead(ResourceGXVO gxInfo) {
@@ -141,18 +147,23 @@ public class GongXuDetailActivity extends BaseActivity {
 
 		isCollect = gxInfo.getIsCollection();
 
-		sharer = new UserVO();// 分享者
-		sharer.setUsername(gxInfo.getName());
-		sharer.setPost(ZhuoConnHelper.getInstance(context).getBaseDataSet()
-				.getPosition().get(gxInfo.getPosition()).getContent());
+		sharer = new UserNewVO();// 分享者
+		sharer.setName(gxInfo.getName());
+//		sharer.setPost(ZhuoConnHelper.getInstance(context).getBaseDataSet()
+//				.getPosition().get(gxInfo.getPosition()).getContent());
 		sharer.setCompany(gxInfo.getCompany());
 		sharer.setUheader(gxInfo.getUheader());
 		sharer.setUserid(gxInfo.getUserid());
 		sharer.setPhone(gxInfo.getPhone());
-
-		tvName.setText(sharer.getUsername());
-		// lz不确定
-		tvWork.setText(sharer.getLevel());
+		tvName.setText(sharer.getName());
+		String work="";
+		if (baseDataSet != null) {
+			int pos = sharer.getPosition();
+			if (pos != 0)// 默认为0，城市标号从1开始
+				pos--;
+			work = ((baseDataSet.getPosition()).get(pos)).getContent();
+		}
+		tvWork.setText(work);
 		tvCompany.setText(sharer.getCompany());
 		// lz不确定
 		mLoadImage.addTask(sharer.getUheader(), ivHead);
@@ -376,6 +387,8 @@ public class GongXuDetailActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
+				if(position==0)
+					return;
 				toId = mList.get(position-1).getId();
 				Intent i = new Intent(GongXuDetailActivity.this,
 						ResCommentActivity.class);

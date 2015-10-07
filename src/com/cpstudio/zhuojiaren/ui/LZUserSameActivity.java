@@ -3,6 +3,7 @@ package com.cpstudio.zhuojiaren.ui;
 import io.rong.app.message.DeAgreedFriendRequestMessage;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient.ErrorCode;
+import io.rong.imlib.RongIMClient.OperationCallback;
 import io.rong.imlib.RongIMClient.SendMessageCallback;
 import io.rong.imlib.model.Conversation.ConversationType;
 
@@ -29,13 +30,16 @@ import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
+import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
 
 /**
- * 请求交换名片的家人
+ * 请求交换名片的家人，请求加入圈子的人
  * 
  * @author lz
  * 
@@ -52,14 +56,20 @@ public class LZUserSameActivity extends BaseActivity implements
 	private LoadImage mLoader = LoadImage.getInstance();
 	// add by lz
 	boolean isManaging = false;
+	int type = 0;// 0:请求加入交换名片的人（请求加好友）、请求加入圈子的人
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_peoples);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		Intent intent = getIntent();
+		type = intent.getIntExtra("type", 0);
 		initTitle();
-		title.setText(R.string.label_active_reuqest_card); // 还需要显示人数
+		if (type == 1)
+			title.setText(R.string.label_reqquanmsg); // 还需要显示人数
+		else
+			title.setText(R.string.label_active_reuqest_card); // 还需要显示人数
 		baseDataSet = mConnHelper.getBaseDataSet();
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
@@ -94,7 +104,7 @@ public class LZUserSameActivity extends BaseActivity implements
 							public void onClick(final View v) {
 								// TODO Auto-generated method stub
 								accept(item);
-								v.setEnabled(false);
+								// v.setEnabled(false);
 							}
 						});
 			}
@@ -107,31 +117,71 @@ public class LZUserSameActivity extends BaseActivity implements
 	}
 
 	void accept(final UserNewVO item) {
-		// 递送名片(即添加好友)
-		DeAgreedFriendRequestMessage msg = new DeAgreedFriendRequestMessage(
-				uid, "同意");
-		RongIM.getInstance()
-				.getRongIMClient()
-				.sendMessage(ConversationType.PRIVATE, item.getUserid(), msg,
-						"同意", new SendMessageCallback() {
+		if (0 == type)// 同意添加好友
+		{
+			// 递送名片(即添加好友)
+			DeAgreedFriendRequestMessage msg = new DeAgreedFriendRequestMessage(
+					uid, "同意");
+			RongIM.getInstance()
+					.getRongIMClient()
+					.sendMessage(ConversationType.PRIVATE, item.getUserid(),
+							msg, "同意", new SendMessageCallback() {
 
-							@Override
-							public void onSuccess(Integer arg0) {
-								// TODO Auto-generated
-								// method stub
-								mConnHelper.followUser(mUIHandler,
-										MsgTagVO.MSG_FOWARD, item.getUserid(),
-										2);
-							}
+								@Override
+								public void onSuccess(Integer arg0) {
+									// TODO Auto-generated
+									// method stub
+									mConnHelper.followUser(mUIHandler,
+											MsgTagVO.MSG_FOWARD,
+											item.getUserid(), 2);
+								}
 
-							@Override
-							public void onError(Integer arg0, ErrorCode arg1) {
-								// TODO Auto-generated
-								// method stub
-								Toast.makeText(LZUserSameActivity.this,
-										"ErrorCode：" + arg1, 1000).show();
-							}
-						});
+								@Override
+								public void onError(Integer arg0, ErrorCode arg1) {
+									// TODO Auto-generated
+									// method stub
+									Toast.makeText(LZUserSameActivity.this,
+											"ErrorCode：" + arg1, 1000).show();
+								}
+							});
+		} else // 同意加入圈子
+		{
+			if (item.getGroupid() == null || item.getGname() == null)
+				return;
+
+			/**
+			 * 加入群组。
+			 * 
+			 * @param groupId
+			 *            群组 Id。
+			 * @param groupName
+			 *            群组名称。
+			 * @param callback
+			 *            加入群组状态的回调。
+			 */
+			RongIM.getInstance()
+					.getRongIMClient()
+					.joinGroup(item.getGroupid(), item.getGname(),
+							new OperationCallback() {
+								@Override
+								public void onSuccess() {
+									mConnHelper.followGroup(mUIHandler,
+											MsgTagVO.FOLLOW_QUAN,
+											item.getGroupid(),
+											QuanVO.QUAN_PERMIT, "agree");
+									CommonUtil.displayToast(
+											LZUserSameActivity.this,
+											"向融云，加入圈子成功");
+								}
+
+								@Override
+								public void onError(ErrorCode errorCode) {
+									CommonUtil.displayToast(
+											LZUserSameActivity.this,
+											"向融云，加入圈子失败");
+								}
+							});
+		}
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -152,7 +202,17 @@ public class LZUserSameActivity extends BaseActivity implements
 				}
 				break;
 			}
+			case MsgTagVO.FOLLOW_QUAN: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					CommonUtil.displayToast(getApplicationContext(), R.string.join_quan_success);
+				}
+				break;
+			}
+			case MsgTagVO.MSG_FOWARD: {
 
+			}
+				break;
 			}
 
 		}
@@ -171,7 +231,11 @@ public class LZUserSameActivity extends BaseActivity implements
 
 	private void loadData() {
 		if (mPullDownView.startLoadData()) {
-			mConnHelper.getFollowReqList(mUIHandler, MsgTagVO.DATA_LOAD);
+			if (0 == type)
+				mConnHelper.getFollowReqList(mUIHandler, MsgTagVO.DATA_LOAD);
+			else
+				mConnHelper.getReqQuanUsers(mUIHandler, MsgTagVO.DATA_LOAD,
+						null);
 		}
 	}
 }

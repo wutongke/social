@@ -1,7 +1,5 @@
 package com.cpstudio.zhuojiaren.model;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class QuanVO {
 	// lz 0801
@@ -24,6 +22,7 @@ public class QuanVO {
 	public final static String[] QUAN_ROLE_NAME={"非成员","普通成员","管理员","圈主"};
 	
 	public final static String QUANROLE = "quanzirole";
+	public final static int QUAN_ROLE_NOTMEMBER = -1;
 	public final static int QUAN_ROLE_YOUKE = 0;
 	public final static int QUAN_ROLE_MEMBER = 1;
 	public final static int QUAN_ROLE_MANAGER = 2;

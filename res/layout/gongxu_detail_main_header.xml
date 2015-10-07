@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/black"
     android:orientation="vertical" >
 
     <TextView
@@ -10,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:textColor="#1c1c1c"
+        android:textColor="@color/white"
         android:textSize="18sp" />
 
     <LinearLayout
@@ -24,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="时间："
+            android:textColor="@color/white"
             android:textSize="13sp" />
 
         <TextView
@@ -31,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="3dp"
+            android:textColor="@color/white"
             android:textSize="13sp" />
     </LinearLayout>
 
@@ -38,18 +41,21 @@
         android:id="@+id/textViewContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_back"
+        android:background="#424242"
         android:padding="10dp"
+        android:gravity="center"
         android:textColor="#989898"
         android:textSize="16sp" />
 
     <TableLayout
         android:id="@+id/gongxu_tableLayoutAuthorPics"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
         android:background="@color/gray"
         android:visibility="visible" >
     </TableLayout>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,7 +68,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/comment"
+            android:drawablePadding="@dimen/dic_bettween"
             android:text="@string/label_cmt"
+            android:layout_centerVertical="true"
             android:textColor="#6a6a6a"
             android:textSize="16sp" />
 
@@ -73,6 +81,7 @@
             android:layout_alignBaseline="@id/textViewivCmt"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
+            android:layout_centerVertical="true"
             android:drawableLeft="@drawable/write"
             android:textColor="#6a6a6a"
             android:textSize="16sp" />

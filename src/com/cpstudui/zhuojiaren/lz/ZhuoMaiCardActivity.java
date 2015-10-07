@@ -13,6 +13,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -318,7 +319,8 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 					CommonUtil.displayToast(ZhuoMaiCardActivity.this,
 							"已是好友，不需要再发送名片");
 				else {
-					sendCard();
+					mConnHelper.followUser(mUIHandler, MsgTagVO.MSG_FOWARD,
+							userInfo.getUserid(), 1);
 				}
 			}
 		});
@@ -342,9 +344,13 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		// 递送名片(即添加好友)
 		if (RongIM.getInstance().getRongIMClient() == null)
 			return;
+		if (userInfo.getUserid() == null)
+			return;
 		ContactNotificationMessage msg = ContactNotificationMessage.obtain(
 				"Request", myid, userInfo.getUserid(), "请求添加好友");
-		io.rong.imlib.model.UserInfo info=new UserInfo(null);
+
+		io.rong.imlib.model.UserInfo info = new UserInfo(userInfo.getUserid(),
+				userInfo.getName(), Uri.parse(userInfo.getUheader()));
 		info.setName(userInfo.getName());
 		info.setUserId(userInfo.getUserid());
 		msg.setUserInfo(info);
@@ -352,13 +358,9 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				.getRongIMClient()
 				.sendMessage(ConversationType.PRIVATE, userInfo.getUserid(),
 						msg, "请求添加好友", new SendMessageCallback() {
-
 							@Override
 							public void onSuccess(Integer arg0) {
 								// TODO Auto-generated method stub
-								mConnHelper.followUser(mUIHandler,
-										MsgTagVO.MSG_FOWARD,
-										userInfo.getUserid(), 1);
 								pwh.showPopTip(findViewById(R.id.zhuomai_card),
 										null, R.string.label_sendcardsuccess);
 							}
@@ -482,21 +484,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				}
 				break;
 			}
-			case MsgTagVO.FOLLOW_QUAN: {
-				if (JsonHandler.checkResult((String) msg.obj,
-						getApplicationContext())) {
-					if (isfollow) {
-						isfollow = false;
-						pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
-								null, R.string.label_exitSuccess);
-						loadData();
-					} else {
-						pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
-								null, R.string.label_applysuccess);
-					}
-				}
-				break;
-			}
 			case MsgTagVO.MSG_LIKE:
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
@@ -507,11 +494,14 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 							R.string.FAILED);
 				}
 			case MsgTagVO.MSG_FOWARD: {
-				// if (JsonHandler.checkResult((String) msg.obj,
-				// getApplicationContext())) {
-				// pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
-				// null, R.string.label_recommandSuccess);
-				// }
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					sendCard();
+				} else {
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.FAILED);
+				}
+
 				break;
 			}
 			}

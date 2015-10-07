@@ -1375,7 +1375,7 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("gpub", pub));
 		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
 		filesMap.put("gheader", files);
-		return getFromServerByPost(ZhuoCommHelperLz.manageQuanPermit(),
+		return getFromServerByPost(ZhuoCommHelperLz.modifyGroupInfo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1811,6 +1811,21 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
 		return getFromServerByPost(ZhuoCommHelperLz.followUser(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	
+	/**
+	 * 获取请求加入圈子的人
+	 * @param mUIHandler
+	 * @param tag
+	 * @param groupid 为null则表示所有请求加入圈子的人
+	 * @return
+	 */
+	public boolean getReqQuanUsers(Handler mUIHandler, int tag, String groupid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		if(groupid!=null)
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		return getFromServerByPost(ZhuoCommHelperLz.getReqQuanUsers(),
 				nameValuePairs, mUIHandler, tag);
 	}
 

@@ -106,8 +106,8 @@
         android:id="@+id/linearLayoutBroadcast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_below="@id/viewGroupInfo" >
+        android:layout_below="@id/viewGroupInfo"
+        android:visibility="gone" >
 
         <com.cpstudui.zhuojiaren.lz.AutoTextView
             android:id="@+id/at_pub"
@@ -118,11 +118,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/gonggao"
             android:layout_toLeftOf="@+id/at_pub"
-             android:textColor="#a1a3a5"
-                android:textSize="14sp"
-             />
+            android:text="@string/gonggao"
+            android:textColor="#a1a3a5"
+            android:textSize="12sp" />
     </RelativeLayout>
 
 </RelativeLayout>

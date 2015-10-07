@@ -89,6 +89,8 @@ public class ZhuoCommHelperLz {
 	private final static String PORTAL_SEARCH = "/portalSearch.do";
 	private final static String FRIENDS_LIST = "/getFriend.do";
 	
+	private final static String QUAN_REQ_USER_LIST = "/groupFollowReqUser.do";
+	
 	public static String getAllJiaren() {
 		return ALL_JIAREN;
 	}
@@ -506,6 +508,13 @@ public class ZhuoCommHelperLz {
 	}
 	public static String getMyFriends() {
 		return SERVER + FRIENDS_LIST;
+	}
+	/**
+	 * 请求加入圈子的人
+	 * @return
+	 */
+	public static String getReqQuanUsers() {
+		return SERVER + QUAN_REQ_USER_LIST;
 	}
 	
 }

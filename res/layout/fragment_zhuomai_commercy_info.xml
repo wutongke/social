@@ -50,8 +50,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginRight="10dp"
-                android:contentDescription="@string/ico"
-                android:src="@drawable/default_userhead" />
+                android:contentDescription="@string/ico" />
 
             <TextView
                 android:id="@+id/textViewResourceTitle"
@@ -119,8 +118,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginRight="10dp"
-                android:contentDescription="@string/ico"
-                android:src="@drawable/default_userhead" />
+                android:contentDescription="@string/ico" />
 
             <TextView
                 android:id="@+id/textViewNeedTitle"

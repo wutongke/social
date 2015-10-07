@@ -80,7 +80,6 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 		else
 			tvTitle.setText(R.string.myxu);
 		
-		
 		mListView = (ListView) findViewById(R.id.listView);
 		mAdapter = new MyResListAdapterListAdapter(
 				CardAddUserResourceActivity.this, mList);

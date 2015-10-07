@@ -34,7 +34,6 @@ import android.view.View;
 import com.cpstudio.zhuojiaren.TabContainerActivity;
 import com.cpstudio.zhuojiaren.facade.GroupFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
-import com.cpstudui.zhuojiaren.lz.CustomerMessageFactory;
 import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 import com.sea_monster.exception.BaseException;
 import com.sea_monster.network.AbstractHttpRequest;
@@ -281,6 +280,11 @@ public final class RongCloudEvent implements
 			mContext.sendBroadcast(in);
 		} else {
 			Log.d(TAG, "onReceived-其他消息，自己来判断处理");
+			Intent in = new Intent();
+			in.setAction(TabContainerActivity.ACTION_SYS_MSG);
+			in.putExtra("message", messageContent);
+			in.putExtra("has_message", true);
+			mContext.sendBroadcast(in);
 		}
 		return false;
 	}

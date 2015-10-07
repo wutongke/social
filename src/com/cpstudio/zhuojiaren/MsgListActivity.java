@@ -79,6 +79,12 @@ public class MsgListActivity extends FragmentActivity implements
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(this);
 		loadMessageSession();
+
+		msgReceiver = new MsgReceiver();
+		IntentFilter filter = new IntentFilter(
+				TabContainerActivity.ACTION_DMEO_RECEIVE_MESSAGE);
+		filter.addAction(TabContainerActivity.ACTION_SYS_MSG);
+		registerReceiver(msgReceiver, filter);
 	}
 
 	void loadMessageSession() {
@@ -121,10 +127,7 @@ public class MsgListActivity extends FragmentActivity implements
 		NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.cancelAll();
 		loadData();
-		msgReceiver = new MsgReceiver();
-		IntentFilter filter = new IntentFilter(
-				TabContainerActivity.ACTION_DMEO_RECEIVE_MESSAGE);
-		registerReceiver(msgReceiver, filter);
+
 		uiHandler.postDelayed(calHeight, 500);
 	}
 
@@ -202,11 +205,18 @@ public class MsgListActivity extends FragmentActivity implements
 
 	@Override
 	protected void onPause() {
+
+		super.onPause();
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
 		ResHelper.getInstance(getApplicationContext()).setMsgList(false);
 		if (msgReceiver != null) {
 			unregisterReceiver(msgReceiver);
 		}
-		super.onPause();
+		super.onDestroy();
 	}
 
 	private void startQuanListActivity() {
@@ -235,8 +245,23 @@ public class MsgListActivity extends FragmentActivity implements
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						findViewById(R.id.textViewMsgCardAll).setVisibility(
+								View.GONE);
 						Intent i = new Intent(MsgListActivity.this,
 								LZUserSameActivity.class);
+						startActivity(i);
+					}
+				});
+		// 请求加入圈子的人的列表
+		v.findViewById(R.id.linearLayoutReqQuan).setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						findViewById(R.id.textViewMsgReqQuanAll).setVisibility(
+								View.GONE);
+						Intent i = new Intent(MsgListActivity.this,
+								LZUserSameActivity.class);
+						i.putExtra("type", 1);
 						startActivity(i);
 					}
 				});
@@ -567,5 +592,4 @@ public class MsgListActivity extends FragmentActivity implements
 			uiHandler.post(calHeight);
 		}
 	}
-
 }

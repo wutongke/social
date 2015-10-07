@@ -14,6 +14,7 @@ import com.cpstudio.zhuojiaren.UserCardActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,17 +29,32 @@ public class TopicCommentListAdapter extends BaseAdapter {
 	private LoadImage mLoadImage;
 	private String msgid = null;
 	private Context mContext;
+	int bgColor = -1;
 
 	public TopicCommentListAdapter(Context context, ArrayList<Comment> list,
 			String msgid) {
+		TopicCommentListAdapter(context, list, msgid, -1);
+	}
+
+	private void TopicCommentListAdapter(Context context,
+			ArrayList<Comment> list, String msgid2, int color) {
+		// TODO Auto-generated method stub
+		if (bgColor != -1)
+			bgColor = color;
 		this.mList = list;
 		this.msgid = msgid;
 		this.inflater = LayoutInflater.from(context);
 		this.mContext = context;
-		mLoadImage =LoadImage.getInstance();
+		mLoadImage = LoadImage.getInstance();
 	}
+
 	public TopicCommentListAdapter(Context context, ArrayList<Comment> list,
-			String msgid,LoadImage loadImage) {
+			String msgid, int color) {
+		TopicCommentListAdapter(context, list, msgid, color);
+	}
+
+	public TopicCommentListAdapter(Context context, ArrayList<Comment> list,
+			String msgid, LoadImage loadImage) {
 		this.mList = list;
 		this.msgid = msgid;
 		this.inflater = LayoutInflater.from(context);
@@ -76,6 +92,8 @@ public class TopicCommentListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
 		}
+		if (bgColor != -1)
+			convertView.setBackgroundColor(bgColor);
 		if (position == 0) {
 			// holder.icoCmt.setVisibility(View.VISIBLE);
 			holder.icoCmt.setVisibility(View.GONE);
@@ -101,8 +119,8 @@ public class TopicCommentListAdapter extends BaseAdapter {
 				context.startActivity(i);
 			}
 		});
-		if(cmt.getToId()!=null)
-			authorName=authorName+" 回复  "+cmt.getToName();
+		if (cmt.getToId() != null)
+			authorName = authorName + " 回复  " + cmt.getToName();
 		holder.nameTV.setText(authorName);
 		holder.timeTV.setText(time);
 		holder.contentTV.setText(content);
@@ -112,9 +130,9 @@ public class TopicCommentListAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-//				Intent intent = new Intent(mContext, UserCardActivity.class);
-//				intent.putExtra("userid", userid);
-//				mContext.startActivity(intent);
+				// Intent intent = new Intent(mContext, UserCardActivity.class);
+				// intent.putExtra("userid", userid);
+				// mContext.startActivity(intent);
 			}
 		});
 		mLoadImage.addTask(headUrl, holder.headIV);

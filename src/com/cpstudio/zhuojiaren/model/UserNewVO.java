@@ -75,6 +75,29 @@ public class UserNewVO {
 	
 	private List<PicNewVO> photo;// (照片 对多10张)
 
+	//允许加入圈子时对应的圈子
+	private String groupid;
+	
+	private String gname;
+	
+	
+	public String getGroupid() {
+		return groupid;
+	}
+
+	public void setGroupid(String groupid) {
+		this.groupid = groupid;
+	}
+
+
+	public String getGname() {
+		return gname;
+	}
+
+	public void setGname(String gname) {
+		this.gname = gname;
+	}
+
 	public String getUserid() {
 		return userid;
 	}

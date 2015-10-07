@@ -454,6 +454,7 @@
     <string name="label_groupchat">圈聊消息</string>
     <string name="label_sysmsg">系统消息</string>
     <string name="label_cmtmsg">评论推荐消息</string>
+    <string name="label_reqquanmsg">请求加入圈子的人</string>
     <string name="label_cloudvoice">云录音</string>
     <string name="label_isopen">对方已公开联系方式</string>
     <string name="label_mytext">你的留言：</string>
@@ -1149,6 +1150,7 @@
     <string name="label_company_tip">请真实全面填写企业信息，以便于家人更加了解自己，发现更多合作机会，合作从了解开始。</string>
     <string name="add_dream">添加梦想</string>
     <string name="lab_msglist_view_changes">查看请求与我交换名片的人</string>
+    <string name="lab_msglist_view_quan_req">查看请求加入圈子的人</string>
     <string name="lab_msglist_view_quan_msg">查看圈子聊天消息</string>
     <string name="lab_msglist_view_sys_msg">查看系统发来的通知信息</string>
     <string name="lab_msglist_view_cmt_msg">查看谁评论了我的文章，或需求信息</string>
@@ -1156,5 +1158,6 @@
     <string name="title_activity_zhuo_name_edit">ZhuoNameEditActivity</string>
  <string name="mygong">我的资源</string>
     <string name="myxu">我的需求</string>
-    <string name="gonggao">公告</string>
+    <string name="gonggao">公告 : </string>
+    <string name="join_quan_success">成功将用户加入圈子 </string>
 </resources>

@@ -26,6 +26,7 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.util.ImageLoader;
 
 public class ZhuomaiCardCommercyInfoFra extends Fragment {
 	@InjectView(R.id.tvMoreResource)
@@ -48,7 +49,7 @@ public class ZhuomaiCardCommercyInfoFra extends Fragment {
 	ImageView imageViewResourcePic;
 	@InjectView(R.id.imageViewNeedPic)
 	ImageView imageViewNeedPic;
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	public final static String EDIT_RES_STR1 = "type";
 	public final static String EDIT_RES_STR2 = "userid";
 	private ZhuoConnHelper mConnHelper = null;
