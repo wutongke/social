@@ -23,7 +23,7 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/searchbg"
+                android:background="@drawable/zxinput_zx_1"
                 android:focusable="false"
                 android:hint="@string/label_main_searchHint"
                 android:imeOptions="actionSearch"
@@ -39,7 +39,7 @@
                 android:layout_gravity="center_vertical"
                 android:padding="10dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/searcher_new_search_icon" />
+                android:src="@drawable/magnifier5_zx_1" />
         </FrameLayout>
 
         <Button

@@ -115,7 +115,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:orientation="horizontal" >
 
             <ImageView
@@ -127,9 +127,10 @@
 
             <com.cpstudui.zhuojiaren.lz.AutoTextView
                 android:id="@+id/at_notices"
+                android:layout_marginLeft="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_gravity="center_vertical" />
         </LinearLayout>
     </RelativeLayout>
 
