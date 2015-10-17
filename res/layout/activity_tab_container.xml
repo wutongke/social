@@ -19,9 +19,7 @@
 
         <TabWidget
             android:id="@android:id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" 
-            android:background="@drawable/bg_bottom" />
+            style="@style/view_bottombar_bg" />
 
     </LinearLayout>
 

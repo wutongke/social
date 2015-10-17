@@ -178,5 +178,16 @@
         <item name="android:gravity">left|center_vertical</item>
         
     </style>
-
+    
+     <style name="view_topbar_bg" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/topbar_height</item>
+        <item name="android:background">@color/topbar_color</item> 
+    </style>
+    
+      <style name="view_bottombar_bg" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/bottombar_height</item>
+        <item name="android:background">@drawable/bottombar_bg</item> 
+    </style>
 </resources>

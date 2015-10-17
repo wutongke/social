@@ -9,11 +9,9 @@
 
     <LinearLayout
         android:id="@+id/userNameShowParent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/view_topbar_bg"
         android:orientation="horizontal"
-        android:paddingRight="8dp"
-        android:background="@drawable/bg_title" >
+        android:paddingRight="8dp" >
 
         <TextView
             android:id="@+id/activity_back"

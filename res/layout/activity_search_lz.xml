@@ -10,9 +10,7 @@
 
     <RelativeLayout
         android:id="@+id/userNameShowParent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_title" >
+        style="@style/view_topbar_bg" >
 
         <FrameLayout
             android:layout_width="match_parent"

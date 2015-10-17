@@ -8,9 +8,7 @@
 
     <RelativeLayout
         android:id="@+id/userNameShowParent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_title" >
+        style="@style/view_topbar_bg" >
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -22,7 +20,7 @@
             <EditText
                 android:id="@+id/search_input"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/searchbg"
@@ -32,7 +30,7 @@
                 android:paddingLeft="35dp"
                 android:paddingRight="10dp"
                 android:singleLine="true"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/search_search"

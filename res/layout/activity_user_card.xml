@@ -9,11 +9,10 @@
 
     <RelativeLayout
         android:id="@+id/userNameShowParent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/view_topbar_bg"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/bg_title" >
+         >
 
         <TextView
             android:id="@+id/userNameShow"

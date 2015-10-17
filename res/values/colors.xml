@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="white">#FFFFFF</color>
-	<color name="black">#000000</color>
-	<color name="gray">#808080</color>
-	<color name="graywhitem">#E6E6E6</color>
-	<color name="red">#FF0000</color>
-	<color name="pink2">#E35063</color>
-	<color name="gold">#FFD700</color>
-	<color name="yellow">#FFFF00</color>
-	<color name="green">#008000</color>
-	<color name="blue">#0000FF</color>
-	<color name="purple">#800080</color>
-	<color name="pink">#FFC0CB</color>
-	<color name="orange">#FFA500</color>
-	<color name="lemonyellow">#FFFACD</color>
-	<color name="graywhite">#555555</color>
-	<color name="grayslate">#708090</color>
-	<color name="lightblue">#0083FF</color>
-	<color name="lightgreen">#6fb956</color>
-	<color name="transparent">#00000000</color>
-	<color name="bg">#EBEBEB</color>
-<color name="font_black">#737373</color><color name="textColor2">#b2b2b2</color>
-	<color name="textColor3">#a3a3a3</color></resources>
+    <color name="black">#000000</color>
+    <color name="gray">#808080</color>
+    <color name="graywhitem">#E6E6E6</color>
+    <color name="red">#FF0000</color>
+    <color name="pink2">#E35063</color>
+    <color name="gold">#FFD700</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="green">#008000</color>
+    <color name="blue">#0000FF</color>
+    <color name="purple">#800080</color>
+    <color name="pink">#FFC0CB</color>
+    <color name="orange">#FFA500</color>
+    <color name="lemonyellow">#FFFACD</color>
+    <color name="graywhite">#555555</color>
+    <color name="grayslate">#708090</color>
+    <color name="lightblue">#0083FF</color>
+    <color name="lightgreen">#6fb956</color>
+    <color name="transparent">#00000000</color>
+    <color name="bg">#EBEBEB</color>
+    <color name="font_black">#737373</color>
+    <color name="textColor2">#b2b2b2</color>
+    <color name="textColor3">#a3a3a3</color>
+ <color name="topbar_color">#333333</color>
+</resources>
