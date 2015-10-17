@@ -53,6 +53,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginRight="10dp"
+                android:scaleType="centerCrop"
                 android:contentDescription="@string/ico" />
 
             <TextView
@@ -124,6 +125,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginRight="10dp"
+                android:scaleType="centerCrop"
                 android:contentDescription="@string/ico" />
 
             <TextView
