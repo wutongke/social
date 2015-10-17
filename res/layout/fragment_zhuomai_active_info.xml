@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
+    android:background="@color/white"
     tools:context="com.cpstudui.zhuojiaren.lz.LZMyHomeActivity" >
 
     <LinearLayout
@@ -138,7 +139,10 @@
             android:layout_height="wrap_content"
             android:background="#ffffff"
             android:gravity="center_vertical"
-            android:padding="15dp" >
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -153,6 +157,7 @@
                     android:drawableLeft="@drawable/myfriend_zmmp_1"
                     android:drawablePadding="14dp"
                     android:ellipsize="end"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:text="@string/renmai_my" />
             </LinearLayout>
@@ -177,7 +182,10 @@
             android:layout_height="wrap_content"
             android:background="#ffffff"
             android:gravity="center_vertical"
-            android:padding="15dp" >
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -192,6 +200,7 @@
                     android:drawableLeft="@drawable/mytalks_zmmp_1"
                     android:drawablePadding="14dp"
                     android:ellipsize="end"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:text="@string/quanzi_my" />
             </LinearLayout>
@@ -204,17 +213,22 @@
                 android:drawableRight="@drawable/ico_arrow_big"
                 android:maxLines="1" />
         </RelativeLayout>
-  <TextView
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#f7f7f7" />
+
         <RelativeLayout
             android:id="@+id/llMyActive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#ffffff"
             android:gravity="center_vertical"
-            android:padding="15dp" >
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -229,6 +243,7 @@
                     android:drawableLeft="@drawable/myactive_zmmp_1"
                     android:drawablePadding="14dp"
                     android:ellipsize="end"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:text="@string/active_my" />
             </LinearLayout>

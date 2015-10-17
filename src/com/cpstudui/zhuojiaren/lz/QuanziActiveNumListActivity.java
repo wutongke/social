@@ -15,12 +15,12 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.GroupStatus;
 
 public class QuanziActiveNumListActivity extends BaseActivity {
-	@InjectView(R.id.textViewICreatedNum)
-	TextView tvICreatedNum;
-	@InjectView(R.id.textViewIJoinedNum)
-	TextView tvIJoinedNum;
-	@InjectView(R.id.textAllQuanNum)
-	TextView tvAllQuanNum;
+	@InjectView(R.id.rlICreatedNum)
+	View vICreatedNum;
+	@InjectView(R.id.rlIJoinedNum)
+	View vIJoinedNum;
+	@InjectView(R.id.rlAllQuanNum)
+	View vAllQuanNum;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class QuanziActiveNumListActivity extends BaseActivity {
 
 	private void initClick() {
 		// TODO Auto-generated method stub
-		tvICreatedNum.setOnClickListener(new OnClickListener() {
+		vICreatedNum.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -45,7 +45,7 @@ public class QuanziActiveNumListActivity extends BaseActivity {
 				startActivity(i);
 			}
 		});
-		tvAllQuanNum.setOnClickListener(new OnClickListener() {
+		vAllQuanNum.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -56,7 +56,7 @@ public class QuanziActiveNumListActivity extends BaseActivity {
 				startActivity(i);
 			}
 		});
-		tvIJoinedNum.setOnClickListener(new OnClickListener() {
+		vIJoinedNum.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {

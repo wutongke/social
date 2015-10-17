@@ -71,6 +71,18 @@ public class LZUserSameActivity extends BaseActivity implements
 		Intent intent = getIntent();
 		type = intent.getIntExtra("type", 0);
 		initTitle();
+		function.setText(getString(R.string.clear));
+		function.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(mList!=null)
+					mList.clear();
+				if(mAdapter!=null)
+					mAdapter.notifyDataSetChanged();
+			}
+		});
 		if (type == 1)
 			title.setText(R.string.label_reqquanmsg); // 还需要显示人数
 		else
@@ -126,7 +138,7 @@ public class LZUserSameActivity extends BaseActivity implements
 		loadData();
 	}
 
-	void accept(final UserNewVO item, View v) {
+	void accept(final UserNewVO item, final View v) {
 		if (0 == type)// 同意添加好友
 		{
 			// // 递送名片(即添加好友)
@@ -166,7 +178,7 @@ public class LZUserSameActivity extends BaseActivity implements
 			// });
 			// }
 			if (v != null)
-				v.setEnabled(false);
+				v.setVisibility(View.GONE);
 			// 权宜之计，应该用上面的
 			mConnHelper.makeFriends(mUIHandler, MsgTagVO.MSG_FOWARD,
 					item.getUserid(), 2);
@@ -200,6 +212,8 @@ public class LZUserSameActivity extends BaseActivity implements
 									CommonUtil.displayToast(
 											LZUserSameActivity.this,
 											"向融云，加入圈子成功");
+									if (v != null)
+										v.setVisibility(View.GONE);
 								}
 
 								@Override

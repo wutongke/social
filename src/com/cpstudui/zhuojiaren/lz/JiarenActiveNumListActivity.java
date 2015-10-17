@@ -15,10 +15,10 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 
 public class JiarenActiveNumListActivity extends BaseActivity {
-	@InjectView(R.id.textViewIFocusedNum)
-	TextView tvIFocusedNum;
-	@InjectView(R.id.textViewAllNum)
-	TextView tvAllNum;
+	@InjectView(R.id.rlIFocusedNum)
+	View vIFocusedNum;
+	@InjectView(R.id.rlAllNum)
+	View vAllNum;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class JiarenActiveNumListActivity extends BaseActivity {
 
 	private void initClick() {
 		// TODO Auto-generated method stub
-		tvIFocusedNum.setOnClickListener(new OnClickListener() {
+		vIFocusedNum.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -43,7 +43,7 @@ public class JiarenActiveNumListActivity extends BaseActivity {
 				startActivity(i);
 			}
 		});
-		tvAllNum.setOnClickListener(new OnClickListener() {
+		vAllNum.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {

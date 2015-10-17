@@ -7,12 +7,13 @@
     <include layout="@layout/title_activity" />
 
     <RelativeLayout
+        android:id="@+id/rlIFocusedNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:padding="15dp"
+        android:background="#ffffff"
         android:gravity="center_vertical"
-        android:background="#ffffff" >
+        android:padding="15dp" >
 
         <TextView
             style="@style/active_font_style"
@@ -40,6 +41,7 @@
         android:background="#d8d8d8" />
 
     <RelativeLayout
+        android:id="@+id/rlAllNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"

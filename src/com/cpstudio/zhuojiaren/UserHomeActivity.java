@@ -39,7 +39,7 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 	private ArrayList<Dynamic> mList = new ArrayList<Dynamic>();
 	private LoadImage mLoadImage = null;
 	private PopupWindows pwh = null;
-	private int mPage = 1;
+	private int mPage = 0;
 	final int pageSize = 10;
 	private String uid = null;
 	private ZhuoConnHelper mConnHelper = null;
@@ -75,13 +75,13 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowHeader();
 		mPullDownView.setShowFooter(false);
-		
 		initClick();
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
+		mPage = 0;
 		loadData();
 		loadInfo();
 		super.onResume();
@@ -279,12 +279,12 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-//		if (id != -1) {
-//			Intent i = new Intent();
-//			i.setClass(UserHomeActivity.this, MsgDetailActivity.class);
-//			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
-//			startActivity(i);
-//		}
+		// if (id != -1) {
+		// Intent i = new Intent();
+		// i.setClass(UserHomeActivity.this, MsgDetailActivity.class);
+		// i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
+		// startActivity(i);
+		// }
 	}
 
 	@Override

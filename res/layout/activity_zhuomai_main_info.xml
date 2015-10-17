@@ -28,7 +28,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:textColor="#ffffff"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/activity_function2"
