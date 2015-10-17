@@ -14,15 +14,15 @@ import com.cpstudio.zhuojiaren.ui.LZUserSameActivity;
 import com.cpstudio.zhuojiaren.ui.UserSameActivity;
 
 public class CardActiveNumListActivity extends BaseActivity {
-	@InjectView(R.id.textViewCardRequestedNum)
-	TextView tvRequestedNum;
-	@InjectView(R.id.textViewViewedNum)
-	TextView tvViededNum;
-	@InjectView(R.id.textCollectedMeNum)
-	TextView tvCollectedNum;
+	@InjectView(R.id.rlCardRequestedNum)
+	View vRequestedNum;
+	@InjectView(R.id.rlViewedNum)
+	View vViededNum;
+	@InjectView(R.id.rlCollectedMeNum)
+	View vCollectedNum;
 
-	@InjectView(R.id.textZanMeNum)
-	TextView tvZanedNum;
+	@InjectView(R.id.rlZanMeNum)
+	View vZanedNum;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class CardActiveNumListActivity extends BaseActivity {
 	private void initClick() {
 		// TODO Auto-generated method stub
 		// 以下都是人的列表
-		tvRequestedNum.setOnClickListener(new OnClickListener() {
+		vRequestedNum.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -48,7 +48,7 @@ public class CardActiveNumListActivity extends BaseActivity {
 			}
 		});
 
-		tvViededNum.setOnClickListener(new OnClickListener() {
+		vViededNum.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -59,7 +59,7 @@ public class CardActiveNumListActivity extends BaseActivity {
 			}
 		});
 
-		tvCollectedNum.setOnClickListener(new OnClickListener() {
+		vCollectedNum.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -70,7 +70,7 @@ public class CardActiveNumListActivity extends BaseActivity {
 			}
 		});
 
-		tvZanedNum.setOnClickListener(new OnClickListener() {
+		vZanedNum.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub

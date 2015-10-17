@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res/com.cpstudio.zhuojiaren"
     android:id="@+id/zhuomai_card"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,8 +15,16 @@
         <com.cpstudio.zhuojiaren.widget.TabButton
             android:id="@+id/azq_tab"
             android:layout_width="match_parent"
-            android:layout_height="42dp" >
-        </com.cpstudio.zhuojiaren.widget.TabButton>
+            android:layout_height="38dp"
+            android:background="@drawable/color_shape"
+            app:buttonBackground="#7094a0"
+            app:buttonSelectBackground="#a6b2c8"
+            app:dividerColor="@color/black"
+            app:dividerSize="38dp"
+            app:slecttextColor="#5c5c5c"
+            app:sliderColor="@color/white"
+            app:sliderSize="0dp"
+            app:textColor="#6e6e6e" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/azq_viewpager"
@@ -30,8 +39,8 @@
             android:id="@+id/menue"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="#afaba9"
             android:layout_alignParentBottom="true"
+            android:background="#afaba9"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -53,8 +62,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:background="@null"
-                        android:drawablePadding="8dp"
                         android:drawableLeft="@drawable/backpic_zmmp_1"
+                        android:drawablePadding="8dp"
                         android:minHeight="20dp"
                         android:text="@string/label_edit_bg"
                         android:textColor="@color/white" />
@@ -71,8 +80,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:background="@null"
-                        android:drawablePadding="8dp"
                         android:drawableLeft="@drawable/cardedit_zmmp_1"
+                        android:drawablePadding="8dp"
                         android:minHeight="20dp"
                         android:text="@string/label_editcard"
                         android:textColor="@color/white" />
@@ -99,8 +108,8 @@
                         android:layout_centerInParent="true"
                         android:background="@null"
                         android:drawableLeft="@drawable/backpic_zmmp_1"
-                        android:minHeight="20dp"
                         android:drawablePadding="8dp"
+                        android:minHeight="20dp"
                         android:text="@string/label_sendcard"
                         android:textColor="@color/white" />
                 </RelativeLayout>

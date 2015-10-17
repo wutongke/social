@@ -7,6 +7,7 @@
     <include layout="@layout/title_activity" />
 
     <RelativeLayout
+        android:id="@+id/rlICreatedNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -39,6 +40,7 @@
         android:background="#d8d8d8" />
 
     <RelativeLayout
+         android:id="@+id/rlIJoinedNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -71,6 +73,7 @@
         android:background="#d8d8d8" />
 
     <RelativeLayout
+         android:id="@+id/rlAllQuanNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
