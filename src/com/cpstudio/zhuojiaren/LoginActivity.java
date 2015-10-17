@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
@@ -164,6 +165,7 @@ public class LoginActivity extends Activity {
 					connHelper.setUploadFileToken(res.getQiniuToken());
 					connHelper.setImToken(res.getRongyunToken());
 					mResHelper.setUserid(mUid);
+					AppClientLef.getInstance(LoginActivity.this.getApplicationContext()).init(LoginActivity.this.getApplicationContext());
 //					// 获取群组信息，TabContainerActivity中进行
 //					connHelper.getMyGroupList(mUIHandler, MsgTagVO.DATA_OTHER);
 					if (mPwdView.getText().toString().equals("000000") && first) {

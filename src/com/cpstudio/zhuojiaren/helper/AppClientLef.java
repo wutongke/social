@@ -61,7 +61,7 @@ public class AppClientLef {
 		return instance;
 	}
 
-	private void init(Context context) {
+	public void init(Context context) {
 		ResHelper resHelper = ResHelper.getInstance(context);
 		this.userId = resHelper.getUserid();
 		this.password = resHelper.getPassword();
@@ -117,6 +117,8 @@ public class AppClientLef {
 		connHelper.setSession(res.getSession());
 		connHelper.setUploadFileToken(res.getQiniuToken());
 		connHelper.setImToken(res.getRongyunToken());
+		if(context!=null)
+		init(context);
 	}
 
 	/**
