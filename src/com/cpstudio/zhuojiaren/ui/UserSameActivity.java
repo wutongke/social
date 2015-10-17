@@ -263,11 +263,10 @@ public class UserSameActivity extends BaseActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		if (id != -1) {
-
+		if (position >=1) {
 			Intent i = new Intent();
 			i.setClass(UserSameActivity.this, ZhuoMaiCardActivity.class);
-			i.putExtra("userid", mList.get(position).getUserid());
+			i.putExtra("userid", mList.get(position-1).getUserid());
 			startActivity(i);
 		}
 	}

@@ -190,7 +190,7 @@ public class GongXuDetailActivity extends BaseActivity {
 						GongXuDetailActivity.this);
 				rl.setLayoutParams(trlp);
 				ImageView iv = new ImageView(GongXuDetailActivity.this);
-				iv.setScaleType(ScaleType.FIT_CENTER);
+				iv.setScaleType(ScaleType.CENTER_CROP);
 				iv.setLayoutParams(rlp);
 				rl.addView(iv);
 				rl.setTag(pics.get(i).getPic());
@@ -387,7 +387,7 @@ public class GongXuDetailActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				if(position==0)
+				if(position<=0)
 					return;
 				toId = mList.get(position-1).getId();
 				Intent i = new Intent(GongXuDetailActivity.this,

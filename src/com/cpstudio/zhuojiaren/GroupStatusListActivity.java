@@ -269,7 +269,7 @@ public class GroupStatusListActivity extends Activity implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		if (id == -1)
+		if (id <=0 )
 			return;
 
 		int type = mList.get(position-1).getType();

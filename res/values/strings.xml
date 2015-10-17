@@ -1160,4 +1160,5 @@
     <string name="myxu">我的需求</string>
     <string name="gonggao">公告 : </string>
     <string name="join_quan_success">成功将用户加入圈子 </string>
+    <string name="admit_user_success">成功接收好友邀请 </string>
 </resources>

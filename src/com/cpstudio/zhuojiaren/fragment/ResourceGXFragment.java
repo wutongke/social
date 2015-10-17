@@ -208,8 +208,8 @@ public class ResourceGXFragment extends Fragment {
 				for (ImageRadioButton temp : list) {
 					i++;
 					if (btnview.equals(temp)) {
-						Util.toastMessage(getActivity(), btnview.getaImage()
-								+ "");
+//						Util.toastMessage(getActivity(), btnview.getaImage()
+//								+ "");
 						break;
 					}
 				}

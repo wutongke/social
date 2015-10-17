@@ -17,6 +17,7 @@
         android:id="@+id/irg_image"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:scaleType="centerCrop"
         android:layout_gravity="center_vertical"
         android:layout_margin="10dp" />
 

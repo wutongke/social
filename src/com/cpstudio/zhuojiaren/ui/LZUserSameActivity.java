@@ -1,5 +1,6 @@
 package com.cpstudio.zhuojiaren.ui;
 
+import io.rong.app.DemoContext;
 import io.rong.app.message.DeAgreedFriendRequestMessage;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -7,12 +8,14 @@ import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.RongIMClient.OperationCallback;
 import io.rong.imlib.RongIMClient.SendMessageCallback;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 import io.rong.imlib.model.Conversation.ConversationType;
 
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -111,7 +114,7 @@ public class LZUserSameActivity extends BaseActivity implements
 							@Override
 							public void onClick(final View v) {
 								// TODO Auto-generated method stub
-								accept(item);
+								accept(item, v);
 								// v.setEnabled(false);
 							}
 						});
@@ -123,40 +126,51 @@ public class LZUserSameActivity extends BaseActivity implements
 		loadData();
 	}
 
-	void accept(final UserNewVO item) {
+	void accept(final UserNewVO item, View v) {
 		if (0 == type)// 同意添加好友
 		{
-			// 递送名片(即添加好友)
-			final DeAgreedFriendRequestMessage msg = new DeAgreedFriendRequestMessage(
-					item.getUserid(), "agree");
+			// // 递送名片(即添加好友)
+			// final DeAgreedFriendRequestMessage msg = new
+			// DeAgreedFriendRequestMessage(
+			// item.getUserid(), "agree");
+			// UserInfo userInfo =new UserInfo(item.getUserid(), item.getName(),
+			// Uri.parse(item.getUheader()));
+			// //把用户信息设置到消息体中，直接发送给对方，可以不设置，非必选项
 			// msg.setUserInfo(userInfo);
-			if (RongIM.getInstance() != null) {
-				// 发送一条添加成功的自定义消息，此条消息不会在ui上展示
-				RongIM.getInstance()
-						.getRongIMClient()
-						.sendMessage(ConversationType.PRIVATE,
-								item.getUserid(), msg, null,
-								new SendMessageCallback() {
-									@Override
-									public void onSuccess(Integer arg0) {
-										// TODO Auto-generated
-										// method stub
-										mConnHelper.makeFriends(mUIHandler,
-												MsgTagVO.MSG_FOWARD,
-												item.getUserid(), 2);
-									}
+			// // msg.setUserInfo(userInfo);
+			// if (RongIM.getInstance() != null) {
+			// // 发送一条添加成功的自定义消息，此条消息不会在ui上展示
+			// RongIM.getInstance()
+			// .getRongIMClient()
+			// .sendMessage(ConversationType.PRIVATE,
+			// item.getUserid(), msg, null,
+			// new SendMessageCallback() {
+			// @Override
+			// public void onSuccess(Integer arg0) {
+			// // TODO Auto-generated
+			// // method stub
+			// mConnHelper.makeFriends(mUIHandler,
+			// MsgTagVO.MSG_FOWARD,
+			// item.getUserid(), 2);
+			// }
+			//
+			// @Override
+			// public void onError(Integer arg0,
+			// ErrorCode arg1) {
+			// // TODO Auto-generated
+			// // method stub
+			// Toast.makeText(LZUserSameActivity.this,
+			// "ErrorCode：" + arg1, 1000)
+			// .show();
+			// }
+			// });
+			// }
+			if (v != null)
+				v.setEnabled(false);
+			// 权宜之计，应该用上面的
+			mConnHelper.makeFriends(mUIHandler, MsgTagVO.MSG_FOWARD,
+					item.getUserid(), 2);
 
-									@Override
-									public void onError(Integer arg0,
-											ErrorCode arg1) {
-										// TODO Auto-generated
-										// method stub
-										Toast.makeText(LZUserSameActivity.this,
-												"ErrorCode：" + arg1, 1000)
-												.show();
-									}
-								});
-			}
 		} else // 同意加入圈子
 		{
 			if (item.getGroupid() == null || item.getGname() == null)
@@ -225,7 +239,11 @@ public class LZUserSameActivity extends BaseActivity implements
 				break;
 			}
 			case MsgTagVO.MSG_FOWARD: {
-
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.admit_user_success);
+				}
 			}
 				break;
 			}

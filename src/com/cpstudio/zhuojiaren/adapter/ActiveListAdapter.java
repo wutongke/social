@@ -23,7 +23,7 @@ import com.cpstudio.zhuojiaren.model.PicNewVO;
 
 public class ActiveListAdapter extends BaseAdapter {
 	private List<Dynamic> mList = null;
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	private LayoutInflater inflater = null;
 	List<City> cityList;
 
