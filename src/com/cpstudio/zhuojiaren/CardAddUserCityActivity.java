@@ -37,6 +37,7 @@ public class CardAddUserCityActivity extends Activity {
 	List<City> cityList;
 	ZhuoConnHelper mConnHelper;
 	ArrayList<String> codes = new ArrayList<String>(3);
+	boolean isEditable = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class CardAddUserCityActivity extends Activity {
 		cityList = mConnHelper.getCitys();
 		// 根据provList，从编号获得城市名称
 		Intent i = getIntent();
+		isEditable = i.getBooleanExtra(CardEditActivity.EDITABLE, false);
 		int place = i.getIntExtra(CardEditActivity.EDIT_PLACE_STR1, 0);
 		int othertowns = i.getIntExtra(CardEditActivity.EDIT_PLACE_STR2, 0);
 		String towns = i.getStringExtra(CardEditActivity.EDIT_PLACE_STR3);
@@ -54,8 +56,10 @@ public class CardAddUserCityActivity extends Activity {
 		fillName(tvPlace, place);
 		fillName(tvTown, othertowns);
 		fillName(tvOtherTowns, towns);
-
-		initClick();
+		if (isEditable)
+			initClick();
+		else
+			findViewById(R.id.buttonSubmit).setVisibility(View.GONE);
 		codes.add("");
 		codes.add("");
 		codes.add("");

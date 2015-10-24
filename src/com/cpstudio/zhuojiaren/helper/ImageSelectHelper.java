@@ -51,7 +51,7 @@ public class ImageSelectHelper implements OnClickListener {
 		inflater = LayoutInflater.from(mActivity);
 		mAddButton = inflater.inflate(R.layout.item_image_add, null);
 		((ImageView) (mAddButton.findViewById(R.id.imageViewPic)))
-				.setImageResource(R.drawable.addpic);
+				.setImageResource(R.drawable.addimg_pub_event);
 		ll.addView(mAddButton);
 	}
 

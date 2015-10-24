@@ -87,7 +87,8 @@ public class CardEditActivity extends Activity {
 	@InjectView(R.id.textViewEditWeixinShow)
 	TextView textViewEditWeixinShow;
 
-	private String userid = "";
+	public final static String EDITABLE = "editable";// 阳历生日
+	public final static String USERID = "userid";// 阳历生日
 	public final static int EDIT_BIRTH = 0;
 	public final static String EDIT_BIRTH_STR1 = "birth";// 阳历生日
 	public final static String EDIT_BIRTH_STR2 = "birthopen";
@@ -153,8 +154,10 @@ public class CardEditActivity extends Activity {
 	private PopupWindows pwh = null;
 	private UserFacade mFacade = null;
 	private boolean edit = false;
+	boolean isEditable = true;
 	UserNewVO userInfo;
 	private LoadImage mLoadImage = new LoadImage();
+	String guestId = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -164,8 +167,14 @@ public class CardEditActivity extends Activity {
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		mFacade = new UserFacade(getApplicationContext());
 		pwh = new PopupWindows(CardEditActivity.this);
-		userid = ResHelper.getInstance(getApplicationContext()).getUserid();
+		String userid = ResHelper.getInstance(getApplicationContext())
+				.getUserid();
 
+		guestId = getIntent().getStringExtra("id");
+		if (guestId != null && guestId != userid) {
+			isEditable = false;
+			buttonSubmit.setVisibility(View.GONE);
+		}
 		initClick();
 		loadInfo();
 	}
@@ -192,53 +201,208 @@ public class CardEditActivity extends Activity {
 			// }
 			// delete first Image
 		}
-		
+
 		userInfo.setSignature(etSignature.getText().toString());
 		mConnHelper.modifyUserInfo(mUIHandler, MsgTagVO.PUB_INFO, userInfo);
 	}
 
 	private void initClick() {
-		textViewChangeHead.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				pwh.showPop(findViewById(R.id.rootLayout));
-			}
-		});
-		etSignature.addTextChangedListener(new TextWatcher() {
-			private CharSequence temp;
-			private int selectionStart;
-			private int selectionEnd;
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int arg1, int arg2,
-					int arg3) {
-				temp = s;
-			}
-
-			@Override
-			public void onTextChanged(CharSequence s, int arg1, int arg2,
-					int arg3) {
-				edit = true;
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				selectionStart = etSignature.getSelectionStart();
-				selectionEnd = etSignature.getSelectionEnd();
-
-				if (temp.length() > 15) {
-					Toast.makeText(CardEditActivity.this,
-							R.string.edit_nsignature_limit, Toast.LENGTH_SHORT)
-							.show();
-					s.delete(selectionStart - 1, selectionEnd);
-					int tempSelection = selectionStart;
-					etSignature.setText(s);
-					etSignature.setSelection(tempSelection);
+		if (!isEditable) {
+			textViewChangeHead.setVisibility(View.GONE);
+			etSignature.setEnabled(false);
+		} else {
+			textViewChangeHead.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					pwh.showPop(findViewById(R.id.rootLayout));
 				}
-			}
-		});
+			});
+			etSignature.addTextChangedListener(new TextWatcher() {
+				private CharSequence temp;
+				private int selectionStart;
+				private int selectionEnd;
+
+				@Override
+				public void beforeTextChanged(CharSequence s, int arg1,
+						int arg2, int arg3) {
+					temp = s;
+				}
+
+				@Override
+				public void onTextChanged(CharSequence s, int arg1, int arg2,
+						int arg3) {
+					edit = true;
+				}
+
+				@Override
+				public void afterTextChanged(Editable s) {
+					selectionStart = etSignature.getSelectionStart();
+					selectionEnd = etSignature.getSelectionEnd();
+
+					if (temp.length() > 15) {
+						Toast.makeText(CardEditActivity.this,
+								R.string.edit_nsignature_limit,
+								Toast.LENGTH_SHORT).show();
+						s.delete(selectionStart - 1, selectionEnd);
+						int tempSelection = selectionStart;
+						etSignature.setText(s);
+						etSignature.setSelection(tempSelection);
+					}
+				}
+			});
+			buttonSubmit.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (edit) {
+						updateInfo();
+					} else {
+						CardEditActivity.this.finish();
+					}
+				}
+			});
+			textViewEditBirthShow.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (userInfo != null) {
+						Intent i = new Intent(CardEditActivity.this,
+								CardAddUserBirthActivity.class);
+
+						i.putExtra(EDIT_BIRTH_STR1, userInfo.getBirthday());// 阳历生日
+						i.putExtra(EDIT_BIRTH_STR2,
+								userInfo.getIsBirthdayOpen());
+						i.putExtra(EDIT_BIRTH_STR3, userInfo.getBirthdayLunar());
+						startActivityForResult(i, EDIT_BIRTH);
+					} else {
+						CommonUtil.displayToast(getApplicationContext(),
+								R.string.error12);
+					}
+				}
+			});
+			textViewEditDreamShow.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (userInfo != null) {
+						Intent i = new Intent(CardEditActivity.this,
+								CardAddUserDreamActivity.class);
+						i.putExtra(EDIT_DREAM_STR, userInfo.getDream());
+						startActivityForResult(i, EDIT_DREAM);
+					} else {
+						CommonUtil.displayToast(getApplicationContext(),
+								R.string.error12);
+					}
+				}
+			});
+			// 此处要改为两个选项：对好友公开和对所有人公开。。
+			textViewEditEmailShow.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (userInfo != null) {
+						Intent i = new Intent(CardEditActivity.this,
+								CardAddUserEmailActivity.class);
+						i.putExtra(EDIT_EMAIL_STR1, userInfo.getEmail());
+						i.putExtra(EDIT_EMAIL_STR2, userInfo.getIsEmailOpen());
+						startActivityForResult(i, EDIT_EMAIL);
+					} else {
+						CommonUtil.displayToast(getApplicationContext(),
+								R.string.error12);
+					}
+				}
+			});
+
+			// lz add
+			textViewEditQQShow.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (userInfo != null) {
+						Intent i = new Intent(CardEditActivity.this,
+								CardAddUserQQActivity.class);
+						String qq = userInfo.getQq();
+						int qqopen = userInfo.getIsQqOpen();
+						if (qq != null)
+							i.putExtra(EDIT_QQ_STR1, qq);
+
+						i.putExtra(EDIT_QQ_STR2, qqopen);
+						startActivityForResult(i, EDIT_QQ);
+					} else {
+						CommonUtil.displayToast(getApplicationContext(),
+								R.string.error12);
+					}
+				}
+			});
+			// lz add
+			textViewEditWeixinShow.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (userInfo != null) {
+						Intent i = new Intent(CardEditActivity.this,
+								CardAddUserWeiXinActivity.class);
+						String weixin = userInfo.getWeixin();
+						int weixinopen = userInfo.getIsWeixinOpen();
+						if (weixin != null)
+							i.putExtra(EDIT_WEIXIN_STR1, weixin);
+						i.putExtra(EDIT_WEIXIN_STR2, weixinopen + "");
+						startActivityForResult(i, EDIT_WEIXIN);
+					} else {
+						CommonUtil.displayToast(getApplicationContext(),
+								R.string.error12);
+					}
+				}
+			});
+
+			textViewEditHobbyShow.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (userInfo != null) {
+						Intent i = new Intent(CardEditActivity.this,
+								CardAddUserHobbyActivity.class);
+						i.putExtra(EDIT_HOBBY_STR, userInfo.getHobby());
+						startActivityForResult(i, EDIT_HOBBY);
+					} else {
+						CommonUtil.displayToast(getApplicationContext(),
+								R.string.error12);
+					}
+				}
+			});
+			// 价值观与信念，接口暂时无此字段
+			textViewEditZymShow.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (userInfo != null) {
+						Intent i = new Intent(CardEditActivity.this,
+								CardAddUserMottoActivity.class);
+						i.putExtra(EDIT_MOTTO_STR, userInfo.getFaith());
+						startActivityForResult(i, EDIT_MOTTO);
+					} else {
+						CommonUtil.displayToast(getApplicationContext(),
+								R.string.error12);
+					}
+				}
+			});
+			// 二维码
+			ivTDCard.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// 显示二维码图片
+				}
+			});
+			textViewEditPhoneShow.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (userInfo != null) {
+						Intent i = new Intent(CardEditActivity.this,
+								CardAddUserPhoneActivity.class);
+						i.putExtra(EDIT_PHONE_STR1, userInfo.getPhone());
+						// 此处要改为两个选项：对好友公开和对所有人公开。。
+						i.putExtra(EDIT_PHONE_STR2, userInfo.getIsPhoneOpen());
+						startActivityForResult(i, EDIT_PHONE);
+					} else {
+						CommonUtil.displayToast(getApplicationContext(),
+								R.string.error12);
+					}
+				}
+			});
+		}
 
 		buttonBack.setOnClickListener(new OnClickListener() {
 			@Override
@@ -246,34 +410,7 @@ public class CardEditActivity extends Activity {
 				CardEditActivity.this.finish();
 			}
 		});
-
-		buttonSubmit.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (edit) {
-					updateInfo();
-				} else {
-					CardEditActivity.this.finish();
-				}
-			}
-		});
-
-		textViewEditBirthShow.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (userInfo != null) {
-					Intent i = new Intent(CardEditActivity.this,
-							CardAddUserBirthActivity.class);
-					i.putExtra(EDIT_BIRTH_STR1, userInfo.getBirthday());// 阳历生日
-					i.putExtra(EDIT_BIRTH_STR2, userInfo.getIsBirthdayOpen());
-					i.putExtra(EDIT_BIRTH_STR3, userInfo.getBirthdayLunar());
-					startActivityForResult(i, EDIT_BIRTH);
-				} else {
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.error12);
-				}
-			}
-		});
+		// 44444444444444
 
 		textViewEditPlaceShow.setOnClickListener(new OnClickListener() {
 			@Override
@@ -281,110 +418,11 @@ public class CardEditActivity extends Activity {
 				if (userInfo != null) {
 					Intent i = new Intent(CardEditActivity.this,
 							CardAddUserCityActivity.class);
+					i.putExtra(EDITABLE, isEditable);// 是否可以编辑
 					i.putExtra(EDIT_PLACE_STR1, userInfo.getCity());
 					i.putExtra(EDIT_PLACE_STR2, userInfo.getHometown());
 					i.putExtra(EDIT_PLACE_STR3, userInfo.getTravelCity());
 					startActivityForResult(i, EDIT_PLACE);
-				} else {
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.error12);
-				}
-			}
-		});
-		textViewEditDreamShow.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (userInfo != null) {
-					Intent i = new Intent(CardEditActivity.this,
-							CardAddUserDreamActivity.class);
-					i.putExtra(EDIT_DREAM_STR, userInfo.getDream());
-					startActivityForResult(i, EDIT_DREAM);
-				} else {
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.error12);
-				}
-			}
-		});
-		// 此处要改为两个选项：对好友公开和对所有人公开。。
-		textViewEditEmailShow.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (userInfo != null) {
-					Intent i = new Intent(CardEditActivity.this,
-							CardAddUserEmailActivity.class);
-					i.putExtra(EDIT_EMAIL_STR1, userInfo.getEmail());
-					i.putExtra(EDIT_EMAIL_STR2, userInfo.getIsEmailOpen());
-					startActivityForResult(i, EDIT_EMAIL);
-				} else {
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.error12);
-				}
-			}
-		});
-
-		// lz add
-		textViewEditQQShow.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (userInfo != null) {
-					Intent i = new Intent(CardEditActivity.this,
-							CardAddUserQQActivity.class);
-					String qq = userInfo.getQq();
-					int qqopen = userInfo.getIsQqOpen();
-					if (qq != null)
-						i.putExtra(EDIT_QQ_STR1, qq);
-
-					i.putExtra(EDIT_QQ_STR2, qqopen);
-					startActivityForResult(i, EDIT_QQ);
-				} else {
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.error12);
-				}
-			}
-		});
-		// lz add
-		textViewEditWeixinShow.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (userInfo != null) {
-					Intent i = new Intent(CardEditActivity.this,
-							CardAddUserWeiXinActivity.class);
-					String weixin = userInfo.getWeixin();
-					int weixinopen = userInfo.getIsWeixinOpen();
-					if (weixin != null)
-						i.putExtra(EDIT_WEIXIN_STR1, weixin);
-					i.putExtra(EDIT_WEIXIN_STR2, weixinopen + "");
-					startActivityForResult(i, EDIT_WEIXIN);
-				} else {
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.error12);
-				}
-			}
-		});
-
-		textViewEditHobbyShow.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (userInfo != null) {
-					Intent i = new Intent(CardEditActivity.this,
-							CardAddUserHobbyActivity.class);
-					i.putExtra(EDIT_HOBBY_STR, userInfo.getHobby());
-					startActivityForResult(i, EDIT_HOBBY);
-				} else {
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.error12);
-				}
-			}
-		});
-		// 价值观与信念，接口暂时无此字段
-		textViewEditZymShow.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (userInfo != null) {
-					Intent i = new Intent(CardEditActivity.this,
-							CardAddUserMottoActivity.class);
-					i.putExtra(EDIT_MOTTO_STR, userInfo.getFaith());
-					startActivityForResult(i, EDIT_MOTTO);
 				} else {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.error12);
@@ -423,6 +461,7 @@ public class CardEditActivity extends Activity {
 					}
 					Intent i = new Intent(CardEditActivity.this,
 							CardAddUserImageActivity.class);
+					i.putExtra(EDITABLE, isEditable);// 是否可以编辑
 					i.putStringArrayListExtra(EDIT_IMAGE_STR1, images);
 					i.putStringArrayListExtra(EDIT_IMAGE_STR2, ids);
 					startActivityForResult(i, EDIT_IMAGE);
@@ -433,28 +472,13 @@ public class CardEditActivity extends Activity {
 			}
 		});
 
-		textViewEditPhoneShow.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (userInfo != null) {
-					Intent i = new Intent(CardEditActivity.this,
-							CardAddUserPhoneActivity.class);
-					i.putExtra(EDIT_PHONE_STR1, userInfo.getPhone());
-					// 此处要改为两个选项：对好友公开和对所有人公开。。
-					i.putExtra(EDIT_PHONE_STR2, userInfo.getIsPhoneOpen());
-					startActivityForResult(i, EDIT_PHONE);
-				} else {
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.error12);
-				}
-			}
-		});
 		textViewEditNameShow.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (userInfo != null) {
 					Intent i = new Intent(CardEditActivity.this,
 							CardAddUserNameActivity.class);
+					i.putExtra(EDITABLE, isEditable);// 是否可以编辑
 					i.putExtra(EDIT_NAME_STR1, userInfo.getName());
 					i.putExtra(EDIT_NAME_STR2, userInfo.getGender());
 					i.putExtra(EDIT_NAME_STR3, userInfo.getMarried());
@@ -463,13 +487,6 @@ public class CardEditActivity extends Activity {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.error12);
 				}
-			}
-		});
-		// 二维码
-		ivTDCard.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// 显示二维码图片
 			}
 		});
 
@@ -496,6 +513,8 @@ public class CardEditActivity extends Activity {
 				if (userInfo != null) {
 					Intent i = new Intent(CardEditActivity.this,
 							CompanyDetailActivity.class);
+					i.putExtra(EDITABLE, isEditable);// 是否可以编辑
+					i.putExtra(USERID, userInfo.getUserid());// 是否可以编辑
 					startActivityForResult(i, EDIT_WORK);
 				} else {
 					CommonUtil.displayToast(getApplicationContext(),
@@ -800,7 +819,8 @@ public class CardEditActivity extends Activity {
 			// }
 		} else {
 			if (mConnHelper != null)
-				mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, userid);
+				mConnHelper
+						.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, guestId);
 		}
 	}
 

@@ -7,7 +7,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
@@ -20,23 +19,22 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/name_pub_event"
             android:drawablePadding="5dp"
-            android:text="@string/people" />
+            android:text="@string/people"
+            android:textColor="@color/white" />
 
         <EditText
             android:id="@+id/idp_people"
             style="@style/basic_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white" />
+            android:layout_marginLeft="5dp"
+            android:background="@null"
+            android:textColor="@color/white" />
     </LinearLayout>
-
-    <include layout="@layout/bg_image" 
-        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
@@ -49,16 +47,22 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/phone_pub_event"
             android:drawablePadding="5dp"
-            android:text="@string/phone" />
+            android:text="@string/phone"
+            android:textColor="@color/white" />
 
         <EditText
             android:id="@+id/idp_phone"
             style="@style/basic_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white" />
+            android:layout_marginLeft="5dp"
+            android:background="@null"
+            android:textColor="@color/white" />
     </LinearLayout>
 
-    <include layout="@layout/bg_image" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white" />
 
 </LinearLayout>

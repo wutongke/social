@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
+import com.cpstudio.zhuojiaren.CardEditActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
@@ -72,6 +73,8 @@ public class CompanyDetailActivity extends BaseActivity {
 	int curIndex = 0;
 	String[] industryArray;
 	String[] positionsArray;
+	boolean isEditable;
+	String userid = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +88,9 @@ public class CompanyDetailActivity extends BaseActivity {
 		title.setText(R.string.title_activity_card_add_user_work);
 
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-
+		isEditable = getIntent().getBooleanExtra(CardEditActivity.EDITABLE,
+				false);
+		userid = getIntent().getStringExtra(CardEditActivity.USERID);
 		cityList = mConnHelper.getCitys();
 		prepareData();
 		initOnClick();
@@ -170,17 +175,19 @@ public class CompanyDetailActivity extends BaseActivity {
 			}
 		});
 		vMainProduct.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(edtMode==EditMODE.ADD)
-				{
-					CommonUtil.displayToast(getApplicationContext(), "请先保存此公司后再编辑产品！");
-					return ;
+				if (edtMode == EditMODE.ADD) {
+					CommonUtil.displayToast(getApplicationContext(),
+							"请先保存此公司后再编辑产品！");
+					return;
 				}
-				Intent intent = new Intent(CompanyDetailActivity.this, ProductDetailActivity.class);
+				Intent intent = new Intent(CompanyDetailActivity.this,
+						ProductDetailActivity.class);
 				intent.putExtra("commpanyId", catchCompany.getComid());
+				intent.putExtra(CardEditActivity.EDITABLE, isEditable);
 				CompanyDetailActivity.this.startActivity(intent);
 			}
 		});
@@ -220,54 +227,62 @@ public class CompanyDetailActivity extends BaseActivity {
 
 			}
 		});
-
-		function.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (edtMode == EditMODE.VIEW)
-					return;
-				else if (edtMode == EditMODE.ADD) {
-					mConnHelper.addCompany(mUIHandler, MsgTagVO.PUB_INFO,
-							editTextCompany.getText().toString(),
-							catchCompany.getIndustry(), catchCompany.getCity(),
-							catchCompany.getPosition(),
-							catchCompany.getHomepage(), 0);
-				} else {
-					mConnHelper.updateCompany(mUIHandler, MsgTagVO.UPDATE,
-							catchCompany.getComid(), editTextCompany.getText()
-									.toString(), catchCompany.getIndustry(),
-							catchCompany.getCity(), catchCompany.getPosition(),
-							editTextWeb.getText().toString(), 0);
+		if (!isEditable) {
+			function.setVisibility(View.GONE);
+			findViewById(R.id.editMenue).setVisibility(View.GONE);
+			vMainProduct.setEnabled(true);
+		} else {
+			function.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					if (edtMode == EditMODE.VIEW)
+						return;
+					else if (edtMode == EditMODE.ADD) {
+						mConnHelper.addCompany(mUIHandler, MsgTagVO.PUB_INFO,
+								editTextCompany.getText().toString(),
+								catchCompany.getIndustry(),
+								catchCompany.getCity(),
+								catchCompany.getPosition(),
+								catchCompany.getHomepage(), 0);
+					} else {
+						mConnHelper.updateCompany(mUIHandler, MsgTagVO.UPDATE,
+								catchCompany.getComid(), editTextCompany
+										.getText().toString(), catchCompany
+										.getIndustry(), catchCompany.getCity(),
+								catchCompany.getPosition(), editTextWeb
+										.getText().toString(), 0);
+					}
 				}
-			}
-		});
-		btnAdd.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				edtMode = EditMODE.ADD;
-				fillItemInfo(-1);
-				setEnable(true);
-			}
-		});
-		btnModify.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				edtMode = EditMODE.EDIT;
-				setEnable(true);
-			}
-		});
-		btnDelete.setOnClickListener(new OnClickListener() {
+			});
+			btnAdd.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					edtMode = EditMODE.ADD;
+					fillItemInfo(-1);
+					setEnable(true);
+				}
+			});
+			btnModify.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					edtMode = EditMODE.EDIT;
+					setEnable(true);
+				}
+			});
+			btnDelete.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				mConnHelper.deleteCompanyInfo(mUIHandler, MsgTagVO.DATA_OTHER,
-						catchCompany.getComid());
-			}
-		});
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					mConnHelper.deleteCompanyInfo(mUIHandler,
+							MsgTagVO.DATA_OTHER, catchCompany.getComid());
+				}
+			});
+		}
+
 	}
 
 	void prepareData() {
@@ -325,7 +340,7 @@ public class CompanyDetailActivity extends BaseActivity {
 	private void loadData() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
 		} else {
-			mConnHelper.getCompanyInfo(mUIHandler, MsgTagVO.DATA_LOAD, null);
+			mConnHelper.getCompanyInfo(mUIHandler, MsgTagVO.DATA_LOAD, userid);
 		}
 	}
 
@@ -394,7 +409,7 @@ public class CompanyDetailActivity extends BaseActivity {
 					companyList.clear();
 					companyList.addAll(nljh.parseCompanyInfoList());
 					resetListVIew();
-					fillItemInfo(companyList.size()-1);
+					fillItemInfo(companyList.size() - 1);
 				}
 				break;
 			case MsgTagVO.DATA_OTHER:// 删除
@@ -436,6 +451,8 @@ public class CompanyDetailActivity extends BaseActivity {
 				fillItemInfo(position);
 				setEnable(false);
 				edtMode = EditMODE.VIEW;
+				if(isEditable)
+					vMainProduct.setEnabled(true);
 			}
 		});
 	}

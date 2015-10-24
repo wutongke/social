@@ -264,6 +264,7 @@
     <string name="info33">是否准备或正在创业：</string>
     <string name="info34">是否准备或正在工作：</string>
     <string name="info35">请输入企业名称</string>
+    
     <string name="info36">请输入职务名称</string>
     <string name="info37">真实完善个人资料，让你更容易获得机会</string>
     <string name="info38">请输入手机号码</string>
@@ -312,6 +313,7 @@
     <string name="info80">文件已复制到</string>
     <string name="info81">复制文件失败</string>
     <string name="info82">个联系人</string>
+     <string name="info83">请输入企业网站</string>
     <string name="label_move_cancel">拖到此处取消</string>
     <string name="label_release_cancel">松开手指,取消发送</string>
     <string name="label_press">按住说话</string>

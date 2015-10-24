@@ -158,7 +158,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_corners"
                 android:orientation="vertical" >
             </LinearLayout>
         </LinearLayout>
@@ -169,7 +168,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/gray"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="10dp" >
@@ -181,6 +179,7 @@
             android:background="#00000000"
             android:drawableLeft="@drawable/addpeople"
             android:minHeight="20dp"
+            android:drawablePadding="@dimen/dic_bettween"
             android:text="@string/add_contact"
             android:textColor="@color/white" />
     </LinearLayout>

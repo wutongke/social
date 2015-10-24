@@ -32,6 +32,7 @@ public class CardAddUserImageActivity extends Activity {
 	private ZhuoConnHelper mConnHelper = null;
 	private Map<String, View> toDelView = new HashMap<String, View>();
 	private ArrayList<String> local = new ArrayList<String>();
+	boolean isEditable = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class CardAddUserImageActivity extends Activity {
 				.getStringArrayListExtra(CardEditActivity.EDIT_IMAGE_STR1);
 		ArrayList<String> ids = intent
 				.getStringArrayListExtra(CardEditActivity.EDIT_IMAGE_STR2);
+		isEditable = intent.getBooleanExtra(CardEditActivity.EDITABLE, false);
 		for (int i = 0; i < images.size(); i++) {
 			if (ids.get(i).equals(CardEditActivity.LOCAL_IMAGE)) {
 				local.add(images.get(i));
@@ -52,6 +54,7 @@ public class CardAddUserImageActivity extends Activity {
 				neturls.add(images.get(i));
 			}
 		}
+
 		pwh = new PopupWindows(CardAddUserImageActivity.this);
 		mIsh = ImageSelectHelper.getIntance(CardAddUserImageActivity.this,
 				R.id.linearLayoutPicContainer);
@@ -91,24 +94,24 @@ public class CardAddUserImageActivity extends Activity {
 							@Override
 							public void onClick(View v) {
 								String id = (String) v.getTag();
-//								mConnHelper.delheaderimg(id, mUIHandler,
-//										MsgTagVO.PUB_INFO,
-//										CardAddUserImageActivity.this, true,
-//										null, id);
+								// mConnHelper.delheaderimg(id, mUIHandler,
+								// MsgTagVO.PUB_INFO,
+								// CardAddUserImageActivity.this, true,
+								// null, id);
 								toDelView.put(id, v);
 								mIsh.removeFromContainer(toDelView.get(id));
 							}
 						}, null);
 				mIsh.insertLocalImage(local);
 				break;
-//			case MsgTagVO.PUB_INFO:
-//				if (JsonHandler.checkResult((String) msg.obj,
-//						getApplicationContext())) {
-//					Bundle bundle = msg.getData();
-//					String id = bundle.getString("data");
-//					mIsh.removeFromContainer(toDelView.get(id));
-//				}
-//				break;
+			// case MsgTagVO.PUB_INFO:
+			// if (JsonHandler.checkResult((String) msg.obj,
+			// getApplicationContext())) {
+			// Bundle bundle = msg.getData();
+			// String id = bundle.getString("data");
+			// mIsh.removeFromContainer(toDelView.get(id));
+			// }
+			// break;
 			default:
 				break;
 			}
@@ -129,45 +132,50 @@ public class CardAddUserImageActivity extends Activity {
 						}, null, R.string.info27);
 			}
 		});
-		findViewById(R.id.buttonSubmit).setOnClickListener(
-				new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						ArrayList<String> images = new ArrayList<String>();
-						ArrayList<String> ids = new ArrayList<String>();
-						for (String tag : mIsh.getTags()) {
-							if (network.containsKey(tag)) {
-								ids.add(tag);
-							} else {
-								images.add(tag);
+		if (!isEditable)
+			findViewById(R.id.buttonSubmit).setVisibility(View.GONE);
+		else {
+			findViewById(R.id.buttonSubmit).setOnClickListener(
+					new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							ArrayList<String> images = new ArrayList<String>();
+							ArrayList<String> ids = new ArrayList<String>();
+							for (String tag : mIsh.getTags()) {
+								if (network.containsKey(tag)) {
+									ids.add(tag);
+								} else {
+									images.add(tag);
+								}
 							}
+							Intent i = new Intent();
+							i.putExtra(CardEditActivity.EDIT_IMAGE_STR1, images);
+							i.putExtra(CardEditActivity.EDIT_IMAGE_STR2, ids);
+							setResult(RESULT_OK, i);
+							CardAddUserImageActivity.this.finish();
 						}
-						Intent i = new Intent();
-						i.putExtra(CardEditActivity.EDIT_IMAGE_STR1, images);
-						i.putExtra(CardEditActivity.EDIT_IMAGE_STR2, ids);
-						setResult(RESULT_OK, i);
-						CardAddUserImageActivity.this.finish();
+					});
+
+			mIsh.getmAddButton().setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					mIsh.initParams();
+					if (mIsh.getTags() != null && mIsh.getTags().size() < 9) {
+						pwh.showPop(findViewById(R.id.rootLayout));
+					} else {
+						mIsh.getmAddButton().setVisibility(View.GONE);
+						CommonUtil.displayToast(getApplicationContext(),
+								R.string.error24);
 					}
-				});
-
-		mIsh.getmAddButton().setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				mIsh.initParams();
-				if (mIsh.getTags() != null && mIsh.getTags().size() < 9) {
-					pwh.showPop(findViewById(R.id.rootLayout));
-				} else {
-					mIsh.getmAddButton().setVisibility(View.GONE);
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.error24);
 				}
-			}
-		});
+			});
+		}
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		String filePath = pwh.dealPhotoReturn(requestCode, resultCode, data,false);
+		String filePath = pwh.dealPhotoReturn(requestCode, resultCode, data,
+				false);
 		if (filePath != null) {
 			try {
 				mIsh.insertLocalImage(filePath);

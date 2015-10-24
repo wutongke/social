@@ -29,16 +29,17 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textSize="15sp"
+        android:padding="10dp"
         android:gravity="center_vertical|top"
         android:hint="@string/text_pub_topic_hint"
         android:inputType="textMultiLine" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/editTextContent"
-        android:background="@color/white"
         android:orientation="vertical"
+        android:background="#f7f7f7"
         android:padding="20dp" >
 
         <com.cpstudio.zhuojiaren.widget.MyGridView
@@ -61,7 +62,8 @@
             style="@style/basic_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/bg_head_add"
+            android:drawableLeft="@drawable/addimg_pub_event"
+            android:drawablePadding="@dimen/dic_bettween"
             android:gravity="center_vertical"
             android:text="@string/image_des2" />
     </LinearLayout>

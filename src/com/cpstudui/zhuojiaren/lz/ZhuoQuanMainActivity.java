@@ -92,6 +92,8 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	View btnJoinQuan;
 	@InjectView(R.id.activity_function_image)
 	ImageView ivFunSimply;
+	@InjectView(R.id.ivClose)
+	ImageView ivClose;
 
 	@InjectView(R.id.btnQuanChat)
 	View btnQuanChat;
@@ -401,6 +403,15 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			public void onClick(View v) {
 				mConnHelper.followGroup(mUIHandler, MsgTagVO.FOLLOW_QUAN,
 						groupid, QuanVO.QUAN_JOIN, null, "");
+			}
+		});
+		ivClose.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				findViewById(R.id.linearLayoutBroadcast).setVisibility(
+						View.GONE);
 			}
 		});
 	}

@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:id="@+id/userNameShowParent"
-        style="@style/view_topbar_bg">
+        style="@style/view_topbar_bg" >
 
         <TextView
             android:id="@+id/userNameShow"
@@ -21,42 +21,49 @@
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
-        <include layout="@layout/goback_button"/>
+        <include layout="@layout/goback_button" />
     </RelativeLayout>
-
-    <GridView
-        android:id="@+id/gridview_procedure"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:horizontalSpacing="10dp"
-        android:listSelector="@drawable/indicator_list"
-        android:numColumns="3"
-        android:verticalSpacing="10dp" >
-    </GridView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center" >
+        android:orientation="vertical"
+        android:background="@drawable/fxindex" >
 
-        <TextView
-            android:id="@+id/textViewPosInfo"
-            android:layout_width="wrap_content"
+        <GridView
+            android:id="@+id/gridview_procedure"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="#dddddd"
-            android:drawableLeft="@drawable/zaddress2"
-            android:drawablePadding="15dp"
+            android:layout_margin="10dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="5dp"
-            android:text="@string/info20" />
+            android:horizontalSpacing="10dp"
+            android:listSelector="@drawable/indicator_list"
+            android:numColumns="3"
+            android:verticalSpacing="10dp" >
+        </GridView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/textViewPosInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#dddddd"
+                android:drawableLeft="@drawable/zaddress2"
+                android:drawablePadding="15dp"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp"
+                android:text="@string/info20" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -20,7 +20,7 @@
     <LinearLayout
         android:id="@+id/linearLayoutBottom"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="#767475"
         android:baselineAligned="false"
@@ -37,12 +37,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="5dp"
+                android:drawablePadding="5dp"
                 android:drawableTop="@drawable/share_hqxq1"
                 android:gravity="center_horizontal"
                 android:text="@string/label_share"
-                android:textSize="@dimen/drawable_text"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textSize="@dimen/drawable_text" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -55,12 +55,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="5dp"
+                android:drawablePadding="5dp"
                 android:drawableTop="@drawable/zhan2_hqxq1"
                 android:gravity="center"
                 android:text="@string/label_good"
-                android:textSize="@dimen/drawable_text"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textSize="@dimen/drawable_text" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -73,12 +73,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="5dp"
+                android:drawablePadding="5dp"
                 android:drawableTop="@drawable/collect_hqxq1"
                 android:gravity="center_horizontal"
                 android:text="@string/label_collect"
-                android:textSize="@dimen/drawable_text"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textSize="@dimen/drawable_text" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -91,12 +91,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="5dp"
+                 android:drawablePadding="5dp"
                 android:drawableTop="@drawable/write_qht1"
                 android:gravity="center_horizontal"
                 android:text="@string/label_cmt"
-                android:textSize="@dimen/drawable_text"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textSize="@dimen/drawable_text" />
         </RelativeLayout>
     </LinearLayout>
 

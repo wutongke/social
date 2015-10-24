@@ -26,6 +26,8 @@
                 layout="@layout/item_product_add" />
 
             <LinearLayout
+                android:id="@+id/editMenue"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

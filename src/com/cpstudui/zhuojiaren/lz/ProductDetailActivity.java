@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
+import com.cpstudio.zhuojiaren.CardEditActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -80,7 +81,7 @@ public class ProductDetailActivity extends BaseActivity {
 	int curIndex = 0;
 	String commpanyId = "";
 	private int requestCode = 1;
-
+	boolean isEditable;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -97,6 +98,8 @@ public class ProductDetailActivity extends BaseActivity {
 		pwh = new PopupWindows(ProductDetailActivity.this);
 		mIsh = ImageSelectHelper.getIntance(ProductDetailActivity.this,
 				R.id.linearLayoutPicContainer);
+		isEditable = getIntent().getBooleanExtra(CardEditActivity.EDITABLE,
+				false);
 		initISH(false);
 		initOnClick();
 		loadData();
@@ -106,6 +109,7 @@ public class ProductDetailActivity extends BaseActivity {
 	{
 		if(flag)
 		mIsh.clear();
+		if(isEditable)
 		mIsh.getmAddButton().setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -143,7 +147,10 @@ public class ProductDetailActivity extends BaseActivity {
 
 	private void initOnClick() {
 		// TODO Auto-generated method stub
-		
+		if (!isEditable) {
+			function.setVisibility(View.GONE);
+			findViewById(R.id.editMenue).setVisibility(View.GONE);
+		} else {
 		function.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -198,6 +205,7 @@ public class ProductDetailActivity extends BaseActivity {
 						catchProduct.getProductid());
 			}
 		});
+		}
 	}
 
 	void clear() {

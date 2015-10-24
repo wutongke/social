@@ -430,7 +430,8 @@
             android:name="com.cpstudio.zhuojiaren.CardEditActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_card_edit"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.MyHomeActivity"
@@ -698,7 +699,7 @@
              <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" />
+            android:process=":remote" />
         -->
         <service
             android:name="com.cpstudio.zhuojiaren.service.ImService"
@@ -729,13 +730,12 @@
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.BaseFragmentActivity"
-             android:screenOrientation="portrait"
-            android:label="@string/title_activity_base_fragment" >
+            android:label="@string/title_activity_base_fragment"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.ViewOrderActivity"
-             android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
         </activity>
         <!-- lzlz -->
 
