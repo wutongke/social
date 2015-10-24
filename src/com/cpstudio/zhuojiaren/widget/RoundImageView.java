@@ -19,9 +19,9 @@ import com.cpstudio.zhuojiaren.R;
 
 /**
  * 
- * 圆形ImageView，可设置�?��两个宽度不同且颜色不同的圆形边框�?
+ * 圆形ImageView，可设置两个宽度不同且颜色不同的圆形边框
  * 
- * 设置颜色在xml布局文件中由自定义属性配置参数指�?
+ * 设置颜色在xml布局文件中由自定义属性配置参数指
  */
 
 public class RoundImageView extends ImageView {

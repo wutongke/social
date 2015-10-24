@@ -203,11 +203,9 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						viewPager.setAdapter(getPagerAdapter());
 						tabButton.setViewPager(viewPager);
 						tabButton.setVisibility(View.VISIBLE);
-
 					}
 				}
 				break;
-
 			}
 			case MsgTagVO.PUB_INFO: {
 				if (JsonHandler.checkResult((String) msg.obj,

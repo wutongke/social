@@ -72,7 +72,6 @@ public class TabButton extends HorizontalScrollView {
 		super(context);
 		init(context, null);
 		this.mContext = context;
-	
 	}
 
 	public TabButton(Context context, AttributeSet attrs) {
