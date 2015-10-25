@@ -334,7 +334,8 @@ public class CompanyDetailActivity extends BaseActivity {
 		tvIndustry.setEnabled(flag);
 		tvPosition.setEnabled(flag);
 		editTextWeb.setEnabled(flag);
-		vMainProduct.setEnabled(flag);
+		if(isEditable)
+			vMainProduct.setEnabled(flag);
 	}
 
 	private void loadData() {
@@ -451,8 +452,6 @@ public class CompanyDetailActivity extends BaseActivity {
 				fillItemInfo(position);
 				setEnable(false);
 				edtMode = EditMODE.VIEW;
-				if(isEditable)
-					vMainProduct.setEnabled(true);
 			}
 		});
 	}

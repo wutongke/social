@@ -199,8 +199,9 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				if (arg0 == 2) {
 					// 不展示第三个page
 					viewPager.setCurrentItem(1);
-					mContext.startActivity(new Intent(mContext,
-							CardEditActivity.class));
+					Intent intent = new Intent(mContext, CardEditActivity.class);
+					intent.putExtra("id", userid);
+					mContext.startActivity(intent);
 					// 跳转到供需发布页面
 				}
 			}
@@ -223,9 +224,11 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			@Override
 			public void tabsButtonOnClick(int id, View v) {
 				// TODO Auto-generated method stub
-				if ((Integer) (v.getTag()) == 2)
-					mContext.startActivity(new Intent(mContext,
-							CardEditActivity.class));
+				if ((Integer) (v.getTag()) == 2) {
+					Intent intent = new Intent(mContext, CardEditActivity.class);
+					intent.putExtra("id", userid);
+					mContext.startActivity(intent);
+				}
 				else {
 					viewPager.setCurrentItem((Integer) v.getTag());
 				}
@@ -353,9 +356,10 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				userInfo.getName(), Uri.parse(userInfo.getUheader()));
 		info.setName(userInfo.getName());
 		info.setUserId(userInfo.getUserid());
-		msg.setUserInfo(info);//对方接受到的仍然为null
+		msg.setUserInfo(info);// 对方接受到的仍然为null
 		RongIM.getInstance()
-				.getRongIMClient()//接受到的content固定为"请求加为好友，有用的只有id"
+				.getRongIMClient()
+				// 接受到的content固定为"请求加为好友，有用的只有id"
 				.sendMessage(ConversationType.PRIVATE, userInfo.getUserid(),
 						msg, userInfo.getName(), new SendMessageCallback() {
 							@Override
@@ -502,7 +506,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.FAILED);
 				}
-				
+
 				break;
 			}
 			}

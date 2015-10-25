@@ -410,7 +410,6 @@ public class CardEditActivity extends Activity {
 				CardEditActivity.this.finish();
 			}
 		});
-		// 44444444444444
 
 		textViewEditPlaceShow.setOnClickListener(new OnClickListener() {
 			@Override

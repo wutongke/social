@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.CardEditActivity;
 import com.cpstudio.zhuojiaren.R;
 
 public class TextEditActivity extends BaseActivity {
