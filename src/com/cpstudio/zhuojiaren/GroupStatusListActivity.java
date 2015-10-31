@@ -66,7 +66,7 @@ public class GroupStatusListActivity extends Activity implements
 	String[] titleArray;
 	private String mLastId = "0";
 	private ZhuoConnHelper mConnHelper = null;
-	private int mPage = 1;
+	private int mPage = 0;
 	final int pageSize = 10;
 
 	// private InfoFacade infoFacade = null;
@@ -304,7 +304,7 @@ public class GroupStatusListActivity extends Activity implements
 
 	@Override
 	public void onRefresh() {
-		mPage = 1;
+		mPage = 0;
 		loadData();
 	}
 

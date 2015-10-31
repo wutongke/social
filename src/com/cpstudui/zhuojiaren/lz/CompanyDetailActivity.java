@@ -165,6 +165,8 @@ public class CompanyDetailActivity extends BaseActivity {
 										// TODO Auto-generated method stub
 										if (tvIndustry == null)
 											return;
+										if (catchCompany.getIndustry() <= 0)
+											catchCompany.setIndustry(1);
 										tvIndustry
 												.setText(industryArray[catchCompany
 														.getIndustry() - 1]);
@@ -334,7 +336,7 @@ public class CompanyDetailActivity extends BaseActivity {
 		tvIndustry.setEnabled(flag);
 		tvPosition.setEnabled(flag);
 		editTextWeb.setEnabled(flag);
-		if(isEditable)
+		if (isEditable)
 			vMainProduct.setEnabled(flag);
 	}
 

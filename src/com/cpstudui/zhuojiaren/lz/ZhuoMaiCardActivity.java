@@ -105,7 +105,9 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	Button btnChat;
 	@InjectView(R.id.rootmain)
 	View rootMainBG;//
-
+	@InjectView(R.id.rlSendCard)
+	View rlSendCard;//
+	
 	private final static int USER_SELECT = 0;
 	private Context mContext;
 	List<Fragment> fragments;
@@ -125,7 +127,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	private UserFacade userFacade = null;
 	UserNewVO userInfo;
 	BaseCodeData baseDataSet;
-
 	// 用于在fragment中获得groupid
 	public String getGroupid() {
 		return groupid;
@@ -195,7 +196,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			@Override
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
-
 				if (arg0 == 2) {
 					// 不展示第三个page
 					viewPager.setCurrentItem(1);
@@ -224,13 +224,14 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			@Override
 			public void tabsButtonOnClick(int id, View v) {
 				// TODO Auto-generated method stub
-				if ((Integer) (v.getTag()) == 2) {
+				int item=(Integer) (v.getTag());
+				if ( item== 2) {
 					Intent intent = new Intent(mContext, CardEditActivity.class);
 					intent.putExtra("id", userid);
 					mContext.startActivity(intent);
 				}
 				else {
-					viewPager.setCurrentItem((Integer) v.getTag());
+					viewPager.setCurrentItem(item);
 				}
 			}
 		});
@@ -321,7 +322,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 						|| userInfo.getUserid().equals(myid))
 					CommonUtil.displayToast(ZhuoMaiCardActivity.this,
 							"已是好友，不需要再发送名片");
-				else {
+				else if(r != UserNewVO.USER_RELATION.RELATION_FRIENDS.ordinal()){
 					mConnHelper.makeFriends(mUIHandler, MsgTagVO.MSG_FOWARD,
 							userInfo.getUserid(), 1);
 				}
@@ -380,8 +381,8 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 	protected void onPause() {
 		super.onPause();
-		viewPager.setCurrentItem(0, false);
-		tabButton.setTabBackgroundByIndex(0);
+//		viewPager.setCurrentItem(0, false);
+//		tabButton.setTabBackgroundByIndex(0);
 	};
 
 	PagerAdapter getPagerAdapter() {
@@ -453,6 +454,11 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		} else {
 			ltNyselfMenue.setVisibility(View.GONE);
 			ltOtherMenue.setVisibility(View.VISIBLE);
+			if(userInfo.getRelation()==UserNewVO.USER_RELATION.RELATION_FRIENDS.ordinal())
+			{
+				rlSendCard.setVisibility(View.GONE);
+			}
+				
 		}
 	}
 
@@ -488,7 +494,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				}
 				break;
 			}
-			case MsgTagVO.MSG_LIKE:
+			case MsgTagVO.MSG_LIKE:{
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					CommonUtil.displayToast(getApplicationContext(),
@@ -497,6 +503,8 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.FAILED);
 				}
+				break;
+			}
 			case MsgTagVO.MSG_FOWARD: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
@@ -506,7 +514,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.FAILED);
 				}
-
 				break;
 			}
 			}

@@ -98,7 +98,7 @@ public class SearchMainActivity extends BaseActivity implements
 
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
-		
+
 		mAdapter = new ZhuoUserListAdapter2(SearchMainActivity.this, mList,
 				R.layout.item_zhuouser_list2, mUIHandler);
 		mListView.setAdapter(mAdapter);
@@ -117,10 +117,9 @@ public class SearchMainActivity extends BaseActivity implements
 					Intent i = new Intent();
 					i.setClass(SearchMainActivity.this,
 							ZhuoMaiCardActivity.class);
-					i.putExtra("userid",(String)view.getTag(R.id.tag_id));
+					i.putExtra("userid", (String) view.getTag(R.id.tag_id));
 					startActivity(i);
 				}
-
 			}
 		});
 		loadHistory();
@@ -131,7 +130,6 @@ public class SearchMainActivity extends BaseActivity implements
 	private void initClick() {
 		// TODO Auto-generated method stub
 		searchView.setOnEditorActionListener(new OnEditorActionListener() {
-
 			@Override
 			public boolean onEditorAction(TextView v, int actionId,
 					KeyEvent event) {
@@ -199,10 +197,10 @@ public class SearchMainActivity extends BaseActivity implements
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				if (position >= 1) {
-					mSearchKey = historyList.get(position - 1);
+				if (position >= 0) {
+					mSearchKey = historyList.get(position);
+					loadData();
 				}
-				loadData();
 			}
 		});
 		historyList.clear();

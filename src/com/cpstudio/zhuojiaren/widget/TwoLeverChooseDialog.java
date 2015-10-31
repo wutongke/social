@@ -106,6 +106,8 @@ public class TwoLeverChooseDialog extends AlertDialog {
 		for (int i = 0, n = province.length; i < n; i++) {
 			itemArray[i] = context.getResources().getStringArray(itemIds[i]);
 		}
+		selectedContent.setText(province[0] + " "
+				+ itemArray[0][0]);
 		firstLeverWV = (WheelView) placeView.findViewById(R.id.place_province);
 		secondLeverWV = (WheelView) placeView.findViewById(R.id.place_city);
 
@@ -156,6 +158,8 @@ public class TwoLeverChooseDialog extends AlertDialog {
 			itemArray[i] = (String[]) subStrings.get(i).toArray(
 					new String[size]);
 		}
+		selectedContent.setText(province[0] + " "
+				+ itemArray[0][0]);
 		firstLeverWV = (WheelView) placeView.findViewById(R.id.place_province);
 		secondLeverWV = (WheelView) placeView.findViewById(R.id.place_city);
 

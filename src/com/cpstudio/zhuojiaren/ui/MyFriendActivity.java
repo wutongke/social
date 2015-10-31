@@ -46,14 +46,19 @@ public class MyFriendActivity extends BaseActivity implements
 	// add by lz
 	boolean isManaging = false;
 
+	int type=0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_peoples);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		Intent intent = getIntent();
+		type=intent.getIntExtra("type", 0);
 		initTitle();
-		title.setText(R.string.label_myfri); // 还需要显示人数
+		if(type==1)
+			title.setText(R.string.renmai_my); 
+		else
+			title.setText(R.string.label_myfri); 
 		baseDataSet = mConnHelper.getBaseDataSet();
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
@@ -61,6 +66,7 @@ public class MyFriendActivity extends BaseActivity implements
 				R.layout.listview_header);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
+		mConnHelper.getMyRenmai(mUIHandler,MsgTagVO.DATA_LOAD);
 		mAdapter = new CommonAdapter<UserNewVO>(MyFriendActivity.this, mList,
 				R.layout.item_myfriends_list) {
 			@Override
@@ -166,7 +172,10 @@ public class MyFriendActivity extends BaseActivity implements
 
 	private void loadData() {
 		if (mPullDownView.startLoadData()) {
-			mConnHelper.getMyFriends(mUIHandler, MsgTagVO.DATA_LOAD);
+			if(1==type)
+				mConnHelper.getMyRenmai(mUIHandler,MsgTagVO.DATA_LOAD);
+			else
+				mConnHelper.getMyFriends(mUIHandler, MsgTagVO.DATA_LOAD);
 		}
 	}
 }

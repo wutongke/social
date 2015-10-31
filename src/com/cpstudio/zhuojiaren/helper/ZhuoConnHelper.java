@@ -1798,6 +1798,17 @@ public class ZhuoConnHelper {
 	}
 
 	/**
+	 * 获得我的人脉
+	 * @param mUIHandler
+	 * @param tag
+	 * @return
+	 */
+	public boolean getMyRenmai(Handler mUIHandler, int tag) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		return getFromServerByPost(ZhuoCommHelperLz.myRenmai(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	/**
 	 * 
 	 * @param mUIHandler
 	 * @param tag

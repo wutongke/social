@@ -38,20 +38,19 @@ public class CardAddUserDreamActivity extends Activity {
 		pwh = new PopupWindows(CardAddUserDreamActivity.this);
 		linearLayout = (LinearLayout) findViewById(R.id.linearLayoutDreams);
 		findViewById(R.id.editText).setTag("dream0");
-		dreamTags.add("dream0");
 		initClick();
 		Intent intent = getIntent();
 		String str = intent.getStringExtra(CardEditActivity.EDIT_DREAM_STR);
 		String strs[] = null;
 		ArrayList<String> dreams = new ArrayList<String>();
 		if (str != null) {
-			strs = str.split(",");
-
+			strs = str.split(";");
 			for (String dr : strs)
 				dreams.add(dr);
 		}
 		if (dreams != null && dreams.size() > 0) {
 			((EditText) findViewById(R.id.editText)).setText(dreams.get(0));
+			dreamTags.add(dreams.get(0));
 			for (int i = 1; i < dreams.size(); i++) {
 				addEditText(dreams.get(i));
 			}
@@ -70,21 +69,20 @@ public class CardAddUserDreamActivity extends Activity {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						String dreamsStr = "[";
+						String dreamsStr = "";
 						for (int i = 0; i < dreamTags.size(); i++) {
 							String dream = ((EditText) linearLayout
 									.findViewWithTag(dreamTags.get(i)))
 									.getText().toString();
 							if (!dream.trim().equals("")) {
 								selected.add(dream);
-								dreamsStr += "{\"dream\":\"" + dream + "\"},";
+								dreamsStr +=   dream + ";";
 							}
 						}
 						if (dreamsStr.length() > 1) {
 							dreamsStr = dreamsStr.substring(0,
 									dreamsStr.length() - 1);
 						}
-						dreamsStr += "]";
 						Intent i = new Intent();
 						i.putExtra(CardEditActivity.EDIT_DREAM_STR,
 								dreamsStr);
@@ -136,8 +134,8 @@ public class CardAddUserDreamActivity extends Activity {
 		View view = inflater.inflate(R.layout.item_dream_add, null);
 		view.setLayoutParams(lp);
 		((EditText) view.findViewById(R.id.editText)).setText(text);
-		view.findViewById(R.id.editText).setTag("dream" + dreamTags.size());
-		dreamTags.add("dream" + dreamTags.size());
+		view.findViewById(R.id.editText).setTag(text);
+		dreamTags.add(text);
 		linearLayout.addView(view);
 	}
 }

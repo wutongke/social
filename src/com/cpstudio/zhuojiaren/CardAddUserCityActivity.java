@@ -80,7 +80,7 @@ public class CardAddUserCityActivity extends Activity {
 		if (cityList == null)
 			tv.setText(codes);
 		else {
-			String text = getResources().getString(R.string.code_error);
+			String text = "";
 			String[] codeArray = codes.split(",");
 			if (codeArray == null || codeArray.length < 1) {
 				tv.setText(codes);

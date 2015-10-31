@@ -690,7 +690,7 @@ public class CardEditActivity extends Activity {
 
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHead);
 		int placeId = userInfo.getCity();
-		String placeText = getString(R.string.txt_data_error);
+		String placeText = getString(R.string.emptyvalue);
 		if (mConnHelper.getCitys() != null && placeId >= 1
 				&& placeId <= mConnHelper.getCitys().size())
 			placeText = mConnHelper.getCitys().get(placeId - 1).getCityName();
