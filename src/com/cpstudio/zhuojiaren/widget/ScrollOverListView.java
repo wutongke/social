@@ -519,4 +519,9 @@ public class ScrollOverListView extends ListView implements OnScrollListener {
 			break;
 		}
 	}
+	public void hideHead()
+	{
+		if(headView!=null)
+			headView.setVisibility(View.GONE);
+	}
 }

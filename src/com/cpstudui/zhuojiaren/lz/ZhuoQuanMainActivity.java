@@ -35,6 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseFragmentActivity;
+import com.cpstudio.zhuojiaren.MsgListActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.UserSelectActivity;
 import com.cpstudio.zhuojiaren.facade.GroupFacade;
@@ -50,6 +51,7 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.gtype;
 import com.cpstudio.zhuojiaren.ui.EditEventActivity;
+import com.cpstudio.zhuojiaren.ui.MyFriendActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.TabButton;
@@ -150,6 +152,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		//发布话题、活动成功后刷新
 		if(viewPager.getAdapter()!=null){
 			fragments.clear();
+			viewPager.removeAllViews();
 			viewPager.setAdapter(getPagerAdapter());
 			tabButton.setViewPager(viewPager);
 			tabButton.setVisibility(View.VISIBLE);
@@ -368,10 +371,13 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 
 					@Override
 					public void onClick(View v) {
+//						Intent i = new Intent(ZhuoQuanMainActivity.this,
+//								UserSelectActivity.class);
+//						i.putStringArrayListExtra("otherids", tempids);
+//						startActivityForResult(i, USER_SELECT);
 						Intent i = new Intent(ZhuoQuanMainActivity.this,
-								UserSelectActivity.class);
-						i.putStringArrayListExtra("otherids", tempids);
-						startActivityForResult(i, USER_SELECT);
+								MyFriendActivity.class);
+						startActivity(i);
 					}
 				};
 				// 需要另外设置菜单选项布局及响应事件

@@ -942,7 +942,7 @@
     <string name="label_quit_quan">退出圈子</string>
     <string name="label_gxsearchHint">请输入商机名称</string>
     <string name="title_find_need">发现需求</string>
-    <string name="title_search_resource">需找资源</string>
+    <string name="title_search_resource">寻找资源</string>
     <string name="title_pub_gx">供需发布</string>
     <string name="title_gx_filter">供需筛选</string>
     <string name="text_choose_location">选择区域：</string>
@@ -1143,6 +1143,7 @@
     <string name="clear">清除</string>
     <string name="txt_uncompleted">未完善</string>
     <string name="txt_data_error">数组错误</string>
+    <string name="emptyvalue"></string>
     <string name="txt_edit">修改</string>
     <string name="txt_cancel">取消修改</string>
     <string name="txt_add">增加</string>

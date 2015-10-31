@@ -262,4 +262,7 @@ public class PullDownView extends LinearLayout implements OnScrollOverListener {
 		mFooterView.setVisibility(View.GONE);
 		mFooterNoData.setVisibility(View.GONE);
 	}
+	public void noHead(){
+		mListView.hideHead();
+	}
 }

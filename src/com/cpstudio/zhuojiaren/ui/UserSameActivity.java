@@ -96,7 +96,7 @@ public class UserSameActivity extends BaseActivity implements
 			mAdapter = new ZhuoNearByUserListAdatper(UserSameActivity.this,
 					mList, R.layout.item_zhuouser_near_list);
 		mListView.setAdapter(mAdapter);
-		mPullDownView.setShowHeader();
+		mPullDownView.setHideHeader();
 		mPullDownView.setShowFooter(false);
 		initData();
 		initClick();
@@ -150,10 +150,12 @@ public class UserSameActivity extends BaseActivity implements
 				// msg.obj = list;
 				// msg.sendToTarget();
 			} else {
-				mConnHelper.getSameUser(mUIHandler, MsgTagVO.DATA_LOAD, type,
-						mPage, pageSize, itemId);
+				
 				if(type==8 || type==9 || type==10)
 					mConnHelper.getMyStatusCard(mUIHandler,MsgTagVO.DATA_LOAD,type-8);
+				else
+					mConnHelper.getSameUser(mUIHandler, MsgTagVO.DATA_LOAD, type,
+							mPage, pageSize, itemId);
 			}
 		}
 	}
@@ -286,7 +288,7 @@ public class UserSameActivity extends BaseActivity implements
 			// msg.sendToTarget();
 		} else {
 			if(type!=8 && type!=9 && type!=10)
-			mConnHelper.getSameUser(mUIHandler, MsgTagVO.DATA_MORE, type,
+				mConnHelper.getSameUser(mUIHandler, MsgTagVO.DATA_MORE, type,
 					mPage, pageSize, itemId);
 		}
 	}

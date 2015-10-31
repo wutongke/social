@@ -14,12 +14,14 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.cpstudio.zhuojiaren.MsgListActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ZMCDCount;
+import com.cpstudio.zhuojiaren.ui.MyFriendActivity;
 import com.cpstudio.zhuojiaren.ui.UserSameActivity;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -115,9 +117,13 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent i = new Intent(mContext, UserSameActivity.class);
-				i.putExtra("type", 12);
+				Intent i = new Intent(mContext,
+						MyFriendActivity.class);
+				i.putExtra("type", 1);
 				startActivity(i);
+//				Intent i = new Intent(mContext, UserSameActivity.class);
+//				i.putExtra("type", 12);
+//				startActivity(i);
 			}
 		});
 		llMyActive.setOnClickListener(new OnClickListener() {
@@ -145,7 +151,6 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 		} else {
 			mConnHelper.getZMDTCount(mUIHandler, MsgTagVO.DATA_LOAD, uid);
 		}
-
 	}
 
 }

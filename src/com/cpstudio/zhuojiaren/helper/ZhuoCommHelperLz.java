@@ -94,6 +94,7 @@ public class ZhuoCommHelperLz {
 	private final static String QUAN_REQ_USER_LIST = "/groupFollowReqUser.do";
 	
 	private final static String MAKE_FRIENDS = "/makeFriend.do";
+	private final static String MY_RENMAI = "/getFollowUser.do";
 	
 	
 	
@@ -537,6 +538,13 @@ public class ZhuoCommHelperLz {
 	 */
 	public static String makeFriends() {
 		return SERVER + MAKE_FRIENDS;
+	}
+	/**
+	 * ÎÒµÄÈËÂö
+	 * @return
+	 */
+	public static String myRenmai() {
+		return SERVER + MY_RENMAI;
 	}
 	
 }

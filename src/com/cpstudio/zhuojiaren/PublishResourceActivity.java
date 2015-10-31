@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -32,6 +33,7 @@ import com.cpstudio.zhuojiaren.model.sdtype;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.TwoLeverChooseDialog;
+import com.umeng.socialize.utils.Log;
 
 public class PublishResourceActivity extends BaseActivity {
 	@InjectView(R.id.btnAddContactPeople)

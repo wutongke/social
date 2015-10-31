@@ -4,7 +4,7 @@ import java.util.List;
 
 public class UserNewVO {
 	//用户关系，对应字段relationType的去值.0:无关注  1:自己  2:单向关注  3:好友
-	public enum USER_RELATION{RELATION_STRANGER,RELATION_MYSELF,RELATION_SINGL,ELATION_FRIENDS};
+	public enum USER_RELATION{RELATION_STRANGER,RELATION_MYSELF,RELATION_SINGL,RELATION_FRIENDS};
 	
 	private String signature;// 签名
 	private String faith;
