@@ -1216,7 +1216,28 @@ public class ZhuoConnHelper {
 				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
 				"pubQuanTopic", false, null, null);
 	}
-
+	/**
+	 * 发布反馈意见
+	 * 
+	 * @param activity
+	 * @param mUIHandler
+	 * @param tag
+	 * @param groupid
+	 * @param content
+	 * @param files
+	 * @return
+	 */
+	public boolean pubAdvice(Activity activity, Handler mUIHandler, int tag,
+			String groupid, String content, ArrayList<String> files) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
+		fileMap.put("file", files);
+		return doPostWithFile(fileMap, nameValuePairs,
+				ZhuoCommHelperLz.pubAdvice(), mUIHandler, tag, activity,
+				"pubAdvice", false, null, null);
+	}
 	/**
 	 * 发布反馈意见
 	 * 

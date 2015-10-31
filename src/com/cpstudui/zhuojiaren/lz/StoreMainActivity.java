@@ -218,7 +218,7 @@ public class StoreMainActivity extends BaseActivity implements
 			}
 			case MsgTagVO.FLIP:
 				adsViewPager.setCurrentItem((adsViewPager.getCurrentItem() + 1)
-						% adsPageAdapter.getCount());
+						% adsPageAdapter.getCount(),false);
 
 				break;
 			}

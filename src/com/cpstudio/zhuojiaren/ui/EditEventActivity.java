@@ -287,8 +287,8 @@ public class EditEventActivity extends BaseActivity {
 		LayoutInflater infloater = EditEventActivity.this.getLayoutInflater();
 		View view = infloater.inflate(R.layout.item_add_people, null);
 		EditText people = (EditText) view.findViewById(R.id.idp_people);
-		EditText peopleTitle = (EditText) view.findViewById(R.id.idp_peopel_title);
-		EditText phoneTitle = (EditText) view.findViewById(R.id.idp_phone_title);
+		TextView peopleTitle = (TextView) view.findViewById(R.id.idp_peopel_title);
+		TextView phoneTitle = (TextView) view.findViewById(R.id.idp_phone_title);
 		EditText phone = (EditText) view.findViewById(R.id.idp_phone);
 		people.setTextColor(Color.BLACK);
 		peopleTitle.setTextColor(Color.BLACK);

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -85,8 +86,9 @@ public class SettingActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				UpdateManager.getUpdateManager().checkAppUpdate(SettingActivity.this,
-						true);
+				Toast.makeText(SettingActivity.this, "已是最新版本", Toast.LENGTH_SHORT).show();
+//				UpdateManager.getUpdateManager().checkAppUpdate(SettingActivity.this,
+//						true);
 			}
 		});
 		newMessage.setOnClickListener(new OnClickListener() {

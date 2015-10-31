@@ -47,7 +47,7 @@ public class CrowdFundingListActivity extends BaseActivity {
 		String type = getIntent().getStringExtra("type");
 		int typeId = getIntent().getIntExtra("typeid", 0);
 		if (typeId <= 2) {
-			typePubOrInv = typeId;
+			typePubOrInv = 1 ;
 		} else {
 			typeCrowd = typeId - 2;
 		}
@@ -93,7 +93,7 @@ public class CrowdFundingListActivity extends BaseActivity {
 				Intent intent = new Intent(CrowdFundingListActivity.this,
 						CrowdFundingDetailActivity.class);
 				intent.putExtra(CrowdFundingVO.CROWDFUNDINGID,
-						mAdapter.getItem(position).getId());
+						mAdapter.getItem(position-1).getId());
 				startActivity(intent);
 			}
 		});

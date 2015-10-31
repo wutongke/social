@@ -71,6 +71,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
 				setFunctionText(arg0);
+				((QuanziFra) (fragments.get(0))).offManager();
 				if(arg0==3 || arg0 == 1){
 					function.setVisibility(View.GONE);
 				}else{

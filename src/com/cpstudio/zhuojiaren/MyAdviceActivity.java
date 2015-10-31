@@ -148,10 +148,7 @@ public class MyAdviceActivity extends BaseActivity {
 			etContent.requestFocus();
 			return;
 		}
-		mConnHelper.pubQuanTopic(MyAdviceActivity.this, mUIHandler, MsgTagVO.PUB_INFO, groupid, content, imageDir);
-//		mConnHelper.pubZhuoInfo(mIsh.getTags(), mUIHandler, MsgTagVO.PUB_INFO,
-//				PublishActiveActivity.this, content, tag, mLocation, imgCnt,
-//				"daily", true, null, null);
+		mConnHelper.pubAdvice(MyAdviceActivity.this, mUIHandler, MsgTagVO.PUB_INFO, groupid, content, imageDir);
 	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

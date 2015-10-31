@@ -363,6 +363,7 @@ public class AppClientLef {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair(idKey, id));
+		if(stateKey !=null &&!stateKey.equals(""))
 		nameValuePairs.add(new BasicNameValuePair(stateKey, state));
 		return doPost(nameValuePairs, url, null, 0, acitivity, url, false,
 				null, null);

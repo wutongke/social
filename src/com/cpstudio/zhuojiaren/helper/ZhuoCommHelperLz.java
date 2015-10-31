@@ -20,6 +20,8 @@ public class ZhuoCommHelperLz {
 	private final static String SERVICE_GET_UPLOADTOKEN = "/qiniu/getUploadToken.do";
 
 	private final static String SERVICE_PUB_GROUP_TOPIC = "/addgrouptopic.do";
+	
+	private final static String SERVICE_ADVICE = "/addFeedback.do";
 
 	private final static String SERVICE_GET_QUANEVENTLIST = "/groupActivityList.do";
 
@@ -166,6 +168,15 @@ public class ZhuoCommHelperLz {
 	 */
 	public static String pubQuanTopic() {
 		return SERVER + SERVICE_PUB_GROUP_TOPIC;
+	}
+	
+	/**
+	 * 发布反馈意见
+	 * 
+	 * @return
+	 */
+	public static String pubAdvice() {
+		return SERVER + SERVICE_ADVICE;
 	}
 
 	/**
