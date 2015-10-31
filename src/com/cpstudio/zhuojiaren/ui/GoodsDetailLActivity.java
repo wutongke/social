@@ -210,10 +210,10 @@ public class GoodsDetailLActivity extends BaseActivity {
 				}
 
 				bannerListData.clear();
-				if (goods.getPic() != null) {
-					for (int i = 0; i < goods.getPic().size(); i++) {
+				if (goods.getImgList() != null) {
+					for (int i = 0; i < goods.getImgList().size(); i++) {
 						BeanBanner item = new BeanBanner();
-						item.setPicUrl(goods.getPic().get(i));
+						item.setPicUrl(goods.getImgList().get(i));
 						bannerListData.add(item);
 					}
 					bannerPageAdapter = new Bee_PageAdapter(

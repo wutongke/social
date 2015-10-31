@@ -63,7 +63,7 @@ public class StoreGoodsListAdapter extends BaseAdapter {
 		String zhuobi = "无数据";
 		if (user.getZhuoPrice() != null)
 			zhuobi = user.getZhuoPrice();
-		List<String> pics = user.getPic();
+		List<String> pics = user.getImgList();
 		convertView.setTag(R.id.tag_id, id);
 		holder.title.setText(title);
 		holder.money.setText("市场价：" + money);

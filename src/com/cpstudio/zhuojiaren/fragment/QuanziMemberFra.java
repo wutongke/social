@@ -94,6 +94,9 @@ public class QuanziMemberFra extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
+				if(position>mList.size()-1){
+					return;
+				}
 				UserNewVO user = mList.get(position);
 				if (user != null) {
 					Intent intent = new Intent(mContext,

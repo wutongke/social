@@ -59,7 +59,7 @@ public class GoodsListAdapter extends BaseAdapter {
 		String id = user.getGoodsId();
 		String title = user.getGoodsName();
 		String money = user.getZhuoPrice();
-		List<String> pics = user.getPic();
+		List<String> pics = user.getImgList();
 		convertView.setTag(R.id.tag_id, id);
 		holder.title.setText(title);
 		holder.money.setText(money);

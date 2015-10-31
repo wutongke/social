@@ -24,7 +24,9 @@
         android:layout_height="1dp"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
-        android:background="@color/bg" />
+        android:background="@color/bg"
+        android:visibility="gone"
+         />
 
     <TextView
         android:id="@+id/dcp_zhuo"
@@ -36,7 +38,9 @@
         android:drawableLeft="@drawable/fxzhuopic_pic"
         android:drawablePadding="15dp"
         android:gravity="center_vertical"
-        android:text="@string/choose_zhuo" />
+        android:text="@string/choose_zhuo"
+        android:visibility="gone"
+         />
 
     <ImageView
         android:layout_width="match_parent"

@@ -143,6 +143,18 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		// 之后的圈话题，圈活动，圈成员在单独的请求中获得。是否需要分页？
 	}
 
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		//发布话题、活动成功后刷新
+		if(viewPager.getAdapter()!=null){
+			fragments.clear();
+			viewPager.setAdapter(getPagerAdapter());
+			tabButton.setViewPager(viewPager);
+			tabButton.setVisibility(View.VISIBLE);
+		}
+	}
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
 		@Override

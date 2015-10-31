@@ -134,14 +134,6 @@ public class EventDetailActivity extends Activity {
 				}
 			}
 		});
-		toApply.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				// 需要判断是否已经加入
-			}
-		});
 	}
 
 	private void loadData() {
@@ -200,7 +192,18 @@ public class EventDetailActivity extends Activity {
 										"activityid", eventId, "type", "0",
 										mUIHandler, quit,
 										EventDetailActivity.this);
+								if(event!=null){
+									int count = 0;
+									if(Integer.parseInt(event.getJoinCount())>0){
+										count = Integer.parseInt(event.getJoinCount());
+									}
+									event.setJoinCount(count +"");
+									applyCount.setText(event.getJoinCount());
+								}
 							} else {
+								int count = Integer.parseInt(event.getJoinCount())+1;
+								event.setJoinCount(count+"");
+								applyCount.setText(event.getJoinCount());
 								mConnHelper.quitEvent(
 										ZhuoCommHelper.getEventadd(),
 										"activityid", eventId, "type", "1",

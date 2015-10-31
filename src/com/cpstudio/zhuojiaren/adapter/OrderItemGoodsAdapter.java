@@ -65,7 +65,7 @@ public class OrderItemGoodsAdapter extends BaseAdapter {
 		String zhuobi = "无数据";
 		if (user.getZhuoPrice() != null)
 			zhuobi = user.getZhuoPrice();
-		List<String> pics = user.getPic();
+		List<String> pics = user.getImgList();
 		convertView.setTag(R.id.tag_id, id);
 		holder.title.setText(title);
 		holder.zhuobimoney.setText(zhuobi + "个");

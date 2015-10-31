@@ -13,7 +13,7 @@ public class GoodsVO implements Serializable{
 	private String markeyPrice;
 	private String zhuoPrice;// 倬币价格(多少个)
 	// 商品图片
-	private List<String> pic = new ArrayList<String>();
+	private List<String> imgList = new ArrayList<String>();
 	// 商品首页图片
 	private String img;
 	// 商品描述
@@ -40,9 +40,6 @@ public class GoodsVO implements Serializable{
 	}
 	public String getZhuoPrice() {
 		return zhuoPrice;
-	}
-	public List<String> getPic() {
-		return pic;
 	}
 	public String getImg() {
 		return img;
@@ -83,8 +80,11 @@ public class GoodsVO implements Serializable{
 	public void setZhuoPrice(String zhuoPrice) {
 		this.zhuoPrice = zhuoPrice;
 	}
-	public void setPic(List<String> pic) {
-		this.pic = pic;
+	public List<String> getImgList() {
+		return imgList;
+	}
+	public void setImgList(List<String> imgList) {
+		this.imgList = imgList;
 	}
 	public void setImg(String img) {
 		this.img = img;

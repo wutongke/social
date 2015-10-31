@@ -71,7 +71,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
 				setFunctionText(arg0);
-				if(arg0==3){
+				if(arg0==3 || arg0 == 1){
 					function.setVisibility(View.GONE);
 				}else{
 					function.setVisibility(View.VISIBLE);
@@ -159,6 +159,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 	}
 
 	private void setFunctionText(int arg0) {
+		function.setVisibility(View.VISIBLE);
 		switch (arg0) {
 		case 0:
 			function.setText(R.string.label_manage);
@@ -172,7 +173,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 			// spanStr.setSpan(span, 0, 1,Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
 			// function.setText(spanStr);
 			function.setText("");
-			function.setBackgroundResource(R.drawable.searcher_new_search_icon);
+			function.setVisibility(View.INVISIBLE);
 			break;
 		case 2:
 			function.setText("ɸѡ");
