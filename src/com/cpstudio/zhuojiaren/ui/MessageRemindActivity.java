@@ -69,8 +69,8 @@ public class MessageRemindActivity extends BaseActivity {
 					isAlert = "0";
 					messageRemind.setBackgroundResource(R.drawable.closecheck);
 				}
-				mConnHelper.updateConfig(mUIHandler, MsgTagVO.PUB_INFO,
-						null, isAlert, false, null, null);
+//				mConnHelper.updateConfig(mUIHandler, MsgTagVO.PUB_INFO,
+//						null, isAlert, false, null, null);
 			}
 		});
 		sound.setOnClickListener(new OnClickListener() {

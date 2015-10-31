@@ -42,6 +42,7 @@ import com.cpstudio.zhuojiaren.widget.PlaceChooseDialog;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
 public class CompanyDetailActivity extends BaseActivity {
+	
 	@InjectView(R.id.editTextCompany)
 	EditText editTextCompany;
 	@InjectView(R.id.tvIndustry)

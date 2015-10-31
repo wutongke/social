@@ -20,7 +20,7 @@ import android.widget.TextView;
 public class TypedStoreGoodsListAdapter extends BaseAdapter {
 	private List<GoodsVO> mList = null;
 	private LayoutInflater inflater = null;
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage = LoadImage.getInstance();
 
 	public TypedStoreGoodsListAdapter(Context context, ArrayList<GoodsVO> list) {
 		this.mList = list;
@@ -70,12 +70,12 @@ public class TypedStoreGoodsListAdapter extends BaseAdapter {
 		holder.title.setText(title);
 		holder.zhuobimoney.setText(zhuobi + "个");
 		holder.image.setImageResource(R.drawable.default_image);
-		if (pics != null && pics.size() > 0) {
-			String pic = pics.get(0);
-			holder.image.setTag(pic);
-			mLoadImage.addTask(pic, holder.image);
-			mLoadImage.doTask();
-		}
+//		if (pics != null && pics.size() > 0) {
+//			String pic = pics.get(0);
+//			holder.image.setTag(pic);
+//		}
+		mLoadImage.addTask(user.getImg(), holder.image);
+		mLoadImage.doTask();
 
 		String rate = user.getCommentPoint();
 		int nums = user.getOrderNum();
