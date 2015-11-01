@@ -2159,7 +2159,32 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.addCompany(),
 				nameValuePairs, mUIHandler, tag);
 	}
-
+	
+	/**
+	 * 评论和回复供需
+	 * @param mUIHandler
+	 * @param tag
+	 * @param sdid 供需ID
+	 * @param comment
+	 * @param toId 可选 要回复的评论ID (不填则是普通评论)
+	 * @param toUserid 可选 要回复的用户ID (不填则是普通评论)
+	 * @return
+	 */
+	public boolean cmtGongxu(Handler mUIHandler, int tag, String sdid,
+			String comment,String toId,String toUserid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		if(sdid==null || comment==null)
+			return false;
+		nameValuePairs.add(new BasicNameValuePair("sdid", sdid));
+		nameValuePairs.add(new BasicNameValuePair("comment", comment));
+		if(toId!=null)
+			nameValuePairs.add(new BasicNameValuePair("toId", toId));
+		if(toId!=null)
+			nameValuePairs.add(new BasicNameValuePair("toUserid", toUserid));
+		return getFromServerByPost(ZhuoCommHelperLz.cmtGX(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	
 	/**
 	 * 获得基本编码数据：id和值的对应
 	 * 
@@ -2236,7 +2261,8 @@ public class ZhuoConnHelper {
 
 	/**
 	 * 
-	 * @param type
+	 * @param sdflag (可选) 供需标识 0-资源 1-需求
+	 * @param type (可选) 供需类型 如果填则根据指定类型筛选信息
 	 * @param title
 	 * @param pageNo
 	 * @param pageSize
@@ -2249,13 +2275,15 @@ public class ZhuoConnHelper {
 	 * @param userid
 	 * @return
 	 */
-	public boolean getGongXuList(String type, String title, int pageNo,
+	public boolean getGongXuList(String sdflag,String type, String title, int pageNo,
 			int pageSize, Handler handler, int handlerTag, Activity activity,
 			boolean cancelable, OnCancelListener cancel, String data,
 			String userid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		if(sdflag!=null)
+			nameValuePairs.add(new BasicNameValuePair("sdflag", sdflag));
 		if (type != null)
 			nameValuePairs.add(new BasicNameValuePair("type", type));
 		if (title != null)
@@ -2275,7 +2303,8 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("sdid", sdid));
-		String url = ZhuoCommHelper.getDisolveQuan();
+		String url = ZhuoCommHelper.getDELETEGONGXU();
+//		String url = ZhuoCommHelper.getDisolveQuan();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				true, null, null);
 	}

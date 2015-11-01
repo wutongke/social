@@ -102,7 +102,7 @@ public class MyResListAdapterListAdapter extends BaseAdapter {
 
 	static class ViewHolder {
 		TextView irg_title;
-		TextView irg_tag;
+		ImageView ivTag;
 		TextView content;
 		ImageView ivHead;
 		CheckBox cb;
@@ -112,7 +112,7 @@ public class MyResListAdapterListAdapter extends BaseAdapter {
 		ViewHolder holder = new ViewHolder();
 		holder.irg_title = (TextView) convertView.findViewById(R.id.irg_title);
 		holder.ivHead = (ImageView) convertView.findViewById(R.id.irg_image);
-		holder.irg_tag = (TextView) convertView.findViewById(R.id.irg_tag);
+		holder.ivTag = (ImageView) convertView.findViewById(R.id.irg_tag);
 		holder.content = (TextView) convertView.findViewById(R.id.irg_fund);
 		holder.cb = (CheckBox) convertView.findViewById(R.id.irg_select);
 		return holder;

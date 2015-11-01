@@ -47,7 +47,6 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.ResCommentActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
@@ -68,6 +67,9 @@ public class GongXuDetailActivity extends BaseActivity {
 
 	@InjectView(R.id.imageViewAuthorHeader)
 	ImageView ivHead;
+	@InjectView(R.id.imageViewCard)
+	ImageView ivCard;
+	
 	@InjectView(R.id.textViewAuthorName)
 	TextView tvName;
 	@InjectView(R.id.textWork)
@@ -356,7 +358,20 @@ public class GongXuDetailActivity extends BaseActivity {
 	}
 
 	private void initClick() {
-
+		ivCard.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(sharer!=null)
+				{
+				Intent intent = new Intent(GongXuDetailActivity.this,
+						ZhuoMaiCardActivity.class);
+				intent.putExtra("userid", sharer.getUserid());
+				startActivity(intent);
+				}
+			}
+		});
 		tvShare.setBackgroundResource(R.drawable.share);
 		tvShare.setOnClickListener(new OnClickListener() {
 
@@ -392,8 +407,10 @@ public class GongXuDetailActivity extends BaseActivity {
 				toId = mList.get(position-1).getId();
 				Intent i = new Intent(GongXuDetailActivity.this,
 						ResCommentActivity.class);
+				i.putExtra("type", 3);
 				i.putExtra("msgid", msgid);
 				i.putExtra("toId", toId);
+				i.putExtra("toUserid", mList.get(position-1).getUserid());
 				i.putExtra("toUserName", mList.get(position - 1).getName());
 				startActivityForResult(i, MsgTagVO.MSG_CMT);
 			}
@@ -427,9 +444,9 @@ public class GongXuDetailActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				toId = "-1";
 				Intent i = new Intent(GongXuDetailActivity.this,
 						ResCommentActivity.class);
+				i.putExtra("type", 3);
 				i.putExtra("msgid", msgid);
 				startActivityForResult(i, MsgTagVO.MSG_CMT);
 			}
@@ -452,9 +469,12 @@ public class GongXuDetailActivity extends BaseActivity {
 							MsgTagVO.MSG_FOWARD, null, true, null, null);
 				}
 			} else if (requestCode == MsgTagVO.MSG_CMT) {
-				mList = JsonHandler_Lef.parseCommentLZList(data
+				ArrayList<Comment> list =JsonHandler_Lef.parseCommentLZList(data
 						.getStringExtra("data"));
+				mList.clear();
+				mList.addAll(list);
 				mAdapter.notifyDataSetChanged();
+				mListView.setSelection(mList.size()-1);
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

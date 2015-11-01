@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -52,13 +54,13 @@ import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 import com.cpstudio.zhuojiaren.widget.TabButton.TabsButtonOnClickListener;
 
 /**
- * پ����Ƭ
+ * 倬脉名片
  * 
  * @author lz
  * 
  */
 public class ZhuoMaiCardActivity extends FragmentActivity {
-	
+
 	@InjectView(R.id.activity_back)
 	TextView tvBack;
 	@InjectView(R.id.activity_title)
@@ -84,16 +86,16 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	@InjectView(R.id.textViewPhone)
 	TextView tvPhone;
 	@InjectView(R.id.textViewPurse)
-	TextView tvZBNum;// پ����
+	TextView tvZBNum;// 倬币数
 	@InjectView(R.id.textViewNote)
-	TextView tvSignature;// پ����
+	TextView tvSignature;
 	@InjectView(R.id.textViewht)
 	TextView tvCompany;
 
 	@InjectView(R.id.lt_myself_menue)
-	View ltNyselfMenue;// �������ϱ༭�˵�
+	View ltNyselfMenue;
 	@InjectView(R.id.lt_other_menue)
-	View ltOtherMenue;// �������ϱ༭�˵�
+	View ltOtherMenue;
 
 	@InjectView(R.id.btnEditBG)
 	Button btnEditBG;//
@@ -108,19 +110,19 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	View rootMainBG;//
 	@InjectView(R.id.rlSendCard)
 	View rlSendCard;//
-	
+
 	private final static int USER_SELECT = 0;
 	private Context mContext;
 	List<Fragment> fragments;
 
 	private PopupWindows phw = null;
 	private LoadImage mLoadImage = new LoadImage();
-	// ��ͬ��ݣ����ܲ�ͬ
+	// 不同身份，功能不同
 	private String memberType = "";
 	private PopupWindows pwh = null;
 	private String groupid = null;
 	private ZhuoConnHelper mConnHelper = null;
-	private boolean isfollow = false;// �Ƿ��Ѿ������Ȧ��
+	private boolean isfollow = false;
 
 	private ArrayList<String> tempids = new ArrayList<String>();
 
@@ -128,10 +130,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	private UserFacade userFacade = null;
 	UserNewVO userInfo;
 	BaseCodeData baseDataSet;
-	// ������fragment�л��groupid
-	public String getGroupid() {
-		return groupid;
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +139,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		mContext = this;
 		tvTitle.setText(R.string.title_zhuomai_card);
 
-		// ��ʼ��tab��viewpager
 		viewPager.setAdapter(getPagerAdapter());
 
 		tabButton.setViewPager(viewPager);
@@ -158,7 +155,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			btnEditBG.setEnabled(false);
 		mLoadImage = new LoadImage();
 
-		// ���ø��Ա���ͼƬ���ڸ�����Ϣ����˿���ѡ���
 		rootMainBG.setBackgroundResource(R.drawable.manbg_zmmp_1);
 		baseDataSet = mConnHelper.getBaseDataSet();
 		initOnClick();
@@ -166,15 +162,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 	private void loadData() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			// UserNewVO quan = userFacade.getById(userid);
-			// if (quan == null) {
-			// CommonUtil.displayToast(getApplicationContext(),
-			// R.string.error0);
-			// } else {
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-			// msg.obj = quan;
-			// msg.sendToTarget();
-			// }
 		} else {
 			if (mConnHelper != null)
 				mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, userid);
@@ -183,7 +170,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 	private void initOnClick() {
 		// TODO Auto-generated method stub
-		// ѡ��ͬ��fragment��function����ͬ
 		tvTitle.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -198,12 +184,10 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
 				if (arg0 == 2) {
-					// ��չʾ�����page
 					viewPager.setCurrentItem(1);
 					Intent intent = new Intent(mContext, CardEditActivity.class);
 					intent.putExtra("id", userid);
 					mContext.startActivity(intent);
-					// ��ת�����跢��ҳ��
 				}
 			}
 
@@ -225,13 +209,12 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			@Override
 			public void tabsButtonOnClick(int id, View v) {
 				// TODO Auto-generated method stub
-				int item=(Integer) (v.getTag());
-				if ( item== 2) {
+				int item = (Integer) (v.getTag());
+				if (item == 2) {
 					Intent intent = new Intent(mContext, CardEditActivity.class);
 					intent.putExtra("id", userid);
 					mContext.startActivity(intent);
-				}
-				else {
+				} else {
 					viewPager.setCurrentItem(item);
 				}
 			}
@@ -241,17 +224,14 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				// ����Ƭ
-
 				mConnHelper.praiseCard(mUIHandler, MsgTagVO.MSG_LIKE, myid, 1);
-				// MsgTagVO.MSG_LIKE, null, true, null, null);
 			}
 		});
 		ivShare.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				// ���?�����أ�
+				// 閿熸枻鎷烽敓锟介敓鏂ゆ嫹閿熸枻鎷烽敓鎴綇鎷�
 				// if (phw == null)
 				// phw = new PopupWindows(ZhuoMaiCardActivity.this);
 				//
@@ -270,7 +250,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				//
 				// @Override
 				// public void onClick(View v) {
-				// // ͨ�����������?QQ��΢�ŵ�
+				// // 閫氶敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿燂拷QQ閿熸枻鎷峰井閿熻剼纰夋嫹
 				// }
 				// };
 				//
@@ -284,7 +264,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				// startActivityForResult(i, USER_SELECT);
 				// }
 				// };
-				// // ��Ҫ�������ò˵�ѡ��ּ���Ӧ�¼�
+				// // 通过第三方软件分享，QQ，微信等
 				// phw.showQuanOptionsMenue(v, 2, briefListener, shareListener,
 				// inviteListener);
 			}
@@ -296,10 +276,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				// TODO Auto-generated method stub
 				if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_MYSELF
 						.ordinal()) {
-					// Intent i = new Intent(ZhuoMaiCardActivity.this,
-					// ChangeBackgroundActivity.class);
-					// startActivity(i);
-					CommonUtil.displayToast(ZhuoMaiCardActivity.this, "����");
 				}
 			}
 		});
@@ -322,8 +298,30 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				if (r == UserNewVO.USER_RELATION.RELATION_MYSELF.ordinal()
 						|| userInfo.getUserid().equals(myid))
 					CommonUtil.displayToast(ZhuoMaiCardActivity.this,
-							"���Ǻ��ѣ�����Ҫ�ٷ�����Ƭ");
-				else if(r != UserNewVO.USER_RELATION.RELATION_FRIENDS.ordinal()){
+							getString(R.string.noneed_send_card));
+				else if (r == UserNewVO.USER_RELATION.RELATION_FRIENDS
+						.ordinal()) {
+					new AlertDialog.Builder(ZhuoMaiCardActivity.this,
+							AlertDialog.THEME_HOLO_LIGHT)
+							.setTitle(getString(R.string.alert))
+							.setMessage(getString(R.string.sure_remove_friend))
+							.setPositiveButton(getString(R.string.sure),
+									new DialogInterface.OnClickListener() {
+
+										@Override
+										public void onClick(DialogInterface dialog,
+												int which) {
+											// TODO Auto-generated method stub
+											//刪除好友
+											mConnHelper.makeFriends(mUIHandler, MsgTagVO.MSG_DEL,
+													userInfo.getUserid(), 0);
+										}
+									}).setNegativeButton(getString(R.string.label_cancel), null).create()
+							.show();
+					
+				}
+				else
+				{
 					mConnHelper.makeFriends(mUIHandler, MsgTagVO.MSG_FOWARD,
 							userInfo.getUserid(), 1);
 				}
@@ -337,7 +335,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 				int r = userInfo.getRelation();
 				if (r == UserNewVO.USER_RELATION.RELATION_STRANGER.ordinal()) {
-					// ���İ��������������ʱ��Ҫ��ʾ�����ǲ��Ǻ��ѣ��Ƿ������Ƭ��ʹ���Ϊ��ĺ���
 				}
 				RongIM.getInstance().startPrivateChat(ZhuoMaiCardActivity.this,
 						userInfo.getUserid(), userInfo.getName());
@@ -346,7 +343,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	}
 
 	void sendCard() {
-		// ������Ƭ(����Ӻ���)
+		// 递送名片（请求添加好友）
 		if (RongIM.getInstance().getRongIMClient() == null)
 			return;
 		if (userInfo.getUserid() == null)
@@ -358,12 +355,12 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				userInfo.getName(), Uri.parse(userInfo.getUheader()));
 		info.setName(userInfo.getName());
 		info.setUserId(userInfo.getUserid());
-		msg.setUserInfo(info);// �Է����ܵ�����ȻΪnull
+		msg.setUserInfo(info);// 对方接受到的仍然为null
 		RongIM.getInstance()
 				.getRongIMClient()
-				// ���ܵ���content�̶�Ϊ"�����Ϊ���ѣ����õ�ֻ��id"
-				.sendMessage(ConversationType.PRIVATE, userInfo.getUserid(),
-						msg, userInfo.getName(), new SendMessageCallback() {
+				// 接受到的content固定为"请求加为好友，有用的只有id"
+				.sendMessage(ConversationType.PRIVATE, myid,
+						msg, myid, new SendMessageCallback() {
 							@Override
 							public void onSuccess(Integer arg0) {
 								// TODO Auto-generated method stub
@@ -375,15 +372,16 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 							public void onError(Integer arg0, ErrorCode arg1) {
 								// TODO Auto-generated method stub
 								Toast.makeText(ZhuoMaiCardActivity.this,
-										"���뷢��ʧ��ErrorCode��" + arg1, 1000).show();
+										getString(R.string.rongyun_failed),
+										1000).show();
 							}
 						});
 	}
 
 	protected void onPause() {
 		super.onPause();
-//		viewPager.setCurrentItem(0, false);
-//		tabButton.setTabBackgroundByIndex(0);
+		// viewPager.setCurrentItem(0, false);
+		// tabButton.setTabBackgroundByIndex(0);
 	};
 
 	PagerAdapter getPagerAdapter() {
@@ -423,7 +421,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	}
 
 	/**
-	 * ���ͷ��������Ϣ
+	 * 填充個人基本信息
 	 */
 	void fillHeadInfo() {
 		if (userInfo == null)
@@ -431,7 +429,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		tvSignature.setText(userInfo.getSignature());
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHeader);
 		tvName.setText(userInfo.getName());
-		// tvPosition/tvMemType��Ҫͨ������ö�Ӧ�����
 		if (mConnHelper.getCitys() != null && userInfo.getCity() >= 1)
 			tvPosition.setText(mConnHelper.getCitys()
 					.get(userInfo.getCity() - 1).getCityName());
@@ -447,7 +444,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 		tvCompany.setText(userInfo.getCompany());
 		tvPhone.setText(userInfo.getPhone());
-		// tvZBNum.setText("����پ����");
+		// tvZBNum.setText("暂无倬币数");
 		if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_MYSELF
 				.ordinal() || userInfo.getUserid().equals(myid)) {
 			ltNyselfMenue.setVisibility(View.VISIBLE);
@@ -455,11 +452,13 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		} else {
 			ltNyselfMenue.setVisibility(View.GONE);
 			ltOtherMenue.setVisibility(View.VISIBLE);
-			if(userInfo.getRelation()==UserNewVO.USER_RELATION.RELATION_FRIENDS.ordinal())
-			{
-				rlSendCard.setVisibility(View.GONE);
+			if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_FRIENDS
+					.ordinal()) {
+				btnSendCard.setText(R.string.remove_friend);
 			}
-				
+			else
+				btnSendCard.setText(R.string.label_cardsend);
+
 		}
 	}
 
@@ -495,14 +494,14 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				}
 				break;
 			}
-			case MsgTagVO.MSG_LIKE:{
+			case MsgTagVO.MSG_LIKE: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.label_zanSuccess);
 				} else {
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.FAILED);
+					// CommonUtil.displayToast(getApplicationContext(),
+					// R.string.FAILED);
 				}
 				break;
 			}
@@ -511,7 +510,17 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 						getApplicationContext())) {
 					sendCard();
 				} else {
-					sendCard();
+//					sendCard();
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.FAILED);
+				}
+				break;
+			}
+			case MsgTagVO.MSG_DEL: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					changeStatus();
+				} else {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.FAILED);
 				}
@@ -521,6 +530,14 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		}
 	};
 
+	/**
+	 * 改变好友关系
+	 */
+	void changeStatus()
+	{
+		loadData();
+	}
+	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub

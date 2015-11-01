@@ -25,6 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_marginLeft="5dp"
+        android:gravity="center_vertical"
         android:orientation="vertical" >
 
         <TextView
@@ -32,16 +34,16 @@
             style="@style/basic_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/irg_fund"
+            android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp" />
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <ImageView
