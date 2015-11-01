@@ -3,13 +3,8 @@
 	<string-array name="my_collection">
 	    <item >视频</item>
 	    <item >音频</item>
-	    <item >文章</item>
 	    <item >活动</item>
-	    <item >名片</item>
-	    <item >产品</item>
-	    <item >圈子</item>
 	    <item >话题</item>
-	    <item >动态</item>
 	    <item >人脉</item>
 	    <item >供</item>
 	    <item >需</item>

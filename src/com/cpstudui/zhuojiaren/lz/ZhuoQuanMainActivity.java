@@ -153,8 +153,8 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		//发布话题、活动成功后刷新
 		if(viewPager.getAdapter()!=null){
 			fragments.clear();
-			viewPager.removeAllViews();
 			viewPager.setAdapter(getPagerAdapter());
+			tabButton.setViewPager(null);
 			tabButton.setViewPager(viewPager);
 			tabButton.setVisibility(View.VISIBLE);
 		}
