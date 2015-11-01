@@ -14,6 +14,8 @@ import android.widget.EditText;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelperLz;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.GeoVO.ResultVO;
@@ -29,7 +31,7 @@ public class ResCommentActivity extends Activity {
 	private String toId = null;
 	private String toUserid = null;
 	private String toUserName = null;
-	int type = 1;// 1:评论圈话题，2：评论动态
+	int type = 1;// 1:评论圈话题，2：评论动态 3:评论和回复供需
 	EditText contentEditText;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class ResCommentActivity extends Activity {
 		toId = i.getStringExtra("toId");
 		toUserid = i.getStringExtra("toUserid");
 		toUserName = i.getStringExtra("toUserName");
+		type=i.getIntExtra("type",1);
 		if(toId!=null&&toId.equals("-1")){
 			contentEditText.setHint("回复"+toUserName);
 		}
@@ -101,6 +104,11 @@ public class ResCommentActivity extends Activity {
 			contentEditText.requestFocus();
 			return;
 		}
+		if(type==3)
+		{
+			ZhuoConnHelper.getInstance(getApplicationContext()).cmtGongxu(mUIHandler, MsgTagVO.PUB_INFO, msgid, content, toId, toUserid);
+		}
+		else
 		AppClientLef.getInstance(ResCommentActivity.this).pubComment(
 				ResCommentActivity.this, mUIHandler, MsgTagVO.PUB_INFO, msgid,
 				content, toId, toUserid);

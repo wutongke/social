@@ -47,12 +47,6 @@ import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 import com.cpstudui.zhuojiaren.lz.GongXuDetailActivity;
 import com.cpstudui.zhuojiaren.lz.ResourceGXAdapter;
 
-/**
- * 众筹Fragmengt，包括我的众筹、寻找众筹等， 使用gridView实现子选项，加入在下拉刷新列表的头部
- * 
- * @author lef
- * 
- */
 public class ResourceGXFragment extends Fragment {
 	@InjectView(R.id.fcd_pull_down_view)
 	PullDownView pullDownView;
@@ -314,13 +308,13 @@ public class ResourceGXFragment extends Fragment {
 		mDatas.clear();
 		mPage = 0;
 		mAdapter.notifyDataSetChanged();
-		appClientLef.getGongXuList(String.valueOf(getType), null, mPage, 5,
+		appClientLef.getGongXuList(String.valueOf(type),String.valueOf(getType), null, mPage, 5,
 				uiHandler, MsgTagVO.DATA_LOAD, getActivity(), true, null, null,
 				null);
 	}
 
 	private void loadMore() {
-		appClientLef.getGongXuList(String.valueOf(getType), null, mPage, 5,
+		appClientLef.getGongXuList(String.valueOf(type), String.valueOf(getType),null, mPage, 5,
 				uiHandler, MsgTagVO.DATA_MORE, getActivity(), true, null, null,
 				null);
 	}
@@ -338,6 +332,7 @@ public class ResourceGXFragment extends Fragment {
 				}
 				String data = res.getData();
 				updateItemList(data, true, false);
+				
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {

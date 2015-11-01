@@ -1,5 +1,6 @@
 package com.cpstudui.zhuojiaren.lz;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -392,6 +393,7 @@ public class GongXuDetailActivity extends BaseActivity {
 				toId = mList.get(position-1).getId();
 				Intent i = new Intent(GongXuDetailActivity.this,
 						ResCommentActivity.class);
+				i.putExtra("type", 3);
 				i.putExtra("msgid", msgid);
 				i.putExtra("toId", toId);
 				i.putExtra("toUserName", mList.get(position - 1).getName());
@@ -427,9 +429,9 @@ public class GongXuDetailActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				toId = "-1";
 				Intent i = new Intent(GongXuDetailActivity.this,
 						ResCommentActivity.class);
+				i.putExtra("type", 3);
 				i.putExtra("msgid", msgid);
 				startActivityForResult(i, MsgTagVO.MSG_CMT);
 			}
@@ -452,8 +454,10 @@ public class GongXuDetailActivity extends BaseActivity {
 							MsgTagVO.MSG_FOWARD, null, true, null, null);
 				}
 			} else if (requestCode == MsgTagVO.MSG_CMT) {
-				mList = JsonHandler_Lef.parseCommentLZList(data
+				ArrayList<Comment> list =JsonHandler_Lef.parseCommentLZList(data
 						.getStringExtra("data"));
+				mList.clear();
+				mList.addAll(list);
 				mAdapter.notifyDataSetChanged();
 			}
 		}

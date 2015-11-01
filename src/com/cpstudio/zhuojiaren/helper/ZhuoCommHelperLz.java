@@ -95,8 +95,7 @@ public class ZhuoCommHelperLz {
 	
 	private final static String MAKE_FRIENDS = "/makeFriend.do";
 	private final static String MY_RENMAI = "/getFollowUser.do";
-	
-	
+	private final static String CMT_GONGXU = "/supplyDemandCmt.do";
 	
 	public static String getAllJiaren() {
 		return ALL_JIAREN;
@@ -545,6 +544,13 @@ public class ZhuoCommHelperLz {
 	 */
 	public static String myRenmai() {
 		return SERVER + MY_RENMAI;
+	}
+	/**
+	 * 评论和回复供需
+	 * @return
+	 */
+	public static String cmtGX() {
+		return SERVER + CMT_GONGXU;
 	}
 	
 }

@@ -52,13 +52,13 @@ import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 import com.cpstudio.zhuojiaren.widget.TabButton.TabsButtonOnClickListener;
 
 /**
- * پ����Ƭ
+ * 倬锟斤拷锟斤拷片
  * 
  * @author lz
  * 
  */
 public class ZhuoMaiCardActivity extends FragmentActivity {
-	
+
 	@InjectView(R.id.activity_back)
 	TextView tvBack;
 	@InjectView(R.id.activity_title)
@@ -84,16 +84,16 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	@InjectView(R.id.textViewPhone)
 	TextView tvPhone;
 	@InjectView(R.id.textViewPurse)
-	TextView tvZBNum;// پ����
+	TextView tvZBNum;// 倬锟斤拷锟斤拷
 	@InjectView(R.id.textViewNote)
-	TextView tvSignature;// پ����
+	TextView tvSignature;// 倬锟斤拷锟斤拷
 	@InjectView(R.id.textViewht)
 	TextView tvCompany;
 
 	@InjectView(R.id.lt_myself_menue)
-	View ltNyselfMenue;// �������ϱ༭�˵�
+	View ltNyselfMenue;// 锟斤拷锟斤拷锟斤拷锟较编辑锟剿碉拷
 	@InjectView(R.id.lt_other_menue)
-	View ltOtherMenue;// �������ϱ༭�˵�
+	View ltOtherMenue;// 锟斤拷锟斤拷锟斤拷锟较编辑锟剿碉拷
 
 	@InjectView(R.id.btnEditBG)
 	Button btnEditBG;//
@@ -108,19 +108,19 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	View rootMainBG;//
 	@InjectView(R.id.rlSendCard)
 	View rlSendCard;//
-	
+
 	private final static int USER_SELECT = 0;
 	private Context mContext;
 	List<Fragment> fragments;
 
 	private PopupWindows phw = null;
 	private LoadImage mLoadImage = new LoadImage();
-	// ��ͬ��ݣ����ܲ�ͬ
+	// 锟斤拷同锟斤拷荩锟斤拷锟斤拷懿锟酵�
 	private String memberType = "";
 	private PopupWindows pwh = null;
 	private String groupid = null;
 	private ZhuoConnHelper mConnHelper = null;
-	private boolean isfollow = false;// �Ƿ��Ѿ������Ȧ��
+	private boolean isfollow = false;// 锟角凤拷锟窖撅拷锟斤拷锟斤拷锟饺︼拷锟�
 
 	private ArrayList<String> tempids = new ArrayList<String>();
 
@@ -128,7 +128,8 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	private UserFacade userFacade = null;
 	UserNewVO userInfo;
 	BaseCodeData baseDataSet;
-	// ������fragment�л��groupid
+
+	// 锟斤拷锟斤拷锟斤拷fragment锟叫伙拷锟絞roupid
 	public String getGroupid() {
 		return groupid;
 	}
@@ -141,7 +142,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		mContext = this;
 		tvTitle.setText(R.string.title_zhuomai_card);
 
-		// ��ʼ��tab��viewpager
+		// 锟斤拷始锟斤拷tab锟斤拷viewpager
 		viewPager.setAdapter(getPagerAdapter());
 
 		tabButton.setViewPager(viewPager);
@@ -158,7 +159,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			btnEditBG.setEnabled(false);
 		mLoadImage = new LoadImage();
 
-		// ���ø��Ա���ͼƬ���ڸ�����Ϣ����˿���ѡ���
+		// 锟斤拷锟矫革拷锟皆憋拷锟斤拷图片锟斤拷锟节革拷锟斤拷锟斤拷息锟斤。锟斤拷锟剿匡拷锟斤拷选锟斤拷锟�
 		rootMainBG.setBackgroundResource(R.drawable.manbg_zmmp_1);
 		baseDataSet = mConnHelper.getBaseDataSet();
 		initOnClick();
@@ -183,7 +184,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 	private void initOnClick() {
 		// TODO Auto-generated method stub
-		// ѡ��ͬ��fragment��function����ͬ
+		// 选锟斤拷同锟斤拷fragment锟斤拷function锟斤拷锟斤拷同
 		tvTitle.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -198,12 +199,12 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
 				if (arg0 == 2) {
-					// ��չʾ�����page
+					// 锟斤拷展示锟斤拷锟斤拷锟絧age
 					viewPager.setCurrentItem(1);
 					Intent intent = new Intent(mContext, CardEditActivity.class);
 					intent.putExtra("id", userid);
 					mContext.startActivity(intent);
-					// ��ת�����跢��ҳ��
+					// 锟斤拷转锟斤拷锟斤拷锟借发锟斤拷页锟斤拷
 				}
 			}
 
@@ -225,13 +226,12 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			@Override
 			public void tabsButtonOnClick(int id, View v) {
 				// TODO Auto-generated method stub
-				int item=(Integer) (v.getTag());
-				if ( item== 2) {
+				int item = (Integer) (v.getTag());
+				if (item == 2) {
 					Intent intent = new Intent(mContext, CardEditActivity.class);
 					intent.putExtra("id", userid);
 					mContext.startActivity(intent);
-				}
-				else {
+				} else {
 					viewPager.setCurrentItem(item);
 				}
 			}
@@ -241,7 +241,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				// ����Ƭ
+				// 锟斤拷锟斤拷片
 
 				mConnHelper.praiseCard(mUIHandler, MsgTagVO.MSG_LIKE, myid, 1);
 				// MsgTagVO.MSG_LIKE, null, true, null, null);
@@ -251,7 +251,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				// ���?�����أ�
+				// 锟斤拷锟�锟斤拷锟斤拷锟截ｏ拷
 				// if (phw == null)
 				// phw = new PopupWindows(ZhuoMaiCardActivity.this);
 				//
@@ -270,7 +270,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				//
 				// @Override
 				// public void onClick(View v) {
-				// // ͨ�����������?QQ��΢�ŵ�
+				// // 通锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟�QQ锟斤拷微锟脚碉拷
 				// }
 				// };
 				//
@@ -284,7 +284,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				// startActivityForResult(i, USER_SELECT);
 				// }
 				// };
-				// // ��Ҫ�������ò˵�ѡ��ּ���Ӧ�¼�
+				// // 锟斤拷要锟斤拷锟斤拷锟斤拷锟矫菜碉拷选锟筋布锟街硷拷锟斤拷应锟铰硷拷
 				// phw.showQuanOptionsMenue(v, 2, briefListener, shareListener,
 				// inviteListener);
 			}
@@ -299,7 +299,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 					// Intent i = new Intent(ZhuoMaiCardActivity.this,
 					// ChangeBackgroundActivity.class);
 					// startActivity(i);
-					CommonUtil.displayToast(ZhuoMaiCardActivity.this, "����");
+					CommonUtil.displayToast(ZhuoMaiCardActivity.this, "锟斤拷锟斤拷");
 				}
 			}
 		});
@@ -322,8 +322,9 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				if (r == UserNewVO.USER_RELATION.RELATION_MYSELF.ordinal()
 						|| userInfo.getUserid().equals(myid))
 					CommonUtil.displayToast(ZhuoMaiCardActivity.this,
-							"���Ǻ��ѣ�����Ҫ�ٷ�����Ƭ");
-				else if(r != UserNewVO.USER_RELATION.RELATION_FRIENDS.ordinal()){
+							"锟斤拷锟角猴拷锟窖ｏ拷锟斤拷锟斤拷要锟劫凤拷锟斤拷锟斤拷片");
+				else if (r != UserNewVO.USER_RELATION.RELATION_FRIENDS
+						.ordinal()) {
 					mConnHelper.makeFriends(mUIHandler, MsgTagVO.MSG_FOWARD,
 							userInfo.getUserid(), 1);
 				}
@@ -337,7 +338,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 				int r = userInfo.getRelation();
 				if (r == UserNewVO.USER_RELATION.RELATION_STRANGER.ordinal()) {
-					// ���İ��������������ʱ��Ҫ��ʾ�����ǲ��Ǻ��ѣ��Ƿ������Ƭ��ʹ���Ϊ��ĺ���
+					// 锟斤拷锟侥帮拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟绞憋拷锟揭拷锟绞撅拷锟斤拷锟斤拷遣锟斤拷呛锟斤拷眩锟斤拷欠锟斤拷锟斤拷锟斤拷片锟斤拷使锟斤拷锟轿拷锟侥猴拷锟斤拷
 				}
 				RongIM.getInstance().startPrivateChat(ZhuoMaiCardActivity.this,
 						userInfo.getUserid(), userInfo.getName());
@@ -346,7 +347,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	}
 
 	void sendCard() {
-		// ������Ƭ(����Ӻ���)
+		// 锟斤拷锟斤拷锟斤拷片(锟斤拷锟斤拷雍锟斤拷锟�
 		if (RongIM.getInstance().getRongIMClient() == null)
 			return;
 		if (userInfo.getUserid() == null)
@@ -358,10 +359,10 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				userInfo.getName(), Uri.parse(userInfo.getUheader()));
 		info.setName(userInfo.getName());
 		info.setUserId(userInfo.getUserid());
-		msg.setUserInfo(info);// �Է����ܵ�����ȻΪnull
+		msg.setUserInfo(info);// 锟皆凤拷锟斤拷锟杰碉拷锟斤拷锟斤拷然为null
 		RongIM.getInstance()
 				.getRongIMClient()
-				// ���ܵ���content�̶�Ϊ"�����Ϊ���ѣ����õ�ֻ��id"
+				// 锟斤拷锟杰碉拷锟斤拷content锟教讹拷为"锟斤拷锟斤拷锟轿拷锟斤拷眩锟斤拷锟斤拷玫锟街伙拷锟絠d"
 				.sendMessage(ConversationType.PRIVATE, userInfo.getUserid(),
 						msg, userInfo.getName(), new SendMessageCallback() {
 							@Override
@@ -375,15 +376,16 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 							public void onError(Integer arg0, ErrorCode arg1) {
 								// TODO Auto-generated method stub
 								Toast.makeText(ZhuoMaiCardActivity.this,
-										"���뷢��ʧ��ErrorCode��" + arg1, 1000).show();
+										"锟斤拷锟诫发锟斤拷失锟斤拷ErrorCode锟斤拷" + arg1,
+										1000).show();
 							}
 						});
 	}
 
 	protected void onPause() {
 		super.onPause();
-//		viewPager.setCurrentItem(0, false);
-//		tabButton.setTabBackgroundByIndex(0);
+		// viewPager.setCurrentItem(0, false);
+		// tabButton.setTabBackgroundByIndex(0);
 	};
 
 	PagerAdapter getPagerAdapter() {
@@ -423,7 +425,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	}
 
 	/**
-	 * ���ͷ��������Ϣ
+	 * 锟斤拷锟酵凤拷锟斤拷锟斤拷锟斤拷锟较�
 	 */
 	void fillHeadInfo() {
 		if (userInfo == null)
@@ -431,7 +433,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		tvSignature.setText(userInfo.getSignature());
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHeader);
 		tvName.setText(userInfo.getName());
-		// tvPosition/tvMemType��Ҫͨ������ö�Ӧ�����
+		// tvPosition/tvMemType锟斤拷要通锟斤拷锟斤拷锟斤拷枚锟接︼拷锟斤拷锟斤拷
 		if (mConnHelper.getCitys() != null && userInfo.getCity() >= 1)
 			tvPosition.setText(mConnHelper.getCitys()
 					.get(userInfo.getCity() - 1).getCityName());
@@ -447,7 +449,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 		tvCompany.setText(userInfo.getCompany());
 		tvPhone.setText(userInfo.getPhone());
-		// tvZBNum.setText("����پ����");
+		// tvZBNum.setText("锟斤拷锟斤拷倬锟斤拷锟斤拷");
 		if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_MYSELF
 				.ordinal() || userInfo.getUserid().equals(myid)) {
 			ltNyselfMenue.setVisibility(View.VISIBLE);
@@ -455,11 +457,11 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		} else {
 			ltNyselfMenue.setVisibility(View.GONE);
 			ltOtherMenue.setVisibility(View.VISIBLE);
-			if(userInfo.getRelation()==UserNewVO.USER_RELATION.RELATION_FRIENDS.ordinal())
-			{
+			if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_FRIENDS
+					.ordinal()) {
 				rlSendCard.setVisibility(View.GONE);
 			}
-				
+
 		}
 	}
 
@@ -495,14 +497,14 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				}
 				break;
 			}
-			case MsgTagVO.MSG_LIKE:{
+			case MsgTagVO.MSG_LIKE: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.label_zanSuccess);
 				} else {
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.FAILED);
+					// CommonUtil.displayToast(getApplicationContext(),
+					// R.string.FAILED);
 				}
 				break;
 			}

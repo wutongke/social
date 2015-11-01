@@ -74,7 +74,7 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 		Intent i = getIntent();
 		mType = i.getIntExtra(CardEditActivity.EDIT_RES_STR1, 0);
 		userid = i.getStringExtra(CardEditActivity.EDIT_RES_STR2);
-
+		myId=mConnHelper.getUserid();
 		if (mType == 0)
 			tvTitle.setText(R.string.mygong);
 		else
@@ -96,7 +96,7 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 		tvManage.setBackgroundResource(R.drawable.button_bg_black);
 		tvManage.setText(getString(R.string.label_manage));
 		// 当打开的不是我自己的名片时需要隐藏管理按钮
-		if (userid != myId) {
+		if (!userid.equals(myId) ) {
 			tvManage.setVisibility(View.GONE);
 			fql_footer.setVisibility(View.GONE);
 			lt_pub_res.setVisibility(View.GONE);
@@ -174,7 +174,9 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 
 		StringBuilder ids = new StringBuilder();
 		for (ResourceGXVO item : deletelist) {
-			ids.append(item.getSdid() + ",");
+			if(ids.length()>0)
+				ids.append(",");
+			ids.append(item.getSdid());
 		}
 		mConnHelper.deleteGongxu(ids.toString(), mUIHandler, MsgTagVO.MSG_DEL,
 				CardAddUserResourceActivity.this);
@@ -222,14 +224,14 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 				ResultVO res;
 				if (JsonHandler.checkResult((String) msg.obj,
 						CardAddUserResourceActivity.this)) {
-					res = JsonHandler.parseResult((String) msg.obj);
+//					res = JsonHandler.parseResult((String) msg.obj);
+					updateItemList((String)msg.obj, true, false);
 				} else {
 					CommonUtil.displayToast(CardAddUserResourceActivity.this,
 							R.string.data_error);
 					return;
 				}
-				String data = res.getData();
-				updateItemList(data, true, false);
+				
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {
@@ -269,7 +271,7 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 		if (mListViewFooter.startLoading()) {
 			mPage = 0;
 			mAdapter.notifyDataSetChanged();
-			mConnHelper.getGongXuList(String.valueOf(mType), null, mPage, 5,
+			mConnHelper.getGongXuList(String.valueOf(mType),null, null, mPage, 5,
 					mUIHandler, MsgTagVO.DATA_LOAD,
 					CardAddUserResourceActivity.this, true, null, null, userid);
 		}
@@ -277,7 +279,7 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 
 	private void loadMore() {
 		if (mListViewFooter.startLoading()) {
-			mConnHelper.getGongXuList(String.valueOf(mType), null, mPage, 5,
+			mConnHelper.getGongXuList(String.valueOf(mType),null, null, mPage, 5,
 					mUIHandler, MsgTagVO.DATA_MORE,
 					CardAddUserResourceActivity.this, true, null, null, userid);
 		}
@@ -288,7 +290,7 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 		if (arg3 != -1) {
 			Intent i = new Intent(CardAddUserResourceActivity.this,
 					GongXuDetailActivity.class);
-			i.putExtra("msgid", (String) arg1.getTag(R.id.tag_id));
+			i.putExtra("msgid",mList.get(arg2 ).getSdid());
 			startActivity(i);
 		}
 	}
