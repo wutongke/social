@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -52,7 +54,7 @@ import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 import com.cpstudio.zhuojiaren.widget.TabButton.TabsButtonOnClickListener;
 
 /**
- * 倬锟斤拷锟斤拷片
+ * 倬脉名片
  * 
  * @author lz
  * 
@@ -84,16 +86,16 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	@InjectView(R.id.textViewPhone)
 	TextView tvPhone;
 	@InjectView(R.id.textViewPurse)
-	TextView tvZBNum;// 倬锟斤拷锟斤拷
+	TextView tvZBNum;// 倬币数
 	@InjectView(R.id.textViewNote)
-	TextView tvSignature;// 倬锟斤拷锟斤拷
+	TextView tvSignature;
 	@InjectView(R.id.textViewht)
 	TextView tvCompany;
 
 	@InjectView(R.id.lt_myself_menue)
-	View ltNyselfMenue;// 锟斤拷锟斤拷锟斤拷锟较编辑锟剿碉拷
+	View ltNyselfMenue;
 	@InjectView(R.id.lt_other_menue)
-	View ltOtherMenue;// 锟斤拷锟斤拷锟斤拷锟较编辑锟剿碉拷
+	View ltOtherMenue;
 
 	@InjectView(R.id.btnEditBG)
 	Button btnEditBG;//
@@ -115,12 +117,12 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 	private PopupWindows phw = null;
 	private LoadImage mLoadImage = new LoadImage();
-	// 锟斤拷同锟斤拷荩锟斤拷锟斤拷懿锟酵�
+	// 不同身份，功能不同
 	private String memberType = "";
 	private PopupWindows pwh = null;
 	private String groupid = null;
 	private ZhuoConnHelper mConnHelper = null;
-	private boolean isfollow = false;// 锟角凤拷锟窖撅拷锟斤拷锟斤拷锟饺︼拷锟�
+	private boolean isfollow = false;
 
 	private ArrayList<String> tempids = new ArrayList<String>();
 
@@ -128,11 +130,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	private UserFacade userFacade = null;
 	UserNewVO userInfo;
 	BaseCodeData baseDataSet;
-
-	// 锟斤拷锟斤拷锟斤拷fragment锟叫伙拷锟絞roupid
-	public String getGroupid() {
-		return groupid;
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +139,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		mContext = this;
 		tvTitle.setText(R.string.title_zhuomai_card);
 
-		// 锟斤拷始锟斤拷tab锟斤拷viewpager
 		viewPager.setAdapter(getPagerAdapter());
 
 		tabButton.setViewPager(viewPager);
@@ -159,7 +155,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			btnEditBG.setEnabled(false);
 		mLoadImage = new LoadImage();
 
-		// 锟斤拷锟矫革拷锟皆憋拷锟斤拷图片锟斤拷锟节革拷锟斤拷锟斤拷息锟斤。锟斤拷锟剿匡拷锟斤拷选锟斤拷锟�
 		rootMainBG.setBackgroundResource(R.drawable.manbg_zmmp_1);
 		baseDataSet = mConnHelper.getBaseDataSet();
 		initOnClick();
@@ -167,15 +162,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 	private void loadData() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			// UserNewVO quan = userFacade.getById(userid);
-			// if (quan == null) {
-			// CommonUtil.displayToast(getApplicationContext(),
-			// R.string.error0);
-			// } else {
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-			// msg.obj = quan;
-			// msg.sendToTarget();
-			// }
 		} else {
 			if (mConnHelper != null)
 				mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, userid);
@@ -184,7 +170,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 	private void initOnClick() {
 		// TODO Auto-generated method stub
-		// 选锟斤拷同锟斤拷fragment锟斤拷function锟斤拷锟斤拷同
 		tvTitle.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -199,12 +184,10 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
 				if (arg0 == 2) {
-					// 锟斤拷展示锟斤拷锟斤拷锟絧age
 					viewPager.setCurrentItem(1);
 					Intent intent = new Intent(mContext, CardEditActivity.class);
 					intent.putExtra("id", userid);
 					mContext.startActivity(intent);
-					// 锟斤拷转锟斤拷锟斤拷锟借发锟斤拷页锟斤拷
 				}
 			}
 
@@ -241,17 +224,14 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				// 锟斤拷锟斤拷片
-
 				mConnHelper.praiseCard(mUIHandler, MsgTagVO.MSG_LIKE, myid, 1);
-				// MsgTagVO.MSG_LIKE, null, true, null, null);
 			}
 		});
 		ivShare.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				// 锟斤拷锟�锟斤拷锟斤拷锟截ｏ拷
+				// 閿熸枻鎷烽敓锟介敓鏂ゆ嫹閿熸枻鎷烽敓鎴綇鎷�
 				// if (phw == null)
 				// phw = new PopupWindows(ZhuoMaiCardActivity.this);
 				//
@@ -270,7 +250,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				//
 				// @Override
 				// public void onClick(View v) {
-				// // 通锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟�QQ锟斤拷微锟脚碉拷
+				// // 閫氶敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿燂拷QQ閿熸枻鎷峰井閿熻剼纰夋嫹
 				// }
 				// };
 				//
@@ -284,7 +264,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				// startActivityForResult(i, USER_SELECT);
 				// }
 				// };
-				// // 锟斤拷要锟斤拷锟斤拷锟斤拷锟矫菜碉拷选锟筋布锟街硷拷锟斤拷应锟铰硷拷
+				// // 通过第三方软件分享，QQ，微信等
 				// phw.showQuanOptionsMenue(v, 2, briefListener, shareListener,
 				// inviteListener);
 			}
@@ -296,10 +276,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				// TODO Auto-generated method stub
 				if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_MYSELF
 						.ordinal()) {
-					// Intent i = new Intent(ZhuoMaiCardActivity.this,
-					// ChangeBackgroundActivity.class);
-					// startActivity(i);
-					CommonUtil.displayToast(ZhuoMaiCardActivity.this, "锟斤拷锟斤拷");
 				}
 			}
 		});
@@ -322,9 +298,30 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				if (r == UserNewVO.USER_RELATION.RELATION_MYSELF.ordinal()
 						|| userInfo.getUserid().equals(myid))
 					CommonUtil.displayToast(ZhuoMaiCardActivity.this,
-							"锟斤拷锟角猴拷锟窖ｏ拷锟斤拷锟斤拷要锟劫凤拷锟斤拷锟斤拷片");
-				else if (r != UserNewVO.USER_RELATION.RELATION_FRIENDS
+							getString(R.string.noneed_send_card));
+				else if (r == UserNewVO.USER_RELATION.RELATION_FRIENDS
 						.ordinal()) {
+					new AlertDialog.Builder(ZhuoMaiCardActivity.this,
+							AlertDialog.THEME_HOLO_LIGHT)
+							.setTitle(getString(R.string.alert))
+							.setMessage(getString(R.string.sure_remove_friend))
+							.setPositiveButton(getString(R.string.sure),
+									new DialogInterface.OnClickListener() {
+
+										@Override
+										public void onClick(DialogInterface dialog,
+												int which) {
+											// TODO Auto-generated method stub
+											//刪除好友
+											mConnHelper.makeFriends(mUIHandler, MsgTagVO.MSG_DEL,
+													userInfo.getUserid(), 0);
+										}
+									}).setNegativeButton(getString(R.string.label_cancel), null).create()
+							.show();
+					
+				}
+				else
+				{
 					mConnHelper.makeFriends(mUIHandler, MsgTagVO.MSG_FOWARD,
 							userInfo.getUserid(), 1);
 				}
@@ -338,7 +335,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 				int r = userInfo.getRelation();
 				if (r == UserNewVO.USER_RELATION.RELATION_STRANGER.ordinal()) {
-					// 锟斤拷锟侥帮拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟绞憋拷锟揭拷锟绞撅拷锟斤拷锟斤拷遣锟斤拷呛锟斤拷眩锟斤拷欠锟斤拷锟斤拷锟斤拷片锟斤拷使锟斤拷锟轿拷锟侥猴拷锟斤拷
 				}
 				RongIM.getInstance().startPrivateChat(ZhuoMaiCardActivity.this,
 						userInfo.getUserid(), userInfo.getName());
@@ -347,7 +343,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	}
 
 	void sendCard() {
-		// 锟斤拷锟斤拷锟斤拷片(锟斤拷锟斤拷雍锟斤拷锟�
+		// 递送名片（请求添加好友）
 		if (RongIM.getInstance().getRongIMClient() == null)
 			return;
 		if (userInfo.getUserid() == null)
@@ -359,12 +355,12 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				userInfo.getName(), Uri.parse(userInfo.getUheader()));
 		info.setName(userInfo.getName());
 		info.setUserId(userInfo.getUserid());
-		msg.setUserInfo(info);// 锟皆凤拷锟斤拷锟杰碉拷锟斤拷锟斤拷然为null
+		msg.setUserInfo(info);// 对方接受到的仍然为null
 		RongIM.getInstance()
 				.getRongIMClient()
-				// 锟斤拷锟杰碉拷锟斤拷content锟教讹拷为"锟斤拷锟斤拷锟轿拷锟斤拷眩锟斤拷锟斤拷玫锟街伙拷锟絠d"
-				.sendMessage(ConversationType.PRIVATE, userInfo.getUserid(),
-						msg, userInfo.getName(), new SendMessageCallback() {
+				// 接受到的content固定为"请求加为好友，有用的只有id"
+				.sendMessage(ConversationType.PRIVATE, myid,
+						msg, myid, new SendMessageCallback() {
 							@Override
 							public void onSuccess(Integer arg0) {
 								// TODO Auto-generated method stub
@@ -376,7 +372,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 							public void onError(Integer arg0, ErrorCode arg1) {
 								// TODO Auto-generated method stub
 								Toast.makeText(ZhuoMaiCardActivity.this,
-										"锟斤拷锟诫发锟斤拷失锟斤拷ErrorCode锟斤拷" + arg1,
+										getString(R.string.rongyun_failed),
 										1000).show();
 							}
 						});
@@ -425,7 +421,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	}
 
 	/**
-	 * 锟斤拷锟酵凤拷锟斤拷锟斤拷锟斤拷锟较�
+	 * 填充個人基本信息
 	 */
 	void fillHeadInfo() {
 		if (userInfo == null)
@@ -433,7 +429,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		tvSignature.setText(userInfo.getSignature());
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHeader);
 		tvName.setText(userInfo.getName());
-		// tvPosition/tvMemType锟斤拷要通锟斤拷锟斤拷锟斤拷枚锟接︼拷锟斤拷锟斤拷
 		if (mConnHelper.getCitys() != null && userInfo.getCity() >= 1)
 			tvPosition.setText(mConnHelper.getCitys()
 					.get(userInfo.getCity() - 1).getCityName());
@@ -449,7 +444,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 		tvCompany.setText(userInfo.getCompany());
 		tvPhone.setText(userInfo.getPhone());
-		// tvZBNum.setText("锟斤拷锟斤拷倬锟斤拷锟斤拷");
+		// tvZBNum.setText("暂无倬币数");
 		if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_MYSELF
 				.ordinal() || userInfo.getUserid().equals(myid)) {
 			ltNyselfMenue.setVisibility(View.VISIBLE);
@@ -459,8 +454,10 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			ltOtherMenue.setVisibility(View.VISIBLE);
 			if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_FRIENDS
 					.ordinal()) {
-				rlSendCard.setVisibility(View.GONE);
+				btnSendCard.setText(R.string.remove_friend);
 			}
+			else
+				btnSendCard.setText(R.string.label_cardsend);
 
 		}
 	}
@@ -513,7 +510,17 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 						getApplicationContext())) {
 					sendCard();
 				} else {
-					sendCard();
+//					sendCard();
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.FAILED);
+				}
+				break;
+			}
+			case MsgTagVO.MSG_DEL: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					changeStatus();
+				} else {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.FAILED);
 				}
@@ -523,6 +530,14 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		}
 	};
 
+	/**
+	 * 改变好友关系
+	 */
+	void changeStatus()
+	{
+		loadData();
+	}
+	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub

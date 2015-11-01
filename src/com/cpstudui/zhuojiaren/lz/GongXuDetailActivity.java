@@ -1,6 +1,5 @@
 package com.cpstudui.zhuojiaren.lz;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +47,6 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.ResCommentActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
@@ -396,6 +394,7 @@ public class GongXuDetailActivity extends BaseActivity {
 				i.putExtra("type", 3);
 				i.putExtra("msgid", msgid);
 				i.putExtra("toId", toId);
+				i.putExtra("toUserid", mList.get(position-1).getUserid());
 				i.putExtra("toUserName", mList.get(position - 1).getName());
 				startActivityForResult(i, MsgTagVO.MSG_CMT);
 			}
@@ -459,6 +458,7 @@ public class GongXuDetailActivity extends BaseActivity {
 				mList.clear();
 				mList.addAll(list);
 				mAdapter.notifyDataSetChanged();
+				mListView.setSelection(mList.size()-1);
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

@@ -3,18 +3,8 @@ package com.cpstudui.zhuojiaren.lz;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.CmtVO;
-import com.cpstudio.zhuojiaren.model.Comment;
-import com.cpstudio.zhuojiaren.model.UserVO;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.MsgCmtActivity;
-import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.UserCardActivity;
-
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +12,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.cpstudio.zhuojiaren.MsgCmtActivity;
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.Comment;
 
 public class TopicCommentListAdapter extends BaseAdapter {
 	private List<Comment> mList = null;

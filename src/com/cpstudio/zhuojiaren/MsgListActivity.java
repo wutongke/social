@@ -589,7 +589,7 @@ public class MsgListActivity extends FragmentActivity implements
 					findViewById(R.id.textViewMsgCardAll).setVisibility(
 							View.VISIBLE);
 					String sourceid = msg.getSourceUserId();
-					String text = msg.getMessage()
+					String text = sourceid
 							+ getString(R.string.label_tomy)
 							+ getString(R.string.label_sendcard);
 					((TextView) findViewById(R.id.textViewCardMsg))
@@ -626,7 +626,6 @@ public class MsgListActivity extends FragmentActivity implements
 				case CustomerMessageFactory.SYS:
 
 					break;
-
 				default:
 					break;
 				}

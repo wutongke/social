@@ -46,7 +46,7 @@ public class ResCommentActivity extends Activity {
 		toUserid = i.getStringExtra("toUserid");
 		toUserName = i.getStringExtra("toUserName");
 		type=i.getIntExtra("type",1);
-		if(toId!=null&&toId.equals("-1")){
+		if(toId!=null && !toId.equals("-1")){
 			contentEditText.setHint("»Ø¸´"+toUserName);
 		}
 		initClick();
