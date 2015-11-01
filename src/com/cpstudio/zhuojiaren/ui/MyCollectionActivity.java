@@ -176,9 +176,9 @@ public class MyCollectionActivity extends BaseActivity {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					tb.setChecked(true);
-					loadData();
-					handlerTag = (Integer) (v.getTag()) + 1;
 					url = ZhuoCommHelper.collectionUrls[handlerTag - 1];
+					handlerTag = (Integer) (v.getTag()) + 1;
+					loadData();
 				}
 			});
 			tb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -222,12 +222,14 @@ public class MyCollectionActivity extends BaseActivity {
 	}
 
 	private void loadMore() {
+		pullDownView.finishLoadData(true);
 //		appClientLef.getVedioList(tutorId, typeId, mPage, 5, uiHandler,
 //				MsgTagVO.DATA_MORE, GrouthListActivity.this, true, null, null);
 	}
 
 	Handler uiHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
+			pullDownView.finishLoadData(true);
 			ResultVO res;
 			if (JsonHandler.checkResult((String) msg.obj,
 					MyCollectionActivity.this)) {

@@ -220,8 +220,11 @@ public class TabButton extends HorizontalScrollView {
 	}
 
 	public void setViewPager(ViewPager vp) {
-		if(vp==null)
+		if(vp==null){
+			mLinearLayout.removeAllViews();
+			tabSize = 0;
 			return;
+		}
 		this.mViewPager = vp;
 		vp.setOnPageChangeListener(getOnPageChangeListener());
 		PagerAdapter pagerAdapter = vp.getAdapter();

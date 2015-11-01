@@ -27,7 +27,7 @@ public class ZhuoUserListAdapter2 extends CommonAdapter<UserAndCollection> {
 	// addByLz
 	boolean isManageing = false;// 锟斤拷锟揭碉拷锟斤拷锟斤拷锟斤拷-> 锟角凤拷删锟斤拷
 
-	LoadImage loadImage = new LoadImage(0);
+	LoadImage loadImage = LoadImage.getInstance();
 	Handler handler;
 	BaseCodeData baseData;
 	private ZhuoConnHelper mConnHelper = null;

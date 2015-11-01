@@ -101,6 +101,8 @@ public class QuanziTopicFra extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// 跳到话题详情页，话题详情内容用活动内容测试通过
+				if(position>mList.size()-1)
+					return;
 				Intent i = new Intent();
 				QuanTopicVO vo = mList.get(position);
 				i.setClass(getActivity(), TopicDetailActivity.class);
