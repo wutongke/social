@@ -96,6 +96,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	View btnQuanChat;
 	private final static int USER_SELECT = 0;
 	private Context mContext;
+	private int currentPager=0;
 	// 四个fragment 方便通信
 	List<Fragment> fragments;
 	QuanVO detail;
@@ -151,6 +152,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			tabButton.setViewPager(null);
 			tabButton.setViewPager(viewPager);
 			tabButton.setVisibility(View.VISIBLE);
+			viewPager.setCurrentItem(currentPager);
 		}
 	}
 	@SuppressLint("HandlerLeak")
@@ -321,6 +323,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
 				setFunctionText(arg0);
+				currentPager = arg0;
 			}
 
 			@Override

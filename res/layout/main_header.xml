@@ -68,7 +68,6 @@
                 android:id="@+id/head_lastUpdatedTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:layout_marginTop="4dp"
                 android:text="@string/label_refresh_time"
                 android:textColor="#a8a7a7"

@@ -64,13 +64,13 @@ public class LZUserSameActivity extends BaseActivity implements
 		initTitle();
 		function.setText(getString(R.string.clear));
 		function.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(mList!=null)
+				if (mList != null)
 					mList.clear();
-				if(mAdapter!=null)
+				if (mAdapter != null)
 					mAdapter.notifyDataSetChanged();
 			}
 		});
@@ -111,7 +111,7 @@ public class LZUserSameActivity extends BaseActivity implements
 				helper.setText(R.id.tvTime, item.getRegisterTime());
 				ImageView iv = helper.getView(R.id.izul_image);
 				iv.setOnClickListener(new OnClickListener() {
-					
+
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
@@ -121,7 +121,7 @@ public class LZUserSameActivity extends BaseActivity implements
 						startActivity(i);
 					}
 				});
-					
+
 				mLoader.beginLoad(item.getUheader(), iv);
 				// 还需要继续写
 				helper.setButton(R.id.izubtn_collect, null, -1,
@@ -138,6 +138,8 @@ public class LZUserSameActivity extends BaseActivity implements
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowFooter(false);
 		mPullDownView.noFoot();
+		if (type == 1)
+			mPullDownView.setHideHeader();
 		loadData();
 	}
 
@@ -271,7 +273,7 @@ public class LZUserSameActivity extends BaseActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		
+
 	}
 
 	private void loadData() {

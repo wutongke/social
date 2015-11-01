@@ -103,7 +103,7 @@ public class MyFriendActivity extends BaseActivity implements
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowFooter(false);
 		mPullDownView.noFoot();
-
+		mPullDownView.setHideHeader();
 		loadData();
 	}
 

@@ -18,6 +18,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -37,6 +38,7 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
@@ -176,8 +178,8 @@ public class MyCollectionActivity extends BaseActivity {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					tb.setChecked(true);
-					url = ZhuoCommHelper.collectionUrls[handlerTag - 1];
 					handlerTag = (Integer) (v.getTag()) + 1;
+					url = ZhuoCommHelper.collectionUrls[handlerTag - 1];
 					loadData();
 				}
 			});
@@ -210,14 +212,15 @@ public class MyCollectionActivity extends BaseActivity {
 	}
 
 	private void loadData() {
-		if (pullDownView.startLoadData()) {
-			mDatas.clear();
-			mPage = 0;
-			mAdapter.notifyDataSetChanged();
-//			appClientLef.getVedioList(tutorId, typeId, mPage, 5, uiHandler,
-//					MsgTagVO.DATA_LOAD, GrouthListActivity.this, true, null,
-//					null);
-		}
+		CommonUtil.displayToast(MyCollectionActivity.this, "暂时没有数据");
+//		if (pullDownView.startLoadData()) {
+//			mDatas.clear();
+//			mPage = 0;
+//			mAdapter.notifyDataSetChanged();
+////			appClientLef.getVedioList(tutorId, typeId, mPage, 5, uiHandler,
+////					MsgTagVO.DATA_LOAD, GrouthListActivity.this, true, null,
+////					null);
+//		}
 
 	}
 
