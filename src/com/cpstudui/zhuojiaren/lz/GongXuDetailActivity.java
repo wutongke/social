@@ -67,6 +67,9 @@ public class GongXuDetailActivity extends BaseActivity {
 
 	@InjectView(R.id.imageViewAuthorHeader)
 	ImageView ivHead;
+	@InjectView(R.id.imageViewCard)
+	ImageView ivCard;
+	
 	@InjectView(R.id.textViewAuthorName)
 	TextView tvName;
 	@InjectView(R.id.textWork)
@@ -355,7 +358,20 @@ public class GongXuDetailActivity extends BaseActivity {
 	}
 
 	private void initClick() {
-
+		ivCard.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(sharer!=null)
+				{
+				Intent intent = new Intent(GongXuDetailActivity.this,
+						ZhuoMaiCardActivity.class);
+				intent.putExtra("userid", sharer.getUserid());
+				startActivity(intent);
+				}
+			}
+		});
 		tvShare.setBackgroundResource(R.drawable.share);
 		tvShare.setOnClickListener(new OnClickListener() {
 

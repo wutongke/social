@@ -7,12 +7,10 @@
     android:orientation="vertical"
     tools:context=".CardAddUserResourceActivity" >
 
-    
     <include
         android:id="@+id/lltitle"
         layout="@layout/title_activity" />
-    
-  
+
     <RelativeLayout
         android:id="@+id/lt_pub_res"
         android:layout_width="match_parent"
@@ -45,7 +43,7 @@
     </ListView>
 
     <LinearLayout
-         android:id="@+id/fql_footer"
+        android:id="@+id/fql_footer"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
@@ -68,7 +66,7 @@
                 android:drawablePadding="5dp"
                 android:text="@string/share"
                 android:textColor="@color/white"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -86,7 +84,7 @@
                 android:drawablePadding="5dp"
                 android:text="@string/label_del"
                 android:textColor="@color/white"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
         </RelativeLayout>
     </LinearLayout>
 

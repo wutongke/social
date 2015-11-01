@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/imageViewAuthorHeader"
-            android:layout_toLeftOf="@id/imageViewCard"
+            android:layout_toLeftOf="@+id/imageViewCard"
             android:orientation="vertical"
             android:paddingLeft="10dp" >
 
