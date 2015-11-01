@@ -195,7 +195,8 @@ public class GoodsDetailLActivity extends BaseActivity {
 					res = JsonHandler.parseResult((String) msg.obj);
 				} else {
 					CommonUtil.displayToast(GoodsDetailLActivity.this,
-							R.string.data_error);
+							"商品不存在");
+					GoodsDetailLActivity.this.finish();
 					return;
 				}
 				Gson gson = new Gson();

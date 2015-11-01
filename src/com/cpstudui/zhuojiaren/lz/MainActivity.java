@@ -36,6 +36,7 @@ import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicAdVO;
+import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.ui.PubDetailActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
@@ -117,12 +118,12 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
 		// 是否和圈子话题公用一个数据结构还不一定
-		mAdapter = new DynamicListAdapter(MainActivity.this,mList, 1);
+		mAdapter = new DynamicListAdapter(MainActivity.this, mList, 1);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setHideHeader();
 		mPullDownView.setShowFooter(false);
 		mPullDownView.noFoot();
-		
+
 		initClick();
 		initHeadView();
 		loadData();
@@ -171,6 +172,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		hotImages.add(ivHot1);
 		hotImages.add(ivHot2);
 		hotImages.add(ivHot3);
+
 	}
 
 	private void initClick() {
@@ -234,8 +236,8 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 					@Override
 					public void onClick(View v) {
-//						Toast.makeText(MainActivity.this, "完善中...", 2000)
-//								.show();
+						// Toast.makeText(MainActivity.this, "完善中...", 2000)
+						// .show();
 						// 此处应该是以微信等其他第三方方式邀请朋友
 						// Intent i = new Intent(MainActivity.this,
 						// UserSelectActivity.class);
@@ -246,12 +248,12 @@ public class MainActivity extends Activity implements OnPullDownListener,
 						com.cpstudio.zhuojiaren.widget.CustomShareBoard shareBoard = new com.cpstudio.zhuojiaren.widget.CustomShareBoard(
 								MainActivity.this);
 						shareBoard.setTitle("倬脉");
-						UMImage image = new UMImage(MainActivity.this, "http://7xkb2a.com1.z0.glb.clouddn.com/android-gg.png");
+						UMImage image = new UMImage(MainActivity.this,
+								"http://7xkb2a.com1.z0.glb.clouddn.com/android-gg.png");
 						shareBoard.setImage(image);
 						shareBoard.setContent("倬脉是一个高端社交平台");
-						shareBoard.showAtLocation(MainActivity.this
-								.getWindow().getDecorView(),
-								Gravity.BOTTOM, 0, 0);
+						shareBoard.showAtLocation(MainActivity.this.getWindow()
+								.getDecorView(), Gravity.BOTTOM, 0, 0);
 					}
 				};
 				phw.showAddOptionsPop(v, times, pubListener, inviteListener);
@@ -261,9 +263,9 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 	private void updateItemList(ArrayList<Dynamic> list, boolean refresh,
 			boolean append) {
-//		mPullDownView.noData(false);
+		// mPullDownView.noData(false);
 		if (!list.isEmpty()) {
-//			mPullDownView.hasData();
+			// mPullDownView.hasData();
 			if (!append) {
 				mList.clear();
 			}
@@ -274,7 +276,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			}
 			mPage++;
 		} else {
-//			mPullDownView.noData(!refresh);
+			// mPullDownView.noData(!refresh);
 		}
 	}
 
@@ -301,7 +303,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			case MsgTagVO.DATA_REFRESH: {
 				break;
 			}
-			
+
 			}
 		}
 
@@ -323,7 +325,6 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	public void onRefresh() {
 		loadData();
 	}
-
 
 	private void loadData() {
 
@@ -374,16 +375,29 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		hotListData = info.getAdmid();
 		for (int i = 0; i < 3; i++) {
 			String url = hotListData.get(i).getAdpic();
+			final String id = hotListData.get(i).getGoodsid();
 			hotImages.get(i).setTag(url);
 			imageLoader.addTask(url, hotImages.get(i));
+
+			hotImages.get(i).setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent i = new Intent(MainActivity.this,
+							GoodsDetailLActivity.class);
+					i.putExtra("goodsId", id);
+					startActivity(i);
+				}
+			});
 		}
 		imageLoader.doTask();
 
 		ArrayList<Dynamic> list = info.getStatus();
-//		boolean loadState = false;
+		// boolean loadState = false;
 		if (info != null) {
-//			loadState = true;
-//			mPullDownView.finishLoadData(loadState);
+			// loadState = true;
+			// mPullDownView.finishLoadData(loadState);
 			updateItemList(list, true, false);
 		}
 	}
@@ -391,7 +405,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	@Override
 	public void onMore() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

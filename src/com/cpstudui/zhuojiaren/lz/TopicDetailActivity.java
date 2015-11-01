@@ -98,7 +98,9 @@ public class TopicDetailActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
 				// TODO Auto-generated method stub
-				Comment cmt = mList.get(position);
+				if(mList==null || position>mList.size())
+					return ;
+				Comment cmt = mList.get(position-1);
 				startCommentActivity(cmt.getToId(), cmt.getToUserid());
 			}
 		});
