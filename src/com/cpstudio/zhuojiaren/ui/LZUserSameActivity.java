@@ -1,21 +1,13 @@
 package com.cpstudio.zhuojiaren.ui;
 
-import io.rong.app.DemoContext;
-import io.rong.app.message.DeAgreedFriendRequestMessage;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.RongIMClient.OperationCallback;
-import io.rong.imlib.RongIMClient.SendMessageCallback;
-import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
-import io.rong.imlib.model.Conversation.ConversationType;
 
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
@@ -41,7 +32,7 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
-import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 /**
  * 请求交换名片的家人，请求加入圈子的人
@@ -119,6 +110,18 @@ public class LZUserSameActivity extends BaseActivity implements
 				// CommonUtil.calcTimeToNow(time)
 				helper.setText(R.id.tvTime, item.getRegisterTime());
 				ImageView iv = helper.getView(R.id.izul_image);
+				iv.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						Intent i = new Intent(LZUserSameActivity.this,
+								ZhuoMaiCardActivity.class);
+						i.putExtra("userid", item.getUserid());
+						startActivity(i);
+					}
+				});
+					
 				mLoader.beginLoad(item.getUheader(), iv);
 				// 还需要继续写
 				helper.setButton(R.id.izubtn_collect, null, -1,
@@ -268,12 +271,7 @@ public class LZUserSameActivity extends BaseActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		// if (id != -1) {
-		// Intent i = new Intent(LZUserSameActivity.this,
-		// MsgDetailActivity.class);
-		// i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
-		// startActivity(i);
-		// }
+		
 	}
 
 	private void loadData() {

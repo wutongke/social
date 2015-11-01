@@ -304,7 +304,6 @@ public class MsgListActivity extends FragmentActivity implements
 						// Intent i = new Intent(MsgListActivity.this,
 						// LinkListActivity.class);
 						// startActivity(i);
-
 						Intent i = new Intent(MsgListActivity.this,
 								MyFriendActivity.class);
 						startActivity(i);

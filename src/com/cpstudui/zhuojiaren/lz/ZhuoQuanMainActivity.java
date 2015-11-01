@@ -479,7 +479,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	}
 
 	private void changeType(boolean isMember) {
-
 		if (isMember) {
 			ltMember.setVisibility(View.VISIBLE);
 			ltYouke.setVisibility(View.GONE);

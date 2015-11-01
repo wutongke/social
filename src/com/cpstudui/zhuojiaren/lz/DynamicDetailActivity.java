@@ -103,8 +103,8 @@ public class DynamicDetailActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				if (mList.size() <= 0)
 					return;
-				Comment cmt = mList.get(position);
-				startCommentActivity(cmt.getToId(), cmt.getToUserid());
+				Comment cmt = mList.get(position-1);
+				startCommentActivity(cmt.getId(), cmt.getUserid());
 			}
 		});
 		baseDataSet = mConnHelper.getBaseDataSet();
