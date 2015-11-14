@@ -13,6 +13,7 @@ import android.util.Log;
 import com.cpstudio.zhuojiaren.model.Comment;
 import com.cpstudio.zhuojiaren.model.CommentVO;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
+import com.cpstudio.zhuojiaren.model.GoodsCategory;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.model.GrouthVisit;
@@ -131,6 +132,27 @@ public class JsonHandler_Lef {
 				for (Iterator<RecordVO> iterator = li.iterator(); iterator
 						.hasNext();) {
 					RecordVO item = (RecordVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public static   ArrayList<GoodsCategory> parseGoodsCategory(String jsonData) {
+		ArrayList<GoodsCategory> list = new ArrayList<GoodsCategory>();
+		try {
+			Type listType = new TypeToken<ArrayList<GoodsCategory>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<GoodsCategory> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<GoodsCategory> iterator = li.iterator(); iterator
+						.hasNext();) {
+					GoodsCategory item = (GoodsCategory) iterator.next();
 					list.add(item);
 				}
 			}

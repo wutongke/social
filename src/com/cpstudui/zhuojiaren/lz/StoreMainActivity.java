@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import butterknife.ButterKnife;
@@ -25,12 +26,18 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.StoreGoodsListAdapter;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.RecordVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.ui.AudioListActivity;
 import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
+import com.cpstudio.zhuojiaren.util.CommonAdapter;
+import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.external.viewpagerindicator.PageIndicator;
 
@@ -47,6 +54,7 @@ public class StoreMainActivity extends BaseActivity implements
 	PageIndicator adsIndicator;
 	private ArrayList<BeanBanner> adsListData;
 	private Bee_PageAdapter adsPageAdapter;
+	private static final int GoodsCategory = 10;
 	// 需要改
 	Class[] classArrays = { GoodsTypedListActivity.class };
 	int iconIds[] = { R.drawable.jiarendongtai, R.drawable.chengzhangzaixian,
@@ -82,6 +90,7 @@ public class StoreMainActivity extends BaseActivity implements
 		// mList.add(new GoodsVO());
 		// mAdapter.notifyDataSetChanged();
 		loadData();
+		loadGoodsCatgory();
 	}
 
 	private void initView() {
@@ -141,6 +150,7 @@ public class StoreMainActivity extends BaseActivity implements
 		tags = getResources().getStringArray(R.array.store_types);
 
 		ArrayList<HashMap<String, Object>> imagelist = new ArrayList<HashMap<String, Object>>();
+
 		// 使用HashMap将图片添加到一个数组中，注意一定要是HashMap<String,Object>类型的，因为装到map中的图片要是资源ID，而不是图片本身
 		// 如果是用findViewById(R.drawable.image)这样把真正的图片取出来了，放到map中是无法正常显示的
 		int n = iconIds.length < tags.length ? iconIds.length : tags.length;
@@ -156,20 +166,6 @@ public class StoreMainActivity extends BaseActivity implements
 						"ivIcon", "tvText" }, new int[] { R.id.ivIcon,
 						R.id.tvText });
 		// 设置GridView的适配器为新建的simpleAdapter
-		gvCats.setAdapter(simpleAdapter);
-
-		gvCats.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-
-				Intent i = new Intent(StoreMainActivity.this, classArrays[0]);
-				i.putExtra("type", arg2);
-				i.putExtra("typeName", tags[arg2]);
-				startActivity(i);
-			}
-		});
 
 	}
 
@@ -217,10 +213,60 @@ public class StoreMainActivity extends BaseActivity implements
 				break;
 			}
 			case MsgTagVO.FLIP:
+				if(adsViewPager.getCurrentItem()==adsPageAdapter.getCount()){
+					adsViewPager.setCurrentItem((adsViewPager.getCurrentItem() + 1)
+							% adsPageAdapter.getCount(),false);
+				}else
 				adsViewPager.setCurrentItem((adsViewPager.getCurrentItem() + 1)
-						% adsPageAdapter.getCount(),false);
+						% adsPageAdapter.getCount());
 
 				break;
+			case GoodsCategory:
+				try {
+					ResultVO res;
+					if (JsonHandler.checkResult((String) msg.obj,
+							StoreMainActivity.this)) {
+						res = JsonHandler.parseResult((String) msg.obj);
+					} else {
+						return;
+					}
+					String data = res.getData();
+					if (data != null && !data.equals("")) {
+						final ArrayList<com.cpstudio.zhuojiaren.model.GoodsCategory> list = JsonHandler_Lef
+								.parseGoodsCategory(data);
+						gvCats.setAdapter(new CommonAdapter<com.cpstudio.zhuojiaren.model.GoodsCategory>(
+								StoreMainActivity.this, list,
+								R.layout.gridview_item_type) {
+
+							@Override
+							public void convert(
+									ViewHolder helper,
+									com.cpstudio.zhuojiaren.model.GoodsCategory item) {
+								// TODO Auto-generated method stub
+								helper.setText(R.id.tvText, item.getCategoryName());
+								ImageView imageView = (ImageView)helper.getView(R.id.ivIcon);
+								LoadImage.getInstance().beginLoad(item.getCategoryPic(), imageView);
+							}
+						});
+
+						gvCats.setOnItemClickListener(new OnItemClickListener() {
+							@Override
+							public void onItemClick(AdapterView<?> arg0,
+									View arg1, int arg2, long arg3) {
+								// TODO Auto-generated method stub
+
+								Intent i = new Intent(StoreMainActivity.this,
+										classArrays[0]);
+								i.putExtra("type", arg2);
+								i.putExtra("typeName", list.get(arg2).getCategoryName());
+								startActivity(i);
+							}
+						});
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
 			}
 		}
 	};
@@ -244,18 +290,23 @@ public class StoreMainActivity extends BaseActivity implements
 
 	}
 
+	private void loadGoodsCatgory() {
+		AppClientLef.getInstance(this).getGoodsCategory(mUIHandler,
+				GoodsCategory, this, false, null, null);
+	}
+
 	private void loadData() {
 		mList.clear();
 		mPage = 0;
 		mAdapter.notifyDataSetChanged();
 		mConnHelper.getGoodsList(mPage, 5, mUIHandler, MsgTagVO.DATA_LOAD,
-				this, null,null,null);
+				this, null, null, null);
 
 	}
 
 	private void loadMore() {
 		mConnHelper.getGoodsList(mPage, 5, mUIHandler, MsgTagVO.DATA_MORE,
-				this, null,null,null);
+				this, null, null, null);
 	}
 
 	private OnClickListener onMoreClick = new OnClickListener() {

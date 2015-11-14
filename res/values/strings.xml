@@ -852,6 +852,7 @@
     <string name="my_money">我的零钱</string>
     <string name="my_zhuobi">我的倬币</string>
     <string name="recharge_money">充值</string>
+    <string name="recharge_money_text">一个倬家币等于一元</string>
     <string name="give_zhuobi">送倬币给朋友</string>
     <string name="take_money">提现</string>
     <string name="my_wallet">我的钱包</string>
@@ -1169,5 +1170,6 @@
     <string name="remove_friend">刪除好友</string>
     <string name="sure_remove_friend">确定刪除该好友？</string>
     <string name="alert">警告</string>
-    <string name="sure">確定</string>
+    <string name="sure">确定</string>
+    <string name="targeturl">http://www.baidu.com</string>
 </resources>

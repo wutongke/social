@@ -219,14 +219,7 @@ public class EventDetailActivity extends Activity {
 							// TODO Auto-generated method stub
 							com.cpstudio.zhuojiaren.widget.CustomShareBoard shareBoard = new com.cpstudio.zhuojiaren.widget.CustomShareBoard(
 									EventDetailActivity.this);
-							shareBoard.setTitle(event.getTitle());
-							UMImage image = new UMImage(mContext, event
-									.getUheader());
-							shareBoard.setImage(image);
-							shareBoard.setContent(event.getContent());
-							shareBoard.showAtLocation(EventDetailActivity.this
-									.getWindow().getDecorView(),
-									Gravity.BOTTOM, 0, 0);
+							shareBoard.showCustomShareContent();
 						}
 					});
 					if (null != detail) {

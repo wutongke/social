@@ -105,14 +105,9 @@ public class VedioActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				CustomShareBoard shareBoard = new CustomShareBoard(
+				com.cpstudio.zhuojiaren.widget.CustomShareBoard shareBoard = new com.cpstudio.zhuojiaren.widget.CustomShareBoard(
 						VedioActivity.this);
-				shareBoard.setTitle("倬脉");
-				UMImage image = new UMImage(VedioActivity.this, "http://7xkb2a.com1.z0.glb.clouddn.com/android-gg.png");
-				shareBoard.setImage(image);
-				shareBoard.setContent("倬脉是一个高端社交平台");
-				shareBoard.showAtLocation(VedioActivity.this.getWindow()
-						.getDecorView(), Gravity.BOTTOM, 0, 0);
+				shareBoard.showCustomShareContent();
 //				startActivity(new Intent(VedioActivity.this,PayActivity.class));
 			}
 		});

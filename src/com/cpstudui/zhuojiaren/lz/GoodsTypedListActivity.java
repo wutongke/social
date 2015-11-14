@@ -58,7 +58,7 @@ public class GoodsTypedListActivity extends BaseActivity implements
 		type = intent.getIntExtra("type", 1);
 		typeName = intent.getStringExtra("typeName");
 		
-		function.setVisibility(View.VISIBLE);
+		function.setVisibility(View.GONE);
 		function.setText(R.string.label_filter2);
 		// 此处需要根据传过来的参数修改
 		if(typeName!=null)

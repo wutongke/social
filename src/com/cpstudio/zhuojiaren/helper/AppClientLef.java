@@ -137,7 +137,41 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				cancelable, cancel, data);
 	}
-
+	/**
+	 * 获取商品大类
+	 * @param url
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
+	public boolean getGoodsCategory(Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		return doPost(nameValuePairs, ZhuoCommHelper.getGOODSCATEGORY(), handler, handlerTag, activity, ZhuoCommHelper.getGOODSCATEGORY(),
+				cancelable, cancel, data);
+	}
+	/**
+	 * 送倬币给朋友
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
+	public boolean giveZhuobiToFriend(Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String userid,String zhuobi) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("userid",userid));
+		nameValuePairs.add(new BasicNameValuePair("zhuobi", zhuobi));
+		return doPost(nameValuePairs, ZhuoCommHelper.getGIVEMONEYTOFRIEND(), handler, handlerTag, activity, ZhuoCommHelper.getGOODSCATEGORY(),
+				cancelable, cancel, null);
+	}
 	/**
 	 * 增加页信息
 	 * 
@@ -608,7 +642,20 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				false, null, null);
 	}
-
+	/**
+	 * 获取商品流水号
+	 */
+	public boolean getOrderNumber(Activity activity, Handler handler,
+			int handlerTag, String channel,String totalFee) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("channel", channel));
+		nameValuePairs.add(new BasicNameValuePair("totalFee", totalFee));
+		String url = ZhuoCommHelper.getGOODSNUMBER();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+	
 	/**
 	 * 获取众筹评论列表
 	 */

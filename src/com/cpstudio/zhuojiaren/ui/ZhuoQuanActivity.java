@@ -57,7 +57,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 		function.setText(R.string.label_manage);
 		// ≥ı ºªØtab∫Õviewpager
 		viewPager.setAdapter(getPagerAdapter());
-
+		viewPager.setOffscreenPageLimit(2);
 		tabButton.setViewPager(viewPager);
 		initOnClick();
 	}
@@ -113,15 +113,17 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 					break;
 				case 3:
 					((QuanziFra) (fragments.get(0))).offManager();
-					function.setTag(0);
-					function.setBackgroundResource(R.drawable.ibutton);
-					function.setText(R.string.label_manage);
+					setOffManager();
 					break;
 				}
 			}
 		});
 	}
-
+	public void setOffManager(){
+		function.setTag(0);
+		function.setBackgroundResource(R.drawable.ibutton);
+		function.setText(R.string.label_manage);
+	}
 	PagerAdapter getPagerAdapter() {
 		fragments = new ArrayList<Fragment>();
 		List<CharSequence> titles = new ArrayList<CharSequence>();

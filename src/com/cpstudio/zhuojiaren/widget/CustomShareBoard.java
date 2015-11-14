@@ -12,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -71,7 +72,17 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		// 配置需要分享的相关平台
 		configPlatforms();
 	}
-
+	
+	public void showCustomShareContent(){
+		setTitle("倬脉");
+		UMImage image = new UMImage(mActivity,R.drawable.ic_launcher);
+		setTargetUrl(mActivity.getResources().getString(R.string.targeturl));
+		setContent("卓越自我　泽及他人");
+		showAtLocation(mActivity
+				.getWindow().getDecorView(),
+				Gravity.BOTTOM, 0, 0);
+	}
+	
 	@SuppressWarnings("deprecation")
 	private void initView(Context context) {
 		View rootView = LayoutInflater.from(context).inflate(

@@ -26,7 +26,7 @@ import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.ui.MyCollectionActivity;
-import com.cpstudio.zhuojiaren.ui.MyMoneyActivity;
+import com.cpstudio.zhuojiaren.ui.MyZhuoBiActivity;
 import com.cpstudio.zhuojiaren.ui.SettingActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
@@ -97,7 +97,7 @@ public class LZMyHomeActivity extends Activity {
 				// 我的钱包
 				// Toast.makeText(LZMyHomeActivity.this, "待完善！", 1000).show();
 				startActivity(new Intent(LZMyHomeActivity.this,
-						MyMoneyActivity.class));
+						MyZhuoBiActivity.class));
 			}
 		});
 

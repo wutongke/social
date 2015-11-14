@@ -28,12 +28,21 @@ public class LocateActivity extends BaseActivity {
 	EditText phone;
 	@InjectView(R.id.alocate_save)
 	Button save;
+	SharedPreferences sp;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_locate);
 		ButterKnife.inject(this);
 		initTitle();
+		sp = getSharedPreferences("receive_goods", MODE_PRIVATE);
+		area.setText(sp.getString("locate1", ""));
+		street.setText(sp.getString("locate2", ""));
+		moreInfo.setText(sp.getString("locate3", ""));
+		name.setText(sp.getString("name", ""));
+		phone.setText(sp.getString("phone", ""));
+		mail.setText(sp.getString("mail", ""));
+		
 		save.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -48,7 +57,6 @@ public class LocateActivity extends BaseActivity {
 						){
 					CommonUtil.displayToast(LocateActivity.this, R.string.please_finish);
 				}else{
-					SharedPreferences sp = getSharedPreferences("receive_goods", MODE_PRIVATE);
 					SharedPreferences.Editor editor = sp.edit();
 					editor.putString("name", name.getText().toString());
 					editor.putString("phone", phone.getText().toString());
@@ -56,6 +64,9 @@ public class LocateActivity extends BaseActivity {
 								street.getText().toString()+
 								moreInfo.getText().toString()
 							);
+					editor.putString("locate1", area.getText().toString());
+					editor.putString("locate2", street.getText().toString());
+					editor.putString("locate3", moreInfo.getText().toString());
 					editor.putString("mail", mail.getText().toString());
 					editor.commit();
 					setResult(RESULT_OK);

@@ -32,6 +32,7 @@
         android:layout_gravity="center"
         android:textSize="@dimen/dp12"
         android:textStyle="normal"
+        android:visibility="gone"
         android:text="市场价：300元" />
 
     <TextView

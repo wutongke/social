@@ -42,6 +42,8 @@ import com.cpstudio.zhuojiaren.model.ImageRadioButton;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
+import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
@@ -72,7 +74,7 @@ public class QuanziFra extends Fragment {
 	private ListViewFooter mListViewFooter = null;
 	private Context mContext;
 	private PopupWindows pupWindow;
-	//筛选圈子
+	// 筛选圈子
 	private String city;
 	private String gtype;
 	// 六个类别
@@ -117,9 +119,9 @@ public class QuanziFra extends Fragment {
 					String groupid = (String) view.getTag(R.id.tag_id);
 					Intent i = new Intent(mContext, ZhuoQuanMainActivity.class);
 					i.putExtra("groupid", groupid);
-					//点击更多是出错
-					if(groupid!=null)
-					startActivity(i);
+					// 点击更多是出错
+					if (groupid != null)
+						startActivity(i);
 				}
 			}
 
@@ -136,7 +138,9 @@ public class QuanziFra extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-
+				com.cpstudio.zhuojiaren.widget.CustomShareBoard shareBoard = new com.cpstudio.zhuojiaren.widget.CustomShareBoard(
+						QuanziFra.this.getActivity());
+				shareBoard.showCustomShareContent();
 			}
 		});
 		// 1为解散，2为退出
@@ -169,6 +173,10 @@ public class QuanziFra extends Fragment {
 											mUIHandler, MsgTagVO.disolve_quan,
 											getActivity(), true, null, null);
 									pupWindow.hidePop();
+									if (QuanziFra.this.getActivity() instanceof ZhuoQuanActivity) {
+										((ZhuoQuanActivity) (QuanziFra.this
+												.getActivity())).setOffManager();
+									}
 								}
 							});
 				} else if ((Integer) (v.getTag()) == 2) {
@@ -192,6 +200,10 @@ public class QuanziFra extends Fragment {
 											mUIHandler, MsgTagVO.out_quan,
 											getActivity(), true, null, null);
 									pupWindow.hidePop();
+									if (QuanziFra.this.getActivity() instanceof ZhuoQuanActivity) {
+										((ZhuoQuanActivity) (QuanziFra.this
+												.getActivity())).setOffManager();
+									}
 								}
 							});
 				}
@@ -257,8 +269,8 @@ public class QuanziFra extends Fragment {
 					int pos = 0;
 					for (ImageRadioButton temp : titleList) {
 						pos++;
-						if (item.equals(temp)){
-							gtype = pos+"";
+						if (item.equals(temp)) {
+							gtype = pos + "";
 							loadData();
 						}
 					}
@@ -283,7 +295,7 @@ public class QuanziFra extends Fragment {
 		}
 		shareFooter.setVisibility(View.VISIBLE);
 	}
-	
+
 	/**
 	 * 退出管理
 	 */
@@ -375,7 +387,7 @@ public class QuanziFra extends Fragment {
 			}
 			case MsgTagVO.disolve_quan:
 			case MsgTagVO.out_quan: {
-				//退出管理，重新下载数据
+				// 退出管理，重新下载数据
 				offManager();
 				loadData();
 			}
@@ -389,7 +401,7 @@ public class QuanziFra extends Fragment {
 			mPage = 0;
 			mAdapter.notifyDataSetChanged();
 			if (url != null && (!url.isEmpty()))
-				mConnHelper.getQuanzi(url, gtype,city,0, 5, mUIHandler,
+				mConnHelper.getQuanzi(url, gtype, city, 0, 5, mUIHandler,
 						MsgTagVO.DATA_LOAD, getActivity(), true, null, null);
 		}
 	}
@@ -397,7 +409,7 @@ public class QuanziFra extends Fragment {
 	private void loadMore() {
 		if (mListViewFooter.startLoading()) {
 
-			mConnHelper.getQuanzi(url, gtype,city,mPage, 5, mUIHandler,
+			mConnHelper.getQuanzi(url, gtype, city, mPage, 5, mUIHandler,
 					MsgTagVO.DATA_MORE, getActivity(), true, null, null);
 		}
 	}
@@ -409,18 +421,18 @@ public class QuanziFra extends Fragment {
 			loadMore();
 		}
 	};
-	
+
 	public void onResult(Intent data) {
 		// TODO Auto-generated method stub
 		url = ZhuoCommHelper.getServiceSearchQuan();
-		//先设置为空
-		gtype=null;
+		// 先设置为空
+		gtype = null;
 		city = null;
 		int type = data.getIntExtra("type", 1);
-		if(type==1){
-			gtype = data.getIntExtra("quanzitype", 1)+"";
-		}else{
-			city = data.getIntExtra("city", 1)+"";
+		if (type == 1) {
+			gtype = data.getIntExtra("quanzitype", 1) + "";
+		} else {
+			city = data.getIntExtra("city", 1) + "";
 		}
 		loadData();
 	}

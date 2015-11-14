@@ -6,7 +6,8 @@
      >
 
     <include layout="@layout/title_activity" />
-  <include layout="@layout/search_layout" />
+  <include layout="@layout/search_layout" 
+      />
     <com.cpstudio.zhuojiaren.widget.PullDownView
         android:id="@+id/aal_pulldown"
         android:layout_width="match_parent"

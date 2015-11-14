@@ -164,11 +164,12 @@ public class GoodsDetailLActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-
+				
 			}
 		});
 
 		mPullDownView.setShowFooter(false);
+		mPullDownView.noFoot();
 		// ͼƬչʾ
 		bannerViewPager = (ViewPager) findViewById(R.id.hgd_viewpager);
 		bannerIndicator = (PageIndicator) findViewById(R.id.hgd_indicator);
@@ -223,14 +224,17 @@ public class GoodsDetailLActivity extends BaseActivity {
 					bannerViewPager.setCurrentItem(0);
 					bannerIndicator.setViewPager(bannerViewPager);
 				}
-				if (goods.getProvider().getPic() != null)
+				if (goods.getProvider()!=null&&goods.getProvider().getPic() != null)
 					lImage.beginLoad(goods.getProvider().getPic(), companyImage);
 				productName.setText(goods.getGoodsName());
 				productDes.setText(goods.getContent());
 				marketPrice.setText(goods.getMarkeyPrice());
-				lImage.beginLoad(goods.getProvider().getPic(), companyImage);
-				company.setText(goods.getProvider().getProviderName());
-				companyDes.setText(goods.getProvider().getContent());
+				if(goods.getProvider()!=null){
+					lImage.beginLoad(goods.getProvider().getPic(), companyImage);
+					company.setText(goods.getProvider().getProviderName());
+					companyDes.setText(goods.getProvider().getContent());
+					
+				}
 				zhuoPrice.setText(goods.getZhuoPrice());
 				// goodsComment
 				mDataList.clear();

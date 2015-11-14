@@ -45,7 +45,7 @@ public class MyFriendActivity extends BaseActivity implements
 	private LoadImage mLoader = LoadImage.getInstance();
 	// add by lz
 	boolean isManaging = false;
-
+	//ËÍÙ¾±Ò¸øÅóÓÑÊÇtypeÎª3
 	int type=0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +163,13 @@ public class MyFriendActivity extends BaseActivity implements
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		if (id != -1) {
+			if(type==3){
+				Intent i = new Intent();
+				i.putExtra("userid", (String) view.getTag(R.id.tag_id));
+				setResult(RESULT_OK,i);
+				MyFriendActivity.this.finish();
+				return;
+			}
 			Intent i = new Intent(MyFriendActivity.this,
 					ZhuoMaiCardActivity.class);
 			i.putExtra("userid", (String) view.getTag(R.id.tag_id));

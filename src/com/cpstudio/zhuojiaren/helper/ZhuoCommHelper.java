@@ -137,6 +137,21 @@ public class ZhuoCommHelper {
 	private static String GoodsCollection = "/goods/collect.do";
 	private static String GoodsAddToCart = "/goods/addGoodsCart.do";
 	private static String PaybackList = "/crowdfunding/supportList.do";
+	private static String GOODSCATEGORY = "/goods/topCategory.do";
+	private static String GOODSNUMBER = "/genZhuobiOrder.do";
+	private static String GIVEMONEYTOFRIEND = "/presentZhuobi.do";
+	public static String getGIVEMONEYTOFRIEND() {
+		return SERVER + GIVEMONEYTOFRIEND;
+	}
+
+	public static String getGOODSNUMBER() {
+		return SERVER + GOODSNUMBER;
+	}
+
+	public static String getGOODSCATEGORY() {
+		return SERVER + GOODSCATEGORY;
+	}
+
 	public static String getPaybackList() {
 		return SERVER +  PaybackList;
 	}
