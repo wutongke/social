@@ -51,6 +51,7 @@ public class CardAddUserDreamActivity extends Activity {
 		if (dreams != null && dreams.size() > 0) {
 			((EditText) findViewById(R.id.editText)).setText(dreams.get(0));
 			dreamTags.add(dreams.get(0));
+			linearLayout.addView(findViewById(R.id.editText));
 			for (int i = 1; i < dreams.size(); i++) {
 				addEditText(dreams.get(i));
 			}
@@ -76,7 +77,7 @@ public class CardAddUserDreamActivity extends Activity {
 									.getText().toString();
 							if (!dream.trim().equals("")) {
 								selected.add(dream);
-								dreamsStr +=   dream + ";";
+								dreamsStr += dream + ";";
 							}
 						}
 						if (dreamsStr.length() > 1) {
@@ -84,8 +85,7 @@ public class CardAddUserDreamActivity extends Activity {
 									dreamsStr.length() - 1);
 						}
 						Intent i = new Intent();
-						i.putExtra(CardEditActivity.EDIT_DREAM_STR,
-								dreamsStr);
+						i.putExtra(CardEditActivity.EDIT_DREAM_STR, dreamsStr);
 						setResult(RESULT_OK, i);
 						CardAddUserDreamActivity.this.finish();
 					}
