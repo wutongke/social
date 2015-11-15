@@ -9,12 +9,12 @@
         android:id="@+id/agd_layout"
         layout="@layout/title_activity" />
 
-    <ListView
+    <com.cpstudio.zhuojiaren.widget.PullDownView
         android:id="@+id/lvOrders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="#ffffff"
         android:dividerHeight="10dp" >
-    </ListView>
+    </com.cpstudio.zhuojiaren.widget.PullDownView>
 
 </LinearLayout>

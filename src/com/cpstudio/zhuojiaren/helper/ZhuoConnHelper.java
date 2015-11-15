@@ -1630,6 +1630,43 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getDynamicList(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
+	/**
+	 * 获得订单列表
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	public boolean getOrdersList(Handler mUIHandler, int handlerTag, int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		
+		nameValuePairs.add(new BasicNameValuePair("pageNo", String
+				.valueOf(pageNo)));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", String
+				.valueOf(pageSize)));
+		return getFromServerByPost(ZhuoCommHelperLz.orderList(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+	/**
+	 * 获得订单详情
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	public boolean getOrderDetail(Handler mUIHandler, int handlerTag, 
+			String billNo, int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+			nameValuePairs.add(new BasicNameValuePair("billNo", billNo));
+		nameValuePairs.add(new BasicNameValuePair("pageNo", String
+				.valueOf(pageNo)));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", String
+				.valueOf(pageSize)));
+		return getFromServerByPost(ZhuoCommHelperLz.orderDetail(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
 
 	/**
 	 * 发布动态

@@ -96,6 +96,8 @@ public class ZhuoCommHelperLz {
 	private final static String MAKE_FRIENDS = "/makeFriend.do";
 	private final static String MY_RENMAI = "/getFollowUser.do";
 	private final static String CMT_GONGXU = "/supplyDemandCmt.do";
+	private final static String ORDERS_LIST = "/goods/getOrderList.do";
+	private final static String ORDER_DETAIL = "/goods/getOrder.do";
 	
 	public static String getAllJiaren() {
 		return ALL_JIAREN;
@@ -551,6 +553,20 @@ public class ZhuoCommHelperLz {
 	 */
 	public static String cmtGX() {
 		return SERVER + CMT_GONGXU;
+	}
+	/**
+	 * 订单列表
+	 * @return
+	 */
+	public static String orderList() {
+		return SERVER + ORDERS_LIST;
+	}
+	/**
+	 * 订单详情
+	 * @return
+	 */
+	public static String orderDetail() {
+		return SERVER + ORDER_DETAIL;
 	}
 	
 }

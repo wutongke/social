@@ -11,13 +11,13 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.http.AndroidHttpClient;
 import android.util.Log;
+
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 
 public class ImageGetForHttp {
 	private static final String LOG_TAG = "ImageGetForHttp";

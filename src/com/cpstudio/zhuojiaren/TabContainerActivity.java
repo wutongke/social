@@ -3,15 +3,11 @@ package com.cpstudio.zhuojiaren;
 import io.rong.app.DemoContext;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.RongIMClient.ErrorCode;
-import io.rong.imlib.RongIMClient.OperationCallback;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.message.ContactNotificationMessage;
 
-import java.security.spec.MGF1ParameterSpec;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -33,10 +29,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
-import android.widget.Toast;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.facade.GroupFacade;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;

@@ -32,6 +32,7 @@ import com.cpstudio.zhuojiaren.model.ImMsgVO;
 import com.cpstudio.zhuojiaren.model.ImQuanVO;
 import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
+import com.cpstudio.zhuojiaren.model.OrderVO;
 import com.cpstudio.zhuojiaren.model.PagesCmtVO;
 import com.cpstudio.zhuojiaren.model.PlanVO;
 import com.cpstudio.zhuojiaren.model.Praise;
@@ -145,7 +146,7 @@ public class JsonHandler {
 				CommonUtil.displayToast(context, result.getMsg());
 			}
 		} else {
-//			CommonUtil.displayToast(context, R.string.data_error);
+			// CommonUtil.displayToast(context, R.string.data_error);
 		}
 		return false;
 	}
@@ -940,6 +941,27 @@ public class JsonHandler {
 		return list;
 	}
 
+	public ArrayList<OrderVO> parseOrderList() {
+		ArrayList<OrderVO> list = new ArrayList<OrderVO>();
+		try {
+			Type listType = new TypeToken<LinkedList<OrderVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<OrderVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<OrderVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					OrderVO item = (OrderVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	public ArrayList<UserAndCollection> parseUserCollection() {
 		ArrayList<UserAndCollection> list = new ArrayList<UserAndCollection>();
 		try {
@@ -1111,7 +1133,6 @@ public class JsonHandler {
 		return userVO;
 	}
 
-	
 	public ArrayList<SearchHotKeyWord> parseHotWords() {
 		ArrayList<SearchHotKeyWord> list = new ArrayList<SearchHotKeyWord>();
 		try {
@@ -1124,8 +1145,7 @@ public class JsonHandler {
 
 				for (Iterator<SearchHotKeyWord> iterator = li.iterator(); iterator
 						.hasNext();) {
-					SearchHotKeyWord item = (SearchHotKeyWord) iterator
-							.next();
+					SearchHotKeyWord item = (SearchHotKeyWord) iterator.next();
 					list.add(item);
 				}
 			}
@@ -1134,7 +1154,7 @@ public class JsonHandler {
 		}
 		return list;
 	}
-	
+
 	public BusinessInfoVO parseBusinessInfo() {
 		BusinessInfoVO info = null;
 		try {

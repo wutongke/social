@@ -44,46 +44,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_search" >
-
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="0px"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true" >
-
-                    <requestFocus />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/editTextSearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="8dp"
-                    android:background="@drawable/zxinput_zx_1"
-                    android:ems="10"
-                    android:hint="@string/label_searchUserHint"
-                    android:imeOptions="actionSearch"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="50dp"
-                    android:singleLine="true"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/imageViewSearch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/editTextSearch"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="7dp"
-                    android:contentDescription="@string/ico"
-                    android:src="@drawable/magnifier5_zx_1" />
-            </RelativeLayout>
 
             <com.cpstudio.zhuojiaren.widget.NestedListView
                 android:id="@+id/listView"

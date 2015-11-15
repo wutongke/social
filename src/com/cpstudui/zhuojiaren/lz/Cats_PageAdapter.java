@@ -107,7 +107,7 @@ public class Cats_PageAdapter extends PagerAdapter {
 						@Override
 						public void onClick(View v) {
 							// TODO Auto-generated method stub
-							// ��תҳ��
+							// 锟斤拷转页锟斤拷
 							onClicked(index);
 
 						}
@@ -128,9 +128,9 @@ public class Cats_PageAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public Object instantiateItem(ViewGroup container, int position) { // 这个方法用来实例化页�?
+	public Object instantiateItem(ViewGroup container, int position) { // 杩欎釜鏂规硶鐢ㄦ潵瀹炰緥鍖栭〉锟�
 																		// container.addView(mListViews.get(position),
-		container.addView(mListView.get(position), 0); // 0);//添加页卡
+		container.addView(mListView.get(position), 0); // 0);//娣诲姞椤靛崱
 		return mListView.get(position);
 	}
 
@@ -151,11 +151,11 @@ public class Cats_PageAdapter extends PagerAdapter {
 			i = new Intent(mContext, JiarenActiveNumListActivity.class);
 			mContext.startActivity(i);
 			break;
-		case 1:// �ɳ�����
+		case 1:// 锟缴筹拷锟斤拷锟斤拷
 			i = new Intent(mContext, GrouthListActivity.class);
 			mContext.startActivity(i);
 			break;
-		case 2:// پԪ����
+		case 2:// 倬元锟斤拷锟斤拷
 			i = new Intent(mContext, AudioListActivity.class);
 			mContext.startActivity(i);
 
@@ -172,7 +172,7 @@ public class Cats_PageAdapter extends PagerAdapter {
 			mContext.startActivity(i);
 			break;
 
-		case 5:// ��Դ����
+		case 5:// 锟斤拷源锟斤拷锟斤拷
 			i = new Intent(mContext, ResourceGXActivity.class);
 			mContext.startActivity(i);
 
@@ -186,13 +186,13 @@ public class Cats_PageAdapter extends PagerAdapter {
 			mContext.startActivity(i);
 			break;
 
-		case 8://同行
+		case 8://鍚岃
 			i = new Intent(mContext, UserSameActivity.class);
 			i.putExtra("type", 2);
 			mContext.startActivity(i);
 			break;
 
-		case 9://同城
+		case 9://鍚屽煄
 			i = new Intent(mContext, UserSameActivity.class);
 			i.putExtra("type", 1);
 			mContext.startActivity(i);
@@ -203,17 +203,22 @@ public class Cats_PageAdapter extends PagerAdapter {
 			i.putExtra("type", 4);
 			mContext.startActivity(i);
 			break;
-		case 11://智慧精进
+		case 11:
+			i = new Intent(mContext, UserSameActivity.class);
+			i.putExtra("type", 3);
+			mContext.startActivity(i);
+			break;
+		case 12://鏅烘収绮捐繘
 			mContext.startActivity(new Intent(mContext,
 					GrouthChooseActivity.class));
 			break;
 
-		case 12:
+		case 13:
 			i = new Intent(mContext, UserSameActivity.class);
 			i.putExtra("type", 5);
 			mContext.startActivity(i);
 			break;
-		case 13:
+		case 14:
 			i = new Intent(mContext, MyMoneyActivity.class);
 			mContext.startActivity(i);
 			break;

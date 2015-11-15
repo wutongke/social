@@ -151,7 +151,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				R.drawable.city, R.drawable.interest, R.drawable.near,
 				R.drawable.jinjing, R.drawable.teacher, R.drawable.money };
 		String[] texts = getResources().getStringArray(R.array.main_cats);
-		for (int i = 0; i < 14; i++) {
+		for (int i = 0; i < drawId.length; i++) {
 			BeanCats item = new BeanCats();
 			item.setPicId(drawId[i]);
 			item.setText(texts[i]);
