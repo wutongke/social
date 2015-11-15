@@ -69,8 +69,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp" >
+        android:orientation="vertical" >
 
         <com.cpstudio.zhuojiaren.widget.PullDownView
             android:id="@+id/main_pull_down_view"
