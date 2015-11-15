@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:id="@+id/userNameShowParent"
-       style="@style/view_topbar_bg" >
+        style="@style/view_topbar_bg" >
 
         <TextView
             android:id="@+id/userNameShow"
@@ -128,18 +128,19 @@
                         android:singleLine="true"
                         android:textColor="#6f6f6f" />
                 </RelativeLayout>
-
+                <!--
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:background="#efefef" />
+                    android:background="#efefef" />                -->
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp" >
+                    android:padding="10dp"
+                    android:visibility="gone" >
 
                     <TextView
                         android:id="@+id/textViewTDCard"

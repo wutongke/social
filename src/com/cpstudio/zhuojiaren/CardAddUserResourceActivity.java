@@ -287,10 +287,10 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		if (arg3 != -1) {
+		if (arg2 != -1) {
 			Intent i = new Intent(CardAddUserResourceActivity.this,
 					GongXuDetailActivity.class);
-			i.putExtra("msgid",mList.get(arg2 ).getSdid());
+			i.putExtra("msgid",mList.get(arg2).getSdid());
 			startActivity(i);
 		}
 	}
