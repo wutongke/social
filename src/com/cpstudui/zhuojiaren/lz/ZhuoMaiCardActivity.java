@@ -55,7 +55,7 @@ import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 import com.cpstudio.zhuojiaren.widget.TabButton.TabsButtonOnClickListener;
 
 /**
- * 鍊剦鍚嶇墖
+ * 閸婎剝鍓﹂崥宥囧
  * 
  * @author lz
  * 
@@ -87,7 +87,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	@InjectView(R.id.textViewPhone)
 	TextView tvPhone;
 	@InjectView(R.id.textViewPurse)
-	TextView tvZBNum;// 鍊竵鏁�
+	TextView tvZBNum;// 閸婎剙绔甸弫锟�
 	@InjectView(R.id.textViewNote)
 	TextView tvSignature;
 	@InjectView(R.id.textViewht)
@@ -118,7 +118,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 	private PopupWindows phw = null;
 	private LoadImage mLoadImage = new LoadImage();
-	// 涓嶅悓韬唤锛屽姛鑳戒笉鍚�
+	// 娑撳秴鎮撻煬顐″敜閿涘苯濮涢懗鎴掔瑝閸氾拷
 	private String memberType = "";
 	private PopupWindows pwh = null;
 	private String groupid = null;
@@ -283,7 +283,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 										public void onClick(DialogInterface dialog,
 												int which) {
 											// TODO Auto-generated method stub
-											//鍒櫎濂藉弸
+											//閸掝亪娅庢總钘夊几
 											mConnHelper.makeFriends(mUIHandler, MsgTagVO.MSG_DEL,
 													userInfo.getUserid(), 0);
 										}
@@ -314,7 +314,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	}
 
 	void sendCard() {
-		// 閫掗�鍚嶇墖锛堣姹傛坊鍔犲ソ鍙嬶級
+		// 闁帡锟介崥宥囧閿涘牐顕Ч鍌涘潑閸旂姴銈介崣瀣剁礆
 		if (RongIM.getInstance().getRongIMClient() == null)
 			return;
 		if (userInfo.getUserid() == null)
@@ -326,10 +326,10 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				userInfo.getName(), Uri.parse(userInfo.getUheader()));
 		info.setName(userInfo.getName());
 		info.setUserId(userInfo.getUserid());
-		msg.setUserInfo(info);// 瀵规柟鎺ュ彈鍒扮殑浠嶇劧涓簄ull
+		msg.setUserInfo(info);// 鐎佃鏌熼幒銉ュ綀閸掓壆娈戞禒宥囧姧娑撶皠ull
 		RongIM.getInstance()
 				.getRongIMClient()
-				// 鎺ュ彈鍒扮殑content鍥哄畾涓�璇锋眰鍔犱负濂藉弸锛屾湁鐢ㄧ殑鍙湁id"
+				// 閹恒儱褰堥崚鎵畱content閸ュ搫鐣炬稉锟界拠閿嬬湴閸旂姳璐熸總钘夊几閿涘本婀侀悽銊ф畱閸欘亝婀乮d"
 				.sendMessage(ConversationType.PRIVATE, userid,
 						msg, myid, new SendMessageCallback() {
 							@Override
@@ -392,7 +392,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	}
 
 	/**
-	 * 濉厖鍊嬩汉鍩烘湰淇℃伅
+	 * 婵夘偄鍘栭崐瀣╂眽閸╃儤婀版穱鈩冧紖
 	 */
 	void fillHeadInfo() {
 		if (userInfo == null)
@@ -415,7 +415,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 		tvCompany.setText(userInfo.getCompany());
 		tvPhone.setText(userInfo.getPhone());
-		// tvZBNum.setText("鏆傛棤鍊竵鏁�);
+		// tvZBNum.setText("閺嗗倹妫ら崐顒�閺侊拷);
 		if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_MYSELF
 				.ordinal() || userInfo.getUserid().equals(myid)) {
 			ltNyselfMenue.setVisibility(View.VISIBLE);
@@ -479,7 +479,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			case MsgTagVO.MSG_FOWARD: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-//ios暂时没做，消息还需要自定义		sendCard();
+//ios鏆傛椂娌″仛锛屾秷鎭繕闇�鑷畾涔�	sendCard();
 				} else {
 				}
 				break;
@@ -499,7 +499,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	};
 
 	/**
-	 * 鏀瑰彉濂藉弸鍏崇郴
+	 * 閺�懓褰夋總钘夊几閸忓磭閮�
 	 */
 	void changeStatus()
 	{

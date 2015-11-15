@@ -421,7 +421,8 @@ public class AppClientLef {
 			int handlerTag) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
-		return doPost(nameValuePairs, ZhuoCommHelper.getMYZHUOBI(), null, 0, acitivity, ZhuoCommHelper.getMYZHUOBI(), false,
+		return doPost(nameValuePairs, ZhuoCommHelper.getMYZHUOBI(),
+				handler,handlerTag, acitivity, ZhuoCommHelper.getMYZHUOBI(), false,
 				null, null);
 	}
 

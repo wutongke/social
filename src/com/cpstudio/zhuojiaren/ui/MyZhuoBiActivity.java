@@ -31,6 +31,7 @@ public class MyZhuoBiActivity extends BaseActivity {
 	Button giveMoney;
 	String price;
 	private static int requestFriend = 2;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,21 +49,23 @@ public class MyZhuoBiActivity extends BaseActivity {
 						IncomeActivity.class));
 			}
 		});
-		findViewById(R.id.amzb_give_money).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(MyZhuoBiActivity.this,MyFriendActivity.class);
-				intent.putExtra("type", 3);
-				startActivityForResult(intent, requestFriend);
-			}
+		findViewById(R.id.amzb_give_money).setOnClickListener(
+				new OnClickListener() {
 
-			private void putExtra(String string, int i) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						Intent intent = new Intent(MyZhuoBiActivity.this,
+								MyFriendActivity.class);
+						intent.putExtra("type", 3);
+						startActivityForResult(intent, requestFriend);
+					}
+
+					private void putExtra(String string, int i) {
+						// TODO Auto-generated method stub
+
+					}
+				});
 		findViewById(R.id.amzb_add_money).setOnClickListener(
 				new OnClickListener() {
 
@@ -75,7 +78,8 @@ public class MyZhuoBiActivity extends BaseActivity {
 								R.layout.textview_dialot, null);
 						final EditText money = (EditText) view
 								.findViewById(R.id.money);
-						new AlertDialog.Builder(MyZhuoBiActivity.this,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+						new AlertDialog.Builder(MyZhuoBiActivity.this,
+								AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
 								.setTitle("≥‰÷µ")
 								.setView(view)
 								.setNegativeButton("»°œ˚", null)
@@ -88,9 +92,10 @@ public class MyZhuoBiActivity extends BaseActivity {
 													int which) {
 												// TODO Auto-generated method
 												// stub
-												if(money.getText()==null)
+												if (money.getText() == null)
 													return;
-												price =money.getText().toString();
+												price = money.getText()
+														.toString();
 												AppClientLef
 														.getInstance(
 																MyZhuoBiActivity.this)
@@ -98,18 +103,26 @@ public class MyZhuoBiActivity extends BaseActivity {
 																MyZhuoBiActivity.this,
 																uiHandler,
 																MsgTagVO.DATA_LOAD,
-																"1",price);
+																"1", price);
 											}
 										}).create().show();
 					}
 				});
+		loadMyZhuobi();
+	}
+
+	private static final  int GET_MONEY = 222;
+	private void loadMyZhuobi() {
+		// TODO Auto-generated method stub
+		AppClientLef.getInstance(this.getApplicationContext()).getMyZhuoBi(
+				MyZhuoBiActivity.this, uiHandler, GET_MONEY);
 	}
 
 	Handler uiHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD:
-				ResultVO res;
+				ResultVO res = null;
 				if (JsonHandler.checkResult((String) msg.obj,
 						MyZhuoBiActivity.this)) {
 					res = JsonHandler.parseResult((String) msg.obj);
@@ -159,26 +172,41 @@ public class MyZhuoBiActivity extends BaseActivity {
 			case MsgTagVO.PUB_INFO:
 				if (JsonHandler.checkResult((String) msg.obj,
 						MyZhuoBiActivity.this)) {
-						Toast.makeText(MyZhuoBiActivity.this, "‘˘ÀÕ≥…π¶", Toast.LENGTH_SHORT).show();
-					} else {
-						Toast.makeText(MyZhuoBiActivity.this, "‘˘ÀÕ ß∞‹", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MyZhuoBiActivity.this, "‘˘ÀÕ≥…π¶",
+							Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(MyZhuoBiActivity.this, "‘˘ÀÕ ß∞‹",
+							Toast.LENGTH_SHORT).show();
 				}
 				break;
+			case GET_MONEY:
+				ResultVO result = JsonHandler.parseResult((String) msg.obj);
+				if (JsonHandler.checkResult((String) msg.obj,
+						MyZhuoBiActivity.this)) {
+					rmb.setText("£§"+result.getData());
+				}else{
+					Toast.makeText(MyZhuoBiActivity.this, result.getMsg(),
+							Toast.LENGTH_SHORT).show();
+				} 
 			}
+			
+				
 		};
 	};
-	protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
-		if(requestCode == requestFriend && resultCode == RESULT_OK){
+
+	protected void onActivityResult(int requestCode, int resultCode,
+			final Intent data) {
+		if (requestCode == requestFriend && resultCode == RESULT_OK) {
 			LayoutInflater inflater = LayoutInflater
 					.from(MyZhuoBiActivity.this);
-			
-			final View view = inflater.inflate(
-					R.layout.textview_dialot, null);
-			final EditText money = (EditText) view
-					.findViewById(R.id.money);
-			final TextView textView = (TextView)view.findViewById(R.id.texttitle);
+
+			final View view = inflater.inflate(R.layout.textview_dialot, null);
+			final EditText money = (EditText) view.findViewById(R.id.money);
+			final TextView textView = (TextView) view
+					.findViewById(R.id.texttitle);
 			textView.setText("");
-			new AlertDialog.Builder(MyZhuoBiActivity.this,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+			new AlertDialog.Builder(MyZhuoBiActivity.this,
+					AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
 					.setTitle("ÀÕŸæ±“∏¯≈Û”—")
 					.setView(view)
 					.setNegativeButton("»°œ˚", null)
@@ -186,17 +214,22 @@ public class MyZhuoBiActivity extends BaseActivity {
 							new DialogInterface.OnClickListener() {
 
 								@Override
-								public void onClick(
-										DialogInterface dialog,
+								public void onClick(DialogInterface dialog,
 										int which) {
 									// TODO Auto-generated method
 									// stub
-									if(money.getText()==null)
+									if (money.getText() == null)
 										return;
-									AppClientLef.getInstance(MyZhuoBiActivity.this).
-									giveZhuobiToFriend(uiHandler, MsgTagVO.PUB_INFO, 
-											MyZhuoBiActivity.this, true, null, data.getStringExtra("userid"), 
-											money.getText().toString());
+									AppClientLef
+											.getInstance(MyZhuoBiActivity.this)
+											.giveZhuobiToFriend(
+													uiHandler,
+													MsgTagVO.PUB_INFO,
+													MyZhuoBiActivity.this,
+													true,
+													null,
+													data.getStringExtra("userid"),
+													money.getText().toString());
 								}
 							}).create().show();
 		}

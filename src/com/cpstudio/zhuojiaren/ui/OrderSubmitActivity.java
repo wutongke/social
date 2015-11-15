@@ -96,7 +96,8 @@ public class OrderSubmitActivity extends BaseActivity {
 			}
 			String data = res.getData();
 			if (msg.what == GET_MONEY) {
-				leftMoney.setText(((Integer) msg.obj).toString());
+				
+				leftMoney.setText(res.getData());
 			} else if(msg.what == GET_ORDER_NUMBER){
 				AppClientLef.getInstance(OrderSubmitActivity.this.getApplicationContext())
 				.payWithZhuobi(OrderSubmitActivity.this, uiHandler, PAYFOR,goodsPrice.getText().toString()
@@ -179,9 +180,10 @@ public class OrderSubmitActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				// submit to get tradeid and then fay
 				//get number
+				int price = (int)Float.parseFloat(goodsPrice.getText().toString());
 				AppClientLef.getInstance(OrderSubmitActivity.this.getApplicationContext())
 				.getOrderNumber(invoice.getText().toString(),leftMessage.getText().toString()
-						,goodsPrice.getText().toString(),new Gson().toJson(goodsList),
+						,price+"".toString(),new Gson().toJson(goodsList),
 						uiHandler, GET_ORDER_NUMBER, OrderSubmitActivity.this);
 			}
 		});

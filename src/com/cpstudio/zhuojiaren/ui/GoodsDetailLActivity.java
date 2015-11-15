@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -219,7 +220,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 						bannerListData.add(item);
 					}
 					bannerPageAdapter = new Bee_PageAdapter(
-							GoodsDetailLActivity.this, bannerListData, lImage);
+							GoodsDetailLActivity.this, bannerListData, lImage,ScaleType.MATRIX);
 					bannerViewPager.setAdapter(bannerPageAdapter);
 					bannerViewPager.setCurrentItem(0);
 					bannerIndicator.setViewPager(bannerViewPager);

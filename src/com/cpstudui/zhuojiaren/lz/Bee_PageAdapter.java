@@ -85,6 +85,33 @@ public class Bee_PageAdapter extends PagerAdapter {
 		}
 
 	}
+	public Bee_PageAdapter(Context context, List<BeanBanner> mListData,LoadImage loadImage,ScaleType scaleType) {
+		this.mListData = mListData;
+		mLoadImage = loadImage;
+		for (BeanBanner beanBanner : mListData) {
+			ImageView iView = new ImageView(context);
+			iView.setScaleType(scaleType);
+			String url = beanBanner.getPicUrl();
+			iView.setTag(url);
+			iView.setScaleType(ScaleType.CENTER_CROP);
+			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+					LayoutParams.MATCH_PARENT);
+			iView.setLayoutParams(params);
+
+			iView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					// 锟斤拷转页锟斤拷
+				}
+			});
+			mLoadImage.addTask(url, iView);
+			mLoadImage.doTask();
+			mListView.add(iView);
+		}
+
+	}
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
 		container.removeView(mListView.get(position));
