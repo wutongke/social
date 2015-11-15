@@ -88,11 +88,6 @@ public class CardAddUserDreamActivity extends Activity {
 								dreamsStr);
 						setResult(RESULT_OK, i);
 						CardAddUserDreamActivity.this.finish();
-//						mConnHelper
-//								.addDream(dreamsStr, mUIHandler,
-//										MsgTagVO.PUB_INFO,
-//										CardAddUserDreamActivity.this, true,
-//										null, null);
 					}
 				});
 		findViewById(R.id.buttonAdd).setOnClickListener(new OnClickListener() {

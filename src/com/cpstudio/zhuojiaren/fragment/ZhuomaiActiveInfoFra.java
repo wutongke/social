@@ -141,6 +141,7 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(mContext, ZhuoQuanActivity.class);
+				i.putExtra("userid", uid);
 				startActivity(i);
 			}
 		});

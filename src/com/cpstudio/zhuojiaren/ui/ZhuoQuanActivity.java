@@ -41,6 +41,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 	private Context mContext;
 	// 四个fragment 方便通信
 	List<Fragment> fragments;
+	String userid = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,9 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 		setContentView(R.layout.activity_zhuo_quan);
 		ButterKnife.inject(this);
 		mContext = this;
+		userid = getIntent().getStringExtra("userid");
+		if (userid == null)
+			function.setVisibility(View.GONE);
 		initTitle();
 		title.setText(R.string.title_activity_zhuojiaquan);
 		// 设置初始值 0 管理，1搜索，2筛选，3退出
@@ -59,6 +63,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 		viewPager.setAdapter(getPagerAdapter());
 		viewPager.setOffscreenPageLimit(2);
 		tabButton.setViewPager(viewPager);
+
 		initOnClick();
 	}
 
@@ -72,9 +77,9 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 				// TODO Auto-generated method stub
 				setFunctionText(arg0);
 				((QuanziFra) (fragments.get(0))).offManager();
-				if(arg0==3 || arg0 == 1){
+				if (arg0 == 3 || arg0 == 1) {
 					function.setVisibility(View.GONE);
-				}else{
+				} else {
 					function.setVisibility(View.VISIBLE);
 				}
 			}
@@ -119,11 +124,13 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 			}
 		});
 	}
-	public void setOffManager(){
+
+	public void setOffManager() {
 		function.setTag(0);
 		function.setBackgroundResource(R.drawable.ibutton);
 		function.setText(R.string.label_manage);
 	}
+
 	PagerAdapter getPagerAdapter() {
 		fragments = new ArrayList<Fragment>();
 		List<CharSequence> titles = new ArrayList<CharSequence>();
@@ -157,6 +164,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 	protected Fragment addBundle(Fragment fragment, int catlog) {
 		Bundle bundle = new Bundle();
 		bundle.putInt(QuanVO.QUANZITYPE, catlog);
+		bundle.putString("userid", userid);
 		fragment.setArguments(bundle);
 		return fragment;
 	}
