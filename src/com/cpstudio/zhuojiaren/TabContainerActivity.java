@@ -481,7 +481,7 @@ public class TabContainerActivity extends TabActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.main, menu);
+//		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 

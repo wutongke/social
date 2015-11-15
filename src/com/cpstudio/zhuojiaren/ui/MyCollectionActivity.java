@@ -2,6 +2,7 @@ package com.cpstudio.zhuojiaren.ui;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,33 +16,45 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.QuanDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.AudioAdapter;
 import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
-import com.cpstudio.zhuojiaren.adapter.QuanListAdapter;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.BaseCodeData;
+import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.RecordVO;
+import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
+import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
+import com.cpstudui.zhuojiaren.lz.EventListAdapter;
+import com.cpstudui.zhuojiaren.lz.GongXuDetailActivity;
+import com.cpstudui.zhuojiaren.lz.MyResListAdapterListAdapter;
+import com.cpstudui.zhuojiaren.lz.QuanziTopicListAdapter;
+import com.cpstudui.zhuojiaren.lz.TopicDetailActivity;
+import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
+
 
 /***
  * 思路
@@ -66,29 +79,23 @@ public class MyCollectionActivity extends BaseActivity {
 	private float times = 2;
 	private int padding = 5;
 	private int baseMargin = 19;
-	private Context mContext;
+	private Activity mContext;
 
 	private String url;
 	private int handlerTag;
 	// 分页
 	private int mPage = 0;
 	private AppClientLef appClientLef;
+	
+	private int type;
 
 	private final int vedio = 1;
 	private final int radio = 2;
-	private final int article = 3;
-	private final int event = 4;
-	// 名片
-	private final int businessCard = 5;
-	private final int product = 6;
-	private final int quan = 7;
-	private final int topic = 8;
-	// 动态
-	private final int dynamic = 9;
-	// 人脉
-	private final int peopleBASE = 10;
-	private final int gong = 11;
-	private final int xu = 12;
+	private final int event = 3;
+	private final int topic = 4;
+	private final int people = 5;
+	private final int gong = 6;
+	private final int xu = 7;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +117,7 @@ public class MyCollectionActivity extends BaseActivity {
 		table = (TableLayout) findViewById(R.id.amc_tableLayout);
 		pullDownView.setShowHeader(false);
 		pullDownView.setShowFooter(false);
+		pullDownView.noFoot();
 		mAdapter = new AudioAdapter(mContext, mDatas, R.layout.item_radio);
 		listView.setAdapter(mAdapter);
 
@@ -124,7 +132,7 @@ public class MyCollectionActivity extends BaseActivity {
 			@Override
 			public void onMore() {
 				// TODO Auto-generated method stub
-				// loadData();
+				 loadData();
 			}
 		});
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -212,7 +220,7 @@ public class MyCollectionActivity extends BaseActivity {
 	}
 
 	private void loadData() {
-		CommonUtil.displayToast(MyCollectionActivity.this, "暂时没有数据");
+//		CommonUtil.displayToast(MyCollectionActivity.this, "暂时没有数据");
 //		if (pullDownView.startLoadData()) {
 //			mDatas.clear();
 //			mPage = 0;
@@ -221,7 +229,31 @@ public class MyCollectionActivity extends BaseActivity {
 ////					MsgTagVO.DATA_LOAD, GrouthListActivity.this, true, null,
 ////					null);
 //		}
-
+		switch(handlerTag){
+		case vedio :
+			appClientLef.getVedioList(null, null, mPage, 5, uiHandler,
+					vedio, (Activity)mContext, true, null, null);
+			break;
+		case radio:
+			appClientLef.getAudioList(mPage, 5, uiHandler,
+					radio,(Activity) mContext, true, null, null);
+			break;
+		case event:
+			connHelper.getQuanEventList(uiHandler, event,
+					"1", null, mPage, 10);
+			break;
+		case topic:
+			connHelper.getQuanTopicList(uiHandler, topic,
+					"1", null, mPage, 10);
+			break;
+		case people:
+			connHelper.getMyFriends(uiHandler, people);
+			break;
+		case gong:
+			break;
+		case xu:
+			break;
+		}
 	}
 
 	private void loadMore() {
@@ -241,21 +273,26 @@ public class MyCollectionActivity extends BaseActivity {
 				return;
 			}
 			String data = res.getData();
+			JsonHandler nljh = new JsonHandler(data, mContext
+					.getApplicationContext());
 			switch (msg.what) {
 			case radio:
+				mDatas = JsonHandler_Lef
+						.parseAudioList(data);
 				mAdapter = new AudioAdapter(mContext, mDatas,
 						R.layout.item_radio);
 				listView.setAdapter(mAdapter);
 				listView.setOnItemClickListener(new OnItemClickListener() {
 
-					@Override
+					@Override 
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
 						// TODO Auto-generated method stub
 						if (mAdapter != null)
 							((AudioAdapter) mAdapter).stop();
-						Intent intent = new Intent(MyCollectionActivity.this,
+						Intent intent = new Intent(mContext,
 								AudioDetailActivity.class);
+						intent.putExtra("audio", mDatas.get(position-1));
 						intent.putExtra("id", mDatas.get(position - 1).getId());
 						startActivity(intent);
 					}
@@ -274,48 +311,129 @@ public class MyCollectionActivity extends BaseActivity {
 						// TODO Auto-generated method stub
 						Intent intent = new Intent(MyCollectionActivity.this,
 								VedioActivity.class);
-						intent.putExtra("id", list.get(position - 1).getId());
+						intent.putExtra("vedio", list.get(position - 1).getId());
 						startActivity(intent);
 					}
 				});
 				break;
-			case quan:
-				final ArrayList<QuanVO> list2 = JsonHandler_Lef
-						.parseQuanList(data);
-				mAdapter = new QuanListAdapter(mContext, list2);
+			case event:
+				
+				final ArrayList<EventVO> eventList = nljh.parseEventInfoList();
+				
+				mAdapter = new EventListAdapter(mContext, eventList);
 				listView.setAdapter(mAdapter);
 				listView.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
-						// TODO Auto-generated method stub
-						Intent intent = new Intent(MyCollectionActivity.this,
-								QuanDetailActivity.class);
-						intent.putExtra("id", list2.get(position - 1).getGroupid());
-						startActivity(intent);
+						if (position >= eventList.size())
+							return;
+						Intent i = new Intent(mContext, EventDetailActivity.class);
+						i.putExtra("eventId", eventList.get(position).getActivityid());
+						startActivity(i);
 					}
 				});
 				break;
-			default:
-				mAdapter = new AudioAdapter(mContext, mDatas,
-						R.layout.item_radio);
+			case topic:
+				final ArrayList<QuanTopicVO> topicList = nljh.parseQuanTopicList();
+				mAdapter = new QuanziTopicListAdapter(mContext,topicList,2);
 				listView.setAdapter(mAdapter);
 				listView.setOnItemClickListener(new OnItemClickListener() {
-
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
-						// TODO Auto-generated method stub
-						if (mAdapter != null)
-							((AudioAdapter) mAdapter).stop();
-						Intent intent = new Intent(MyCollectionActivity.this,
-								AudioDetailActivity.class);
-						intent.putExtra("id", mDatas.get(position - 1).getId());
-						startActivity(intent);
+						if (position >= topicList.size())
+							return;
+						Intent i = new Intent();
+						QuanTopicVO vo = topicList.get(position);
+						i.setClass(mContext, TopicDetailActivity.class);
+						i.putExtra("topicid", vo.getTopicid());
+						startActivity(i);
 					}
 				});
 				break;
+			case gong:
+				final ArrayList<ResourceGXVO> gongList = (ArrayList<ResourceGXVO>) nljh
+				.parseGongxuList();
+				mAdapter = new MyResListAdapterListAdapter(
+						mContext, gongList);
+				listView.setAdapter(mAdapter);
+				listView.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						if (position >= 0) {
+							Intent i = new Intent(mContext,
+									GongXuDetailActivity.class);
+							i.putExtra("msgid",gongList.get(position ).getSdid());
+							startActivity(i);
+						}
+					}
+				});
+				break;
+			case xu:
+				final ArrayList<ResourceGXVO> xuList = (ArrayList<ResourceGXVO>) nljh
+				.parseGongxuList();
+				mAdapter = new MyResListAdapterListAdapter(
+						mContext, xuList);
+				listView.setAdapter(mAdapter);
+				listView.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						if (position >= 0) {
+							Intent i = new Intent(mContext,
+									GongXuDetailActivity.class);
+							i.putExtra("msgid",xuList.get(position ).getSdid());
+							startActivity(i);
+						}
+					}
+				});
+				break;
+			case people:
+				ArrayList<UserNewVO> mList = nljh.parseUserNewList();
+				final LoadImage mLoad = LoadImage.getInstance();
+				final BaseCodeData baseDataSet = 
+						ZhuoConnHelper.getInstance(getApplicationContext()).getBaseDataSet();
+				mAdapter = new CommonAdapter<UserNewVO>(mContext, mList,
+						R.layout.item_myfriends_list) {
+					@Override
+					public void convert(ViewHolder helper, final UserNewVO item) {
+						// TODO Auto-generated method stub
+						helper.getConvertView().setTag(R.id.tag_id, item.getUserid());
+						helper.setCheckBox(R.id.isChecked, false, View.GONE);
+						helper.setText(R.id.izul_name, item.getName());
+						String position = "";
+						if (baseDataSet != null) {
+							int pos = item.getPosition();
+							if (pos != 0)
+								pos--;
+							position = ((baseDataSet.getPosition()).get(pos))
+									.getContent();
+						}
+						helper.setText(R.id.izul_position, position);// 职位
+						helper.setText(R.id.izul_company, item.getCompany());
+						// CommonUtil.calcTimeToNow(time)
+						helper.setText(R.id.tvTime, item.getRegisterTime());
+						ImageView iv = helper.getView(R.id.izul_image);
+						mLoad.beginLoad(item.getUheader(), iv);
+					}
+				};
+				listView.setAdapter(mAdapter);
+				listView.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						if (id != -1) {
+							Intent i = new Intent(mContext,
+									ZhuoMaiCardActivity.class);
+							i.putExtra("userid", (String) view.getTag(R.id.tag_id));
+							startActivity(i);
+						}
+					}
+				});
 			}
 		};
 	};
+	
 }

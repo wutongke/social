@@ -58,7 +58,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 	String groupId;
 	BaseCodeData baseDataSet;
 
-	int role;// “我在圈子中的身份”
+	int role;// 鈥滄垜鍦ㄥ湀瀛愪腑鐨勮韩浠解�
 
 	public String getGroupId() {
 		return groupId;
@@ -70,7 +70,6 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 
 	public QuanziTopicListAdapter(Fragment fragment,
 			ArrayList<QuanTopicVO> list, int role) {
-		// 圈子话题的列表
 		this.mContext = fragment.getActivity();
 		this.fragment = fragment;
 		this.mList = list;
@@ -85,7 +84,6 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 
 	public QuanziTopicListAdapter(Activity activity,
 			ArrayList<QuanTopicVO> list, int role) {
-		// 好友动态的列表，fragment为null..与圈话题的内容一致
 		this.mContext = activity;
 		this.fragment = null;
 		this.mList = list;
@@ -95,6 +93,12 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
 		this.role = role;
+	}
+
+	public QuanziTopicListAdapter(Context mContext2,
+			ArrayList<QuanTopicVO> topicList, int role2) {
+		// TODO Auto-generated constructor stub
+		this((Activity)mContext2, topicList, role2);
 	}
 
 	@Override
@@ -231,7 +235,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		});
 		final List<PicNewVO> picsinner = item.getTopicPic();
 		holder.gvImages.setVisibility(View.GONE);
-		// 显示图片
+		// 鏄剧ず鍥剧墖
 		if (picsinner != null && picsinner.size() > 0) {
 			holder.gvImages.setVisibility(View.VISIBLE);
 			ArrayList<String> urls = new ArrayList<String>();
@@ -296,7 +300,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		return holder;
 	}
 
-	// 多张图片
+	// 澶氬紶鍥剧墖
 	class GridViewAdapter extends CommonAdapter<String> {
 
 		public GridViewAdapter(Context context, List<String> mDatas,

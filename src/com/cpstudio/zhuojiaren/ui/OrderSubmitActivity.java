@@ -20,6 +20,7 @@ import butterknife.InjectView;
 import com.alipay.sdk.pay.ailiyue.AliPayActivity;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -59,6 +60,7 @@ public class OrderSubmitActivity extends BaseActivity {
 	SharedPreferences.Editor editer;
 	ArrayList<GoodsVO> goodsList;
 	LoadImage loadImage = new LoadImage();
+	private static int GET_MONEY = 100;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,15 +76,12 @@ public class OrderSubmitActivity extends BaseActivity {
 
 	private void getleftMoney() {
 		// TODO Auto-generated method stub
-		Message msg = uiHandler.obtainMessage();
-		msg.what = 1;
-		msg.obj = 500;
-		msg.sendToTarget();
+		AppClientLef.getInstance(this.getApplicationContext()).getMyZhuoBi(OrderSubmitActivity.this,uiHandler, GET_MONEY);
 	}
 
 	private Handler uiHandler = new Handler() {
 		public void handleMessage(final Message msg) {
-			if (msg.what == MsgTagVO.DATA_LOAD) {
+			if (msg.what == GET_MONEY) {
 				leftMoney.setText(((Integer) msg.obj).toString());
 			} else if (msg.what == MsgTagVO.PUB_INFO) {
 				final Intent i = new Intent();
@@ -192,11 +191,6 @@ public class OrderSubmitActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				// submit to get tradeid and then fay
-				Message msg = uiHandler.obtainMessage();
-				msg.what = MsgTagVO.PUB_INFO;
-				msg.obj = System.currentTimeMillis()+"";
-				msg.sendToTarget();
-
 			}
 		});
 	}
