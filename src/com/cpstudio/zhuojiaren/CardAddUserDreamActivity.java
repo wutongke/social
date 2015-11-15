@@ -51,7 +51,6 @@ public class CardAddUserDreamActivity extends Activity {
 		if (dreams != null && dreams.size() > 0) {
 			((EditText) findViewById(R.id.editText)).setText(dreams.get(0));
 			dreamTags.add(dreams.get(0));
-			linearLayout.addView(findViewById(R.id.editText));
 			for (int i = 1; i < dreams.size(); i++) {
 				addEditText(dreams.get(i));
 			}
@@ -70,19 +69,16 @@ public class CardAddUserDreamActivity extends Activity {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						String dreamsStr = "";
-						for (int i = 0; i < dreamTags.size(); i++) {
+						String dreamsStr = ((EditText) findViewById(R.id.editText)).getText().toString();
+						if(dreamTags.size()>1)
+						for (int i = 1; i < dreamTags.size(); i++) {
 							String dream = ((EditText) linearLayout
 									.findViewWithTag(dreamTags.get(i)))
 									.getText().toString();
 							if (!dream.trim().equals("")) {
-								selected.add(dream);
 								dreamsStr += dream + ";";
+								selected.add(dream);
 							}
-						}
-						if (dreamsStr.length() > 1) {
-							dreamsStr = dreamsStr.substring(0,
-									dreamsStr.length() - 1);
 						}
 						Intent i = new Intent();
 						i.putExtra(CardEditActivity.EDIT_DREAM_STR, dreamsStr);
