@@ -80,7 +80,16 @@ public class UserNewVO {
 	
 	private String gname;
 	
+	String zhuobi;
 	
+	public String getZhuobi() {
+		return zhuobi;
+	}
+
+	public void setZhuobi(String zhuobi) {
+		this.zhuobi = zhuobi;
+	}
+
 	public String getGroupid() {
 		return groupid;
 	}

@@ -54,23 +54,22 @@
                 android:textColor="#585858"
                 android:textSize="@dimen/position_text_size" />
 
-            <ImageView
+          <ImageView
                 android:id="@+id/optionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/label_option"
-                android:visibility="gone"
                 android:src="@drawable/dtmore" />
 
             <TextView
                 android:id="@+id/textViewTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="3dp"
+                android:layout_toLeftOf="@+id/optionButton"
                 android:textSize="@dimen/time_text_size" />
         </RelativeLayout>
 

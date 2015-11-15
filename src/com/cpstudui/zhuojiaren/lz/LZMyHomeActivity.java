@@ -224,12 +224,19 @@ public class LZMyHomeActivity extends Activity {
 
 		((TextView) findViewById(R.id.textViewCompany)).setText(userInfo
 				.getCompany());
+		int count = 1;
+		try {
+			count = Integer.parseInt(userInfo.getZhuobi());
+		} catch (Exception e) {
 
+		}
+		if (count != -1)
+			((TextView) findViewById(R.id.textViewMoney)).setText(String
+					.format(getResources().getString(R.string.zhuobi_num), count));
 		if (userInfo.getGender() == 0)// ÄÐ
 			rlbg.setBackgroundResource(R.drawable.mbg6_wdzy_1);
 		else
 			rlbg.setBackgroundResource(R.drawable.mbg5_wdzy_1);
-
 	}
 
 	@SuppressLint("HandlerLeak")

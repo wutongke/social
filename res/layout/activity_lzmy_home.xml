@@ -87,7 +87,6 @@
                             android:drawableLeft="@drawable/zhuob5_wdhd_1"
                             android:drawablePadding="5dp"
                             android:maxLines="1"
-                            android:visibility="invisible"
                             android:textColor="#ffd370"
                             android:textSize="@dimen/detail_time_text_size" />
                     </LinearLayout>
