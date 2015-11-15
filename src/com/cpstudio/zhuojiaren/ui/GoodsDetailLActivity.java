@@ -100,14 +100,17 @@ public class GoodsDetailLActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				String type = "1";
 				if (goods.getIsCollection() != null
-						&& !goods.getIsCollection().equals(GoodsVO.collected)) {
+						&& goods.getIsCollection().equals(GoodsVO.collected)) {
 					Drawable drawable = getResources().getDrawable(
 							R.drawable.dongt2);
 					// / 这一步必须要做,否则不会显示.
 					drawable.setBounds(0, 0, drawable.getMinimumWidth(),
 							drawable.getMinimumHeight());
 					collection.setCompoundDrawables(drawable, null, null, null);
+					goods.setIsCollection("1");
+					type = "1";
 				} else {
 					Drawable drawable = getResources().getDrawable(
 							R.drawable.dongt);
@@ -115,10 +118,12 @@ public class GoodsDetailLActivity extends BaseActivity {
 					drawable.setBounds(0, 0, drawable.getMinimumWidth(),
 							drawable.getMinimumHeight());
 					collection.setCompoundDrawables(drawable, null, null, null);
+					goods.setIsCollection("0");
+					type = "0";
 				}
 				appClient.collection(GoodsDetailLActivity.this,
 						ZhuoCommHelper.getGoodsCollection(), "goodsid",
-						goodsId, "", "");
+						goodsId, "type", type);
 			}
 		});
 		cart.setOnClickListener(new OnClickListener() {

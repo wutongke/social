@@ -77,6 +77,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		setTitle("倬脉");
 		UMImage image = new UMImage(mActivity,R.drawable.ic_launcher);
 		setTargetUrl(mActivity.getResources().getString(R.string.targeturl));
+		setImage(image);
 		setContent("卓越自我　泽及他人");
 		showAtLocation(mActivity
 				.getWindow().getDecorView(),

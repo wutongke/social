@@ -147,9 +147,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="centerCrop" />
+            android:scaleType="fitXY" />
 
         <View
+            android:visibility="gone"
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="#eeeeee" />
@@ -165,9 +166,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:scaleType="centerCrop" />
+                android:scaleType="fitXY"
+                 />
 
             <View
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="#eeeeee" />
@@ -177,7 +180,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:scaleType="centerCrop" />
+                android:scaleType="fitXY"
+                 />
         </LinearLayout>
     </LinearLayout>
 
