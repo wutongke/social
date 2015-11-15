@@ -92,8 +92,8 @@ public class MyCollectionActivity extends BaseActivity {
 	private final int vedio = 1;
 	private final int radio = 2;
 	private final int event = 3;
-	private final int people = 4;
-	private final int topic = 5;
+	private final int topic = 4;
+	private final int people = 5;
 	private final int gong = 6;
 	private final int xu = 7;
 
@@ -232,17 +232,22 @@ public class MyCollectionActivity extends BaseActivity {
 		switch(handlerTag){
 		case vedio :
 			appClientLef.getVedioList(null, null, mPage, 5, uiHandler,
-					MsgTagVO.DATA_MORE, (Activity)mContext, true, null, null);
+					vedio, (Activity)mContext, true, null, null);
 			break;
 		case radio:
 			appClientLef.getAudioList(mPage, 5, uiHandler,
-					MsgTagVO.DATA_MORE,(Activity) mContext, true, null, null);
+					radio,(Activity) mContext, true, null, null);
 			break;
 		case event:
+			connHelper.getQuanEventList(uiHandler, event,
+					"1", null, mPage, 10);
 			break;
 		case topic:
+			connHelper.getQuanTopicList(uiHandler, topic,
+					"1", null, mPage, 10);
 			break;
 		case people:
+			connHelper.getMyFriends(uiHandler, people);
 			break;
 		case gong:
 			break;
@@ -285,8 +290,9 @@ public class MyCollectionActivity extends BaseActivity {
 						// TODO Auto-generated method stub
 						if (mAdapter != null)
 							((AudioAdapter) mAdapter).stop();
-						Intent intent = new Intent(MyCollectionActivity.this,
+						Intent intent = new Intent(mContext,
 								AudioDetailActivity.class);
+						intent.putExtra("audio", mDatas.get(position-1));
 						intent.putExtra("id", mDatas.get(position - 1).getId());
 						startActivity(intent);
 					}
@@ -305,7 +311,7 @@ public class MyCollectionActivity extends BaseActivity {
 						// TODO Auto-generated method stub
 						Intent intent = new Intent(MyCollectionActivity.this,
 								VedioActivity.class);
-						intent.putExtra("id", list.get(position - 1).getId());
+						intent.putExtra("vedio", list.get(position - 1).getId());
 						startActivity(intent);
 					}
 				});
@@ -351,6 +357,7 @@ public class MyCollectionActivity extends BaseActivity {
 				.parseGongxuList();
 				mAdapter = new MyResListAdapterListAdapter(
 						mContext, gongList);
+				listView.setAdapter(mAdapter);
 				listView.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
@@ -369,6 +376,7 @@ public class MyCollectionActivity extends BaseActivity {
 				.parseGongxuList();
 				mAdapter = new MyResListAdapterListAdapter(
 						mContext, xuList);
+				listView.setAdapter(mAdapter);
 				listView.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
@@ -411,6 +419,7 @@ public class MyCollectionActivity extends BaseActivity {
 						mLoad.beginLoad(item.getUheader(), iv);
 					}
 				};
+				listView.setAdapter(mAdapter);
 				listView.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
