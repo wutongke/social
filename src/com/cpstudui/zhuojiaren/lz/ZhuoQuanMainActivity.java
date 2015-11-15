@@ -47,6 +47,7 @@ import com.cpstudio.zhuojiaren.model.gtype;
 import com.cpstudio.zhuojiaren.ui.EditEventActivity;
 import com.cpstudio.zhuojiaren.ui.MyFriendActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.cpstudio.zhuojiaren.widget.CustomShareBoard;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
@@ -362,6 +363,9 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 					@Override
 					public void onClick(View v) {
 						// 通过第三方软件分享，QQ，微信等
+						CustomShareBoard cb = new CustomShareBoard(
+								ZhuoQuanMainActivity.this);
+						cb.showCustomShareContent();
 					}
 				};
 

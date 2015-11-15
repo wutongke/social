@@ -683,20 +683,21 @@ public class CardEditActivity extends Activity {
 	void fillInfo() {
 		if (userInfo == null)
 			return;
-
+		
 		// 生成名片二维码信息图片
 		createQRImage(ivTDCard,
 				userInfo.getUserid() + "," + userInfo.getName(), 100, 100);
 
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHead);
+		fillText(textViewEditDreamShow,userInfo.getDream());
+		
 		int placeId = userInfo.getCity();
-		String placeText = getString(R.string.emptyvalue);
+		String placeText = getString(R.string.nofill);
 		if (mConnHelper.getCitys() != null && placeId >= 1
 				&& placeId <= mConnHelper.getCitys().size())
 			placeText = mConnHelper.getCitys().get(placeId - 1).getCityName();
 		textViewEditPlaceShow.setText(placeText);
-
-		textViewEditNameShow.setText(userInfo.getName());
+		fillText(textViewEditNameShow,userInfo.getName());
 		List<PicNewVO> images = userInfo.getPhoto();
 		if (images != null) {
 			((TextView) findViewById(R.id.textViewEditImagesShow))
@@ -704,35 +705,32 @@ public class CardEditActivity extends Activity {
 							+ getString(R.string.mp_imgasall));
 		}
 
-		// String work = "";
-		// if (baseDataSet != null)
-		// work = ((baseDataSet.getPosition()).get(userInfo.getPosition() - 1))
-		// .getContent();
-		// textViewEditWorkShow.setText(work);
-
-		// String industry = "";
-		// if (baseDataSet != null && userInfo.getIndustry() >= 1)
-		// industry = baseDataSet.getIndustry()
-		// .get(userInfo.getIndustry() - 1).getContent();
-		// ((TextView) findViewById(R.id.textViewEditFieldsShow))
-		// .setText(industry);
 
 		String birthday = userInfo.getBirthday();
 		if (birthday == null)
 			birthday = userInfo.getBirthdayLunar();
-		textViewEditBirthShow.setText(birthday);
+		fillText(textViewEditBirthShow,birthday);
 
-		textViewEditDreamShow.setText(userInfo.getDream());
-		textViewEditZymShow.setText(userInfo.getFaith());
-		textViewEditHobbyShow.setText(userInfo.getHobby());
-
-		textViewEditPhoneShow.setText(userInfo.getPhone());
-		textViewEditEmailShow.setText(userInfo.getEmail());
-		textViewEditQQShow.setText(userInfo.getQq());
-		textViewEditWeixinShow.setText(userInfo.getWeixin());
-		etSignature.setText(userInfo.getSignature());
+		fillText(textViewEditDreamShow,userInfo.getDream());
+		fillText(textViewEditZymShow,userInfo.getFaith());
+		fillText(textViewEditHobbyShow,userInfo.getHobby());
+		fillText(textViewEditPhoneShow,userInfo.getPhone());
+		fillText(textViewEditEmailShow,userInfo.getEmail());
+		fillText(textViewEditQQShow,userInfo.getQq());
+		fillText(textViewEditWeixinShow,userInfo.getWeixin());
+		fillText(etSignature,userInfo.getSignature());
 	}
 
+	void fillText(TextView tv,String text)
+	{
+		if(tv==null)
+			return ;
+		if(text==null || text.trim().toString().equals(""))
+			tv.setText(getString(R.string.nofill));
+		else
+			tv.setText(text);
+	}
+	
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
 		@Override

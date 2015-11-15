@@ -1574,6 +1574,7 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("isWeixinOpen", user
 				.getIsWeixinOpen() + ""));
 		nameValuePairs.add(new BasicNameValuePair("signature", user.getSignature()));
+		nameValuePairs.add(new BasicNameValuePair("dream", user.getDream()));
 		return getFromServerByPost(ZhuoCommHelperLz.modifyUserInfo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}

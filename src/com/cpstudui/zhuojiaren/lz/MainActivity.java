@@ -40,6 +40,7 @@ import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.ui.PubDetailActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
+import com.cpstudio.zhuojiaren.widget.CustomShareBoard;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
@@ -245,15 +246,20 @@ public class MainActivity extends Activity implements OnPullDownListener,
 						// tempids.add(uid);
 						// i.putStringArrayListExtra("otherids", tempids);
 						// startActivity(i);
-						com.cpstudio.zhuojiaren.widget.CustomShareBoard shareBoard = new com.cpstudio.zhuojiaren.widget.CustomShareBoard(
+						// com.cpstudio.zhuojiaren.widget.CustomShareBoard
+						// shareBoard = new
+						// com.cpstudio.zhuojiaren.widget.CustomShareBoard(
+						// MainActivity.this);
+						// shareBoard.setTitle("倬脉");
+						// UMImage image = new UMImage(MainActivity.this,
+						// "http://7xkb2a.com1.z0.glb.clouddn.com/android-gg.png");
+						// shareBoard.setImage(image);
+						// shareBoard.setContent("倬脉是一个高端社交平台");
+						// shareBoard.showAtLocation(MainActivity.this.getWindow()
+						// .getDecorView(), Gravity.BOTTOM, 0, 0);
+						CustomShareBoard cb = new CustomShareBoard(
 								MainActivity.this);
-						shareBoard.setTitle("倬脉");
-						UMImage image = new UMImage(MainActivity.this,
-								"http://7xkb2a.com1.z0.glb.clouddn.com/android-gg.png");
-						shareBoard.setImage(image);
-						shareBoard.setContent("倬脉是一个高端社交平台");
-						shareBoard.showAtLocation(MainActivity.this.getWindow()
-								.getDecorView(), Gravity.BOTTOM, 0, 0);
+						cb.showCustomShareContent();
 					}
 				};
 				phw.showAddOptionsPop(v, times, pubListener, inviteListener);

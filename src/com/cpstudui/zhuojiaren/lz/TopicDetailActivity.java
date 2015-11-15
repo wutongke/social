@@ -44,6 +44,7 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.widget.CustomShareBoard;
 import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
@@ -98,9 +99,9 @@ public class TopicDetailActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
 				// TODO Auto-generated method stub
-				if(mList==null || position>mList.size())
-					return ;
-				Comment cmt = mList.get(position-1);
+				if (mList == null || position > mList.size())
+					return;
+				Comment cmt = mList.get(position - 1);
 				startCommentActivity(cmt.getToId(), cmt.getToUserid());
 			}
 		});
@@ -144,7 +145,7 @@ public class TopicDetailActivity extends BaseActivity {
 			}
 			if (urls.size() > 0)
 				gvImages.setVisibility(View.VISIBLE);
-			GridViewAdapter gv=new GridViewAdapter(context, urls,
+			GridViewAdapter gv = new GridViewAdapter(context, urls,
 					R.layout.item_gridview_image);
 			gvImages.setAdapter(gv);
 			gv.notifyDataSetChanged();
@@ -176,7 +177,7 @@ public class TopicDetailActivity extends BaseActivity {
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			TableRow.LayoutParams trlp = new TableRow.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			
+
 			TableLayout tl = (TableLayout) findViewById(R.id.tableLayoutGood);
 			if (tl != null)
 				tl.removeAllViews();
@@ -262,29 +263,31 @@ public class TopicDetailActivity extends BaseActivity {
 			case MsgTagVO.MSG_COLLECT:
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-//					TextView collectBtn = (TextView) findViewById(R.id.buttonTabCollect);
-//					TextView numTV = (TextView) findViewById(R.id.textViewGongXuCollectNum);
+					// TextView collectBtn = (TextView)
+					// findViewById(R.id.buttonTabCollect);
+					// TextView numTV = (TextView)
+					// findViewById(R.id.textViewGongXuCollectNum);
 					if (isCollect != null && isCollect.equals("0")) {
-//						collectBtn.setText(R.string.label_collectCancel);
-//						Drawable drawable = getResources().getDrawable(
-//								R.drawable.tab_collect_on);
-//						drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-//								drawable.getMinimumHeight());
-//						collectBtn.setCompoundDrawables(null, drawable, null,
-//								null);
+						// collectBtn.setText(R.string.label_collectCancel);
+						// Drawable drawable = getResources().getDrawable(
+						// R.drawable.tab_collect_on);
+						// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+						// drawable.getMinimumHeight());
+						// collectBtn.setCompoundDrawables(null, drawable, null,
+						// null);
 						isCollect = "1";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_collectSuccess);
 						// numTV.setText(String.valueOf(Integer.valueOf(numTV
 						// .getText().toString()) + 1));
 					} else {
-//						collectBtn.setText(R.string.label_collect);
-//						Drawable drawable = getResources().getDrawable(
-//								R.drawable.tab_collect_off);
-//						drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-//								drawable.getMinimumHeight());
-//						collectBtn.setCompoundDrawables(null, drawable, null,
-//								null);
+						// collectBtn.setText(R.string.label_collect);
+						// Drawable drawable = getResources().getDrawable(
+						// R.drawable.tab_collect_off);
+						// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+						// drawable.getMinimumHeight());
+						// collectBtn.setCompoundDrawables(null, drawable, null,
+						// null);
 						isCollect = "0";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_cancelCollect);
@@ -348,24 +351,26 @@ public class TopicDetailActivity extends BaseActivity {
 
 					@Override
 					public void onClick(View v) {
-						Intent i = new Intent(TopicDetailActivity.this,
-								UserSelectActivity.class);
-						ArrayList<String> tempids = new ArrayList<String>(1);
-						tempids.add(uid);
-						i.putStringArrayListExtra("otherids", tempids);
-						startActivityForResult(i, MsgTagVO.MSG_FOWARD);
+						// Intent i = new Intent(TopicDetailActivity.this,
+						// UserSelectActivity.class);
+						// ArrayList<String> tempids = new ArrayList<String>(1);
+						// tempids.add(uid);
+						// i.putStringArrayListExtra("otherids", tempids);
+						// startActivityForResult(i, MsgTagVO.MSG_FOWARD);
+						CustomShareBoard cb = new CustomShareBoard(
+								TopicDetailActivity.this);
+						cb.showCustomShareContent();
 					}
 				});
 		collectBtn = (TextView) findViewById(R.id.buttonTabCollect);
-		collectBtn.setOnClickListener(
-				new OnClickListener() {
+		collectBtn.setOnClickListener(new OnClickListener() {
 
-					@Override
-					public void onClick(View v) {
-						mConnHelper.collectTopic(mUIHandler,
-								MsgTagVO.MSG_COLLECT, topicid, 1);
-					}
-				});
+			@Override
+			public void onClick(View v) {
+				mConnHelper.collectTopic(mUIHandler, MsgTagVO.MSG_COLLECT,
+						topicid, 1);
+			}
+		});
 		textViewTip = findViewById(R.id.textViewTip);
 	}
 
