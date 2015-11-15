@@ -415,11 +415,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 		tvCompany.setText(userInfo.getCompany());
 		tvPhone.setText(userInfo.getPhone());
-<<<<<<< .mine
-		// tvZBNum.setText("閺嗗倹妫ら崐顒�閺侊拷);
-=======
-		
->>>>>>> .theirs
 		if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_MYSELF
 				.ordinal() || userInfo.getUserid().equals(myid)) {
 			ltNyselfMenue.setVisibility(View.VISIBLE);
