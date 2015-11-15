@@ -2,12 +2,12 @@ package com.cpstudio.zhuojiaren.ui;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,7 +25,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.CardAddUserResourceActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.AudioAdapter;
 import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
@@ -38,13 +37,13 @@ import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
@@ -80,7 +79,7 @@ public class MyCollectionActivity extends BaseActivity {
 	private float times = 2;
 	private int padding = 5;
 	private int baseMargin = 19;
-	private Context mContext;
+	private Activity mContext;
 
 	private String url;
 	private int handlerTag;
@@ -232,8 +231,12 @@ public class MyCollectionActivity extends BaseActivity {
 //		}
 		switch(handlerTag){
 		case vedio :
+			appClientLef.getVedioList(null, null, mPage, 5, uiHandler,
+					MsgTagVO.DATA_MORE, (Activity)mContext, true, null, null);
 			break;
 		case radio:
+			appClientLef.getAudioList(mPage, 5, uiHandler,
+					MsgTagVO.DATA_MORE,(Activity) mContext, true, null, null);
 			break;
 		case event:
 			break;
