@@ -156,6 +156,14 @@ public class MyZhuoBiActivity extends BaseActivity {
 						});
 				alert.show();
 				break;
+			case MsgTagVO.PUB_INFO:
+				if (JsonHandler.checkResult((String) msg.obj,
+						MyZhuoBiActivity.this)) {
+						Toast.makeText(MyZhuoBiActivity.this, "‘˘ÀÕ≥…π¶", Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(MyZhuoBiActivity.this, "‘˘ÀÕ ß∞‹", Toast.LENGTH_SHORT).show();
+				}
+				break;
 			}
 		};
 	};
@@ -163,6 +171,7 @@ public class MyZhuoBiActivity extends BaseActivity {
 		if(requestCode == requestFriend && resultCode == RESULT_OK){
 			LayoutInflater inflater = LayoutInflater
 					.from(MyZhuoBiActivity.this);
+			
 			final View view = inflater.inflate(
 					R.layout.textview_dialot, null);
 			final EditText money = (EditText) view
@@ -191,5 +200,5 @@ public class MyZhuoBiActivity extends BaseActivity {
 								}
 							}).create().show();
 		}
-	};
+	}
 }

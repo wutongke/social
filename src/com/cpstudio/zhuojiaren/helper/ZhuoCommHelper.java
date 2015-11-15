@@ -140,6 +140,16 @@ public class ZhuoCommHelper {
 	private static String GOODSCATEGORY = "/goods/topCategory.do";
 	private static String GOODSNUMBER = "/genZhuobiOrder.do";
 	private static String GIVEMONEYTOFRIEND = "/presentZhuobi.do";
+	private static String MYZHUOBI = "/getMyZhuobi.do";
+	private static String MALLPAY = "/mallPay.do";
+	public static String getMALLPAY() {
+		return SERVER + MALLPAY;
+	}
+
+	public static String getMYZHUOBI() {
+		return SERVER + MYZHUOBI;
+	}
+
 	public static String getGIVEMONEYTOFRIEND() {
 		return SERVER + GIVEMONEYTOFRIEND;
 	}

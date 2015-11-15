@@ -158,6 +158,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 		mAdapter = new MyPagerAdapter(getSupportFragmentManager(), tabTitles,crowdFundingId,
 				crowdFunding);
 		viewPager.setAdapter(mAdapter);
+		viewPager.setOffscreenPageLimit(2);
 		tab.clearTab();
 		tab.setViewPager(viewPager);
 		// 第一个可用
