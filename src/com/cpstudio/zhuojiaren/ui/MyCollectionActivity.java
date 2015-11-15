@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -86,6 +87,8 @@ public class MyCollectionActivity extends BaseActivity {
 	// 分页
 	private int mPage = 0;
 	private AppClientLef appClientLef;
+	
+	private int type;
 
 	private final int vedio = 1;
 	private final int radio = 2;
@@ -218,7 +221,7 @@ public class MyCollectionActivity extends BaseActivity {
 	}
 
 	private void loadData() {
-		CommonUtil.displayToast(MyCollectionActivity.this, "暂时没有数据");
+//		CommonUtil.displayToast(MyCollectionActivity.this, "暂时没有数据");
 //		if (pullDownView.startLoadData()) {
 //			mDatas.clear();
 //			mPage = 0;
@@ -227,7 +230,22 @@ public class MyCollectionActivity extends BaseActivity {
 ////					MsgTagVO.DATA_LOAD, GrouthListActivity.this, true, null,
 ////					null);
 //		}
-
+		switch(handlerTag){
+		case vedio :
+			break;
+		case radio:
+			break;
+		case event:
+			break;
+		case topic:
+			break;
+		case people:
+			break;
+		case gong:
+			break;
+		case xu:
+			break;
+		}
 	}
 
 	private void loadMore() {
