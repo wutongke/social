@@ -83,7 +83,7 @@ public class QuanziFra extends Fragment {
 	TitleAdapter mTitleAdapter;
 	// 主View
 	View layout;
-
+String userid=null;
 	public interface functionListener {
 		//
 		public void onTypeChange(int type);
@@ -102,7 +102,7 @@ public class QuanziFra extends Fragment {
 		// 加载的圈子类型
 		Bundle intent = getArguments();
 		mType = intent.getInt(QuanVO.QUANZITYPE);
-
+		userid=intent.getString("userid");
 		mAdapter = new QuanListAdapter(mContext, mList);
 		RelativeLayout mFooterView = (RelativeLayout) inflater.inflate(
 				R.layout.listview_footer, null);
@@ -402,7 +402,7 @@ public class QuanziFra extends Fragment {
 			mAdapter.notifyDataSetChanged();
 			if (url != null && (!url.isEmpty()))
 				mConnHelper.getQuanzi(url, gtype, city, 0, 5, mUIHandler,
-						MsgTagVO.DATA_LOAD, getActivity(), true, null, null);
+						MsgTagVO.DATA_LOAD, getActivity(), true, null, null,userid);
 		}
 	}
 
@@ -410,7 +410,7 @@ public class QuanziFra extends Fragment {
 		if (mListViewFooter.startLoading()) {
 
 			mConnHelper.getQuanzi(url, gtype, city, mPage, 5, mUIHandler,
-					MsgTagVO.DATA_MORE, getActivity(), true, null, null);
+					MsgTagVO.DATA_MORE, getActivity(), true, null, null,userid);
 		}
 	}
 

@@ -126,7 +126,7 @@ public class AppClientLef {
 	 */
 	public boolean getQuanzi(String url, String gtype, String city, int pageNo,
 			int pageSize, Handler handler, int handlerTag, Activity activity,
-			boolean cancelable, OnCancelListener cancel, String data) {
+			boolean cancelable, OnCancelListener cancel, String data,String userid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
@@ -134,6 +134,8 @@ public class AppClientLef {
 			nameValuePairs.add(new BasicNameValuePair("gtype", gtype));
 		if (city != null)
 			nameValuePairs.add(new BasicNameValuePair("city", city));
+		if(userid!=null)
+			nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				cancelable, cancel, data);
 	}
