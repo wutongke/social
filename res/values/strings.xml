@@ -1172,4 +1172,5 @@
     <string name="alert">警告</string>
     <string name="sure">确定</string>
     <string name="targeturl">http://www.baidu.com</string>
+    <string name="nofill">未填写</string>
 </resources>

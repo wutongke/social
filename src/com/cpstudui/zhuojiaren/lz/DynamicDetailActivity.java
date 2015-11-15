@@ -45,6 +45,7 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.widget.CustomShareBoard;
 import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
@@ -103,7 +104,7 @@ public class DynamicDetailActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				if (mList.size() <= 0)
 					return;
-				Comment cmt = mList.get(position-1);
+				Comment cmt = mList.get(position - 1);
 				startCommentActivity(cmt.getId(), cmt.getUserid());
 			}
 		});
@@ -162,7 +163,7 @@ public class DynamicDetailActivity extends BaseActivity {
 			gvImages.setAdapter(gv);
 			gv.notifyDataSetChanged();
 		}
-		
+
 		mLoadImage.doTask();
 
 		fillPraiseList(dynamicDetail.getPraiseList());
@@ -189,7 +190,7 @@ public class DynamicDetailActivity extends BaseActivity {
 			Context context = mHeadView.getContext();
 			TableLayout.LayoutParams tllp = new TableLayout.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			
+
 			TableRow.LayoutParams trlp = new TableRow.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			TableLayout tl = (TableLayout) findViewById(R.id.tableLayoutGood);
@@ -281,26 +282,26 @@ public class DynamicDetailActivity extends BaseActivity {
 					// TextView numTV = (TextView)
 					// findViewById(R.id.textViewGongXuCollectNum);
 					if (isCollect != null && isCollect.equals("0")) {
-//						collectBtn.setText(R.string.label_collectCancel);
-//						Drawable drawable = getResources().getDrawable(
-//								R.drawable.tab_collect_on);
-//						drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-//								drawable.getMinimumHeight());
-//						collectBtn.setCompoundDrawables(null, drawable, null,
-//								null);
+						// collectBtn.setText(R.string.label_collectCancel);
+						// Drawable drawable = getResources().getDrawable(
+						// R.drawable.tab_collect_on);
+						// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+						// drawable.getMinimumHeight());
+						// collectBtn.setCompoundDrawables(null, drawable, null,
+						// null);
 						isCollect = "1";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_collectSuccess);
 						// numTV.setText(String.valueOf(Integer.valueOf(numTV
 						// .getText().toString()) + 1));
 					} else {
-//						collectBtn.setText(R.string.label_collect);
-//						Drawable drawable = getResources().getDrawable(
-//								R.drawable.tab_collect_off);
-//						drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-//								drawable.getMinimumHeight());
-//						collectBtn.setCompoundDrawables(null, drawable, null,
-//								null);
+						// collectBtn.setText(R.string.label_collect);
+						// Drawable drawable = getResources().getDrawable(
+						// R.drawable.tab_collect_off);
+						// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+						// drawable.getMinimumHeight());
+						// collectBtn.setCompoundDrawables(null, drawable, null,
+						// null);
 						isCollect = "0";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_cancelCollect);
@@ -364,24 +365,26 @@ public class DynamicDetailActivity extends BaseActivity {
 
 					@Override
 					public void onClick(View v) {
-						Intent i = new Intent(DynamicDetailActivity.this,
-								UserSelectActivity.class);
-						ArrayList<String> tempids = new ArrayList<String>(1);
-						tempids.add(uid);
-						i.putStringArrayListExtra("otherids", tempids);
-						startActivityForResult(i, MsgTagVO.MSG_FOWARD);
+						CustomShareBoard cb = new CustomShareBoard(
+								DynamicDetailActivity.this);
+						cb.showCustomShareContent();
+						// Intent i = new Intent(DynamicDetailActivity.this,
+						// UserSelectActivity.class);
+						// ArrayList<String> tempids = new ArrayList<String>(1);
+						// tempids.add(uid);
+						// i.putStringArrayListExtra("otherids", tempids);
+						// startActivityForResult(i, MsgTagVO.MSG_FOWARD);
 					}
 				});
 		collectBtn = (TextView) findViewById(R.id.buttonTabCollect);
-		collectBtn.setOnClickListener(
-				new OnClickListener() {
+		collectBtn.setOnClickListener(new OnClickListener() {
 
-					@Override
-					public void onClick(View v) {
-						mConnHelper.collectDynamic(mUIHandler,
-								MsgTagVO.MSG_COLLECT, msgid, 1);
-					}
-				});
+			@Override
+			public void onClick(View v) {
+				mConnHelper.collectDynamic(mUIHandler, MsgTagVO.MSG_COLLECT,
+						msgid, 1);
+			}
+		});
 		textViewTip = findViewById(R.id.textViewTip);
 	}
 

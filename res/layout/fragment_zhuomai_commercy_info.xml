@@ -14,7 +14,7 @@
             android:paddingBottom="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:paddingTop="10dp"  >
+            android:paddingTop="10dp" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -53,8 +53,8 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginRight="10dp"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/ico" />
+                android:contentDescription="@string/ico"
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/textViewResourceTitle"
@@ -123,8 +123,8 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginRight="10dp"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/ico" />
+                android:contentDescription="@string/ico"
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/textViewNeedTitle"
@@ -154,7 +154,8 @@
             android:background="@color/gray"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="10dp" >
+            android:padding="10dp"
+            android:visibility="gone" >
 
             <ImageView
                 android:id="@+id/textViewWeidian"
