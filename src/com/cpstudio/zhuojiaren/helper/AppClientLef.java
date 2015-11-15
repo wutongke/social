@@ -98,7 +98,11 @@ public class AppClientLef {
 				}, null);
 		conn.execute();
 	}
-
+	private List<NameValuePair> addUserInfo(List<NameValuePair> nameValuePairs) {
+		nameValuePairs.add(new BasicNameValuePair("username", userId));
+		nameValuePairs.add(new BasicNameValuePair("password", password));
+		return nameValuePairs;
+	}
 	public void refreshUserInfo(LoginRes res) {
 		SharedPreferences sp = context.getSharedPreferences("cpzhuojiaren",
 				Activity.MODE_PRIVATE);
@@ -1101,7 +1105,7 @@ public class AppClientLef {
 			final Handler handler, int handlerTag, Activity activity
 			) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs = addUserInfo(nameValuePairs);
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("invoice", invoice));
 		nameValuePairs.add(new BasicNameValuePair("message", message));
 		nameValuePairs.add(new BasicNameValuePair("totalZhuobi", totalZhuobi));
@@ -1302,7 +1306,7 @@ public class AppClientLef {
 		nameValuePairs.add(new BasicNameValuePair("isemailopen", isemailopen));
 		nameValuePairs.add(new BasicNameValuePair("isbirthopen", isbirthopen));
 		nameValuePairs.add(new BasicNameValuePair("mycustomer", mycustomer));
-		return doFormPost(files, addUserInfo(nameValuePairs),
+		return doFormPost(files, addUserInfoByPost(nameValuePairs),
 				ZhuoCommHelper.getUrlUpdateUserDetail(), handler, handlerTag,
 				activity, "updateUserDetail", cancelable, cancel, data);
 	}
@@ -1567,7 +1571,7 @@ public class AppClientLef {
 				mStartedTag.add(tag);
 			}
 			AsyncConnectHelper conn = new AsyncConnectHelper(
-					addUserInfo(nameValuePairs), url, getFinishCallback(
+					addUserInfoByPost(nameValuePairs), url, getFinishCallback(
 							callback, tag), activity);
 			conn.setCancelable(cancelable);
 			if (cancelable) {
@@ -1694,11 +1698,6 @@ public class AppClientLef {
 		}
 	}
 
-	private List<NameValuePair> addUserInfo(List<NameValuePair> nameValuePairs) {
-		nameValuePairs.add(new BasicNameValuePair("username", userId));
-		nameValuePairs.add(new BasicNameValuePair("password", password));
-		return nameValuePairs;
-	}
 
 	// lz0713
 	private List<NameValuePair> addUserInfoByPost(

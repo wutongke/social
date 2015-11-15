@@ -99,15 +99,17 @@ public class OrderSubmitActivity extends BaseActivity {
 				
 				leftMoney.setText(res.getData());
 			} else if(msg.what == GET_ORDER_NUMBER){
+				int price = (int)Float.parseFloat(goodsPrice.getText().toString());
 				AppClientLef.getInstance(OrderSubmitActivity.this.getApplicationContext())
-				.payWithZhuobi(OrderSubmitActivity.this, uiHandler, PAYFOR,goodsPrice.getText().toString()
+				.payWithZhuobi(OrderSubmitActivity.this, uiHandler, PAYFOR,price+""
 						, res.getData());
 				orderNumber = res.getData();
 			} else if(msg.what == PAYFOR){
 				CommonUtil.displayToast(OrderSubmitActivity.this, "支付成功");
-				leftMoney.setText(res.getData());
-				AppClientLef.getInstance(OrderSubmitActivity.this.getApplicationContext())
-				.postPayStatus(OrderSubmitActivity.this, uiHandler, PAYMESSAGE, orderNumber, "1");//1表示成功
+				OrderSubmitActivity.this.finish();
+//				leftMoney.setText(res.getData());
+//				AppClientLef.getInstance(OrderSubmitActivity.this.getApplicationContext())
+//				.postPayStatus(OrderSubmitActivity.this, uiHandler, PAYMESSAGE, orderNumber, "1");//1表示成功
 			}
 			else{
 				CommonUtil.displayToast(OrderSubmitActivity.this,

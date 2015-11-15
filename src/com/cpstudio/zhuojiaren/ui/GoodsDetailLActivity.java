@@ -220,7 +220,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 						bannerListData.add(item);
 					}
 					bannerPageAdapter = new Bee_PageAdapter(
-							GoodsDetailLActivity.this, bannerListData, lImage,ScaleType.MATRIX);
+							GoodsDetailLActivity.this, bannerListData, lImage,ScaleType.FIT_XY);
 					bannerViewPager.setAdapter(bannerPageAdapter);
 					bannerViewPager.setCurrentItem(0);
 					bannerIndicator.setViewPager(bannerViewPager);
