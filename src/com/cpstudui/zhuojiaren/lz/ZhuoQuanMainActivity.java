@@ -279,24 +279,25 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						groupName);
 		String pushMsg = mConnHelper.getUserid() + "请求加入圈子：" + groupName + "(+"
 				+ groupid + ")";
-		RongIM.getInstance()
-				.getRongIMClient()
-				.sendMessage(ConversationType.PRIVATE, detail.getUserid(),
-						reqMsg, pushMsg, new SendMessageCallback() {
-							@Override
-							public void onSuccess(Integer arg0) {
-								// TODO Auto-generated method stub
-								pwh.showPopTip(findViewById(R.id.zhuomai_card),
-										null, R.string.label_applysuccess);
-							}
-
-							@Override
-							public void onError(Integer arg0, ErrorCode arg1) {
-								// TODO Auto-generated method stub
-								Toast.makeText(ZhuoQuanMainActivity.this,
-										"申请发送失败ErrorCode：" + arg1, 1000).show();
-							}
-						});
+//ios 暂时没做
+//		RongIM.getInstance()
+//				.getRongIMClient()
+//				.sendMessage(ConversationType.PRIVATE, detail.getUserid(),
+//						reqMsg, pushMsg, new SendMessageCallback() {
+//							@Override
+//							public void onSuccess(Integer arg0) {
+//								// TODO Auto-generated method stub
+//								pwh.showPopTip(findViewById(R.id.zhuomai_card),
+//										null, R.string.label_applysuccess);
+//							}
+//
+//							@Override
+//							public void onError(Integer arg0, ErrorCode arg1) {
+//								// TODO Auto-generated method stub
+//								Toast.makeText(ZhuoQuanMainActivity.this,
+//										"申请发送失败ErrorCode：" + arg1, 1000).show();
+//							}
+//						});
 	}
 
 	private void loadData() {

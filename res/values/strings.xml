@@ -1093,6 +1093,7 @@
     <string name="phone_number2">手机号码</string>
     <string name="title_activity_goods_collection">GoodsCollectionActivity</string>
     <string name="title_activity_view_order">订单详情</string>
+    <string name="title_activity_view_order_list">订单列表</string>
     <string name="all_catgary">全部分类</string>
     <string name="mail_number">邮编</string>
     <string name="plane">机票</string>

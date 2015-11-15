@@ -60,7 +60,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:background="@drawable/find_textview_bg"
+            android:background="@null"
             android:text="@string/label_main_find"
             android:textColor="#ffffff"
             android:textSize="12sp" />

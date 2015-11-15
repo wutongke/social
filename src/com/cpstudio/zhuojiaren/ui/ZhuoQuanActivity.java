@@ -49,16 +49,19 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 		setContentView(R.layout.activity_zhuo_quan);
 		ButterKnife.inject(this);
 		mContext = this;
-		userid = getIntent().getStringExtra("userid");
-		if (userid == null)
-			function.setVisibility(View.GONE);
 		initTitle();
 		title.setText(R.string.title_activity_zhuojiaquan);
+		userid = getIntent().getStringExtra("userid");
+		if (userid == null)//查看的是别人的不需要管理
+			function.setVisibility(View.GONE);
+		else
+		{
 		// 设置初始值 0 管理，1搜索，2筛选，3退出
 		function.setTag(0);
 		function.setTextSize(14);
 		function.setBackgroundResource(R.drawable.ibutton);
 		function.setText(R.string.label_manage);
+		}
 		// 初始化tab和viewpager
 		viewPager.setAdapter(getPagerAdapter());
 		viewPager.setOffscreenPageLimit(2);

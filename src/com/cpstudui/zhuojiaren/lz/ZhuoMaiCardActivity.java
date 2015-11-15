@@ -99,7 +99,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	View ltOtherMenue;
 
 	@InjectView(R.id.btnEditBG)
-	Button btnEditBG;//
+	Button btnEditBG;
 	@InjectView(R.id.btnEditCard)
 	Button btnEditCard;
 
@@ -244,6 +244,9 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				// TODO Auto-generated method stub
 				if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_MYSELF
 						.ordinal()) {
+					Intent i = new Intent(ZhuoMaiCardActivity.this,
+							ChangeBackgroundActivity.class);
+					startActivity(i);
 				}
 			}
 		});
@@ -476,11 +479,8 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			case MsgTagVO.MSG_FOWARD: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-					sendCard();
+//ios暂时没做，消息还需要自定义		sendCard();
 				} else {
-//					sendCard();
-//					CommonUtil.displayToast(getApplicationContext(),
-//							R.string.FAILED);
 				}
 				break;
 			}
