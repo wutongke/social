@@ -70,6 +70,7 @@ public class JiarenActiveSimpleActivity extends Activity implements
 		mFacade = new UserFacade(getApplicationContext());
 		// infoFacade = new InfoFacade(getApplicationContext(),
 		// InfoFacade.ACTIVELIST);
+		ivPub.setVisibility(View.GONE);
 		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		pwh = new PopupWindows(JiarenActiveSimpleActivity.this);
 		mLoadImage = new LoadImage();
@@ -104,13 +105,13 @@ public class JiarenActiveSimpleActivity extends Activity implements
 				JiarenActiveSimpleActivity.this.finish();
 			}
 		});
-		ivPub.setImageResource(R.drawable.iwrite);
-		ivPub.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				pwh.showPop(findViewById(R.id.layoutJiarenActive));
-			}
-		});
+//		ivPub.setImageResource(R.drawable.iwrite);
+//		ivPub.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				pwh.showPop(findViewById(R.id.layoutJiarenActive));
+//			}
+//		});
 	}
 
 	private void updateItemList(ArrayList<Dynamic> list, boolean refresh,
