@@ -11,10 +11,25 @@ public class GoodsVO implements Serializable{
 	private String goodsName;
 	// 商品价格
 	private String markeyPrice;
+	private String buyNum;
+	public String getBuyNum() {
+		return buyNum;
+	}
+	public void setBuyNum(String buyNum) {
+		this.buyNum = buyNum;
+	}
+	public String getSubAmount() {
+		return subAmount;
+	}
+	public void setSubAmount(String subAmount) {
+		this.subAmount = subAmount;
+	}
+	private String subAmount;
 	private String zhuoPrice;// 倬币价格(多少个)
 	// 商品图片
 	private List<String> imgList = new ArrayList<String>();
 	// 商品首页图片
+	private String goodsImg;
 	private String img;
 	// 商品描述
 	private String content;
@@ -40,9 +55,6 @@ public class GoodsVO implements Serializable{
 	}
 	public String getZhuoPrice() {
 		return zhuoPrice;
-	}
-	public String getImg() {
-		return img;
 	}
 	public String getContent() {
 		return content;
@@ -86,9 +98,6 @@ public class GoodsVO implements Serializable{
 	public void setImgList(List<String> imgList) {
 		this.imgList = imgList;
 	}
-	public void setImg(String img) {
-		this.img = img;
-	}
 	public void setContent(String content) {
 		this.content = content;
 	}
@@ -104,6 +113,12 @@ public class GoodsVO implements Serializable{
 	public void setProvider(ProviderVO provider) {
 		this.provider = provider;
 	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 	public void setComments(ArrayList<GoodsComment> comments) {
 		this.comments = comments;
 	}
@@ -112,6 +127,12 @@ public class GoodsVO implements Serializable{
 	}
 	public void setGoodsCount(String goodsCount) {
 		this.goodsCount = goodsCount;
+	}
+	public String getGoodsImg() {
+		return goodsImg;
+	}
+	public void setGoodsImg(String goodsImg) {
+		this.goodsImg = goodsImg;
 	}
 
 	

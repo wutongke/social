@@ -74,7 +74,7 @@ public class TypedStoreGoodsListAdapter extends BaseAdapter {
 //			String pic = pics.get(0);
 //			holder.image.setTag(pic);
 //		}
-		mLoadImage.addTask(user.getImg(), holder.image);
+		mLoadImage.addTask(user.getGoodsImg(), holder.image);
 		mLoadImage.doTask();
 
 		String rate = user.getCommentPoint();

@@ -69,7 +69,7 @@ public class StoreGoodsListAdapter extends BaseAdapter {
 		holder.money.setText("市场价：" + money);
 		holder.zhuobimoney.setText("倬家币：" + zhuobi);
 		holder.image.setImageResource(R.drawable.default_image);
-		if (user.getImg()!=null) {
+		if (user.getGoodsImg()!=null) {
 			String pic = user.getImg();
 			holder.image.setTag(pic);
 			mLoadImage.addTask(pic, holder.image);

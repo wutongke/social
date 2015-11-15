@@ -81,21 +81,21 @@
                 <ImageView
                     android:id="@+id/aod_pic1"
                     android:layout_width="70dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:layout_marginRight="10dp"
                     android:scaleType="centerCrop" />
 
                 <ImageView
                     android:id="@+id/aod_pic2"
                     android:layout_width="70dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:layout_marginRight="10dp"
                     android:scaleType="centerCrop" />
 
                 <ImageView
                     android:id="@+id/aod_pic3"
                     android:layout_width="70dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:layout_marginRight="10dp"
                     android:scaleType="centerCrop" />
 

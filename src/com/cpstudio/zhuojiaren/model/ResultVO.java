@@ -35,7 +35,7 @@ public class ResultVO {
 	public static final int PHONENUMBER = 105;
 	public static final int SESSIONOUT = 107;
 	private String code;
-	private String msg;
+	private String msg="";
 	private String data;
 
 	public String getCode() {

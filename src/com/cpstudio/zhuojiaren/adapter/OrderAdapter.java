@@ -64,6 +64,8 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 			helper.setText(R.id.icg_num_text, item
 					.getGoodsCount());
 		}
+		item.setSubAmount(item.getZhuoPrice());
+		item.setBuyNum("1");
 		// 商品数量+1
 		helper.getView(R.id.icg_num_add).setOnClickListener(
 				new OnClickListener() {
@@ -75,6 +77,7 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 								.toString());
 						goodsNum.setText(num + 1 + "");
 						item.setGoodsCount(num + 1 + "");
+						item.setBuyNum(goodsNum.getText().toString());
 						if(goodsChangeListenter!=null)
 							goodsChangeListenter.onGoodsChange(addAllGoodsPrice(),selectList.size());
 							
@@ -91,13 +94,14 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 						if (num > 1)
 							goodsNum.setText(num - 1 + "");
 						item.setGoodsCount(num - 1 + "");
+						item.setBuyNum(goodsNum.getText().toString()); 
 						if(goodsChangeListenter!=null)
 							goodsChangeListenter.onGoodsChange(addAllGoodsPrice(),selectList.size());
 					}
 				});
-		if(item.getImg()!=null)
+		if(item.getGoodsImg()!=null)
 		loader.beginLoad(
-				item.getImg(),
+				item.getGoodsImg(),
 				(ImageView) helper.getView(R.id.icg_goods_image));
 		else{
 			((ImageView)helper.getView(R.id.icg_goods_image)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.shopcar2_wode_1));

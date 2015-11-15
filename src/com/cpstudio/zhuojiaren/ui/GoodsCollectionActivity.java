@@ -81,7 +81,7 @@ public class GoodsCollectionActivity extends BaseActivity {
 			public void convert(ViewHolder helper, final GoodsVO item) {
 				// TODO Auto-generated method stub
 				helper.setText(R.id.igc_name, item.getGoodsName());
-				loader.beginLoad(item.getImg(),
+				loader.beginLoad(item.getGoodsImg(),
 						(ImageView) helper.getView(R.id.igc_goods_image));
 				helper.setText(R.id.igc_price, item.getZhuoPrice());
 				helper.getView(R.id.igc_collec_image).setOnClickListener(

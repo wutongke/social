@@ -21,10 +21,13 @@ import com.alipay.sdk.pay.ailiyue.AliPayActivity;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.google.gson.Gson;
 
 public class OrderSubmitActivity extends BaseActivity {
 	@InjectView(R.id.aod_person_info)
@@ -61,7 +64,10 @@ public class OrderSubmitActivity extends BaseActivity {
 	ArrayList<GoodsVO> goodsList;
 	LoadImage loadImage = new LoadImage();
 	private static int GET_MONEY = 100;
-
+	private static int GET_ORDER_NUMBER = 101;
+	private static int PAYFOR = 102;
+	private static int PAYMESSAGE = 103;
+	String orderNumber;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,47 +87,28 @@ public class OrderSubmitActivity extends BaseActivity {
 
 	private Handler uiHandler = new Handler() {
 		public void handleMessage(final Message msg) {
+			ResultVO res = null;
+			res = JsonHandler.parseResult((String) msg.obj);
+			if (JsonHandler.checkResult((String) msg.obj, OrderSubmitActivity.this)) {
+			} else {
+				CommonUtil.displayToast(OrderSubmitActivity.this, res.getMsg());
+				return;
+			}
+			String data = res.getData();
 			if (msg.what == GET_MONEY) {
 				leftMoney.setText(((Integer) msg.obj).toString());
-			} else if (msg.what == MsgTagVO.PUB_INFO) {
-				final Intent i = new Intent();
-				i.putExtra("tradeNum", (String) msg.obj);
-				View view = getLayoutInflater().inflate(
-						R.layout.pay_wey_choose, null);
-				final AlertDialog alert = new AlertDialog.Builder(OrderSubmitActivity.this,
-						AlertDialog.THEME_HOLO_LIGHT).setTitle("选择支付方式")
-						.setView(view).create();
-				view.findViewById(R.id.pay_weixin).setOnClickListener(
-						new OnClickListener() {
-
-							@Override
-							public void onClick(View v) {
-								// TODO Auto-generated method stub
-								i.setClass(OrderSubmitActivity.this,
-										PayActivity.class);
-//								i.putExtra("money", "5");
-								i.putExtra("money", String.valueOf((int)(Float.parseFloat(goodsPrice.getText().toString())*100)));
-								startActivity(i);
-								alert.dismiss();
-							}
-						});
-				view.findViewById(R.id.pay_ali).setOnClickListener(
-						new OnClickListener() {
-
-							@Override
-							public void onClick(View v) {
-								// TODO Auto-generated method stub
-								i.setClass(OrderSubmitActivity.this,
-										AliPayActivity.class);
-//								i.putExtra("money", "0.5");
-								i.putExtra("money", String.valueOf((int)(Float.parseFloat(goodsPrice.getText().toString()))));
-								startActivity(i);
-								alert.dismiss();
-							}
-						});
-				alert.show();
-				
-			} else {
+			} else if(msg.what == GET_ORDER_NUMBER){
+				AppClientLef.getInstance(OrderSubmitActivity.this.getApplicationContext())
+				.payWithZhuobi(OrderSubmitActivity.this, uiHandler, PAYFOR,goodsPrice.getText().toString()
+						, res.getData());
+				orderNumber = res.getData();
+			} else if(msg.what == PAYFOR){
+				CommonUtil.displayToast(OrderSubmitActivity.this, "支付成功");
+				leftMoney.setText(res.getData());
+				AppClientLef.getInstance(OrderSubmitActivity.this.getApplicationContext())
+				.postPayStatus(OrderSubmitActivity.this, uiHandler, PAYMESSAGE, orderNumber, "1");//1表示成功
+			}
+			else{
 				CommonUtil.displayToast(OrderSubmitActivity.this,
 						R.string.error0);
 			}
@@ -153,11 +140,11 @@ public class OrderSubmitActivity extends BaseActivity {
 				goodsList.size()));
 		int count = goodsList.size();
 		if (count >= 1) {
-			loadImage.beginLoad(goodsList.get(0).getImg(), pic1);
+			loadImage.beginLoad(goodsList.get(0).getGoodsImg(), pic1);
 			if (count >= 2)
-				loadImage.beginLoad(goodsList.get(1).getImg(), pic2);
+				loadImage.beginLoad(goodsList.get(1).getGoodsImg(), pic2);
 			if (count >= 3)
-				loadImage.beginLoad(goodsList.get(2).getImg(), pic3);
+				loadImage.beginLoad(goodsList.get(2).getGoodsImg(), pic3);
 		}
 		goodsPrice.setText(intent.getStringExtra("goodsprice"));
 	}
@@ -191,6 +178,11 @@ public class OrderSubmitActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				// submit to get tradeid and then fay
+				//get number
+				AppClientLef.getInstance(OrderSubmitActivity.this.getApplicationContext())
+				.getOrderNumber(invoice.getText().toString(),leftMessage.getText().toString()
+						,goodsPrice.getText().toString(),new Gson().toJson(goodsList),
+						uiHandler, GET_ORDER_NUMBER, OrderSubmitActivity.this);
 			}
 		});
 	}

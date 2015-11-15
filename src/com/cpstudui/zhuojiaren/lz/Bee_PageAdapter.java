@@ -50,7 +50,7 @@ public class Bee_PageAdapter extends PagerAdapter {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					// ��תҳ��
+					// 锟斤拷转页锟斤拷
 				}
 			});
 			mLoadImage.addTask(url, iView);
@@ -76,7 +76,7 @@ public class Bee_PageAdapter extends PagerAdapter {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					// ��תҳ��
+					// 锟斤拷转页锟斤拷
 				}
 			});
 			mLoadImage.addTask(url, iView);
@@ -91,9 +91,9 @@ public class Bee_PageAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public Object instantiateItem(ViewGroup container, int position) { // 这个方法用来实例化页�?
+	public Object instantiateItem(ViewGroup container, int position) { // 杩欎釜鏂规硶鐢ㄦ潵瀹炰緥鍖栭〉锟�
 																		// container.addView(mListViews.get(position),
-																		// 0);//添加页卡
+																		// 0);//娣诲姞椤靛崱
 		container.addView(mListView.get(position), 0);
 		return mListView.get(position);
 	}
@@ -110,4 +110,5 @@ public class Bee_PageAdapter extends PagerAdapter {
 	public int getItemPosition(Object object) {
 	    return POSITION_NONE;
 	}
+	
 }

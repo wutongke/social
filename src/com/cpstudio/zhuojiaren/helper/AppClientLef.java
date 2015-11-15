@@ -452,8 +452,58 @@ public class AppClientLef {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("zhuobi", money));
-		nameValuePairs.add(new BasicNameValuePair("number", number));
+		nameValuePairs.add(new BasicNameValuePair("billNo", number));
 		String url = ZhuoCommHelper.getMALLPAY();
+		return doPost(nameValuePairs, url, handler, handlerTag, acitivity, url,
+				false, null, null);
+	}
+	/** 
+	 * 支付状态
+	 * @param acitivity
+	 * @param handler
+	 * @param handlerTag
+	 * @param url
+	 * @param idKey
+	 * @param id
+	 * @param stateKey
+	 * @param state
+	 * @return
+	 */
+	public boolean postPayStatus(Activity acitivity, Handler handler,
+			int handlerTag, String billNo,String status) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("billNo", billNo));
+		nameValuePairs.add(new BasicNameValuePair("status", status));
+		String url = ZhuoCommHelper.getPOSTPAYSTATUS();
+		return doPost(nameValuePairs, url, handler, handlerTag, acitivity, url,
+				false, null, null);
+	}
+	
+	/** 
+	 * 设置收货地址
+	 * @param acitivity
+	 * @param handler
+	 * @param handlerTag
+	 * @param url
+	 * @param idKey
+	 * @param id
+	 * @param stateKey
+	 * @param state
+	 * @return
+	 */
+	public boolean setShippingAddress(Activity acitivity, Handler handler,
+			int handlerTag, String street,String detail,
+			String receiptor,String phone,String zip
+			) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("street", street));
+		nameValuePairs.add(new BasicNameValuePair("detail", detail));
+		nameValuePairs.add(new BasicNameValuePair("receiptor", receiptor));
+		nameValuePairs.add(new BasicNameValuePair("phone", phone));
+		nameValuePairs.add(new BasicNameValuePair("zip", zip));
+		String url = ZhuoCommHelper.getSHIPPINGADDRESS();
 		return doPost(nameValuePairs, url, handler, handlerTag, acitivity, url,
 				false, null, null);
 	}
@@ -1024,7 +1074,7 @@ public class AppClientLef {
 				handler, handlerTag, activity, "applyForExch", cancelable,
 				cancel, data);
 	}
-
+	
 	public boolean collectMsg(String msgid, String iscollect,
 			final Handler handler, int handlerTag, Activity activity,
 			boolean cancelable, OnCancelListener cancel, String data) {
@@ -1033,6 +1083,30 @@ public class AppClientLef {
 		nameValuePairs.add(new BasicNameValuePair("iscollect", iscollect));
 		return doPost(nameValuePairs, ZhuoCommHelper.getUrlCollect(), handler,
 				handlerTag, activity, "collectMsg", cancelable, cancel, data);
+	}
+	/**
+	 * 获取商城订单
+	 * @param msgid
+	 * @param iscollect
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
+	public boolean getOrderNumber(String invoice,String message, String totalZhuobi,String buyGoods,
+			final Handler handler, int handlerTag, Activity activity
+			) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfo(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("invoice", invoice));
+		nameValuePairs.add(new BasicNameValuePair("message", message));
+		nameValuePairs.add(new BasicNameValuePair("totalZhuobi", totalZhuobi));
+		nameValuePairs.add(new BasicNameValuePair("buyGoods", buyGoods));
+		return doPost(nameValuePairs, ZhuoCommHelper.getGENERATEORDER(), handler,
+				handlerTag, activity, ZhuoCommHelper.getGENERATEORDER(), false, null, null);
 	}
 
 	public boolean followUser(String uid, String type, Handler handler,

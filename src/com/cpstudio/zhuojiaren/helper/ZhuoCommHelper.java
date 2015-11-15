@@ -142,6 +142,21 @@ public class ZhuoCommHelper {
 	private static String GIVEMONEYTOFRIEND = "/presentZhuobi.do";
 	private static String MYZHUOBI = "/getMyZhuobi.do";
 	private static String MALLPAY = "/mallPay.do";
+	private static String GENERATEORDER = "/goods/generateOrder.do";
+	private static String POSTPAYSTATUS = "/goods/setOrderStatus.do";
+	private static String SHIPPINGADDRESS = "/goods/setOrderAddress.do";
+	public static String getSHIPPINGADDRESS() {
+		return SERVER + SHIPPINGADDRESS;
+	}
+
+	public static String getPOSTPAYSTATUS() {
+		return SERVER + POSTPAYSTATUS;
+	}
+
+	public static String getGENERATEORDER() {
+		return SERVER + GENERATEORDER;
+	}
+
 	public static String getMALLPAY() {
 		return SERVER + MALLPAY;
 	}
