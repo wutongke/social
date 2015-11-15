@@ -52,8 +52,8 @@ public class DynamicListAdapter extends BaseAdapter {
 	String msgid = "11";
 	String groupId;
 	BaseCodeData baseDataSet;
-	// 没用
-	int role;// “我在圈子中的身份”
+	// 娌＄敤
+	int role;// 鈥滄垜鍦ㄥ湀瀛愪腑鐨勮韩浠解�
 
 	public String getGroupId() {
 		return groupId;
@@ -65,7 +65,7 @@ public class DynamicListAdapter extends BaseAdapter {
 
 	public DynamicListAdapter(Activity activity, ArrayList<Dynamic> list,
 			int role) {
-		// 好友动态的列表，fragment为null..与圈话题的内容一致
+		// 濂藉弸鍔ㄦ�鐨勫垪琛紝fragment涓簄ull..涓庡湀璇濋鐨勫唴瀹逛竴鑷�
 		mLoadImage = new LoadImage(0, 100, 100);
 		this.mContext = activity;
 		this.mList = list;
@@ -80,7 +80,7 @@ public class DynamicListAdapter extends BaseAdapter {
 
 	public DynamicListAdapter(Activity activity, LoadImage imageLoad,
 			ArrayList<Dynamic> list, int role) {
-		// 好友动态的列表，fragment为null..与圈话题的内容一致
+		// 濂藉弸鍔ㄦ�鐨勫垪琛紝fragment涓簄ull..涓庡湀璇濋鐨勫唴瀹逛竴鑷�
 		this.mLoadImage = imageLoad;
 		this.mContext = activity;
 		this.mList = list;
@@ -145,7 +145,7 @@ public class DynamicListAdapter extends BaseAdapter {
 		String time = item.getAddtime();
 
 		time = CommonUtil.calcTime(time);
-		// 用于activity点击时获得id
+		// 鐢ㄤ簬activity鐐瑰嚮鏃惰幏寰梚d
 		convertView.setTag(R.id.tag_id, msgid);
 
 		holder.nameTV.setText(authorName);
@@ -186,36 +186,36 @@ public class DynamicListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View view) {
 
-				OnClickListener zanListener = new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						mConnHelper.praiseDynamic(mHandler, MsgTagVO.MSG_LIKE,
-								msgid, 1);
-					}
-				};
-				OnClickListener cmtListener = new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-
-						Intent i = new Intent(mContext, MsgCmtActivity.class);
-						i.putExtra("msgid", msgid);
-						i.putExtra("parentid", msgid);
-						i.putExtra("type", 2);
-						// ((Activity)
-						// mContext).startActivityForResult(i,MsgTagVO.MSG_CMT);
-						((Activity) mContext).startActivityForResult(i,
-								MsgTagVO.MSG_CMT);
-					}
-				};
-				phw.showOptionsPop(view, times, zanListener, cmtListener);
+//				OnClickListener zanListener = new OnClickListener() {
+//
+//					@Override
+//					public void onClick(View v) {
+//						mConnHelper.praiseDynamic(mHandler, MsgTagVO.MSG_LIKE,
+//								msgid, 1);
+//					}
+//				};
+//				OnClickListener cmtListener = new OnClickListener() {
+//
+//					@Override
+//					public void onClick(View v) {
+//
+//						Intent i = new Intent(mContext, MsgCmtActivity.class);
+//						i.putExtra("msgid", msgid);
+//						i.putExtra("parentid", msgid);
+//						i.putExtra("type", 2);
+//						// ((Activity)
+//						// mContext).startActivityForResult(i,MsgTagVO.MSG_CMT);
+//						((Activity) mContext).startActivityForResult(i,
+//								MsgTagVO.MSG_CMT);
+//					}
+//				};
+//				phw.showOptionsPop(view, times, zanListener, cmtListener);
 			}
 		});
 
 		final List<PicNewVO> picsinner = item.getStatusPic();
 		holder.gvImages.setVisibility(View.GONE);
-		// 显示图片
+		// 鏄剧ず鍥剧墖
 		if (picsinner != null && picsinner.size() > 0) {
 
 			ArrayList<String> urls = new ArrayList<String>();
@@ -309,7 +309,7 @@ public class DynamicListAdapter extends BaseAdapter {
 		return holder;
 	}
 
-	// 多张图片
+	// 澶氬紶鍥剧墖
 	class GridViewAdapter extends CommonAdapter<String> {
 
 		public GridViewAdapter(Context context, List<String> mDatas,

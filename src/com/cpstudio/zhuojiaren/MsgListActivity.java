@@ -62,7 +62,7 @@ public class MsgListActivity extends FragmentActivity implements
 	private String myid = null;
 	private ImChatFacade mFacade = null;
 	private MsgReceiver msgReceiver = null;
-	private String mSearchKey = "";
+//	private String mSearchKey = "";
 	ConversationListFragment listFragment;
 	Handler uiHandler;
 
@@ -310,31 +310,24 @@ public class MsgListActivity extends FragmentActivity implements
 					}
 				});
 
-		final EditText searchView = (EditText) findViewById(R.id.editTextSearch);
-		searchView.setOnEditorActionListener(new OnEditorActionListener() {
-
-			@Override
-			public boolean onEditorAction(TextView v, int actionId,
-					KeyEvent event) {
-				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-					mSearchKey = v.getText().toString();
-					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-					imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-					loadData();
-				}
-				return false;
-			}
-		});
+//		final EditText searchView = (EditText) findViewById(R.id.editTextSearch);
+//		searchView.setOnEditorActionListener(new OnEditorActionListener() {
+//
+//			@Override
+//			public boolean onEditorAction(TextView v, int actionId,
+//					KeyEvent event) {
+//				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//					mSearchKey = v.getText().toString();
+//					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//					imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+//					loadData();
+//				}
+//				return false;
+//			}
+//		});
 	}
 
 	private void loadData() {
-		if (mSearchKey == null || mSearchKey.equals("")) {
-			// loadQuanData();
-			// loadSysMsgData();
-			// loadCardData();
-			// loadCmtRcmdData();
-		}
-		// loadChatData();
 	}
 
 	private void loadQuanData() {

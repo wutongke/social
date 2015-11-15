@@ -9,17 +9,13 @@
 
     <com.cpstudio.zhuojiaren.widget.TabButton
         android:id="@+id/azq_tab"
-        android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:background="@drawable/color_shape"
-        app:buttonBackground="#7094a0"
-        app:buttonSelectBackground="#a6b2c8"
-        app:dividerColor="@color/black"
-        app:dividerSize="38dp"
-        app:slecttextColor="#5c5c5c"
-        app:sliderColor="@color/white"
-        app:sliderSize="0dp"
-        app:textColor="#6e6e6e" />
+          android:layout_width="match_parent"
+         android:layout_height="42dp" 
+         app:textColor="@color/black"
+         app:slecttextColor="@color/graywhite"
+         app:sliderColor="@color/white"
+         app:sliderSize="0dp"
+        />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/azq_viewpager"

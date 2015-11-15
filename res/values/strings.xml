@@ -1174,4 +1174,6 @@
     <string name="sure">确定</string>
     <string name="targeturl">http://www.baidu.com</string>
     <string name="nofill">未填写</string>
+     <string name="zhuobi_num">倬币%d个</string>
+     <string name="num">%d个</string>
 </resources>

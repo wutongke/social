@@ -415,14 +415,24 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 		tvCompany.setText(userInfo.getCompany());
 		tvPhone.setText(userInfo.getPhone());
-		// tvZBNum.setText("鏆傛棤鍊竵鏁�);
+		
 		if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_MYSELF
 				.ordinal() || userInfo.getUserid().equals(myid)) {
 			ltNyselfMenue.setVisibility(View.VISIBLE);
 			ltOtherMenue.setVisibility(View.GONE);
+			int count = 1;
+			try {
+				count = Integer.parseInt(userInfo.getZhuobi());
+			} catch (Exception e) {
+
+			}
+			if (count != -1)
+				tvZBNum.setText(String
+						.format(getResources().getString(R.string.num), count));
 		} else {
 			ltNyselfMenue.setVisibility(View.GONE);
 			ltOtherMenue.setVisibility(View.VISIBLE);
+			tvZBNum.setVisibility(View.GONE);
 			if (userInfo.getRelation() == UserNewVO.USER_RELATION.RELATION_FRIENDS
 					.ordinal()) {
 				btnSendCard.setText(R.string.remove_friend);
