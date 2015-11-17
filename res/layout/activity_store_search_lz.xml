@@ -108,6 +108,7 @@
                     android:id="@+id/lvHostory"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:listSelector="@drawable/indicator_list"
                     android:layout_above="@+id/tvDeleteHistory" />
             </RelativeLayout>
         </LinearLayout>

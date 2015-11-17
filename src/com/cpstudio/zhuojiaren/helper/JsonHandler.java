@@ -941,6 +941,18 @@ public class JsonHandler {
 		return list;
 	}
 
+	public OrderVO parseOrderVO() {
+		OrderVO data = null;
+		try {
+			Gson gson = new Gson();
+
+			data = gson.fromJson(jsonData, OrderVO.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+
 	public ArrayList<OrderVO> parseOrderList() {
 		ArrayList<OrderVO> list = new ArrayList<OrderVO>();
 		try {

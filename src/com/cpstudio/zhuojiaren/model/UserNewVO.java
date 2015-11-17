@@ -13,7 +13,7 @@ public class UserNewVO {
 	private int position;
 	private String company;
 	private String birthday;
-
+	private int  spokesman;//<int> (代言人标识 0-不是代言人 1-是代言人) 
 	private int isPhoneOpen;
 
 	private int  constellation;
@@ -84,6 +84,14 @@ public class UserNewVO {
 	
 	public String getZhuobi() {
 		return zhuobi;
+	}
+
+	public int getSpokesman() {
+		return spokesman;
+	}
+
+	public void setSpokesman(int spokesman) {
+		this.spokesman = spokesman;
 	}
 
 	public void setZhuobi(String zhuobi) {

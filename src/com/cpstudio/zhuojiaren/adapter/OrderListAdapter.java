@@ -28,7 +28,7 @@ import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 public class OrderListAdapter extends BaseAdapter {
 	private List<OrderVO> mList = null;
 	private LayoutInflater inflater = null;
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	Context mContext;
 
 	public OrderListAdapter(Context context, ArrayList<OrderVO> list) {
@@ -67,32 +67,34 @@ public class OrderListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
 		}
-		// OrderVO order = mList.get(position);
-		// String id = order.getOrderNum();
-		//
-		// String time = order.getOrderTime();
-		//
-		// int tatalNum = order.getTotalCount();
-		// String totalNumStr =
-		// mContext.getString(R.string.text_order_total_num);
-		// totalNumStr = String.format(totalNumStr, tatalNum);
-		//
-		// String price = order.getTotalPrice();
-		//
-		// List<GoodsVO> goodsList = order.getGoodsList();
-		//
-		// holder.tvDate.setText(time);
-		// holder.tvTotalNum.setText(totalNumStr);
-		// holder.tvTotalPrice.setText(price);
-		//
+		OrderVO order = mList.get(position);
+		final String id = order.getBillNo();
+
+		String time = order.getGentime();
+		final List<GoodsVO> goodsList = order.getBuyGoods();
+		int totalNum = 0;
+		if (goodsList != null) {
+			for (GoodsVO goodsVO : goodsList) {
+				totalNum += goodsVO.getBuyNum();
+			}
+		}
+		String totalNumStr = String.format(
+				mContext.getString(R.string.text_order_total_num), totalNum);
+		String priceStr = String.format(
+				mContext.getString(R.string.text_total_pay),
+				order.getTotalZhuobi());
+
+		holder.tvDate.setText(time);
+		holder.tvTotalNum.setText(totalNumStr);
+		holder.tvTotalPrice.setText(priceStr);
+
 		holder.btnDetail.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(mContext, OrderDetailActivity.class);
-//id
-				i.putExtra("orderId", "1232");
+				i.putExtra("orderId", id);
 				mContext.startActivity(i);
 			}
 		});
@@ -101,13 +103,6 @@ public class OrderListAdapter extends BaseAdapter {
 		// OrderListItemGoodsListAdapter(
 		// mContext, goodsList);
 		// holder.lvGoods.setAdapter(goodsListAdapter);
-
-		// 测试
-		final List<GoodsVO> goodsList = new ArrayList<GoodsVO>();
-		for (int i = 0; i < 3; i++)
-			goodsList.add(new GoodsVO());
-
-		//
 
 		OrderListItemGoodsListAdapter goodsListAdapter = new OrderListItemGoodsListAdapter(
 				mContext, goodsList);
@@ -118,27 +113,27 @@ public class OrderListAdapter extends BaseAdapter {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(mContext,GoodsDetailLActivity.class);
+				Intent intent = new Intent(mContext, GoodsDetailLActivity.class);
 				intent.putExtra("goodsId", goodsList.get(position).getGoodsId());
 				mContext.startActivity(intent);
 			}
 		});
 		// 固定子listview的高度
-		int totalHeight = 0;
-		for (int i = 0, len = goodsListAdapter.getCount(); i < len; i++) { // listAdapter.getCount()返回数据项的数目
-			View listItem = goodsListAdapter.getView(i, null, holder.lvGoods);
-			listItem.measure(0, 0); // 计算子项View 的宽高
-			totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
-		}
-
-		ViewGroup.LayoutParams params = holder.lvGoods.getLayoutParams();
-		params.height = totalHeight
-				+ (holder.lvGoods.getDividerHeight() * (holder.lvGoods
-						.getCount() - 1));
-		// listView.getDividerHeight()获取子项间分隔符占用的高度
-		// params.height最后得到整个ListView完整显示需要的高度
-		holder.lvGoods.setLayoutParams(params);
-
+		// int totalHeight = 0;
+		// for (int i = 0, len = goodsListAdapter.getCount(); i < len; i++) { //
+		// listAdapter.getCount()返回数据项的数目
+		// View listItem = goodsListAdapter.getView(i, null, holder.lvGoods);
+		// listItem.measure(0, 0); // 计算子项View 的宽高
+		// totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
+		// }
+		//
+		// ViewGroup.LayoutParams params = holder.lvGoods.getLayoutParams();
+		// params.height = totalHeight
+		// + (holder.lvGoods.getDividerHeight() * (holder.lvGoods
+		// .getCount() - 1));
+		// // listView.getDividerHeight()获取子项间分隔符占用的高度
+		// // params.height最后得到整个ListView完整显示需要的高度
+		// holder.lvGoods.setLayoutParams(params);
 		return convertView;
 	}
 

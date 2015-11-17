@@ -38,15 +38,15 @@ public class ViewOrderActivity extends BaseActivity implements
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		initTitle();
 		ButterKnife.inject(this);
-//		title.setText(R.string.title_activity_view_order_list);
-//		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
-//				R.layout.listview_header);
-//		mPullDownView.setOnPullDownListener(this);
-//		mPullDownView.setShowHeader();
-//		mListView = mPullDownView.getListView();
-//		mAdapter = new OrderListAdapter(this, mList);
-//		mListView.setAdapter(mAdapter);
-//		loadData();
+		title.setText(R.string.title_activity_view_order_list);
+		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
+				R.layout.listview_header);
+		mPullDownView.setOnPullDownListener(this);
+		mPullDownView.setShowHeader();
+		mListView = mPullDownView.getListView();
+		mAdapter = new OrderListAdapter(this, mList);
+		mListView.setAdapter(mAdapter);
+		loadData();
 	}
 
 	private Handler mUIHandler = new Handler() {

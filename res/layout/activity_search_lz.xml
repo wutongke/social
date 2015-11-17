@@ -206,6 +206,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
+                    android:listSelector="@drawable/indicator_list"
                     android:layout_above="@+id/tvDeleteHistory"
                     android:layout_below="@+id/tvHist" />
             </RelativeLayout>

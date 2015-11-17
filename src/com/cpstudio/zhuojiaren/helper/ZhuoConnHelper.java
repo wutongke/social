@@ -1657,13 +1657,9 @@ public class ZhuoConnHelper {
 	 * @return
 	 */
 	public boolean getOrderDetail(Handler mUIHandler, int handlerTag, 
-			String billNo, int pageNo, int pageSize) {
+			String billNo) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs.add(new BasicNameValuePair("billNo", billNo));
-		nameValuePairs.add(new BasicNameValuePair("pageNo", String
-				.valueOf(pageNo)));
-		nameValuePairs.add(new BasicNameValuePair("pageSize", String
-				.valueOf(pageSize)));
 		return getFromServerByPost(ZhuoCommHelperLz.orderDetail(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}

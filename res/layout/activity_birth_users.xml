@@ -41,6 +41,7 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:listSelector="@drawable/indicator_list"
             android:divider="@drawable/bg_border3" />
     </RelativeLayout>
 
