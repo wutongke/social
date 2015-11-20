@@ -21,10 +21,9 @@ public class IncomeAdapter extends CommonAdapter<IncomeVO>{
 	@Override
 	public void convert(ViewHolder helper, IncomeVO item) {
 		// TODO Auto-generated method stub
-		helper.setText(R.id.ii_name, item.getName());
-		String time = item.getTime();
-		helper.setText(R.id.ii_time, CommonUtil.getTime(Long.parseLong(time)));
-		helper.setText(R.id.ii_money, item.getMoney());
+		helper.setText(R.id.ii_name, item.getContent());
+		helper.setText(R.id.ii_time, item.getAddtime());
+		helper.setText(R.id.ii_money, item.getZhuobi());
 	}
 	
 }

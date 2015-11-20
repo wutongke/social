@@ -9,7 +9,10 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.IncomeVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class IncomeDetailsActivity extends BaseActivity {
@@ -27,6 +30,8 @@ public class IncomeDetailsActivity extends BaseActivity {
 	TextView time;
 	@InjectView(R.id.aid_type)
 	TextView type;
+	private IncomeVO income;
+	private String[] typelist = {"收入","支出"};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,37 +39,46 @@ public class IncomeDetailsActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		initTitle();
 		title.setText(R.string.income_expenditure_details);
-		loadData(getIntent().getStringExtra(getResources().getString(R.id.tag_id)));
+		income = (IncomeVO) getIntent().getSerializableExtra("income");
+		dealNumber.setText(income.getBillNo());
+		remark.setText(income.getRemark());
+		time.setText(income.getAddtime());
+		int typeNum = 0;
+		try{
+			typeNum = Integer.parseInt(income.getType());
+		}catch(Exception e){
+			
+		}
+		if(typeNum == 0 || typeNum == 1){
+			type.setText(typelist[typeNum]);
+		}
+		getleftMoney();
 	}
-	private void loadData(String stringExtra) {
+
+	private void getleftMoney() {
 		// TODO Auto-generated method stub
-		IncomeVO test = new IncomeVO();
-		test.setId("123");
-		test.setName("购置图书");
-		test.setTime(System.currentTimeMillis()-System.currentTimeMillis()/99+"");
-		test.setLeftMoney("3000");
-		test.setMoney("30.00");
-		test.setOthers("不错不错");
-		test.setDealNumber("123453463454");
-		Message msg = uihandler.obtainMessage();
-		msg.obj = test;
-		msg.sendToTarget();
+		AppClientLef.getInstance(this.getApplicationContext()).getMyZhuoBi(
+				IncomeDetailsActivity.this, uiHandler, GET_MONEY);
 	}
-	Handler uihandler = new Handler(){
-		public void handleMessage(android.os.Message msg) {
-			IncomeVO res = (IncomeVO) msg.obj;
-			moneyTV.setText(res.getMoney());
-			type.setText(res.getName());
-			time.setText(CommonUtil.calcTime(res.getTime()));
-			dealNumber.setText(res.getDealNumber());
-			leftBrokenMoney.setText(res.getLeftMoney());
-			remark.setText(res.getOthers());
-			Float money = Float.parseFloat(res.getMoney());
-			if(money>0){
-				moneyType.setText(R.string.income_money);
-				moneyTV.setTextColor(getResources().getColor(R.color.lightgreen));
-			}else{
-				moneyTV.setTextColor(getResources().getColor(R.color.black));
+
+	private static final int GET_MONEY = 101;
+	private Handler uiHandler = new Handler() {
+		public void handleMessage(final Message msg) {
+			ResultVO res = null;
+			res = JsonHandler.parseResult((String) msg.obj);
+			if (JsonHandler.checkResult((String) msg.obj,
+					IncomeDetailsActivity.this)) {
+			} else {
+				CommonUtil.displayToast(IncomeDetailsActivity.this,
+						res.getMsg());
+				return;
+			}
+			String data = res.getData();
+			if (msg.what == GET_MONEY) {
+				leftBrokenMoney.setText(res.getData());
+			} else {
+				CommonUtil.displayToast(IncomeDetailsActivity.this,
+						R.string.error0);
 			}
 		};
 	};

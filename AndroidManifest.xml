@@ -894,6 +894,11 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.IncomeDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
         <activity android:name="com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity" >
         </activity>
         <activity

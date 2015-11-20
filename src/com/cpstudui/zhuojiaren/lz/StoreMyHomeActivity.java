@@ -18,15 +18,18 @@ import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.ViewOrderActivity;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.CartActivity;
 import com.cpstudio.zhuojiaren.ui.GoodsCollectionActivity;
+import com.cpstudio.zhuojiaren.ui.IncomeDetailsActivity;
 import com.cpstudio.zhuojiaren.ui.LocateActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
@@ -81,7 +84,8 @@ public class StoreMyHomeActivity extends BaseActivity {
 	// GoodsCollectionActivity.class));
 	// }
 
-	@Optional@OnClick({ R.id.llMyCollect, R.id.llAddress })
+	@Optional
+	@OnClick({ R.id.llMyCollect, R.id.llAddress })
 	public void gotoCollection(View v) {
 		switch (v.getId()) {
 		case R.id.llMyCollect:
@@ -189,29 +193,21 @@ public class StoreMyHomeActivity extends BaseActivity {
 				break;
 			}
 			case MsgTagVO.DATA_OTHER: {
+				ResultVO res = null;
+				res = JsonHandler.parseResult((String) msg.obj);
 				if (JsonHandler.checkResult((String) msg.obj,
-						getApplicationContext())) {
-					String rmb = JsonHandler.getSingleResult((String) msg.obj);
-					((TextView) findViewById(R.id.textViewMoney)).setText(rmb);
+						StoreMyHomeActivity.this)) {
+				} else {
+					CommonUtil.displayToast(StoreMyHomeActivity.this,
+							res.getMsg());
+					return;
 				}
-				break;
+				((TextView) findViewById(R.id.textViewMoney)).setText(res
+						.getData());
 			}
 			}
 		}
 	};
-
-	private void loadDb() {
-		// RecordChatFacade mFacade = new
-		// RecordChatFacade(getApplicationContext());
-		// int all = mFacade.getUnread().size();
-		// TextView allNum = (TextView) findViewById(R.id.textViewRecordNum);
-		// allNum.setText(all + "");
-		// if (all == 0) {
-		// allNum.setVisibility(View.GONE);
-		// } else {
-		// allNum.setVisibility(View.VISIBLE);
-		// }
-	}
 
 	private void loadInfo() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
@@ -219,4 +215,11 @@ public class StoreMyHomeActivity extends BaseActivity {
 			mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD, mUid);
 		}
 	}
+
+	private void loadDb() {
+		// TODO Auto-generated method stub
+		AppClientLef.getInstance(this.getApplicationContext()).getMyZhuoBi(
+				StoreMyHomeActivity.this, mUIHandler, MsgTagVO.DATA_OTHER);
+	}
+
 }
