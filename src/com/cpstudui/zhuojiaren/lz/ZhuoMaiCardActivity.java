@@ -387,7 +387,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		bundle.putInt(QuanVO.QUANZIMAINTYPE, catlog);
 		bundle.putString("userid", userid);
 		fragment.setArguments(bundle);
-
 		return fragment;
 	}
 
@@ -400,10 +399,10 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		tvSignature.setText(userInfo.getSignature());
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHeader);
 		tvName.setText(userInfo.getName());
-		if (mConnHelper.getCitys() != null && userInfo.getCity() >= 1)
-			tvPosition.setText(mConnHelper.getCitys()
-					.get(userInfo.getCity() - 1).getCityName());
-
+		if(1==userInfo.getSpokesman())
+			tvMemType.setVisibility(View.VISIBLE);
+		else
+			tvMemType.setVisibility(View.INVISIBLE);
 		String work = "";
 		if (baseDataSet != null) {
 			int pos = userInfo.getPosition();
@@ -411,7 +410,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				pos--;
 			work = ((baseDataSet.getPosition()).get(pos)).getContent();
 		}
-		tvMemType.setText(work);
+		tvPosition.setText(work);
 
 		tvCompany.setText(userInfo.getCompany());
 		tvPhone.setText(userInfo.getPhone());

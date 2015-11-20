@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/fql_footer"
         android:layout_below="@+id/lt_pub_res"
+        android:listSelector="@drawable/indicator_list"
         android:divider="@drawable/bg_border3" >
     </ListView>
 

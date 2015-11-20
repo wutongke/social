@@ -65,7 +65,7 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 					.getGoodsCount());
 		}
 		item.setSubAmount(item.getZhuoPrice());
-		item.setBuyNum("1");
+		item.setBuyNum(1);
 		// 商品数量+1
 		helper.getView(R.id.icg_num_add).setOnClickListener(
 				new OnClickListener() {
@@ -77,7 +77,7 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 								.toString());
 						goodsNum.setText(num + 1 + "");
 						item.setGoodsCount(num + 1 + "");
-						item.setBuyNum(goodsNum.getText().toString());
+						item.setBuyNum(num);
 						if(goodsChangeListenter!=null)
 							goodsChangeListenter.onGoodsChange(addAllGoodsPrice(),selectList.size());
 							
@@ -94,7 +94,7 @@ public class OrderAdapter extends CommonAdapter<GoodsVO> {
 						if (num > 1)
 							goodsNum.setText(num - 1 + "");
 						item.setGoodsCount(num - 1 + "");
-						item.setBuyNum(goodsNum.getText().toString()); 
+						item.setBuyNum(num); 
 						if(goodsChangeListenter!=null)
 							goodsChangeListenter.onGoodsChange(addAllGoodsPrice(),selectList.size());
 					}

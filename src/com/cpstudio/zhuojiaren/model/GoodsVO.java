@@ -11,11 +11,11 @@ public class GoodsVO implements Serializable{
 	private String goodsName;
 	// 商品价格
 	private String markeyPrice;
-	private String buyNum;
-	public String getBuyNum() {
+	private int buyNum;
+	public int getBuyNum() {
 		return buyNum;
 	}
-	public void setBuyNum(String buyNum) {
+	public void setBuyNum(int buyNum) {
 		this.buyNum = buyNum;
 	}
 	public String getSubAmount() {

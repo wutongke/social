@@ -19,7 +19,7 @@ import com.cpstudio.zhuojiaren.model.GoodsVO;
 public class OrderListItemGoodsListAdapter extends BaseAdapter {
 	private List<GoodsVO> mList = null;
 	private LayoutInflater inflater = null;
-	private LoadImage mLoadImage = new LoadImage();
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	Context mContext;
 
 	public OrderListItemGoodsListAdapter(Context context, List<GoodsVO> list) {
@@ -59,30 +59,24 @@ public class OrderListItemGoodsListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
 		}
-		// GoodsVO goods = mList.get(position);
-		//
-		// String picurl = null;
-		// if (goods.getPic() != null) {
-		// if (goods.getPic().get(0) != null)
-		// picurl = goods.getPic().get(0).getUrl();
-		// }
-		// 注意，在click事件中要传此参数
-		// String id = goods.getGid();
-		//
-		// String info = goods.getDetail();
-		//
-		// String count = goods.getGoodsCount();
-		//
-		// String price = goods.getPrice();
-		// holder.tvPrice.setText("$ " + price);
-		// holder.tvCount.setText("x" + count);
-		// holder.tvInfo.setText(info);
-		// if (picurl != null) {
-		// mLoadImage.addTask(picurl, holder.ivPic);
-		// mLoadImage.doTask();
-		// }
-		
+		GoodsVO goods = mList.get(position);
 
+		String picurl = goods.getGoodsImg();
+
+		// 注意，在click事件中要传此参数
+		String id = goods.getGoodsId();
+
+		String info = goods.getGoodsName();
+
+		int count = goods.getBuyNum();
+		String price = goods.getZhuoPrice();
+		holder.tvPrice.setText(price);
+		holder.tvCount.setText("x" + count);
+		holder.tvInfo.setText(info);
+		if (picurl != null) {
+			mLoadImage.addTask(picurl, holder.ivPic);
+			mLoadImage.doTask();
+		}
 		return convertView;
 	}
 
