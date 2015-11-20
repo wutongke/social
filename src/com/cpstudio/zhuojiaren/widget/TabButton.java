@@ -291,8 +291,6 @@ public class TabButton extends HorizontalScrollView {
 			public void onPageSelected(int arg0) {
 				pageSelect = arg0;
 				setTabBackgroundByIndex(pageSelect);
-				//写在后边，否则会被覆盖
-				drawUnderLine(pageSelect, 0);
 				if(pageChangeListener!=null)
 					pageChangeListener.onPageSelected(arg0);
 			}
@@ -342,6 +340,8 @@ public class TabButton extends HorizontalScrollView {
 //				view.setBackgroundResource(mButtonBackground);
 			}
 		}
+		pageSelect = Index;
+		drawUnderLine(pageSelect, 0);
 	}
 	/**
 	 * 清除tab
