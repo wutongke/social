@@ -2,7 +2,10 @@ package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
@@ -27,6 +30,7 @@ public class CardAddUserImageActivity extends Activity {
 	private PopupWindows pwh = null;
 	private ImageSelectHelper mIsh = null;
 	private Map<String, String> network = new HashMap<String, String>();
+	private Map<String, String> localsMap = new HashMap<String, String>();
 	private ArrayList<String> netids = new ArrayList<String>();
 	private ArrayList<String> neturls = new ArrayList<String>();
 	private LoadImage mLoadImage = new LoadImage();
@@ -49,6 +53,7 @@ public class CardAddUserImageActivity extends Activity {
 		for (int i = 0; i < images.size(); i++) {
 			if (ids.get(i).equals(CardEditActivity.LOCAL_IMAGE)) {
 				local.add(images.get(i));
+				localsMap.put(images.get(i), images.get(i));
 			} else {
 				network.put(ids.get(i), images.get(i));
 				netids.add(ids.get(i));
@@ -129,18 +134,19 @@ public class CardAddUserImageActivity extends Activity {
 		}
 	};
 
+	boolean isLocal(String item) {
+		for (int i = 0; i < local.size(); i++) {
+			if (local.get(i).equals(item))
+				return true;
+		}
+		return false;
+	}
+
 	private void initClick() {
 		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				pwh.showPopDlg(findViewById(R.id.rootLayout),
-						new OnClickListener() {
-
-							@Override
-							public void onClick(View v) {
-								CardAddUserImageActivity.this.finish();
-							}
-						}, null, R.string.info27);
+				CardAddUserImageActivity.this.finish();
 			}
 		});
 		if (!isEditable)
@@ -153,13 +159,15 @@ public class CardAddUserImageActivity extends Activity {
 							ArrayList<String> images = new ArrayList<String>();
 							ArrayList<String> ids = new ArrayList<String>();
 							for (String tag : mIsh.getTags()) {
-								if (network.containsKey(tag)) {
-									ids.add(tag);
-								} else {
+								// if (network.containsKey(tag))
+								// {
+								// ids.add(tag);
+								// } else
+								if (isLocal(tag) == false) {
 									images.add(tag);
 								}
 							}
-							String originStr = getPhotoStr(ids);
+							String originStr = getPhotoStr(local);
 							ZhuoConnHelper.getInstance(getApplicationContext())
 									.pubPhoto(CardAddUserImageActivity.this,
 											mUIHandler, MsgTagVO.DATA_LOAD,
@@ -189,10 +197,25 @@ public class CardAddUserImageActivity extends Activity {
 			return null;
 		}
 		StringBuilder sb = new StringBuilder();
+		boolean flag = false;
+		Set<String> set = toDelView.keySet();
 		for (String item : pics) {
+			boolean ff = false;
+			for (Iterator iter = set.iterator(); iter.hasNext();) {
+				String key = (String) iter.next();
+				if (item.equals(key)) {
+					ff = true;
+					break;
+				}
+			}
+			if (ff)
+				continue;
+			if (flag)
+				sb.append(",");
+			flag = true;
 			sb.append(item);
-			sb.append(",");
 		}
+
 		return sb.toString();
 	}
 

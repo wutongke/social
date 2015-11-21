@@ -86,11 +86,12 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@null"
-                android:paddingLeft="8dp"
                 android:gravity="center_vertical"
                 android:hint="@string/label_signature"
                 android:maxLines="2"
                 android:minLines="2"
+                android:imeOptions="actionDone"
+                android:paddingLeft="8dp"
                 android:textColor="#c9c9c9" />
 
             <!-- android:background="@drawable/shape_corners2" -->
@@ -129,14 +130,6 @@
                         android:singleLine="true"
                         android:textColor="#6f6f6f" />
                 </RelativeLayout>
-                <!--
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginRight="1dp"
-                    android:background="#efefef" />
-                -->
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -501,43 +494,6 @@
                     android:padding="10dp" >
 
                     <TextView
-                        android:id="@+id/textViewEditPhone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
-                        android:text="@string/mp_mysj"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/textViewEditPhoneShow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/textViewEditPhone"
-                        android:drawablePadding="5dp"
-                        android:drawableRight="@drawable/ico_arrow_big"
-                        android:ellipsize="end"
-                        android:gravity="right|center_vertical"
-                        android:singleLine="true"
-                        android:textColor="#6f6f6f" />
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginRight="1dp"
-                    android:background="#efefefef" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp" >
-
-                    <TextView
                         android:id="@+id/textViewEditEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -575,22 +531,22 @@
                     android:padding="10dp" >
 
                     <TextView
-                        android:id="@+id/textViewEditQQ"
+                        android:id="@+id/textViewEditPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="@string/title_card_qq"
+                        android:text="@string/mp_mysj"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/textViewEditQQShow"
+                        android:id="@+id/textViewEditPhoneShow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/textViewEditQQ"
+                        android:layout_toRightOf="@+id/textViewEditPhone"
                         android:drawablePadding="5dp"
                         android:drawableRight="@drawable/ico_arrow_big"
                         android:ellipsize="end"
@@ -628,6 +584,43 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/textViewEditWeixin"
+                        android:drawablePadding="5dp"
+                        android:drawableRight="@drawable/ico_arrow_big"
+                        android:ellipsize="end"
+                        android:gravity="right|center_vertical"
+                        android:singleLine="true"
+                        android:textColor="#6f6f6f" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:background="#efefefef" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:id="@+id/textViewEditQQ"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/title_card_qq"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textViewEditQQShow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/textViewEditQQ"
                         android:drawablePadding="5dp"
                         android:drawableRight="@drawable/ico_arrow_big"
                         android:ellipsize="end"

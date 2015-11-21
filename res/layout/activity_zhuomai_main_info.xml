@@ -2,13 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootmain"
     android:layout_width="match_parent"
-    android:layout_height="200dp" >
-    <ImageView 
+    android:layout_height="210dp" >
+
+    <ImageView
+        android:id="@+id/bgImg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/manbg_zmmp_1"
         android:scaleType="centerCrop"
-        android:id="@+id/bgImg"/>
+        android:src="@drawable/manbg_zmmp_1" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -65,13 +67,14 @@
             android:id="@+id/rootLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
             android:padding="15dp" >
 
             <com.cpstudio.zhuojiaren.widget.RoundImageView
                 android:id="@+id/imageViewHeader"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:layout_margin="3dp"
                 android:contentDescription="@string/label_author_header"
                 android:src="@drawable/default_grouphead" />
 
@@ -155,7 +158,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/imageViewHeader"
                 android:layout_below="@id/imageViewHeader"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="18dp"
                 android:drawableLeft="@drawable/company"
                 android:drawablePadding="5dp"
                 android:textColor="@color/white"
@@ -170,9 +173,11 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/jianjie_zmmp_1"
                 android:gravity="center"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:text="我们的个性签名"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </RelativeLayout>
     </LinearLayout>
-
 </FrameLayout>

@@ -30,7 +30,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
-            android:background="@drawable/button_save"
+            android:background="@null"
             android:text="@string/label_save"
             android:textColor="#ffffff"
             android:textSize="14sp" />

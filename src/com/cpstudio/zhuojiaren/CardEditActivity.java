@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -21,11 +22,14 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.TextView.OnEditorActionListener;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -86,6 +90,8 @@ public class CardEditActivity extends Activity {
 	TextView textViewEditQQShow;
 	@InjectView(R.id.textViewEditWeixinShow)
 	TextView textViewEditWeixinShow;
+	@InjectView(R.id.userNameShow)
+	TextView textViewuserNameShow;
 
 	public final static String EDITABLE = "editable";// 阳历生日
 	public final static String USERID = "userid";// 阳历生日
@@ -173,9 +179,9 @@ public class CardEditActivity extends Activity {
 		guestId = getIntent().getStringExtra("id");
 		if (guestId != null && guestId != userid) {
 			isEditable = false;
-			setTitle(getString(R.string.view_into));
+			textViewuserNameShow.setText(getString(R.string.view_into));
 		} else {
-			setTitle(getString(R.string.edit_info));
+			textViewuserNameShow.setText(getString(R.string.edit_info));
 		}
 		initClick();
 
@@ -220,6 +226,29 @@ public class CardEditActivity extends Activity {
 			textViewChangeHead.setVisibility(View.GONE);
 			etSignature.setEnabled(false);
 		} else {
+
+			textViewChangeHead
+					.setOnEditorActionListener(new OnEditorActionListener() {
+						@Override
+						public boolean onEditorAction(TextView v, int actionId,
+								KeyEvent event) {
+							if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+								String text = v.getText().toString();
+								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+								imm.hideSoftInputFromWindow(v.getWindowToken(),
+										0);
+								UserNewVO userInfo = new UserNewVO();
+								userInfo.setSignature(text);
+								ZhuoConnHelper.getInstance(
+										getApplicationContext())
+										.modifyUserInfo(mUIHandler,
+												MsgTagVO.PUB_INFO, userInfo);
+
+							}
+							return false;
+						}
+					});
+
 			textViewChangeHead.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
@@ -257,6 +286,7 @@ public class CardEditActivity extends Activity {
 						int tempSelection = selectionStart;
 						etSignature.setText(s);
 						etSignature.setSelection(tempSelection);
+
 					}
 				}
 			});
@@ -757,11 +787,11 @@ public class CardEditActivity extends Activity {
 			case MsgTagVO.PUB_INFO: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-					// mFacade.saveOrUpdate(userInfo);
 					CommonUtil.displayToast(getApplicationContext(),
-							R.string.info10);
-					CardEditActivity.this.finish();
-				}
+							R.string.bg_success);
+				} else
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.bg_failed);
 			}
 				break;
 			case MsgTagVO.DATA_OTHER:
