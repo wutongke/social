@@ -3,10 +3,6 @@ package com.cpstudio.zhuojiaren.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.TeacherVO;
-import com.cpstudio.zhuojiaren.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.TeacherVO;
 
 public class TeacherListAdapter extends BaseAdapter {
 	private List<TeacherVO> mList = null;

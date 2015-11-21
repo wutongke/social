@@ -2,7 +2,6 @@ package com.cpstudio.zhuojiaren.ui;
 
 import java.util.HashMap;
 
-
 import org.androidpn.client.ServiceManager;
 
 import android.content.Intent;
@@ -22,7 +21,6 @@ import com.cpstudio.zhuojiaren.helper.DatabaseHelper;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.SysApplication;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.util.UpdateManager;
 
 public class SettingActivity extends BaseActivity {
 	@InjectView(R.id.as_account)

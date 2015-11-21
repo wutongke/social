@@ -8,7 +8,6 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -16,11 +15,11 @@ import android.widget.SeekBar;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 
 public class AudioAdapter extends CommonAdapter<RecordVO> {
 	private MediaPlayer mediaPlayer;

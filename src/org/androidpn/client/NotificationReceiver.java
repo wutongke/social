@@ -20,6 +20,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.TabContainerActivity;
 import com.cpstudio.zhuojiaren.facade.CardMsgFacade;
@@ -41,11 +46,6 @@ import com.cpstudio.zhuojiaren.model.ImMsgVO;
 import com.cpstudio.zhuojiaren.model.ImQuanVO;
 import com.cpstudio.zhuojiaren.model.PushMsgVO;
 import com.cpstudio.zhuojiaren.model.SysMsgVO;
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 
 /**
  * Broadcast receiver that handles push notification messages from the server.
