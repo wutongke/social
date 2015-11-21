@@ -175,7 +175,6 @@
                 android:gravity="center"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:text="我们的个性签名"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </RelativeLayout>

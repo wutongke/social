@@ -227,12 +227,12 @@ public class CardEditActivity extends Activity {
 			etSignature.setEnabled(false);
 		} else {
 
-			textViewChangeHead
+			etSignature
 					.setOnEditorActionListener(new OnEditorActionListener() {
 						@Override
 						public boolean onEditorAction(TextView v, int actionId,
 								KeyEvent event) {
-							if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+							if (actionId == EditorInfo.IME_ACTION_DONE) {
 								String text = v.getText().toString();
 								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 								imm.hideSoftInputFromWindow(v.getWindowToken(),
@@ -243,7 +243,6 @@ public class CardEditActivity extends Activity {
 										getApplicationContext())
 										.modifyUserInfo(mUIHandler,
 												MsgTagVO.PUB_INFO, userInfo);
-
 							}
 							return false;
 						}

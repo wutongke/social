@@ -59,7 +59,7 @@ import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
  * 
  */
 public class ZhuoQuanMainActivity extends BaseFragmentActivity {
-	
+
 	@InjectView(R.id.azq_tab)
 	TabButton tabButton;
 	@InjectView(R.id.azq_viewpager)
@@ -96,7 +96,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	View btnQuanChat;
 	private final static int USER_SELECT = 0;
 	private Context mContext;
-	private int currentPager=0;
+	private int currentPager = 0;
 	// 四个fragment 方便通信
 	List<Fragment> fragments;
 	QuanVO detail;
@@ -145,8 +145,8 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		//发布话题、活动成功后刷新
-		if(viewPager.getAdapter()!=null){
+		// 发布话题、活动成功后刷新
+		if (viewPager.getAdapter() != null) {
 			fragments.clear();
 			viewPager.setAdapter(getPagerAdapter());
 			tabButton.setViewPager(null);
@@ -155,6 +155,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			viewPager.setCurrentItem(currentPager);
 		}
 	}
+
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
 		@Override
@@ -251,7 +252,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						// R.string.label_applysuccess);
 						// 申请加入成功后应通过融云推送申请消息到圈主
 						sendReqQuan();
-
 					}
 				}
 				break;
@@ -269,6 +269,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	};
 
 	void sendReqQuan() {
+
 		if (RongIM.getInstance().getRongIMClient() == null)
 			return;
 		if (mConnHelper.getUserid() == null)
@@ -278,25 +279,27 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						groupName);
 		String pushMsg = mConnHelper.getUserid() + "请求加入圈子：" + groupName + "(+"
 				+ groupid + ")";
-//ios 暂时没做
-//		RongIM.getInstance()
-//				.getRongIMClient()
-//				.sendMessage(ConversationType.PRIVATE, detail.getUserid(),
-//						reqMsg, pushMsg, new SendMessageCallback() {
-//							@Override
-//							public void onSuccess(Integer arg0) {
-//								// TODO Auto-generated method stub
-//								pwh.showPopTip(findViewById(R.id.zhuomai_card),
-//										null, R.string.label_applysuccess);
-//							}
-//
-//							@Override
-//							public void onError(Integer arg0, ErrorCode arg1) {
-//								// TODO Auto-generated method stub
-//								Toast.makeText(ZhuoQuanMainActivity.this,
-//										"申请发送失败ErrorCode：" + arg1, 1000).show();
-//							}
-//						});
+		pwh.showPopTip(findViewById(R.id.zhuomai_card), null,
+				R.string.label_applysuccess);
+		// ios 暂时没做
+		// RongIM.getInstance()
+		// .getRongIMClient()
+		// .sendMessage(ConversationType.PRIVATE, detail.getUserid(),
+		// reqMsg, pushMsg, new SendMessageCallback() {
+		// @Override
+		// public void onSuccess(Integer arg0) {
+		// // TODO Auto-generated method stub
+		// pwh.showPopTip(findViewById(R.id.zhuomai_card),
+		// null, R.string.label_applysuccess);
+		// }
+		//
+		// @Override
+		// public void onError(Integer arg0, ErrorCode arg1) {
+		// // TODO Auto-generated method stub
+		// Toast.makeText(ZhuoQuanMainActivity.this,
+		// "申请发送失败ErrorCode：" + arg1, 1000).show();
+		// }
+		// });
 	}
 
 	private void loadData() {
@@ -373,10 +376,10 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 
 					@Override
 					public void onClick(View v) {
-//						Intent i = new Intent(ZhuoQuanMainActivity.this,
-//								UserSelectActivity.class);
-//						i.putStringArrayListExtra("otherids", tempids);
-//						startActivityForResult(i, USER_SELECT);
+						// Intent i = new Intent(ZhuoQuanMainActivity.this,
+						// UserSelectActivity.class);
+						// i.putStringArrayListExtra("otherids", tempids);
+						// startActivityForResult(i, USER_SELECT);
 						Intent i = new Intent(ZhuoQuanMainActivity.this,
 								MyFriendActivity.class);
 						startActivity(i);

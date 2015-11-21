@@ -91,7 +91,7 @@
                 android:maxLines="2"
                 android:minLines="2"
                 android:imeOptions="actionDone"
-                android:paddingLeft="8dp"
+                android:paddingLeft="10dp"
                 android:textColor="#c9c9c9" />
 
             <!-- android:background="@drawable/shape_corners2" -->
