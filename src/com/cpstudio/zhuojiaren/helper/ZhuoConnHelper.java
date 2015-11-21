@@ -1589,6 +1589,9 @@ public class ZhuoConnHelper {
 		if (user.getIsPhoneOpen() != -1)
 			nameValuePairs.add(new BasicNameValuePair("isPhoneOpen", user
 					.getIsPhoneOpen() + ""));
+		if (user.getPhone() != null)
+			nameValuePairs.add(new BasicNameValuePair("isPhoneOpen", user
+					.getPhone() ));
 		if (user.getQq() != null)
 			nameValuePairs.add(new BasicNameValuePair("qq", user.getQq()));
 		if (user.getIsQqOpen() != -1)

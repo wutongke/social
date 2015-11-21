@@ -85,6 +85,7 @@ public class ChangeBackgroundActivity extends BaseActivity implements
 					Toast.makeText(ChangeBackgroundActivity.this,
 							getString(R.string.bg_success), Toast.LENGTH_SHORT)
 							.show();
+					ChangeBackgroundActivity.this.finish();
 				} else {
 					Toast.makeText(ChangeBackgroundActivity.this,
 							getString(R.string.bg_failed), Toast.LENGTH_SHORT)
