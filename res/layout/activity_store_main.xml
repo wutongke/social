@@ -10,39 +10,47 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="43dp"
-        android:background="@drawable/searchbg"
-        >
+         >
 
-        <EditText
-            android:id="@+id/search_input"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:gravity="center"
+        <RelativeLayout
             android:layout_centerInParent="true"
-            android:focusable="false"
-            android:hint="@string/label_main_searchHint2"
-            android:imeOptions="actionSearch"
-            android:paddingLeft="5dp"
-            android:singleLine="true"
-            android:textSize="16sp" 
-            android:background="@null"/>
+            android:layout_height="35dp"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/searchbg" >
 
-        <ImageView
-            android:layout_toLeftOf="@+id/search_input"
-            android:id="@+id/search_search"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="3dp"
-            android:contentDescription="@string/SAVE"
-            android:src="@drawable/magnifier5" />
+            <EditText
+                android:id="@+id/search_input"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_centerInParent="true"
+                android:background="@null"
+                android:focusable="false"
+                android:gravity="center"
+                android:hint="@string/label_main_searchHint2"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="5dp"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/search_search"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3dp"
+                android:layout_toLeftOf="@+id/search_input"
+                android:contentDescription="@string/SAVE"
+                android:src="@drawable/magnifier5" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/main_cats"
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="130dp" >
+        android:layout_height="130dp"
+        android:background="@color/white" >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/ads_viewpager"
@@ -63,26 +71,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="10dp"
+        android:background="@color/white"
         android:gravity="center"
         android:horizontalSpacing="10dp"
         android:listSelector="@drawable/indicator_list"
-        android:background="@color/white"
         android:numColumns="5"
+        android:padding="10dp"
         android:verticalSpacing="10dp" >
     </GridView>
 
     <GridView
         android:id="@+id/gv_goods"
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="10dp"
+        android:background="@color/white"
         android:gravity="center"
         android:horizontalSpacing="10dp"
         android:listSelector="@drawable/indicator_list"
         android:numColumns="3"
+        android:padding="10dp"
         android:verticalSpacing="10dp" >
     </GridView>
 
@@ -90,10 +98,10 @@
         android:id="@+id/layoutFooter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:background="@color/white"
         android:paddingTop="5dp" >
 
         <TextView

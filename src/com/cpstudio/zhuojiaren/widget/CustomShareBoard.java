@@ -184,6 +184,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		// 添加新浪SSO授权
 //		mController.getConfig().setSsoHandler(new SinaSsoHandler());
 //		addSMS();
+		mController.getConfig().closeToast();
 		// 添加QQ、QZone平台
 		addQQQZonePlatform();
 		// 添加微信、微信朋友圈平台
