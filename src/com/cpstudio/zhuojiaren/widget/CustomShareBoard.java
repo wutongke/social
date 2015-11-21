@@ -116,9 +116,9 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		} else if (id == R.id.wechat_circle) {
 			performShare(SHARE_MEDIA.WEIXIN_CIRCLE);
 		} else if (id == R.id.qq) {
-//			performShare(SHARE_MEDIA.QQ);
+			performShare(SHARE_MEDIA.QQ);
 		} else if (id == R.id.qzone) {
-//			performShare(SHARE_MEDIA.QZONE);
+			performShare(SHARE_MEDIA.QZONE);
 		} else if (id == R.id.xinlang) {
 //			performShare(SHARE_MEDIA.SINA);
 		} else if (id == R.id.message) {
@@ -171,7 +171,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 				} else {
 					showText += "分享失败";
 				}
-				Toast.makeText(mActivity, showText, Toast.LENGTH_SHORT).show();
+//				Toast.makeText(mActivity, showText, Toast.LENGTH_SHORT).show();
 				dismiss();
 			}
 		});
@@ -182,8 +182,8 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 	 */
 	private void configPlatforms() {
 		// 添加新浪SSO授权
-		mController.getConfig().setSsoHandler(new SinaSsoHandler());
-		addSMS();
+//		mController.getConfig().setSsoHandler(new SinaSsoHandler());
+//		addSMS();
 		// 添加QQ、QZone平台
 		addQQQZonePlatform();
 		// 添加微信、微信朋友圈平台

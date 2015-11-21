@@ -172,6 +172,8 @@ public class MyZhuoBiActivity extends BaseActivity {
 			case MsgTagVO.PUB_INFO:
 				if (JsonHandler.checkResult((String) msg.obj,
 						MyZhuoBiActivity.this)) {
+					ResultVO result = JsonHandler.parseResult((String) msg.obj);
+					rmb.setText("£¤"+result.getData());
 					Toast.makeText(MyZhuoBiActivity.this, "ÔùËÍ³É¹¦",
 							Toast.LENGTH_SHORT).show();
 				} else {
