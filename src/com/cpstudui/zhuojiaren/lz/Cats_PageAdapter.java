@@ -156,8 +156,8 @@ public class Cats_PageAdapter extends PagerAdapter {
 			mContext.startActivity(i);
 			break;
 		case 1:// 锟缴筹拷锟斤拷锟斤拷
-			i = new Intent(mContext, GrouthListActivity.class);
-			mContext.startActivity(i);
+			mContext.startActivity(new Intent(mContext,
+					GrouthListActivity.class));
 			break;
 		case 2:// 倬元锟斤拷锟斤拷
 			i = new Intent(mContext, AudioListActivity.class);
@@ -213,10 +213,9 @@ public class Cats_PageAdapter extends PagerAdapter {
 			mContext.startActivity(i);
 			break;
 		case 12://鏅烘収绮捐繘
-			mContext.startActivity(new Intent(mContext,
-					GrouthChooseActivity.class));
+			i = new Intent(mContext, GrouthActivity.class);
+			mContext.startActivity(i);
 			break;
-
 		case 13:
 			i = new Intent(mContext, UserSameActivity.class);
 			i.putExtra("type", 5);

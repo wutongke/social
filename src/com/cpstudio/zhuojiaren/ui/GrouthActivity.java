@@ -166,7 +166,7 @@ public class GrouthActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				startActivity(new Intent(GrouthActivity.this,
-						GrouthListActivity.class));
+						GrouthChooseActivity.class));
 			}
 		});
 		findViewById(R.id.hgm_visit).setOnClickListener(new OnClickListener() {

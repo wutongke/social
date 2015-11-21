@@ -1,14 +1,39 @@
 package com.cpstudio.zhuojiaren;
 
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 public class CardAddUserWeiXinActivity extends Activity {
+	private Handler mUIHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case MsgTagVO.DATA_LOAD: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.bg_success);
+				} else
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.bg_failed);
+				break;
+			}
+			}
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +63,20 @@ public class CardAddUserWeiXinActivity extends Activity {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Intent i = new Intent();
-						i.putExtra(CardEditActivity.EDIT_WEIXIN_STR1,
-								((EditText) findViewById(R.id.edtWeixin))
-										.getText().toString());
+						int open = 0;
 						if (((CheckBox) findViewById(R.id.checkBoxIsOpen))
 								.isChecked()) {
-							i.putExtra(CardEditActivity.EDIT_WEIXIN_STR2, 0);
+							open = 0;
 						} else {
-							i.putExtra(CardEditActivity.EDIT_PHONE_STR2, 1);
+							open = 1;
 						}
-						setResult(RESULT_OK, i);
-						CardAddUserWeiXinActivity.this.finish();
+						UserNewVO userInfo = new UserNewVO();
+						userInfo.setWeixin(((EditText) findViewById(R.id.edtWeixin))
+								.getText().toString());
+						userInfo.setIsWeixinOpen(open);
+						ZhuoConnHelper.getInstance(getApplicationContext())
+								.modifyUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,
+										userInfo);
 					}
 				});
 	}

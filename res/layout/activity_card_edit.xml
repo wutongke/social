@@ -86,7 +86,8 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@null"
-                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:gravity="center_vertical"
                 android:hint="@string/label_signature"
                 android:maxLines="2"
                 android:minLines="2"
@@ -134,7 +135,8 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:background="#efefef" />                -->
+                    android:background="#efefef" />
+                -->
 
                 <RelativeLayout
                     android:layout_width="match_parent"

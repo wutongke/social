@@ -8,6 +8,7 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
@@ -87,6 +88,16 @@ public class CardAddUserImageActivity extends Activity {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
+			case MsgTagVO.DATA_LOAD: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.bg_success);
+				} else
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.bg_failed);
+				break;
+			}
 			case MsgTagVO.INIT_SELECT:
 				mIsh.insertNetworkImage(netids, neturls, mLoadImage,
 						new OnClickListener() {
@@ -148,11 +159,11 @@ public class CardAddUserImageActivity extends Activity {
 									images.add(tag);
 								}
 							}
-							Intent i = new Intent();
-							i.putExtra(CardEditActivity.EDIT_IMAGE_STR1, images);
-							i.putExtra(CardEditActivity.EDIT_IMAGE_STR2, ids);
-							setResult(RESULT_OK, i);
-							CardAddUserImageActivity.this.finish();
+							String originStr = getPhotoStr(ids);
+							ZhuoConnHelper.getInstance(getApplicationContext())
+									.pubPhoto(CardAddUserImageActivity.this,
+											mUIHandler, MsgTagVO.DATA_LOAD,
+											originStr, images);
 						}
 					});
 
@@ -171,6 +182,18 @@ public class CardAddUserImageActivity extends Activity {
 				}
 			});
 		}
+	}
+
+	String getPhotoStr(ArrayList<String> pics) {
+		if (pics == null || pics.size() < 1) {
+			return null;
+		}
+		StringBuilder sb = new StringBuilder();
+		for (String item : pics) {
+			sb.append(item);
+			sb.append(",");
+		}
+		return sb.toString();
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

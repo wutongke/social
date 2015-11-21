@@ -8,6 +8,7 @@ import io.rong.imlib.model.Group;
 import io.rong.message.ContactNotificationMessage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -133,6 +134,7 @@ public class TabContainerActivity extends TabActivity implements
 	private void getMyGroupSuccess(GroupsForIM groups) {
 		if (groups != null) {
 			List<Group> grouplist = new ArrayList<Group>();
+			HashMap<String, Group> groupMap=new HashMap<String, Group>();
 			final List<QuanVO> quanlist = new ArrayList<QuanVO>();
 			if (groups.getCreateGroups() != null) {
 				for (int i = 0; i < groups.getCreateGroups().size(); i++) {
@@ -142,13 +144,17 @@ public class TabContainerActivity extends TabActivity implements
 					String name = quna.getGname();
 					if (id == null || name == null)
 						continue;
+					Group tmpGroup=null;
 					if (groups.getCreateGroups().get(i).getGheader() != null) {
 						Uri uri = Uri.parse(groups.getCreateGroups().get(i)
 								.getGheader());
-						grouplist.add(new Group(id, name, uri));
+						tmpGroup=new Group(id, name, uri);
 					} else {
-						grouplist.add(new Group(id, name, null));
+						tmpGroup=new Group(id, name, null);
 					}
+					if(tmpGroup!=null)
+						grouplist.add(tmpGroup);
+					groupMap.put(tmpGroup.getId(), tmpGroup);
 				}
 			}
 			if (groups.getFollowGroups() != null) {
@@ -159,16 +165,20 @@ public class TabContainerActivity extends TabActivity implements
 					String name = quna.getGname();
 					if (id == null || name == null)
 						continue;
+					Group tmpGroup=null;
 					if (groups.getFollowGroups().get(i).getGheader() != null) {
 						Uri uri = Uri.parse(groups.getFollowGroups().get(i)
 								.getGheader());
-						grouplist.add(new Group(id, name, uri));
+						tmpGroup=new Group(id, name, uri);
 					} else {
-						grouplist.add(new Group(id, name, null));
+						tmpGroup=new Group(id, name, null);
 					}
+					if(tmpGroup!=null)
+						grouplist.add(tmpGroup);
+					groupMap.put(tmpGroup.getId(), tmpGroup);
 				}
 			}
-
+			connHelper.setGroupMap(groupMap);
 			if (grouplist.size() > 0)
 				RongIM.getInstance()
 						.getRongIMClient()

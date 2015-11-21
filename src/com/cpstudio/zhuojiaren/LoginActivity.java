@@ -211,8 +211,8 @@ public class LoginActivity extends Activity {
 
 					@Override
 					public void onSuccess(String arg0) {
-						Toast.makeText(LoginActivity.this, "connect onSuccess",
-								Toast.LENGTH_SHORT).show();
+//						Toast.makeText(LoginActivity.this, "connect onSuccess",
+//								Toast.LENGTH_SHORT).show();
 					}
 
 					@Override

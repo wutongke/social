@@ -5,7 +5,6 @@
     android:background="@drawable/dlg_bg"
     android:gravity="center"
     android:orientation="vertical" >
-
     <Button
         android:id="@+id/buttonPubActivity"
         android:layout_width="wrap_content"

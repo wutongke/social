@@ -20,6 +20,8 @@ import android.widget.LinearLayout.LayoutParams;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
 public class CardAddUserDreamActivity extends Activity {
@@ -29,7 +31,6 @@ public class CardAddUserDreamActivity extends Activity {
 	private ArrayList<String> selected = new ArrayList<String>();
 	private PopupWindows pwh = null;
 	private ZhuoConnHelper mConnHelper = null;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,10 +81,12 @@ public class CardAddUserDreamActivity extends Activity {
 								selected.add(dream);
 							}
 						}
-						Intent i = new Intent();
-						i.putExtra(CardEditActivity.EDIT_DREAM_STR, dreamsStr);
-						setResult(RESULT_OK, i);
-						CardAddUserDreamActivity.this.finish();
+						
+						UserNewVO userInfo = new UserNewVO();
+						userInfo.setDream(dreamsStr);
+						ZhuoConnHelper.getInstance(getApplicationContext())
+								.modifyUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,
+										userInfo);
 					}
 				});
 		findViewById(R.id.buttonAdd).setOnClickListener(new OnClickListener() {
@@ -105,11 +108,20 @@ public class CardAddUserDreamActivity extends Activity {
 					intent.putStringArrayListExtra(
 							CardEditActivity.EDIT_DREAM_STR, selected);
 					setResult(RESULT_OK, intent);
-					CardAddUserDreamActivity.this.finish();
 				} else {
 					pwh.showPopDlgOne(findViewById(R.id.rootLayout), null,
 							R.string.error5);
 				}
+				break;
+			}
+			case MsgTagVO.DATA_LOAD: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.bg_success);
+				} else
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.bg_failed);
 				break;
 			}
 			}

@@ -244,6 +244,7 @@
                 android:drawableLeft="@drawable/addpeople"
                 android:minHeight="20dp"
                  android:background="@null"
+                 android:drawablePadding="@dimen/dic_bettween"
                 android:text="@string/label_join_quan"
                 android:textColor="@color/white" />
         </LinearLayout>

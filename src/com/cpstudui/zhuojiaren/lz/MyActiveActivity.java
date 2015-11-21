@@ -94,9 +94,11 @@ public class MyActiveActivity extends BaseActivity implements
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				if(position<1)
+					return ;
 				Intent i = new Intent(MyActiveActivity.this,
 						EventDetailActivity.class);
-				i.putExtra("eventId", mPubList.get(position).getActivityid());
+				i.putExtra("eventId", mPubList.get(position-1).getActivityid());
 				startActivity(i);
 			}
 
@@ -105,19 +107,17 @@ public class MyActiveActivity extends BaseActivity implements
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				if(position<1)
+					return ;
 				Intent i = new Intent(MyActiveActivity.this,
 						EventDetailActivity.class);
-				i.putExtra("eventId", mJoinList.get(position).getActivityid());
+				i.putExtra("eventId", mJoinList.get(position-1).getActivityid());
 				startActivity(i);
 			}
 
 		});
 
 		initClick();
-		// if (sk != null && !sk.equals("")) {
-		// mSearchKey = sk;
-		// ((EditText) findViewById(R.id.editTextSearch)).setText(sk);
-		// }
 		loadData();
 	}
 

@@ -63,11 +63,12 @@ public class ChangeBackgroundActivity extends BaseActivity implements
 								String[] arrays = str.split(";");
 								if (arrays != null && arrays.length > 0) {
 									mList.clear();
-									for (int i = 0; i < arrays.length; i++) {
-										String string = arrays[i];
+									for (int i = 0; i < arrays.length-1; i=i+2) {
+										if(arrays[i].equals(""))
+											continue;
 										ChangeBgAVO vo = new ChangeBgAVO();
-										vo.setBgid(i + 1);
-										vo.setBgpic(string);
+										vo.setBgid( Integer.parseInt(arrays[i]));
+										vo.setBgpic( arrays[i+1]);
 										mList.add(vo);
 									}
 								}
@@ -102,10 +103,11 @@ public class ChangeBackgroundActivity extends BaseActivity implements
 			for (int i = 0; i < mList.size(); i++) {
 				if (mList.get(i) == null)
 					continue;
-				if (!sb.equals(""))
+				if (sb.length()>0)
 					sb.append(";");
+				sb.append(mList.get(i).getBgid());
+				sb.append(";");
 				sb.append(mList.get(i).getBgpic());
-
 			}
 			mResHelper.setBgPics(sb.toString());
 		}
@@ -137,6 +139,7 @@ public class ChangeBackgroundActivity extends BaseActivity implements
 		mAdapter = new ChangeBgGridViewAdatper(ChangeBackgroundActivity.this,
 				mList, R.layout.item_imageview);
 		gvBackGround.setAdapter(mAdapter);
+		gvBackGround.setOnItemClickListener(this);
 		bgVersion = mResHelper.getBgVersion();
 		initClick();
 		loadData();
@@ -160,7 +163,7 @@ public class ChangeBackgroundActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		// Toast.makeText(ChangeBackgroundActivity.this,
 		// arg2 + mList.get(arg2).getBgid(), 1000).show();
-		mConnHelper.setCardBg(mUIHandler, MsgTagVO.DATA_OTHER, bgVersion);
+		mConnHelper.setCardBg(mUIHandler, MsgTagVO.DATA_OTHER, mList.get(arg2).getBgid());
 	}
 
 }

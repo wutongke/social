@@ -3,9 +3,16 @@ package com.cpstudio.zhuojiaren;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -25,7 +32,23 @@ public class CardAddUserHobbyActivity extends Activity {
 	private int padding = 5;
 	private int baseMargin = 19;
 	private Map<String, Boolean> selected = new HashMap<String, Boolean>();
-
+	private Handler mUIHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case MsgTagVO.DATA_LOAD: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.bg_success);
+				} else
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.bg_failed);
+				break;
+			}
+			}
+		}
+	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -121,11 +144,12 @@ public class CardAddUserHobbyActivity extends Activity {
 						if (hobby.startsWith(" ")) {
 							hobby = hobby.substring(1);
 						}
-						Intent intent = new Intent();
-						intent.putExtra(CardEditActivity.EDIT_HOBBY_STR, hobby);
-						setResult(RESULT_OK, intent);
-						CardAddUserHobbyActivity.this.finish();
-
+						
+						UserNewVO userInfo = new UserNewVO();
+						userInfo.setHobby(hobby);
+						ZhuoConnHelper.getInstance(getApplicationContext())
+								.modifyUserInfo(mUIHandler, MsgTagVO.PUB_INFO,
+										userInfo);
 					}
 				});
 	}

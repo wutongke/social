@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:gravity="center"
-        android:horizontalSpacing="10dp"
+        android:horizontalSpacing="5dp"
         android:listSelector="@drawable/indicator_list"
-        android:numColumns="3"
-        android:verticalSpacing="10dp" >
+        android:numColumns="2"
+        android:verticalSpacing="5dp" >
     </GridView>
 
 </LinearLayout>

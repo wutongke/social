@@ -1216,6 +1216,7 @@ public class ZhuoConnHelper {
 				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
 				"pubQuanTopic", false, null, null);
 	}
+
 	/**
 	 * 发布反馈意见
 	 * 
@@ -1238,6 +1239,7 @@ public class ZhuoConnHelper {
 				ZhuoCommHelperLz.pubAdvice(), mUIHandler, tag, activity,
 				"pubAdvice", false, null, null);
 	}
+
 	/**
 	 * 发布反馈意见
 	 * 
@@ -1355,12 +1357,12 @@ public class ZhuoConnHelper {
 	 * @return
 	 */
 	public boolean followGroup(Handler mUIHandler, int tag, String groupid,
-			int type,String userid, String content) {
+			int type, String userid, String content) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
 		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
 		nameValuePairs.add(new BasicNameValuePair("content", content));
-		if(userid!=null)
+		if (userid != null)
 			nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		return getFromServerByPost(ZhuoCommHelperLz.manageQuanPermit(),
 				nameValuePairs, mUIHandler, tag);
@@ -1537,44 +1539,73 @@ public class ZhuoConnHelper {
 	public boolean modifyUserInfo(Handler mUIHandler, int handlerTag,
 			UserNewVO user) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("name", user.getName()));
-		nameValuePairs.add(new BasicNameValuePair("email", user.getEmail()));
-		nameValuePairs.add(new BasicNameValuePair("gender", user.getGender()
-				+ ""));
-		nameValuePairs.add(new BasicNameValuePair("married", user.getMarried()
-				+ ""));
-		nameValuePairs.add(new BasicNameValuePair("city", user.getCity() + ""));
-		nameValuePairs.add(new BasicNameValuePair("hometown", user
-				.getHometown() + ""));
-		nameValuePairs.add(new BasicNameValuePair("travelCity", user
-				.getTravelCity()));
-		nameValuePairs.add(new BasicNameValuePair("birthday", user
-				.getBirthday()));
-		nameValuePairs.add(new BasicNameValuePair("isBirthdayOpen", user
-				.getIsBirthdayOpen() + ""));
-		nameValuePairs.add(new BasicNameValuePair("birthdayLunar", user
-				.getBirthdayLunar()));
-		nameValuePairs.add(new BasicNameValuePair("constellation", user
-				.getConstellation() + ""));
-		nameValuePairs.add(new BasicNameValuePair("zodiac", user.getZodiac()
-				+ ""));
-		nameValuePairs.add(new BasicNameValuePair("hobby", user.getHobby()));
-		nameValuePairs.add(new BasicNameValuePair("industry", user
-				.getIndustry() + ""));
-		nameValuePairs.add(new BasicNameValuePair("position", user
-				.getPosition() + ""));
-		nameValuePairs.add(new BasicNameValuePair("isEmailOpen", user
-				.getIsEmailOpen() + ""));
-		nameValuePairs.add(new BasicNameValuePair("isPhoneOpen", user
-				.getIsPhoneOpen() + ""));
-		nameValuePairs.add(new BasicNameValuePair("qq", user.getQq()));
-		nameValuePairs.add(new BasicNameValuePair("isQqOpen", user
-				.getIsQqOpen() + ""));
-		nameValuePairs.add(new BasicNameValuePair("weixin", user.getWeixin()));
-		nameValuePairs.add(new BasicNameValuePair("isWeixinOpen", user
-				.getIsWeixinOpen() + ""));
-		nameValuePairs.add(new BasicNameValuePair("signature", user.getSignature()));
-		nameValuePairs.add(new BasicNameValuePair("dream", user.getDream()));
+		if (user.getName() != null)
+			nameValuePairs.add(new BasicNameValuePair("name", user.getName()));
+		if (user.getEmail() != null)
+			nameValuePairs
+					.add(new BasicNameValuePair("email", user.getEmail()));
+		if (user.getGender() != -1)
+			nameValuePairs.add(new BasicNameValuePair("gender", user
+					.getGender() + ""));
+		if (user.getMarried() != -1)
+			nameValuePairs.add(new BasicNameValuePair("married", user
+					.getMarried() + ""));
+		if (user.getCity() != -1)
+			nameValuePairs.add(new BasicNameValuePair("city", user.getCity()
+					+ ""));
+		if (user.getHometown() != -1)
+			nameValuePairs.add(new BasicNameValuePair("hometown", user
+					.getHometown() + ""));
+		if (user.getTravelCity() != null)
+			nameValuePairs.add(new BasicNameValuePair("travelCity", user
+					.getTravelCity()));
+		if (user.getBirthday() != null)
+			nameValuePairs.add(new BasicNameValuePair("birthday", user
+					.getBirthday()));
+		if (user.getIsBirthdayOpen() != -1)
+			nameValuePairs.add(new BasicNameValuePair("isBirthdayOpen", user
+					.getIsBirthdayOpen() + ""));
+		if (user.getBirthdayLunar() != null)
+			nameValuePairs.add(new BasicNameValuePair("birthdayLunar", user
+					.getBirthdayLunar()));
+		if (user.getConstellation() != -1)
+			nameValuePairs.add(new BasicNameValuePair("constellation", user
+					.getConstellation() + ""));
+		if (user.getZodiac() != -1)
+			nameValuePairs.add(new BasicNameValuePair("zodiac", user
+					.getZodiac() + ""));
+		if (user.getHobby() != null)
+			nameValuePairs
+					.add(new BasicNameValuePair("hobby", user.getHobby()));
+		if (user.getIndustry() != -1)
+			nameValuePairs.add(new BasicNameValuePair("industry", user
+					.getIndustry() + ""));
+		if (user.getPosition() != -1)
+			nameValuePairs.add(new BasicNameValuePair("position", user
+					.getPosition() + ""));
+		if (user.getIsEmailOpen() != -1)
+			nameValuePairs.add(new BasicNameValuePair("isEmailOpen", user
+					.getIsEmailOpen() + ""));
+		if (user.getIsPhoneOpen() != -1)
+			nameValuePairs.add(new BasicNameValuePair("isPhoneOpen", user
+					.getIsPhoneOpen() + ""));
+		if (user.getQq() != null)
+			nameValuePairs.add(new BasicNameValuePair("qq", user.getQq()));
+		if (user.getIsQqOpen() != -1)
+			nameValuePairs.add(new BasicNameValuePair("isQqOpen", user
+					.getIsQqOpen() + ""));
+		if (user.getWeixin() != null)
+			nameValuePairs.add(new BasicNameValuePair("weixin", user
+					.getWeixin()));
+		if (user.getIsWeixinOpen() != -1)
+			nameValuePairs.add(new BasicNameValuePair("isWeixinOpen", user
+					.getIsWeixinOpen() + ""));
+		if (user.getSignature() != null)
+			nameValuePairs.add(new BasicNameValuePair("signature", user
+					.getSignature()));
+		if (user.getDream() != null)
+			nameValuePairs
+					.add(new BasicNameValuePair("dream", user.getDream()));
 		return getFromServerByPost(ZhuoCommHelperLz.modifyUserInfo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
@@ -1630,17 +1661,20 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getDynamicList(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
+
 	/**
 	 * 获得订单列表
+	 * 
 	 * @param mUIHandler
 	 * @param handlerTag
 	 * @param pageNo
 	 * @param pageSize
 	 * @return
 	 */
-	public boolean getOrdersList(Handler mUIHandler, int handlerTag, int pageNo, int pageSize) {
+	public boolean getOrdersList(Handler mUIHandler, int handlerTag,
+			int pageNo, int pageSize) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		
+
 		nameValuePairs.add(new BasicNameValuePair("pageNo", String
 				.valueOf(pageNo)));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", String
@@ -1648,35 +1682,40 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.orderList(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
+
 	/**
 	 * 获得订单详情
+	 * 
 	 * @param mUIHandler
 	 * @param handlerTag
 	 * @param pageNo
 	 * @param pageSize
 	 * @return
 	 */
-	public boolean getOrderDetail(Handler mUIHandler, int handlerTag, 
+	public boolean getOrderDetail(Handler mUIHandler, int handlerTag,
 			String billNo) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-			nameValuePairs.add(new BasicNameValuePair("billNo", billNo));
+		nameValuePairs.add(new BasicNameValuePair("billNo", billNo));
 		return getFromServerByPost(ZhuoCommHelperLz.orderDetail(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
-	public boolean getCardBg(Handler mUIHandler, int handlerTag, 
-			int version) {
+
+	public boolean getCardBg(Handler mUIHandler, int handlerTag, int version) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-			nameValuePairs.add(new BasicNameValuePair("version", String.valueOf(version)));
-		return getFromServerByPost(ZhuoCommHelperLz.cardBg(),
-				nameValuePairs, mUIHandler, handlerTag);
+		nameValuePairs.add(new BasicNameValuePair("version", String
+				.valueOf(version)));
+		return getFromServerByPost(ZhuoCommHelperLz.cardBg(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
-	public boolean setCardBg(Handler mUIHandler, int handlerTag, 
-			int bgid) {
+
+	public boolean setCardBg(Handler mUIHandler, int handlerTag, int bgid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("bgid", String.valueOf(bgid)));
+		nameValuePairs
+				.add(new BasicNameValuePair("bgid", String.valueOf(bgid)));
 		return getFromServerByPost(ZhuoCommHelperLz.setCardBg(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
+
 	/**
 	 * 发布动态
 	 * 
@@ -1867,15 +1906,17 @@ public class ZhuoConnHelper {
 
 	/**
 	 * 获得我的人脉
+	 * 
 	 * @param mUIHandler
 	 * @param tag
 	 * @return
 	 */
 	public boolean getMyRenmai(Handler mUIHandler, int tag) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		return getFromServerByPost(ZhuoCommHelperLz.myRenmai(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(ZhuoCommHelperLz.myRenmai(), nameValuePairs,
+				mUIHandler, tag);
 	}
+
 	/**
 	 * 
 	 * @param mUIHandler
@@ -1883,7 +1924,7 @@ public class ZhuoConnHelper {
 	 * @param userid
 	 *            对方用户ID （要关注的、要取消关注的、要接受的）
 	 * @param type
-	 *            0取消关注(取消收藏)  1关注(收藏)
+	 *            0取消关注(取消收藏) 1关注(收藏)
 	 * @return
 	 */
 	public boolean followUser(Handler mUIHandler, int tag, String userid,
@@ -1894,18 +1935,18 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.followUser(),
 				nameValuePairs, mUIHandler, tag);
 	}
+
 	/**
-	 *  申请添加好友=递送名片；接受好友请求=交换名片。
-		如果对方接受名片交换请求（接受好友添加请求）则成为好友关系。
-		注意：好友关系由应用服务器来维护。使用融云发送ContactNotificationMessage联系人好友通知消息后，调用此接口通知应用服务器进行相应的好友关系处理。
-		流程：
-		1.调用申请添加好友接口(type=1)，在应用服务器建立相应的关联。
-		2.通过融云的好友添加通知向对方发送一个通知。
-		3.对方点接受，调用接受好友添加接口(type=2)。
+	 * 申请添加好友=递送名片；接受好友请求=交换名片。 如果对方接受名片交换请求（接受好友添加请求）则成为好友关系。
+	 * 注意：好友关系由应用服务器来维护。使用融云发送ContactNotificationMessage联系人好友通知消息后
+	 * ，调用此接口通知应用服务器进行相应的好友关系处理。 流程： 1.调用申请添加好友接口(type=1)，在应用服务器建立相应的关联。
+	 * 2.通过融云的好友添加通知向对方发送一个通知。 3.对方点接受，调用接受好友添加接口(type=2)。
+	 * 
 	 * @param mUIHandler
 	 * @param tag
 	 * @param userid
-	 * @param type 0删除好友  1申请添加好友(递送名片)  2接受添加请求(交换名片)
+	 * @param type
+	 *            0删除好友 1申请添加好友(递送名片) 2接受添加请求(交换名片)
 	 * @return
 	 */
 	public boolean makeFriends(Handler mUIHandler, int tag, String userid,
@@ -1916,18 +1957,20 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.makeFriends(),
 				nameValuePairs, mUIHandler, tag);
 	}
-	
+
 	/**
 	 * 获取请求加入圈子的人
+	 * 
 	 * @param mUIHandler
 	 * @param tag
-	 * @param groupid 为null则表示所有请求加入圈子的人
+	 * @param groupid
+	 *            为null则表示所有请求加入圈子的人
 	 * @return
 	 */
 	public boolean getReqQuanUsers(Handler mUIHandler, int tag, String groupid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		if(groupid!=null)
-		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		if (groupid != null)
+			nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
 		return getFromServerByPost(ZhuoCommHelperLz.getReqQuanUsers(),
 				nameValuePairs, mUIHandler, tag);
 	}
@@ -2142,10 +2185,9 @@ public class ZhuoConnHelper {
 				nameValuePairs, mUIHandler, tag);
 	}
 
-	
-	
 	/**
 	 * 获取搜索热词
+	 * 
 	 * @param mUIHandler
 	 * @param tag
 	 * @return
@@ -2155,8 +2197,10 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getHotKey(),
 				nameValuePairs, mUIHandler, tag);
 	}
+
 	/**
 	 * 根据关键词检索用户。 关键词可以为名字，公司名，职位。
+	 * 
 	 * @param mUIHandler
 	 * @param tag
 	 * @param keyword
@@ -2164,8 +2208,8 @@ public class ZhuoConnHelper {
 	 * @param pageSize
 	 * @return
 	 */
-	public boolean getSearchContent(Handler mUIHandler, int tag,String keyword,int pageNo,
-			int pageSize) {
+	public boolean getSearchContent(Handler mUIHandler, int tag,
+			String keyword, int pageNo, int pageSize) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("keyword", keyword));
 		nameValuePairs.add(new BasicNameValuePair("pageNo", String
@@ -2175,21 +2219,21 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getPortalSearch(),
 				nameValuePairs, mUIHandler, tag);
 	}
+
 	/**
 	 * 获取我的好友列表
+	 * 
 	 * @param mUIHandler
 	 * @param tag
 	 * @return
 	 */
 	public boolean getMyFriends(Handler mUIHandler, int tag) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		
+
 		return getFromServerByPost(ZhuoCommHelperLz.getMyFriends(),
 				nameValuePairs, mUIHandler, tag);
 	}
-	
-	
-	
+
 	public boolean addCompany(Handler mUIHandler, int tag, String company,
 			int industry, int city, int position, String homepage, int status) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -2206,32 +2250,36 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.addCompany(),
 				nameValuePairs, mUIHandler, tag);
 	}
-	
+
 	/**
 	 * 评论和回复供需
+	 * 
 	 * @param mUIHandler
 	 * @param tag
-	 * @param sdid 供需ID
+	 * @param sdid
+	 *            供需ID
 	 * @param comment
-	 * @param toId 可选 要回复的评论ID (不填则是普通评论)
-	 * @param toUserid 可选 要回复的用户ID (不填则是普通评论)
+	 * @param toId
+	 *            可选 要回复的评论ID (不填则是普通评论)
+	 * @param toUserid
+	 *            可选 要回复的用户ID (不填则是普通评论)
 	 * @return
 	 */
 	public boolean cmtGongxu(Handler mUIHandler, int tag, String sdid,
-			String comment,String toId,String toUserid) {
+			String comment, String toId, String toUserid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		if(sdid==null || comment==null)
+		if (sdid == null || comment == null)
 			return false;
 		nameValuePairs.add(new BasicNameValuePair("sdid", sdid));
 		nameValuePairs.add(new BasicNameValuePair("comment", comment));
-		if(toId!=null)
+		if (toId != null)
 			nameValuePairs.add(new BasicNameValuePair("toId", toId));
-		if(toId!=null)
+		if (toId != null)
 			nameValuePairs.add(new BasicNameValuePair("toUserid", toUserid));
-		return getFromServerByPost(ZhuoCommHelperLz.cmtGX(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(ZhuoCommHelperLz.cmtGX(), nameValuePairs,
+				mUIHandler, tag);
 	}
-	
+
 	/**
 	 * 获得基本编码数据：id和值的对应
 	 * 
@@ -2308,8 +2356,10 @@ public class ZhuoConnHelper {
 
 	/**
 	 * 
-	 * @param sdflag (可选) 供需标识 0-资源 1-需求
-	 * @param type (可选) 供需类型 如果填则根据指定类型筛选信息
+	 * @param sdflag
+	 *            (可选) 供需标识 0-资源 1-需求
+	 * @param type
+	 *            (可选) 供需类型 如果填则根据指定类型筛选信息
 	 * @param title
 	 * @param pageNo
 	 * @param pageSize
@@ -2322,14 +2372,14 @@ public class ZhuoConnHelper {
 	 * @param userid
 	 * @return
 	 */
-	public boolean getGongXuList(String sdflag,String type, String title, int pageNo,
-			int pageSize, Handler handler, int handlerTag, Activity activity,
-			boolean cancelable, OnCancelListener cancel, String data,
-			String userid) {
+	public boolean getGongXuList(String sdflag, String type, String title,
+			int pageNo, int pageSize, Handler handler, int handlerTag,
+			Activity activity, boolean cancelable, OnCancelListener cancel,
+			String data, String userid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
-		if(sdflag!=null)
+		if (sdflag != null)
 			nameValuePairs.add(new BasicNameValuePair("sdflag", sdflag));
 		if (type != null)
 			nameValuePairs.add(new BasicNameValuePair("type", type));
@@ -2351,7 +2401,7 @@ public class ZhuoConnHelper {
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("sdid", sdid));
 		String url = ZhuoCommHelper.getDELETEGONGXU();
-//		String url = ZhuoCommHelper.getDisolveQuan();
+		// String url = ZhuoCommHelper.getDisolveQuan();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				true, null, null);
 	}
@@ -2432,7 +2482,7 @@ public class ZhuoConnHelper {
 	 */
 	private boolean isExistDataCache(String cachefile) {
 		boolean exist = false;
-		if(context==null)
+		if (context == null)
 			return exist;
 		File data = context.getFileStreamPath(cachefile);
 		if (data.exists())

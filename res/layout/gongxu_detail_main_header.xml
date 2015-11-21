@@ -42,8 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#424242"
-        android:padding="10dp"
-        android:gravity="center"
+        android:padding="5dp"
         android:textColor="#989898"
         android:textSize="16sp" />
 
@@ -51,8 +50,8 @@
         android:id="@+id/gongxu_tableLayoutAuthorPics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:background="@color/gray"
+        android:padding="10dp"
         android:visibility="visible" >
     </TableLayout>
 
@@ -67,10 +66,10 @@
             android:id="@+id/textViewivCmt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:drawableLeft="@drawable/comment"
             android:drawablePadding="@dimen/dic_bettween"
             android:text="@string/label_cmt"
-            android:layout_centerVertical="true"
             android:textColor="#6a6a6a"
             android:textSize="16sp" />
 
@@ -80,8 +79,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/textViewivCmt"
             android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
             android:layout_centerVertical="true"
+            android:layout_margin="10dp"
             android:drawableLeft="@drawable/write"
             android:textColor="#6a6a6a"
             android:textSize="16sp" />
