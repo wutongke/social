@@ -80,8 +80,17 @@ public class UserNewVO {
 	
 	private String gname;
 	
-	String zhuobi;
+	private String zhuobi;
+	private String bgpic;
 	
+	public String getBgpic() {
+		return bgpic;
+	}
+
+	public void setBgpic(String bgpic) {
+		this.bgpic = bgpic;
+	}
+
 	public String getZhuobi() {
 		return zhuobi;
 	}

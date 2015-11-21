@@ -20,6 +20,7 @@ public class OrderVO {
 
 	private String userid;
 	// (倬币总价)
+
 	private int totalZhuobi;
 	// <int> (订单状态 0-未支付 1-已成功支付 2-支付失败 3-订单取消 4-卖家已发货 5-买家已收货) ,
 	private int status;
@@ -36,6 +37,7 @@ public class OrderVO {
 	// 收货地址
 	private String receiverAddr;
 	// 收货人电话
+
 	private String phone;
 
 	public String getPhone() {
@@ -65,6 +67,7 @@ public class OrderVO {
 	public List<GoodsVO> getBuyGoods() {
 		return buyGoods;
 	}
+
 
 	public void setBuyGoods(List<GoodsVO> buyGoods) {
 		this.buyGoods = buyGoods;

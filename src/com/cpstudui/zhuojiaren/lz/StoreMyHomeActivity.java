@@ -34,6 +34,7 @@ import com.cpstudio.zhuojiaren.ui.LocateActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class StoreMyHomeActivity extends BaseActivity {
+
 	@InjectView(R.id.llViewOrder)
 	View vOrder;// ²é¿´¶©µ¥
 	@InjectView(R.id.llGWC)

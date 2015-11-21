@@ -1,20 +1,19 @@
 package com.cpstudio.zhuojiaren.model;
 
 public class ChangeBgAVO {
-	private String id;
-	private String url;
-	public String getId() {
-		return id;
+	private int bgid;
+	private String bgpic;
+	public int getBgid() {
+		return bgid;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setBgid(int bgid) {
+		this.bgid = bgid;
 	}
-	public String getUrl() {
-		return url;
+	public String getBgpic() {
+		return bgpic;
 	}
-	public void setUrl(String url) {
-		this.url = url;
+	public void setBgpic(String bgpic) {
+		this.bgpic = bgpic;
 	}
- 
 
 }

@@ -26,9 +26,9 @@ public class ChangeBgGridViewAdatper extends CommonAdapter<ChangeBgAVO> {
 	public void convert(ViewHolder helper, ChangeBgAVO item) {
 		// TODO Auto-generated method stub
 
-		ImageView iv = (ImageView) helper.getView(R.id.imageView);
-		iv.setTag(item.getUrl());
-		loadImage.addTask(item.getUrl(), iv);
-		loadImage.doTask();
+//		ImageView iv = (ImageView) helper.getView(R.id.imageView);
+//		iv.setTag(item.getUrl());
+//		loadImage.addTask(item.getUrl(), iv);
+//		loadImage.doTask();
 	}
 }

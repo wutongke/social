@@ -71,6 +71,10 @@ public class ResHelper {
 	public final static String SESSION = "zhuojiaren/session/";
 	public final static String UPLIOAD_TOKEN = "zhuojiaren/uploadtoken/";
 	public final static String IM_TOKEN = "zhuojiaren/imtoken/";
+	// 本地背景图片版本
+	public final static String BG_VERSION = "card_bg_version";
+	// 本地背景,以";"隔开
+	public final static String BG_PICS = "card_bg_pics";
 
 	private ResHelper(Context context) {
 		mContext = context;
@@ -166,6 +170,26 @@ public class ResHelper {
 		return mPu.getPreference(FIRSTUSER, true);
 	}
 
+	public int getBgVersion() {
+		return mPu.getPreference(BG_VERSION, 0);
+	}
+
+	public void setBgVersion(int newVersion) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put(BG_VERSION, newVersion);
+		setPreference(map);
+	}
+
+	public String getBgPics() {
+		return mPu.getPreference(BG_PICS, null);
+	}
+
+	public void setBgPics(String pics) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put(BG_PICS, pics);
+		setPreference(map);
+	}
+	
 	public String getRootPath() {
 		String path = SDPATH + mPu.getPreference(ROOT_PATH, DEFAULT_ROOT_PATH);
 		File dir = new File(path);
@@ -226,17 +250,17 @@ public class ResHelper {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		//lz 此处若不加唯一标示，则每次生成的缩率图地址一样，从而会覆盖之前的内容，只能加一张图片
+		// lz 此处若不加唯一标示，则每次生成的缩率图地址一样，从而会覆盖之前的内容，只能加一张图片
 		UUID uuid = UUID.randomUUID();
 		String uniqueId = uuid.toString();
 		path += uniqueId + "captrueTemp.jpg";
 		return path;
 	}
-	
+
 	public Uri getSureCaptrueUri() {
 		return Uri.fromFile(new File(getSureCaptruePath()));
 	}
-	
+
 	public String getSureCaptruePath() {
 		String path = SDPATH
 				+ mPu.getPreference(IMAGE_PATH, DEFAULT_IMAGE_PATH);

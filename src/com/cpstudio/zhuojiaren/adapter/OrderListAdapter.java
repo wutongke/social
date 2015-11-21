@@ -67,6 +67,7 @@ public class OrderListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag(R.id.tag_view_holder);
 		}
+
 		OrderVO order = mList.get(position);
 		final String id = order.getBillNo();
 
@@ -119,6 +120,7 @@ public class OrderListAdapter extends BaseAdapter {
 			}
 		});
 		// 固定子listview的高度
+
 		// int totalHeight = 0;
 		// for (int i = 0, len = goodsListAdapter.getCount(); i < len; i++) { //
 		// listAdapter.getCount()返回数据项的数目
