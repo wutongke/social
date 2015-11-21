@@ -139,8 +139,16 @@ public class CartActivity extends BaseActivity {
 					function.setTag(2);
 					function.setText(R.string.DELETE);
 				} else {
+
 					function.setTag(1);
 					function.setText(R.string.label_manage);
+					StringBuilder sb = new StringBuilder();
+					for (GoodsVO goods :mAdapter.getSelectList()){
+						sb.append(goods.getGoodsId()+";");
+					}
+					AppClientLef.getInstance(CartActivity.this).removeGoods(
+							sb.toString(), null, 0, CartActivity.this);
+
 					mDatas.removeAll(mAdapter.getSelectList());
 					mAdapter.getSelectList().clear();
 					// …Ë÷√
@@ -157,7 +165,8 @@ public class CartActivity extends BaseActivity {
 	}
 
 	private void loadData() {
-		appClientLef.getCartGoodsList(this,uiHandler,MsgTagVO.DATA_LOAD,0,1000);
+		appClientLef.getCartGoodsList(this, uiHandler, MsgTagVO.DATA_LOAD, 0,
+				1000);
 	}
 
 	Handler uiHandler = new Handler() {

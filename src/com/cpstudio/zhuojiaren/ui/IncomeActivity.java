@@ -69,7 +69,7 @@ public class IncomeActivity extends BaseActivity {
 			@Override
 			public void onMore() {
 				// TODO Auto-generated method stub
-				loadData();
+				loadMore();
 			}
 		});
 		pullDownView.setShowHeader();
@@ -85,8 +85,7 @@ public class IncomeActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(IncomeActivity.this,
 						IncomeDetailsActivity.class);
-				intent.putExtra(getResources().getString(R.id.tag_id),
-						mDatas.get(position - 1).getId());
+				intent.putExtra("income", mDatas.get(position - 1));
 				startActivity(intent);
 			}
 		});
@@ -97,16 +96,15 @@ public class IncomeActivity extends BaseActivity {
 			mDatas.clear();
 			mPage = 0;
 			mAdapter.notifyDataSetChanged();
-//			appClientLef.getFundingList(typeCrowd, typePubOrInv, mPage, 5,
-//					uiHandler, MsgTagVO.DATA_LOAD,
-//					CrowdFundingListActivity.this, true, null, null);
+			appClientLef.getIncomeList(mPage, 20, uiHandler,
+					MsgTagVO.DATA_LOAD, IncomeActivity.this);
 		}
 
 	}
 
 	private void loadMore() {
-//		appClientLef.getAudioList(mPage, 5, uiHandler, MsgTagVO.DATA_MORE,
-//				CrowdFundingListActivity.this, true, null, null);
+		appClientLef.getIncomeList(mPage, 20, uiHandler, MsgTagVO.DATA_LOAD,
+				IncomeActivity.this);
 	}
 
 	Handler uiHandler = new Handler() {

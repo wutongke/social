@@ -145,6 +145,16 @@ public class ZhuoCommHelper {
 	private static String GENERATEORDER = "/goods/generateOrder.do";
 	private static String POSTPAYSTATUS = "/goods/setOrderStatus.do";
 	private static String SHIPPINGADDRESS = "/goods/setOrderAddress.do";
+	private static String INCOME = "/getMyZhuobiRecord.do";
+	private static String REMOVEGOODS = "/goods/delGoodsCart.do";
+	public static String getREMOVEGOODS() {
+		return SERVER +  REMOVEGOODS;
+	}
+
+	public static String getINCOME() {
+		return SERVER +  INCOME;
+	}
+
 	public static String getSHIPPINGADDRESS() {
 		return SERVER + SHIPPINGADDRESS;
 	}

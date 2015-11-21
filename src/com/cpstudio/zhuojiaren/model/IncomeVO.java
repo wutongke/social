@@ -1,36 +1,46 @@
 package com.cpstudio.zhuojiaren.model;
 
-public class IncomeVO {
+import java.io.Serializable;
+
+public class IncomeVO implements Serializable{
 	String id;
-	String name;
-	String time;
-	String money;
+	String content;
+	String addtime;
+	String zhuobi;
 	String leftMoney;
-	String dealNumber;
-	String others;
+	String billNo;
+	String remark;
+	String userid;
+	String type;
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public String getContent() {
+		return content;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	public String getTime() {
-		return time;
+	public String getAddtime() {
+		return addtime;
 	}
-	public void setTime(String time) {
-		this.time = time;
+	public void setAddtime(String addtime) {
+		this.addtime = addtime;
 	}
-	public String getMoney() {
-		return money;
+	public String getZhuobi() {
+		return zhuobi;
 	}
-	public void setMoney(String money) {
-		this.money = money;
+	public void setZhuobi(String zhuobi) {
+		this.zhuobi = zhuobi;
 	}
 	public String getLeftMoney() {
 		return leftMoney;
@@ -38,16 +48,22 @@ public class IncomeVO {
 	public void setLeftMoney(String leftMoney) {
 		this.leftMoney = leftMoney;
 	}
-	public String getOthers() {
-		return others;
+	public String getBillNo() {
+		return billNo;
 	}
-	public void setOthers(String others) {
-		this.others = others;
+	public void setBillNo(String billNo) {
+		this.billNo = billNo;
 	}
-	public String getDealNumber() {
-		return dealNumber;
+	public String getRemark() {
+		return remark;
 	}
-	public void setDealNumber(String dealNumber) {
-		this.dealNumber = dealNumber;
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 }
