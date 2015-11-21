@@ -242,9 +242,7 @@ public class QuanBriefActivity extends BaseActivity {
 					loadData();
 				}
 				break;
-
 			}
-
 			}
 		}
 	};

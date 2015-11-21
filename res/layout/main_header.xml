@@ -86,10 +86,10 @@
     <RelativeLayout
         android:id="@+id/main_cats"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="155dp"
         android:layout_marginTop="8dp"
         android:gravity="center_vertical"
-        android:paddingBottom="15dp"
+        android:paddingBottom="8dp"
         android:paddingTop="15dp" >
 
         <android.support.v4.view.ViewPager
@@ -103,8 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="3dp"
-            android:padding="3dp" />
+            android:padding="5dp" />
     </RelativeLayout>
 
     <RelativeLayout

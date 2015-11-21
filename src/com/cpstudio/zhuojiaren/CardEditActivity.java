@@ -169,14 +169,23 @@ public class CardEditActivity extends Activity {
 		pwh = new PopupWindows(CardEditActivity.this);
 		String userid = ResHelper.getInstance(getApplicationContext())
 				.getUserid();
-
+		buttonSubmit.setVisibility(View.GONE);
 		guestId = getIntent().getStringExtra("id");
 		if (guestId != null && guestId != userid) {
 			isEditable = false;
-			buttonSubmit.setVisibility(View.GONE);
+			setTitle(getString(R.string.view_into));
+		} else {
+			setTitle(getString(R.string.edit_info));
 		}
 		initClick();
+
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
 		loadInfo();
+		super.onResume();
 	}
 
 	void updateInfo() {
@@ -525,146 +534,147 @@ public class CardEditActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == Activity.RESULT_OK) {
-			switch (requestCode) {
-			case EDIT_NAME:
-				String name = data.getStringExtra(EDIT_NAME_STR1);
-				int gend = data.getIntExtra(EDIT_NAME_STR2, 0);
-				int ismarry = data.getIntExtra(EDIT_NAME_STR3, 0);
-				userInfo.setName(name);
-				userInfo.setGender(gend);
-				userInfo.setMarried(ismarry);
-				((TextView) findViewById(R.id.textViewEditNameShow))
-						.setText(name);
-				break;
-			case EDIT_BIRTH:
-				String birth = data.getStringExtra(EDIT_BIRTH_STR1);
-				int birthopen = data.getIntExtra(EDIT_BIRTH_STR2, 0);
-				String birthdayLunar = data.getStringExtra(EDIT_BIRTH_STR3);
-				int constellation = data.getIntExtra(EDIT_BIRTH_STR4, 0);// 星座编号
-				int zodiac = data.getIntExtra(EDIT_BIRTH_STR5, 0);// 星座编号EDIT_BIRTH_STR5
-				userInfo.setBirthday(birth);
-				userInfo.setZodiac(zodiac);
-				userInfo.setBirthdayLunar(birthdayLunar);
-				userInfo.setIsBirthdayOpen(birthopen);
-				userInfo.setConstellation(constellation);
-				textViewEditBirthShow.setText(birth);
-				break;
-			case EDIT_PLACE:
-				int place = data.getIntExtra(EDIT_PLACE_STR1, 0);
-				int hometown = data.getIntExtra(EDIT_PLACE_STR2, 0);
-				String othertowns = data.getStringExtra(EDIT_PLACE_STR3);
-				userInfo.setCity(place);
-				userInfo.setHometown(hometown);
-				userInfo.setTravelCity(othertowns);
-
-				if (mConnHelper.getCitys() != null && place >= 1
-						&& place <= mConnHelper.getCitys().size())
-					textViewEditPlaceShow.setText(mConnHelper.getCitys()
-							.get(place - 1).getCityName());
-				break;
-			case EDIT_DREAM:
-				// dreamsList = data.getStringArrayListExtra(EDIT_DREAM_STR);
-				// String dream = "";
-				// if (dream != null) {
-				// for (String str : dreamsList) {
-				// dream += str + " ";
-				// }
-				// }
-				String dream = data.getStringExtra(EDIT_DREAM_STR);
-				userInfo.setDream(dream);
-				textViewEditDreamShow.setText(dream);
-				break;
-			case EDIT_EMAIL:
-				String email = data.getStringExtra(EDIT_EMAIL_STR1);
-				int emailopen = data.getIntExtra(EDIT_EMAIL_STR2, 0);
-				userInfo.setEmail(email);
-				userInfo.setIsEmailOpen(emailopen);
-				textViewEditEmailShow.setText(email);
-				break;
-
-			case EDIT_QQ:
-				String qq = data.getStringExtra(EDIT_QQ_STR1);
-				int qqopen = data.getIntExtra(EDIT_QQ_STR2, 0);
-				userInfo.setQq(qq);
-				userInfo.setIsQqOpen(qqopen);
-				textViewEditQQShow.setText(qq);
-				break;
-			case EDIT_WEIXIN:
-				String weixin = data.getStringExtra(EDIT_WEIXIN_STR1);
-				int weixinopen = data.getIntExtra(EDIT_WEIXIN_STR2, 0);
-				userInfo.setWeixin(weixin);
-				userInfo.setIsWeixinOpen(weixinopen);
-				textViewEditWeixinShow.setText(weixin);
-				break;
-			case EDIT_HOBBY:
-				String hobby = data.getStringExtra(EDIT_HOBBY_STR);
-				userInfo.setHobby(hobby);
-				textViewEditHobbyShow.setText(hobby);
-				break;
-			case EDIT_MOTTO:
-				String motto = data.getStringExtra(EDIT_MOTTO_STR);
-				userInfo.setFaith(motto);
-				textViewEditZymShow.setText(motto);
-				break;
-			case EDIT_IMAGE:
-				try {
-					ArrayList<String> images = data
-							.getStringArrayListExtra(EDIT_IMAGE_STR1); // 本地需要上传的
-					localImages.clear();
-					localImages.addAll(images);
-					ArrayList<String> ids = data
-							.getStringArrayListExtra(EDIT_IMAGE_STR2);
-					ArrayList<PicNewVO> pics = new ArrayList<PicNewVO>();
-					if (userInfo.getPhoto() != null) {
-						PicNewVO temp = null;
-						for (PicNewVO pic : userInfo.getPhoto()) {
-							if (ids.contains(pic.getPic())) {
-								if (ids.get(ids.size() - 1)
-										.equals(pic.getPic())) {
-									temp = pic;
-								} else {
-									pics.add(pic);
-								}
-							}
-						}
-						if (temp != null) {
-							pics.add(temp);
-						}
-					}
-					// userInfo.setPhoto(pics);
-
-					userInfo.setPhoto(pics);
-					String originStr = getPhotoStr(pics);
-
-					mConnHelper.pubPhoto(CardEditActivity.this, mUIHandler,
-							MsgTagVO.DATA_OTHER, originStr, images);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				break;
-			case EDIT_PHONE:
-				String phone = data.getStringExtra(EDIT_PHONE_STR1);
-				int phoneopen = data.getIntExtra(EDIT_PHONE_STR2, 0);
-				userInfo.setPhone(phone);
-				userInfo.setIsPhoneOpen(phoneopen);
-				textViewEditPhoneShow.setText(phone);
-				break;
-			default:
-				String filePath = pwh.dealPhotoReturn(requestCode, resultCode,
-						data, false);
-				if (filePath != null) {
-					try {
-						mConnHelper.setUserHeadImage(CardEditActivity.this,
-								mUIHandler, MsgTagVO.SELECT_PICTURE, filePath);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				break;
-			}
-			edit = true;
-		}
+		// if (resultCode == Activity.RESULT_OK) {
+		// switch (requestCode) {
+		// case EDIT_NAME:
+		// String name = data.getStringExtra(EDIT_NAME_STR1);
+		// int gend = data.getIntExtra(EDIT_NAME_STR2, 0);
+		// int ismarry = data.getIntExtra(EDIT_NAME_STR3, 0);
+		// userInfo.setName(name);
+		// userInfo.setGender(gend);
+		// userInfo.setMarried(ismarry);
+		// ((TextView) findViewById(R.id.textViewEditNameShow))
+		// .setText(name);
+		// break;
+		// case EDIT_BIRTH:
+		// String birth = data.getStringExtra(EDIT_BIRTH_STR1);
+		// // int birthopen = data.getIntExtra(EDIT_BIRTH_STR2, 0);
+		// // String birthdayLunar = data.getStringExtra(EDIT_BIRTH_STR3);
+		// // int constellation = data.getIntExtra(EDIT_BIRTH_STR4, 0);// 星座编号
+		// // int zodiac = data.getIntExtra(EDIT_BIRTH_STR5, 0);//
+		// 星座编号EDIT_BIRTH_STR5
+		// userInfo.setBirthday(birth);
+		// // userInfo.setZodiac(zodiac);
+		// // userInfo.setBirthdayLunar(birthdayLunar);
+		// // userInfo.setIsBirthdayOpen(birthopen);
+		// // userInfo.setConstellation(constellation);
+		// textViewEditBirthShow.setText(birth);
+		// break;
+		// case EDIT_PLACE:
+		// int place = data.getIntExtra(EDIT_PLACE_STR1, 0);
+		// int hometown = data.getIntExtra(EDIT_PLACE_STR2, 0);
+		// String othertowns = data.getStringExtra(EDIT_PLACE_STR3);
+		// userInfo.setCity(place);
+		// userInfo.setHometown(hometown);
+		// userInfo.setTravelCity(othertowns);
+		//
+		// if (mConnHelper.getCitys() != null && place >= 1
+		// && place <= mConnHelper.getCitys().size())
+		// textViewEditPlaceShow.setText(mConnHelper.getCitys()
+		// .get(place - 1).getCityName());
+		// break;
+		// case EDIT_DREAM:
+		// // dreamsList = data.getStringArrayListExtra(EDIT_DREAM_STR);
+		// // String dream = "";
+		// // if (dream != null) {
+		// // for (String str : dreamsList) {
+		// // dream += str + " ";
+		// // }
+		// // }
+		// String dream = data.getStringExtra(EDIT_DREAM_STR);
+		// userInfo.setDream(dream);
+		// textViewEditDreamShow.setText(dream);
+		// break;
+		// case EDIT_EMAIL:
+		// String email = data.getStringExtra(EDIT_EMAIL_STR1);
+		// int emailopen = data.getIntExtra(EDIT_EMAIL_STR2, 0);
+		// userInfo.setEmail(email);
+		// userInfo.setIsEmailOpen(emailopen);
+		// textViewEditEmailShow.setText(email);
+		// break;
+		//
+		// case EDIT_QQ:
+		// String qq = data.getStringExtra(EDIT_QQ_STR1);
+		// int qqopen = data.getIntExtra(EDIT_QQ_STR2, 0);
+		// userInfo.setQq(qq);
+		// userInfo.setIsQqOpen(qqopen);
+		// textViewEditQQShow.setText(qq);
+		// break;
+		// case EDIT_WEIXIN:
+		// String weixin = data.getStringExtra(EDIT_WEIXIN_STR1);
+		// int weixinopen = data.getIntExtra(EDIT_WEIXIN_STR2, 0);
+		// userInfo.setWeixin(weixin);
+		// userInfo.setIsWeixinOpen(weixinopen);
+		// textViewEditWeixinShow.setText(weixin);
+		// break;
+		// case EDIT_HOBBY:
+		// String hobby = data.getStringExtra(EDIT_HOBBY_STR);
+		// userInfo.setHobby(hobby);
+		// textViewEditHobbyShow.setText(hobby);
+		// break;
+		// case EDIT_MOTTO:
+		// String motto = data.getStringExtra(EDIT_MOTTO_STR);
+		// userInfo.setFaith(motto);
+		// textViewEditZymShow.setText(motto);
+		// break;
+		// case EDIT_IMAGE:
+		// try {
+		// ArrayList<String> images = data
+		// .getStringArrayListExtra(EDIT_IMAGE_STR1); // 本地需要上传的
+		// localImages.clear();
+		// localImages.addAll(images);
+		// ArrayList<String> ids = data
+		// .getStringArrayListExtra(EDIT_IMAGE_STR2);
+		// ArrayList<PicNewVO> pics = new ArrayList<PicNewVO>();
+		// if (userInfo.getPhoto() != null) {
+		// PicNewVO temp = null;
+		// for (PicNewVO pic : userInfo.getPhoto()) {
+		// if (ids.contains(pic.getPic())) {
+		// if (ids.get(ids.size() - 1)
+		// .equals(pic.getPic())) {
+		// temp = pic;
+		// } else {
+		// pics.add(pic);
+		// }
+		// }
+		// }
+		// if (temp != null) {
+		// pics.add(temp);
+		// }
+		// }
+		// // userInfo.setPhoto(pics);
+		//
+		// userInfo.setPhoto(pics);
+		// String originStr = getPhotoStr(pics);
+		//
+		// mConnHelper.pubPhoto(CardEditActivity.this, mUIHandler,
+		// MsgTagVO.DATA_OTHER, originStr, images);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// break;
+		// case EDIT_PHONE:
+		// String phone = data.getStringExtra(EDIT_PHONE_STR1);
+		// int phoneopen = data.getIntExtra(EDIT_PHONE_STR2, 0);
+		// userInfo.setPhone(phone);
+		// userInfo.setIsPhoneOpen(phoneopen);
+		// textViewEditPhoneShow.setText(phone);
+		// break;
+		// default:
+		// String filePath = pwh.dealPhotoReturn(requestCode, resultCode,
+		// data, false);
+		// if (filePath != null) {
+		// try {
+		// mConnHelper.setUserHeadImage(CardEditActivity.this,
+		// mUIHandler, MsgTagVO.SELECT_PICTURE, filePath);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// }
+		// break;
+		// }
+		// edit = true;
+		// }
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
@@ -683,21 +693,21 @@ public class CardEditActivity extends Activity {
 	void fillInfo() {
 		if (userInfo == null)
 			return;
-		
+
 		// 生成名片二维码信息图片
 		createQRImage(ivTDCard,
 				userInfo.getUserid() + "," + userInfo.getName(), 100, 100);
 
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHead);
-		fillText(textViewEditDreamShow,userInfo.getDream());
-		
+		fillText(textViewEditDreamShow, userInfo.getDream());
+
 		int placeId = userInfo.getCity();
 		String placeText = getString(R.string.nofill);
 		if (mConnHelper.getCitys() != null && placeId >= 1
 				&& placeId <= mConnHelper.getCitys().size())
 			placeText = mConnHelper.getCitys().get(placeId - 1).getCityName();
 		textViewEditPlaceShow.setText(placeText);
-		fillText(textViewEditNameShow,userInfo.getName());
+		fillText(textViewEditNameShow, userInfo.getName());
 		List<PicNewVO> images = userInfo.getPhoto();
 		if (images != null) {
 			((TextView) findViewById(R.id.textViewEditImagesShow))
@@ -705,32 +715,30 @@ public class CardEditActivity extends Activity {
 							+ getString(R.string.mp_imgasall));
 		}
 
-
 		String birthday = userInfo.getBirthday();
 		if (birthday == null)
 			birthday = userInfo.getBirthdayLunar();
-		fillText(textViewEditBirthShow,birthday);
+		fillText(textViewEditBirthShow, birthday);
 
-		fillText(textViewEditDreamShow,userInfo.getDream());
-		fillText(textViewEditZymShow,userInfo.getFaith());
-		fillText(textViewEditHobbyShow,userInfo.getHobby());
-		fillText(textViewEditPhoneShow,userInfo.getPhone());
-		fillText(textViewEditEmailShow,userInfo.getEmail());
-		fillText(textViewEditQQShow,userInfo.getQq());
-		fillText(textViewEditWeixinShow,userInfo.getWeixin());
-		fillText(etSignature,userInfo.getSignature());
+		fillText(textViewEditDreamShow, userInfo.getDream());
+		fillText(textViewEditZymShow, userInfo.getFaith());
+		fillText(textViewEditHobbyShow, userInfo.getHobby());
+		fillText(textViewEditPhoneShow, userInfo.getPhone());
+		fillText(textViewEditEmailShow, userInfo.getEmail());
+		fillText(textViewEditQQShow, userInfo.getQq());
+		fillText(textViewEditWeixinShow, userInfo.getWeixin());
+		fillText(etSignature, userInfo.getSignature());
 	}
 
-	void fillText(TextView tv,String text)
-	{
-		if(tv==null)
-			return ;
-		if(text==null || text.trim().toString().equals(""))
+	void fillText(TextView tv, String text) {
+		if (tv == null)
+			return;
+		if (text == null || text.trim().toString().equals(""))
 			tv.setText(getString(R.string.nofill));
 		else
 			tv.setText(text);
 	}
-	
+
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
 		@Override

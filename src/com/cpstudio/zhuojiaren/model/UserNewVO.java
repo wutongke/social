@@ -10,45 +10,45 @@ public class UserNewVO {
 	private String faith;
 	private String dream;
 	private List<PicNewVO> myPic;
-	private int position;
+	private int position=-1;
 	private String company;
 	private String birthday;
-	private int  spokesman;//<int> (代言人标识 0-不是代言人 1-是代言人) 
-	private int isPhoneOpen;
+	private int  spokesman=-1;//<int> (代言人标识 0-不是代言人 1-是代言人) 
+	private int isPhoneOpen=-1;
 
-	private int  constellation;
+	private int  constellation=-1;
 
-	private int hometown;
+	private int hometown=-1;
 
 	private String hobby;
 
 	private String registerTime;
 
-	private int userType;// 0:普通用户 1:导师 2:代理商
+	private int userType=-1;// 0:普通用户 1:导师 2:代理商
 
-	private int city;
+	private int city=-1;
 
-	private int isBirthdayOpen;
+	private int isBirthdayOpen=-1;
 
 	private String birthdayLunar;
 
-	private int married;
+	private int married=-1;
 
 	private String weixin;
 
-	private int isEmailOpen;
+	private int isEmailOpen=-1;
 
-	private int zodiac;
+	private int zodiac=-1;
 
 	private String email;
 
-	private int isWeixinOpen;
+	private int isWeixinOpen=-1;
 
 	private String name;
 
 	private String uheader;
 
-	private int gender;
+	private int gender=-1;
 
 	private String travelCity;
 
@@ -56,22 +56,22 @@ public class UserNewVO {
 
 	private String qq;
 
-	private int isQqOpen;
+	private int isQqOpen=-1;
 
 	private String addtime;
-	int industry;
+	int industry=-1;
 	private String phone;
 	private String userid;
-	int isFree;// (0:收费用户 1:免费用户)
-	int role;// 我在圈子中的身份类型
+	int isFree=-1;// (0:收费用户 1:免费用户)
+	int role=-1;// 我在圈子中的身份类型
 
 	String qrcode; // 二维码图片url
-	int friendNum; // (好友个数 在动态页面中使用)
-	int statusNum; // (动态/文章个数 在动态页面中使用)
+	int friendNum=-1; // (好友个数 在动态页面中使用)
+	int statusNum=-1; // (动态/文章个数 在动态页面中使用)
 	
 	//还需增加一个字段:mType;
 	
-	int relation;//0:陌生人。1：好友。2：自己
+	int relation=-1;//0:陌生人。1：好友。2：自己
 	
 	private List<PicNewVO> photo;// (照片 对多10张)
 

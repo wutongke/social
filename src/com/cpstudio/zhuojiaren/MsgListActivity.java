@@ -132,12 +132,10 @@ public class MsgListActivity extends FragmentActivity implements
 		NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.cancelAll();
 		loadData();
-
 		uiHandler.postDelayed(calHeight, 500);
 	}
 
 	Runnable calHeight = new Runnable() {
-
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub

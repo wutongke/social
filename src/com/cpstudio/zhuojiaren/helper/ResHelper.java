@@ -72,7 +72,7 @@ public class ResHelper {
 	public final static String UPLIOAD_TOKEN = "zhuojiaren/uploadtoken/";
 	public final static String IM_TOKEN = "zhuojiaren/imtoken/";
 	// 本地背景图片版本
-	public final static String BG_VERSION = "card_bg_version";
+	public final static String BG_VERSION = "card_bg_new_version";
 	// 本地背景,以";"隔开
 	public final static String BG_PICS = "card_bg_pics";
 

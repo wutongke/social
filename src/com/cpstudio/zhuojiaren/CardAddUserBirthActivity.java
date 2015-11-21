@@ -10,6 +10,8 @@ import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RadioButton;
@@ -17,6 +19,11 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudui.zhuojiaren.lz.Lunar;
 import com.utils.LundarToSolar;
 import com.utils.SolarToLundar;
@@ -32,6 +39,24 @@ public class CardAddUserBirthActivity extends Activity {
 	int constellation = 0, zodiac = 0;
 	boolean isYangli = true;
 	int isOpen = 0;
+
+	private Handler mUIHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case MsgTagVO.DATA_LOAD: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.bg_success);
+				} else
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.bg_failed);
+				break;
+			}
+			}
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -113,23 +138,19 @@ public class CardAddUserBirthActivity extends Activity {
 						int year = wheel1.getCurrentItem() + 1900;
 						int month = wheel2.getCurrentItem() + 1;
 						int day = wheel3.getCurrentItem() + 1;
-						Intent intent = new Intent();
 
-						intent.putExtra(CardEditActivity.EDIT_BIRTH_STR2,
-								isOpen);
-
-						intent.putExtra(CardEditActivity.EDIT_BIRTH_STR4,
-								constellation + 1);
-						intent.putExtra(CardEditActivity.EDIT_BIRTH_STR5,
-								zodiac + 1);
 						int[] solor = LundarToSolar.getLundarToSolar(year,
 								month, day);
-						intent.putExtra(CardEditActivity.EDIT_BIRTH_STR3,
-								solor[0] + "-" + solor[1] + "-" + solor[2]);
-						intent.putExtra(CardEditActivity.EDIT_BIRTH_STR1, year
-								+ "-" + month + "-" + day);
-						setResult(RESULT_OK, intent);
-						CardAddUserBirthActivity.this.finish();
+						UserNewVO userInfo = new UserNewVO();
+						userInfo.setBirthday(year + "-" + month + "-" + day);
+						userInfo.setZodiac(zodiac + 1);
+						userInfo.setBirthdayLunar(solor[0] + "-" + solor[1]
+								+ "-" + solor[2]);
+						userInfo.setIsBirthdayOpen(isOpen);
+						userInfo.setConstellation(constellation + 1);
+						ZhuoConnHelper.getInstance(getApplicationContext())
+								.modifyUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,
+										userInfo);
 					}
 				});
 		findViewById(R.id.buttonYangli).setOnClickListener(

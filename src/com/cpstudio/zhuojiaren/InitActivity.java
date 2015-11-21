@@ -125,8 +125,8 @@ public class InitActivity extends Activity {
 
 					@Override
 					public void onSuccess(String arg0) {
-						Toast.makeText(InitActivity.this, "connect onSuccess",
-								Toast.LENGTH_SHORT).show();
+//						Toast.makeText(InitActivity.this, "connect onSuccess",
+//								Toast.LENGTH_SHORT).show();
 						RongCloudEvent.getInstance().setOtherListener();
 
 					}

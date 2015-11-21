@@ -355,7 +355,7 @@
     <string name="label_qzgb">广播</string>
     <string name="label_msg">圈聊消息提醒</string>
     <string name="label_qzgx">最新更新时间：</string>
-    <string name="label_qzcy">人</string>
+    <string name="label_qzcy">成员:</string>
     <string name="label_qzcj">创建者</string>
     <string name="label_qzgl">管理员</string>
     <string name="label_qzqz">圈主</string>
@@ -911,7 +911,7 @@
     <string name="title_activity_zhuojiaquan_main">圈子主页</string>
     <string name="label_quan_brief">圈子简介</string>
     <string name="label_invite_friends">邀请好友</string>
-    <string name="label_qzht">话数：</string>
+    <string name="label_qzht">话题:</string>
     <string name="quanzi_topic">圈话题</string>
     <string name="quanzi_event">圈活动</string>
     <string name="quanzi_member">圈成员</string>
@@ -1177,4 +1177,8 @@
      <string name="zhuobi_num">倬币%d个</string>
      <string name="num">%d个</string>
       <string name="spokeman">代言人</string>
+       <string name="bg_success">更换成功</string>
+       <string name="bg_failed">更换失败</string>
+         <string name="view_into">查看更多资料</string>
+       <string name="edit_info">编辑更多资料</string>
 </resources>

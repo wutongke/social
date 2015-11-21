@@ -10,10 +10,15 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.City;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.Province;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PlaceChooseDialog;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -38,6 +43,23 @@ public class CardAddUserCityActivity extends Activity {
 	ZhuoConnHelper mConnHelper;
 	ArrayList<String> codes = new ArrayList<String>(3);
 	boolean isEditable = false;
+	private Handler mUIHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case MsgTagVO.DATA_LOAD: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.bg_success);
+				} else
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.bg_failed);
+				break;
+			}
+			}
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -123,12 +145,14 @@ public class CardAddUserCityActivity extends Activity {
 							code1 = Integer.parseInt(codes.get(0));
 						if (!"".equals(codes.get(1)))
 							code2 = Integer.parseInt(codes.get(1));
-						intent.putExtra(CardEditActivity.EDIT_PLACE_STR1, code1);
-						intent.putExtra(CardEditActivity.EDIT_PLACE_STR2, code2);
-						intent.putExtra(CardEditActivity.EDIT_PLACE_STR3,
-								codes.get(2));
-						setResult(RESULT_OK, intent);
-						CardAddUserCityActivity.this.finish();
+
+						UserNewVO userInfo = new UserNewVO();
+						userInfo.setCity(code1);
+						userInfo.setHometown(code2);
+						userInfo.setTravelCity(codes.get(2));
+						ZhuoConnHelper.getInstance(getApplicationContext())
+								.modifyUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,
+										userInfo);
 					}
 				});
 		tvPlace.setOnClickListener(new OnClickListener() {
