@@ -21,11 +21,11 @@
             android:layout_weight="1"
             android:text="@string/all_catgary" />
 
-        <TextView
+        <ImageView
             android:id="@+id/agc_show_categary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/address" />
+            android:src="@drawable/address" />
     </LinearLayout>
 
     <ImageView

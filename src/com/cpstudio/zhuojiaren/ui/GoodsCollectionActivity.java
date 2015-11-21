@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,6 +35,7 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
+import com.cpstudui.zhuojiaren.lz.StoreMainActivity;
 
 public class GoodsCollectionActivity extends BaseActivity {
 	@InjectView(R.id.agc_categary)
@@ -41,7 +43,7 @@ public class GoodsCollectionActivity extends BaseActivity {
 	@InjectView(R.id.agc_listview)
 	ListView listView;
 	@InjectView(R.id.agc_show_categary)
-	TextView showCategary;
+	ImageView showCategary;
 	LoadImage loader = LoadImage.getInstance();
 	private CommonAdapter<GoodsVO> mAdapter;
 	private ArrayList<GoodsVO> mDataList = new ArrayList<GoodsVO>();
@@ -80,8 +82,9 @@ public class GoodsCollectionActivity extends BaseActivity {
 			@Override
 			public void convert(ViewHolder helper, final GoodsVO item) {
 				// TODO Auto-generated method stub
+				
 				helper.setText(R.id.igc_name, item.getGoodsName());
-				loader.beginLoad(item.getGoodsImg(),
+				loader.beginLoad(item.getImg(),
 						(ImageView) helper.getView(R.id.igc_goods_image));
 				helper.setText(R.id.igc_price, item.getZhuoPrice());
 				helper.getView(R.id.igc_collec_image).setOnClickListener(
@@ -131,6 +134,18 @@ public class GoodsCollectionActivity extends BaseActivity {
 			}
 		});
 		listView.setAdapter(mAdapter);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(GoodsCollectionActivity.this,
+						GoodsDetailLActivity.class);
+				i.putExtra("goodsId", ((GoodsVO)mAdapter.getItem(position)).getGoodsId());
+				startActivity(i);
+			}
+		});
 		int[] categary = { R.string.all_catgary, R.string.phone_fee,
 				R.string.plane, R.string.movie, R.string.hotel, R.string.tea,
 				R.string.intelligence, R.string.red_wine, R.string.tele_goods,

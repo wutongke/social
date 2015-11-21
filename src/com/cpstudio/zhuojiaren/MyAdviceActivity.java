@@ -2,6 +2,18 @@ package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -14,20 +26,6 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.widget.ImageChooseAdapter;
 import com.cpstudio.zhuojiaren.widget.PicChooseActivity;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class MyAdviceActivity extends BaseActivity {
 

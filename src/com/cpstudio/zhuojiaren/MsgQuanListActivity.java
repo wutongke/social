@@ -5,27 +5,27 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.cpstudio.zhuojiaren.adapter.MsgQuanListAdapter;
-import com.cpstudio.zhuojiaren.facade.ImQuanFacade;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.model.ImQuanVO;
-import com.cpstudio.zhuojiaren.util.ImQuanMsgComparator;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+
+import com.cpstudio.zhuojiaren.adapter.MsgQuanListAdapter;
+import com.cpstudio.zhuojiaren.facade.ImQuanFacade;
+import com.cpstudio.zhuojiaren.helper.ResHelper;
+import com.cpstudio.zhuojiaren.model.ImQuanVO;
+import com.cpstudio.zhuojiaren.util.ImQuanMsgComparator;
 
 public class MsgQuanListActivity extends Activity implements
 		OnItemClickListener {

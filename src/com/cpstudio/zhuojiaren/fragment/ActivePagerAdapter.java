@@ -1,12 +1,10 @@
 package com.cpstudio.zhuojiaren.fragment;
 
 import java.util.List;
-import java.util.Map;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.SparseArray;
 
 public class ActivePagerAdapter extends FragmentPagerAdapter {
 	private List<Fragment> fragments;

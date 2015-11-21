@@ -1,6 +1,5 @@
 package com.cpstudui.zhuojiaren.lz;
 
-import android.R.string;
 
 public class BeanBanner {
 	private String picUrl;

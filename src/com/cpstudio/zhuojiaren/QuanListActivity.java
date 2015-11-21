@@ -1,18 +1,10 @@
 package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
-import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.facade.ZhuoQuanFacade;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.QuanVO;
-import com.cpstudio.zhuojiaren.model.ZhuoQuanVO;
-import com.cpstudio.zhuojiaren.ui.QuanCreateActivity;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,9 +17,17 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
+
+import com.cpstudio.zhuojiaren.facade.ZhuoQuanFacade;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.ZhuoQuanVO;
+import com.cpstudio.zhuojiaren.ui.QuanCreateActivity;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class QuanListActivity extends Activity {
 	private DisplayMetrics dm;
