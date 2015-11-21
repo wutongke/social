@@ -73,6 +73,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 	private LinearLayout companyMoreInfo;
 	private AppClientLef appClient;
 	private String goodsId;
+	private static final int Collection = 333;
 	LoadImage lImage = LoadImage.getInstance();
 
 	@Override
@@ -101,27 +102,27 @@ public class GoodsDetailLActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				String type = "1";
-				if (goods.getIsCollection() != null
-						&& goods.getIsCollection().equals(GoodsVO.collected)) {
-					Drawable drawable = getResources().getDrawable(
-							R.drawable.dongt2);
-					// / 这一步必须要做,否则不会显示.
-					drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-							drawable.getMinimumHeight());
-					collection.setCompoundDrawables(drawable, null, null, null);
-					goods.setIsCollection("1");
-					type = "1";
-				} else {
-					Drawable drawable = getResources().getDrawable(
-							R.drawable.dongt);
-					// / 这一步必须要做,否则不会显示.
-					drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-							drawable.getMinimumHeight());
-					collection.setCompoundDrawables(drawable, null, null, null);
-					goods.setIsCollection("0");
-					type = "0";
-				}
-				appClient.collection(GoodsDetailLActivity.this,
+//				if (goods.getIsCollection() != null
+//						&& goods.getIsCollection().equals(GoodsVO.collected)) {
+//					Drawable drawable = getResources().getDrawable(
+//							R.drawable.dongt2);
+//					// / 这一步必须要做,否则不会显示.
+//					drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+//							drawable.getMinimumHeight());
+//					collection.setCompoundDrawables(drawable, null, null, null);
+//					goods.setIsCollection("1");
+//					type = "1";
+//				} else {
+//					Drawable drawable = getResources().getDrawable(
+//							R.drawable.dongt);
+//					// / 这一步必须要做,否则不会显示.
+//					drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+//							drawable.getMinimumHeight());
+//					collection.setCompoundDrawables(drawable, null, null, null);
+//					goods.setIsCollection("0");
+//					type = "0";
+//				}
+				appClient.collection(GoodsDetailLActivity.this,uiHandler,Collection,
 						ZhuoCommHelper.getGoodsCollection(), "goodsid",
 						goodsId, "type", type);
 			}
@@ -193,7 +194,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 
 	Handler uiHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			ResultVO res;
+			ResultVO res = null;
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD:
 				mPullDownView.finishLoadData(true);
@@ -225,7 +226,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 						bannerListData.add(item);
 					}
 					bannerPageAdapter = new Bee_PageAdapter(
-							GoodsDetailLActivity.this, bannerListData, lImage,ScaleType.FIT_XY);
+							GoodsDetailLActivity.this, bannerListData, lImage,ScaleType.MATRIX);
 					bannerViewPager.setAdapter(bannerPageAdapter);
 					bannerViewPager.setCurrentItem(0);
 					bannerIndicator.setViewPager(bannerViewPager);
@@ -252,13 +253,27 @@ public class GoodsDetailLActivity extends BaseActivity {
 				if (JsonHandler.checkResult((String) msg.obj,
 						GoodsDetailLActivity.this)) {
 					res = JsonHandler.parseResult((String) msg.obj);
+					CommonUtil.displayToast(GoodsDetailLActivity.this,
+							"添加到购物车成功");
 				} else {
 					CommonUtil.displayToast(GoodsDetailLActivity.this,
-							R.string.data_error);
+							res.getData());
 					return;
 				}
-				Intent i = new Intent(GoodsDetailLActivity.this,CartActivity.class);
-				startActivity(i);
+//				Intent i = new Intent(GoodsDetailLActivity.this,CartActivity.class);
+//				startActivity(i);
+				break;
+			case Collection:
+				res = JsonHandler.parseResult((String) msg.obj);
+				if (JsonHandler.checkResult((String) msg.obj,
+						GoodsDetailLActivity.this)) {
+					CommonUtil.displayToast(GoodsDetailLActivity.this,
+							"成功收藏商品");
+				} else {
+					CommonUtil.displayToast(GoodsDetailLActivity.this,
+							res.getData());
+					return;
+				}
 				break;
 			default:break;
 			}

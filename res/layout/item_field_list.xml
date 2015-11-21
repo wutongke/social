@@ -34,6 +34,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
         android:contentDescription="@string/ico"
+        android:visibility="gone"
         android:src="@drawable/ico_arrow_gray" />
 
 </RelativeLayout>
