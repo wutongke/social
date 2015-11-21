@@ -1177,4 +1177,6 @@
      <string name="zhuobi_num">倬币%d个</string>
      <string name="num">%d个</string>
       <string name="spokeman">代言人</string>
+       <string name="bg_success">更换成功</string>
+       <string name="bg_failed">更换失败</string>
 </resources>

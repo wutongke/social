@@ -15,6 +15,7 @@ import com.cpstudio.zhuojiaren.model.AdVO;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.BusinessInfoVO;
 import com.cpstudio.zhuojiaren.model.CardMsgVO;
+import com.cpstudio.zhuojiaren.model.ChangeBgAVO;
 import com.cpstudio.zhuojiaren.model.CmtRcmdVO;
 import com.cpstudio.zhuojiaren.model.CmtVO;
 import com.cpstudio.zhuojiaren.model.Comment;
@@ -974,6 +975,27 @@ public class JsonHandler {
 		return list;
 	}
 
+	public ArrayList<ChangeBgAVO> parseBg() {
+		ArrayList<ChangeBgAVO> list = new ArrayList<ChangeBgAVO>();
+		try {
+			Type listType = new TypeToken<LinkedList<ChangeBgAVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				LinkedList<ChangeBgAVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<ChangeBgAVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					ChangeBgAVO item = (ChangeBgAVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	public ArrayList<UserAndCollection> parseUserCollection() {
 		ArrayList<UserAndCollection> list = new ArrayList<UserAndCollection>();
 		try {
