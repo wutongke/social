@@ -650,4 +650,12 @@
 	    <item >我创建的圈子动态</item>
 	    <item >我加入的圈子动态</item>
 	</string-array>
+	<string-array name="order_status">
+	    <item >未支付</item>
+	    <item >已成功支付</item>
+	    <item >支付失败</item>
+	    <item >订单取消</item>
+	    <item >卖家已发货</item>
+	    <item >买家已收货</item>
+	</string-array>
 </resources>

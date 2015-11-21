@@ -144,7 +144,7 @@
                 android:id="@+id/tvOrderNum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="190238928392" />
+                android:text="32322" />
         </LinearLayout>
 
         <LinearLayout

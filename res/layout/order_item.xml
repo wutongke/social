@@ -14,11 +14,11 @@
         android:text="2015-03-21 >"
         android:textStyle="bold" />
 
-    <ListView
+    <com.cpstudio.zhuojiaren.widget.NestedListView
         android:id="@+id/lvGoods"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-    </ListView>
+    </com.cpstudio.zhuojiaren.widget.NestedListView>
 
     <View
         android:layout_width="match_parent"
@@ -40,17 +40,13 @@
             android:layout_height="wrap_content"
             android:text="@string/text_order_total_num" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="@string/label_total_pay" />
 
         <TextView
             android:id="@+id/order_total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$32.9"
+            android:layout_marginLeft="10dp"
+            android:text="@string/text_total_pay"
             android:textStyle="bold" />
     </LinearLayout>
 
