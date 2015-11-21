@@ -68,9 +68,9 @@ public class OrderListItemGoodsListAdapter extends BaseAdapter {
 
 		String info = goods.getGoodsName();
 
-		String count = goods.getGoodsCount();
+		int count = goods.getBuyNum();
 		String price = goods.getZhuoPrice();
-		holder.tvPrice.setText("$ " + price);
+		holder.tvPrice.setText(price);
 		holder.tvCount.setText("x" + count);
 		holder.tvInfo.setText(info);
 		if (picurl != null) {

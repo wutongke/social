@@ -63,6 +63,7 @@
                 android:id="@+id/lv_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:listSelector="@drawable/indicator_list"
                 android:cacheColorHint="@android:color/transparent" >
             </com.cpstudio.zhuojiaren.widget.NestedListView>
         </LinearLayout>

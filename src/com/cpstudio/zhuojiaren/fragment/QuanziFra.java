@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -38,17 +39,19 @@ import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.ImageRadioButton;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
-import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
 
 public class QuanziFra extends Fragment {
+	@InjectView(R.id.hgm_adv)
+	ImageView advImage;
 	@InjectView(R.id.fql_list)
 	ListView mListView;
 	@InjectView(R.id.fql_my_layout)
@@ -83,7 +86,8 @@ public class QuanziFra extends Fragment {
 	TitleAdapter mTitleAdapter;
 	// 主View
 	View layout;
-String userid=null;
+	String userid = null;
+
 	public interface functionListener {
 		//
 		public void onTypeChange(int type);
@@ -99,10 +103,17 @@ String userid=null;
 		pupWindow = new PopupWindows(getActivity());
 		mContext = getActivity();
 		mConnHelper = AppClientLef.getInstance(getActivity());
+		
 		// 加载的圈子类型
 		Bundle intent = getArguments();
 		mType = intent.getInt(QuanVO.QUANZITYPE);
-		userid=intent.getString("userid");
+		if(mType == QuanVO.QUANZIRECOMMEND){
+			advImage.setVisibility(View.VISIBLE);
+			LoadImage.getInstance().beginLoad(
+					"http://7xkb2a.com1.z0.glb.clouddn.com/android-gg.png",
+					advImage);
+		}
+		userid = intent.getString("userid");
 		mAdapter = new QuanListAdapter(mContext, mList);
 		RelativeLayout mFooterView = (RelativeLayout) inflater.inflate(
 				R.layout.listview_footer, null);
@@ -175,7 +186,8 @@ String userid=null;
 									pupWindow.hidePop();
 									if (QuanziFra.this.getActivity() instanceof ZhuoQuanActivity) {
 										((ZhuoQuanActivity) (QuanziFra.this
-												.getActivity())).setOffManager();
+												.getActivity()))
+												.setOffManager();
 									}
 								}
 							});
@@ -202,7 +214,8 @@ String userid=null;
 									pupWindow.hidePop();
 									if (QuanziFra.this.getActivity() instanceof ZhuoQuanActivity) {
 										((ZhuoQuanActivity) (QuanziFra.this
-												.getActivity())).setOffManager();
+												.getActivity()))
+												.setOffManager();
 									}
 								}
 							});
@@ -402,15 +415,18 @@ String userid=null;
 			mAdapter.notifyDataSetChanged();
 			if (url != null && (!url.isEmpty()))
 				mConnHelper.getQuanzi(url, gtype, city, 0, 5, mUIHandler,
-						MsgTagVO.DATA_LOAD, getActivity(), true, null, null,userid);
+						MsgTagVO.DATA_LOAD, getActivity(), true, null, null,
+						userid);
 		}
 	}
 
 	private void loadMore() {
 		if (mListViewFooter.startLoading()) {
 
-			mConnHelper.getQuanzi(url, gtype, city, mPage, 5, mUIHandler,
-					MsgTagVO.DATA_MORE, getActivity(), true, null, null,userid);
+			mConnHelper
+					.getQuanzi(url, gtype, city, mPage, 5, mUIHandler,
+							MsgTagVO.DATA_MORE, getActivity(), true, null,
+							null, userid);
 		}
 	}
 

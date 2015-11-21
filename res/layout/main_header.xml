@@ -86,10 +86,11 @@
     <RelativeLayout
         android:id="@+id/main_cats"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="160dp"
         android:layout_marginTop="8dp"
         android:gravity="center_vertical"
-         >
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp" >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/cats_viewpager"
@@ -102,6 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="3dp"
             android:padding="3dp" />
     </RelativeLayout>
 
@@ -128,10 +130,10 @@
 
             <com.cpstudui.zhuojiaren.lz.AutoTextView
                 android:id="@+id/at_notices"
-                android:layout_marginLeft="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -150,10 +152,10 @@
             android:scaleType="fitXY" />
 
         <View
-            android:visibility="gone"
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:background="#eeeeee" />
+            android:background="#eeeeee"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -166,22 +168,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:scaleType="fitXY"
-                 />
+                android:scaleType="fitXY" />
 
             <View
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#eeeeee" />
+                android:background="#eeeeee"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/ivHot3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:scaleType="fitXY"
-                 />
+                android:scaleType="fitXY" />
         </LinearLayout>
     </LinearLayout>
 

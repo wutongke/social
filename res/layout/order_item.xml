@@ -11,13 +11,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:padding="10dp"
-        android:text="2015-03-21 >"
         android:textStyle="bold" />
 
     <com.cpstudio.zhuojiaren.widget.NestedListView
         android:id="@+id/lvGoods"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:listSelector="@drawable/indicator_list" >
     </com.cpstudio.zhuojiaren.widget.NestedListView>
 
     <View
@@ -39,7 +39,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_order_total_num" />
-
 
         <TextView
             android:id="@+id/order_total_price"

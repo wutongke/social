@@ -86,9 +86,9 @@
             android:layout_toLeftOf="@+id/textCollectedMeNum"
             android:ellipsize="end"
             android:maxLines="1"
+            android:drawableRight="@drawable/ico_arrow_big"
             android:text="@string/label_active_collected_me" />
 
-        rl
     </RelativeLayout>
 
     <TextView

@@ -79,6 +79,7 @@ public class LoadImage {
 		addTask(url, img);
 		doTask();
 	}
+	
 	public void setHeightAndWidth(int height,int width) {
 		this.height = height;
 		this.width = width;

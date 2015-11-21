@@ -20,7 +20,8 @@ public class OrderVO {
 
 	private String userid;
 	// (倬币总价)
-	private String totalZhuobi;
+
+	private int totalZhuobi;
 	// <int> (订单状态 0-未支付 1-已成功支付 2-支付失败 3-订单取消 4-卖家已发货 5-买家已收货) ,
 	private int status;
 	// 订单生成时间
@@ -36,15 +37,16 @@ public class OrderVO {
 	// 收货地址
 	private String receiverAddr;
 	// 收货人电话
-		private String phone;
+
+	private String phone;
 
 	public String getPhone() {
-			return phone;
-		}
+		return phone;
+	}
 
-		public void setPhone(String phone) {
-			this.phone = phone;
-		}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
 	public String getReceiver() {
 		return receiver;
@@ -65,6 +67,7 @@ public class OrderVO {
 	public List<GoodsVO> getBuyGoods() {
 		return buyGoods;
 	}
+
 
 	public void setBuyGoods(List<GoodsVO> buyGoods) {
 		this.buyGoods = buyGoods;
@@ -102,11 +105,11 @@ public class OrderVO {
 		this.userid = userid;
 	}
 
-	public String getTotalZhuobi() {
+	public int getTotalZhuobi() {
 		return totalZhuobi;
 	}
 
-	public void setTotalZhuobi(String totalZhuobi) {
+	public void setTotalZhuobi(int totalZhuobi) {
 		this.totalZhuobi = totalZhuobi;
 	}
 

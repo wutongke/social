@@ -2,8 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
+	 <ImageView
+        android:id="@+id/hgm_adv"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop" 
+        android:visibility="gone"
+        />
     <RelativeLayout
+        android:layout_below="@+id/hgm_adv"
         android:id="@+id/rel2"
         android:background="@drawable/color_shape2"
         android:layout_width="match_parent"

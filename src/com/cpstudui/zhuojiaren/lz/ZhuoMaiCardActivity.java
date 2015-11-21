@@ -87,7 +87,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	@InjectView(R.id.textViewPhone)
 	TextView tvPhone;
 	@InjectView(R.id.textViewPurse)
-	TextView tvZBNum;// 閸婎剙绔甸弫锟�
+	TextView tvZBNum;
 	@InjectView(R.id.textViewNote)
 	TextView tvSignature;
 	@InjectView(R.id.textViewht)
@@ -107,11 +107,11 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	Button btnSendCard;//
 	@InjectView(R.id.btnChat)
 	Button btnChat;
-	@InjectView(R.id.rootmain)
-	View rootMainBG;//
+	@InjectView(R.id.bgImg)
+	ImageView ivBg;//
 	@InjectView(R.id.rlSendCard)
 	View rlSendCard;//
-
+	
 	private final static int USER_SELECT = 0;
 	private Context mContext;
 	List<Fragment> fragments;
@@ -156,7 +156,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			btnEditBG.setEnabled(false);
 		mLoadImage = new LoadImage();
 
-		rootMainBG.setBackgroundResource(R.drawable.manbg_zmmp_1);
+//		ivBg.setBackgroundResource(R.drawable.manbg_zmmp_1);
 		baseDataSet = mConnHelper.getBaseDataSet();
 		initOnClick();
 	}
@@ -387,7 +387,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		bundle.putInt(QuanVO.QUANZIMAINTYPE, catlog);
 		bundle.putString("userid", userid);
 		fragment.setArguments(bundle);
-
 		return fragment;
 	}
 
@@ -397,13 +396,17 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	void fillHeadInfo() {
 		if (userInfo == null)
 			return;
+		
 		tvSignature.setText(userInfo.getSignature());
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHeader);
+		if(userInfo.getBgpic()!=null)
+		mLoadImage.beginLoad(userInfo.getBgpic(),ivBg);
+		
 		tvName.setText(userInfo.getName());
-		if (mConnHelper.getCitys() != null && userInfo.getCity() >= 1)
-			tvPosition.setText(mConnHelper.getCitys()
-					.get(userInfo.getCity() - 1).getCityName());
-
+		if(1==userInfo.getSpokesman())
+			tvMemType.setVisibility(View.VISIBLE);
+		else
+			tvMemType.setVisibility(View.INVISIBLE);
 		String work = "";
 		if (baseDataSet != null) {
 			int pos = userInfo.getPosition();
@@ -411,7 +414,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				pos--;
 			work = ((baseDataSet.getPosition()).get(pos)).getContent();
 		}
-		tvMemType.setText(work);
+		tvPosition.setText(work);
 
 		tvCompany.setText(userInfo.getCompany());
 		tvPhone.setText(userInfo.getPhone());

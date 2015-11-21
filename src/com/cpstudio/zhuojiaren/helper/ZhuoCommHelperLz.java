@@ -98,7 +98,8 @@ public class ZhuoCommHelperLz {
 	private final static String CMT_GONGXU = "/supplyDemandCmt.do";
 	private final static String ORDERS_LIST = "/goods/getOrderList.do";
 	private final static String ORDER_DETAIL = "/goods/getOrder.do";
-	
+	private final static String CARD_BG = "/getBackground.do";
+	private final static String SET_CARD_BG  = "/setUserBackground.do";
 	public static String getAllJiaren() {
 		return ALL_JIAREN;
 	}
@@ -567,6 +568,16 @@ public class ZhuoCommHelperLz {
 	 */
 	public static String orderDetail() {
 		return SERVER + ORDER_DETAIL;
+	}
+	/**
+	 * ÃûÆ¬±³¾°Í¼Æ¬
+	 * @return
+	 */
+	public static String cardBg() {
+		return SERVER + CARD_BG;
+	}
+	public static String setCardBg() {
+		return SERVER + SET_CARD_BG;
 	}
 	
 }

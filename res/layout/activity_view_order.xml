@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="#ffffff"
-        android:dividerHeight="10dp" >
+        android:dividerHeight="10dp"
+        android:listSelector="@drawable/indicator_list" >
     </com.cpstudio.zhuojiaren.widget.PullDownView>
 
 </LinearLayout>

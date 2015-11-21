@@ -65,8 +65,9 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 		// ≥ı ºªØtab∫Õviewpager
 		viewPager.setAdapter(getPagerAdapter());
 		viewPager.setOffscreenPageLimit(2);
+		viewPager.setCurrentItem(2);
 		tabButton.setViewPager(viewPager);
-
+		tabButton.setTabBackgroundByIndex(2);
 		initOnClick();
 	}
 

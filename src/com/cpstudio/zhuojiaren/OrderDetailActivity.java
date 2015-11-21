@@ -1,6 +1,5 @@
 package com.cpstudio.zhuojiaren;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
@@ -100,7 +99,7 @@ public class OrderDetailActivity extends BaseActivity {
 				R.array.order_status);
 		if (item.getStatus() >= 0 && item.getStatus() < statusArray.length)
 			setText(tvStatus, statusArray[item.getStatus()]);
-		setText(tvZhuobi, item.getTotalZhuobi());
+		setText(tvZhuobi, String.valueOf(item.getTotalZhuobi()));
 
 		setText(tvAddress, item.getReceiverAddr());
 		setText(tvReceiver, item.getReceiver());

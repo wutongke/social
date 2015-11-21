@@ -13,7 +13,7 @@ public class UserNewVO {
 	private int position;
 	private String company;
 	private String birthday;
-
+	private int  spokesman;//<int> (代言人标识 0-不是代言人 1-是代言人) 
 	private int isPhoneOpen;
 
 	private int  constellation;
@@ -80,10 +80,27 @@ public class UserNewVO {
 	
 	private String gname;
 	
-	String zhuobi;
+	private String zhuobi;
+	private String bgpic;
 	
+	public String getBgpic() {
+		return bgpic;
+	}
+
+	public void setBgpic(String bgpic) {
+		this.bgpic = bgpic;
+	}
+
 	public String getZhuobi() {
 		return zhuobi;
+	}
+
+	public int getSpokesman() {
+		return spokesman;
+	}
+
+	public void setSpokesman(int spokesman) {
+		this.spokesman = spokesman;
 	}
 
 	public void setZhuobi(String zhuobi) {

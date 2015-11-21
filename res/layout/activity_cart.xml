@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/acart_layout"
         android:background="@color/white" 
+        android:listSelector="@drawable/indicator_list"
         android:layout_marginBottom="50dp"
     />
 
