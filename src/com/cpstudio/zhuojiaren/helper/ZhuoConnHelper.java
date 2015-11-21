@@ -1663,7 +1663,20 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.orderDetail(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
-
+	public boolean getCardBg(Handler mUIHandler, int handlerTag, 
+			int version) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+			nameValuePairs.add(new BasicNameValuePair("version", String.valueOf(version)));
+		return getFromServerByPost(ZhuoCommHelperLz.cardBg(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
+	public boolean setCardBg(Handler mUIHandler, int handlerTag, 
+			int bgid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("bgid", String.valueOf(bgid)));
+		return getFromServerByPost(ZhuoCommHelperLz.setCardBg(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
 	/**
 	 * ·¢²¼¶¯Ì¬
 	 * 

@@ -1,6 +1,5 @@
 package com.cpstudio.zhuojiaren;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
