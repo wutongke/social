@@ -214,6 +214,9 @@ public class LZUserSameActivity extends BaseActivity implements
 											item.getGroupid(),
 											QuanVO.QUAN_PERMIT,
 											item.getUserid(), "agree");
+//									CommonUtil.displayToast(
+//											LZUserSameActivity.this,
+//											item.getGroupid()+","+item.getGname()+","+item.getUserid());
 									CommonUtil.displayToast(
 											LZUserSameActivity.this,
 											"向融云，加入圈子成功");
