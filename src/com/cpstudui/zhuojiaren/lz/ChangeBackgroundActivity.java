@@ -29,7 +29,6 @@ import com.google.gson.JsonParser;
 
 public class ChangeBackgroundActivity extends BaseActivity implements
 		OnItemClickListener {
-
 	@InjectView(R.id.gridview_bg)
 	GridView gvBackGround;
 	CommonAdapter mAdapter;

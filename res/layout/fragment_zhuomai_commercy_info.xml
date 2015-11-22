@@ -63,7 +63,7 @@
                 android:layout_toRightOf="@+id/imageViewResourcePic"
                 android:maxLines="2"
                 android:textColor="#1c1c1c"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/textViewTime"
@@ -75,7 +75,7 @@
                 android:lineSpacingExtra="2dp"
                 android:maxLines="1"
                 android:textColor="#585858"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -133,7 +133,7 @@
                 android:layout_toRightOf="@+id/imageViewNeedPic"
                 android:maxLines="2"
                 android:textColor="#1c1c1c"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/textViewNeedTime"
@@ -145,7 +145,7 @@
                 android:lineSpacingExtra="2dp"
                 android:maxLines="1"
                 android:textColor="#585858"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
         </RelativeLayout>
 
         <LinearLayout

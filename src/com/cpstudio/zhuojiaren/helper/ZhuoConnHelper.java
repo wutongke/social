@@ -937,40 +937,63 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-			AsyncUploadHelper helper = new AsyncUploadHelper(activity,
-					uploadFileToken, filesMap, new ICompleteCallback() {
+			if (filesMap != null && filesMap.size() > 0) {
+				AsyncUploadHelper helper = new AsyncUploadHelper(activity,
+						uploadFileToken, filesMap, new ICompleteCallback() {
 
-						@Override
-						public void onReturn(Map<String, StringBuilder> map) {
-							// TODO Auto-generated method stub
-							if (map == null)
-								Toast.makeText(activity, "ÉÏ´«µ½ÆßÅ£ÔÆÊ§°Ü", 1000)
-										.show();
-							if (map.size() > 0) {
-								for (Map.Entry<String, StringBuilder> entry : map
-										.entrySet()) {
-									String key = entry.getKey();
+							@Override
+							public void onReturn(Map<String, StringBuilder> map) {
+								// TODO Auto-generated method stub
+								if (map == null)
+									Toast.makeText(activity, "ÉÏ´«µ½ÆßÅ£ÔÆÊ§°Ü", 1000)
+											.show();
+								if (map.size() > 0) {
+									for (Map.Entry<String, StringBuilder> entry : map
+											.entrySet()) {
+										String key = entry.getKey();
 
-									String value = entry.getValue().toString();
-									if (extra != null)
-										value = extra + value;
-									nameValuePairs.add(new BasicNameValuePair(
-											key, value));
+										String value = entry.getValue()
+												.toString();
+										if (extra != null)
+											value = extra + "," + value;
+										nameValuePairs
+												.add(new BasicNameValuePair(
+														key, value));
+									}
 								}
+								else
+									nameValuePairs
+									.add(new BasicNameValuePair(
+											"file", extra));
+								AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+										addUserInfoByPost(nameValuePairs), url,
+										true, getFinishCallback(handler,
+												handlerTag, tag, data),
+										activity);
+								conn.setCancelable(cancelable);
+								if (cancelable) {
+									conn.setCancel(getCancelListener(cancel,
+											tag, conn));
+								}
+								conn.execute();
 							}
-							AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
-									addUserInfoByPost(nameValuePairs), url,
-									true, getFinishCallback(handler,
-											handlerTag, tag, data), activity);
-							conn.setCancelable(cancelable);
-							if (cancelable) {
-								conn.setCancel(getCancelListener(cancel, tag,
-										conn));
-							}
-							conn.execute();
-						}
-					});
-			helper.execute("test");
+						});
+				helper.execute("test");
+			} else {
+				nameValuePairs
+				.add(new BasicNameValuePair(
+						"file", extra));
+				AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+						addUserInfoByPost(nameValuePairs), url, true,
+						getFinishCallback(handler, handlerTag, tag, data),
+						activity);
+				conn.setCancelable(cancelable);
+				if (cancelable) {
+					conn.setCancel(getCancelListener(cancel, tag, conn));
+				}
+				conn.execute();
+			}
+
 			return true;
 		}
 		return false;
@@ -1276,8 +1299,11 @@ public class ZhuoConnHelper {
 	public boolean pubPhoto(Activity activity, Handler mUIHandler, int tag,
 			String originFilekeys, ArrayList<String> files) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
-		fileMap.put("file", files);
+		Map<String, ArrayList<String>> fileMap = null;
+		if (files != null && files.size() > 0) {
+			fileMap = new HashMap<String, ArrayList<String>>();
+			fileMap.put("file", files);
+		}
 		return doPostWithFile(fileMap, nameValuePairs,
 				ZhuoCommHelperLz.pubPhoto(), mUIHandler, tag, activity,
 				"pubQuanTopic", false, null, null, originFilekeys);
@@ -1590,8 +1616,8 @@ public class ZhuoConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("isPhoneOpen", user
 					.getIsPhoneOpen() + ""));
 		if (user.getPhone() != null)
-			nameValuePairs.add(new BasicNameValuePair("isPhoneOpen", user
-					.getPhone() ));
+			nameValuePairs.add(new BasicNameValuePair("phone", user
+					.getPhone()));
 		if (user.getQq() != null)
 			nameValuePairs.add(new BasicNameValuePair("qq", user.getQq()));
 		if (user.getIsQqOpen() != -1)

@@ -59,7 +59,6 @@ import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
  * 
  */
 public class ZhuoQuanMainActivity extends BaseFragmentActivity {
-
 	@InjectView(R.id.azq_tab)
 	TabButton tabButton;
 	@InjectView(R.id.azq_viewpager)

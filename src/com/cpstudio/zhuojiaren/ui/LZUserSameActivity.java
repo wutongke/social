@@ -33,6 +33,7 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
+import com.umeng.socialize.utils.Log;
 
 /**
  * 请求交换名片的家人，请求加入圈子的人
@@ -214,9 +215,7 @@ public class LZUserSameActivity extends BaseActivity implements
 											item.getGroupid(),
 											QuanVO.QUAN_PERMIT,
 											item.getUserid(), "agree");
-//									CommonUtil.displayToast(
-//											LZUserSameActivity.this,
-//											item.getGroupid()+","+item.getGname()+","+item.getUserid());
+									Log.i("lzasd", item.getGroupid()+","+item.getGname()+","+item.getUserid());
 									CommonUtil.displayToast(
 											LZUserSameActivity.this,
 											"向融云，加入圈子成功");

@@ -30,11 +30,10 @@ public class CardAddUserImageActivity extends Activity {
 	private PopupWindows pwh = null;
 	private ImageSelectHelper mIsh = null;
 	private Map<String, String> network = new HashMap<String, String>();
-	private Map<String, String> localsMap = new HashMap<String, String>();
+	// private Map<String, String> localsMap = new HashMap<String, String>();
 	private ArrayList<String> netids = new ArrayList<String>();
 	private ArrayList<String> neturls = new ArrayList<String>();
 	private LoadImage mLoadImage = new LoadImage();
-	private ZhuoConnHelper mConnHelper = null;
 	private Map<String, View> toDelView = new HashMap<String, View>();
 	private ArrayList<String> local = new ArrayList<String>();
 	boolean isEditable = false;
@@ -43,22 +42,22 @@ public class CardAddUserImageActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_card_add_user_image);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		Intent intent = getIntent();
 		ArrayList<String> images = intent
 				.getStringArrayListExtra(CardEditActivity.EDIT_IMAGE_STR1);
-		ArrayList<String> ids = intent
-				.getStringArrayListExtra(CardEditActivity.EDIT_IMAGE_STR2);
+		// ArrayList<String> ids = intent
+		// .getStringArrayListExtra(CardEditActivity.EDIT_IMAGE_STR2);
 		isEditable = intent.getBooleanExtra(CardEditActivity.EDITABLE, false);
 		for (int i = 0; i < images.size(); i++) {
-			if (ids.get(i).equals(CardEditActivity.LOCAL_IMAGE)) {
-				local.add(images.get(i));
-				localsMap.put(images.get(i), images.get(i));
-			} else {
-				network.put(ids.get(i), images.get(i));
-				netids.add(ids.get(i));
-				neturls.add(images.get(i));
-			}
+			// if (ids.get(i).equals(CardEditActivity.LOCAL_IMAGE)) {
+			local.add(images.get(i));
+			// localsMap.put(images.get(i), images.get(i));
+			// }
+			// else {
+			// network.put(ids.get(i), images.get(i));
+			// netids.add(ids.get(i));
+			// neturls.add(images.get(i));
+			// }
 		}
 
 		pwh = new PopupWindows(CardAddUserImageActivity.this);
@@ -70,7 +69,6 @@ public class CardAddUserImageActivity extends Activity {
 
 	private void initSelecter() {
 		new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				try {
@@ -104,30 +102,17 @@ public class CardAddUserImageActivity extends Activity {
 				break;
 			}
 			case MsgTagVO.INIT_SELECT:
-				mIsh.insertNetworkImage(netids, neturls, mLoadImage,
+				mIsh.insertNetworkImage(local, local, mLoadImage,
 						new OnClickListener() {
-
 							@Override
 							public void onClick(View v) {
 								String id = (String) v.getTag();
-								// mConnHelper.delheaderimg(id, mUIHandler,
-								// MsgTagVO.PUB_INFO,
-								// CardAddUserImageActivity.this, true,
-								// null, id);
 								toDelView.put(id, v);
 								mIsh.removeFromContainer(toDelView.get(id));
 							}
 						}, null);
-				mIsh.insertLocalImage(local);
+				// mIsh.insertLocalImage(local);
 				break;
-			// case MsgTagVO.PUB_INFO:
-			// if (JsonHandler.checkResult((String) msg.obj,
-			// getApplicationContext())) {
-			// Bundle bundle = msg.getData();
-			// String id = bundle.getString("data");
-			// mIsh.removeFromContainer(toDelView.get(id));
-			// }
-			// break;
 			default:
 				break;
 			}
@@ -157,26 +142,26 @@ public class CardAddUserImageActivity extends Activity {
 						@Override
 						public void onClick(View v) {
 							ArrayList<String> images = new ArrayList<String>();
-							ArrayList<String> ids = new ArrayList<String>();
+							StringBuilder sb = new StringBuilder();
+							boolean flag = false;
 							for (String tag : mIsh.getTags()) {
-								// if (network.containsKey(tag))
-								// {
-								// ids.add(tag);
-								// } else
 								if (isLocal(tag) == false) {
 									images.add(tag);
+								} else {
+									if (flag)
+										sb.append(",");
+									sb.append(tag.subSequence(tag.lastIndexOf("/")+1, tag.length()));
+									flag = true;
 								}
 							}
-							String originStr = getPhotoStr(local);
 							ZhuoConnHelper.getInstance(getApplicationContext())
 									.pubPhoto(CardAddUserImageActivity.this,
 											mUIHandler, MsgTagVO.DATA_LOAD,
-											originStr, images);
+											sb.toString(), images);
 						}
 					});
 
 			mIsh.getmAddButton().setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					mIsh.initParams();
@@ -232,20 +217,5 @@ public class CardAddUserImageActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			pwh.showPopDlg(findViewById(R.id.rootLayout),
-					new OnClickListener() {
-
-						@Override
-						public void onClick(View paramView) {
-							CardAddUserImageActivity.this.finish();
-
-						}
-					}, null, R.string.info27);
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
+	
 }

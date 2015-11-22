@@ -49,7 +49,6 @@ import com.umeng.socialize.media.UMImage;
 
 public class MainActivity extends Activity implements OnPullDownListener,
 		OnItemClickListener {
-
 	@InjectView(R.id.main_banner)
 	ImageView idBanner;
 	@InjectView(R.id.at_notices)
