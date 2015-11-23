@@ -2520,38 +2520,39 @@ public class ZhuoConnHelper {
 			exist = true;
 		return exist;
 	}
-	
-	
+
 	/**
 	 * 设置群组信息提供者，并发送消息到群主
+	 * 
 	 * @param context
-	 * @param targetId 对方ID
+	 * @param targetId
+	 *            对方ID
 	 * @param group
-	 * @param type 0,退出；1 加入
+	 * @param type
+	 *            0,退出；1 加入
 	 */
 	public void followQuan(final Context context, String targetId, Group group,
 			int type) {
 		HashMap<String, Group> groupHashMap = getGroupMap();
-		//reqMsg已实现， quitMsg需要重新自定义
+		// reqMsg已实现， quitMsg需要重新自定义
 		TextMessage reqMsg = null, quitMsg = null;
 		String pushReqMs = "", pushQuitMs = "";
 		if (type == 1) {// 加入群
 			groupHashMap.put(group.getId(), group);
-//			reqMsg = CustomerMessageFactory.getInstance().getReqQuanMsg(
-//					getUserid(), "XX", group.getId(), group.getName());
-//			pushReqMs = getUserid() + "请求加入圈子：" + group.getName() + "(+"
-//					+ group.getId() + ")";
+			// reqMsg = CustomerMessageFactory.getInstance().getReqQuanMsg(
+			// getUserid(), "XX", group.getId(), group.getName());
+			// pushReqMs = getUserid() + "请求加入圈子：" + group.getName() + "(+"
+			// + group.getId() + ")";
 		} else if (type == 0) {
 			groupHashMap.remove(group.getId());
-//			 quitMsg=
+			// quitMsg=
 		}
 		setGroupMap(groupHashMap);
 
-		if (RongIM.getInstance().getRongIMClient() == null)
-			return;
-		if (getUserid() == null)
-			return;
-
+		// if (RongIM.getInstance().getRongIMClient() == null)
+		// return;
+		// if (getUserid() == null)
+		// return;
 		// ios 暂时没做
 		// RongIM.getInstance()
 		// .getRongIMClient()
