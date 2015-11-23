@@ -215,11 +215,13 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 							findViewById(R.id.linearLayoutBroadcast)
 									.setVisibility(View.VISIBLE);
 						}
-
-						// ≥ı ºªØtab∫Õviewpager
+						if(fragments!=null)
+							fragments.clear();
 						viewPager.setAdapter(getPagerAdapter());
+						tabButton.setViewPager(null);
 						tabButton.setViewPager(viewPager);
 						tabButton.setVisibility(View.VISIBLE);
+						viewPager.setCurrentItem(currentPager);
 					}
 				}
 				break;
@@ -250,7 +252,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 								R.string.label_exitSuccess);
 						type = 0;
 					} else {
-						pwh.showPopTip(findViewById(R.id.zhuomai_card), null,
+						pwh.showPopTip(findViewById(R.id.root), null,
 								R.string.label_applysuccess);
 						type = 1;
 					}
