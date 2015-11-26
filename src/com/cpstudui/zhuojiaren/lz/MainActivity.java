@@ -20,9 +20,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.cpstudio.zhuojiaren.JiarenActiveActivity;
 import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.facade.InfoFacade;
@@ -30,6 +32,7 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.Comment;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.GoodsPicAdVO;
 import com.cpstudio.zhuojiaren.model.MainHeadInfo;
@@ -302,7 +305,15 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			startActivity(i);
 		}
 	}
-
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == Activity.RESULT_OK) {
+			if (requestCode == MsgTagVO.MSG_CMT) {
+				Toast.makeText(MainActivity.this, "评论成功！", 2000).show();
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 	// refresh刷新加载的新的数据没有写数据库
 	@Override
 	public void onRefresh() {

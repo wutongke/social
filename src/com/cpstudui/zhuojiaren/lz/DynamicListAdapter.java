@@ -27,6 +27,7 @@ import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
+import com.cpstudio.zhuojiaren.model.Praise;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
@@ -49,7 +50,6 @@ public class DynamicListAdapter extends BaseAdapter {
 	private float times = 2;
 	private ZhuoConnHelper mConnHelper = null;
 	private PopupWindows phw = null, phwChild;
-	String msgid = "11";
 	String groupId;
 	BaseCodeData baseDataSet;
 	// 娌＄敤
@@ -125,7 +125,7 @@ public class DynamicListAdapter extends BaseAdapter {
 					.getTag(R.id.tag_view_holder);
 		}
 		Dynamic item = mList.get(position);
-		msgid = item.getStatusid();
+		final String msgid = item.getStatusid();
 
 		final String userId = item.getUserid();
 
@@ -186,30 +186,30 @@ public class DynamicListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View view) {
 
-//				OnClickListener zanListener = new OnClickListener() {
-//
-//					@Override
-//					public void onClick(View v) {
-//						mConnHelper.praiseDynamic(mHandler, MsgTagVO.MSG_LIKE,
-//								msgid, 1);
-//					}
-//				};
-//				OnClickListener cmtListener = new OnClickListener() {
-//
-//					@Override
-//					public void onClick(View v) {
-//
-//						Intent i = new Intent(mContext, MsgCmtActivity.class);
-//						i.putExtra("msgid", msgid);
-//						i.putExtra("parentid", msgid);
-//						i.putExtra("type", 2);
-//						// ((Activity)
-//						// mContext).startActivityForResult(i,MsgTagVO.MSG_CMT);
-//						((Activity) mContext).startActivityForResult(i,
-//								MsgTagVO.MSG_CMT);
-//					}
-//				};
-//				phw.showOptionsPop(view, times, zanListener, cmtListener);
+				OnClickListener zanListener = new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						mConnHelper.praiseDynamic(mHandler, MsgTagVO.MSG_LIKE,
+								msgid, 1);
+					}
+				};
+				OnClickListener cmtListener = new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+
+						Intent i = new Intent(mContext, MsgCmtActivity.class);
+						i.putExtra("msgid", msgid);
+						i.putExtra("parentid", msgid);
+						i.putExtra("type", 2);
+						// ((Activity)
+						// mContext).startActivityForResult(i,MsgTagVO.MSG_CMT);
+						((Activity) mContext).startActivityForResult(i,
+								MsgTagVO.MSG_CMT);
+					}
+				};
+				phw.showOptionsPop(view, times, zanListener, cmtListener);
 			}
 		});
 
@@ -238,29 +238,13 @@ public class DynamicListAdapter extends BaseAdapter {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case MsgTagVO.MSG_LIKE: {
-				if (JsonHandler.checkResult((String) msg.obj, mContext)) {
-					CommonUtil
-							.displayToast(mContext, R.string.label_zanSuccess);
-					// Bundle bundle = msg.getData();
-					// String id = bundle.getString("data");
-					// for (ZhuoInfoVO item : mList) {
-					// if (id != null) {
-					// if (id.equals(item.getMsgid())) {
-					// item.setGoodnum((Integer.valueOf(item
-					// .getGoodnum()) + 1) + "");
-					// } else if (item.getOrigin() != null
-					// && id.equals(item.getOrigin().getMsgid())) {
-					// item.getOrigin().setGoodnum(
-					// (Integer.valueOf(item.getOrigin()
-					// .getGoodnum()) + 1) + "");
-					// }
-					// }
-					// }
-					// notifyDataSetChanged();
+			case MsgTagVO.MSG_LIKE:
+				if (JsonHandler.checkResult((String) msg.obj,
+						mContext)) {
+					CommonUtil.displayToast(mContext,
+							R.string.label_zanSuccess);
 				}
 				break;
-			}
 			case MsgTagVO.MSG_DEL: {
 				if (JsonHandler.checkResult((String) msg.obj, mContext)) {
 					CommonUtil.displayToast(mContext, R.string.info12);
