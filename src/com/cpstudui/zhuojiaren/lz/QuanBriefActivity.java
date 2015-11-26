@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -77,12 +78,13 @@ public class QuanBriefActivity extends BaseActivity {
 	ImageView ivFun;
 	int localCode = -1;
 	private PopupWindows phw = null;
-	private LoadImage mLoadImage =  LoadImage.getInstance();
-	
+	private LoadImage mLoadImage = LoadImage.getInstance();
+
 	// 不同身份，功能不同
 	private int memberType = 0;
 	private PopupWindows pwh = null;
 	private String groupid = null, groupName = null, gheadurl = null;
+	private String owerName = null, owerId = null;
 	private ZhuoConnHelper mConnHelper = null;
 	private boolean isfollow = false;// 是否已经加入该圈子
 	private QuanFacade mFacade = null;
@@ -157,8 +159,9 @@ public class QuanBriefActivity extends BaseActivity {
 						tvName.setText(groupName);
 						gheadurl = detail.getGheader();
 						ivGroupHeader.setTag(gheadurl);
-						groupName = detail.getName();
-						tvQunzhuName.setText(groupName);
+						owerName = detail.getName();
+						owerId = detail.getUserid();
+						tvQunzhuName.setText(owerName);
 						tvGonggao.setText(detail.getGpub());
 						tvBrief.setText(detail.getGintro());
 						// 圈子类型
@@ -194,7 +197,8 @@ public class QuanBriefActivity extends BaseActivity {
 							});
 						}
 						changeType(isfollow);
-						mLoadImage.beginLoad(detail.getGheader(), ivGroupHeader);
+						mLoadImage
+								.beginLoad(detail.getGheader(), ivGroupHeader);
 						mLoadImage.beginLoad(detail.getUheader(), imageViewCj);
 					}
 				}
@@ -226,19 +230,23 @@ public class QuanBriefActivity extends BaseActivity {
 			case MsgTagVO.FOLLOW_QUAN: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
+					int type = 0;
 					if (isfollow) {
-						isfollow = false;
-						mConnHelper.setGroupMap(new Group(groupid, null, null),
-								0);
 						pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
 								null, R.string.label_exitSuccess);
+						type = 0;
 					} else {
-						isfollow = true;
-						mConnHelper.setGroupMap(new Group(groupid, groupName,
-								android.net.Uri.parse(gheadurl)), 0);
 						pwh.showPopTip(findViewById(R.id.scrollViewGroupInfo),
 								null, R.string.label_applysuccess);
+
+						type = 1;
 					}
+					mConnHelper.followQuan(
+							QuanBriefActivity.this,
+							owerId,
+							new Group(groupid, groupName, android.net.Uri
+									.parse(gheadurl)), type);
+					isfollow = !isfollow;
 					loadData();
 				}
 				break;
@@ -246,6 +254,7 @@ public class QuanBriefActivity extends BaseActivity {
 			}
 		}
 	};
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -253,13 +262,14 @@ public class QuanBriefActivity extends BaseActivity {
 			loadData();
 		}
 	}
+
 	private void initOnClick() {
 		// TODO Auto-generated method stub
 		btnJoinQuan.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				mConnHelper.followGroup(mUIHandler, MsgTagVO.FOLLOW_QUAN,
-						groupid, QuanVO.QUAN_JOIN,null, "");
+						groupid, QuanVO.QUAN_JOIN, null, "");
 			}
 		});
 
@@ -271,7 +281,7 @@ public class QuanBriefActivity extends BaseActivity {
 					public void onClick(View v) {
 						mConnHelper.followGroup(mUIHandler,
 								MsgTagVO.FOLLOW_QUAN, groupid,
-								QuanVO.QUAN_QUIT,null, "");
+								QuanVO.QUAN_QUIT, null, "");
 					}
 				}, null, R.string.info13);
 			}
