@@ -100,13 +100,14 @@ public class JiarenActiveActivity extends Activity implements
 				// TODO Auto-generated method stub
 				if (id != -1) {
 					Intent i = new Intent();
-					i.setClass(JiarenActiveActivity.this, DynamicDetailActivity.class);
+					i.setClass(JiarenActiveActivity.this,
+							DynamicDetailActivity.class);
 					i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
 					startActivity(i);
 				}
 			}
 		});
-		
+
 		loadData();
 		initClick();
 	}
@@ -120,13 +121,12 @@ public class JiarenActiveActivity extends Activity implements
 
 	private void initClick() {
 		ivPub.setImageResource(R.drawable.iwrite);
-		ivPub.setOnClickListener(
-				new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						pwh.showPop(findViewById(R.id.layoutJiarenActive));
-					}
-				});
+		ivPub.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				pwh.showPop(findViewById(R.id.layoutJiarenActive));
+			}
+		});
 		findViewById(R.id.textViewActiveJiaren).setOnClickListener(
 				new OnClickListener() {// 我的所有家人动态
 					@Override
@@ -200,6 +200,7 @@ public class JiarenActiveActivity extends Activity implements
 								+ getString(R.string.p_jiaren_active_rizhi));
 
 				ImageView iv = (ImageView) findViewById(R.id.imageViewUserHead);
+				ImageView bgView = (ImageView) findViewById(R.id.bgImg);
 				iv.setOnClickListener(new OnClickListener() {
 
 					@Override
@@ -211,6 +212,8 @@ public class JiarenActiveActivity extends Activity implements
 						startActivity(i);
 					}
 				});
+				if (user.getBgpic() != null)
+					mLoadImage.beginLoad(user.getBgpic(), bgView);
 				if (headurl != null && !headurl.equals("")) {
 					iv.setTag(headurl);
 					mLoadImage.beginLoad(headurl, iv);
@@ -293,16 +296,16 @@ public class JiarenActiveActivity extends Activity implements
 		}
 	};
 
-//	@Override
-//	public void onItemClick(AdapterView<?> parent, View view, int position,
-//			long id) {
-//		if (id != -1) {
-//			Intent i = new Intent();
-//			i.setClass(JiarenActiveActivity.this, DynamicDetailActivity.class);
-//			i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
-//			startActivity(i);
-//		}
-//	}
+	// @Override
+	// public void onItemClick(AdapterView<?> parent, View view, int position,
+	// long id) {
+	// if (id != -1) {
+	// Intent i = new Intent();
+	// i.setClass(JiarenActiveActivity.this, DynamicDetailActivity.class);
+	// i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
+	// startActivity(i);
+	// }
+	// }
 
 	private void loadInfo() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
@@ -320,8 +323,6 @@ public class JiarenActiveActivity extends Activity implements
 		}
 	}
 
-	
-	
 	public void loadData() {
 		if (mPullDownView.startLoadData()) {
 			// mList.clear();
