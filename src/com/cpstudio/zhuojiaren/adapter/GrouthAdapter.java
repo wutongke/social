@@ -25,7 +25,7 @@ public class GrouthAdapter extends CommonAdapter<GrouthVedio>{
 //		helper.setImageResource(R.id.ig_grouth_image, R.drawable.pop_cancel2);
 		helper.setText(R.id.ig_grouth_name, item.getTutorName());
 		helper.setText(R.id.ig_browse_count,item.getViewCount());
-		helper.setText(R.id.ig_duration, Util.getTimeString(Long.parseLong(item.getDuration())*1000));
+		helper.setText(R.id.ig_duration, Util.getTimeString(item.getDuration()));
 		imageLoader.beginLoad(item.getImageAddr(), (ImageView)helper.getView(R.id.ig_grouth_image));
 	}
 
