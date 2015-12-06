@@ -166,7 +166,7 @@ public class AutoTextView extends TextSwitcher implements
 	}
 
 	public void updateUI() {
-		AutoTextView.this.setText(getList().get(index).getPublish());
+		AutoTextView.this.setText(getList().get(0).getPublish());
 		invalidate(); // 鏇存柊瑙嗗浘
 		if (updateThread == null)
 			updateThread = new Thread(new updateThread());
@@ -221,5 +221,7 @@ public class AutoTextView extends TextSwitcher implements
 
 	public void setList(List<MessagePubVO> list) {
 		this.list = list;
+		updateThread=null;
+		this.index=0;
 	}
 }

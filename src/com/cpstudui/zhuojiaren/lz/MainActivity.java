@@ -120,10 +120,11 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
+	
 		// 是否和圈子话题公用一个数据结构还不一定
 		mAdapter = new DynamicListAdapter(MainActivity.this, mList, 1);
 		mListView.setAdapter(mAdapter);
-		mPullDownView.setHideHeader();
+//		mPullDownView.setHideHeader();
 		mPullDownView.setShowFooter(false);
 		mPullDownView.noFoot();
 
@@ -273,6 +274,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
+				boolean loadState=false;
 				MainHeadInfo info = null;
 				if (msg.obj instanceof MainHeadInfo) {// 加载的本地数据
 					info = (MainHeadInfo) msg.obj;
@@ -281,9 +283,12 @@ public class MainActivity extends Activity implements OnPullDownListener,
 							getApplicationContext());
 					info = nljh.parseMainInfo();
 					if (info != null) {
+						loadState=true;
+						
 						updateAdInfo(info);
 					}
 				}
+				mPullDownView.finishLoadData(loadState);
 				break;
 			}
 			case MsgTagVO.DATA_REFRESH: {
@@ -338,8 +343,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 		picAd = info.getAdtop();
 
-		imageLoader.addTask(picAd.getAdlink(), idBanner);
-		imageLoader.doTask();
+		imageLoader.beginLoad(picAd.getAdlink(), idBanner);
 
 		ArrayList<MessagePubVO> listData = (ArrayList<MessagePubVO>) info
 				.getPub();
@@ -348,9 +352,9 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		for (int i = 0; i < listData.size(); i++) {
 			noticesListData.add(listData.get(i));
 		}
-
+		antoText.stopAutoText();
 		antoText.setList(noticesListData);
-		antoText.updateUI();
+		
 		antoText.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -363,7 +367,8 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				startActivity(i);
 			}
 		});
-
+		antoText.updateUI();
+		
 		if (hotListData != null)
 			hotListData.clear();
 		hotListData = info.getAdmid();
@@ -371,7 +376,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			String url = hotListData.get(i).getAdpic();
 			final String id = hotListData.get(i).getGoodsid();
 			hotImages.get(i).setTag(url);
-			imageLoader.addTask(url, hotImages.get(i));
+			imageLoader.beginLoad(url, hotImages.get(i));
 
 			hotImages.get(i).setOnClickListener(new OnClickListener() {
 
@@ -385,7 +390,6 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				}
 			});
 		}
-		imageLoader.doTask();
 
 		ArrayList<Dynamic> list = info.getStatus();
 		// boolean loadState = false;

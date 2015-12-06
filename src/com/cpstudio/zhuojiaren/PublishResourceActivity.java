@@ -50,7 +50,7 @@ public class PublishResourceActivity extends BaseActivity {
 	private String mLocation = "";
 	private ZhuoConnHelper mConnHelper = null;
 	private BaiduLocationHelper locationHelper = null;
-	// 供需类型（1-50为资源信息，51-100为需求信息。见 基础-获取基础数据编码 接口文档
+	// 供需类型（1-5为资源信息，5-00为需求信息。见 基础-获取基础数据编码 接口文档
 	int typecode;
 	List<List<String>> subStrings;
 	List<sdtype> gtypes;
@@ -80,7 +80,7 @@ public class PublishResourceActivity extends BaseActivity {
 			gtypes = baseCodeData.getSdtype();
 			List<String> zyList = new ArrayList<String>(), xqList = new ArrayList<String>();
 			for (sdtype item : gtypes) {
-				if (item.getId() < 51)
+				if (item.getId() < 5)
 					zyList.add(item.getContent());
 				else
 					xqList.add(item.getContent());
