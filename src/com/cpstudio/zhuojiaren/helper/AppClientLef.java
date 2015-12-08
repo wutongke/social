@@ -616,7 +616,7 @@ public class AppClientLef {
 	// accesspms int 访问权限 0:所有人都可以访问，1:加入圈子才可以访问
 	public boolean createQuan(Activity activity, Handler handler,
 			int handlerTag, String gname, String gintro, String gtype,
-			String city, String followpms, String accesspms,
+			String city, String followpms, String accesspms,String gpub,
 			ArrayList<String> files) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
@@ -626,6 +626,7 @@ public class AppClientLef {
 		nameValuePairs.add(new BasicNameValuePair("city", city));
 		nameValuePairs.add(new BasicNameValuePair("followpms", followpms));
 		nameValuePairs.add(new BasicNameValuePair("accesspms", accesspms));
+		nameValuePairs.add(new BasicNameValuePair("gpub", gpub));
 		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
 		filesMap.put("gheader", files);
 		return ZhuoConnHelper.getInstance(context).doPostWithFile(filesMap,

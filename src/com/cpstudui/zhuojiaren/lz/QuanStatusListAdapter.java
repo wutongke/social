@@ -158,7 +158,10 @@ public class QuanStatusListAdapter extends BaseAdapter {
 			String time = item.getAddtime();
 			time = CommonUtil.calcTime(time);
 			convertView.setTag(R.id.tag_id, msgid);
-			holder.nameTV.setText(authorName);
+			if (item.getGroupName() != null)
+				holder.nameTV.setText(item.getGroupName());
+			else
+				holder.nameTV.setText(authorName);
 			holder.timeTV.setText(time);
 			if (work != null) {
 				holder.workTV.setText(work);
@@ -233,6 +236,11 @@ public class QuanStatusListAdapter extends BaseAdapter {
 		} else if (mList.get(position).getGroupActivity() != null) {
 			final EventVO event = mList.get(position).getGroupActivity();
 			msgid = event.getActivityid();
+			if (event.getGroupName() != null) {
+				holderActive.tvQuanName.setVisibility(View.VISIBLE);
+				holderActive.tvQuanName.setText(event.getGroupName());
+			} else
+				holderActive.tvQuanName.setVisibility(View.GONE);
 			holderActive.textViewTitle.setText(event.getTitle());
 			holderActive.textViewDateTime.setText(event.getStarttime());
 			if (event.getOutdate() == 1)
@@ -316,6 +324,7 @@ public class QuanStatusListAdapter extends BaseAdapter {
 		TextView textViewNums;
 		TextView textViewDetail;
 		CheckBox cbSelected;
+		TextView tvQuanName;
 	}
 
 	private ViewHolderActive initHolderActive(View convertView) {
@@ -335,6 +344,8 @@ public class QuanStatusListAdapter extends BaseAdapter {
 				.findViewById(R.id.textViewNums);
 		holder.textViewDetail = (TextView) convertView
 				.findViewById(R.id.textViewDetail);
+		holder.tvQuanName = (TextView) convertView
+				.findViewById(R.id.tvQuanName);
 
 		holder.cbSelected = (CheckBox) convertView.findViewById(R.id.cbChecked);
 

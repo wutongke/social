@@ -63,7 +63,7 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 		}
 		userFacade = new UserFacade(getApplicationContext());
 		pwh = new PopupWindows(UserHomeActivity.this);
-		mLoadImage = new LoadImage();
+		mLoadImage = LoadImage.getInstance();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.listview_header9);
@@ -161,8 +161,7 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 					startActivity(i);
 				}
 			});
-			mLoadImage.addTask(headurl, iv);
-			mLoadImage.doTask();
+			mLoadImage.beginLoad(headurl, iv);
 		}
 	}
 
@@ -255,6 +254,8 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 								+ getString(R.string.p_jiaren_active_rizhi));
 
 				ImageView iv = (ImageView) findViewById(R.id.imageViewUserHead);
+				ImageView bgView = (ImageView) findViewById(R.id.bgImg);
+				
 				iv.setOnClickListener(new OnClickListener() {
 
 					@Override
@@ -265,10 +266,11 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 						startActivity(i);
 					}
 				});
+				if (user.getBgpic() != null)
+					mLoadImage.beginLoad(user.getBgpic(), bgView);
 				if (headurl != null && !headurl.equals("")) {
 					iv.setTag(headurl);
-					mLoadImage.addTask(headurl, iv);
-					mLoadImage.doTask();
+					mLoadImage.beginLoad(headurl, iv);
 				}
 			}
 		} catch (Exception e) {
@@ -289,6 +291,8 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 
 	@Override
 	public void onRefresh() {
+		mPage=0;
+		loadData();
 	}
 
 	@Override

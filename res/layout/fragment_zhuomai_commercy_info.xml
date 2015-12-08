@@ -44,6 +44,7 @@
             android:background="#d8d8d8" />
 
         <RelativeLayout
+            android:id="@+id/rlmyResource"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp" >
@@ -114,6 +115,7 @@
             android:background="#d8d8d8" />
 
         <RelativeLayout
+            android:id="@+id/rlmyNeed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp" >

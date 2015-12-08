@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -13,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
@@ -26,9 +29,11 @@ public class ActiveListAdapter extends BaseAdapter {
 	private LoadImage mLoadImage = LoadImage.getInstance();
 	private LayoutInflater inflater = null;
 	List<City> cityList;
+	Context mcontext;
 
 	public ActiveListAdapter(Context context, ArrayList<Dynamic> list) {
 		this.mList = list;
+		mcontext = context;
 		this.inflater = LayoutInflater.from(context);
 		cityList = ZhuoConnHelper.getInstance(context.getApplicationContext())
 				.getCitys();
@@ -78,6 +83,7 @@ public class ActiveListAdapter extends BaseAdapter {
 		List<PicNewVO> Pics = item.getStatusPic();
 		Context context = convertView.getContext();
 		if (Pics != null && Pics.size() > 0) {
+			holder.rl.setVisibility(View.VISIBLE);
 			holder.textViewAll.setText(context.getString(R.string.label_gong)
 					+ Pics.size() + context.getString(R.string.label_zhang));
 			LinearLayout ll = null;
@@ -115,17 +121,35 @@ public class ActiveListAdapter extends BaseAdapter {
 					.getLayoutParams();
 			rllp.addRule(RelativeLayout.CENTER_IN_PARENT);
 			ll.setLayoutParams(rllp);
+			final ArrayList<String> picArray = new ArrayList<String>();
 			for (int i = 0; i < ivs.size(); i++) {
 				ImageView iv = ivs.get(i);
 				iv.setTag(Pics.get(i).getPic());
 				mLoadImage.addTask(Pics.get(i).getPic(), iv);
+				picArray.add(Pics.get(i).getPic());
 			}
-		}
+			holder.rl.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					if (picArray != null && picArray.size() > 0) {
+						Intent intent = new Intent(mcontext,
+								PhotoViewMultiActivity.class);
+
+						intent.putStringArrayListExtra("pics", picArray);
+						intent.putExtra("pic", picArray.get(0));
+						mcontext.startActivity(intent);
+					}
+				}
+			});
+		} else
+			holder.rl.setVisibility(View.GONE);
 
 		String place = "µØµã±àºÅ£º" + item.getPosition();
 		if (cityList != null && item.getPosition() >= 1
 				&& item.getPosition() <= cityList.size())
-			place = cityList.get(item.getPosition()-1).getCityName();
+			place = cityList.get(item.getPosition() - 1).getCityName();
 		String time = item.getAddtime();
 		if (null != time && !time.equals("") && time.indexOf("-") != -1) {
 			String month = ZhuoCommHelper.getMonthFromTime(time);

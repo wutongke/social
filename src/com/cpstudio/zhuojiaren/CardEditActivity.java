@@ -182,8 +182,8 @@ public class CardEditActivity extends Activity {
 		} else {
 			textViewuserNameShow.setText(getString(R.string.edit_info));
 		}
-		initClick();
-
+		if(isEditable)
+			initClick();
 	}
 
 	@Override

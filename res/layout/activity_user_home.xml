@@ -28,12 +28,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/button_top_bg_menu"
+            android:layout_marginRight="18dp"
+            android:background="@null"
             android:text="@string/label_card"
             android:textColor="#ffffff"
-            android:textSize="14sp"
-            android:visibility="gone" />
+            android:textSize="14sp" 
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <LinearLayout

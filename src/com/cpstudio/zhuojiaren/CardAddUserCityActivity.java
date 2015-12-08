@@ -78,6 +78,12 @@ public class CardAddUserCityActivity extends Activity {
 		fillName(tvPlace, place);
 		fillName(tvTown, othertowns);
 		fillName(tvOtherTowns, towns);
+		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				CardAddUserCityActivity.this.finish();
+			}
+		});
 		if (isEditable)
 			initClick();
 		else
@@ -127,13 +133,7 @@ public class CardAddUserCityActivity extends Activity {
 	}
 
 	private void initClick() {
-		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				CardAddUserCityActivity.this.finish();
-			}
-		});
+		
 		findViewById(R.id.buttonSubmit).setOnClickListener(
 				new OnClickListener() {
 					@Override

@@ -66,7 +66,7 @@
     <RelativeLayout
         android:id="@+id/v_bg"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="@dimen/bg_image_height"
         android:orientation="vertical" >
 
         <RelativeLayout
@@ -78,7 +78,7 @@
                 android:id="@+id/bgImg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop" />
+                android:scaleType="fitXY" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"

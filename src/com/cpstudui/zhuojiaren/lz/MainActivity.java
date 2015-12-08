@@ -94,7 +94,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	private InfoFacade infoFacade = null;
 	private int mPage = 1;
 	boolean isContinue = true;
-	LoadImage imageLoader = new LoadImage(3);
+	LoadImage imageLoader = LoadImage.getInstance();
 
 	MainHeadInfo adInfo = new MainHeadInfo();
 
@@ -343,7 +343,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 		picAd = info.getAdtop();
 
-		imageLoader.beginLoad(picAd.getAdlink(), idBanner);
+		imageLoader.beginLoad(picAd.getAdpic(), idBanner);
 
 		ArrayList<MessagePubVO> listData = (ArrayList<MessagePubVO>) info
 				.getPub();

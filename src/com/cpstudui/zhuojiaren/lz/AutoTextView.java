@@ -168,6 +168,7 @@ public class AutoTextView extends TextSwitcher implements
 	public void updateUI() {
 		AutoTextView.this.setText(getList().get(0).getPublish());
 		invalidate(); // 鏇存柊瑙嗗浘
+		stopFlag=false;
 		if (updateThread == null)
 			updateThread = new Thread(new updateThread());
 		updateThread.start();

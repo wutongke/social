@@ -477,16 +477,16 @@ public class QuanCreateActivity extends BaseActivity {
 						else
 							addQuanRight2.setChecked(true);
 						// Õ∑œÒœ‘ æ£∫£∫£∫£ø£ø£ø
-//						String head = detail.getGheader();
-//
-//						if (head != null) {
-//							try {
-//								mIsh2.updateNetworkImage(head,mLoadImage,"mew");
-//								mHeadChanged = false;
-//							} catch (Exception e) {
-//								e.printStackTrace();
-//							}
-//						}
+						// String head = detail.getGheader();
+						//
+						// if (head != null) {
+						// try {
+						// mIsh2.updateNetworkImage(head,mLoadImage,"mew");
+						// mHeadChanged = false;
+						// } catch (Exception e) {
+						// e.printStackTrace();
+						// }
+						// }
 					}
 				}
 				break;
@@ -512,6 +512,8 @@ public class QuanCreateActivity extends BaseActivity {
 		String title = editTextTitle.getText().toString();
 		groupname = title;
 		String intro = introTextTitle.getText().toString();
+		String pub = ((EditText) findViewById(R.id.editTextQuanPub)).getText()
+				.toString().trim();
 		RadioButton radio = (RadioButton) findViewById(radios
 				.getCheckedRadioButtonId());
 		String gproperty = radio.getText().toString();
@@ -528,8 +530,7 @@ public class QuanCreateActivity extends BaseActivity {
 			}
 			ids = ZhuoCommHelper.subLast(ids);
 		}
-		String pub = ((EditText) findViewById(R.id.editTextQuanPub)).getText()
-				.toString().trim();
+
 		// Map<String, String> files = new HashMap<String, String>();
 		// if (mHeadChanged) {
 		// ArrayList<String> temp = mIsh2.getTags();
@@ -557,7 +558,7 @@ public class QuanCreateActivity extends BaseActivity {
 			mConnHelper.createQuan(QuanCreateActivity.this, mUIHandler,
 					MsgTagVO.PUB_INFO, title, intro,
 					String.valueOf(typeQuanzi), locateCode, addRight, seeRight,
-					mIsh2.getTags());
+					pub, mIsh2.getTags());
 		}
 	}
 

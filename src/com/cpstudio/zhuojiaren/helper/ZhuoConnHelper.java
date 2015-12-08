@@ -1187,12 +1187,12 @@ public class ZhuoConnHelper {
 	 * 
 	 * @param mUIHandler
 	 * @param tag
-	 * @param type
+	 * @param type 广告类别 0-首页 1-发现 2-精进 3-商城 4-众筹
 	 * @return
 	 */
 	public boolean getAdInfo(Handler mUIHandler, int tag, int type) {
 		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("type", type + ""));
+		params.add(new BasicNameValuePair("type",String.valueOf(type)));
 		return getFromServerByPost(ZhuoCommHelperLz.getAdInfo(), params,
 				mUIHandler, tag);
 	}

@@ -27,6 +27,7 @@ import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ImageLoader;
+import com.cpstudui.zhuojiaren.lz.GongXuDetailActivity;
 
 public class ZhuomaiCardCommercyInfoFra extends Fragment {
 	@InjectView(R.id.tvMoreResource)
@@ -49,6 +50,10 @@ public class ZhuomaiCardCommercyInfoFra extends Fragment {
 	ImageView imageViewResourcePic;
 	@InjectView(R.id.imageViewNeedPic)
 	ImageView imageViewNeedPic;
+	@InjectView(R.id.rlmyResource)
+	View rlmyResource;
+	@InjectView(R.id.rlmyNeed)
+	View rlmyNeed;
 	private LoadImage mLoadImage = LoadImage.getInstance();
 	public final static String EDIT_RES_STR1 = "type";
 	public final static String EDIT_RES_STR2 = "userid";
@@ -90,19 +95,41 @@ public class ZhuomaiCardCommercyInfoFra extends Fragment {
 		// TODO Auto-generated method stub
 		if (info == null)
 			return;
-		ResourceGXVO resource = info.getSupply();
+		final ResourceGXVO resource = info.getSupply();
 		if (resource != null) {
 			mLoadImage.beginLoad(resource.getPicture(),
 					imageViewResourcePic);
 			textViewResourceTitle.setText(resource.getTitle());
 			textViewTime.setText(resource.getAddtime());
 		}
-		ResourceGXVO need = info.getDemand();
+		final ResourceGXVO need = info.getDemand();
 		if (need != null) {
 			mLoadImage.beginLoad(need.getPicture(), imageViewNeedPic);
 			textViewNeedTitle.setText(need.getTitle());
 			textViewNeedTime.setText(need.getAddtime());
 		}
+		rlmyResource.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(),
+						GongXuDetailActivity.class);
+				intent.putExtra("msgid",resource.getSdid());
+				startActivity(intent);
+			}
+		});
+		rlmyNeed.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(),
+						GongXuDetailActivity.class);
+				intent.putExtra("msgid",need.getSdid());
+				startActivity(intent);
+			}
+		});
 	}
 
 	@Override
