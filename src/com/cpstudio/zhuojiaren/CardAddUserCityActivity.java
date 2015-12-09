@@ -21,11 +21,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.Editable;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -81,6 +83,8 @@ public class CardAddUserCityActivity extends Activity {
 		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+				imm.hideSoftInputFromWindow(CardAddUserCityActivity.this.getCurrentFocus().getWindowToken(), 0);
 				CardAddUserCityActivity.this.finish();
 			}
 		});
@@ -195,27 +199,27 @@ public class CardAddUserCityActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
 						String value = edtView.getText().toString();
-						if (codeIndex == 2)// 多个地点
-						{
-							if (!"".equals(value)) {
-								value = value
-										+ ","
-										+ placeChoose.getPlace().getText()
-												.toString();
-								codes.set(codeIndex, codes.get(codeIndex) + ","
-										+ placeChoose.getCityCode());
-							}
-
-							else {
-								value = placeChoose.getPlace().getText()
-										.toString();
-								codes.set(codeIndex, placeChoose.getCityCode()
-										+ "");
-							}
-						} else {
+//						if (codeIndex == 2)// 多个地点
+//						{
+//							if (!"".equals(value)) {
+//								value = value
+//										+ ","
+//										+ placeChoose.getPlace().getText()
+//												.toString();
+//								codes.set(codeIndex, codes.get(codeIndex) + ","
+//										+ placeChoose.getCityCode());
+//							}
+//
+//							else {
+//								value = placeChoose.getPlace().getText()
+//										.toString();
+//								codes.set(codeIndex, placeChoose.getCityCode()
+//										+ "");
+//							}
+//						} else {
 							value = placeChoose.getPlace().getText().toString();
 							codes.set(codeIndex, placeChoose.getCityCode() + "");
-						}
+//						}
 						edtView.setText(value);
 					}
 				});

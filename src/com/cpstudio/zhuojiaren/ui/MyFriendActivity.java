@@ -45,20 +45,21 @@ public class MyFriendActivity extends BaseActivity implements
 	private LoadImage mLoader = LoadImage.getInstance();
 	// add by lz
 	boolean isManaging = false;
-	//送倬币给朋友是type为3
-	int type=0;
+	// 送倬币给朋友是type为3
+	int type = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_peoples);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		Intent intent = getIntent();
-		type=intent.getIntExtra("type", 0);
+		type = intent.getIntExtra("type", 0);
 		initTitle();
-		if(type==1)
-			title.setText(R.string.renmai_my); 
+		if (type == 1)
+			title.setText(R.string.renmai_my);
 		else
-			title.setText(R.string.label_myfri); 
+			title.setText(R.string.label_myfri);
 		baseDataSet = mConnHelper.getBaseDataSet();
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
@@ -66,7 +67,7 @@ public class MyFriendActivity extends BaseActivity implements
 				R.layout.listview_header);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
-		mConnHelper.getMyRenmai(mUIHandler,MsgTagVO.DATA_LOAD);
+		mConnHelper.getMyRenmai(mUIHandler, MsgTagVO.DATA_LOAD);
 		mAdapter = new CommonAdapter<UserNewVO>(MyFriendActivity.this, mList,
 				R.layout.item_myfriends_list) {
 			@Override
@@ -163,10 +164,21 @@ public class MyFriendActivity extends BaseActivity implements
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		if (id != -1) {
-			if(type==3){
+			if (type == 3) {
 				Intent i = new Intent();
 				i.putExtra("userid", (String) view.getTag(R.id.tag_id));
-				setResult(RESULT_OK,i);
+				setResult(RESULT_OK, i);
+				MyFriendActivity.this.finish();
+				return;
+			} else if (type == 100)// 选择联系人
+			{
+				if (position < 1 || position > mList.size())
+					return;
+				UserNewVO user = mList.get(position - 1);
+				Intent i = new Intent();
+				i.putExtra("name", user.getName());
+				i.putExtra("phone", user.getPhone());
+				setResult(RESULT_OK, i);
 				MyFriendActivity.this.finish();
 				return;
 			}
@@ -179,8 +191,8 @@ public class MyFriendActivity extends BaseActivity implements
 
 	private void loadData() {
 		if (mPullDownView.startLoadData()) {
-			if(1==type)
-				mConnHelper.getMyRenmai(mUIHandler,MsgTagVO.DATA_LOAD);
+			if (1 == type)
+				mConnHelper.getMyRenmai(mUIHandler, MsgTagVO.DATA_LOAD);
 			else
 				mConnHelper.getMyFriends(mUIHandler, MsgTagVO.DATA_LOAD);
 		}

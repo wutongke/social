@@ -1637,6 +1637,9 @@ public class ZhuoConnHelper {
 		if (user.getDream() != null)
 			nameValuePairs
 					.add(new BasicNameValuePair("dream", user.getDream()));
+		if(user.getFaith()!=null)
+			nameValuePairs
+			.add(new BasicNameValuePair("faith", user.getFaith()));
 		return getFromServerByPost(ZhuoCommHelperLz.modifyUserInfo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}

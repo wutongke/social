@@ -9,10 +9,12 @@ import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -94,6 +96,8 @@ public class CardAddUserFieldsActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+			imm.hideSoftInputFromWindow(CardAddUserFieldsActivity.this.getCurrentFocus().getWindowToken(), 0);
 				CardAddUserFieldsActivity.this.finish();
 			}
 		});

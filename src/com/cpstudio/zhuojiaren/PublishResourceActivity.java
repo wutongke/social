@@ -1,15 +1,19 @@
 package com.cpstudio.zhuojiaren;
 
+import io.rong.imkit.RongIM;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Process;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +34,7 @@ import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.gtype;
 import com.cpstudio.zhuojiaren.model.sdtype;
+import com.cpstudio.zhuojiaren.ui.MyFriendActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.TwoLeverChooseDialog;
@@ -153,7 +158,33 @@ public class PublishResourceActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				// 添加联系人
-				addContactPeopel();
+				final AlertDialog.Builder alterDialog = new AlertDialog.Builder(
+						PublishResourceActivity.this);
+				alterDialog.setMessage("是否从好友中选择？");
+				alterDialog.setCancelable(true);
+				alterDialog.setPositiveButton("确定",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								Intent i = new Intent(
+										PublishResourceActivity.this,
+										MyFriendActivity.class);
+								i.putExtra("type", 100);
+								startActivityForResult(i, 100);
+							}
+						});
+				alterDialog.setNegativeButton("取消",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.cancel();
+								addContactPeopel(null, null);
+							}
+						});
+				alterDialog.show();
+
 				// contactsContainer
 			}
 		});
@@ -269,7 +300,7 @@ public class PublishResourceActivity extends BaseActivity {
 				});
 	}
 
-	private void addContactPeopel() {
+	private void addContactPeopel(String nameVal, String phoneVal) {
 		LayoutInflater infloater = PublishResourceActivity.this
 				.getLayoutInflater();
 		View view = infloater.inflate(R.layout.item_add_people, null);
@@ -278,6 +309,10 @@ public class PublishResourceActivity extends BaseActivity {
 		contactsContainer.addView(view);
 		peopleList.add(people);
 		phoneList.add(phone);
+		if (nameVal != null)
+			people.setText(nameVal);
+		if (phoneVal != null)
+			people.setText(phoneVal);
 	}
 
 	private void publish() {
@@ -374,20 +409,29 @@ public class PublishResourceActivity extends BaseActivity {
 	};
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		String filePath = pwh.dealPhotoReturn(requestCode, resultCode, data,
-				false);
-		if (filePath != null) {
-			try {
-				mIsh.insertLocalImage(filePath);
-				if (mIsh.getTags() != null && mIsh.getTags().size() == 9) {
-					mIsh.getmAddButton().setVisibility(View.GONE);
+		if (resultCode == Activity.RESULT_OK) {
+			if (requestCode == 100) {
+				addContactPeopel(data.getStringExtra("name"), data.getStringExtra("phone"));
+			} else {
+				String filePath = pwh.dealPhotoReturn(requestCode, resultCode,
+						data, false);
+				if (filePath != null) {
+					try {
+						mIsh.insertLocalImage(filePath);
+						if (mIsh.getTags() != null
+								&& mIsh.getTags().size() == 9) {
+							mIsh.getmAddButton().setVisibility(View.GONE);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+
+	
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

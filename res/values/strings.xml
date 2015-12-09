@@ -1188,4 +1188,7 @@
        <string name="bg_failed">更换失败</string>
          <string name="view_into">查看更多资料</string>
        <string name="edit_info">编辑更多资料</string>
+        <string name="secret">保密</string>
+        <string name="quit_quan_iCreated_success">成功退出我发起的活动</string>
+        <string name="quit_quan_iJoined_success">成功退出我加入的活动</string>
 </resources>

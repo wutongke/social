@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,17 +17,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
-import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudui.zhuojiaren.lz.GongXuDetailActivity;
@@ -44,14 +43,10 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 //	@InjectView(R.id.buttonManage)
 //	TextView buttonManage;
 
-	@InjectView(R.id.fql_footer)
-	View fql_footer;
+	
 	@InjectView(R.id.lt_pub_res)
 	View lt_pub_res;
-	@InjectView(R.id.fql_share)
-	View fql_share;
-	@InjectView(R.id.fql_delete)
-	View fql_delete;
+
 
 	private ListView mListView;
 	private MyResListAdapterListAdapter mAdapter;
@@ -62,7 +57,7 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 	private String userid = "";
 	private ListViewFooter mListViewFooter = null;
 	// 是否处于管理
-	boolean isManaging = true;
+	boolean isManaging = false;
 	String myId;
 
 	@Override
@@ -93,18 +88,17 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 		mListView.setOnItemClickListener(this);
 		loadData();
 		initClick();
-		tvManage.setBackgroundResource(R.drawable.button_bg_black);
 		tvManage.setText(getString(R.string.label_manage));
 		// 当打开的不是我自己的名片时需要隐藏管理按钮
 		if (!userid.equals(myId) ) {
 			tvManage.setVisibility(View.GONE);
-			fql_footer.setVisibility(View.GONE);
 			lt_pub_res.setVisibility(View.GONE);
 			isManaging = false;
 		}
 	}
 
 	public void offManager() {
+		isManaging = false;
 		if (mAdapter != null) {
 			mAdapter.setManaging(false);
 			mAdapter.getmSelectedList().clear();
@@ -124,12 +118,12 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 		tvManage.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				isManaging = !isManaging;
-				mAdapter.setManaging(isManaging);
-				if (isManaging) {
-					tvManage.setText(R.string.EXIT);
+				if (!isManaging) {
+					tvManage.setText(getString(R.string.DELETE));
+					isManaging = true;
+					mAdapter.setManaging(true);
 				} else {
-					tvManage.setText(R.string.label_manage);
+					deleteSelected();
 				}
 			}
 		});
@@ -143,24 +137,16 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 				startActivityForResult(i, MsgTagVO.DATA_REFRESH);
 			}
 		});
-		fql_share.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-		fql_delete.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				deleteSelected();
-			}
-		});
+		
 	}
-
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && isManaging) {
+			offManager();
+			return true;
+		}
+		return super.dispatchKeyEvent(event);
+	}
 	protected void deleteSelected() {
 		// TODO Auto-generated method stub\
 		// 解散选中的我创建的圈子
@@ -293,5 +279,11 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 			i.putExtra("msgid",mList.get(arg2).getSdid());
 			startActivity(i);
 		}
+	}
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == Activity.RESULT_OK) {
+			loadData();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 }

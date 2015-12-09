@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
@@ -69,6 +71,8 @@ public class CardAddUserNameActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+				imm.hideSoftInputFromWindow(CardAddUserNameActivity.this.getCurrentFocus().getWindowToken(), 0);
 				CardAddUserNameActivity.this.finish();
 			}
 		});
@@ -91,11 +95,12 @@ public class CardAddUserNameActivity extends Activity {
 								gender = 2;
 							}
 							int isMarray = 0;
-							if (((RadioButton) findViewById(R.id.radioIsmarray))
+							if (((RadioButton) findViewById(R.id.radioNotmarry))
 									.isChecked()) {
 								isMarray = 1;
-							} else {
-								isMarray = 0;
+							} else if (((RadioButton) findViewById(R.id.radioIsmarray))
+									.isChecked()){
+								isMarray = 2;
 							}
 							UserNewVO userInfo = new UserNewVO();
 							userInfo.setName(name);

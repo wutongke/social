@@ -69,14 +69,16 @@ public class CardAddUserBirthActivity extends Activity {
 		Calendar solar = Calendar.getInstance();
 		Intent i = getIntent();
 		String birthday = i.getStringExtra(CardEditActivity.EDIT_BIRTH_STR1);
-		String birthdayopen = i
-				.getStringExtra(CardEditActivity.EDIT_BIRTH_STR2);
+		int  birthdayopen = i
+				.getIntExtra(CardEditActivity.EDIT_BIRTH_STR2,0);
 		// String birthdayLunar = i
 		// .getStringExtra(CardEditActivity.EDIT_BIRTH_STR3);// 阴历生日
-		if (birthdayopen != null && birthdayopen.equals("0")) {
+		if (birthdayopen==1) {
 			((RadioButton) (findViewById(R.id.radioPrivate))).setChecked(true);
+			isOpen = 1;
 		} else {
 			((RadioButton) (findViewById(R.id.radioOpen))).setChecked(true);
+			isOpen = 0;
 		}
 		((RadioGroup) this.findViewById(R.id.radioGroup))
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -86,9 +88,9 @@ public class CardAddUserBirthActivity extends Activity {
 						// 获取变更后的选中项的ID
 						int radioButtonId = arg0.getCheckedRadioButtonId();
 						if (radioButtonId == R.id.radioPrivate)
-							isOpen = 0;
-						else
 							isOpen = 1;
+						else
+							isOpen = 0;
 					}
 				});
 

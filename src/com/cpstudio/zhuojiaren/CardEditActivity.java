@@ -182,13 +182,26 @@ public class CardEditActivity extends Activity {
 		} else {
 			textViewuserNameShow.setText(getString(R.string.edit_info));
 		}
-		if(isEditable)
+		buttonBack.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				CardEditActivity.this.finish();
+			}
+		});
+		if (isEditable)
 			initClick();
+		else {
+			etSignature.setEnabled(false);
+			etSignature.setFocusable(false);
+		}
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
+		((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
+				.hideSoftInputFromWindow(etSignature.getWindowToken(),
+						InputMethodManager.HIDE_NOT_ALWAYS);
 		loadInfo();
 		super.onResume();
 	}
@@ -438,12 +451,7 @@ public class CardEditActivity extends Activity {
 			});
 		}
 
-		buttonBack.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				CardEditActivity.this.finish();
-			}
-		});
+		
 
 		textViewEditPlaceShow.setOnClickListener(new OnClickListener() {
 			@Override
@@ -543,7 +551,6 @@ public class CardEditActivity extends Activity {
 				userInfo.getUserid() + "," + userInfo.getName(), 100, 100);
 
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHead);
-		fillText(textViewEditDreamShow, userInfo.getDream());
 
 		int placeId = userInfo.getCity();
 		String placeText = getString(R.string.nofill);
@@ -551,39 +558,46 @@ public class CardEditActivity extends Activity {
 				&& placeId <= mConnHelper.getCitys().size())
 			placeText = mConnHelper.getCitys().get(placeId - 1).getCityName();
 		textViewEditPlaceShow.setText(placeText);
-		fillText(textViewEditNameShow, userInfo.getName());
+		fillText(textViewEditNameShow, userInfo.getName(), 0);
 		List<PicNewVO> images = userInfo.getPhoto();
-		if (images != null && images.size()>0) {
+		if (images != null && images.size() > 0) {
 			((TextView) findViewById(R.id.textViewEditImagesShow))
 					.setText(getString(R.string.mp_has) + images.size()
 							+ getString(R.string.mp_imgasall));
-		}
-		else
+		} else
 			((TextView) findViewById(R.id.textViewEditImagesShow))
-			.setText(getString(R.string.txt_uncompleted));
-
+					.setText(getString(R.string.txt_uncompleted));
+		fillText(etSignature, userInfo.getSignature(), 0);
+		fillText(textViewEditDreamShow, userInfo.getDream(), 0);
+		fillText(textViewEditZymShow, userInfo.getFaith(), 0);
+		fillText(textViewEditHobbyShow, userInfo.getHobby(), 0);
 		String birthday = userInfo.getBirthday();
 		if (birthday == null)
 			birthday = userInfo.getBirthdayLunar();
-		fillText(textViewEditBirthShow, birthday);
+		fillText(textViewEditBirthShow, birthday, userInfo.getIsBirthdayOpen());
 
-		fillText(textViewEditDreamShow, userInfo.getDream());
-		fillText(textViewEditZymShow, userInfo.getFaith());
-		fillText(textViewEditHobbyShow, userInfo.getHobby());
-		fillText(textViewEditPhoneShow, userInfo.getPhone());
-		fillText(textViewEditEmailShow, userInfo.getEmail());
-		fillText(textViewEditQQShow, userInfo.getQq());
-		fillText(textViewEditWeixinShow, userInfo.getWeixin());
-		fillText(etSignature, userInfo.getSignature());
+		fillText(textViewEditPhoneShow, userInfo.getPhone(),
+				userInfo.getIsPhoneOpen());
+		fillText(textViewEditEmailShow, userInfo.getEmail(),
+				userInfo.getIsEmailOpen());
+		fillText(textViewEditQQShow, userInfo.getQq(), userInfo.getIsQqOpen());
+		fillText(textViewEditWeixinShow, userInfo.getWeixin(),
+				userInfo.getIsWeixinOpen());
+
 	}
 
-	void fillText(TextView tv, String text) {
+	void fillText(TextView tv, String text, int isOpen) {
 		if (tv == null)
 			return;
 		if (text == null || text.trim().toString().equals(""))
 			tv.setText(getString(R.string.nofill));
-		else
-			tv.setText(text);
+		else {
+			if (isOpen == 1 && userInfo.getRelation() != 1
+					&& userInfo.getRelation() != 2)
+				tv.setText(getString(R.string.secret));// 只对好友公开
+			else
+				tv.setText(text);
+		}
 	}
 
 	@SuppressLint("HandlerLeak")

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -19,6 +20,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.TabContainerActivity;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
@@ -37,9 +39,6 @@ public class MyActiveActivity extends BaseActivity implements
 	TextView pubView;
 	@InjectView(R.id.tvSearchActive)
 	TextView tvSearchActive;
-
-	@InjectView(R.id.llDelete)
-	View llDelete;
 
 	@InjectView(R.id.pvPubed)
 	PullDownView pvPubed;// 发布的活动
@@ -94,11 +93,12 @@ public class MyActiveActivity extends BaseActivity implements
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				if(position<1)
-					return ;
+				if (position < 1)
+					return;
 				Intent i = new Intent(MyActiveActivity.this,
 						EventDetailActivity.class);
-				i.putExtra("eventId", mPubList.get(position-1).getActivityid());
+				i.putExtra("eventId", mPubList.get(position - 1)
+						.getActivityid());
 				startActivity(i);
 			}
 
@@ -107,11 +107,12 @@ public class MyActiveActivity extends BaseActivity implements
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				if(position<1)
-					return ;
+				if (position < 1)
+					return;
 				Intent i = new Intent(MyActiveActivity.this,
 						EventDetailActivity.class);
-				i.putExtra("eventId", mJoinList.get(position-1).getActivityid());
+				i.putExtra("eventId", mJoinList.get(position - 1)
+						.getActivityid());
 				startActivity(i);
 			}
 
@@ -158,8 +159,8 @@ public class MyActiveActivity extends BaseActivity implements
 					loadState = true;
 					updateItemList((String) msg.obj, true, false);
 				}
-				pvPubed.finishLoadData(loadState);
-				pvJoined.finishLoadData(loadState);
+//				pvPubed.finishLoadData(loadState);
+//				pvJoined.finishLoadData(loadState);
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {
@@ -168,15 +169,35 @@ public class MyActiveActivity extends BaseActivity implements
 					loadState = true;
 					updateItemList((String) msg.obj, false, true);
 				}
-				pvPubed.finishLoadData(loadState);
-				pvJoined.finishLoadData(loadState);
+//				pvPubed.finishLoadData(loadState);
+//				pvJoined.finishLoadData(loadState);
 				break;
 			}
-			case MsgTagVO.disolve_quan:
+			case MsgTagVO.disolve_quan: {
+				// 退出管理，重新下载数据
+				if (JsonHandler.checkResult((String) msg.obj,getApplicationContext())) {
+					CommonUtil.displayToast(getApplicationContext(), R.string.quit_quan_iCreated_success);
+					offManager();
+					loadData();
+				} else {
+					CommonUtil.displayToast(getApplicationContext(), R.string.data_error);
+					return;
+				}
+				
+				break;
+			}
+				
 			case MsgTagVO.out_quan: {
 				// 退出管理，重新下载数据
-				offManager();
-				loadData();
+				if (JsonHandler.checkResult((String) msg.obj,getApplicationContext())) {
+					CommonUtil.displayToast(getApplicationContext(), R.string.quit_quan_iJoined_success);
+					offManager();
+					loadData();
+				} else {
+					CommonUtil.displayToast(getApplicationContext(), R.string.data_error);
+					return;
+				}
+				
 				break;
 			}
 			}
@@ -186,6 +207,8 @@ public class MyActiveActivity extends BaseActivity implements
 	};
 
 	public void offManager() {
+		isManaging = false;
+		function.setText(R.string.label_manage);
 		if (mPubAdapter != null) {
 			mPubAdapter.setManaging(false);
 			mPubAdapter.getmSelectedList().clear();
@@ -196,7 +219,6 @@ public class MyActiveActivity extends BaseActivity implements
 			mJoinAdapter.getmSelectedList().clear();
 			mJoinAdapter.notifyDataSetChanged();
 		}
-		llDelete.setVisibility(View.GONE);
 	}
 
 	public void onRefresh() {
@@ -223,25 +245,15 @@ public class MyActiveActivity extends BaseActivity implements
 		function.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				isManaging = !isManaging;
-				mPubAdapter.setManaging(isManaging);
-				mJoinAdapter.setManaging(isManaging);
-				if (isManaging) {
-					llDelete.setVisibility(View.VISIBLE);
-					function.setText(R.string.EXIT);
+				if (!isManaging) {
+					function.setText(getString(R.string.DELETE));
+					isManaging = true;
+					mPubAdapter.setManaging(true);
+					mJoinAdapter.setManaging(true);
 				} else {
-					function.setText(R.string.label_manage);
-					llDelete.setVisibility(View.GONE);
+					deleteSelected();
 				}
-			}
-		});
 
-		llDelete.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				deleteSelected();
 			}
 		});
 
@@ -310,6 +322,15 @@ public class MyActiveActivity extends BaseActivity implements
 		// });
 	}
 
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && isManaging) {
+			offManager();
+			return true;
+		}
+		return super.dispatchKeyEvent(event);
+	}
+
 	protected void deleteSelected() {
 		// TODO Auto-generated method stub\
 		// 解散选中的我创建的圈子
@@ -333,7 +354,7 @@ public class MyActiveActivity extends BaseActivity implements
 				quitids.append(event.getActivityid() + ",");
 			}
 			mConnHelper.followGroup(mUIHandler, MsgTagVO.out_quan,
-					quitids.toString(), QuanVO.QUAN_QUIT,null, "none");
+					quitids.toString(), QuanVO.QUAN_QUIT, null, "none");
 		}
 
 	}

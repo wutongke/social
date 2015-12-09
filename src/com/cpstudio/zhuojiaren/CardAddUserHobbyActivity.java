@@ -14,11 +14,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
@@ -127,6 +129,8 @@ public class CardAddUserHobbyActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+				imm.hideSoftInputFromWindow(CardAddUserHobbyActivity.this.getCurrentFocus().getWindowToken(), 0);
 				CardAddUserHobbyActivity.this.finish();
 			}
 		});
@@ -148,7 +152,7 @@ public class CardAddUserHobbyActivity extends Activity {
 						UserNewVO userInfo = new UserNewVO();
 						userInfo.setHobby(hobby);
 						ZhuoConnHelper.getInstance(getApplicationContext())
-								.modifyUserInfo(mUIHandler, MsgTagVO.PUB_INFO,
+								.modifyUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,
 										userInfo);
 					}
 				});
