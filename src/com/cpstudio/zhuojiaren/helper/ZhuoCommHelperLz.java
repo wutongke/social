@@ -100,6 +100,7 @@ public class ZhuoCommHelperLz {
 	private final static String ORDER_DETAIL = "/goods/getOrder.do";
 	private final static String CARD_BG = "/getBackground.do";
 	private final static String SET_CARD_BG  = "/setUserBackground.do";
+	private final static String SET_QUAN_LOG  = "/setgheader.do";
 	public static String getAllJiaren() {
 		return ALL_JIAREN;
 	}
@@ -578,6 +579,9 @@ public class ZhuoCommHelperLz {
 	}
 	public static String setCardBg() {
 		return SERVER + SET_CARD_BG;
+	}
+	public static String setQuanLogo() {
+		return SERVER + SET_QUAN_LOG;
 	}
 	
 }

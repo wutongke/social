@@ -123,7 +123,9 @@ public class MyActiveActivity extends BaseActivity implements
 	}
 
 	private void updateItemList(String data, boolean refresh, boolean append) {
+		boolean loadState = false;
 		try {
+
 			if (data != null && !data.equals("")) {
 				JsonHandler nljh = new JsonHandler(data,
 						getApplicationContext());
@@ -141,11 +143,16 @@ public class MyActiveActivity extends BaseActivity implements
 				} else {
 					pvPubed.noData(!refresh);
 					pvJoined.noData(!refresh);
+					return;
 				}
+				loadState = true;
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		pvPubed.finishLoadData(loadState);
+		pvJoined.finishLoadData(loadState);
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -154,50 +161,49 @@ public class MyActiveActivity extends BaseActivity implements
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
-				boolean loadState = false;
-				if (msg.obj != null && !msg.obj.equals("")) {
-					loadState = true;
-					updateItemList((String) msg.obj, true, false);
-				}
-//				pvPubed.finishLoadData(loadState);
-//				pvJoined.finishLoadData(loadState);
+
+				updateItemList((String) msg.obj, true, false);
+				// pvPubed.finishLoadData(loadState);
+				// pvJoined.finishLoadData(loadState);
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {
-				boolean loadState = false;
-				if (msg.obj != null && !msg.obj.equals("")) {
-					loadState = true;
-					updateItemList((String) msg.obj, false, true);
-				}
-//				pvPubed.finishLoadData(loadState);
-//				pvJoined.finishLoadData(loadState);
+				updateItemList((String) msg.obj, false, true);
+				// pvPubed.finishLoadData(loadState);
+				// pvJoined.finishLoadData(loadState);
 				break;
 			}
 			case MsgTagVO.disolve_quan: {
 				// 退出管理，重新下载数据
-				if (JsonHandler.checkResult((String) msg.obj,getApplicationContext())) {
-					CommonUtil.displayToast(getApplicationContext(), R.string.quit_quan_iCreated_success);
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.quit_quan_iCreated_success);
 					offManager();
 					loadData();
 				} else {
-					CommonUtil.displayToast(getApplicationContext(), R.string.data_error);
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.data_error);
 					return;
 				}
-				
+
 				break;
 			}
-				
+
 			case MsgTagVO.out_quan: {
 				// 退出管理，重新下载数据
-				if (JsonHandler.checkResult((String) msg.obj,getApplicationContext())) {
-					CommonUtil.displayToast(getApplicationContext(), R.string.quit_quan_iJoined_success);
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.quit_quan_iJoined_success);
 					offManager();
 					loadData();
 				} else {
-					CommonUtil.displayToast(getApplicationContext(), R.string.data_error);
+					CommonUtil.displayToast(getApplicationContext(),
+							R.string.data_error);
 					return;
 				}
-				
+
 				break;
 			}
 			}

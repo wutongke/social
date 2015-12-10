@@ -31,7 +31,7 @@ import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudui.zhuojiaren.lz.GongXuDetailActivity;
 import com.cpstudui.zhuojiaren.lz.MyResListAdapterListAdapter;
 
-public class CardAddUserResourceActivity extends  BaseActivity implements
+public class CardAddUserResourceActivity extends BaseActivity implements
 		OnItemClickListener {
 	@InjectView(R.id.activity_title)
 	TextView tvTitle;
@@ -39,14 +39,12 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 	TextView tvBack;
 	@InjectView(R.id.activity_function)
 	TextView tvManage;
-	
-//	@InjectView(R.id.buttonManage)
-//	TextView buttonManage;
 
-	
+	// @InjectView(R.id.buttonManage)
+	// TextView buttonManage;
+
 	@InjectView(R.id.lt_pub_res)
 	View lt_pub_res;
-
 
 	private ListView mListView;
 	private MyResListAdapterListAdapter mAdapter;
@@ -69,12 +67,12 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 		Intent i = getIntent();
 		mType = i.getIntExtra(CardEditActivity.EDIT_RES_STR1, 0);
 		userid = i.getStringExtra(CardEditActivity.EDIT_RES_STR2);
-		myId=mConnHelper.getUserid();
+		myId = mConnHelper.getUserid();
 		if (mType == 0)
 			tvTitle.setText(R.string.mygong);
 		else
 			tvTitle.setText(R.string.myxu);
-		
+
 		mListView = (ListView) findViewById(R.id.listView);
 		mAdapter = new MyResListAdapterListAdapter(
 				CardAddUserResourceActivity.this, mList);
@@ -90,7 +88,7 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 		initClick();
 		tvManage.setText(getString(R.string.label_manage));
 		// 当打开的不是我自己的名片时需要隐藏管理按钮
-		if (!userid.equals(myId) ) {
+		if (!userid.equals(myId)) {
 			tvManage.setVisibility(View.GONE);
 			lt_pub_res.setVisibility(View.GONE);
 			isManaging = false;
@@ -100,6 +98,7 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 	public void offManager() {
 		isManaging = false;
 		if (mAdapter != null) {
+			tvManage.setText(getString(R.string.label_manage));
 			mAdapter.setManaging(false);
 			mAdapter.getmSelectedList().clear();
 			mAdapter.notifyDataSetChanged();
@@ -137,8 +136,9 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 				startActivityForResult(i, MsgTagVO.DATA_REFRESH);
 			}
 		});
-		
+
 	}
+
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && isManaging) {
@@ -147,6 +147,7 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 		}
 		return super.dispatchKeyEvent(event);
 	}
+
 	protected void deleteSelected() {
 		// TODO Auto-generated method stub\
 		// 解散选中的我创建的圈子
@@ -160,7 +161,7 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 
 		StringBuilder ids = new StringBuilder();
 		for (ResourceGXVO item : deletelist) {
-			if(ids.length()>0)
+			if (ids.length() > 0)
 				ids.append(",");
 			ids.append(item.getSdid());
 		}
@@ -210,14 +211,14 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 				ResultVO res;
 				if (JsonHandler.checkResult((String) msg.obj,
 						CardAddUserResourceActivity.this)) {
-//					res = JsonHandler.parseResult((String) msg.obj);
-					updateItemList((String)msg.obj, true, false);
+					// res = JsonHandler.parseResult((String) msg.obj);
+					updateItemList((String) msg.obj, true, false);
 				} else {
 					CommonUtil.displayToast(CardAddUserResourceActivity.this,
 							R.string.data_error);
 					return;
 				}
-				
+
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {
@@ -257,16 +258,16 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 		if (mListViewFooter.startLoading()) {
 			mPage = 0;
 			mAdapter.notifyDataSetChanged();
-			mConnHelper.getGongXuList(String.valueOf(mType),null, null, mPage, 5,
-					mUIHandler, MsgTagVO.DATA_LOAD,
+			mConnHelper.getGongXuList(String.valueOf(mType), null, null, mPage,
+					5, mUIHandler, MsgTagVO.DATA_LOAD,
 					CardAddUserResourceActivity.this, true, null, null, userid);
 		}
 	}
 
 	private void loadMore() {
 		if (mListViewFooter.startLoading()) {
-			mConnHelper.getGongXuList(String.valueOf(mType),null, null, mPage, 5,
-					mUIHandler, MsgTagVO.DATA_MORE,
+			mConnHelper.getGongXuList(String.valueOf(mType), null, null, mPage,
+					5, mUIHandler, MsgTagVO.DATA_MORE,
 					CardAddUserResourceActivity.this, true, null, null, userid);
 		}
 	}
@@ -276,10 +277,11 @@ public class CardAddUserResourceActivity extends  BaseActivity implements
 		if (arg2 != -1) {
 			Intent i = new Intent(CardAddUserResourceActivity.this,
 					GongXuDetailActivity.class);
-			i.putExtra("msgid",mList.get(arg2).getSdid());
+			i.putExtra("msgid", mList.get(arg2).getSdid());
 			startActivity(i);
 		}
 	}
+
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK) {
 			loadData();

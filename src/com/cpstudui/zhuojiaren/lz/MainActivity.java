@@ -130,7 +130,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 		initClick();
 		initHeadView();
-		loadData();
+//		loadData();
 		times = DeviceInfoUtil.getDeviceCsd(MainActivity.this);
 	}
 
@@ -325,6 +325,13 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		loadData();
 	}
 
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		loadData();
+		super.onResume();
+	}
+	
 	private void loadData() {
 
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2

@@ -82,13 +82,22 @@ public class ActiveListAdapter extends BaseAdapter {
 		holder.textViewAll.setText("");
 		List<PicNewVO> Pics = item.getStatusPic();
 		Context context = convertView.getContext();
+		holder.rl.setVisibility(View.GONE);
+		int count=0;
 		if (Pics != null && Pics.size() > 0) {
+			ArrayList<String> urls = new ArrayList<String>();
+			for (PicNewVO temp : Pics) {
+				if (temp.getPic() != null && !"".equals(temp.getPic().trim()))
+					urls.add(temp.getPic());
+			}
+			if(urls.size()>0)
+			{
 			holder.rl.setVisibility(View.VISIBLE);
 			holder.textViewAll.setText(context.getString(R.string.label_gong)
-					+ Pics.size() + context.getString(R.string.label_zhang));
+					+ urls.size() + context.getString(R.string.label_zhang));
 			LinearLayout ll = null;
 			ArrayList<ImageView> ivs = new ArrayList<ImageView>();
-			switch (Pics.size()) {
+			switch (urls.size()) {
 			case 1:
 				ll = (LinearLayout) inflater.inflate(R.layout.item_one_image,
 						null);
@@ -124,9 +133,9 @@ public class ActiveListAdapter extends BaseAdapter {
 			final ArrayList<String> picArray = new ArrayList<String>();
 			for (int i = 0; i < ivs.size(); i++) {
 				ImageView iv = ivs.get(i);
-				iv.setTag(Pics.get(i).getPic());
-				mLoadImage.addTask(Pics.get(i).getPic(), iv);
-				picArray.add(Pics.get(i).getPic());
+				iv.setTag(urls.get(i));
+				mLoadImage.addTask(urls.get(i), iv);
+				picArray.add(urls.get(i));
 			}
 			holder.rl.setOnClickListener(new OnClickListener() {
 
@@ -142,9 +151,8 @@ public class ActiveListAdapter extends BaseAdapter {
 						mcontext.startActivity(intent);
 					}
 				}
-			});
-		} else
-			holder.rl.setVisibility(View.GONE);
+			});}
+		} 
 
 		String place = "µØµã±àºÅ£º" + item.getPosition();
 		if (cityList != null && item.getPosition() >= 1

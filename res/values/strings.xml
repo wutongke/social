@@ -1191,4 +1191,8 @@
         <string name="secret">保密</string>
         <string name="quit_quan_iCreated_success">成功退出我发起的活动</string>
         <string name="quit_quan_iJoined_success">成功退出我加入的活动</string>
+        <string name="modify_quan_info_success">修改圈子信息成功</string>
+          <string name="modify_quan_logo_success">更新圈子LOGO成功</string>
+          <string name="modify_quan_info_failed">修改圈子信息失败</string>
+          <string name="modify_quan_logo_failed">更新圈子LOGO失败</string>
 </resources>

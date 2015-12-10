@@ -135,7 +135,7 @@ public class ZhuoMaiActiveListActivity extends BaseActivity implements
 	}
 
 	private void loadData() {
-		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
+		if (CommonUtil.getNetworkState(getApplicationContext()) == 0) {
 			{
 				if (mListViewFooter.startLoading()) {
 					mList.clear();
@@ -150,7 +150,7 @@ public class ZhuoMaiActiveListActivity extends BaseActivity implements
 	}
 
 	private void loadAdImage() {
-		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
+		if (CommonUtil.getNetworkState(getApplicationContext()) == 0) {
 			mConnHelper.getAdInfo(mUIHandler, MsgTagVO.DATA_OTHER, 2);
 		}
 	}

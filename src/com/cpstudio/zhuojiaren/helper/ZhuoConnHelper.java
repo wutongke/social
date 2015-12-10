@@ -1431,7 +1431,23 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.modifyGroupInfo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
-
+	/**
+	 * 设置圈子头像
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param groupid
+	 * @param files
+	 * @return
+	 */
+	public boolean setQuanLogo(Handler mUIHandler, int handlerTag,
+			String groupid, ArrayList<String> files) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
+		filesMap.put("file", files);
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		return getFromServerByPost(ZhuoCommHelperLz.setQuanLogo(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
 	/**
 	 * 获取圈话题详情
 	 * 
@@ -1462,6 +1478,7 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.topicPraise(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
+	
 
 	public boolean praiseDynamic(Handler mUIHandler, int handlerTag,
 			String statusid, int praise) {
