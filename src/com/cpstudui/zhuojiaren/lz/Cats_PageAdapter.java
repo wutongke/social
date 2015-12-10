@@ -25,6 +25,7 @@ import com.cpstudio.zhuojiaren.ui.GrouthActivity;
 import com.cpstudio.zhuojiaren.ui.GrouthChooseActivity;
 import com.cpstudio.zhuojiaren.ui.GrouthListActivity;
 import com.cpstudio.zhuojiaren.ui.MyMoneyActivity;
+import com.cpstudio.zhuojiaren.ui.MyZhuoBiActivity;
 import com.cpstudio.zhuojiaren.ui.UserSameActivity;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
 
@@ -111,7 +112,7 @@ public class Cats_PageAdapter extends PagerAdapter {
 						@Override
 						public void onClick(View v) {
 							// TODO Auto-generated method stub
-							// 锟斤拷转页锟斤拷
+							// 閿熸枻鎷疯浆椤甸敓鏂ゆ嫹
 							onClicked(index);
 
 						}
@@ -132,9 +133,9 @@ public class Cats_PageAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public Object instantiateItem(ViewGroup container, int position) { // 杩欎釜鏂规硶鐢ㄦ潵瀹炰緥鍖栭〉锟�
+	public Object instantiateItem(ViewGroup container, int position) { // 鏉╂瑤閲滈弬瑙勭《閻€劍娼电�鐐扮伐閸栨牠銆夐敓锟�
 																		// container.addView(mListViews.get(position),
-		container.addView(mListView.get(position), 0); // 0);//娣诲姞椤靛崱
+		container.addView(mListView.get(position), 0); // 0);//濞ｈ濮炴い闈涘幢
 		return mListView.get(position);
 	}
 
@@ -155,11 +156,11 @@ public class Cats_PageAdapter extends PagerAdapter {
 			i = new Intent(mContext, JiarenActiveNumListActivity.class);
 			mContext.startActivity(i);
 			break;
-		case 1:// 锟缴筹拷锟斤拷锟斤拷
+		case 1:// 閿熺即绛规嫹閿熸枻鎷烽敓鏂ゆ嫹
 			mContext.startActivity(new Intent(mContext,
 					GrouthListActivity.class));
 			break;
-		case 2:// 倬元锟斤拷锟斤拷
+		case 2:// 鍊厓閿熸枻鎷烽敓鏂ゆ嫹
 			i = new Intent(mContext, AudioListActivity.class);
 			mContext.startActivity(i);
 
@@ -176,7 +177,7 @@ public class Cats_PageAdapter extends PagerAdapter {
 			mContext.startActivity(i);
 			break;
 
-		case 5:// 锟斤拷源锟斤拷锟斤拷
+		case 5:// 閿熸枻鎷锋簮閿熸枻鎷烽敓鏂ゆ嫹
 			i = new Intent(mContext, ResourceGXActivity.class);
 			mContext.startActivity(i);
 
@@ -190,13 +191,13 @@ public class Cats_PageAdapter extends PagerAdapter {
 			mContext.startActivity(i);
 			break;
 
-		case 8://鍚岃
+		case 8://閸氬矁顢�
 			i = new Intent(mContext, UserSameActivity.class);
 			i.putExtra("type", 2);
 			mContext.startActivity(i);
 			break;
 
-		case 9://鍚屽煄
+		case 9://閸氬苯鐓�
 			i = new Intent(mContext, UserSameActivity.class);
 			i.putExtra("type", 1);
 			mContext.startActivity(i);
@@ -212,7 +213,7 @@ public class Cats_PageAdapter extends PagerAdapter {
 			i.putExtra("type", 3);
 			mContext.startActivity(i);
 			break;
-		case 12://鏅烘収绮捐繘
+		case 12://閺呯儤鍙庣划鎹愮箻
 			i = new Intent(mContext, GrouthActivity.class);
 			mContext.startActivity(i);
 			break;
@@ -222,7 +223,7 @@ public class Cats_PageAdapter extends PagerAdapter {
 			mContext.startActivity(i);
 			break;
 		case 14:
-			i = new Intent(mContext, MyMoneyActivity.class);
+			i = new Intent(mContext, MyZhuoBiActivity.class);
 			mContext.startActivity(i);
 			break;
 		}

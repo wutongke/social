@@ -348,6 +348,19 @@ public class AppClientLef {
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				cancelable, cancel, data);
 	}
+	/**
+	 * 获取众筹投资
+	 */
+	public boolean getFundingListInvest(int pageNo,
+			int pageSize, Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		String url = ZhuoCommHelper.getServiceFundingListInvest();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+	}
 
 	/**
 	 * 获取明细
@@ -369,6 +382,9 @@ public class AppClientLef {
 			int handlerTag, Activity activity) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		if(goodsid!=null&&goodsid.length()>0){
+			goodsid = goodsid.substring(0, goodsid.length()-1);
+		}
 		nameValuePairs.add(new BasicNameValuePair("goodsid", goodsid));
 		String url = ZhuoCommHelper.getREMOVEGOODS();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
@@ -1201,6 +1217,16 @@ public class AppClientLef {
 		return doPost(nameValuePairs, ZhuoCommHelper.getUrlAdvice(), handler,
 				handlerTag, activity, "advice", cancelable, cancel, data);
 	}
+	
+	public boolean thoughtPost(String text, Handler handler, int handlerTag,
+			Activity activity, boolean cancelable, OnCancelListener cancel,
+			String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("content", text));
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		return doPost(nameValuePairs, ZhuoCommHelper.getUrlAdvice(), handler,
+				handlerTag, activity, "advice", cancelable, cancel, data);
+	}
 
 	public boolean black(String uid, String type, Handler handler,
 			int handlerTag, Activity activity, boolean cancelable,
@@ -1574,6 +1600,7 @@ public class AppClientLef {
 	private boolean doPost(List<NameValuePair> nameValuePairs, String url,
 			Handler handler, int handlerTag, Activity activity, String tag,
 			boolean cancelable, OnCancelListener cancel, String data) {
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		if (instance == null) {
 			instance = AppClientLef.getInstance(activity);
 		}

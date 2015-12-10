@@ -108,6 +108,7 @@ public class ZhuoCommHelper {
 
 	private final static String SERVICE_Teacher_LIST = "/getTutor.do";
 	private final static String SERVICE_Funding_LIST = "/crowdfunding/list.do";
+	private static String SERVICE_Funding_LIST_Invest = "/crowdfunding/investList.do";
 	private final static String AUDIO_COLL = "/praiseAudio.do";
 	private final static String GrowthOnlineType = "/getGrowthOnlineType.do";
 	private final static String CREATEGROUP = "/creategroup.do";
@@ -147,6 +148,12 @@ public class ZhuoCommHelper {
 	private static String SHIPPINGADDRESS = "/goods/setOrderAddress.do";
 	private static String INCOME = "/getMyZhuobiRecord.do";
 	private static String REMOVEGOODS = "/goods/delGoodsCart.do";
+	
+	public static String getServiceFundingListInvest() {
+		return SERVER +SERVICE_Funding_LIST_Invest;
+	}
+
+
 	public static String getREMOVEGOODS() {
 		return SERVER +  REMOVEGOODS;
 	}

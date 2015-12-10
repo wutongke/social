@@ -170,8 +170,6 @@ public class GoodsCollectionActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				type = position;
 				loadData(position);
-				CommonUtil.displayToast(GoodsCollectionActivity.this, position
-						+ "");
 				gridView.setVisibility(View.GONE);
 			}
 

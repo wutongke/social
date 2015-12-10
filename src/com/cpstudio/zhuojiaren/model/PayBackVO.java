@@ -11,9 +11,15 @@ public class PayBackVO {
 	String name;
 	String cfId;
 	String amount;
-	String limit;
+	String limits="0";
 	String intro;
 	String num;
+	public String getLimits() {
+		return limits;
+	}
+	public void setLimits(String limits) {
+		this.limits = limits;
+	}
 	String pics ;
 	public String getName() {
 		return name;
@@ -23,9 +29,6 @@ public class PayBackVO {
 	}
 	public String getAmount() {
 		return amount;
-	}
-	public String getLimits() {
-		return limit;
 	}
 	public String getIntro() {
 		return intro;
@@ -44,9 +47,6 @@ public class PayBackVO {
 	}
 	public void setAmount(String amount) {
 		this.amount = amount;
-	}
-	public void setLimits(String limits) {
-		this.limit = limits;
 	}
 	public void setIntro(String intro) {
 		this.intro = intro;

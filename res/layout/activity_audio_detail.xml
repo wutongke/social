@@ -2,51 +2,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/graywhite"
+    android:orientation="vertical"
     tools:context=".AudioDetailActivity" >
 
     <include layout="@layout/title_activity" />
+
     <ImageView
         android:id="@+id/hgm_adv"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:scaleType="centerCrop" />
-	<ImageView
-	    android:id="@+id/aad_adv"
-	    android:layout_width="match_parent"
-	    android:scaleType="centerCrop"
-	    android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/aad_adv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop" />
+
     <ImageView
         android:id="@+id/aad_start"
-        android:background="@drawable/jjplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/jjplay" />
 
     <TextView
         android:id="@+id/aad_name"
+        style="@style/basic_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/basic_text"
-        android:textColor="@color/white"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:textColor="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:padding="10dp"
-        android:orientation="horizontal" >
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:padding="10dp" >
 
         <ImageView
             android:id="@+id/aad_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/jjplay3"
-             />
+            android:background="@drawable/jjplay3" />
 
         <SeekBar
             android:id="@+id/aad_seekbar"
@@ -73,8 +75,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-         >
+        android:layout_weight="1" >
     </LinearLayout>
 
     <LinearLayout
@@ -86,18 +87,34 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp" >
 
-        <TextView
-            style="@style/basic_text"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/jjsshare"
-            android:drawablePadding="10dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:text="@string/share_inspiration" />
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/basic_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/jjsshare"
+                android:drawablePadding="10dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:text="@string/share_inspiration" />
+
+            <Button
+                android:id="@+id/thought_post"
+                style="@style/basic_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:gravity="center"
+                android:text="发送" />
+        </LinearLayout>
 
         <ImageView
             android:layout_width="match_parent"
@@ -113,26 +130,25 @@
             android:minHeight="50dp" />
     </LinearLayout>
 
-    <LinearLayout 
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:background="@color/graywhite"
         android:gravity="center_horizontal"
-        android:background="@color/graywhite"
-        >
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
         <Button
-        android:id="@+id/aad_more_inspiration"
-        style="@style/basic_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/graywhite"
-        android:textColor="@color/white" 
-        android:text="@string/more_inspiration"
-        android:drawableLeft="@drawable/magnifier5"
-        android:drawablePadding="5dp"
-        android:padding="10dp"
-        />
+            android:id="@+id/aad_more_inspiration"
+            style="@style/basic_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/graywhite"
+            android:drawableLeft="@drawable/magnifier5"
+            android:drawablePadding="5dp"
+            android:padding="10dp"
+            android:text="@string/more_inspiration"
+            android:textColor="@color/white" />
     </LinearLayout>
-    
 
 </LinearLayout>
