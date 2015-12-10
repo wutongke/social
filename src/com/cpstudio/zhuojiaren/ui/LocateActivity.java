@@ -23,8 +23,6 @@ public class LocateActivity extends BaseActivity {
 	EditText area;
 	@InjectView(R.id.alocate_mail_number)
 	EditText mail;
-	@InjectView(R.id.alocate_street)
-	EditText street;
 	@InjectView(R.id.alocate_more_info)
 	EditText moreInfo;
 	@InjectView(R.id.alocate_receive_name)
@@ -43,7 +41,6 @@ public class LocateActivity extends BaseActivity {
 		initTitle();
 		sp = getSharedPreferences("receive_goods", MODE_PRIVATE);
 		area.setText(sp.getString("locate1", ""));
-		street.setText(sp.getString("locate2", ""));
 		moreInfo.setText(sp.getString("locate3", ""));
 		name.setText(sp.getString("name", ""));
 		phone.setText(sp.getString("phone", ""));
@@ -56,7 +53,6 @@ public class LocateActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				if (area.getText().toString().isEmpty()
 						|| mail.getText().toString().isEmpty()
-						|| street.getText().toString().isEmpty()
 						|| moreInfo.getText().toString().isEmpty()
 						|| name.getText().toString().isEmpty()
 						|| phone.getText().toString().isEmpty()) {
@@ -67,10 +63,8 @@ public class LocateActivity extends BaseActivity {
 					editor.putString("name", name.getText().toString());
 					editor.putString("phone", phone.getText().toString());
 					editor.putString("locate", area.getText().toString()
-							+ street.getText().toString()
 							+ moreInfo.getText().toString());
 					editor.putString("locate1", area.getText().toString());
-					editor.putString("locate2", street.getText().toString());
 					editor.putString("locate3", moreInfo.getText().toString());
 					editor.putString("mail", mail.getText().toString());
 					editor.commit();
@@ -82,8 +76,7 @@ public class LocateActivity extends BaseActivity {
 									LocateActivity.this,
 									uiHandler,
 									MsgTagVO.PUB_INFO,
-									area.getText().toString()
-											+ street.getText().toString(),
+									area.getText().toString(),
 									moreInfo.getText().toString(),
 									name.getText().toString(),
 									phone.getText().toString(),

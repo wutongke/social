@@ -47,7 +47,8 @@ public class CrowdFundingFragment extends Fragment {
 	private TitleAdapter mTitleAdapter;
 	private ArrayList<CrowdFundingVO> mDatas = new ArrayList<CrowdFundingVO>();
 	private int type;
-
+	private int crowdType = 0;
+	private boolean isInvest = false;
 	// 分页
 	private int mPage = 0;
 	private AppClientLef appClientLef;
@@ -97,8 +98,8 @@ public class CrowdFundingFragment extends Fragment {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(CrowdFundingFragment.this
 						.getActivity(), CrowdFundingDetailActivity.class);
-				intent.putExtra(CrowdFundingVO.CROWDFUNDINGID,
-						mAdapter.getItem(position-1).getId());
+				intent.putExtra(CrowdFundingVO.CROWDFUNDINGID, mAdapter
+						.getItem(position - 1).getId());
 				startActivity(intent);
 			}
 		});
@@ -115,13 +116,13 @@ public class CrowdFundingFragment extends Fragment {
 					R.drawable.sciencedcrowd));
 			list.add(new ImageRadioButton(R.drawable.publishingucrowd,
 					R.drawable.publishingdcrowd));
-			list.add(new ImageRadioButton(R.drawable.publicucrowd,
-					R.drawable.publicdcrowd));
 			list.add(new ImageRadioButton(R.drawable.gameucrowd,
+					R.drawable.publicdcrowd));
+			list.add(new ImageRadioButton(R.drawable.artucrowd,
 					R.drawable.gamedcrowd));
 			list.add(new ImageRadioButton(R.drawable.farmerucrowd,
 					R.drawable.farmerdcrowd));
-			list.add(new ImageRadioButton(R.drawable.artucrowd,
+			list.add(new ImageRadioButton(R.drawable.publicucrowd,
 					R.drawable.artdcrowd));
 		}
 		mTitleAdapter = new TitleAdapter(getActivity(), list,
@@ -131,21 +132,19 @@ public class CrowdFundingFragment extends Fragment {
 			@Override
 			public void OnClickItem(ImageRadioButton item) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(getActivity(),
-						CrowdFundingListActivity.class);
 				int position = list.indexOf(item);
 				if (type == CrowdFundingVO.CROWDFUNDINGMY) {
-
-					intent.putExtra("type",
-							CrowdFundingVO.typeStr[position + 1]);
-					intent.putExtra("typeid", position + 1);
+					if (position == 1)
+						loadDataInvest();
+					else{
+						crowdType = 0;
+						loadData();
+					}
 				} else if (type == CrowdFundingVO.CROWDFUNDINGQUERY) {
-					intent.putExtra("type",
-							CrowdFundingVO.typeStr[position + 3]);
-					intent.putExtra("typeid", position + 3);
+					crowdType = position+1;
+					loadData();
 				}
 				mTitleAdapter.notifyDataSetChanged();
-				startActivity(intent);
 			}
 		});
 		gridView.setAdapter(mTitleAdapter);
@@ -165,14 +164,35 @@ public class CrowdFundingFragment extends Fragment {
 		mDatas.clear();
 		mPage = 0;
 		mAdapter.notifyDataSetChanged();
-		appClientLef.getFundingList(1, 0, mPage, 5, uiHandler,
+		// isMy=1 我发布 0 其他
+		int isMy = 1;
+		if (crowdType > 0)
+			isMy = 0;
+		appClientLef.getFundingList(isMy, crowdType, mPage, 5, uiHandler,
 				MsgTagVO.DATA_LOAD, getActivity(), true, null, null);
 
 	}
 
+	private void loadDataInvest() {
+		mDatas.clear();
+		mPage = 0;
+		mAdapter.notifyDataSetChanged();
+		appClientLef.getFundingListInvest(mPage, 5, uiHandler,
+				MsgTagVO.DATA_LOAD, getActivity(), true, null, null);
+	}
+
 	private void loadMore() {
-		appClientLef.getAudioList(mPage, 5, uiHandler, MsgTagVO.DATA_MORE,
-				getActivity(), true, null, null);
+		if (isInvest) {
+			appClientLef.getFundingListInvest(mPage, 5, uiHandler,
+					MsgTagVO.DATA_MORE, getActivity(), true, null, null);
+		} else {
+			int isMy = 1;
+			if (crowdType > 0)
+				isMy = 0;
+			appClientLef.getFundingList(isMy, crowdType, mPage, 5, uiHandler,
+					MsgTagVO.DATA_MORE, getActivity(), true, null, null);
+		}
+
 	}
 
 	Handler uiHandler = new Handler() {

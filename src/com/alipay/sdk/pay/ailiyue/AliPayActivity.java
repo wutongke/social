@@ -22,6 +22,7 @@ import butterknife.InjectView;
 import com.alipay.sdk.app.PayTask;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.ui.CartActivity;
+import com.cpstudio.zhuojiaren.ui.MyZhuoBiActivity;
 
 public class AliPayActivity extends FragmentActivity {
 
@@ -64,9 +65,9 @@ public class AliPayActivity extends FragmentActivity {
 				if (TextUtils.equals(resultStatus, "9000")) {
 					Toast.makeText(AliPayActivity.this, "支付成功",
 							Toast.LENGTH_SHORT).show();
-					Intent it = new Intent(AliPayActivity.this,CartActivity.class);
-					it.putExtra("from", "money");
-					startActivity(it);
+//					Intent it = new Intent(AliPayActivity.this,MyZhuoBiActivity.class);
+//					it.putExtra("from", "money");
+//					startActivity(it);
 					AliPayActivity.this.finish();
 				} else {
 					// 判断resultStatus 为非“9000”则代表可能支付失败

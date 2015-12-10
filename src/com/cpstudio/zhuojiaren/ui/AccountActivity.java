@@ -12,6 +12,7 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.ResHelper;
 
 public class AccountActivity extends BaseActivity {
 	@InjectView(R.id.ac_zhuo_account)
@@ -62,12 +63,13 @@ public class AccountActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent (mContext,ZhuoNameEditActivity.class);
-				intent.putExtra("edtiText", "±à¼­Ù¾ÂöºÅ");
-				startActivityForResult(intent, zhuoR);
+//				Intent intent = new Intent (mContext,ZhuoNameEditActivity.class);
+//				intent.putExtra("edtiText", "±à¼­Ù¾ÂöºÅ");
+//				startActivityForResult(intent, zhuoR);
 			}
 		};
 		zhuoAccount.setOnClickListener(click);
+		zhuoAccountText.setText(ResHelper.getInstance(getApplicationContext()).getUserid()+"");
 		phoneNumber.setOnClickListener(new OnClickListener() {
 			
 			@Override
