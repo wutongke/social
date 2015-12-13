@@ -33,6 +33,8 @@ import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelperLz;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -156,7 +158,7 @@ public class VedioActivity extends BaseActivity {
 						}
 						AppClientLef.getInstance(
 								VedioActivity.this.getApplicationContext())
-								.thoughtPost(
+								.shareThought( ZhuoCommHelperLz.getGrouththought(),"goid",vedio.getId(),
 										share.getText().toString(),
 										uiHandler, MsgTagVO.PUB_INFO,
 										VedioActivity.this, true, null, null);

@@ -102,6 +102,7 @@ public class ZhuoCommHelper {
 	private final static String SERVICE_SEARCH_QUAN = "/groupsearch.do";
 	private final static String SERVICE_CITY_LIST = "/getcitylist.do";
 	private final static String SERVICE_VEDIO_LIST = "/getGrowthOnlineList.do";
+	private static String SERVICE_VEDIO_LIST_Collection = "/myCollectGrouthOnline.do";
 	private final static String SERVICE_AUDIO_LIST = "/getAudio.do";
 	private final static String SERVICE_Visit_LIST = "/getInterviewList.do";
 	private final static String SUBMIT_VISIT= "/getGrowthOnlineType.do";
@@ -148,7 +149,13 @@ public class ZhuoCommHelper {
 	private static String SHIPPINGADDRESS = "/goods/setOrderAddress.do";
 	private static String INCOME = "/getMyZhuobiRecord.do";
 	private static String REMOVEGOODS = "/goods/delGoodsCart.do";
-	
+	private static String AudioCollection = "/myAudio.do";
+	public static String getAudioCollection() {
+		return SERVER + AudioCollection;
+	}
+	public static String getServiceVedioListCollection() {
+		return SERVER + SERVICE_VEDIO_LIST_Collection;
+	}
 	public static String getServiceFundingListInvest() {
 		return SERVER +SERVICE_Funding_LIST_Invest;
 	}

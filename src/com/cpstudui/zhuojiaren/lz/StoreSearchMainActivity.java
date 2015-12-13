@@ -42,6 +42,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
@@ -113,6 +114,18 @@ public class StoreSearchMainActivity extends Activity implements
 
 	private void initClick() {
 		// TODO Auto-generated method stub
+		findViewById(R.id.buttonSearch).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(mSearchKey!=null && !mSearchKey.isEmpty()){
+					loadData();
+				}else{
+					CommonUtil.displayToast(StoreSearchMainActivity.this, R.string.please_finish);
+				}
+			}
+		});
 		findViewById(R.id.activity_back).setOnClickListener(new OnClickListener() {
 			
 			@Override

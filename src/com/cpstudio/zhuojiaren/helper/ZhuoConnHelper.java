@@ -1333,7 +1333,52 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getQuanEventList(),
 				nameValuePairs, mUIHandler, tag);
 	}
-
+	public boolean getQuanEventListCollection(Handler mUIHandler, int tag,
+			String groupid, String uid, int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		if (uid != null)
+			nameValuePairs.add(new BasicNameValuePair("userid", uid));
+		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
+		return getFromServerByPost(ZhuoCommHelperLz.getQuaneventcollection(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	public boolean getGongListCollection(Handler mUIHandler, int tag,
+			int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
+		nameValuePairs.add(new BasicNameValuePair("sdflag", "0" ));
+		return getFromServerByPost(ZhuoCommHelperLz.getGonglist(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	public boolean getPeopleListCollection(Handler mUIHandler, int tag,
+			int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
+		return getFromServerByPost(ZhuoCommHelperLz.getPeoplelist(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	public boolean getXuListCollection(Handler mUIHandler, int tag,
+			int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
+		nameValuePairs.add(new BasicNameValuePair("sdflag", "1" ));
+		return getFromServerByPost(ZhuoCommHelperLz.getGonglist(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	
+	public boolean getTopicListCollection(Handler mUIHandler, int tag,
+			int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
+		return getFromServerByPost(ZhuoCommHelperLz.getTopiclist(),
+				nameValuePairs, mUIHandler, tag);
+	}
 	/**
 	 * 获取用户加入和创建的活动
 	 * 
@@ -2267,7 +2312,6 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getMyFriends(),
 				nameValuePairs, mUIHandler, tag);
 	}
-
 	public boolean addCompany(Handler mUIHandler, int tag, String company,
 			int industry, int city, int position, String homepage, int status) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
