@@ -28,7 +28,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
-            android:background="@drawable/button_top_bg_menu"
+            android:background="@null"
             android:text="@string/label_lisklist"
             android:textColor="#ffffff"
             android:textSize="14sp" 

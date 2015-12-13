@@ -220,46 +220,37 @@ public class MyCollectionActivity extends BaseActivity {
 	}
 
 	private void loadData() {
-//		CommonUtil.displayToast(MyCollectionActivity.this, "暂时没有数据");
-//		if (pullDownView.startLoadData()) {
-//			mDatas.clear();
-//			mPage = 0;
-//			mAdapter.notifyDataSetChanged();
-////			appClientLef.getVedioList(tutorId, typeId, mPage, 5, uiHandler,
-////					MsgTagVO.DATA_LOAD, GrouthListActivity.this, true, null,
-////					null);
-//		}
 		switch(handlerTag){
 		case vedio :
-			appClientLef.getVedioList(null, null, mPage, 5, uiHandler,
+			appClientLef.getVedioCollectionList(null, null, mPage, 100, uiHandler,
 					vedio, (Activity)mContext, true, null, null);
 			break;
 		case radio:
-			appClientLef.getAudioList(mPage, 5, uiHandler,
+			appClientLef.getAudioListCollection(mPage, 100, uiHandler,
 					radio,(Activity) mContext, true, null, null);
 			break;
 		case event:
-			connHelper.getQuanEventList(uiHandler, event,
-					"1", null, mPage, 10);
+			connHelper.getQuanEventListCollection(uiHandler, event,
+					"1", null, mPage, 100);
 			break;
 		case topic:
-			connHelper.getQuanTopicList(uiHandler, topic,
-					"1", null, mPage, 10);
+			connHelper.getTopicListCollection(uiHandler, topic,
+					mPage, 100);
 			break;
 		case people:
-			connHelper.getMyFriends(uiHandler, people);
+			connHelper.getPeopleListCollection(uiHandler, people,mPage,100);
 			break;
 		case gong:
+			connHelper.getGongListCollection(uiHandler, gong, mPage, 100);
 			break;
 		case xu:
+			connHelper.getGongListCollection(uiHandler, gong, mPage, 100);
 			break;
 		}
 	}
 
 	private void loadMore() {
 		pullDownView.finishLoadData(true);
-//		appClientLef.getVedioList(tutorId, typeId, mPage, 5, uiHandler,
-//				MsgTagVO.DATA_MORE, GrouthListActivity.this, true, null, null);
 	}
 
 	Handler uiHandler = new Handler() {
@@ -273,7 +264,7 @@ public class MyCollectionActivity extends BaseActivity {
 				return;
 			}
 			String data = res.getData();
-			JsonHandler nljh = new JsonHandler(data, mContext
+			JsonHandler nljh = new JsonHandler((String)msg.obj, mContext
 					.getApplicationContext());
 			switch (msg.what) {
 			case radio:

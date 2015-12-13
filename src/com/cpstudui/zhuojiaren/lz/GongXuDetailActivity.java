@@ -69,7 +69,7 @@ public class GongXuDetailActivity extends BaseActivity {
 	ImageView ivHead;
 	@InjectView(R.id.imageViewCard)
 	ImageView ivCard;
-	
+
 	@InjectView(R.id.textViewAuthorName)
 	TextView tvName;
 	@InjectView(R.id.textWork)
@@ -86,12 +86,12 @@ public class GongXuDetailActivity extends BaseActivity {
 	private ListView mListView;
 	private TopicCommentListAdapter mAdapter;
 	private ArrayList<Comment> mList = new ArrayList<Comment>();
-	private LoadImage mLoadImage =LoadImage.getInstance();
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	private View mHeadView = null;
 	private String msgid = null;
 	private int mPage = 1;
 	private AppClientLef mConnHelper = null;
-	private  ZhuoConnHelper mConnHelperlz= null;
+	private ZhuoConnHelper mConnHelperlz = null;
 	private String isCollect = "0";
 	// private ListViewFooter mListViewFooter = null;
 	private String uid = null;
@@ -104,6 +104,7 @@ public class GongXuDetailActivity extends BaseActivity {
 
 	ResourceGXVO resDetail;
 	BaseCodeData baseDataSet;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -111,15 +112,15 @@ public class GongXuDetailActivity extends BaseActivity {
 		initTitle();
 
 		mConnHelper = AppClientLef.getInstance(getApplicationContext());
-		mConnHelperlz=ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelperlz = ZhuoConnHelper.getInstance(getApplicationContext());
 		// mFacade = new ZhuoInfoFacade(getApplicationContext());
 		myid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		Intent i = getIntent();
 		msgid = i.getStringExtra("msgid");
 
 		mAdapter = new TopicCommentListAdapter(GongXuDetailActivity.this,
-				mList, msgid,Color.GRAY);
-		
+				mList, msgid, Color.GRAY);
+
 		mListView = (ListView) findViewById(R.id.listViewDetail);
 		mListView.setDividerHeight(0);
 		baseDataSet = mConnHelperlz.getBaseDataSet();
@@ -133,7 +134,7 @@ public class GongXuDetailActivity extends BaseActivity {
 		title.setText(R.string.title_activity_gong_xu_detail);
 		mListView.setAdapter(mAdapter);
 		loadData();
-		
+
 	}
 
 	public void loadHead(ResourceGXVO gxInfo) {
@@ -161,9 +162,11 @@ public class GongXuDetailActivity extends BaseActivity {
 		String work="";
 		if (baseDataSet != null) {
 			int pos = sharer.getPosition();
-			if (pos != 0)// 默认为0，城市标号从1开始
-				pos--;
-			work = ((baseDataSet.getPosition()).get(pos)).getContent();
+			if(pos>=1 && pos<=baseDataSet.getPosition().size())
+			{
+				pos--; //默认为0，城市标号从1开始
+				work = ((baseDataSet.getPosition()).get(pos)).getContent();
+			}
 		}
 		tvWork.setText(work);
 		tvCompany.setText(sharer.getCompany());
@@ -298,10 +301,11 @@ public class GongXuDetailActivity extends BaseActivity {
 			case MsgTagVO.MSG_FOWARD: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-					pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
-							null, R.string.label_share_success);
-				}else{
-					com.cpstudio.zhuojiaren.model.ResultVO res = JsonHandler.parseResult((String) msg.obj);
+					pwh.showPopTip(findViewById(R.id.linearLayoutBottom), null,
+							R.string.label_share_success);
+				} else {
+					com.cpstudio.zhuojiaren.model.ResultVO res = JsonHandler
+							.parseResult((String) msg.obj);
 					CommonUtil.displayToast(getApplicationContext(),
 							res.getMsg());
 				}
@@ -322,8 +326,7 @@ public class GongXuDetailActivity extends BaseActivity {
 						// drawable.getMinimumHeight());
 						// tvCollect.setCompoundDrawables(null, drawable, null,
 						// null);
-						tvCollect
-								.setBackgroundResource(R.drawable.dongt2);
+						tvCollect.setBackgroundResource(R.drawable.dongt2);
 						isCollect = "0";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_collectSuccess);
@@ -337,8 +340,7 @@ public class GongXuDetailActivity extends BaseActivity {
 						// drawable.getMinimumHeight());
 						// tvCollect.setCompoundDrawables(null, drawable, null,
 						// null);
-						tvCollect
-								.setBackgroundResource(R.drawable.dongt);
+						tvCollect.setBackgroundResource(R.drawable.dongt);
 						isCollect = "1";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_cancelCollect);
@@ -359,16 +361,15 @@ public class GongXuDetailActivity extends BaseActivity {
 
 	private void initClick() {
 		ivCard.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(sharer!=null)
-				{
-				Intent intent = new Intent(GongXuDetailActivity.this,
-						ZhuoMaiCardActivity.class);
-				intent.putExtra("userid", sharer.getUserid());
-				startActivity(intent);
+				if (sharer != null) {
+					Intent intent = new Intent(GongXuDetailActivity.this,
+							ZhuoMaiCardActivity.class);
+					intent.putExtra("userid", sharer.getUserid());
+					startActivity(intent);
 				}
 			}
 		});
@@ -377,7 +378,8 @@ public class GongXuDetailActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				mConnHelper.shareRESToZhuo(GongXuDetailActivity.this,mUIHandler,MsgTagVO.MSG_FOWARD,msgid);
+				mConnHelper.shareRESToZhuo(GongXuDetailActivity.this,
+						mUIHandler, MsgTagVO.MSG_FOWARD, msgid);
 			}
 		});
 		tvCollect.setVisibility(View.VISIBLE);
@@ -393,7 +395,9 @@ public class GongXuDetailActivity extends BaseActivity {
 					type = "1";
 				}
 				mConnHelper.collection(GongXuDetailActivity.this, mUIHandler,
-						MsgTagVO.MSG_COLLECT, ZhuoCommHelper.getCOMMONCOLLECTION(),"sdid", msgid, "type", type);
+						MsgTagVO.MSG_COLLECT,
+						ZhuoCommHelper.getCOMMONCOLLECTION(), "sdid", msgid,
+						"type", type);
 			}
 		});
 		mListView.setOnItemClickListener(new OnItemClickListener() {
@@ -402,15 +406,15 @@ public class GongXuDetailActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				if(position<=0)
+				if (position <= 0)
 					return;
-				toId = mList.get(position-1).getId();
+				toId = mList.get(position - 1).getId();
 				Intent i = new Intent(GongXuDetailActivity.this,
 						ResCommentActivity.class);
 				i.putExtra("type", 3);
 				i.putExtra("msgid", msgid);
 				i.putExtra("toId", toId);
-				i.putExtra("toUserid", mList.get(position-1).getUserid());
+				i.putExtra("toUserid", mList.get(position - 1).getUserid());
 				i.putExtra("toUserName", mList.get(position - 1).getName());
 				startActivityForResult(i, MsgTagVO.MSG_CMT);
 			}
@@ -469,12 +473,12 @@ public class GongXuDetailActivity extends BaseActivity {
 							MsgTagVO.MSG_FOWARD, null, true, null, null);
 				}
 			} else if (requestCode == MsgTagVO.MSG_CMT) {
-				ArrayList<Comment> list =JsonHandler_Lef.parseCommentLZList(data
-						.getStringExtra("data"));
+				ArrayList<Comment> list = JsonHandler_Lef
+						.parseCommentLZList(data.getStringExtra("data"));
 				mList.clear();
 				mList.addAll(list);
 				mAdapter.notifyDataSetChanged();
-				mListView.setSelection(mList.size()-1);
+				mListView.setSelection(mList.size() - 1);
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

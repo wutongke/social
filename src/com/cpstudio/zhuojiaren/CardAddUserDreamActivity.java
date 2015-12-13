@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -63,6 +65,8 @@ public class CardAddUserDreamActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+				imm.hideSoftInputFromWindow(CardAddUserDreamActivity.this.getCurrentFocus().getWindowToken(), 0);
 				CardAddUserDreamActivity.this.finish();
 			}
 		});
@@ -76,8 +80,8 @@ public class CardAddUserDreamActivity extends Activity {
 							String dream = ((EditText) linearLayout
 									.findViewWithTag(dreamTags.get(i)))
 									.getText().toString();
-							if (!dream.trim().equals("")) {
-								dreamsStr += dream + ";";
+							if (!dreamsStr.trim().equals("")) {
+								dreamsStr +=  ";"+dream;
 								selected.add(dream);
 							}
 						}

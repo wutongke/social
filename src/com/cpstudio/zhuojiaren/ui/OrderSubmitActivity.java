@@ -3,11 +3,14 @@ package com.cpstudio.zhuojiaren.ui;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -22,6 +25,7 @@ import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -68,6 +72,7 @@ public class OrderSubmitActivity extends BaseActivity {
 	private static int PAYFOR = 102;
 	private static int PAYMESSAGE = 103;
 	String orderNumber;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -82,36 +87,40 @@ public class OrderSubmitActivity extends BaseActivity {
 
 	private void getleftMoney() {
 		// TODO Auto-generated method stub
-		AppClientLef.getInstance(this.getApplicationContext()).getMyZhuoBi(OrderSubmitActivity.this,uiHandler, GET_MONEY);
+		AppClientLef.getInstance(this.getApplicationContext()).getMyZhuoBi(
+				OrderSubmitActivity.this, uiHandler, GET_MONEY);
 	}
 
 	private Handler uiHandler = new Handler() {
 		public void handleMessage(final Message msg) {
 			ResultVO res = null;
 			res = JsonHandler.parseResult((String) msg.obj);
-			if (JsonHandler.checkResult((String) msg.obj, OrderSubmitActivity.this)) {
+			if (JsonHandler.checkResult((String) msg.obj,
+					OrderSubmitActivity.this)) {
 			} else {
 				CommonUtil.displayToast(OrderSubmitActivity.this, res.getMsg());
 				return;
 			}
 			String data = res.getData();
 			if (msg.what == GET_MONEY) {
-				
+
 				leftMoney.setText(res.getData());
-			} else if(msg.what == GET_ORDER_NUMBER){
-				int price = (int)Float.parseFloat(goodsPrice.getText().toString());
-				AppClientLef.getInstance(OrderSubmitActivity.this.getApplicationContext())
-				.payWithZhuobi(OrderSubmitActivity.this, uiHandler, PAYFOR,price+""
-						, res.getData());
+			} else if (msg.what == GET_ORDER_NUMBER) {
+				int price = (int) Float.parseFloat(goodsPrice.getText()
+						.toString());
+				AppClientLef.getInstance(
+						OrderSubmitActivity.this.getApplicationContext())
+						.payWithZhuobi(OrderSubmitActivity.this, uiHandler,
+								PAYFOR, price + "", res.getData());
 				orderNumber = res.getData();
-			} else if(msg.what == PAYFOR){
+			} else if (msg.what == PAYFOR) {
 				CommonUtil.displayToast(OrderSubmitActivity.this, "支付成功");
 				OrderSubmitActivity.this.finish();
-//				leftMoney.setText(res.getData());
-//				AppClientLef.getInstance(OrderSubmitActivity.this.getApplicationContext())
-//				.postPayStatus(OrderSubmitActivity.this, uiHandler, PAYMESSAGE, orderNumber, "1");//1表示成功
-			}
-			else{
+				// leftMoney.setText(res.getData());
+				// AppClientLef.getInstance(OrderSubmitActivity.this.getApplicationContext())
+				// .postPayStatus(OrderSubmitActivity.this, uiHandler,
+				// PAYMESSAGE, orderNumber, "1");//1表示成功
+			} else {
 				CommonUtil.displayToast(OrderSubmitActivity.this,
 						R.string.error0);
 			}
@@ -181,12 +190,52 @@ public class OrderSubmitActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				// submit to get tradeid and then fay
-				//get number
-				int price = (int)Float.parseFloat(goodsPrice.getText().toString());
-				AppClientLef.getInstance(OrderSubmitActivity.this.getApplicationContext())
-				.getOrderNumber(invoice.getText().toString(),leftMessage.getText().toString()
-						,price+"".toString(),new Gson().toJson(goodsList),
-						uiHandler, GET_ORDER_NUMBER, OrderSubmitActivity.this);
+				// get number
+				final int price = (int) Float.parseFloat(goodsPrice.getText()
+						.toString());
+				
+				LayoutInflater inflater = LayoutInflater
+						.from(OrderSubmitActivity.this);
+				final View view = inflater.inflate(R.layout.textview_dialot,
+						null);
+				final TextView title = (TextView)view.findViewById(R.id.texttitle);
+				final EditText password = (EditText) view.findViewById(R.id.money);
+				title.setVisibility(View.GONE);
+				password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+				new AlertDialog.Builder(OrderSubmitActivity.this,
+						AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+						.setTitle("请输入支付密码（登录密码）")
+						.setView(view)
+						.setNegativeButton("取消", null)
+						.setPositiveButton("确定",
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										// TODO Auto-generated method
+										// stub
+										if (!password.getText().toString()
+												.isEmpty()
+												&& CommonUtil.getMD5String(password.getText()
+														.toString())
+														.equals(ResHelper
+																.getInstance(
+																		OrderSubmitActivity.this)
+																.getPassword())) {
+											AppClientLef.getInstance(
+													OrderSubmitActivity.this.getApplicationContext())
+													.getOrderNumber(invoice.getText().toString(),
+															leftMessage.getText().toString(),
+															price + "".toString(),
+															new Gson().toJson(goodsList), uiHandler,
+															GET_ORDER_NUMBER, OrderSubmitActivity.this);
+										}else{
+											CommonUtil.displayToast(OrderSubmitActivity.this, R.string.error_password);
+										}
+									}
+								}).create().show();
+				
 			}
 		});
 	}

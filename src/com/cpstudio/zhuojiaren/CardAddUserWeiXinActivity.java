@@ -7,16 +7,22 @@ import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class CardAddUserWeiXinActivity extends Activity {
+	int isOpen = 0;
 	private Handler mUIHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -43,11 +49,26 @@ public class CardAddUserWeiXinActivity extends Activity {
 		String weixin = i.getStringExtra(CardEditActivity.EDIT_WEIXIN_STR1);
 		((EditText) findViewById(R.id.edtWeixin)).setText(weixin);
 		int weixinopen = i.getIntExtra(CardEditActivity.EDIT_WEIXIN_STR2, 0);
-		if (0 == weixinopen) {
-			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(true);
+		if (weixinopen == 1) {
+			((RadioButton) (findViewById(R.id.radioPrivate))).setChecked(true);
+			isOpen = 1;
 		} else {
-			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(false);
+			((RadioButton) (findViewById(R.id.radioOpen))).setChecked(true);
+			isOpen = 0;
 		}
+		((RadioGroup) this.findViewById(R.id.radioGroup))
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(RadioGroup arg0, int arg1) {
+						// TODO Auto-generated method stub
+						// 获取变更后的选中项的ID
+						int radioButtonId = arg0.getCheckedRadioButtonId();
+						if (radioButtonId == R.id.radioPrivate)
+							isOpen = 1;
+						else
+							isOpen = 0;
+					}
+				});
 		initClick();
 	}
 
@@ -56,6 +77,8 @@ public class CardAddUserWeiXinActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+				imm.hideSoftInputFromWindow(CardAddUserWeiXinActivity.this.getCurrentFocus().getWindowToken(), 0);
 				CardAddUserWeiXinActivity.this.finish();
 			}
 		});
@@ -63,17 +86,11 @@ public class CardAddUserWeiXinActivity extends Activity {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						int open = 0;
-						if (((CheckBox) findViewById(R.id.checkBoxIsOpen))
-								.isChecked()) {
-							open = 0;
-						} else {
-							open = 1;
-						}
+
 						UserNewVO userInfo = new UserNewVO();
 						userInfo.setWeixin(((EditText) findViewById(R.id.edtWeixin))
 								.getText().toString());
-						userInfo.setIsWeixinOpen(open);
+						userInfo.setIsWeixinOpen(isOpen);
 						ZhuoConnHelper.getInstance(getApplicationContext())
 								.modifyUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,
 										userInfo);

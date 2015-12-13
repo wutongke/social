@@ -34,7 +34,6 @@ import com.cpstudio.zhuojiaren.ui.LocateActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class StoreMyHomeActivity extends BaseActivity {
-
 	@InjectView(R.id.llViewOrder)
 	View vOrder;// 查看订单
 	@InjectView(R.id.llGWC)
@@ -43,10 +42,8 @@ public class StoreMyHomeActivity extends BaseActivity {
 	View vMyStore;// 我的店铺
 	@InjectView(R.id.llMyCollect)
 	View vCollect;
-
 	@InjectView(R.id.llAddress)
 	View vAddress;// 收货地址
-
 	@InjectView(R.id.imageViewHome)
 	ImageView ivHome;
 
@@ -120,7 +117,6 @@ public class StoreMyHomeActivity extends BaseActivity {
 		// LocateActivity.class));
 		// }
 		// });
-
 		vGWC.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -149,9 +145,7 @@ public class StoreMyHomeActivity extends BaseActivity {
 		ivHome.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
-				// startActivity(new
-				// Intent(StoreMyHomeActivity.this,MyMoneyActivity.class));
+				StoreMyHomeActivity.this.finish();
 			}
 		});
 	}

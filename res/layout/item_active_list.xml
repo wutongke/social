@@ -39,8 +39,8 @@
         android:id="@+id/relativeLayoutImageContainer"
         android:layout_width="60dp"
         android:layout_height="60dp" 
+        android:visibility="gone"
         android:layout_marginLeft="10dp" >
-
     </RelativeLayout>
 
     <RelativeLayout

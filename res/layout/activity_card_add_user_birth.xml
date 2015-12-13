@@ -163,14 +163,14 @@
 
                     <RadioButton
                         android:id="@+id/radioPrivate"
-                        style="@style/view_size_radio"
-                        android:checked="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/info41" />
 
                     <RadioButton
                         android:id="@+id/radioOpen"
-                        style="@style/view_size_radio"
-                        android:checked="false"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/info399" />
                 </RadioGroup>
             </LinearLayout>

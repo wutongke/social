@@ -179,7 +179,7 @@ public class TabContainerActivity extends TabActivity implements
 				}
 			}
 			connHelper.setGroupMap(groupMap);
-			if (grouplist.size() > 0)
+			if (grouplist.size() > 0 && RongIM.getInstance()!=null && RongIM.getInstance().getRongIMClient()!=null)
 				RongIM.getInstance()
 						.getRongIMClient()
 						.syncGroup(grouplist,

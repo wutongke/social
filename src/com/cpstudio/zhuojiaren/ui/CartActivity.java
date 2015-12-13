@@ -146,6 +146,7 @@ public class CartActivity extends BaseActivity {
 					for (GoodsVO goods :mAdapter.getSelectList()){
 						sb.append(goods.getGoodsId()+";");
 					}
+					
 					AppClientLef.getInstance(CartActivity.this).removeGoods(
 							sb.toString(), null, 0, CartActivity.this);
 

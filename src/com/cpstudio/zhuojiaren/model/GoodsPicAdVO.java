@@ -4,9 +4,17 @@ public class GoodsPicAdVO {
 	private String adpic;
 
 	private String adlink;
-
-	private String getAdpic() {
+	private String adno;
+	public String getAdpic() {
 		return adpic;
+	}
+
+	public String getAdno() {
+		return adno;
+	}
+
+	public void setAdno(String adno) {
+		this.adno = adno;
 	}
 
 	public void setAdpic(String adpic) {

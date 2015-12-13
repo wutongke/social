@@ -124,8 +124,6 @@ public class ResourceGXFragment extends Fragment {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(getActivity(),
 						GongXuDetailActivity.class);
-				// ‘› ±–¥À¿£¨≤‚ ‘
-				// intent.putExtra("msgid",mListDatas.get(arg2).getMsgId());
 				intent.putExtra("msgid", mDatas.get(arg2 - 1).getSdid());
 				startActivity(intent);
 			}

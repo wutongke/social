@@ -88,25 +88,26 @@
                 </EditText>
             </LinearLayout>
 
-            <CheckBox
-                android:id="@+id/checkBoxIsOpen"
-                style="@style/CPCheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:checked="true"
-                android:paddingLeft="35dp"
-                android:text="@string/info39" />
+          
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:contentDescription="是否开放" >
 
-            <CheckBox
-                android:id="@+id/checkBoxIsOpenToAll"
-                style="@style/CPCheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:checked="false"
-                android:paddingLeft="35dp"
-                android:text="@string/info399" />
+                    <RadioButton
+                        android:id="@+id/radioPrivate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/info41" />
+
+                    <RadioButton
+                        android:id="@+id/radioOpen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/info399" />
+                </RadioGroup>
         </LinearLayout>
     </ScrollView>
 

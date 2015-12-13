@@ -28,7 +28,6 @@ import com.cpstudio.zhuojiaren.widget.PicChooseActivity;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
 public class MyAdviceActivity extends BaseActivity {
-
 	@InjectView(R.id.aee_image_layout)
 	GridView imageGrid;
 	@InjectView(R.id.aee_add_image)

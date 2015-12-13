@@ -116,6 +116,16 @@ public class StoreMainActivity extends BaseActivity implements
 
 				Intent i = new Intent(StoreMainActivity.this,
 						StoreSearchMainActivity.class);
+				startActivity(i);
+			}
+		});
+		findViewById(R.id.search).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(StoreMainActivity.this,
+						StoreSearchMainActivity.class);
 				// i.putExtra("filePath", filePath);
 				startActivity(i);
 			}

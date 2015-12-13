@@ -12,7 +12,6 @@
         android:id="@+id/head_contentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_active_top"
         android:paddingLeft="30dp" >
 
         <FrameLayout
@@ -67,14 +66,19 @@
     <RelativeLayout
         android:id="@+id/v_bg"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="@dimen/bg_image_height"
         android:orientation="vertical" >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_active" >
+            android:layout_marginBottom="20dp" >
+
+            <ImageView
+                android:id="@+id/bgImg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"

@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GoodsSearchActivity" >
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/title_activity" />
+
+    <RelativeLayout
+        android:id="@+id/userNameShowParent"
+        style="@style/view_topbar_bg"
+        android:layout_below="@+id/title" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            >
+
+            <EditText
+                android:id="@+id/search_input"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/zxinput_zx_1"
+                android:hint="@string/label_main_searchHint"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="35dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/search_search"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:padding="10dp"
+                android:src="@drawable/magnifier5_zx_1" />
+        </FrameLayout>
+    </RelativeLayout>
+	<ListView 
+	    android:id="@+id/goods_list"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+		android:cacheColorHint="@color/transparent"	    
+		android:listSelector="@color/transparent"
+	    ></ListView>
+</RelativeLayout>

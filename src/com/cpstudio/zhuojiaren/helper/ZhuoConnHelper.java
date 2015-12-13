@@ -1,7 +1,12 @@
 package com.cpstudio.zhuojiaren.helper;
 
 import io.rong.app.model.ApiResult;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient.ErrorCode;
+import io.rong.imlib.RongIMClient.SendMessageCallback;
+import io.rong.imlib.model.Conversation.ConversationType;
 import io.rong.imlib.model.Group;
+import io.rong.message.TextMessage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,6 +45,7 @@ import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.Province;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudui.zhuojiaren.lz.CustomerMessageFactory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.qiniu.android.storage.UploadManager;
@@ -937,40 +943,59 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-			AsyncUploadHelper helper = new AsyncUploadHelper(activity,
-					uploadFileToken, filesMap, new ICompleteCallback() {
+			if (filesMap != null && filesMap.size() > 0) {
+				AsyncUploadHelper helper = new AsyncUploadHelper(activity,
+						uploadFileToken, filesMap, new ICompleteCallback() {
 
-						@Override
-						public void onReturn(Map<String, StringBuilder> map) {
-							// TODO Auto-generated method stub
-							if (map == null)
-								Toast.makeText(activity, "上传到七牛云失败", 1000)
-										.show();
-							if (map.size() > 0) {
-								for (Map.Entry<String, StringBuilder> entry : map
-										.entrySet()) {
-									String key = entry.getKey();
+							@Override
+							public void onReturn(Map<String, StringBuilder> map) {
+								// TODO Auto-generated method stub
+								if (map == null)
+									Toast.makeText(activity, "上传到七牛云失败", 1000)
+											.show();
+								if (map.size() > 0) {
+									for (Map.Entry<String, StringBuilder> entry : map
+											.entrySet()) {
+										String key = entry.getKey();
 
-									String value = entry.getValue().toString();
-									if (extra != null)
-										value = extra + value;
+										String value = entry.getValue()
+												.toString();
+										if (extra != null)
+											value = extra + "," + value;
+										nameValuePairs
+												.add(new BasicNameValuePair(
+														key, value));
+									}
+								} else
 									nameValuePairs.add(new BasicNameValuePair(
-											key, value));
+											"file", extra));
+								AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+										addUserInfoByPost(nameValuePairs), url,
+										true, getFinishCallback(handler,
+												handlerTag, tag, data),
+										activity);
+								conn.setCancelable(cancelable);
+								if (cancelable) {
+									conn.setCancel(getCancelListener(cancel,
+											tag, conn));
 								}
+								conn.execute();
 							}
-							AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
-									addUserInfoByPost(nameValuePairs), url,
-									true, getFinishCallback(handler,
-											handlerTag, tag, data), activity);
-							conn.setCancelable(cancelable);
-							if (cancelable) {
-								conn.setCancel(getCancelListener(cancel, tag,
-										conn));
-							}
-							conn.execute();
-						}
-					});
-			helper.execute("test");
+						});
+				helper.execute("test");
+			} else {
+				nameValuePairs.add(new BasicNameValuePair("file", extra));
+				AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+						addUserInfoByPost(nameValuePairs), url, true,
+						getFinishCallback(handler, handlerTag, tag, data),
+						activity);
+				conn.setCancelable(cancelable);
+				if (cancelable) {
+					conn.setCancel(getCancelListener(cancel, tag, conn));
+				}
+				conn.execute();
+			}
+
 			return true;
 		}
 		return false;
@@ -1162,12 +1187,12 @@ public class ZhuoConnHelper {
 	 * 
 	 * @param mUIHandler
 	 * @param tag
-	 * @param type
+	 * @param type 广告类别 0-首页 1-发现 2-精进 3-商城 4-众筹
 	 * @return
 	 */
 	public boolean getAdInfo(Handler mUIHandler, int tag, int type) {
 		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("type", type + ""));
+		params.add(new BasicNameValuePair("type",String.valueOf(type)));
 		return getFromServerByPost(ZhuoCommHelperLz.getAdInfo(), params,
 				mUIHandler, tag);
 	}
@@ -1276,8 +1301,11 @@ public class ZhuoConnHelper {
 	public boolean pubPhoto(Activity activity, Handler mUIHandler, int tag,
 			String originFilekeys, ArrayList<String> files) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
-		fileMap.put("file", files);
+		Map<String, ArrayList<String>> fileMap = null;
+		if (files != null && files.size() > 0) {
+			fileMap = new HashMap<String, ArrayList<String>>();
+			fileMap.put("file", files);
+		}
 		return doPostWithFile(fileMap, nameValuePairs,
 				ZhuoCommHelperLz.pubPhoto(), mUIHandler, tag, activity,
 				"pubQuanTopic", false, null, null, originFilekeys);
@@ -1305,7 +1333,52 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getQuanEventList(),
 				nameValuePairs, mUIHandler, tag);
 	}
-
+	public boolean getQuanEventListCollection(Handler mUIHandler, int tag,
+			String groupid, String uid, int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		if (uid != null)
+			nameValuePairs.add(new BasicNameValuePair("userid", uid));
+		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
+		return getFromServerByPost(ZhuoCommHelperLz.getQuaneventcollection(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	public boolean getGongListCollection(Handler mUIHandler, int tag,
+			int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
+		nameValuePairs.add(new BasicNameValuePair("sdflag", "0" ));
+		return getFromServerByPost(ZhuoCommHelperLz.getGonglist(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	public boolean getPeopleListCollection(Handler mUIHandler, int tag,
+			int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
+		return getFromServerByPost(ZhuoCommHelperLz.getPeoplelist(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	public boolean getXuListCollection(Handler mUIHandler, int tag,
+			int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
+		nameValuePairs.add(new BasicNameValuePair("sdflag", "1" ));
+		return getFromServerByPost(ZhuoCommHelperLz.getGonglist(),
+				nameValuePairs, mUIHandler, tag);
+	}
+	
+	public boolean getTopicListCollection(Handler mUIHandler, int tag,
+			int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
+		return getFromServerByPost(ZhuoCommHelperLz.getTopiclist(),
+				nameValuePairs, mUIHandler, tag);
+	}
 	/**
 	 * 获取用户加入和创建的活动
 	 * 
@@ -1403,7 +1476,23 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.modifyGroupInfo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
-
+	/**
+	 * 设置圈子头像
+	 * @param mUIHandler
+	 * @param handlerTag
+	 * @param groupid
+	 * @param files
+	 * @return
+	 */
+	public boolean setQuanLogo(Handler mUIHandler, int handlerTag,
+			String groupid, ArrayList<String> files) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
+		filesMap.put("file", files);
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		return getFromServerByPost(ZhuoCommHelperLz.setQuanLogo(),
+				nameValuePairs, mUIHandler, handlerTag);
+	}
 	/**
 	 * 获取圈话题详情
 	 * 
@@ -1434,6 +1523,7 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.topicPraise(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
+	
 
 	public boolean praiseDynamic(Handler mUIHandler, int handlerTag,
 			String statusid, int praise) {
@@ -1590,8 +1680,8 @@ public class ZhuoConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("isPhoneOpen", user
 					.getIsPhoneOpen() + ""));
 		if (user.getPhone() != null)
-			nameValuePairs.add(new BasicNameValuePair("isPhoneOpen", user
-					.getPhone() ));
+			nameValuePairs
+					.add(new BasicNameValuePair("phone", user.getPhone()));
 		if (user.getQq() != null)
 			nameValuePairs.add(new BasicNameValuePair("qq", user.getQq()));
 		if (user.getIsQqOpen() != -1)
@@ -1609,6 +1699,9 @@ public class ZhuoConnHelper {
 		if (user.getDream() != null)
 			nameValuePairs
 					.add(new BasicNameValuePair("dream", user.getDream()));
+		if(user.getFaith()!=null)
+			nameValuePairs
+			.add(new BasicNameValuePair("faith", user.getFaith()));
 		return getFromServerByPost(ZhuoCommHelperLz.modifyUserInfo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
@@ -2236,7 +2329,6 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getMyFriends(),
 				nameValuePairs, mUIHandler, tag);
 	}
-
 	public boolean addCompany(Handler mUIHandler, int tag, String company,
 			int industry, int city, int position, String homepage, int status) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -2494,27 +2586,56 @@ public class ZhuoConnHelper {
 	}
 
 	/**
-	 * 设置群组信息提供者，当收到推送的消息表示加群成功时需要调用此
+	 * 设置群组信息提供者，并发送消息到群主
 	 * 
-	 * @param result
-	 * @param i
+	 * @param context
+	 * @param targetId
+	 *            对方ID
+	 * @param group
+	 * @param type
 	 *            0,退出；1 加入
 	 */
-	public void setGroupMap(Group group, int i) {
+	public void followQuan(final Context context, String targetId, Group group,
+			int type) {
 		HashMap<String, Group> groupHashMap = getGroupMap();
-		if (i == 1) {// 加入群
-			if (group.getPortraitUri() != null)
-				groupHashMap.put(
-						group.getId(),
-						new Group(group.getId(), group.getName(), group
-								.getPortraitUri()));
-			else
-				groupHashMap.put(group.getId(),
-						new Group(group.getId(), group.getName(), null));
-		} else if (i == 0) {
+		// reqMsg已实现， quitMsg需要重新自定义
+		TextMessage reqMsg = null, quitMsg = null;
+		String pushReqMs = "", pushQuitMs = "";
+		if (type == 1) {// 加入群
+			groupHashMap.put(group.getId(), group);
+			// reqMsg = CustomerMessageFactory.getInstance().getReqQuanMsg(
+			// getUserid(), "XX", group.getId(), group.getName());
+			// pushReqMs = getUserid() + "请求加入圈子：" + group.getName() + "(+"
+			// + group.getId() + ")";
+		} else if (type == 0) {
 			groupHashMap.remove(group.getId());
+			// quitMsg=
 		}
 		setGroupMap(groupHashMap);
+
+		// if (RongIM.getInstance().getRongIMClient() == null)
+		// return;
+		// if (getUserid() == null)
+		// return;
+		// ios 暂时没做
+		// RongIM.getInstance()
+		// .getRongIMClient()
+		// .sendMessage(ConversationType.PRIVATE, targetId, reqMsg,
+		// pushReqMs, new SendMessageCallback() {
+		// @Override
+		// public void onSuccess(Integer arg0) {
+		// // TODO Auto-generated method stub
+		// Toast.makeText(context, "发送到对方成功", 1000).show();
+		//
+		// }
+		//
+		// @Override
+		// public void onError(Integer arg0, ErrorCode arg1) {
+		// // TODO Auto-generated method stub
+		// Toast.makeText(context,
+		// "申请发送失败ErrorCode：" + arg1, 1000).show();
+		// }
+		// });
 	}
 
 }

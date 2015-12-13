@@ -51,6 +51,7 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 		mContext = this;
 		initTitle();
 		title.setText(R.string.title_activity_zhuojiaquan);
+		int selected=getIntent().getIntExtra("selected", 2);
 		userid = getIntent().getStringExtra("userid");
 		if (userid == null)//查看的是别人的不需要管理
 			function.setVisibility(View.GONE);
@@ -65,9 +66,9 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 		// 初始化tab和viewpager
 		viewPager.setAdapter(getPagerAdapter());
 		viewPager.setOffscreenPageLimit(2);
-		viewPager.setCurrentItem(2);
+		viewPager.setCurrentItem(selected);
 		tabButton.setViewPager(viewPager);
-		tabButton.setTabBackgroundByIndex(2);
+		tabButton.setTabBackgroundByIndex(selected);
 		initOnClick();
 	}
 

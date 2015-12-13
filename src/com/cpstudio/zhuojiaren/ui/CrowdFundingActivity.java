@@ -44,6 +44,7 @@ public class CrowdFundingActivity extends BaseFragmentActivity {
 		initTitle();
 		title.setText(R.string.crowdfunding);
 		functionImage.setBackgroundResource(R.drawable.magnifiercrowd);
+		functionImage.setVisibility(View.GONE);
 		// ≥ı ºªØtab∫Õviewpager
 		viewPager.setAdapter(getPagerAdapter());
 

@@ -6,11 +6,11 @@
     android:background="#f9f9f9"
     android:orientation="vertical"
     tools:context=".ZhuoMaiActiveListActivity" >
- <include layout="@layout/title_activity" />
-  
-   
 
-    <!-- TextView
+    <include layout="@layout/title_activity" />
+
+    <!--
+         TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -21,14 +21,23 @@
         android:shadowRadius="1"
         android:text="敬请期待"
         android:textColor="#ffffff"
-        android:textSize="18sp" /> -->
+        android:textSize="18sp" />
+    -->
+
+    <ImageView
+        android:id="@+id/main_banner"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        android:scaleType="centerCrop" >
+    </ImageView>
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:listSelector="@drawable/indicator_list"
-        android:divider="@drawable/bg_border3">
+        android:layout_height="wrap_content"
+        android:divider="@drawable/bg_border3"
+        android:listSelector="@drawable/indicator_list" >
     </ListView>
 
 </LinearLayout>

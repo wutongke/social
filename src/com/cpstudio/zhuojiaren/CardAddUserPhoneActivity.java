@@ -1,23 +1,27 @@
 package com.cpstudio.zhuojiaren;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.app.Activity;
-import android.content.Intent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
-
 public class CardAddUserPhoneActivity extends Activity {
+	int isOpen = 0;
 	private Handler mUIHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -35,6 +39,7 @@ public class CardAddUserPhoneActivity extends Activity {
 			}
 		}
 	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,12 +47,27 @@ public class CardAddUserPhoneActivity extends Activity {
 		Intent i = getIntent();
 		String phone = i.getStringExtra(CardEditActivity.EDIT_PHONE_STR1);
 		((EditText) findViewById(R.id.edtPhone)).setText(phone);
-		int phoneopen = i.getIntExtra(CardEditActivity.EDIT_PHONE_STR2,0);
-		if (0==phoneopen) {
-			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(true);
-		}else{
-			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(false);
+		int phoneopen = i.getIntExtra(CardEditActivity.EDIT_PHONE_STR2, 0);
+		if (phoneopen == 1) {
+			((RadioButton) (findViewById(R.id.radioPrivate))).setChecked(true);
+			isOpen = 1;
+		} else {
+			((RadioButton) (findViewById(R.id.radioOpen))).setChecked(true);
+			isOpen = 0;
 		}
+		((RadioGroup) this.findViewById(R.id.radioGroup))
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(RadioGroup arg0, int arg1) {
+						// TODO Auto-generated method stub
+						// 获取变更后的选中项的ID
+						int radioButtonId = arg0.getCheckedRadioButtonId();
+						if (radioButtonId == R.id.radioPrivate)
+							isOpen = 1;
+						else
+							isOpen = 0;
+					}
+				});
 		initClick();
 	}
 
@@ -56,6 +76,8 @@ public class CardAddUserPhoneActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+				imm.hideSoftInputFromWindow(CardAddUserPhoneActivity.this.getCurrentFocus().getWindowToken(), 0);  
 				CardAddUserPhoneActivity.this.finish();
 			}
 		});
@@ -63,14 +85,7 @@ public class CardAddUserPhoneActivity extends Activity {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-					int isOpen=0;
-						if (((CheckBox) findViewById(R.id.checkBoxIsOpen))
-								.isChecked()) {
-							isOpen= 1;
-						} else {
-							isOpen=0;
-						}
-						
+
 						UserNewVO userInfo = new UserNewVO();
 						userInfo.setPhone(((EditText) findViewById(R.id.edtPhone))
 								.getText().toString());

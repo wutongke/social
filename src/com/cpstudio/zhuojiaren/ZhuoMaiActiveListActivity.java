@@ -14,28 +14,30 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.ui.PubDetailActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 
 public class ZhuoMaiActiveListActivity extends BaseActivity implements
 		OnItemClickListener {
-
+	ImageView ivBanner;
 	private ListView mListView;
 	private CommonAdapter mAdapter;
 	private ArrayList<MessagePubVO> mList = new ArrayList<MessagePubVO>();
 	private ZhuoConnHelper mConnHelper = null;
 	private ListViewFooter mListViewFooter = null;
 	int pageNum = 0, pageSize = 5;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,6 +68,8 @@ public class ZhuoMaiActiveListActivity extends BaseActivity implements
 		mListViewFooter = new ListViewFooter(footerView, onMoreClick);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(this);
+		ivBanner = (ImageView) findViewById(R.id.main_banner);
+		loadAdImage();
 		loadData();
 	}
 
@@ -98,6 +102,7 @@ public class ZhuoMaiActiveListActivity extends BaseActivity implements
 			loadMore();
 		}
 	};
+
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
 		@Override
@@ -113,24 +118,40 @@ public class ZhuoMaiActiveListActivity extends BaseActivity implements
 				updateItemList((String) msg.obj, false, true);
 				break;
 			}
+			case MsgTagVO.DATA_OTHER: {
+//				LoadImage imageLoader = LoadImage.getInstance();
+				//Ω‚ŒˆÕº∆¨≤¢œ¬‘ÿivBanner
+				break;
+			}
 			}
 		}
 	};
 
 	public void loadMore() {
 		if (mListViewFooter.startLoading()) {
-			mConnHelper.getZhuomaiList(mUIHandler, MsgTagVO.DATA_LOAD, pageNum,
+			mConnHelper.getZhuomaiList(mUIHandler, MsgTagVO.DATA_MORE, pageNum,
 					pageSize);
 		}
 	}
 
 	private void loadData() {
-		if (mListViewFooter.startLoading()) {
-			mList.clear();
-			pageNum = 0;
-			mAdapter.notifyDataSetChanged();
-			mConnHelper.getZhuomaiList(mUIHandler, MsgTagVO.DATA_LOAD, pageNum,
-					pageSize);
+		if (CommonUtil.getNetworkState(getApplicationContext()) == 0) {
+			{
+				if (mListViewFooter.startLoading()) {
+					mList.clear();
+					pageNum = 0;
+					mAdapter.notifyDataSetChanged();
+					mConnHelper.getZhuomaiList(mUIHandler, MsgTagVO.DATA_LOAD,
+							pageNum, pageSize);
+				}
+			}
+		}
+
+	}
+
+	private void loadAdImage() {
+		if (CommonUtil.getNetworkState(getApplicationContext()) == 0) {
+			mConnHelper.getAdInfo(mUIHandler, MsgTagVO.DATA_OTHER, 2);
 		}
 	}
 

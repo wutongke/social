@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -24,14 +25,20 @@ import android.widget.MediaController;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelperLz;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.Util;
 import com.cpstudio.zhuojiaren.widget.CustomShareBoard;
 import com.cpstudio.zhuojiaren.widget.VedioPlayer;
@@ -99,7 +106,7 @@ public class VedioActivity extends BaseActivity {
 		initTitle();
 		title.setText(R.string.grouth_online_detail);
 		shareImage.setBackgroundResource(R.drawable.share);
-		
+
 		shareImage.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -108,7 +115,8 @@ public class VedioActivity extends BaseActivity {
 				com.cpstudio.zhuojiaren.widget.CustomShareBoard shareBoard = new com.cpstudio.zhuojiaren.widget.CustomShareBoard(
 						VedioActivity.this);
 				shareBoard.showCustomShareContent();
-//				startActivity(new Intent(VedioActivity.this,PayActivity.class));
+				// startActivity(new
+				// Intent(VedioActivity.this,PayActivity.class));
 			}
 		});
 		findViewById(R.id.activity_back).setOnClickListener(
@@ -131,11 +139,33 @@ public class VedioActivity extends BaseActivity {
 			getWindowManager().getDefaultDisplay().getMetrics(metric);
 			frame.setLayoutParams(VedioPlayer.getLayoutParamsBasedOnParent(
 					frame, metric.widthPixels, metric.heightPixels));
-//			frame.getLayoutParams().height =  metric.heightPixels;
-//			frame.getLayoutParams().width =  metric.widthPixels;
-//			frame.setLayoutParams(new FrameLayout.LayoutParams(
-//					metric.widthPixels, metric.heightPixels));
+			// frame.getLayoutParams().height = metric.heightPixels;
+			// frame.getLayoutParams().width = metric.widthPixels;
+			// frame.setLayoutParams(new FrameLayout.LayoutParams(
+			// metric.widthPixels, metric.heightPixels));
 		}
+		final InputMethodManager iMM = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+		findViewById(R.id.thought_post).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						if (share.getText().toString().isEmpty()) {
+							CommonUtil.displayToast(VedioActivity.this,
+									R.string.please_finish_share);
+							return;
+						}
+						AppClientLef.getInstance(
+								VedioActivity.this.getApplicationContext())
+								.shareThought( ZhuoCommHelperLz.getGrouththought(),"goid",vedio.getId(),
+										share.getText().toString(),
+										uiHandler, MsgTagVO.PUB_INFO,
+										VedioActivity.this, true, null, null);
+						share.setText("");
+						iMM.hideSoftInputFromInputMethod(share.getWindowToken(), 0);
+					}
+				});
 	}
 
 	@Override
@@ -348,7 +378,21 @@ public class VedioActivity extends BaseActivity {
 		return super.onKeyDown(keyCode, event);
 	};
 
-	private Handler uiHandler = new Handler();
+	private Handler uiHandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+
+			if (msg.what == MsgTagVO.PUB_INFO) {
+				if (JsonHandler.checkResult((String) msg.obj,
+						VedioActivity.this)) {
+					CommonUtil.displayToast(VedioActivity.this,
+							R.string.success);
+					
+				} else {
+					return;
+				}
+			}
+		};
+	};
 
 	@SuppressLint("InlinedApi")
 	private void fullScreen() {
@@ -374,10 +418,12 @@ public class VedioActivity extends BaseActivity {
 									| View.SYSTEM_UI_FLAG_FULLSCREEN);
 			DisplayMetrics metric = new DisplayMetrics();
 			getWindowManager().getDefaultDisplay().getMetrics(metric);
-//			frame.setLayoutParams(VedioPlayer.getLayoutParamsBasedOnParent(frame, metric.widthPixels,
-//					metric.heightPixels));
-//			frame.setLayoutParams(new FrameLayout.LayoutParams(metric.widthPixels,
-//					metric.heightPixels));
+			// frame.setLayoutParams(VedioPlayer.getLayoutParamsBasedOnParent(frame,
+			// metric.widthPixels,
+			// metric.heightPixels));
+			// frame.setLayoutParams(new
+			// FrameLayout.LayoutParams(metric.widthPixels,
+			// metric.heightPixels));
 			setFullScreen();
 			isFullscreen = true;
 		}
@@ -426,7 +472,7 @@ public class VedioActivity extends BaseActivity {
 
 		@Override
 		public void setAnchorView(View view) {
-			
+
 		}
 	}
 

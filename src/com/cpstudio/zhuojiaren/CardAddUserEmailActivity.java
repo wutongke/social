@@ -7,16 +7,21 @@ import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.CheckBox;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class CardAddUserEmailActivity extends Activity {
+	int isOpen = 0;
 	private Handler mUIHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -42,12 +47,27 @@ public class CardAddUserEmailActivity extends Activity {
 		Intent i = getIntent();
 		String email = i.getStringExtra(CardEditActivity.EDIT_EMAIL_STR1);
 		((EditText) findViewById(R.id.editTextEmail)).setText(email);
-		String emailopen = i.getStringExtra(CardEditActivity.EDIT_EMAIL_STR2);
-		if (emailopen != null && emailopen.equals("1")) {
-			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(true);
+		int emailopen = i.getIntExtra(CardEditActivity.EDIT_EMAIL_STR2, 0);
+		if (emailopen==1) {
+			((RadioButton) (findViewById(R.id.radioPrivate))).setChecked(true);
+			isOpen = 1;
 		} else {
-			((CheckBox) findViewById(R.id.checkBoxIsOpen)).setChecked(false);
+			((RadioButton) (findViewById(R.id.radioOpen))).setChecked(true);
+			isOpen = 0;
 		}
+		((RadioGroup) this.findViewById(R.id.radioGroup))
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(RadioGroup arg0, int arg1) {
+						// TODO Auto-generated method stub
+						// 获取变更后的选中项的ID
+						int radioButtonId = arg0.getCheckedRadioButtonId();
+						if (radioButtonId == R.id.radioPrivate)
+							isOpen = 1;
+						else
+							isOpen = 0;
+					}
+				});
 		initClick();
 
 	}
@@ -57,6 +77,8 @@ public class CardAddUserEmailActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+				imm.hideSoftInputFromWindow(CardAddUserEmailActivity.this.getCurrentFocus().getWindowToken(), 0);
 				CardAddUserEmailActivity.this.finish();
 			}
 		});
@@ -66,17 +88,10 @@ public class CardAddUserEmailActivity extends Activity {
 					public void onClick(View v) {
 						String email = ((EditText) findViewById(R.id.editTextEmail))
 								.getText().toString();
-						int isopen = 0;
-						if (((CheckBox) findViewById(R.id.checkBoxIsOpen))
-								.isChecked()) {
-							isopen = 0;
-						} else {
-							isopen = 1;
-						}
 
 						UserNewVO userInfo = new UserNewVO();
 						userInfo.setEmail(email);
-						userInfo.setIsEmailOpen(isopen);
+						userInfo.setIsEmailOpen(isOpen);
 						ZhuoConnHelper.getInstance(getApplicationContext())
 								.modifyUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,
 										userInfo);

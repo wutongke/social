@@ -1,12 +1,14 @@
 package com.cpstudio.zhuojiaren;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -49,6 +51,8 @@ public class CardAddUserMottoActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+				imm.hideSoftInputFromWindow(CardAddUserMottoActivity.this.getCurrentFocus().getWindowToken(), 0);
 				CardAddUserMottoActivity.this.finish();
 			}
 		});

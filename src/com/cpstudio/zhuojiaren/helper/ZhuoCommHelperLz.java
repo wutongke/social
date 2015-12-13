@@ -100,6 +100,42 @@ public class ZhuoCommHelperLz {
 	private final static String ORDER_DETAIL = "/goods/getOrder.do";
 	private final static String CARD_BG = "/getBackground.do";
 	private final static String SET_CARD_BG  = "/setUserBackground.do";
+	private final static String QuanEventCollection  = "/getCollectActivity.do";
+	private final static String gongList  = "/getCollectSupplyDemand.do";
+	private final static String TopicList  = "/getCollectTopic.do";
+	private final static String peopleList  = "/getFollowUser.do";
+	private final static String grouthThought  = "/growthOnlineCmt.do";
+	private final static String audioThought  = "/audioCmt.do";
+	private final static String visitThought  = "/interviewCmt.do";
+	public static String getVisitthought() {
+		return SERVER + visitThought;
+	}
+
+	public static String getAudiothought() {
+		return SERVER + audioThought;
+	}
+
+	public static String getGrouththought() {
+		return SERVER + grouthThought;
+	}
+
+	public static String getPeoplelist() {
+		return SERVER + peopleList;
+	}
+
+	public static String getTopiclist() {
+		return SERVER + TopicList;
+	}
+
+	public static String getGonglist() {
+		return SERVER +  gongList;
+	}
+
+	public static String getQuaneventcollection() {
+		return SERVER + QuanEventCollection;
+	}
+
+	private final static String SET_QUAN_LOG  = "/setgheader.do";
 	public static String getAllJiaren() {
 		return ALL_JIAREN;
 	}
@@ -578,6 +614,9 @@ public class ZhuoCommHelperLz {
 	}
 	public static String setCardBg() {
 		return SERVER + SET_CARD_BG;
+	}
+	public static String setQuanLogo() {
+		return SERVER + SET_QUAN_LOG;
 	}
 	
 }

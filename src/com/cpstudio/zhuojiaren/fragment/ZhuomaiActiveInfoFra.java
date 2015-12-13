@@ -133,7 +133,7 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(mContext, MyActiveActivity.class);
 				startActivity(i);
-			}
+			} 
 		});
 		llMyQuanzi.setOnClickListener(new OnClickListener() {
 
@@ -142,6 +142,7 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(mContext, ZhuoQuanActivity.class);
 				i.putExtra("userid", uid);
+				i.putExtra("selected", 0);
 				startActivity(i);
 			}
 		});

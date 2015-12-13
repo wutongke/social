@@ -67,6 +67,11 @@ public class EventListAdapter extends BaseAdapter {
 					.getTag(R.id.tag_view_holder);
 		}
 		EventVO event = mList.get(position);
+		if (event.getGroupName() != null) {
+			holder.tvQuanName.setVisibility(View.VISIBLE);
+			holder.tvQuanName.setText(event.getGroupName());
+		} else
+			holder.tvQuanName.setVisibility(View.GONE);
 		holder.textViewTitle.setText(event.getTitle());
 		holder.textViewDateTime.setText(event.getStarttime());
 		if (event.getOutdate() == 1)
@@ -127,6 +132,7 @@ public class EventListAdapter extends BaseAdapter {
 		TextView textViewNums;
 		TextView textViewDetail;
 		CheckBox cbSelected;
+		TextView tvQuanName;
 	}
 
 	private ViewHolderActive initHolderActive(View convertView) {
@@ -148,12 +154,13 @@ public class EventListAdapter extends BaseAdapter {
 				.findViewById(R.id.textViewDetail);
 
 		holder.cbSelected = (CheckBox) convertView.findViewById(R.id.cbChecked);
-
+		holder.tvQuanName = (TextView) convertView
+				.findViewById(R.id.tvQuanName);
 		return holder;
 	}
 
 	public List<EventVO> getmSelectedList() {
 		return mSelectedList;
 	}
-	
+
 }

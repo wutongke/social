@@ -63,7 +63,7 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 		}
 		userFacade = new UserFacade(getApplicationContext());
 		pwh = new PopupWindows(UserHomeActivity.this);
-		mLoadImage = new LoadImage();
+		mLoadImage = LoadImage.getInstance();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.listview_header9);
@@ -161,8 +161,7 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 					startActivity(i);
 				}
 			});
-			mLoadImage.addTask(headurl, iv);
-			mLoadImage.doTask();
+			mLoadImage.beginLoad(headurl, iv);
 		}
 	}
 
@@ -255,6 +254,8 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 								+ getString(R.string.p_jiaren_active_rizhi));
 
 				ImageView iv = (ImageView) findViewById(R.id.imageViewUserHead);
+				ImageView bgView = (ImageView) findViewById(R.id.bgImg);
+
 				iv.setOnClickListener(new OnClickListener() {
 
 					@Override
@@ -265,10 +266,11 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 						startActivity(i);
 					}
 				});
+				if (user.getBgpic() != null)
+					mLoadImage.beginLoad(user.getBgpic(), bgView);
 				if (headurl != null && !headurl.equals("")) {
 					iv.setTag(headurl);
-					mLoadImage.addTask(headurl, iv);
-					mLoadImage.doTask();
+					mLoadImage.beginLoad(headurl, iv);
 				}
 			}
 		} catch (Exception e) {
@@ -289,6 +291,8 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 
 	@Override
 	public void onRefresh() {
+		mPage = 0;
+		loadData();
 	}
 
 	@Override
@@ -299,16 +303,6 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 			// msg.obj = list;
 			// msg.sendToTarget();
 		} else {
-			// String params = ZhuoCommHelper.getUrlMsgList();
-			// params += "?pageflag=" + "1";
-			// params += "&reqnum=" + "10";
-			// params += "&lastid=" + mLastId;
-			// params += "&type=" + mType;
-			// params += "&gongxutype=" + "0";
-			// params += "&from=" + "6";
-			// params += "&uid=" + mUid;
-			// mConnHelper.getFromServer(params, mUIHandler,
-			// MsgTagVO.DATA_MORE);
 			mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_MORE, mType,
 					null, mPage, pageSize);
 		}
@@ -319,10 +313,6 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 			// mList.clear();
 			// mAdapter.notifyDataSetChanged();
 			if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-				// ArrayList<Dynamic> list = infoFacade.getByPage(mPage);
-				// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-				// msg.obj = list;
-				// msg.sendToTarget();
 			} else {
 				mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_LOAD,
 						mType, null, mPage, pageSize);
@@ -348,12 +338,19 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		String filePath = pwh.dealPhotoReturn(requestCode, resultCode, data);
-		if (filePath != null) {
-			Intent i = new Intent(UserHomeActivity.this,
-					PublishActiveActivity.class);
-			i.putExtra("filePath", filePath);
-			startActivity(i);
+		if (resultCode == Activity.RESULT_OK) {
+			String filePath = pwh.dealPhotoReturn(requestCode, resultCode,
+					data, false);
+			if (filePath != null) {
+				try {
+					Intent i = new Intent(UserHomeActivity.this,
+							PublishActiveActivity.class);
+					i.putExtra("filePath", filePath);
+					startActivityForResult(i, MsgTagVO.DATA_REFRESH);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 

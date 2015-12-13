@@ -108,7 +108,19 @@ public class ResourceGXActivity extends BaseFragmentActivity {
 			}
 		});
 	}
-
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		// 发布话题、活动成功后刷新
+		if (viewPager.getAdapter() != null) {
+			fragments.clear();
+			viewPager.setAdapter(getPagerAdapter());
+			tabButton.setViewPager(null);
+			tabButton.setViewPager(viewPager);
+			tabButton.setVisibility(View.VISIBLE);
+		}
+	}
 	PagerAdapter getPagerAdapter() {
 		fragments = new ArrayList<Fragment>();
 		List<CharSequence> titles = new ArrayList<CharSequence>();

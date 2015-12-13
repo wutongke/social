@@ -102,12 +102,14 @@ public class ZhuoCommHelper {
 	private final static String SERVICE_SEARCH_QUAN = "/groupsearch.do";
 	private final static String SERVICE_CITY_LIST = "/getcitylist.do";
 	private final static String SERVICE_VEDIO_LIST = "/getGrowthOnlineList.do";
+	private static String SERVICE_VEDIO_LIST_Collection = "/myCollectGrouthOnline.do";
 	private final static String SERVICE_AUDIO_LIST = "/getAudio.do";
 	private final static String SERVICE_Visit_LIST = "/getInterviewList.do";
 	private final static String SUBMIT_VISIT= "/getGrowthOnlineType.do";
 
 	private final static String SERVICE_Teacher_LIST = "/getTutor.do";
 	private final static String SERVICE_Funding_LIST = "/crowdfunding/list.do";
+	private static String SERVICE_Funding_LIST_Invest = "/crowdfunding/investList.do";
 	private final static String AUDIO_COLL = "/praiseAudio.do";
 	private final static String GrowthOnlineType = "/getGrowthOnlineType.do";
 	private final static String CREATEGROUP = "/creategroup.do";
@@ -147,6 +149,18 @@ public class ZhuoCommHelper {
 	private static String SHIPPINGADDRESS = "/goods/setOrderAddress.do";
 	private static String INCOME = "/getMyZhuobiRecord.do";
 	private static String REMOVEGOODS = "/goods/delGoodsCart.do";
+	private static String AudioCollection = "/myAudio.do";
+	public static String getAudioCollection() {
+		return SERVER + AudioCollection;
+	}
+	public static String getServiceVedioListCollection() {
+		return SERVER + SERVICE_VEDIO_LIST_Collection;
+	}
+	public static String getServiceFundingListInvest() {
+		return SERVER +SERVICE_Funding_LIST_Invest;
+	}
+
+
 	public static String getREMOVEGOODS() {
 		return SERVER +  REMOVEGOODS;
 	}

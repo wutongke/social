@@ -699,7 +699,7 @@
              <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" />
+            android:process=":remote" />
         -->
         <service
             android:name="com.cpstudio.zhuojiaren.service.ImService"
@@ -1308,6 +1308,10 @@
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.ResCommentActivity"
             android:label="@string/title_activity_res_comment" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.GoodsSearchActivity"
+            android:label="@string/title_activity_goods_search" >
         </activity>
     </application>
 

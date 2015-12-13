@@ -7,7 +7,6 @@
     tools:context=".LocateActivity" >
 
 	<include layout="@layout/title_activity" />
-"
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -40,6 +39,7 @@
                 style="@style/basic_second_text"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
+                android:visibility="gone"
                 android:text="@string/street"
                 />
             <EditText 
@@ -48,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="30dp"
                 android:gravity="bottom"
+                android:visibility="gone"
                 style="@style/basic_text_black"
                 />
             <TextView 

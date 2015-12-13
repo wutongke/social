@@ -17,11 +17,20 @@
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/tvQuanName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/name_text_size"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/tvActiveTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:padding="10dp"
+            android:text="全场"
             android:textSize="@dimen/name_text_size" />
 
         <LinearLayout

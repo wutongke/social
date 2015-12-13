@@ -245,9 +245,10 @@ public class GoodsDetailLActivity extends BaseActivity {
 				zhuoPrice.setText(goods.getZhuoPrice());
 				// goodsComment
 				mDataList.clear();
-				if(goods.getComments()!=null)
-				mDataList.addAll(goods.getComments());
-				mAdapter.notifyDataSetChanged();
+				//delete comment
+//				if(goods.getComments()!=null)
+//				mDataList.addAll(goods.getComments());
+//				mAdapter.notifyDataSetChanged();
 				break;
 			case MsgTagVO.PUB_INFO:
 				if (JsonHandler.checkResult((String) msg.obj,

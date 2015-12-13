@@ -12,6 +12,7 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.ResHelper;
 
 public class AccountActivity extends BaseActivity {
 	@InjectView(R.id.ac_zhuo_account)
@@ -39,11 +40,12 @@ public class AccountActivity extends BaseActivity {
 	@InjectView(R.id.ac_account_security_text)
 	TextView accountSecurityText;
 	private Context mContext;
-	private final int zhuoR=1;
-	private final int phoneR=2;
+	private final int zhuoR = 1;
+	private final int phoneR = 2;
 	private final int qqR = 3;
-	private final int emailR= 4;
+	private final int emailR = 4;
 	private final int zhuoPwdR = 5;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,87 +56,95 @@ public class AccountActivity extends BaseActivity {
 		title.setText(R.string.account_and_security);
 		initClick();
 	}
+
 	private void initClick() {
-		
+
 		// TODO Auto-generated method stub
 		OnClickListener click = new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent (mContext,ZhuoNameEditActivity.class);
-				intent.putExtra("edtiText", "±à¼­Ù¾ÂöºÅ");
-				startActivityForResult(intent, zhuoR);
+				// Intent intent = new Intent
+				// (mContext,ZhuoNameEditActivity.class);
+				// intent.putExtra("edtiText", "±à¼­Ù¾ÂöºÅ");
+				// startActivityForResult(intent, zhuoR);
 			}
 		};
 		zhuoAccount.setOnClickListener(click);
+		zhuoAccountText.setText(ResHelper.getInstance(getApplicationContext())
+				.getUserid() + "");
 		phoneNumber.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent(mContext,PhoneActivity.class));
+				startActivity(new Intent(mContext, PhoneActivity.class));
 			}
 		});
 		qqNumber.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent (mContext,QQActivity.class);
+				Intent intent = new Intent(mContext, QQActivity.class);
 				intent.putExtra("qq", "456123789");
-				startActivityForResult(intent,qqR);
+				startActivityForResult(intent, qqR);
 			}
 		});
 		email.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent (mContext,EmailActivity.class);
+				Intent intent = new Intent(mContext, EmailActivity.class);
 				intent.putExtra("email", "456123789@qq.com");
-				startActivityForResult(intent,qqR);
+				startActivityForResult(intent, qqR);
 			}
 		});
 		accountSecurity.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent (mContext,AccountProtectActivity.class);
+				Intent intent = new Intent(mContext,
+						AccountProtectActivity.class);
 				intent.putExtra("protect", "0");
-				startActivity(new Intent(new Intent (mContext,AccountProtectActivity.class)));
+				startActivity(new Intent(new Intent(mContext,
+						AccountProtectActivity.class)));
 			}
 		});
 		zhuoPassword.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent(new Intent (mContext,MyChangePwdActivity.class)));
+				startActivity(new Intent(new Intent(mContext,
+						MyChangePwdActivity.class)));
 			}
 		});
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode==RESULT_OK)
-		switch(requestCode){
-		
-		case zhuoR:
-			zhuoAccountText.setText(data.getStringExtra("data"));
-			break;
-		case phoneR:
-			phoneNumberText.setText(data.getStringExtra("data"));
-			break;
-		case qqR:
-			qqNumberText.setText(data.getStringExtra("data"));
-			break;
-		case emailR:
-			emailText.setText(data.getStringExtra("data"));
-			break;
-		}
+		if (resultCode == RESULT_OK)
+			switch (requestCode) {
+
+			case zhuoR:
+				zhuoAccountText.setText(data.getStringExtra("data"));
+				break;
+			case phoneR:
+				phoneNumberText.setText(data.getStringExtra("data"));
+				break;
+			case qqR:
+				qqNumberText.setText(data.getStringExtra("data"));
+				break;
+			case emailR:
+				emailText.setText(data.getStringExtra("data"));
+				break;
+			}
 	}
 
 }

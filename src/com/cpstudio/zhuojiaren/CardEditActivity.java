@@ -182,13 +182,26 @@ public class CardEditActivity extends Activity {
 		} else {
 			textViewuserNameShow.setText(getString(R.string.edit_info));
 		}
-		initClick();
-
+		buttonBack.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				CardEditActivity.this.finish();
+			}
+		});
+		if (isEditable)
+			initClick();
+		else {
+			etSignature.setEnabled(false);
+			etSignature.setFocusable(false);
+		}
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
+		((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
+				.hideSoftInputFromWindow(etSignature.getWindowToken(),
+						InputMethodManager.HIDE_NOT_ALWAYS);
 		loadInfo();
 		super.onResume();
 	}
@@ -226,27 +239,23 @@ public class CardEditActivity extends Activity {
 			etSignature.setEnabled(false);
 		} else {
 
-			textViewChangeHead
-					.setOnEditorActionListener(new OnEditorActionListener() {
-						@Override
-						public boolean onEditorAction(TextView v, int actionId,
-								KeyEvent event) {
-							if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-								String text = v.getText().toString();
-								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-								imm.hideSoftInputFromWindow(v.getWindowToken(),
-										0);
-								UserNewVO userInfo = new UserNewVO();
-								userInfo.setSignature(text);
-								ZhuoConnHelper.getInstance(
-										getApplicationContext())
-										.modifyUserInfo(mUIHandler,
-												MsgTagVO.PUB_INFO, userInfo);
-
-							}
-							return false;
-						}
-					});
+			etSignature.setOnEditorActionListener(new OnEditorActionListener() {
+				@Override
+				public boolean onEditorAction(TextView v, int actionId,
+						KeyEvent event) {
+					if (actionId == EditorInfo.IME_ACTION_DONE) {
+						String text = v.getText().toString();
+						InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+						imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+						UserNewVO userInfo = new UserNewVO();
+						userInfo.setSignature(text);
+						ZhuoConnHelper.getInstance(getApplicationContext())
+								.modifyUserInfo(mUIHandler, MsgTagVO.PUB_INFO,
+										userInfo);
+					}
+					return false;
+				}
+			});
 
 			textViewChangeHead.setOnClickListener(new OnClickListener() {
 				@Override
@@ -310,7 +319,7 @@ public class CardEditActivity extends Activity {
 						i.putExtra(EDIT_BIRTH_STR2,
 								userInfo.getIsBirthdayOpen());
 						i.putExtra(EDIT_BIRTH_STR3, userInfo.getBirthdayLunar());
-						startActivityForResult(i, EDIT_BIRTH);
+						startActivity(i);
 					} else {
 						CommonUtil.displayToast(getApplicationContext(),
 								R.string.error12);
@@ -324,7 +333,7 @@ public class CardEditActivity extends Activity {
 						Intent i = new Intent(CardEditActivity.this,
 								CardAddUserDreamActivity.class);
 						i.putExtra(EDIT_DREAM_STR, userInfo.getDream());
-						startActivityForResult(i, EDIT_DREAM);
+						startActivity(i);
 					} else {
 						CommonUtil.displayToast(getApplicationContext(),
 								R.string.error12);
@@ -340,7 +349,7 @@ public class CardEditActivity extends Activity {
 								CardAddUserEmailActivity.class);
 						i.putExtra(EDIT_EMAIL_STR1, userInfo.getEmail());
 						i.putExtra(EDIT_EMAIL_STR2, userInfo.getIsEmailOpen());
-						startActivityForResult(i, EDIT_EMAIL);
+						startActivity(i);
 					} else {
 						CommonUtil.displayToast(getApplicationContext(),
 								R.string.error12);
@@ -361,7 +370,7 @@ public class CardEditActivity extends Activity {
 							i.putExtra(EDIT_QQ_STR1, qq);
 
 						i.putExtra(EDIT_QQ_STR2, qqopen);
-						startActivityForResult(i, EDIT_QQ);
+						startActivity(i);
 					} else {
 						CommonUtil.displayToast(getApplicationContext(),
 								R.string.error12);
@@ -380,7 +389,7 @@ public class CardEditActivity extends Activity {
 						if (weixin != null)
 							i.putExtra(EDIT_WEIXIN_STR1, weixin);
 						i.putExtra(EDIT_WEIXIN_STR2, weixinopen + "");
-						startActivityForResult(i, EDIT_WEIXIN);
+						startActivity(i);
 					} else {
 						CommonUtil.displayToast(getApplicationContext(),
 								R.string.error12);
@@ -395,7 +404,7 @@ public class CardEditActivity extends Activity {
 						Intent i = new Intent(CardEditActivity.this,
 								CardAddUserHobbyActivity.class);
 						i.putExtra(EDIT_HOBBY_STR, userInfo.getHobby());
-						startActivityForResult(i, EDIT_HOBBY);
+						startActivity(i);
 					} else {
 						CommonUtil.displayToast(getApplicationContext(),
 								R.string.error12);
@@ -410,7 +419,7 @@ public class CardEditActivity extends Activity {
 						Intent i = new Intent(CardEditActivity.this,
 								CardAddUserMottoActivity.class);
 						i.putExtra(EDIT_MOTTO_STR, userInfo.getFaith());
-						startActivityForResult(i, EDIT_MOTTO);
+						startActivity(i);
 					} else {
 						CommonUtil.displayToast(getApplicationContext(),
 								R.string.error12);
@@ -433,7 +442,7 @@ public class CardEditActivity extends Activity {
 						i.putExtra(EDIT_PHONE_STR1, userInfo.getPhone());
 						// 此处要改为两个选项：对好友公开和对所有人公开。。
 						i.putExtra(EDIT_PHONE_STR2, userInfo.getIsPhoneOpen());
-						startActivityForResult(i, EDIT_PHONE);
+						startActivity(i);
 					} else {
 						CommonUtil.displayToast(getApplicationContext(),
 								R.string.error12);
@@ -442,12 +451,7 @@ public class CardEditActivity extends Activity {
 			});
 		}
 
-		buttonBack.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				CardEditActivity.this.finish();
-			}
-		});
+		
 
 		textViewEditPlaceShow.setOnClickListener(new OnClickListener() {
 			@Override
@@ -459,7 +463,7 @@ public class CardEditActivity extends Activity {
 					i.putExtra(EDIT_PLACE_STR1, userInfo.getCity());
 					i.putExtra(EDIT_PLACE_STR2, userInfo.getHometown());
 					i.putExtra(EDIT_PLACE_STR3, userInfo.getTravelCity());
-					startActivityForResult(i, EDIT_PLACE);
+					startActivity(i);
 				} else {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.error12);
@@ -472,36 +476,18 @@ public class CardEditActivity extends Activity {
 			public void onClick(View v) {
 				if (userInfo != null) {
 					ArrayList<String> images = new ArrayList<String>();
-					ArrayList<String> ids = new ArrayList<String>();
 					if (userInfo.getPhoto() != null) {
-						String headUrl = null;
-						String headId = null;
 						for (int i = 0; i < userInfo.getPhoto().size(); i++) {
 							PicNewVO pic = userInfo.getPhoto().get(
 									userInfo.getPhoto().size() - 1 - i);
-							if (pic.getPic().equals(userInfo.getUheader())) {
-								headUrl = pic.getPic();
-								headId = pic.getPic();
-							} else {
-								images.add(pic.getPic());
-								ids.add(pic.getPic());
-							}
+							images.add(pic.getPic());
 						}
-						if (headId != null) {
-							images.add(headUrl);
-							ids.add(headId);
-						}
-					}
-					for (String localImage : localImages) {
-						images.add(localImage);
-						ids.add(LOCAL_IMAGE);
 					}
 					Intent i = new Intent(CardEditActivity.this,
 							CardAddUserImageActivity.class);
 					i.putExtra(EDITABLE, isEditable);// 是否可以编辑
 					i.putStringArrayListExtra(EDIT_IMAGE_STR1, images);
-					i.putStringArrayListExtra(EDIT_IMAGE_STR2, ids);
-					startActivityForResult(i, EDIT_IMAGE);
+					startActivity(i);
 				} else {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.error12);
@@ -519,7 +505,7 @@ public class CardEditActivity extends Activity {
 					i.putExtra(EDIT_NAME_STR1, userInfo.getName());
 					i.putExtra(EDIT_NAME_STR2, userInfo.getGender());
 					i.putExtra(EDIT_NAME_STR3, userInfo.getMarried());
-					startActivityForResult(i, EDIT_NAME);
+					startActivity(i);
 				} else {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.error12);
@@ -527,23 +513,6 @@ public class CardEditActivity extends Activity {
 			}
 		});
 
-		// 移到了我的企业中的主营产品,注意对EDIT_PRODUCT处理
-		// ((View) findViewById(R.id.textViewEditProductShow).getParent())
-		// .setOnClickListener(new OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// if (userInfo != null) {
-		// Intent i = new Intent(CardEditActivity.this,
-		// CardAddUserProductActivity.class);
-		// i.putParcelableArrayListExtra(EDIT_PRODUCT_STR,
-		// (ArrayList<ProductVO>) userInfo.getProduct());
-		// startActivityForResult(i, EDIT_PRODUCT);
-		// } else {
-		// CommonUtil.displayToast(getApplicationContext(),
-		// R.string.error12);
-		// }
-		// }
-		// });
 		textViewEditWorkShow.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -552,159 +521,13 @@ public class CardEditActivity extends Activity {
 							CompanyDetailActivity.class);
 					i.putExtra(EDITABLE, isEditable);// 是否可以编辑
 					i.putExtra(USERID, userInfo.getUserid());// 是否可以编辑
-					startActivityForResult(i, EDIT_WORK);
+					startActivity(i);
 				} else {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.error12);
 				}
 			}
 		});
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// if (resultCode == Activity.RESULT_OK) {
-		// switch (requestCode) {
-		// case EDIT_NAME:
-		// String name = data.getStringExtra(EDIT_NAME_STR1);
-		// int gend = data.getIntExtra(EDIT_NAME_STR2, 0);
-		// int ismarry = data.getIntExtra(EDIT_NAME_STR3, 0);
-		// userInfo.setName(name);
-		// userInfo.setGender(gend);
-		// userInfo.setMarried(ismarry);
-		// ((TextView) findViewById(R.id.textViewEditNameShow))
-		// .setText(name);
-		// break;
-		// case EDIT_BIRTH:
-		// String birth = data.getStringExtra(EDIT_BIRTH_STR1);
-		// // int birthopen = data.getIntExtra(EDIT_BIRTH_STR2, 0);
-		// // String birthdayLunar = data.getStringExtra(EDIT_BIRTH_STR3);
-		// // int constellation = data.getIntExtra(EDIT_BIRTH_STR4, 0);// 星座编号
-		// // int zodiac = data.getIntExtra(EDIT_BIRTH_STR5, 0);//
-		// 星座编号EDIT_BIRTH_STR5
-		// userInfo.setBirthday(birth);
-		// // userInfo.setZodiac(zodiac);
-		// // userInfo.setBirthdayLunar(birthdayLunar);
-		// // userInfo.setIsBirthdayOpen(birthopen);
-		// // userInfo.setConstellation(constellation);
-		// textViewEditBirthShow.setText(birth);
-		// break;
-		// case EDIT_PLACE:
-		// int place = data.getIntExtra(EDIT_PLACE_STR1, 0);
-		// int hometown = data.getIntExtra(EDIT_PLACE_STR2, 0);
-		// String othertowns = data.getStringExtra(EDIT_PLACE_STR3);
-		// userInfo.setCity(place);
-		// userInfo.setHometown(hometown);
-		// userInfo.setTravelCity(othertowns);
-		//
-		// if (mConnHelper.getCitys() != null && place >= 1
-		// && place <= mConnHelper.getCitys().size())
-		// textViewEditPlaceShow.setText(mConnHelper.getCitys()
-		// .get(place - 1).getCityName());
-		// break;
-		// case EDIT_DREAM:
-		// // dreamsList = data.getStringArrayListExtra(EDIT_DREAM_STR);
-		// // String dream = "";
-		// // if (dream != null) {
-		// // for (String str : dreamsList) {
-		// // dream += str + " ";
-		// // }
-		// // }
-		// String dream = data.getStringExtra(EDIT_DREAM_STR);
-		// userInfo.setDream(dream);
-		// textViewEditDreamShow.setText(dream);
-		// break;
-		// case EDIT_EMAIL:
-		// String email = data.getStringExtra(EDIT_EMAIL_STR1);
-		// int emailopen = data.getIntExtra(EDIT_EMAIL_STR2, 0);
-		// userInfo.setEmail(email);
-		// userInfo.setIsEmailOpen(emailopen);
-		// textViewEditEmailShow.setText(email);
-		// break;
-		//
-		// case EDIT_QQ:
-		// String qq = data.getStringExtra(EDIT_QQ_STR1);
-		// int qqopen = data.getIntExtra(EDIT_QQ_STR2, 0);
-		// userInfo.setQq(qq);
-		// userInfo.setIsQqOpen(qqopen);
-		// textViewEditQQShow.setText(qq);
-		// break;
-		// case EDIT_WEIXIN:
-		// String weixin = data.getStringExtra(EDIT_WEIXIN_STR1);
-		// int weixinopen = data.getIntExtra(EDIT_WEIXIN_STR2, 0);
-		// userInfo.setWeixin(weixin);
-		// userInfo.setIsWeixinOpen(weixinopen);
-		// textViewEditWeixinShow.setText(weixin);
-		// break;
-		// case EDIT_HOBBY:
-		// String hobby = data.getStringExtra(EDIT_HOBBY_STR);
-		// userInfo.setHobby(hobby);
-		// textViewEditHobbyShow.setText(hobby);
-		// break;
-		// case EDIT_MOTTO:
-		// String motto = data.getStringExtra(EDIT_MOTTO_STR);
-		// userInfo.setFaith(motto);
-		// textViewEditZymShow.setText(motto);
-		// break;
-		// case EDIT_IMAGE:
-		// try {
-		// ArrayList<String> images = data
-		// .getStringArrayListExtra(EDIT_IMAGE_STR1); // 本地需要上传的
-		// localImages.clear();
-		// localImages.addAll(images);
-		// ArrayList<String> ids = data
-		// .getStringArrayListExtra(EDIT_IMAGE_STR2);
-		// ArrayList<PicNewVO> pics = new ArrayList<PicNewVO>();
-		// if (userInfo.getPhoto() != null) {
-		// PicNewVO temp = null;
-		// for (PicNewVO pic : userInfo.getPhoto()) {
-		// if (ids.contains(pic.getPic())) {
-		// if (ids.get(ids.size() - 1)
-		// .equals(pic.getPic())) {
-		// temp = pic;
-		// } else {
-		// pics.add(pic);
-		// }
-		// }
-		// }
-		// if (temp != null) {
-		// pics.add(temp);
-		// }
-		// }
-		// // userInfo.setPhoto(pics);
-		//
-		// userInfo.setPhoto(pics);
-		// String originStr = getPhotoStr(pics);
-		//
-		// mConnHelper.pubPhoto(CardEditActivity.this, mUIHandler,
-		// MsgTagVO.DATA_OTHER, originStr, images);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// break;
-		// case EDIT_PHONE:
-		// String phone = data.getStringExtra(EDIT_PHONE_STR1);
-		// int phoneopen = data.getIntExtra(EDIT_PHONE_STR2, 0);
-		// userInfo.setPhone(phone);
-		// userInfo.setIsPhoneOpen(phoneopen);
-		// textViewEditPhoneShow.setText(phone);
-		// break;
-		// default:
-		// String filePath = pwh.dealPhotoReturn(requestCode, resultCode,
-		// data, false);
-		// if (filePath != null) {
-		// try {
-		// mConnHelper.setUserHeadImage(CardEditActivity.this,
-		// mUIHandler, MsgTagVO.SELECT_PICTURE, filePath);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// }
-		// break;
-		// }
-		// edit = true;
-		// }
-		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	String getPhotoStr(ArrayList<PicNewVO> pics) {
@@ -728,7 +551,6 @@ public class CardEditActivity extends Activity {
 				userInfo.getUserid() + "," + userInfo.getName(), 100, 100);
 
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHead);
-		fillText(textViewEditDreamShow, userInfo.getDream());
 
 		int placeId = userInfo.getCity();
 		String placeText = getString(R.string.nofill);
@@ -736,36 +558,46 @@ public class CardEditActivity extends Activity {
 				&& placeId <= mConnHelper.getCitys().size())
 			placeText = mConnHelper.getCitys().get(placeId - 1).getCityName();
 		textViewEditPlaceShow.setText(placeText);
-		fillText(textViewEditNameShow, userInfo.getName());
+		fillText(textViewEditNameShow, userInfo.getName(), 0);
 		List<PicNewVO> images = userInfo.getPhoto();
-		if (images != null) {
+		if (images != null && images.size() > 0) {
 			((TextView) findViewById(R.id.textViewEditImagesShow))
 					.setText(getString(R.string.mp_has) + images.size()
 							+ getString(R.string.mp_imgasall));
-		}
-
+		} else
+			((TextView) findViewById(R.id.textViewEditImagesShow))
+					.setText(getString(R.string.txt_uncompleted));
+		fillText(etSignature, userInfo.getSignature(), 0);
+		fillText(textViewEditDreamShow, userInfo.getDream(), 0);
+		fillText(textViewEditZymShow, userInfo.getFaith(), 0);
+		fillText(textViewEditHobbyShow, userInfo.getHobby(), 0);
 		String birthday = userInfo.getBirthday();
 		if (birthday == null)
 			birthday = userInfo.getBirthdayLunar();
-		fillText(textViewEditBirthShow, birthday);
+		fillText(textViewEditBirthShow, birthday, userInfo.getIsBirthdayOpen());
 
-		fillText(textViewEditDreamShow, userInfo.getDream());
-		fillText(textViewEditZymShow, userInfo.getFaith());
-		fillText(textViewEditHobbyShow, userInfo.getHobby());
-		fillText(textViewEditPhoneShow, userInfo.getPhone());
-		fillText(textViewEditEmailShow, userInfo.getEmail());
-		fillText(textViewEditQQShow, userInfo.getQq());
-		fillText(textViewEditWeixinShow, userInfo.getWeixin());
-		fillText(etSignature, userInfo.getSignature());
+		fillText(textViewEditPhoneShow, userInfo.getPhone(),
+				userInfo.getIsPhoneOpen());
+		fillText(textViewEditEmailShow, userInfo.getEmail(),
+				userInfo.getIsEmailOpen());
+		fillText(textViewEditQQShow, userInfo.getQq(), userInfo.getIsQqOpen());
+		fillText(textViewEditWeixinShow, userInfo.getWeixin(),
+				userInfo.getIsWeixinOpen());
+
 	}
 
-	void fillText(TextView tv, String text) {
+	void fillText(TextView tv, String text, int isOpen) {
 		if (tv == null)
 			return;
 		if (text == null || text.trim().toString().equals(""))
 			tv.setText(getString(R.string.nofill));
-		else
-			tv.setText(text);
+		else {
+			if (isOpen == 1 && userInfo.getRelation() != 1
+					&& userInfo.getRelation() != 2)
+				tv.setText(getString(R.string.secret));// 只对好友公开
+			else
+				tv.setText(text);
+		}
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -793,49 +625,6 @@ public class CardEditActivity extends Activity {
 							R.string.bg_failed);
 			}
 				break;
-			case MsgTagVO.DATA_OTHER:
-				if (JsonHandler.checkResult((String) msg.obj,
-						getApplicationContext())) {
-					// mFacade.saveOrUpdate(userInfo);
-					((TextView) findViewById(R.id.textViewEditImagesShow))
-							.setText(getString(R.string.mp_has)
-									+ (userInfo.getPhoto().size() + localImages
-											.size())
-									+ getString(R.string.mp_imgasall));
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.update_photo_success);
-				} else {
-					CommonUtil.displayToast(getApplicationContext(),
-							R.string.update_photo_failed);
-
-				}
-				break;
-			case MsgTagVO.SELECT_PICTURE:
-				if (JsonHandler.checkResult((String) msg.obj,
-						getApplicationContext())) {
-					// CommonUtil.displayToast(getApplicationContext(),
-					// R.string.info10);
-					String data = JsonHandler.getSingleResult((String) msg.obj);
-					if (data == null)
-						CommonUtil.displayToast(getApplicationContext(),
-								R.string.tip_jsonerror);
-					else {
-						try {
-							JSONObject jobj = new JSONObject(data);
-							String uheader = jobj.getString("uheader");
-							userInfo.setUheader(uheader);
-							mLoadImage.beginLoad(uheader, ivHead);
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-							CommonUtil.displayToast(getApplicationContext(),
-									R.string.tip_jsonerror);
-						}
-						// CommonUtil.displayToast(getApplicationContext(),
-						// R.string.uhead_update_success);
-					}
-
-				}
 			}
 		}
 	};

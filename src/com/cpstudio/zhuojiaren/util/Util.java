@@ -578,6 +578,24 @@ public class Util {
 
 		return buf.toString();
 	}
+	public static String getTimeString(String  milli) {
+		StringBuffer buf = new StringBuffer();
+		long millis = 0l;
+		try{
+			millis = (Long.parseLong(milli)*1000);
+		}catch (Exception e){
+			return "";
+		}
+		long hours = millis / (1000 * 60 * 60);
+		long minutes = (millis % (1000 * 60 * 60)) / (1000 * 60);
+		long seconds = ((millis % (1000 * 60 * 60)) % (1000 * 60)) / 1000;
+
+		buf.append(String.format("%02d", hours)).append(":")
+				.append(String.format("%02d", minutes)).append(":")
+				.append(String.format("%02d", seconds));
+
+		return buf.toString();
+	}
 	public static void setText(TextView view,String text){
 		if(text==null){
 			Log.d("Debug", "textÎª¿Õ");

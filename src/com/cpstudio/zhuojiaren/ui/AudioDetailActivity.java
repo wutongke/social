@@ -11,6 +11,7 @@ import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,7 +22,10 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.ZhuoCommHelperLz;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.CustomShareBoard;
@@ -41,10 +45,10 @@ public class AudioDetailActivity extends BaseActivity {
 	ImageView playImage2;
 	@InjectView(R.id.aad_seekbar)
 	SeekBar seekBar;
-	@InjectView(R.id.aad_share_inspiration)
-	EditText shareInspriration;
 	@InjectView(R.id.aad_adv)
 	ImageView advertisementIamge;
+	@InjectView(R.id.aad_share_inspiration)
+	TextView share;
 	MediaPlayer mediaPlayer;
 	RecordVO record;
 	private volatile boolean isPlaying = false;
@@ -78,6 +82,28 @@ public class AudioDetailActivity extends BaseActivity {
 
 	private void initOnclick() {
 		// TODO Auto-generated method stub
+		final InputMethodManager iMM = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+		findViewById(R.id.thought_post).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						if (share.getText().toString().isEmpty()) {
+							CommonUtil.displayToast(AudioDetailActivity.this,
+									R.string.please_finish_share);
+							return;
+						}
+						AppClientLef.getInstance(
+								AudioDetailActivity.this.getApplicationContext())
+								.shareThought( ZhuoCommHelperLz.getAudiothought(),"audioid",mId,
+										share.getText().toString(),
+										uiHandler, MsgTagVO.PUB_INFO,
+										AudioDetailActivity.this, true, null, null);
+						share.setText("");
+						iMM.hideSoftInputFromInputMethod(share.getWindowToken(), 0);
+					}
+				});
 		imageFunction.setOnClickListener(new OnClickListener() {
 
 			@Override

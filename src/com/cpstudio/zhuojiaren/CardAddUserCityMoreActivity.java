@@ -10,8 +10,10 @@ import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 public class CardAddUserCityMoreActivity extends Activity {
@@ -54,6 +56,8 @@ public class CardAddUserCityMoreActivity extends Activity {
 						((EditText) findViewById(R.id.editText)).getText()
 								.toString());
 				setResult(RESULT_OK, intent);
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+				imm.hideSoftInputFromWindow(CardAddUserCityMoreActivity.this.getCurrentFocus().getWindowToken(), 0);
 				CardAddUserCityMoreActivity.this.finish();
 			}
 		});

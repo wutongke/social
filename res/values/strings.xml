@@ -173,6 +173,12 @@
         <item>飞行</item>
         <item>京剧</item>
     </string-array>
+    <string-array name="QUAN_ROLE_NAME">
+        <item>申请入圈</item>
+        <item>普通成员</item>
+        <item>管理员</item>
+        <item>圈主</item>
+    </string-array>
 
     <string name="type_board0">分享</string>
     <string name="type_board1">活动</string>
@@ -264,7 +270,6 @@
     <string name="info33">是否准备或正在创业：</string>
     <string name="info34">是否准备或正在工作：</string>
     <string name="info35">请输入企业名称</string>
-    
     <string name="info36">请输入职务名称</string>
     <string name="info37">真实完善个人资料，让你更容易获得机会</string>
     <string name="info38">请输入手机号码</string>
@@ -313,7 +318,7 @@
     <string name="info80">文件已复制到</string>
     <string name="info81">复制文件失败</string>
     <string name="info82">个联系人</string>
-     <string name="info83">请输入企业网站</string>
+    <string name="info83">请输入企业网站</string>
     <string name="label_move_cancel">拖到此处取消</string>
     <string name="label_release_cancel">松开手指,取消发送</string>
     <string name="label_press">按住说话</string>
@@ -897,12 +902,14 @@
     <string name="vibrate">震动</string>
     <string name="get_password">找回密码</string>
     <string name="please_finish">请填写完整</string>
+    <string name="please_finish_share">请填写感悟</string>
     <string name="invalid_number">手机号不合法</string>
     <string name="submitting">提交中&#8230;&#8230;&#8230;</string>
 
     <!-- lz -->
     <string name="label_main_find">发现</string>
     <string name="label_main_searchHint">可搜索人名/公司/职务等关键词</string>
+    <string name="label_goods_searchHint">输入商品关键词</string>
     <string name="label_main_searchHint2">请输入关键词</string>
     <string name="label_plus">+</string>
     <string name="label_hot">热门推荐</string>
@@ -1159,9 +1166,8 @@
     <string name="lab_msglist_view_quan_msg">查看圈子聊天消息</string>
     <string name="lab_msglist_view_sys_msg">查看系统发来的通知信息</string>
     <string name="lab_msglist_view_cmt_msg">查看谁评论了我的文章，或需求信息</string>
-
     <string name="title_activity_zhuo_name_edit">ZhuoNameEditActivity</string>
- 	<string name="mygong">我的资源</string>
+    <string name="mygong">我的资源</string>
     <string name="myxu">我的需求</string>
     <string name="gonggao">公告 : </string>
     <string name="join_quan_success">成功将用户加入圈子 </string>
@@ -1174,11 +1180,22 @@
     <string name="sure">确定</string>
     <string name="targeturl">http://www.baidu.com</string>
     <string name="nofill">未填写</string>
-     <string name="zhuobi_num">倬币%d个</string>
-     <string name="num">%d个</string>
-      <string name="spokeman">代言人</string>
-       <string name="bg_success">更换成功</string>
-       <string name="bg_failed">更换失败</string>
-         <string name="view_into">查看更多资料</string>
-       <string name="edit_info">编辑更多资料</string>
+    <string name="zhuobi_num">倬币%d个</string>
+    <string name="num">%d个</string>
+    <string name="spokeman">代言人</string>
+    <string name="bg_success">更换成功</string>
+    <string name="bg_failed">更换失败</string>
+    <string name="view_into">查看更多资料</string>
+    <string name="edit_info">编辑更多资料</string>
+    <string name="secret">保密</string>
+    <string name="quit_quan_iCreated_success">成功退出我发起的活动</string>
+    <string name="quit_quan_iJoined_success">成功退出我加入的活动</string>
+    <string name="success">成功</string>
+    <string name="error_password">密码错误</string>
+    <string name="title_activity_goods_search">GoodsSearchActivity</string>
+    <string name="modify_quan_info_success">修改圈子信息成功</string>
+    <string name="modify_quan_logo_success">更新圈子LOGO成功</string>
+    <string name="modify_quan_info_failed">修改圈子信息失败</string>
+    <string name="modify_quan_logo_failed">更新圈子LOGO失败</string>
+
 </resources>
