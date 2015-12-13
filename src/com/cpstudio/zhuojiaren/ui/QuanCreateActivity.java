@@ -96,7 +96,6 @@ public class QuanCreateActivity extends BaseActivity {
 	private int typeQuanzi = 0;
 	private String[] quanziType;
 	List<City> cityList;
-
 	// 城市编码
 	private String locateCode;
 	// 加入权限
@@ -115,11 +114,13 @@ public class QuanCreateActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		mContext = this;
 		mConnHelper = AppClientLef.getInstance(getApplicationContext());
+
 		// 圈子类型
 		quanziType = getResources().getStringArray(R.array.quanzi_type);
 		initTitle();
 		title.setText(R.string.title_activity_create_quan);
 		function.setText(R.string.finish);
+
 		mConnHelper.getCitys(mUIHandler, MsgTagVO.DATA_OTHER,
 				(Activity) mContext, true, null, null);
 
@@ -371,10 +372,29 @@ public class QuanCreateActivity extends BaseActivity {
 
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
+		
 		@Override
 		public void handleMessage(Message msg) {
+			View v = findViewById(R.id.rootLayout);
 			switch (msg.what) {
-			case MsgTagVO.DATA_REFRESH:
+			case MsgTagVO.DATA_REFRESH: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					pwh.showPopDlgOne(v, null, R.string.modify_quan_info_success);
+				}
+				else
+					pwh.showPopDlgOne(v, null, R.string.modify_quan_info_failed);
+				break;
+			}
+			case MsgTagVO.UPDATE: {
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					pwh.showPopDlgOne(v, null, R.string.modify_quan_logo_success);
+				}
+				else
+					pwh.showPopDlgOne(v, null, R.string.modify_quan_logo_failed);
+				break;
+			}
 			case MsgTagVO.PUB_INFO: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
@@ -392,7 +412,6 @@ public class QuanCreateActivity extends BaseActivity {
 
 						}
 					};
-					View v = findViewById(R.id.rootLayout);
 
 					Intent intent = new Intent();
 
@@ -539,13 +558,18 @@ public class QuanCreateActivity extends BaseActivity {
 		// }
 		// }
 
-		if (null != groupid && !groupid.equals(""))
+		if (null != groupid && !groupid.equals("")) {
 			ZhuoConnHelper.getInstance(getApplicationContext())
 					.modifyGroupInfo(mUIHandler, MsgTagVO.DATA_REFRESH,
 							groupid, title, intro, String.valueOf(typeQuanzi),
 							locateCode, addRight, seeRight, pub,
 							mIsh2.getTags());
-		else
+			// 修改头像是另外的一个接口
+			if (mIsh2.getTags() != null && mIsh2.getTags().size() > 0)
+				ZhuoConnHelper.getInstance(getApplicationContext())
+						.setQuanLogo(mUIHandler, MsgTagVO.UPDATE, groupid,
+								mIsh2.getTags());
+		} else
 		// 加上pub
 		{
 			quanNew = new QuanVO();

@@ -135,6 +135,7 @@ public class ZhuoCommHelperLz {
 		return SERVER + QuanEventCollection;
 	}
 
+	private final static String SET_QUAN_LOG  = "/setgheader.do";
 	public static String getAllJiaren() {
 		return ALL_JIAREN;
 	}
@@ -613,6 +614,9 @@ public class ZhuoCommHelperLz {
 	}
 	public static String setCardBg() {
 		return SERVER + SET_CARD_BG;
+	}
+	public static String setQuanLogo() {
+		return SERVER + SET_QUAN_LOG;
 	}
 	
 }

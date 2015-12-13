@@ -25,7 +25,6 @@ import com.cpstudio.zhuojiaren.ui.CartActivity;
 import com.cpstudio.zhuojiaren.ui.MyZhuoBiActivity;
 
 public class AliPayActivity extends FragmentActivity {
-
 	//商户PID
 	public static final String PARTNER = "2088021294618045";
 	//商户收款账号

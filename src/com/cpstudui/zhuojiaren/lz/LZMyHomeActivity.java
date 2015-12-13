@@ -216,8 +216,9 @@ public class LZMyHomeActivity extends Activity {
 		String work = "";
 		if (baseDataSet != null) {
 			int pos = userInfo.getPosition();
-			if (pos != 0)// 默认为0，城市标号从1开始
+			if (pos > 0)// 默认为0，城市标号从1开始
 				pos--;
+			else return;
 			work = ((baseDataSet.getPosition()).get(pos)).getContent();
 		}
 		((TextView) findViewById(R.id.textViewContent)).setText(work);
