@@ -51,7 +51,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 public class CardEditActivity extends Activity {
-
 	@InjectView(R.id.buttonBack)
 	Button buttonBack;
 	@InjectView(R.id.buttonSubmit)
