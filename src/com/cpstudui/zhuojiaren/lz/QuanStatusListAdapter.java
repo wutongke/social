@@ -158,8 +158,8 @@ public class QuanStatusListAdapter extends BaseAdapter {
 			String time = item.getAddtime();
 			time = CommonUtil.calcTime(time);
 			convertView.setTag(R.id.tag_id, msgid);
-			if (item.getGroupName() != null)
-				holder.nameTV.setText(item.getGroupName());
+			if (item.getGname() != null)
+				holder.nameTV.setText(item.getGname());
 			else
 				holder.nameTV.setText(authorName);
 			holder.timeTV.setText(time);
@@ -236,9 +236,9 @@ public class QuanStatusListAdapter extends BaseAdapter {
 		} else if (mList.get(position).getGroupActivity() != null) {
 			final EventVO event = mList.get(position).getGroupActivity();
 			msgid = event.getActivityid();
-			if (event.getGroupName() != null) {
+			if (event.getGname() != null) {
 				holderActive.tvQuanName.setVisibility(View.VISIBLE);
-				holderActive.tvQuanName.setText(event.getGroupName());
+				holderActive.tvQuanName.setText(event.getGname());
 			} else
 				holderActive.tvQuanName.setVisibility(View.GONE);
 			holderActive.textViewTitle.setText(event.getTitle());
