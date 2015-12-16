@@ -61,10 +61,6 @@ public class MyZhuoBiActivity extends BaseActivity {
 						startActivityForResult(intent, requestFriend);
 					}
 
-					private void putExtra(String string, int i) {
-						// TODO Auto-generated method stub
-
-					}
 				});
 		findViewById(R.id.amzb_add_money).setOnClickListener(
 				new OnClickListener() {
@@ -130,44 +126,49 @@ public class MyZhuoBiActivity extends BaseActivity {
 					return;
 				}
 				String data = res.getData();
-				final Intent i = new Intent();
-				i.putExtra("tradeNum", data);
-				View view = getLayoutInflater().inflate(
-						R.layout.pay_wey_choose, null);
-				final AlertDialog alert = new AlertDialog.Builder(
-						MyZhuoBiActivity.this, AlertDialog.THEME_HOLO_LIGHT)
-						.setTitle("选择支付方式").setView(view).create();
-				view.findViewById(R.id.pay_weixin).setOnClickListener(
-						new OnClickListener() {
-
-							@Override
-							public void onClick(View v) {
-								// TODO Auto-generated method stub
-								i.setClass(MyZhuoBiActivity.this,
-										PayActivity.class);
-								// i.putExtra("money", "5");
-								i.putExtra("money", String.valueOf((int) (Float
-										.parseFloat(price) * 100)));
-								startActivity(i);
-								alert.dismiss();
-							}
-						});
-				view.findViewById(R.id.pay_ali).setOnClickListener(
-						new OnClickListener() {
-
-							@Override
-							public void onClick(View v) {
-								// TODO Auto-generated method stub
-								i.setClass(MyZhuoBiActivity.this,
-										AliPayActivity.class);
-								// i.putExtra("money", "0.5");
-								i.putExtra("money", String.valueOf((int) (Float
-										.parseFloat(price))));
-								startActivity(i);
-								alert.dismiss();
-							}
-						});
-				alert.show();
+				Intent payIntent = new Intent(MyZhuoBiActivity.this,ShoppingCartActivity.class);
+				payIntent.putExtra("money",  (int) (Float
+										.parseFloat(price)*100));
+				payIntent.putExtra("number", data);
+				startActivity(payIntent);
+//				final Intent i = new Intent();
+//				i.putExtra("tradeNum", data);
+//				View view = getLayoutInflater().inflate(
+//						R.layout.pay_wey_choose, null);
+//				final AlertDialog alert = new AlertDialog.Builder(
+//						MyZhuoBiActivity.this, AlertDialog.THEME_HOLO_LIGHT)
+//						.setTitle("选择支付方式").setView(view).create();
+//				view.findViewById(R.id.pay_weixin).setOnClickListener(
+//						new OnClickListener() {
+//
+//							@Override
+//							public void onClick(View v) {
+//								// TODO Auto-generated method stub
+//								i.setClass(MyZhuoBiActivity.this,
+//										PayActivity.class);
+//								// i.putExtra("money", "5");
+//								i.putExtra("money", String.valueOf((int) (Float
+//										.parseFloat(price) * 100)));
+//								startActivity(i);
+//								alert.dismiss();
+//							}
+//						});
+//				view.findViewById(R.id.pay_ali).setOnClickListener(
+//						new OnClickListener() {
+//
+//							@Override
+//							public void onClick(View v) {
+//								// TODO Auto-generated method stub
+//								i.setClass(MyZhuoBiActivity.this,
+//										AliPayActivity.class);
+//								// i.putExtra("money", "0.5");
+//								i.putExtra("money", String.valueOf((int) (Float
+//										.parseFloat(price))));
+//								startActivity(i);
+//								alert.dismiss();
+//							}
+//						});
+//				alert.show();
 				break;
 			case MsgTagVO.PUB_INFO:
 				if (JsonHandler.checkResult((String) msg.obj,

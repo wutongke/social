@@ -885,6 +885,11 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
+            android:name="com.cpstudio.zhuojiaren.ui.ShoppingCartActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
             android:name="com.cpstudio.zhuojiaren.ui.MyBrokenMoneyActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
@@ -1313,6 +1318,19 @@
             android:name="com.cpstudio.zhuojiaren.ui.GoodsSearchActivity"
             android:label="@string/title_activity_goods_search" >
         </activity>
+         <!-- WXPay sdk begin -->
+        <activity
+            android:name="cn.beecloud.BCWechatPaymentActivity"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity-alias
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:targetActivity="cn.beecloud.BCWechatPaymentActivity" />
+        <!-- WXPay sdk end -->
+
+
     </application>
 
     <!-- renren sso Permission for Unit Test -->
