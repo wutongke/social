@@ -390,10 +390,10 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					Intent i = new Intent(MainActivity.this,
-							GoodsDetailLActivity.class);
-					i.putExtra("goodsId", id);
-					startActivity(i);
+//					Intent i = new Intent(MainActivity.this,
+//							GoodsDetailLActivity.class);
+//					i.putExtra("goodsId", id);
+//					startActivity(i);
 				}
 			});
 		}

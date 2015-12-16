@@ -22,13 +22,18 @@
             android:paddingLeft="10dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
+            android:textSize="15dp"
+            android:textStyle="normal"
             android:singleLine="true" >
             <requestFocus />
         </EditText>
 
         <EditText
             android:id="@+id/password"
+            android:textSize="15dp"
+            android:textStyle="normal"
             android:layout_centerInParent="true"
+            android:paddingBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginBottom="10dp"
