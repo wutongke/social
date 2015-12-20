@@ -56,7 +56,7 @@ public class ZhuoMaiActiveListActivity extends BaseActivity implements
 				helper.setText(R.id.textViewTitle, item.getPublish());// ְλ
 				helper.setText(R.id.textViewTime, item.getPubtime());
 				helper.setText(R.id.textViewContent, item.getContent());
-
+				helper.setImageByNetUrl(R.id.imageViewRes, item.getPubpic());
 			}
 		};
 		mListView = (ListView) findViewById(R.id.listView);

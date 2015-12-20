@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
@@ -46,7 +47,7 @@ public class PubDetailActivity extends BaseActivity {
 		initTitle();
 		id = getIntent().getStringExtra("id");
 		title.setText(R.string.lab_zhuomaiactive_detail);
-		imageLoader = new LoadImage();
+		imageLoader = LoadImage.getInstance();
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		loadData();
 	}
@@ -62,8 +63,13 @@ public class PubDetailActivity extends BaseActivity {
 	private void fillData() {
 		// TODO Auto-generated method stub
 		if (pubMsg != null) {
-			// imageLoader.beginLoad(visit.getImageAddr(), image);
-			content.setText("  "+pubMsg.getContent());
+			if (pubMsg.getPubpic() != null) {
+				image.setVisibility(View.VISIBLE);
+				imageLoader.beginLoad(pubMsg.getPubpic(), image);
+			}
+			else
+				image.setVisibility(View.GONE);
+			content.setText("  " + pubMsg.getContent());
 			name.setText(pubMsg.getPublish());
 			time.setText(pubMsg.getPubtime());
 		}

@@ -71,7 +71,6 @@ public class ResourceGXFilterActivity extends BaseActivity {
 			}
 		});
 		typeLayout.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				final TwoLeverChooseDialog typeChoose = new TwoLeverChooseDialog(

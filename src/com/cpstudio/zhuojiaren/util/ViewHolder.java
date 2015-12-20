@@ -1,6 +1,7 @@
 package com.cpstudio.zhuojiaren.util;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.util.ImageLoader.Type;
 
 import android.content.Context;
@@ -112,7 +113,7 @@ public class ViewHolder {
 	 * @param drawableId
 	 * @return
 	 */
-	public ViewHolder setButton(int viewId, String txt,int visible,
+	public ViewHolder setButton(int viewId, String txt, int visible,
 			OnClickListener listener) {
 
 		Button view = getView(viewId);
@@ -154,11 +155,20 @@ public class ViewHolder {
 	 */
 	public ViewHolder setImageByUrl(int viewId, String url) {
 		// 鍏堝垱寤猴紝鍚庝娇鐢�
-		ImageLoader il = ImageLoader.getInstance(3, Type.LIFO);
-		il.loadImage(url, (ImageView) getView(viewId));
+		if (url != null) {
+			ImageLoader il = ImageLoader.getInstance(3, Type.LIFO);
+			il.loadImage(url, (ImageView) getView(viewId));
+		}
 		return this;
 	}
-
+	public ViewHolder setImageByNetUrl(int viewId, String url) {
+		// 鍏堝垱寤猴紝鍚庝娇鐢�
+		if (url != null) {
+			LoadImage loaderr = LoadImage.getInstance();
+					loaderr.beginLoad(url, (ImageView) getView(viewId));
+		}
+		return this;
+	}
 	// add by lz
 	/**
 	 * 涓篊heckBox璧嬪�
