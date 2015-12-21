@@ -1,7 +1,5 @@
 package com.cpstudio.zhuojiaren;
 
-import io.rong.imkit.RongIM;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Process;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -31,6 +27,8 @@ import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
+import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
+import com.cpstudio.zhuojiaren.model.GXTypeItemVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.gtype;
 import com.cpstudio.zhuojiaren.model.sdtype;
@@ -38,7 +36,6 @@ import com.cpstudio.zhuojiaren.ui.MyFriendActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.TwoLeverChooseDialog;
-import com.umeng.socialize.utils.Log;
 
 public class PublishResourceActivity extends BaseActivity {
 	@InjectView(R.id.btnAddContactPeople)
@@ -58,7 +55,7 @@ public class PublishResourceActivity extends BaseActivity {
 	// 供需类型（1-5为资源信息，5-00为需求信息。见 基础-获取基础数据编码 接口文档
 	int typecode;
 	List<List<String>> subStrings;
-	List<sdtype> gtypes;
+	List<gtype> gtypes;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,15 +77,25 @@ public class PublishResourceActivity extends BaseActivity {
 	}
 
 	void getCodedData() {
-		BaseCodeData baseCodeData = mConnHelper.getBaseDataSet();
+		GXTypeCodeData baseCodeData = mConnHelper.getGxTypeCodeDataSet();
+		gtypes = new ArrayList<gtype>();
 		if (baseCodeData != null) {
-			gtypes = baseCodeData.getSdtype();
+			// gtypes = baseCodeData.getSdtype();
 			List<String> zyList = new ArrayList<String>(), xqList = new ArrayList<String>();
-			for (sdtype item : gtypes) {
-				if (item.getId() < 5)
-					zyList.add(item.getContent());
-				else
-					xqList.add(item.getContent());
+
+			for (GXTypeItemVO item : baseCodeData.getSupply()) {
+				zyList.add(item.getTitle());
+				if (item.getSdtype() != null && item.getSdtype().size() > 0)
+					gtypes.add(new gtype(item.getSdtype().get(0).getId(), item
+							.getTitle()));
+
+			}
+			for (GXTypeItemVO item : baseCodeData.getDemand()) {
+				xqList.add(item.getTitle());
+				if (item.getSdtype() != null && item.getSdtype().size() > 0)
+					gtypes.add(new gtype(item.getSdtype().get(0).getId(), item
+							.getTitle()));
+
 			}
 			subStrings = new ArrayList<List<String>>();
 			subStrings.add(zyList);
@@ -202,8 +209,6 @@ public class PublishResourceActivity extends BaseActivity {
 					public void onClick(View v) {
 
 						int type1 = R.array.share_gx;
-						int[] type2 = { R.array.gongxu_main_type,
-								R.array.subtype_fund };
 						final TwoLeverChooseDialog typeChoose = new TwoLeverChooseDialog(
 								PublishResourceActivity.this,
 								AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, "分享资源",
@@ -411,7 +416,8 @@ public class PublishResourceActivity extends BaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK) {
 			if (requestCode == 100) {
-				addContactPeopel(data.getStringExtra("name"), data.getStringExtra("phone"));
+				addContactPeopel(data.getStringExtra("name"),
+						data.getStringExtra("phone"));
 			} else {
 				String filePath = pwh.dealPhotoReturn(requestCode, resultCode,
 						data, false);
@@ -430,8 +436,6 @@ public class PublishResourceActivity extends BaseActivity {
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
-	
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

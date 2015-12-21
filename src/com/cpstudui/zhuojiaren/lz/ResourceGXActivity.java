@@ -39,7 +39,8 @@ public class ResourceGXActivity extends BaseFragmentActivity {
 	private Context mContext;
 	// 四个fragment 方便通信
 	List<Fragment> fragments;
-	int currentFragmentIndex=0;
+	int currentFragmentIndex = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,12 +63,13 @@ public class ResourceGXActivity extends BaseFragmentActivity {
 			@Override
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
-				currentFragmentIndex=arg0;
-				if(arg0==2){
-					//不展示第三个page
+				currentFragmentIndex = arg0;
+				if (arg0 == 2) {
+					// 不展示第三个page
 					viewPager.setCurrentItem(1);
-					mContext.startActivity(new Intent(mContext,PublishResourceActivity.class));
-				//跳转到供需发布页面
+					mContext.startActivity(new Intent(mContext,
+							PublishResourceActivity.class));
+					// 跳转到供需发布页面
 				}
 			}
 
@@ -83,44 +85,48 @@ public class ResourceGXActivity extends BaseFragmentActivity {
 
 			}
 		});
-		
+
 		tabButton.setTabsButtonOnClickListener(new TabsButtonOnClickListener() {
-			
+
 			@Override
 			public void tabsButtonOnClick(int id, View v) {
 				// TODO Auto-generated method stub
-				if((Integer)(v.getTag())==2)
-					mContext.startActivity(new Intent(mContext,PublishResourceActivity.class));
-				else{
-					viewPager.setCurrentItem((Integer)v.getTag());
+				if ((Integer) (v.getTag()) == 2)
+					mContext.startActivity(new Intent(mContext,
+							PublishResourceActivity.class));
+				else {
+					viewPager.setCurrentItem((Integer) v.getTag());
 				}
 			}
 		});
-		
+
 		function.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-	//			跳转到筛选页面
-				Intent i=new Intent(ResourceGXActivity.this,ResourceGXFilterActivity.class);
+				// 跳转到筛选页面
+				Intent i = new Intent(ResourceGXActivity.this,
+						ResourceGXFilterActivity.class);
 				i.putExtra(ResourceGXVO.RESOURCEGXTYPE, currentFragmentIndex);
 				startActivityForResult(i, currentFragmentIndex);
 			}
 		});
 	}
+
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
 		// 发布话题、活动成功后刷新
-		if (viewPager.getAdapter() != null) {
-			fragments.clear();
-			viewPager.setAdapter(getPagerAdapter());
-			tabButton.setViewPager(null);
-			tabButton.setViewPager(viewPager);
-			tabButton.setVisibility(View.VISIBLE);
-		}
+//		if (viewPager.getAdapter() != null) {
+//			fragments.clear();
+//			viewPager.setAdapter(getPagerAdapter());
+//			tabButton.setViewPager(null);
+//			tabButton.setViewPager(viewPager);
+//			tabButton.setVisibility(View.VISIBLE);
+//		}
 	}
+
 	PagerAdapter getPagerAdapter() {
 		fragments = new ArrayList<Fragment>();
 		List<CharSequence> titles = new ArrayList<CharSequence>();
@@ -139,9 +145,8 @@ public class ResourceGXActivity extends BaseFragmentActivity {
 		fragments.add(quanQueryFragment);
 		titles.add(findneedTitle);
 
-
 		Fragment quanRecommendFragment = addBundle(new ResourceGXFragment(),
-				ResourceGXVO.PUB_NEED_RESOURCE);
+				ResourceGXVO.NEED_FIND);
 		fragments.add(quanRecommendFragment);
 		titles.add(pubgxTitle);
 
@@ -162,11 +167,13 @@ public class ResourceGXActivity extends BaseFragmentActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		// 筛选
 		if (resultCode == RESULT_OK) {
-			int type=data.getIntExtra(ResourceGXVO.RESOURCEGXFILTER_TYPE, 0);
-			String loc=data.getStringExtra(ResourceGXVO.RESOURCEGXFILTER_LOCATION);
-			String subType=data.getStringExtra(ResourceGXVO.RESOURCEGXFILTER_TYPE);
-			((ResourceGXFragment)(fragments.get(currentFragmentIndex))).filterData(loc, subType);
+			int subType = data.getIntExtra(ResourceGXVO.RESOURCEGXFILTER_TYPE,
+					-1);
+			String loc = data
+					.getStringExtra(ResourceGXVO.RESOURCEGXFILTER_LOCATION);
+			((ResourceGXFragment) (fragments.get(currentFragmentIndex)))
+					.filterData(loc, subType);
 		}
-		
+
 	}
 }

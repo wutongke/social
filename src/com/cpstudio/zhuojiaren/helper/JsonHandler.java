@@ -24,6 +24,7 @@ import com.cpstudio.zhuojiaren.model.ContactVO;
 import com.cpstudio.zhuojiaren.model.DownloadVO;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.EventVO;
+import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
 import com.cpstudio.zhuojiaren.model.GeoVO;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.GroupStatus;
@@ -1242,6 +1243,16 @@ public class JsonHandler {
 			e.printStackTrace();
 		}
 		return baseData;
+	}
+	public static GXTypeCodeData parseGXTypeCodeData(String jsonData) {
+		GXTypeCodeData gxCodeData = null;
+		try {
+			Gson gson = new Gson();
+			gxCodeData = gson.fromJson(jsonData, GXTypeCodeData.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return gxCodeData;
 	}
 
 	// 注意看命名是否和json中的一致

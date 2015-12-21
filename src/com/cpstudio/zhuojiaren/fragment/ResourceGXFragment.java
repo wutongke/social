@@ -1,6 +1,7 @@
 package com.cpstudio.zhuojiaren.fragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -35,12 +36,14 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
+import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
+import com.cpstudio.zhuojiaren.model.GXTypeItemVO;
 import com.cpstudio.zhuojiaren.model.ImageRadioButton;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.model.gtype;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.util.Util;
 import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
@@ -65,16 +68,38 @@ public class ResourceGXFragment extends Fragment {
 	// 用于数据筛选
 	private int type = 0;// 资源还是需求
 	// 网络请求参数
-	private int getType = 1;
-	private int item = 0;
+	// private int getType = 1;
+	private int item = -1;
 
-	String subType;// 过滤子类
+	int subType = -1;// 过滤子类
 	String location = null;// 区域
 	// 分页
 	private int mPage = 0;
 	private ZhuoConnHelper appClientLef;
 	// 基本编码
 	private BaseCodeData baseDataSet;
+	List<gtype> gtypes;
+
+	void getCodedData() {
+		GXTypeCodeData baseCodeData = ZhuoConnHelper.getInstance(getActivity())
+				.getGxTypeCodeDataSet();
+		gtypes = new ArrayList<gtype>();
+		if (baseCodeData != null) {
+
+			for (GXTypeItemVO item : baseCodeData.getSupply()) {
+				if (item.getSdtype() != null && item.getSdtype().size() > 0)
+					gtypes.add(new gtype(item.getSdtype().get(0).getId(), item
+							.getTitle()));
+
+			}
+			for (GXTypeItemVO item : baseCodeData.getDemand()) {
+				if (item.getSdtype() != null && item.getSdtype().size() > 0)
+					gtypes.add(new gtype(item.getSdtype().get(0).getId(), item
+							.getTitle()));
+
+			}
+		}
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,6 +112,7 @@ public class ResourceGXFragment extends Fragment {
 		baseDataSet = ZhuoConnHelper.getInstance(
 				getActivity().getApplicationContext()).getBaseDataSet();
 		initPullDownView();
+		getCodedData();
 		loadData();
 		return view;
 	}
@@ -189,7 +215,7 @@ public class ResourceGXFragment extends Fragment {
 					R.drawable.wisdomd_1));
 		}
 		mTitleAdapter = new TitleAdapter(getActivity(), list,
-				R.layout.item_title_image);
+				R.layout.item_title_image, true);
 
 		mTitleAdapter.setImageOnclick(new ImageOnclick() {
 
@@ -198,22 +224,24 @@ public class ResourceGXFragment extends Fragment {
 				// TODO Auto-generated method stub
 				int i = 0;
 				for (ImageRadioButton temp : list) {
-					i++;
 					if (btnview.equals(temp)) {
-//						Util.toastMessage(getActivity(), btnview.getaImage()
-//								+ "");
+						// Util.toastMessage(getActivity(), btnview.getaImage()
+						// + "");
 						break;
 					}
+					i++;
 				}
 				// 0资源1需求
-				if (type == 0) {
-					getType = i;
-				} else if (type == 1) {
-					getType = i + 50;
-				}
+				int index = 0;
+				if (type == 1)
+					index = 6;
+				index += i;
+				if (index >= gtypes.size())
+					index = 0;
+				subType = gtypes.get(index).getId();
 				if (item != i) {
 					mTitleAdapter.notifyDataSetChanged();
-					item = i;
+					item = index;
 					// 重新请求数据刷新列表
 					loadData();
 				}
@@ -293,10 +321,9 @@ public class ResourceGXFragment extends Fragment {
 				}
 			}
 		});
-
 	}
 
-	public void filterData(String loc, String subType) {
+	public void filterData(String loc, int subType) {
 		location = loc;
 		this.subType = subType;
 		loadData();
@@ -306,15 +333,21 @@ public class ResourceGXFragment extends Fragment {
 		mDatas.clear();
 		mPage = 0;
 		mAdapter.notifyDataSetChanged();
-		appClientLef.getGongXuList(String.valueOf(type),String.valueOf(getType), null, mPage, 5,
-				uiHandler, MsgTagVO.DATA_LOAD, getActivity(), true, null, null,
-				null);
+		String subStr = null;
+		if (subType != -1)
+			subStr = String.valueOf(subType);
+		appClientLef.getGongXuList(String.valueOf(type), subStr, null, mPage,
+				5, uiHandler, MsgTagVO.DATA_LOAD, getActivity(), true, null,
+				null, null);
 	}
 
 	private void loadMore() {
-		appClientLef.getGongXuList(String.valueOf(type), String.valueOf(getType),null, mPage, 5,
-				uiHandler, MsgTagVO.DATA_MORE, getActivity(), true, null, null,
-				null);
+		String subStr = null;
+		if (subType != -1)
+			subStr = String.valueOf(subType);
+		appClientLef.getGongXuList(String.valueOf(type), subStr, null, mPage,
+				5, uiHandler, MsgTagVO.DATA_MORE, getActivity(), true, null,
+				null, null);
 	}
 
 	Handler uiHandler = new Handler() {
@@ -330,7 +363,7 @@ public class ResourceGXFragment extends Fragment {
 				}
 				String data = res.getData();
 				updateItemList(data, true, false);
-				
+
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {

@@ -19,6 +19,12 @@ public class gtype implements Serializable{
 		this.content = content;
 	}
 
+	public gtype(int id, String content) {
+		super();
+		this.id = id;
+		this.content = content;
+	}
+
 	public String getContent() {
 		return this.content;
 	}

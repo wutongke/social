@@ -7,6 +7,7 @@ public class MsgTagVO {
 	 */
 	public static final int DATA_BASE = 77;
 	public static final int DATA_CITYS = 78;
+	public static final int DATA_GXTYPES = 79;
 	
 	/**
 	 * 初次加载首页数据

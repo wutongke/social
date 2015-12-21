@@ -43,8 +43,12 @@ import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.ICompleteCallback;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.Dynamic;
+import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
+import com.cpstudio.zhuojiaren.model.GXTypeItemVO;
 import com.cpstudio.zhuojiaren.model.Province;
+import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.model.gtype;
 import com.cpstudui.zhuojiaren.lz.CustomerMessageFactory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -63,6 +67,7 @@ public class ZhuoConnHelper {
 	};
 
 	public static final String BASEDATA = "baseCodeDatas";
+	public static final String GXTYPES = "gongxuTypes";
 	public static final String CITYS = "citys";
 	private static ZhuoConnHelper instance;
 	private String userid = null;
@@ -79,8 +84,10 @@ public class ZhuoConnHelper {
 	Context context;
 
 	private BaseCodeData baseDataSet;
+	private GXTypeCodeData gxTypeCodeDataSet;
 	private List<Province> citysOfProvince;
 	private List<City> citys;
+
 	private HashMap<String, Group> groupMap;// 群组信息
 
 	private void init(Context context) {
@@ -106,8 +113,17 @@ public class ZhuoConnHelper {
 		return instance;
 	}
 
+
 	public HashMap<String, Group> getGroupMap() {
 		return groupMap;
+	}
+
+	public GXTypeCodeData getGxTypeCodeDataSet() {
+		return gxTypeCodeDataSet;
+	}
+
+	public void setGxTypeCodeDataSet(GXTypeCodeData gxTypeCodeDataSet) {
+		this.gxTypeCodeDataSet = gxTypeCodeDataSet;
 	}
 
 	public void setGroupMap(HashMap<String, Group> groupMap) {
@@ -1187,12 +1203,13 @@ public class ZhuoConnHelper {
 	 * 
 	 * @param mUIHandler
 	 * @param tag
-	 * @param type 广告类别 0-首页 1-发现 2-精进 3-商城 4-众筹
+	 * @param type
+	 *            广告类别 0-首页 1-发现 2-精进 3-商城 4-众筹
 	 * @return
 	 */
 	public boolean getAdInfo(Handler mUIHandler, int tag, int type) {
 		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("type",String.valueOf(type)));
+		params.add(new BasicNameValuePair("type", String.valueOf(type)));
 		return getFromServerByPost(ZhuoCommHelperLz.getAdInfo(), params,
 				mUIHandler, tag);
 	}
@@ -1333,6 +1350,7 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getQuanEventList(),
 				nameValuePairs, mUIHandler, tag);
 	}
+
 	public boolean getQuanEventListCollection(Handler mUIHandler, int tag,
 			String groupid, String uid, int pageNo, int pageSize) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -1344,15 +1362,17 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getQuaneventcollection(),
 				nameValuePairs, mUIHandler, tag);
 	}
+
 	public boolean getGongListCollection(Handler mUIHandler, int tag,
 			int pageNo, int pageSize) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
-		nameValuePairs.add(new BasicNameValuePair("sdflag", "0" ));
+		nameValuePairs.add(new BasicNameValuePair("sdflag", "0"));
 		return getFromServerByPost(ZhuoCommHelperLz.getGonglist(),
 				nameValuePairs, mUIHandler, tag);
 	}
+
 	public boolean getPeopleListCollection(Handler mUIHandler, int tag,
 			int pageNo, int pageSize) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -1361,16 +1381,17 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getPeoplelist(),
 				nameValuePairs, mUIHandler, tag);
 	}
-	public boolean getXuListCollection(Handler mUIHandler, int tag,
-			int pageNo, int pageSize) {
+
+	public boolean getXuListCollection(Handler mUIHandler, int tag, int pageNo,
+			int pageSize) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
-		nameValuePairs.add(new BasicNameValuePair("sdflag", "1" ));
+		nameValuePairs.add(new BasicNameValuePair("sdflag", "1"));
 		return getFromServerByPost(ZhuoCommHelperLz.getGonglist(),
 				nameValuePairs, mUIHandler, tag);
 	}
-	
+
 	public boolean getTopicListCollection(Handler mUIHandler, int tag,
 			int pageNo, int pageSize) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -1379,6 +1400,7 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getTopiclist(),
 				nameValuePairs, mUIHandler, tag);
 	}
+
 	/**
 	 * 获取用户加入和创建的活动
 	 * 
@@ -1476,8 +1498,10 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.modifyGroupInfo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
+
 	/**
 	 * 设置圈子头像
+	 * 
 	 * @param mUIHandler
 	 * @param handlerTag
 	 * @param groupid
@@ -1493,6 +1517,7 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.setQuanLogo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
+
 	/**
 	 * 获取圈话题详情
 	 * 
@@ -1523,7 +1548,6 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.topicPraise(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
-	
 
 	public boolean praiseDynamic(Handler mUIHandler, int handlerTag,
 			String statusid, int praise) {
@@ -1699,9 +1723,9 @@ public class ZhuoConnHelper {
 		if (user.getDream() != null)
 			nameValuePairs
 					.add(new BasicNameValuePair("dream", user.getDream()));
-		if(user.getFaith()!=null)
+		if (user.getFaith() != null)
 			nameValuePairs
-			.add(new BasicNameValuePair("faith", user.getFaith()));
+					.add(new BasicNameValuePair("faith", user.getFaith()));
 		return getFromServerByPost(ZhuoCommHelperLz.modifyUserInfo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
@@ -2329,6 +2353,7 @@ public class ZhuoConnHelper {
 		return getFromServerByPost(ZhuoCommHelperLz.getMyFriends(),
 				nameValuePairs, mUIHandler, tag);
 	}
+
 	public boolean addCompany(Handler mUIHandler, int tag, String company,
 			int industry, int city, int position, String homepage, int status) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -2389,7 +2414,29 @@ public class ZhuoConnHelper {
 	public boolean getBaseCodeData(Handler handler, int handlerTag,
 			Activity activity, boolean cancelable, OnCancelListener cancel,
 			String data) {
-		String res = readObject(BASEDATA);
+		// String res = readObject(BASEDATA);
+		// if (res != null) {
+		// Message msg = handler.obtainMessage(handlerTag);
+		// Bundle bundle = new Bundle();
+		// bundle.putString("data", data);
+		// msg.setData(bundle);
+		// msg.obj = res;
+		// msg.sendToTarget();
+		// return true;
+		// } else {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("version", "0"));
+		String url = ZhuoCommHelperLz.getBaseCodeData();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+		// }
+	}
+
+	public boolean getGXTypes(Handler handler, int handlerTag,
+			Activity activity, boolean cancelable, OnCancelListener cancel,
+			String data) {
+		String res = readObject(GXTYPES);
 		if (res != null) {
 			Message msg = handler.obtainMessage(handlerTag);
 			Bundle bundle = new Bundle();
@@ -2402,7 +2449,7 @@ public class ZhuoConnHelper {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs = addUserInfoByPost(nameValuePairs);
 			nameValuePairs.add(new BasicNameValuePair("version", "0"));
-			String url = ZhuoCommHelperLz.getBaseCodeData();
+			String url = ZhuoCommHelperLz.getGXTypes();
 			return doPost(nameValuePairs, url, handler, handlerTag, activity,
 					url, cancelable, cancel, data);
 		}
