@@ -22,7 +22,6 @@ public class BaseCodeData implements Serializable {
 	private List<position> position;
 
 	private List<gtype> gtype;
-	private List<sdtype> sdtype;
 
 	private List<sdtype> teacherType;
 
@@ -34,13 +33,6 @@ public class BaseCodeData implements Serializable {
 		this.teacherType = teacherType;
 	}
 
-	public List<sdtype> getSdtype() {
-		return sdtype;
-	}
-
-	public void setSdtype(List<sdtype> sdtype) {
-		this.sdtype = sdtype;
-	}
 
 	public void setZodiac(List<zodiac> zodiac) {
 		this.zodiac = zodiac;

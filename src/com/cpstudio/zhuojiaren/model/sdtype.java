@@ -7,6 +7,12 @@ public class sdtype implements Serializable{
 
 	private String content;
 
+	public sdtype(int id, String content) {
+		super();
+		this.id = id;
+		this.content = content;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}

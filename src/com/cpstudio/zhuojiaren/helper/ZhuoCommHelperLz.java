@@ -107,6 +107,8 @@ public class ZhuoCommHelperLz {
 	private final static String grouthThought  = "/growthOnlineCmt.do";
 	private final static String audioThought  = "/audioCmt.do";
 	private final static String visitThought  = "/interviewCmt.do";
+	private final static String gxtyles  = "/getSupplyDemandType.do";
+	
 	public static String getVisitthought() {
 		return SERVER + visitThought;
 	}
@@ -617,6 +619,9 @@ public class ZhuoCommHelperLz {
 	}
 	public static String setQuanLogo() {
 		return SERVER + SET_QUAN_LOG;
+	}
+	public static String getGXTypes() {
+		return SERVER + gxtyles;
 	}
 	
 }

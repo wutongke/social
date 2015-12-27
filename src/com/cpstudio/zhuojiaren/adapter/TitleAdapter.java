@@ -27,11 +27,22 @@ public class TitleAdapter extends CommonAdapter<ImageRadioButton> {
 	}
 
 	public TitleAdapter(Context context, List<ImageRadioButton> mDatas,
+			int itemLayoutId, boolean none) {
+		super(context, mDatas, itemLayoutId);
+		if (none) {
+			mSelect = null;
+			return;
+		}
+		if (mDatas.size() > 0)
+			mSelect = mDatas.get(0);
+		// TODO Auto-generated constructor stub
+	}
+
+	public TitleAdapter(Context context, List<ImageRadioButton> mDatas,
 			int itemLayoutId) {
 		super(context, mDatas, itemLayoutId);
 		if (mDatas.size() > 0)
 			mSelect = mDatas.get(0);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -40,7 +51,7 @@ public class TitleAdapter extends CommonAdapter<ImageRadioButton> {
 
 		final ImageView image = helper.getView(R.id.iti_image);
 		image.setBackgroundResource(item.getaImage());
-		if (mSelect.equals(item))
+		if (mSelect!=null && mSelect.equals(item))
 			image.setBackgroundResource(item.getbImage());
 		image.setOnClickListener(new OnClickListener() {
 

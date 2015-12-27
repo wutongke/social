@@ -6,8 +6,17 @@ public class MessagePubVO {
 	private String id;
 
 	private String content;
-	
+
 	private String pubtime;
+	private String pubpic;
+
+	public String getPubpic() {
+		return pubpic;
+	}
+
+	public void setPubpic(String pubpic) {
+		this.pubpic = pubpic;
+	}
 
 	public String getContent() {
 		return content;

@@ -189,6 +189,61 @@ public class TwoLeverChooseDialog extends AlertDialog {
 		});
 
 	}
+	public TwoLeverChooseDialog(Context context, int theme,
+			String defaultFirstLeverItem, String defaultSecondLeverItem,
+			String[] mainSUbstrs, List<List<String>> subStrings) {
+		super(context, theme);
+		this.mContext = context;
+		// this.itemIds=secondLecerIds;
+		// TODO Auto-generated constructor stub
+		LayoutInflater inflater = (LayoutInflater) mContext
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View placeView = inflater.inflate(R.layout.place_choose, null);
+		// 初始化省市
+		selectedContent = (TextView) placeView.findViewById(R.id.place);
+		setView(placeView);
+		province =mainSUbstrs;
+		itemArray = new String[province.length][subStrings.size()];
+		for (int i = 0, n = province.length; i < n; i++) {
+			int size = subStrings.get(i).size();
+			itemArray[i] = (String[]) subStrings.get(i).toArray(
+					new String[size]);
+		}
+		selectedContent.setText(province[0] + " "
+				+ itemArray[0][0]);
+		firstLeverWV = (WheelView) placeView.findViewById(R.id.place_province);
+		secondLeverWV = (WheelView) placeView.findViewById(R.id.place_city);
+		
+		setPlace(defaultFirstLeverItem, defaultSecondLeverItem);
+		// place.setText(province[0]+" "+city[0][0]);
+		// firstLeverWV.setLabel("省/直辖市");
+		// secondLeverWV.setLabel("市");
+		firstLeverWV.addChangingListener(new OnWheelChangedListener() {
+			
+			@Override
+			public void onChanged(WheelView arg0, int arg1, int arg2) {
+				// TODO Auto-generated method stub
+				secondLeverWV.setViewAdapter(new ArrayWheelAdapter<String>(
+						mContext, itemArray[arg2]));
+				selectedContent.setText(province[arg2] + " "
+						+ itemArray[arg2][0]);
+			}
+		});
+		secondLeverWV.addChangingListener(new OnWheelChangedListener() {
+			
+			@Override
+			public void onChanged(WheelView arg0, int arg1, int arg2) {
+				// TODO Auto-generated method stub
+				selectedContent.setText(province[firstLeverWV.getCurrentItem()]
+						+ " " + itemArray[firstLeverWV.getCurrentItem()][arg2]);
+			}
+		});
+		
+	}
+	
+	
+	
+	
 
 	public void setPlace(String mypro, String mycity) {
 		int provinceIndex = 0;

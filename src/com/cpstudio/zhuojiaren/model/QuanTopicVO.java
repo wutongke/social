@@ -10,7 +10,8 @@ public class QuanTopicVO implements Serializable{
 	private String content;
 
 	private String groupid;
-	private String groupName;
+//	private String groupName;
+	private String gname;
 	private String uheader;
 
 	private int position;
@@ -95,12 +96,20 @@ public class QuanTopicVO implements Serializable{
 		return this.topicPic;
 	}
 
-	public String getGroupName() {
-		return groupName;
+	public String getGname() {
+		return gname;
 	}
 
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public void setGname(String gname) {
+		this.gname = gname;
 	}
+
+//	public String getGroupName() {
+//		return groupName;
+//	}
+//
+//	public void setGroupName(String groupName) {
+//		this.groupName = groupName;
+//	}
 	
 }

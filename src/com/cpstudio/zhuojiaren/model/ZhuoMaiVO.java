@@ -8,7 +8,7 @@ public class ZhuoMaiVO {
 	private String title;
 	String detailContent;
 	private String addtime;
-	String imgUrl;// 列表显示的图片
+	String pubpic;// 列表显示的图片
 
 	String isCollect;
 	UserVO owner;
@@ -62,13 +62,12 @@ public class ZhuoMaiVO {
 		this.title = title;
 	}
 
-	
-	public String getImgUrl() {
-		return imgUrl;
+	public String getPubpic() {
+		return pubpic;
 	}
 
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
+	public void setPubpic(String pubpic) {
+		this.pubpic = pubpic;
 	}
 
 }

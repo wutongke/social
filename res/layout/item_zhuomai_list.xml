@@ -45,19 +45,18 @@
 
             <ImageView
                 android:id="@+id/imageViewRes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="2dp"
+                android:layout_marginRight="10dp"
                 android:contentDescription="@string/ico" />
 
             <TextView
                 android:id="@+id/textViewContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/imageViewRes"
                 android:ems="20"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="2"

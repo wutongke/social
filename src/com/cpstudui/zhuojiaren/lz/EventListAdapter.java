@@ -67,9 +67,9 @@ public class EventListAdapter extends BaseAdapter {
 					.getTag(R.id.tag_view_holder);
 		}
 		EventVO event = mList.get(position);
-		if (event.getGroupName() != null) {
+		if (event.getGname() != null) {
 			holder.tvQuanName.setVisibility(View.VISIBLE);
-			holder.tvQuanName.setText(event.getGroupName());
+			holder.tvQuanName.setText(event.getGname());
 		} else
 			holder.tvQuanName.setVisibility(View.GONE);
 		holder.textViewTitle.setText(event.getTitle());

@@ -36,12 +36,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.facade.GroupFacade;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.SysApplication;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
+import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
 import com.cpstudio.zhuojiaren.model.GroupsForIM;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.Province;
@@ -127,14 +127,14 @@ public class TabContainerActivity extends TabActivity implements
 		filter.addAction(ACTION_SYS_MSG);
 		filter.addAction(ACTION_DMEO_AGREE_REQUEST);
 		filter.addAction(ACTION_DMEO_GROUP_MESSAGE);
-		
+
 		registerReceiver(msgReceiver, filter);
 	}
 
 	private void getMyGroupSuccess(GroupsForIM groups) {
 		if (groups != null) {
 			List<Group> grouplist = new ArrayList<Group>();
-			HashMap<String, Group> groupMap=new HashMap<String, Group>();
+			HashMap<String, Group> groupMap = new HashMap<String, Group>();
 			final List<QuanVO> quanlist = new ArrayList<QuanVO>();
 			if (groups.getCreateGroups() != null) {
 				for (int i = 0; i < groups.getCreateGroups().size(); i++) {
@@ -144,15 +144,15 @@ public class TabContainerActivity extends TabActivity implements
 					String name = quna.getGname();
 					if (id == null || name == null)
 						continue;
-					Group tmpGroup=null;
+					Group tmpGroup = null;
 					if (groups.getCreateGroups().get(i).getGheader() != null) {
 						Uri uri = Uri.parse(groups.getCreateGroups().get(i)
 								.getGheader());
-						tmpGroup=new Group(id, name, uri);
+						tmpGroup = new Group(id, name, uri);
 					} else {
-						tmpGroup=new Group(id, name, null);
+						tmpGroup = new Group(id, name, null);
 					}
-					if(tmpGroup!=null)
+					if (tmpGroup != null)
 						grouplist.add(tmpGroup);
 					groupMap.put(tmpGroup.getId(), tmpGroup);
 				}
@@ -165,21 +165,22 @@ public class TabContainerActivity extends TabActivity implements
 					String name = quna.getGname();
 					if (id == null || name == null)
 						continue;
-					Group tmpGroup=null;
+					Group tmpGroup = null;
 					if (groups.getFollowGroups().get(i).getGheader() != null) {
 						Uri uri = Uri.parse(groups.getFollowGroups().get(i)
 								.getGheader());
-						tmpGroup=new Group(id, name, uri);
+						tmpGroup = new Group(id, name, uri);
 					} else {
-						tmpGroup=new Group(id, name, null);
+						tmpGroup = new Group(id, name, null);
 					}
-					if(tmpGroup!=null)
+					if (tmpGroup != null)
 						grouplist.add(tmpGroup);
 					groupMap.put(tmpGroup.getId(), tmpGroup);
 				}
 			}
 			connHelper.setGroupMap(groupMap);
-			if (grouplist.size() > 0 && RongIM.getInstance()!=null && RongIM.getInstance().getRongIMClient()!=null)
+			if (grouplist.size() > 0 && RongIM.getInstance() != null
+					&& RongIM.getInstance().getRongIMClient() != null)
 				RongIM.getInstance()
 						.getRongIMClient()
 						.syncGroup(grouplist,
@@ -257,6 +258,8 @@ public class TabContainerActivity extends TabActivity implements
 		}
 		connHelper.getBaseCodeData(msgHandler, MsgTagVO.DATA_BASE,
 				TabContainerActivity.this, false, null, null);
+		connHelper.getGXTypes(msgHandler, MsgTagVO.DATA_GXTYPES,
+				TabContainerActivity.this, false, null, null);
 		connHelper.getCitys(msgHandler, MsgTagVO.DATA_CITYS,
 				TabContainerActivity.this, true, null, null);
 	}
@@ -318,20 +321,42 @@ public class TabContainerActivity extends TabActivity implements
 				break;
 			}
 			case MsgTagVO.DATA_BASE: {// 基础编码数据，保存到内存中\
-				ResultVO res;
+				ResultVO res = null;
+				String dataStr = null;
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-					res = JsonHandler.parseResult((String) msg.obj);
-					connHelper.saveObject((String) msg.obj,
-							ZhuoConnHelper.BASEDATA);
+					dataStr = (String) msg.obj;
+					connHelper.saveObject(dataStr, ZhuoConnHelper.BASEDATA);
 				} else {
-					return;
+					dataStr = connHelper.readObject(ZhuoConnHelper.BASEDATA);
 				}
-				String data = res.getData();
-				AppClientLef.getInstance(getApplicationContext()).saveObject(
-						data, "BaseSetData");
-				BaseCodeData dataset = JsonHandler.parseBaseCodeData(data);
-				connHelper.setBaseDataSet(dataset);
+				if (dataStr != null)
+					res = JsonHandler.parseResult(dataStr);
+				if (res != null) {
+					String data = res.getData();
+					BaseCodeData dataset = JsonHandler.parseBaseCodeData(data);
+					connHelper.setBaseDataSet(dataset);
+				}
+				break;
+			}
+			case MsgTagVO.DATA_GXTYPES: {// 供需类型数据，保存到内存中\
+				ResultVO res = null;
+				String dataStr = null;
+				if (JsonHandler.checkResult((String) msg.obj,
+						getApplicationContext())) {
+					dataStr = (String) msg.obj;
+					connHelper.saveObject(dataStr, ZhuoConnHelper.GXTYPES);
+				} else {
+					dataStr = connHelper.readObject(ZhuoConnHelper.GXTYPES);
+				}
+				if (dataStr != null)
+					res = JsonHandler.parseResult(dataStr);
+				if (res != null) {
+					String data = res.getData();
+					GXTypeCodeData gxTypes = JsonHandler
+							.parseGXTypeCodeData(data);
+					connHelper.setGxTypeCodeDataSet(gxTypes);
+				}
 				break;
 			}
 			default:
@@ -392,25 +417,20 @@ public class TabContainerActivity extends TabActivity implements
 
 				if (msg != null) {
 					String sourceid = msg.getSourceUserId();
-					String text = sourceid
-							+ getString(R.string.label_tomy)
+					String text = sourceid + getString(R.string.label_tomy)
 							+ getString(R.string.label_sendcard);
 					CommonUtil.displayToast(getApplicationContext(), text);
 				}
-			}
-			else if(action.equals(ACTION_DMEO_AGREE_REQUEST)){
-				String text=intent.getStringExtra("userid");
-				if(text!=null)
-				{
-					text+="同意添加好友！";
-				    CommonUtil.displayToast(getApplicationContext(), text); 
-				} 
-			}
-			else if(action.equals(TabContainerActivity.ACTION_DMEO_GROUP_MESSAGE))
-			{
-				
-			}
-			else {
+			} else if (action.equals(ACTION_DMEO_AGREE_REQUEST)) {
+				String text = intent.getStringExtra("userid");
+				if (text != null) {
+					text += "同意添加好友！";
+					CommonUtil.displayToast(getApplicationContext(), text);
+				}
+			} else if (action
+					.equals(TabContainerActivity.ACTION_DMEO_GROUP_MESSAGE)) {
+
+			} else {
 				String data = intent.getStringExtra("json");
 				Toast.makeText(getApplicationContext(), data, 1000).show();
 				int type = intent.getIntExtra("type", -1);
@@ -487,7 +507,7 @@ public class TabContainerActivity extends TabActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-//		getMenuInflater().inflate(R.menu.main, menu);
+		// getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 

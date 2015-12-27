@@ -31,23 +31,25 @@ public class EventVO {
 	private String isjoined;
 	private String isowner;
 	private String lefttime;
-	private String groupId,groupName;//该活动所在圈子的ID和名称
+	private String groupid,gname;//该活动所在圈子的ID和名称
 	
 	
-	public String getGroupId() {
-		return groupId;
+	
+
+	public String getGroupid() {
+		return groupid;
 	}
 
-	public void setGroupId(String groupId) {
-		this.groupId = groupId;
+	public void setGroupid(String groupid) {
+		this.groupid = groupid;
 	}
 
-	public String getGroupName() {
-		return groupName;
+	public String getGname() {
+		return gname;
 	}
 
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public void setGname(String gname) {
+		this.gname = gname;
 	}
 
 	public String getIsjoined() {

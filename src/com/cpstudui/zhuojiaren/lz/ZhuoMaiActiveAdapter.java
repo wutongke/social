@@ -9,15 +9,13 @@ import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
-import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ZhuoMaiVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.utils.ImageRectUtil;
 
 public class ZhuoMaiActiveAdapter extends CommonAdapter<ZhuoMaiVO> {
-	private LoadImage mLoadImage = new LoadImage(10);
+	private LoadImage mLoadImage = LoadImage.getInstance();
 	private Context mContext;
 
 	public ZhuoMaiActiveAdapter(Context context, List<ZhuoMaiVO> mDatas,
@@ -37,6 +35,7 @@ public class ZhuoMaiActiveAdapter extends CommonAdapter<ZhuoMaiVO> {
 		image.setImageBitmap(ImageRectUtil.toRoundCorner(BitmapFactory
 				.decodeResource(mContext.getResources(),
 						R.drawable.ico_chat_pic), 10));
+		
 	}
 
 }
