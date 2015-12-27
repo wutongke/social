@@ -408,7 +408,8 @@ public class PublishCrowdFundingActivity extends BaseActivity {
 						tempP.setAmount(supportPrice.getText().toString());
 						tempP.setIntro(nameV.getText().toString());
 						tempP.setLimits(supportPeople.getText().toString());
-
+						if(map.get(i+"")==null)
+							break;
 						String[] keys = map.get(i + "").toString().split(",");
 						ArrayList<String> urls = new ArrayList<String>();
 						for(String temp:keys){
