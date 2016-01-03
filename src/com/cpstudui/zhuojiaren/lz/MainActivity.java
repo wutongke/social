@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -24,7 +23,6 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.JiarenActiveActivity;
 import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.facade.InfoFacade;
@@ -32,14 +30,13 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.Comment;
+import com.cpstudio.zhuojiaren.model.BeanCats;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.GoodsPicAdVO;
 import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicAdVO;
-import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.ui.PubDetailActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
@@ -48,8 +45,11 @@ import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 import com.external.viewpagerindicator.PageIndicator;
-import com.umeng.socialize.media.UMImage;
-
+/**
+ * 首页
+ * @author lz
+ *
+ */
 public class MainActivity extends Activity implements OnPullDownListener,
 		OnItemClickListener {
 	@InjectView(R.id.main_banner)
@@ -79,23 +79,14 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	private ArrayList<BeanCats> catsListData;
 	private Cats_PageAdapter catPageAdapter;
 
-	// ImageView idBanner;
 	private ListView mListView;
-	// lz .. private ZhuoUserListAdapter mAdapter;
 	private DynamicListAdapter mAdapter;
 	private PullDownView mPullDownView;
-	// 圈话题的布局与动态一样，暂时用QuanTopicVO的List和adapter
 	private ArrayList<Dynamic> mList = new ArrayList<Dynamic>();
 	private String mSearchKey = null;
-	private String mLastId = null;
-	private String uid = null;
 	private ZhuoConnHelper mConnHelper = null;
-	// 存本地。需改写
-	private InfoFacade infoFacade = null;
-	private int mPage = 1;
 	boolean isContinue = true;
 	LoadImage imageLoader = LoadImage.getInstance();
-
 	MainHeadInfo adInfo = new MainHeadInfo();
 
 	@Override
@@ -107,11 +98,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		infoFacade = new InfoFacade(getApplicationContext(),
-				InfoFacade.NEWSLIST);
-		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		mPullDownView = (PullDownView) findViewById(R.id.main_pull_down_view);
-		// /lz
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.main_header);
 
@@ -120,17 +107,12 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
-	
-		// 是否和圈子话题公用一个数据结构还不一定
 		mAdapter = new DynamicListAdapter(MainActivity.this, mList, 1);
 		mListView.setAdapter(mAdapter);
-//		mPullDownView.setHideHeader();
 		mPullDownView.setShowFooter(false);
 		mPullDownView.noFoot();
-
 		initClick();
 		initHeadView();
-//		loadData();
 		times = DeviceInfoUtil.getDeviceCsd(MainActivity.this);
 	}
 
@@ -142,10 +124,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	}
 
 	private void initHeadView() {
-		// idBanner = (ImageView) findViewById(R.id.main_banner);
-
 		catsViewPager = (ViewPager) findViewById(R.id.cats_viewpager);
-		// catsViewPager.setLayoutParams(params);
 		catsListData = new ArrayList<BeanCats>();
 		int drawId[] = { R.drawable.jiarendongtai,
 				R.drawable.chengzhangzaixian, R.drawable.zhuoyuanyuyin,
@@ -172,17 +151,13 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		catsViewPager.setCurrentItem(0);
 		catsIndicator = (PageIndicator) findViewById(R.id.cats_indicator);
 		catsIndicator.setViewPager(catsViewPager);
-
 		hotImages.add(ivHot1);
 		hotImages.add(ivHot2);
 		hotImages.add(ivHot3);
-
 	}
 
 	private void initClick() {
-
 		idBanner.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -213,7 +188,6 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 				Intent i = new Intent(MainActivity.this,
 						SearchMainActivity.class);
-				// i.putExtra("filePath", filePath);
 				startActivity(i);
 			}
 		});
@@ -250,7 +224,6 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 	private void updateItemList(ArrayList<Dynamic> list, boolean refresh,
 			boolean append) {
-		// mPullDownView.noData(false);
 		if (!list.isEmpty()) {
 			// mPullDownView.hasData();
 			if (!append) {
@@ -258,12 +231,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			}
 			mList.addAll(list);
 			mAdapter.notifyDataSetChanged();
-			if (mList.size() > 0) {
-				mLastId = mList.get(mList.size() - 1).getStatusid();
-			}
-			mPage++;
 		} else {
-			// mPullDownView.noData(!refresh);
 		}
 	}
 
@@ -274,7 +242,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
-				boolean loadState=false;
+				boolean loadState = false;
 				MainHeadInfo info = null;
 				if (msg.obj instanceof MainHeadInfo) {// 加载的本地数据
 					info = (MainHeadInfo) msg.obj;
@@ -283,21 +251,16 @@ public class MainActivity extends Activity implements OnPullDownListener,
 							getApplicationContext());
 					info = nljh.parseMainInfo();
 					if (info != null) {
-						loadState=true;
-						
+						loadState = true;
+
 						updateAdInfo(info);
 					}
 				}
 				mPullDownView.finishLoadData(loadState);
 				break;
 			}
-			case MsgTagVO.DATA_REFRESH: {
-				break;
-			}
-
 			}
 		}
-
 	};
 
 	@Override
@@ -310,6 +273,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 			startActivity(i);
 		}
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK) {
@@ -319,7 +283,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	// refresh刷新加载的新的数据没有写数据库
+
 	@Override
 	public void onRefresh() {
 		loadData();
@@ -331,16 +295,11 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		loadData();
 		super.onResume();
 	}
-	
+
 	private void loadData() {
 
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2
 				&& (mSearchKey == null || mSearchKey.equals(""))) {
-			// 获取本地数据
-			// adInfo = infoFacade.getByPage(mPage);
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_OTHER);
-			// msg.obj = adInfo;
-			// msg.sendToTarget();
 		} else {
 			mConnHelper.getMainInfo(mUIHandler, MsgTagVO.DATA_LOAD, 0, 0);
 		}
@@ -352,30 +311,31 @@ public class MainActivity extends Activity implements OnPullDownListener,
 
 		imageLoader.beginLoad(picAd.getAdpic(), idBanner);
 
-		ArrayList<MessagePubVO> listData = (ArrayList<MessagePubVO>) info
-				.getPub();
-		if (noticesListData != null)
-			noticesListData.clear();
-		for (int i = 0; i < listData.size(); i++) {
-			noticesListData.add(listData.get(i));
-		}
-		antoText.stopAutoText();
-		antoText.setList(noticesListData);
-		
-		antoText.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				String id = antoText.getCurrentId();
-				Intent i = new Intent(MainActivity.this,
-						PubDetailActivity.class);
-				i.putExtra("id", id);
-				startActivity(i);
+		if (noticesListData == null || noticesListData.size() < 1) {
+			ArrayList<MessagePubVO> listData = (ArrayList<MessagePubVO>) info
+					.getPub();
+			if (noticesListData != null)
+				noticesListData.clear();
+			for (int i = 0; i < listData.size(); i++) {
+				noticesListData.add(listData.get(i));
 			}
-		});
-		antoText.updateUI();
-		
+			antoText.stopAutoText();
+			antoText.setList(noticesListData);
+
+			antoText.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					String id = antoText.getCurrentId();
+					Intent i = new Intent(MainActivity.this,
+							PubDetailActivity.class);
+					i.putExtra("id", id);
+					startActivity(i);
+				}
+			});
+			antoText.updateUI();
+		}
 		if (hotListData != null)
 			hotListData.clear();
 		hotListData = info.getAdmid();
@@ -390,19 +350,16 @@ public class MainActivity extends Activity implements OnPullDownListener,
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-//					Intent i = new Intent(MainActivity.this,
-//							GoodsDetailLActivity.class);
-//					i.putExtra("goodsId", id);
-//					startActivity(i);
+					// Intent i = new Intent(MainActivity.this,
+					// GoodsDetailLActivity.class);
+					// i.putExtra("goodsId", id);
+					// startActivity(i);
 				}
 			});
 		}
 
 		ArrayList<Dynamic> list = info.getStatus();
-		// boolean loadState = false;
 		if (info != null) {
-			// loadState = true;
-			// mPullDownView.finishLoadData(loadState);
 			updateItemList(list, true, false);
 		}
 	}
@@ -410,7 +367,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	@Override
 	public void onMore() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }

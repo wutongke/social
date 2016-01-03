@@ -17,7 +17,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -39,10 +38,6 @@ public class CardAddUserResourceActivity extends BaseActivity implements
 	TextView tvBack;
 	@InjectView(R.id.activity_function)
 	TextView tvManage;
-
-	// @InjectView(R.id.buttonManage)
-	// TextView buttonManage;
-
 	@InjectView(R.id.lt_pub_res)
 	View lt_pub_res;
 
@@ -54,7 +49,6 @@ public class CardAddUserResourceActivity extends BaseActivity implements
 	private int mPage = 0;
 	private String userid = "";
 	private ListViewFooter mListViewFooter = null;
-	// 是否处于管理
 	boolean isManaging = false;
 	String myId;
 
@@ -87,7 +81,6 @@ public class CardAddUserResourceActivity extends BaseActivity implements
 		loadData();
 		initClick();
 		tvManage.setText(getString(R.string.label_manage));
-		// 当打开的不是我自己的名片时需要隐藏管理按钮
 		if (!userid.equals(myId)) {
 			tvManage.setVisibility(View.GONE);
 			lt_pub_res.setVisibility(View.GONE);
@@ -208,10 +201,8 @@ public class CardAddUserResourceActivity extends BaseActivity implements
 			switch (msg.what) {
 			case MsgTagVO.DATA_LOAD: {
 				mListViewFooter.finishLoading();
-				ResultVO res;
 				if (JsonHandler.checkResult((String) msg.obj,
 						CardAddUserResourceActivity.this)) {
-					// res = JsonHandler.parseResult((String) msg.obj);
 					updateItemList((String) msg.obj, true, false);
 				} else {
 					CommonUtil.displayToast(CardAddUserResourceActivity.this,

@@ -37,7 +37,6 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
@@ -52,7 +51,11 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.google.gson.Gson;
-
+/**
+ * 供需详情接界面
+ * @author lz
+ *
+ */
 public class GongXuDetailActivity extends BaseActivity {
 	@InjectView(R.id.activity_function)
 	TextView tvShare;
@@ -89,16 +92,10 @@ public class GongXuDetailActivity extends BaseActivity {
 	private LoadImage mLoadImage = LoadImage.getInstance();
 	private View mHeadView = null;
 	private String msgid = null;
-	private int mPage = 1;
 	private AppClientLef mConnHelper = null;
 	private ZhuoConnHelper mConnHelperlz = null;
 	private String isCollect = "0";
-	// private ListViewFooter mListViewFooter = null;
-	private String uid = null;
 	private PopupWindows pwh;
-	// 不要本地缓存
-	// private ZhuoInfoFacade mFacade = null;
-	private String myid = null;
 	private String toId;
 	UserNewVO sharer;
 
@@ -113,8 +110,6 @@ public class GongXuDetailActivity extends BaseActivity {
 
 		mConnHelper = AppClientLef.getInstance(getApplicationContext());
 		mConnHelperlz = ZhuoConnHelper.getInstance(getApplicationContext());
-		// mFacade = new ZhuoInfoFacade(getApplicationContext());
-		myid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		Intent i = getIntent();
 		msgid = i.getStringExtra("msgid");
 
@@ -152,8 +147,6 @@ public class GongXuDetailActivity extends BaseActivity {
 
 		sharer = new UserNewVO();// 分享者
 		sharer.setName(gxInfo.getName());
-//		sharer.setPost(ZhuoConnHelper.getInstance(context).getBaseDataSet()
-//				.getPosition().get(gxInfo.getPosition()).getContent());
 		sharer.setCompany(gxInfo.getCompany());
 		sharer.setUheader(gxInfo.getUheader());
 		sharer.setUserid(gxInfo.getUserid());
@@ -237,27 +230,6 @@ public class GongXuDetailActivity extends BaseActivity {
 		}
 	}
 
-	private void updateItemList(String data, boolean refresh, boolean append) {
-		try {
-			if (data != null && !data.equals("")) {
-				List<Comment> list = JsonHandler_Lef.parseCommentLZList(data);
-				if (!list.isEmpty()) {
-					// textViewTip.setVisibility(View.GONE);
-					if (!append) {
-						mList.clear();
-					}
-					mPage++;
-					mList.addAll(list);
-					mAdapter.notifyDataSetChanged();
-				} else {
-					// textViewTip.setVisibility(View.VISIBLE);
-
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {
@@ -289,14 +261,6 @@ public class GongXuDetailActivity extends BaseActivity {
 				initClick();
 				break;
 			}
-			case MsgTagVO.DATA_OTHER: {
-				updateItemList((String) msg.obj, true, false);
-				break;
-			}
-			case MsgTagVO.DATA_MORE: {
-				updateItemList((String) msg.obj, false, true);
-				break;
-			}
 
 			case MsgTagVO.MSG_FOWARD: {
 				if (JsonHandler.checkResult((String) msg.obj,
@@ -314,38 +278,16 @@ public class GongXuDetailActivity extends BaseActivity {
 			case MsgTagVO.MSG_COLLECT: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-					// TextView collectBtn = (TextView)
-					// findViewById(R.id.buttonTabCollect);
-					// TextView numTV = (TextView)
-					// findViewById(R.id.textViewGongXuCollectNum);
 					if (isCollect != null && isCollect.equals("1")) {
-						// tvCollect.setText(R.string.label_collectCancel);
-						// Drawable drawable = getResources().getDrawable(
-						// R.drawable.tab_collect_on);
-						// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-						// drawable.getMinimumHeight());
-						// tvCollect.setCompoundDrawables(null, drawable, null,
-						// null);
 						tvCollect.setBackgroundResource(R.drawable.dongt2);
 						isCollect = "0";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_collectSuccess);
-						// numTV.setText(String.valueOf(Integer.valueOf(numTV
-						// .getText().toString()) + 1));
 					} else {
-						// tvCollect.setText(R.string.label_collect);
-						// Drawable drawable = getResources().getDrawable(
-						// R.drawable.tab_collect_off);
-						// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-						// drawable.getMinimumHeight());
-						// tvCollect.setCompoundDrawables(null, drawable, null,
-						// null);
 						tvCollect.setBackgroundResource(R.drawable.dongt);
 						isCollect = "1";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_cancelCollect);
-						// numTV.setText(String.valueOf(Integer.valueOf(numTV
-						// .getText().toString()) - 1));
 					}
 				}
 				break;

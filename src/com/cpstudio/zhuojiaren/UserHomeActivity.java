@@ -10,8 +10,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,9 +28,12 @@ import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
-
-public class UserHomeActivity extends Activity implements OnPullDownListener,
-		OnItemClickListener {
+/**
+ * 我的成长界面
+ * @author lz
+ *
+ */
+public class UserHomeActivity extends Activity implements OnPullDownListener {
 	private ListView mListView;
 	private ActiveListAdapter mAdapter;
 	private PullDownView mPullDownView;
@@ -45,9 +46,8 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 	private ZhuoConnHelper mConnHelper = null;
 	// private UserInfoFacade mFacade = null;
 	private UserFacade userFacade = null;
-	private int mType = Dynamic.DYNATIC_TYPE_MY_JIAREN;// 类型 0-自己的家人动态(我的动态)
+	private int mType = Dynamic.DYNATIC_TYPE_MY_JIAREN;
 
-	// 1-指定用户的家人动态 2-所有家人动态
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -69,7 +69,6 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 				R.layout.listview_header9);
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
-		mListView.setOnItemClickListener(this);
 		mListView.setDividerHeight(0);
 		mAdapter = new ActiveListAdapter(UserHomeActivity.this, mList);
 		mListView.setAdapter(mAdapter);
@@ -278,16 +277,6 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 		}
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		// if (id != -1) {
-		// Intent i = new Intent();
-		// i.setClass(UserHomeActivity.this, MsgDetailActivity.class);
-		// i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
-		// startActivity(i);
-		// }
-	}
 
 	@Override
 	public void onRefresh() {
@@ -298,10 +287,6 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 	@Override
 	public void onMore() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			// ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
-			// msg.obj = list;
-			// msg.sendToTarget();
 		} else {
 			mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_MORE, mType,
 					null, mPage, pageSize);
@@ -310,8 +295,6 @@ public class UserHomeActivity extends Activity implements OnPullDownListener,
 
 	private void loadData() {
 		if (mPullDownView.startLoadData()) {
-			// mList.clear();
-			// mAdapter.notifyDataSetChanged();
 			if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
 			} else {
 				mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_LOAD,

@@ -17,7 +17,6 @@ import butterknife.Optional;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.ViewOrderActivity;
-import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
@@ -29,10 +28,13 @@ import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.CartActivity;
 import com.cpstudio.zhuojiaren.ui.GoodsCollectionActivity;
-import com.cpstudio.zhuojiaren.ui.IncomeDetailsActivity;
 import com.cpstudio.zhuojiaren.ui.LocateActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-
+/**
+ * 倬脉商场中的“我的”界面
+ * @author lz
+ *
+ */
 public class StoreMyHomeActivity extends BaseActivity {
 	@InjectView(R.id.llViewOrder)
 	View vOrder;// 查看订单
@@ -49,7 +51,6 @@ public class StoreMyHomeActivity extends BaseActivity {
 
 	private ZhuoConnHelper mConnHelper = null;
 	private String mUid = null;
-	private UserFacade userFacade = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,6 @@ public class StoreMyHomeActivity extends BaseActivity {
 		initTitle();
 		title.setText(R.string.title_activity_lzmy_home);
 		ButterKnife.inject(this);
-		userFacade = new UserFacade(getApplicationContext());
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		initClick();
@@ -99,24 +99,6 @@ public class StoreMyHomeActivity extends BaseActivity {
 
 	private void initClick() {
 
-		// vCollect.setOnClickListener(new OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// // 收藏的
-		//
-		// startActivity(new
-		// Intent(StoreMyHomeActivity.this,GoodsCollectionActivity.class));
-		// }
-		// });
-
-		// vAddress.setOnClickListener(new OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		//
-		// startActivity(new Intent(StoreMyHomeActivity.this,
-		// LocateActivity.class));
-		// }
-		// });
 		vGWC.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

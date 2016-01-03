@@ -15,15 +15,17 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
-
+/**
+ * 评论界面，包括动态和圈话题的评论
+ * @author lz
+ *
+ */
 public class MsgCmtActivity extends Activity {
 
 	private PopupWindows pwh = null;
 	private String msgid = null;
-	private String parentid = null;
 	private String after = null;
 	private ZhuoConnHelper mConnHelper = null;
-	private String forward = "0";
 	private String content = null;
 	private String toId = null;
 	private String toUserid = null;
@@ -69,9 +71,6 @@ public class MsgCmtActivity extends Activity {
 			case MsgTagVO.PUB_INFO: {
 				if (JsonHandler.checkResult((String) msg.obj)) {
 					Intent intent = new Intent();
-					// intent.putExtra("forward", forward);
-					// intent.putExtra("msgid", msgid);
-					// intent.putExtra("userid", userid);
 					intent.putExtra("data", (String) msg.obj);
 					setResult(RESULT_OK, intent);
 					MsgCmtActivity.this.finish();
@@ -100,10 +99,7 @@ public class MsgCmtActivity extends Activity {
 		}
 		CheckBox cb = (CheckBox) findViewById(R.id.checkBoxZf);
 		if (cb.isChecked()) {
-			forward = "1";
 		}
-		// mConnHelper.pubCmt(msgid, parentid, content, forward, mUIHandler,
-		// , MsgCmtActivity.this, true, null, null);
 		if (1 == type)
 			mConnHelper.CommentTopic(mUIHandler, MsgTagVO.PUB_INFO, msgid,
 					content, toId, toUserid);

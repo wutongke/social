@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.JiarenActiveActivity;
 import com.cpstudio.zhuojiaren.JiarenActiveSimpleActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.Dynamic;

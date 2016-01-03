@@ -1,19 +1,5 @@
 package com.cpstudui.zhuojiaren.lz;
 
-//
-//                       __
-//                      /\ \   _
-//    ____    ____   ___\ \ \_/ \           _____    ___     ___
-//   / _  \  / __ \ / __ \ \    <     __   /\__  \  / __ \  / __ \
-//  /\ \_\ \/\  __//\  __/\ \ \\ \   /\_\  \/_/  / /\ \_\ \/\ \_\ \
-//  \ \____ \ \____\ \____\\ \_\\_\  \/_/   /\____\\ \____/\ \____/
-//   \/____\ \/____/\/____/ \/_//_/         \/____/ \/___/  \/___/
-//     /\____/
-//     \/___/
-//
-//  Powered by BeeFramework
-//
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +13,12 @@ import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout.LayoutParams;
 
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-
+import com.cpstudio.zhuojiaren.model.BeanBanner;
+/**
+ * ¶àÒ³Ãæ¿É»¬¶¯ViewPageµÄÊı¾İAdapter£ºÉÌ³¡Ê×Ò³¼°ÉÌÆ·ÏêÇéµÄÍ¼Æ¬Õ¹Ê¾
+ * @author lz
+ *
+ */
 public class Bee_PageAdapter extends PagerAdapter {
 	public List<BeanBanner> mListData;
 	LoadImage mLoadImage;
@@ -50,7 +41,6 @@ public class Bee_PageAdapter extends PagerAdapter {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					// é”Ÿæ–¤æ‹·è½¬é¡µé”Ÿæ–¤æ‹·
 				}
 			});
 			mLoadImage.addTask(url, iView);
@@ -76,7 +66,6 @@ public class Bee_PageAdapter extends PagerAdapter {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					// é”Ÿæ–¤æ‹·è½¬é¡µé”Ÿæ–¤æ‹·
 				}
 			});
 			mLoadImage.addTask(url, iView);
@@ -103,7 +92,6 @@ public class Bee_PageAdapter extends PagerAdapter {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					// é”Ÿæ–¤æ‹·è½¬é¡µé”Ÿæ–¤æ‹·
 				}
 			});
 			mLoadImage.addTask(url, iView);
@@ -118,9 +106,7 @@ public class Bee_PageAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public Object instantiateItem(ViewGroup container, int position) { // æ©æ¬é‡œé‚è§„ç¡¶é¢ã„¦æ½µç€¹ç‚°ç·¥é–æ ­ã€‰é”Ÿï¿½
-																		// container.addView(mListViews.get(position),
-																		// 0);//å¨£è¯²å§æ¤¤é›å´±
+	public Object instantiateItem(ViewGroup container, int position) { 
 		container.addView(mListView.get(position), 0);
 		return mListView.get(position);
 	}

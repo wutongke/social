@@ -34,7 +34,6 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.CardEditActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.ZhuomaiActiveInfoFra;
 import com.cpstudio.zhuojiaren.fragment.ZhuomaiCardCommercyInfoFra;
@@ -55,7 +54,7 @@ import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 import com.cpstudio.zhuojiaren.widget.TabButton.TabsButtonOnClickListener;
 
 /**
- * 閸婎剝鍓﹂崥宥囧
+ * 倬脉名片
  * 
  * @author lz
  * 
@@ -112,23 +111,14 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	@InjectView(R.id.rlSendCard)
 	View rlSendCard;//
 	
-	private final static int USER_SELECT = 0;
 	private Context mContext;
 	List<Fragment> fragments;
 
-	private PopupWindows phw = null;
 	private LoadImage mLoadImage = new LoadImage();
-	// 娑撳秴鎮撻煬顐″敜閿涘苯濮涢懗鎴掔瑝閸氾拷
-	private String memberType = "";
 	private PopupWindows pwh = null;
-	private String groupid = null;
 	private ZhuoConnHelper mConnHelper = null;
-	private boolean isfollow = false;
-
-	private ArrayList<String> tempids = new ArrayList<String>();
 
 	String userid, myid, ismy;
-	private UserFacade userFacade = null;
 	UserNewVO userInfo;
 	BaseCodeData baseDataSet;
 
@@ -144,7 +134,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 		tabButton.setViewPager(viewPager);
 
-		userFacade = new UserFacade(ZhuoMaiCardActivity.this);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		pwh = new PopupWindows(ZhuoMaiCardActivity.this);
 		Intent i = getIntent();
@@ -156,7 +145,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			btnEditBG.setEnabled(false);
 		mLoadImage = new LoadImage();
 
-//		ivBg.setBackgroundResource(R.drawable.manbg_zmmp_1);
 		baseDataSet = mConnHelper.getBaseDataSet();
 		initOnClick();
 	}
@@ -283,7 +271,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 										public void onClick(DialogInterface dialog,
 												int which) {
 											// TODO Auto-generated method stub
-											//閸掝亪娅庢總钘夊几
 											mConnHelper.makeFriends(mUIHandler, MsgTagVO.MSG_DEL,
 													userInfo.getUserid(), 0);
 										}
@@ -314,7 +301,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	}
 
 	void sendCard() {
-		// 闁帡锟介崥宥囧閿涘牐顕Ч鍌涘潑閸旂姴銈介崣瀣剁礆
 		if (RongIM.getInstance().getRongIMClient() == null)
 			return;
 		if (userInfo.getUserid() == null)
@@ -326,10 +312,9 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				userInfo.getName(), Uri.parse(userInfo.getUheader()));
 		info.setName(userInfo.getName());
 		info.setUserId(userInfo.getUserid());
-		msg.setUserInfo(info);// 鐎佃鏌熼幒銉ュ綀閸掓壆娈戞禒宥囧姧娑撶皠ull
+		msg.setUserInfo(info);
 		RongIM.getInstance()
 				.getRongIMClient()
-				// 閹恒儱褰堥崚鎵畱content閸ュ搫鐣炬稉锟界拠閿嬬湴閸旂姳璐熸總钘夊几閿涘本婀侀悽銊ф畱閸欘亝婀乮d"
 				.sendMessage(ConversationType.PRIVATE, userid,
 						msg, myid, new SendMessageCallback() {
 							@Override
@@ -351,8 +336,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 	protected void onPause() {
 		super.onPause();
-		// viewPager.setCurrentItem(0, false);
-		// tabButton.setTabBackgroundByIndex(0);
 	};
 
 	PagerAdapter getPagerAdapter() {
@@ -391,12 +374,11 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 	}
 
 	/**
-	 * 婵夘偄鍘栭崐瀣╂眽閸╃儤婀版穱鈩冧紖
+	 * 填充名片基本信息
 	 */
 	void fillHeadInfo() {
 		if (userInfo == null)
 			return;
-		
 		tvSignature.setText(userInfo.getSignature());
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHeader);
 		if(userInfo.getBgpic()!=null)
@@ -491,7 +473,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			case MsgTagVO.MSG_FOWARD: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-//ios鏆傛椂娌″仛锛屾秷鎭繕闇�鑷畾涔�	sendCard();
+//					sendCard();
 				} else {
 				}
 				break;
@@ -499,7 +481,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			case MsgTagVO.MSG_DEL: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-					changeStatus();
+					loadData();
 				} else {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.FAILED);
@@ -509,14 +491,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 			}
 		}
 	};
-
-	/**
-	 * 閺�懓褰夋總钘夊几閸忓磭閮�
-	 */
-	void changeStatus()
-	{
-		loadData();
-	}
 	
 	@Override
 	protected void onResume() {

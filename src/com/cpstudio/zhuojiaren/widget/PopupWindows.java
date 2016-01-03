@@ -1,17 +1,13 @@
 package com.cpstudio.zhuojiaren.widget;
 
 import java.io.File;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
-import kankan.wheel.widget.adapters.WheelViewAdapter;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,8 +18,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,43 +25,35 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ResFilterListAdapter;
 import com.cpstudio.zhuojiaren.adapter.TypeFilterListAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.model.GrouthType;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.ResultVO;
-import com.cpstudio.zhuojiaren.model.Teacher;
-import com.cpstudio.zhuojiaren.ui.GrouthChooseActivity;
 import com.cpstudio.zhuojiaren.ui.GrouthListActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.utils.ImageRectUtil;
 import com.zhuojiaren.sortlistview.NamePup;
-import com.zhuojiaren.sortlistview.SortAdapter;
 
 public class PopupWindows {
 	private PopupWindow popupWindow;

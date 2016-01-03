@@ -1,6 +1,5 @@
-package com.cpstudui.zhuojiaren.lz;
+package com.cpstudio.zhuojiaren.model;
 
-import android.R.string;
 
 public class BeanCats {
 	private String picUrl;

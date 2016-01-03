@@ -23,7 +23,11 @@ import com.cpstudio.zhuojiaren.model.OrderVO;
 import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.NestedListView;
-
+/**
+ * 订单详情
+ * @author lz
+ *
+ */
 public class OrderDetailActivity extends BaseActivity {
 	@InjectView(R.id.tvOrderStatus)
 	TextView tvStatus;
@@ -33,7 +37,6 @@ public class OrderDetailActivity extends BaseActivity {
 	TextView tvReceiver;
 	@InjectView(R.id.tvPhoneNum)
 	TextView tvPhoneNum;
-	// 设置内容和是需要格式化设置
 	@InjectView(R.id.tvAddress)
 	TextView tvAddress;
 	@InjectView(R.id.ivGoods)
@@ -47,7 +50,6 @@ public class OrderDetailActivity extends BaseActivity {
 	@InjectView(R.id.rlCmt)
 	View rlCmt;
 	String orderId = null;
-	// List<GoodsVO> goodsList = new ArrayList<GoodsVO>();
 	OrderListItemGoodsListAdapter mAdapter;
 	private ZhuoConnHelper mConnHelper = null;
 
@@ -135,7 +137,6 @@ public class OrderDetailActivity extends BaseActivity {
 
 	private void loadData() {
 		// TODO Auto-generated method stub
-
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
 		} else {
 			mConnHelper.getOrderDetail(mUIHandler, MsgTagVO.DATA_LOAD, orderId);

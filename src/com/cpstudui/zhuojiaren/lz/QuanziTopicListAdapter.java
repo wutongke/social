@@ -39,26 +39,24 @@ import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.utils.ImageRectUtil;
 
 /**
- * 
- * 
+ * 圈子话题列表数据Adapter
  * @author lz
- * 
+ *
  */
 public class QuanziTopicListAdapter extends BaseAdapter {
 	private List<QuanTopicVO> mList = null;
 	private LayoutInflater inflater = null;
 	private LoadImage mLoadImage = LoadImage.getInstance();
 	private Context mContext = null;
-	private int width = 720;
 	private float times = 2;
 	private ZhuoConnHelper mConnHelper = null;
-	private PopupWindows phw = null, phwChild;
+	private PopupWindows phw = null;
 	String msgid = "11";
 	Fragment fragment;
 	String groupId;
 	BaseCodeData baseDataSet;
 
-	int role;// 鈥滄垜鍦ㄥ湀瀛愪腑鐨勮韩浠解�
+	int role;
 
 	public String getGroupId() {
 		return groupId;
@@ -74,7 +72,6 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		this.fragment = fragment;
 		this.mList = list;
 		this.inflater = LayoutInflater.from(mContext);
-		this.width = DeviceInfoUtil.getDeviceCsw(mContext);
 		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
 		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
@@ -88,7 +85,6 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		this.fragment = null;
 		this.mList = list;
 		this.inflater = LayoutInflater.from(mContext);
-		this.width = DeviceInfoUtil.getDeviceCsw(mContext);
 		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
 		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
@@ -235,7 +231,6 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		});
 		final List<PicNewVO> picsinner = item.getTopicPic();
 		holder.gvImages.setVisibility(View.GONE);
-		// 鏄剧ず鍥剧墖
 		if (picsinner != null && picsinner.size() > 0) {
 			holder.gvImages.setVisibility(View.VISIBLE);
 			ArrayList<String> urls = new ArrayList<String>();
@@ -300,7 +295,6 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		return holder;
 	}
 
-	// 澶氬紶鍥剧墖
 	class GridViewAdapter extends CommonAdapter<String> {
 
 		public GridViewAdapter(Context context, List<String> mDatas,
@@ -312,11 +306,8 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		@Override
 		public void convert(ViewHolder helper, String item) {
 			// TODO Auto-generated method stub
-			// helper.setImageResource(R.id.gridview_image,
-			// R.drawable.ico_chat_pic);
 
 			ImageView iv = helper.getView(R.id.gridview_image);
-			// iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ico_chat_pic));
 			iv.setTag(item);
 			iv.setOnClickListener(new OnClickListener() {
 
@@ -332,10 +323,8 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 					mContext.startActivity(intent);
 				}
 			});
-
 			mLoadImage.addTask(item,
 					(ImageView) helper.getView(R.id.gridview_image));
-			// mLoadImage.doTask();
 		}
 
 	}

@@ -17,35 +17,37 @@ import com.cpstudio.zhuojiaren.MsgCmtActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.Comment;
-
+/**
+ * 评论列表数据Adapter，包括圈子话题、动态、供需的评论
+ * @author lz
+ *
+ */
 public class TopicCommentListAdapter extends BaseAdapter {
 	private List<Comment> mList = null;
 	private LayoutInflater inflater = null;
 	private LoadImage mLoadImage;
 	private String msgid = null;
-	private Context mContext;
 	int bgColor = -1;
 
 	public TopicCommentListAdapter(Context context, ArrayList<Comment> list,
 			String msgid) {
-		TopicCommentListAdapter(context, list, msgid, -1);
+		TopicCommentListAdapterCore(context, list, msgid, -1);
 	}
 
-	private void TopicCommentListAdapter(Context context,
+	private void TopicCommentListAdapterCore(Context context,
 			ArrayList<Comment> list, String msgid2, int color) {
 		// TODO Auto-generated method stub
 		if (bgColor != -1)
 			bgColor = color;
 		this.mList = list;
-		this.msgid = msgid;
+		this.msgid = msgid2;
 		this.inflater = LayoutInflater.from(context);
-		this.mContext = context;
 		mLoadImage = LoadImage.getInstance();
 	}
 
 	public TopicCommentListAdapter(Context context, ArrayList<Comment> list,
 			String msgid, int color) {
-		TopicCommentListAdapter(context, list, msgid, color);
+		TopicCommentListAdapterCore(context, list, msgid, color);
 	}
 
 	public TopicCommentListAdapter(Context context, ArrayList<Comment> list,
@@ -53,7 +55,6 @@ public class TopicCommentListAdapter extends BaseAdapter {
 		this.mList = list;
 		this.msgid = msgid;
 		this.inflater = LayoutInflater.from(context);
-		this.mContext = context;
 		this.mLoadImage = loadImage;
 	}
 
@@ -90,15 +91,11 @@ public class TopicCommentListAdapter extends BaseAdapter {
 		if (bgColor != -1)
 			convertView.setBackgroundColor(bgColor);
 		if (position == 0) {
-			// holder.icoCmt.setVisibility(View.VISIBLE);
 			holder.icoCmt.setVisibility(View.GONE);
 		} else {
 			holder.icoCmt.setVisibility(View.GONE);
 		}
 		Comment cmt = mList.get(position);
-		// final String id = cmt.get
-		// convertView.setTag(R.id.tag_id, id);
-		final String userid = cmt.getUserid();
 		String authorName = cmt.getName();
 		String headUrl = cmt.getUheader();
 		String time = cmt.getAddtime();

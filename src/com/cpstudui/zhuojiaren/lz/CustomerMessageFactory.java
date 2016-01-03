@@ -6,7 +6,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.cpstudio.zhuojiaren.model.ReqQuanVO;
-
+/**
+ * 自定义消息处理类
+ * @author lz
+ *
+ */
 public class CustomerMessageFactory {
 
 	private static CustomerMessageFactory instance;

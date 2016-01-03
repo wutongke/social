@@ -1,4 +1,4 @@
-package com.cpstudio.zhuojiaren.ui;
+package com.cpstudui.zhuojiaren.lz;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient.ErrorCode;
@@ -32,17 +32,15 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 import com.umeng.socialize.utils.Log;
 
 /**
- * 请求交换名片的家人，请求加入圈子的人
+ * 请求交换名片的家人，请求加入圈子的人 界面
  * 
  * @author lz
  * 
  */
-public class LZUserSameActivity extends BaseActivity implements
-		OnItemClickListener {
+public class LZUserSameActivity extends BaseActivity {
 	private ListView mListView;
 	private CommonAdapter mAdapter;
 	private PullDownView mPullDownView;
@@ -51,7 +49,6 @@ public class LZUserSameActivity extends BaseActivity implements
 	private ZhuoConnHelper mConnHelper = null;
 	BaseCodeData baseDataSet;
 	private LoadImage mLoader = LoadImage.getInstance();
-	// add by lz
 	boolean isManaging = false;
 	int type = 0;// 0:请求加入交换名片的人（请求加好友）、请求加入圈子的人
 
@@ -108,7 +105,6 @@ public class LZUserSameActivity extends BaseActivity implements
 						helper.setText(R.id.izul_company,
 								"请求加入圈子：" + item.getGname());
 				}
-				// CommonUtil.calcTimeToNow(time)
 				helper.setText(R.id.tvTime, item.getRegisterTime());
 				ImageView iv = helper.getView(R.id.izul_image);
 				iv.setOnClickListener(new OnClickListener() {
@@ -131,7 +127,6 @@ public class LZUserSameActivity extends BaseActivity implements
 							public void onClick(final View v) {
 								// TODO Auto-generated method stub
 								accept(item, v);
-								// v.setEnabled(false);
 							}
 						});
 			}
@@ -185,7 +180,6 @@ public class LZUserSameActivity extends BaseActivity implements
 			// }
 			if (v != null)
 				v.setVisibility(View.GONE);
-			// 权宜之计，应该用上面的
 			mConnHelper.makeFriends(mUIHandler, MsgTagVO.MSG_FOWARD,
 					item.getUserid(), 2);
 
@@ -272,11 +266,6 @@ public class LZUserSameActivity extends BaseActivity implements
 		}
 	};
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-
-	}
 
 	private void loadData() {
 		if (mPullDownView.startLoadData()) {

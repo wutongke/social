@@ -27,20 +27,21 @@ import com.cpstudio.zhuojiaren.adapter.StoreGoodsListAdapter;
 import com.cpstudio.zhuojiaren.helper.AppClientLef;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.BeanBanner;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
-import com.cpstudio.zhuojiaren.ui.AudioListActivity;
 import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.external.viewpagerindicator.PageIndicator;
-
+/**
+ * 倬脉商城，lef2改
+ * @author lz
+ *
+ */
 public class StoreMainActivity extends BaseActivity implements
 		OnItemClickListener {
 	@InjectView(R.id.gv_cats)
@@ -75,7 +76,7 @@ public class StoreMainActivity extends BaseActivity implements
 		setContentView(R.layout.activity_store_main);
 		initTitle();
 		ButterKnife.inject(this);
-		function.setText("我的");
+		function.setText(R.string.tab_item5);
 		function.setVisibility(View.VISIBLE);
 		title.setText(R.string.title_activity_store_main);
 		initView();
@@ -86,9 +87,6 @@ public class StoreMainActivity extends BaseActivity implements
 		RelativeLayout mFooterView = (RelativeLayout) findViewById(R.id.layoutFooter);
 		mListViewFooter = new ListViewFooter(mFooterView, onMoreClick);
 
-		// for(int i=0;i<20;i++)
-		// mList.add(new GoodsVO());
-		// mAdapter.notifyDataSetChanged();
 		loadData();
 		loadGoodsCatgory();
 	}

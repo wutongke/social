@@ -3,21 +3,16 @@ package com.cpstudui.zhuojiaren.lz;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
-import com.utils.ImageRectUtil;
 
 public class ResourceGXAdapter extends CommonAdapter<ResourceGXVO>{
 	private LoadImage mLoadImage = LoadImage.getInstance();
-	private Context mContext;
 	public ResourceGXAdapter(Context context, List<ResourceGXVO> mDatas,
 			int itemLayoutId) {
 		super(context, mDatas, itemLayoutId);
@@ -29,9 +24,6 @@ public class ResourceGXAdapter extends CommonAdapter<ResourceGXVO>{
 	public void convert(ViewHolder helper, ResourceGXVO item) {
 		// TODO Auto-generated method stub
 		ImageView image = helper.getView(R.id.irg_image);
-//		TextView title = helper.getView(R.id.irg_title);
-//		TextView price = helper.getView(R.id.irg_fund);
-//		TextView tvImageTag = helper.getView(R.id.irg_tag);
 		helper.setText(R.id.irg_title, item.getTitle());
 		String content = item.getContent();
 		if(content.length()>33){

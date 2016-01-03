@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import butterknife.InjectView;
 
-public class AboutZhuomaoActivity extends BaseActivity {
+public class AboutZhuomaiActivity extends BaseActivity {
 	@InjectView(R.id.tvAboutZM)
 	TextView tvAboutZM;
 

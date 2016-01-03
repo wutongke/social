@@ -1,19 +1,14 @@
 package com.cpstudui.zhuojiaren.lz;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
@@ -22,20 +17,18 @@ import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
-import com.cpstudio.zhuojiaren.widget.PopupWindows;
-
+/**
+ * 圈子成员数据Adapter
+ * @author lz
+ *
+ */
 public class QuanMemberListAdapter extends BaseAdapter {
 	private List<UserNewVO> mList = null;
 	private LayoutInflater inflater = null;
-	private Map<String, Integer> map = new HashMap<String, Integer>();
 	private LoadImage mLoadImage = LoadImage.getInstance();
 	BaseCodeData baseDataSet;
 	private ZhuoConnHelper mConnHelper = null;
 	Context mContext;
-
-	// private String mSections = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
 	public QuanMemberListAdapter(Context context, ArrayList<UserNewVO> list) {
 		this.mList = list;
 		this.inflater = LayoutInflater.from(context);
@@ -95,20 +88,18 @@ public class QuanMemberListAdapter extends BaseAdapter {
 				&& p <= baseDataSet.getPosition().size())
 			work = ((baseDataSet.getPosition()).get(p - 1)).getContent();
 		holder.workTV.setText(work);
-//		holder.headIV.setImageResource(R.drawable.default_userhead);
 		holder.headIV.setTag(user.getUheader());
 		mLoadImage.beginLoad(user.getUheader(), holder.headIV);
-
 		return convertView;
 	}
 
 	static class ViewHolder {
 		TextView nameTV;
-		TextView workTV;// 鑱屼綅
+		TextView workTV;
 
 		ImageView headIV;
-		TextView textViewStatus;// 缇や富鎴栫鐞嗗憳
-		TextView textViewRes;// 鍏徃鍚嶇О
+		TextView textViewStatus;
+		TextView textViewRes;
 	}
 
 	private ViewHolder initHolder(View convertView) {

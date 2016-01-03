@@ -26,10 +26,9 @@ import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 import com.cpstudio.zhuojiaren.widget.TabButton.TabsButtonOnClickListener;
 
 /**
- * acitivity与fragment通信,当fragment选中我圈子时，设置管理，点击管理后，操作fragment
- * 
- * @author lef
- * 
+ * 资源供需主界面，类似于桌家圈子主页ZhuoQuanMainActivity
+ * @author lz
+ *
  */
 public class ResourceGXActivity extends BaseFragmentActivity {
 	@InjectView(R.id.azq_tab)
@@ -37,7 +36,6 @@ public class ResourceGXActivity extends BaseFragmentActivity {
 	@InjectView(R.id.azq_viewpager)
 	ViewPager viewPager;
 	private Context mContext;
-	// 四个fragment 方便通信
 	List<Fragment> fragments;
 	int currentFragmentIndex = 0;
 
@@ -50,7 +48,6 @@ public class ResourceGXActivity extends BaseFragmentActivity {
 		initTitle();
 		title.setText(R.string.mp_gongxu);
 		function.setText(R.string.label_filter2);
-		// 初始化tab和viewpager
 		viewPager.setAdapter(getPagerAdapter());
 		tabButton.setViewPager(viewPager);
 		initOnClick();
@@ -69,7 +66,6 @@ public class ResourceGXActivity extends BaseFragmentActivity {
 					viewPager.setCurrentItem(1);
 					mContext.startActivity(new Intent(mContext,
 							PublishResourceActivity.class));
-					// 跳转到供需发布页面
 				}
 			}
 
@@ -117,14 +113,6 @@ public class ResourceGXActivity extends BaseFragmentActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		// 发布话题、活动成功后刷新
-//		if (viewPager.getAdapter() != null) {
-//			fragments.clear();
-//			viewPager.setAdapter(getPagerAdapter());
-//			tabButton.setViewPager(null);
-//			tabButton.setViewPager(viewPager);
-//			tabButton.setVisibility(View.VISIBLE);
-//		}
 	}
 
 	PagerAdapter getPagerAdapter() {

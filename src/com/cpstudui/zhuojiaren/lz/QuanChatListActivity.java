@@ -9,13 +9,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
-
+/**
+ * 圈聊消息列表界面，參照融云相关文档
+ * @author lz
+ *
+ */
 public class QuanChatListActivity extends FragmentActivity {
 	@InjectView(R.id.activity_back)
 	TextView tvBack;
@@ -43,7 +46,7 @@ public class QuanChatListActivity extends FragmentActivity {
 	}
 
 	void loadMessageSession() {
-		ViewGroup root = (ViewGroup) findViewById(R.id.ryConversationListContainer);
+//		ViewGroup root = (ViewGroup) findViewById(R.id.ryConversationListContainer);
 		listFragment = ConversationListFragment.getInstance();
 		Uri uri = Uri
 				.parse("rong://" + getApplicationInfo().packageName)

@@ -29,10 +29,7 @@ import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.MsgCmtActivity;
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.UserSelectActivity;
-import com.cpstudio.zhuojiaren.facade.ZhuoInfoFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.Comment;
@@ -48,7 +45,11 @@ import com.cpstudio.zhuojiaren.widget.CustomShareBoard;
 import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
-
+/**
+ * 话题详情页面，与动态详情页面DynamicDetailActivity的布局一样
+ * @author lz
+ *
+ */
 public class TopicDetailActivity extends BaseActivity {
 	private ListView mListView;
 	private TopicCommentListAdapter mAdapter;
@@ -57,13 +58,9 @@ public class TopicDetailActivity extends BaseActivity {
 	private View mHeadView = null;
 	private PopupWindows pwh;
 	private String topicid = null;
-	private int mPage = 1;
 	private ZhuoConnHelper mConnHelper = null;
 	private String isCollect = "0";
-	// private ListViewFooter mListViewFooter = null;
 	private String uid = null;
-	private ZhuoInfoFacade mFacade = null;
-	private String myid = null;
 	TextView collectBtn;
 	View textViewTip;
 	TopicDetailVO topicDetail;
@@ -78,8 +75,6 @@ public class TopicDetailActivity extends BaseActivity {
 		title.setText(R.string.title_activity_topic_detail);
 
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		mFacade = new ZhuoInfoFacade(getApplicationContext());
-		myid = ResHelper.getInstance(getApplicationContext()).getUserid();
 
 		Intent intent = getIntent();
 		topicid = intent.getStringExtra("topicid");
@@ -112,7 +107,6 @@ public class TopicDetailActivity extends BaseActivity {
 	public void fillData() {
 		((TextView) (mHeadView.findViewById(R.id.textViewAuthorName)))
 				.setText(topicDetail.getName());
-		// 此处还需要从编号获得对应的名称
 
 		((TextView) (mHeadView.findViewById(R.id.textViewRes)))
 				.setText(topicDetail.getCompany());
@@ -164,7 +158,6 @@ public class TopicDetailActivity extends BaseActivity {
 			textViewTip.setVisibility(View.GONE);
 		} else {
 			textViewTip.setVisibility(View.VISIBLE);
-			// mListViewFooter.noData(false);
 		}
 	}
 
@@ -254,19 +247,11 @@ public class TopicDetailActivity extends BaseActivity {
 						getApplicationContext())) {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.info10);
-					// TextView numTV = (TextView)
-					// findViewById(R.id.textViewGongXuZfNum);
-					// numTV.setText(String.valueOf(Integer.valueOf(numTV
-					// .getText().toString()) + 1));
 				}
 				break;
 			case MsgTagVO.MSG_COLLECT:
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-					// TextView collectBtn = (TextView)
-					// findViewById(R.id.buttonTabCollect);
-					// TextView numTV = (TextView)
-					// findViewById(R.id.textViewGongXuCollectNum);
 					if (isCollect != null && isCollect.equals("0")) {
 						// collectBtn.setText(R.string.label_collectCancel);
 						// Drawable drawable = getResources().getDrawable(
@@ -291,8 +276,6 @@ public class TopicDetailActivity extends BaseActivity {
 						isCollect = "0";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_cancelCollect);
-						// numTV.setText(String.valueOf(Integer.valueOf(numTV
-						// .getText().toString()) - 1));
 					}
 				}
 				break;
@@ -302,15 +285,6 @@ public class TopicDetailActivity extends BaseActivity {
 
 	private void loadData() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			// QuanVO quan = mFacade.getById(groupid);
-			// if (quan == null) {
-			// CommonUtil.displayToast(getApplicationContext(),
-			// R.string.error0);
-			// } else {
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-			// msg.obj = quan;
-			// msg.sendToTarget();
-			// }
 		} else {
 			mConnHelper.getTopicDetail(mUIHandler, MsgTagVO.DATA_LOAD, topicid);
 		}
@@ -351,12 +325,6 @@ public class TopicDetailActivity extends BaseActivity {
 
 					@Override
 					public void onClick(View v) {
-						// Intent i = new Intent(TopicDetailActivity.this,
-						// UserSelectActivity.class);
-						// ArrayList<String> tempids = new ArrayList<String>(1);
-						// tempids.add(uid);
-						// i.putStringArrayListExtra("otherids", tempids);
-						// startActivityForResult(i, MsgTagVO.MSG_FOWARD);
 						CustomShareBoard cb = new CustomShareBoard(
 								TopicDetailActivity.this);
 						cb.showCustomShareContent();
@@ -423,11 +391,8 @@ public class TopicDetailActivity extends BaseActivity {
 		@Override
 		public void convert(ViewHolder helper, String item) {
 			// TODO Auto-generated method stub
-			// helper.setImageResource(R.id.gridview_image,
-			// R.drawable.ico_chat_pic);
 
 			ImageView iv = helper.getView(R.id.gridview_image);
-			// iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ico_chat_pic));
 			iv.setTag(item);
 			iv.setOnClickListener(new OnClickListener() {
 
@@ -445,7 +410,6 @@ public class TopicDetailActivity extends BaseActivity {
 			});
 			mLoadImage.addTask(item,
 					(ImageView) helper.getView(R.id.gridview_image));
-			// mLoadImage.doTask();
 		}
 
 	}

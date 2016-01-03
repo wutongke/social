@@ -37,7 +37,11 @@ import com.cpstudui.zhuojiaren.lz.DynamicDetailActivity;
 import com.cpstudui.zhuojiaren.lz.DynamicListAdapter;
 import com.cpstudui.zhuojiaren.lz.JiarenActiveNumListActivity;
 import com.cpstudui.zhuojiaren.lz.QuanziActiveNumListActivity;
-
+/**
+ * 动态主界面
+ * @author lz
+ *
+ */
 public class JiarenActiveActivity extends Activity implements
 		OnPullDownListener {
 	@InjectView(R.id.activity_function_image)
@@ -47,10 +51,6 @@ public class JiarenActiveActivity extends Activity implements
 	@InjectView(R.id.activity_title)
 	TextView tvTitle;
 	private ListView mListView;
-	// private ZhuoInfoAdapter mAdapter;
-
-	// 倬家人所有的动态及谁加入倬家人，不包括话题，需求等，内容布局与话题一样
-	// 此处暂时用了圈话题的适配器，之后需要修改
 	private DynamicListAdapter mAdapter;
 	private PullDownView mPullDownView;
 	private ArrayList<Dynamic> mList = new ArrayList<Dynamic>();
@@ -58,16 +58,11 @@ public class JiarenActiveActivity extends Activity implements
 	private PopupWindows pwh = null;
 	private String mUid = null;
 	private int mType = Dynamic.DYNATIC_TYPE_MY_JIAREN;// 类型 0-我的家人动态
-	private String mLastId = "0";
 	private ZhuoConnHelper mConnHelper = null;
 	private UserFacade mFacade = null;
 	private int mPage = 0;
 	final int pageSize = 10;
 
-	// private InfoFacade infoFacade = null;
-	// type==0时所有人动态，就只是动态，不包括需求，话题，活动什么的
-	/*
-	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,8 +70,6 @@ public class JiarenActiveActivity extends Activity implements
 		ButterKnife.inject(this);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		mFacade = new UserFacade(getApplicationContext());
-		// infoFacade = new InfoFacade(getApplicationContext(),
-		// InfoFacade.ACTIVELIST);
 		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		pwh = new PopupWindows(JiarenActiveActivity.this);
 		mLoadImage = LoadImage.getInstance();
@@ -175,9 +168,6 @@ public class JiarenActiveActivity extends Activity implements
 			}
 			mList.addAll(list);
 			mAdapter.notifyDataSetChanged();
-			if (mList.size() > 0) {
-				mLastId = mList.get(mList.size() - 1).getStatusid();
-			}
 			mPage++;
 		} else {
 			mPullDownView.noData(!refresh);
@@ -241,25 +231,10 @@ public class JiarenActiveActivity extends Activity implements
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
 						list = nljh.parseDynamicList();
-						if (!list.isEmpty()) {
-							// infoFacade.update(list);
-						}
 					}
 				}
 				mPullDownView.finishLoadData(loadState);
 				updateItemList(list, true, false);
-				break;
-			}
-			case MsgTagVO.DATA_REFRESH: {
-				// boolean loadState = false;
-				// if (msg.obj != null && !msg.obj.equals("")) {
-				// loadState = true;
-				// JsonHandler nljh = new JsonHandler((String) msg.obj,
-				// getApplicationContext());
-				// ArrayList<Dynamic> list = nljh.parseDynamicList();
-				// updateItemList(list, false, false);
-				// }
-				// mPullDownView.RefreshComplete(loadState);
 				break;
 			}
 			case MsgTagVO.DATA_MORE: {
@@ -272,9 +247,6 @@ public class JiarenActiveActivity extends Activity implements
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
 						list = nljh.parseDynamicList();
-						if (!list.isEmpty()) {
-							// infoFacade.update(list);
-						}
 					}
 				}
 				updateItemList(list, false, true);
@@ -296,16 +268,6 @@ public class JiarenActiveActivity extends Activity implements
 		}
 	};
 
-	// @Override
-	// public void onItemClick(AdapterView<?> parent, View view, int position,
-	// long id) {
-	// if (id != -1) {
-	// Intent i = new Intent();
-	// i.setClass(JiarenActiveActivity.this, DynamicDetailActivity.class);
-	// i.putExtra("msgid", (String) view.getTag(R.id.tag_id));
-	// startActivity(i);
-	// }
-	// }
 
 	private void loadInfo() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
@@ -325,13 +287,7 @@ public class JiarenActiveActivity extends Activity implements
 
 	public void loadData() {
 		if (mPullDownView.startLoadData()) {
-			// mList.clear();
-			// mAdapter.notifyDataSetChanged();
 			if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-				// ArrayList<Dynamic> list = infoFacade.getByPage(mPage);
-				// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-				// msg.obj = list;
-				// msg.sendToTarget();
 			} else {
 				mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_LOAD,
 						mType, null, mPage, pageSize);
@@ -348,10 +304,6 @@ public class JiarenActiveActivity extends Activity implements
 	@Override
 	public void onMore() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			// ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
-			// msg.obj = list;
-			// msg.sendToTarget();
 		} else {
 			mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_MORE, mType,
 					null, mPage, pageSize);

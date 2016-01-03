@@ -12,10 +12,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -39,8 +37,11 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PlaceChooseDialog;
-import com.cpstudio.zhuojiaren.widget.PopupWindows;
-
+/**
+ * 企业详细信息界面
+ * @author lz
+ *
+ */
 public class CompanyDetailActivity extends BaseActivity {
 	
 	@InjectView(R.id.editTextCompany)
@@ -64,7 +65,6 @@ public class CompanyDetailActivity extends BaseActivity {
 	@InjectView(R.id.lv_company)
 	ListView lv_company;
 	EditMODE edtMode = EditMODE.VIEW;
-	private PopupWindows phw = null;
 	private ZhuoConnHelper mConnHelper = null;
 	CommonAdapter<CompanyNewVO> mAdapter;
 	List<CompanyNewVO> companyList = new ArrayList<CompanyNewVO>();
@@ -403,8 +403,6 @@ public class CompanyDetailActivity extends BaseActivity {
 			case MsgTagVO.DATA_LOAD:
 				if (msg.obj instanceof List<?>)// 加载的本地数据
 				{
-					// userInfo = (UserNewVO) msg.obj;
-					// userInfo.setUserid(mUid);
 					companyList = (List<CompanyNewVO>) msg.obj;
 				} else if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
@@ -450,7 +448,6 @@ public class CompanyDetailActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				CompanyNewVO com = companyList.get(curIndex);
 				curIndex = position;
 				fillItemInfo(position);
 				setEnable(false);

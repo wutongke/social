@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,7 +35,6 @@ import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
 import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 import com.google.gson.Gson;
-import com.umeng.socialize.media.UMImage;
 
 public class EventDetailActivity extends Activity {
 	@InjectView(R.id.aed_activity_back)

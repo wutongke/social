@@ -43,7 +43,7 @@ import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.utils.ImageRectUtil;
 
 /**
- * 
+ * 圈子动态Adapter,动态内容有话题和活动两种。包括发布的动态和活动 布局可以综合已有的ZhuoQuanMainActivity中的两种布局
  * 
  * @author lz
  * 
@@ -53,10 +53,9 @@ public class QuanStatusListAdapter extends BaseAdapter {
 	private LayoutInflater inflater = null;
 	private LoadImage mLoadImage = LoadImage.getInstance();
 	private Context mContext = null;
-	private int width = 720;
 	private float times = 2;
 	private ZhuoConnHelper mConnHelper = null;
-	private PopupWindows phw = null, phwChild;
+	private PopupWindows phw = null;
 	String msgid = "11";
 	String groupId;
 	BaseCodeData baseDataSet;
@@ -89,7 +88,6 @@ public class QuanStatusListAdapter extends BaseAdapter {
 		this.mContext = activity;
 		this.mList = list;
 		this.inflater = LayoutInflater.from(mContext);
-		this.width = DeviceInfoUtil.getDeviceCsw(mContext);
 		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
 		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
@@ -381,11 +379,8 @@ public class QuanStatusListAdapter extends BaseAdapter {
 		@Override
 		public void convert(ViewHolder helper, String item) {
 			// TODO Auto-generated method stub
-			// helper.setImageResource(R.id.gridview_image,
-			// R.drawable.ico_chat_pic);
 
 			ImageView iv = helper.getView(R.id.gridview_image);
-			// iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ico_chat_pic));
 			iv.setTag(item);
 			iv.setOnClickListener(new OnClickListener() {
 
@@ -401,10 +396,8 @@ public class QuanStatusListAdapter extends BaseAdapter {
 					mContext.startActivity(intent);
 				}
 			});
-
 			mLoadImage.addTask(item,
 					(ImageView) helper.getView(R.id.gridview_image));
-			// mLoadImage.doTask();
 		}
 
 	}

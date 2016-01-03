@@ -27,20 +27,16 @@ import com.cpstudio.zhuojiaren.ui.CrowdFundingActivity;
 import com.cpstudio.zhuojiaren.ui.UserSameActivity;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-
+/**
+ * 首页左上角发现按钮跳转到的界面
+ * @author lz
+ *
+ */
 public class FindActivity extends Activity {
-	private String mLocation = "";
-
-	// private BaiduLocationHelper locationHelper = null;
-	private ArrayList<BeanNotice> noticesListData;
-
 	int[] imageIds = { R.drawable.circleu, R.drawable.resourceu,
 			R.drawable.fianceu, R.drawable.zcityu, R.drawable.travelu,
 			R.drawable.nearu, R.drawable.interestu, R.drawable.teacheru,
 			R.drawable.allu };
-
-	// Class[] classArrays = { QuanListActivity.class,
-	// MsgResourceActivity.class,
 
 	Class[] classArrays = { ZhuoQuanActivity.class, ResourceGXActivity.class,
 
@@ -51,7 +47,6 @@ public class FindActivity extends Activity {
 			UserSameActivity.class,// 同趣
 			UserSameActivity.class, UserSameActivity.class };
 	private ZhuoConnHelper mConnHelper = null;
-	// private UserInfoFacade mFacade = null;
 	private UserFacade mFacade = null;
 	String uid = null;
 
@@ -108,9 +103,6 @@ public class FindActivity extends Activity {
 		loadInfo();
 		initClick();
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		// locationHelper = new BaiduLocationHelper(getApplicationContext(),
-		// mUIHandler, MsgTagVO.UPDATE_LOCAL);
-
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -119,18 +111,6 @@ public class FindActivity extends Activity {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case MsgTagVO.UPDATE_LOCAL: {
-				String locationinfo = (String) msg.obj;
-				if (null != locationinfo && !locationinfo.trim().equals("")) {
-					mLocation = locationinfo;
-					((TextView) findViewById(R.id.textViewPosInfo))
-							.setText("当前位置：" + locationinfo);
-				} else {
-					((TextView) findViewById(R.id.textViewPosInfo))
-							.setText(getString(R.string.error10));
-				}
-				break;
-			}
 			case MsgTagVO.DATA_OTHER: {
 				UserNewVO user = null;
 				if (msg.obj instanceof UserNewVO) {
@@ -176,113 +156,13 @@ public class FindActivity extends Activity {
 		}
 	}
 
-	@Override
-	protected void onDestroy() {
-		// if (locationHelper != null) {
-		// locationHelper.stopLocation();
-		// }
-		super.onDestroy();
-	}
-
-	@Override
-	protected void onPause() {
-		// if (locationHelper != null) {
-		// locationHelper.stopLocation();
-		// }
-		super.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-		// if (locationHelper != null) {
-		// locationHelper.startLocation();
-		// }
-		super.onResume();
-	}
-
 	private void initClick() {
 
 		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				FindActivity.this.finish();
 			}
 		});
-		// findViewById(R.id.relativeLayoutZJQZ).setOnClickListener(
-		// new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Intent i = new Intent(FindActivity.this,
-		// QuanListActivity.class);
-		// startActivity(i);
-		// }
-		// });
-		// findViewById(R.id.relativeLayoutTCJR).setOnClickListener(
-		// new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Intent i = new Intent(FindActivity.this,
-		// UserSameActivity.class);
-		// i.putExtra("type", 1);
-		// startActivity(i);
-		// }
-		// });
-		// findViewById(R.id.relativeLayoutTHJR).setOnClickListener(
-		// new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Intent i = new Intent(FindActivity.this,
-		// FieldSelectUserActivity.class);
-		// startActivity(i);
-		// }
-		// });
-		// findViewById(R.id.relativeLayoutTXJR).setOnClickListener(
-		// new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Intent i = new Intent(FindActivity.this,
-		// UserSameActivity.class);
-		// i.putExtra("type", 3);
-		// startActivity(i);
-		// }
-		// });
-		//
-		// findViewById(R.id.relativeLayoutZYGX).setOnClickListener(
-		// new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Intent i = new Intent(FindActivity.this,
-		// MsgResourceActivity.class);
-		// startActivity(i);
-		// }
-		// });
-		// findViewById(R.id.relativeLayoutZXDS).setOnClickListener(
-		// new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Intent i = new Intent(FindActivity.this,
-		// TeacherListActivity.class);
-		// startActivity(i);
-		// }
-		// });
-		//
-		// findViewById(R.id.relativeLayoutSYJR).setOnClickListener(
-		// new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Intent i = new Intent(FindActivity.this,
-		// UserAllActivity.class);
-		// startActivity(i);
-		// }
-		// });
-
 	}
 }

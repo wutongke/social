@@ -13,10 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -32,12 +30,10 @@ public class CardAddUserDreamActivity extends Activity {
 	private ArrayList<String> dreamTags = new ArrayList<String>();
 	private ArrayList<String> selected = new ArrayList<String>();
 	private PopupWindows pwh = null;
-	private ZhuoConnHelper mConnHelper = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_card_add_user_dream);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		pwh = new PopupWindows(CardAddUserDreamActivity.this);
 		linearLayout = (LinearLayout) findViewById(R.id.linearLayoutDreams);
 		findViewById(R.id.editText).setTag("dream0");

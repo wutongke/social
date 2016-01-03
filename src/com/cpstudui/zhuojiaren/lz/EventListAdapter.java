@@ -16,7 +16,11 @@ import android.widget.TextView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
-
+/**
+ * È¦×Ó»î¶¯ÁĞ±íÊı¾İAdapter
+ * @author lz
+ *
+ */
 public class EventListAdapter extends BaseAdapter {
 	private List<EventVO> mList = null;
 	private LayoutInflater inflater = null;
@@ -75,10 +79,10 @@ public class EventListAdapter extends BaseAdapter {
 		holder.textViewTitle.setText(event.getTitle());
 		holder.textViewDateTime.setText(event.getStarttime());
 		if (event.getOutdate() == 1)
-			holder.textViewIsOverTime.setText("å·²è¿‡æœŸ");
+			holder.textViewIsOverTime.setText("ÒÑ¹ıÆÚ");
 		else
-			holder.textViewIsOverTime.setText("æœªè¿‡æœŸ");
-		holder.textViewNums.setText(event.getJoinCount() + "äººæŠ¥å");
+			holder.textViewIsOverTime.setText("Î´¹ıÆÚ");
+		holder.textViewNums.setText(event.getJoinCount() + "ÈË±¨Ãû");
 
 		holder.textViewPlace.setText(event.getAddress());
 		holder.textViewDetail.setOnClickListener(new OnClickListener() {
@@ -99,7 +103,7 @@ public class EventListAdapter extends BaseAdapter {
 		else
 			holder.cbSelected.setVisibility(View.GONE);
 		holder.cbSelected.setChecked(false);
-		// è®¾ç½®æ˜¯å¦é€‰ä¸­
+		// ÉèÖÃÊÇ·ñÑ¡ÖĞ
 		if (mSelectedList.contains(mList.get(position))) {
 			holder.cbSelected.setChecked(true);
 		} else {

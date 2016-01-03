@@ -60,7 +60,6 @@ public class CardAddUserEmailActivity extends Activity {
 					@Override
 					public void onCheckedChanged(RadioGroup arg0, int arg1) {
 						// TODO Auto-generated method stub
-						// 获取变更后的选中项的ID
 						int radioButtonId = arg0.getCheckedRadioButtonId();
 						if (radioButtonId == R.id.radioPrivate)
 							isOpen = 1;

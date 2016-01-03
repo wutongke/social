@@ -1,11 +1,5 @@
 package com.cpstudio.zhuojiaren;
 
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.UserNewVO;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +9,16 @@ import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class CardAddUserWeiXinActivity extends Activity {
 	int isOpen = 0;

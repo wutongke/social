@@ -1,22 +1,22 @@
 package com.cpstudio.zhuojiaren;
 
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.UserNewVO;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
+
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class CardAddUserNameActivity extends Activity {
 	boolean isEditable;
@@ -83,7 +83,6 @@ public class CardAddUserNameActivity extends Activity {
 					new OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							Intent intent = new Intent();
 							String name = ((EditText) findViewById(R.id.editTextName))
 									.getText().toString();
 							int gender = 0;

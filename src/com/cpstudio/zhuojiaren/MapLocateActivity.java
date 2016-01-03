@@ -1,15 +1,14 @@
 package com.cpstudio.zhuojiaren;
 
+import android.app.Activity;
+import android.os.Bundle;
+
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-
-import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
 
 public class MapLocateActivity extends Activity {
 	// µÿÕºœ‡πÿ

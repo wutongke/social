@@ -3,7 +3,6 @@ package com.cpstudui.zhuojiaren.lz;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.androidpn.client.Constants;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -33,7 +32,7 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter2;
+import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
@@ -44,7 +43,11 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-
+/**
+ * 首页顶部搜索框的搜索界面
+ * @author lz
+ *
+ */
 public class SearchMainActivity extends BaseActivity implements
 		OnPullDownListener {
 	@InjectView(R.id.search_pull_down_view)
@@ -66,14 +69,12 @@ public class SearchMainActivity extends BaseActivity implements
 	private CommonAdapter mAdapter;
 
 	ArrayList<String> historyList = new ArrayList<String>();
-	// String[] hotWords;
 	String mLastId;
 	private SharedPreferences sharedPrefs;
 
 	String uid = null;
 	String mSearchKey = null;
 	private ZhuoConnHelper mConnHelper = null;
-	// private InfoFacade infoFacade = null;
 	private int mPage = 0;
 	private int mPageNum = 5;
 
@@ -84,12 +85,8 @@ public class SearchMainActivity extends BaseActivity implements
 		ButterKnife.inject(this);
 		initTitle();
 		title.setText(R.string.label_searchUserHint);
-		// getWindow().setSoftInputMode(
-		// WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		// infoFacade = new InfoFacade(getApplicationContext(),
-		// InfoFacade.NEWSLIST);
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
 
 		mPullDownView = (PullDownView) findViewById(R.id.search_pull_down_view);
@@ -99,7 +96,7 @@ public class SearchMainActivity extends BaseActivity implements
 		mPullDownView.setOnPullDownListener(this);
 		mListView = mPullDownView.getListView();
 
-		mAdapter = new ZhuoUserListAdapter2(SearchMainActivity.this, mList,
+		mAdapter = new ZhuoUserListAdapter(SearchMainActivity.this, mList,
 				R.layout.item_zhuouser_list2, mUIHandler);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setHideHeader();
@@ -138,7 +135,6 @@ public class SearchMainActivity extends BaseActivity implements
 					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 					imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 					loadData();
-
 				}
 				return false;
 			}
@@ -180,6 +176,7 @@ public class SearchMainActivity extends BaseActivity implements
 									Context.MODE_PRIVATE);
 						Editor editor = sharedPrefs.edit();
 						editor.remove(Constants.SEARCH_HISTORY);
+						editor.commit();
 						historyList.clear();
 						historyAdapter.notifyDataSetChanged();
 					}
@@ -245,9 +242,6 @@ public class SearchMainActivity extends BaseActivity implements
 			}
 			mList.addAll(list);
 			mAdapter.notifyDataSetChanged();
-			// if (mList.size() > 0) {
-			// mLastId = mList.get(mList.size() - 1).getMsgid();
-			// }
 			mPage++;
 		} else {
 			mPullDownView.noData(!refresh);
@@ -323,16 +317,6 @@ public class SearchMainActivity extends BaseActivity implements
 			}
 
 			case MsgTagVO.UPDATE: {
-				// if (msg.obj != null && !msg.obj.equals("")) {
-				// JsonHandler nljh = new JsonHandler((String) msg.obj,
-				// getApplicationContext());
-				// UserVO user = nljh.parseUser();
-				// if (null != user) {
-				// UserFacade facade = new UserFacade(
-				// getApplicationContext());
-				// facade.saveOrUpdate(user);
-				// }
-				// }
 				break;
 			}
 
@@ -342,9 +326,6 @@ public class SearchMainActivity extends BaseActivity implements
 					JsonHandler nljh = new JsonHandler((String) msg.obj,
 							getApplicationContext());
 					ArrayList<SearchHotKeyWord> datas = nljh.parseHotWords();
-					// // 共六个热词，以";"隔开
-					// String words = nljh.getSingleKeyValue("HOT_WORDS");
-					// displayHotWord(words);
 					if (datas != null && datas.size() > 0) {
 						displayHotWord(datas);
 					}
@@ -390,10 +371,6 @@ public class SearchMainActivity extends BaseActivity implements
 	public void onMore() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2
 				&& (mSearchKey == null || mSearchKey.equals(""))) {
-			// ArrayList<UserAndCollection> list = infoFacade.getByPage(mPage);
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
-			// msg.obj = list;
-			// msg.sendToTarget();
 		} else {
 			mConnHelper.getSearchContent(mUIHandler, MsgTagVO.DATA_MORE,
 					mSearchKey, mPage, mPageNum);
@@ -423,17 +400,10 @@ public class SearchMainActivity extends BaseActivity implements
 			mAdapter.notifyDataSetChanged();
 			if (CommonUtil.getNetworkState(getApplicationContext()) == 2
 					&& (mSearchKey == null || mSearchKey.equals(""))) {
-				// // 获取本地数据
-				// ArrayList<UserAndCollection> list =
-				// infoFacade.getByPage(mPage);
-				// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-				// msg.obj = list;
-				// msg.sendToTarget();
 			} else {
 				mConnHelper.getSearchContent(mUIHandler, MsgTagVO.DATA_LOAD,
 						mSearchKey, mPage, mPageNum);
 			}
 		}
 	}
-
 }

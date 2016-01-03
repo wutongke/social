@@ -26,7 +26,11 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+/**
+ * 更换个人背景图片界面
+ * @author lz
+ *
+ */
 public class ChangeBackgroundActivity extends BaseActivity implements
 		OnItemClickListener {
 	@InjectView(R.id.gridview_bg)
@@ -141,13 +145,7 @@ public class ChangeBackgroundActivity extends BaseActivity implements
 		gvBackGround.setAdapter(mAdapter);
 		gvBackGround.setOnItemClickListener(this);
 		bgVersion = mResHelper.getBgVersion();
-		initClick();
 		loadData();
-	}
-
-	private void initClick() {
-		// TODO Auto-generated method stub
-
 	}
 
 	private void loadData() {
@@ -161,9 +159,6 @@ public class ChangeBackgroundActivity extends BaseActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		// Toast.makeText(ChangeBackgroundActivity.this,
-		// arg2 + mList.get(arg2).getBgid(), 1000).show();
 		mConnHelper.setCardBg(mUIHandler, MsgTagVO.DATA_OTHER, mList.get(arg2).getBgid());
 	}
-
 }

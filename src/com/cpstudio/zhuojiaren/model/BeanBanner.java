@@ -1,15 +1,16 @@
-package com.cpstudui.zhuojiaren.lz;
+package com.cpstudio.zhuojiaren.model;
 
-public class BeanNotice{
-	
-	private String content;
+
+public class BeanBanner {
+	private String picUrl;
 	private int type;
 	private String itemId;
-	public String getContent() {
-		return content;
+	
+	public String getPicUrl() {
+		return picUrl;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
 	}
 	public int getType() {
 		return type;
@@ -23,7 +24,6 @@ public class BeanNotice{
 	public void setItemId(String itemId) {
 		this.itemId = itemId;
 	}
-	
 	
 	
 }

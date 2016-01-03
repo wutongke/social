@@ -3,7 +3,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
+/**
+ * 日历转换工具类
+ * @author lz
+ *
+ */
 public class Lunar {
 	private int year;
 	private int month;
@@ -17,8 +21,6 @@ public class Lunar {
 	
 	static SimpleDateFormat chineseDateFormat = new SimpleDateFormat(
 			"yyyy年MM月dd日");
-	
-	
 	
 	final static long[] lunarInfo = new long[] { 0x04bd8, 0x04ae0, 0x0a570,
 			0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2,

@@ -19,11 +19,8 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -32,7 +29,11 @@ import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 import com.cpstudui.zhuojiaren.lz.DynamicDetailActivity;
 import com.cpstudui.zhuojiaren.lz.DynamicListAdapter;
-
+/**
+ * 家人动态
+ * @author lz
+ *
+ */
 public class JiarenActiveSimpleActivity extends Activity implements
 		OnPullDownListener, OnItemClickListener {
 	@InjectView(R.id.activity_function_image)
@@ -45,35 +46,23 @@ public class JiarenActiveSimpleActivity extends Activity implements
 	private DynamicListAdapter mAdapter;
 	private PullDownView mPullDownView;
 	private ArrayList<Dynamic> mList = new ArrayList<Dynamic>();
-	private LoadImage mLoadImage = null;
 	private PopupWindows pwh = null;
-	private String mUid = null;
 	private int mType = Dynamic.DYNATIC_TYPE_MY_JIAREN;// 类型 0-自己的家人动态
 														// 1-指定用户的家人动态 2-所有家人动态
 	private ZhuoConnHelper mConnHelper = null;
-	private UserFacade mFacade = null;
 	private int mPage = 0;
 	final int pageSize = 10;
 	final int titleIds[] = { R.string.title_active, R.string.title_active,
 			R.string.label_active_all, R.string.label_active_i_focus };
 
-	// private InfoFacade infoFacade = null;
-	// type==0时所有人动态，就只是动态，不包括需求，话题，活动什么的
-	/*
-	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jiaren_active);
 		ButterKnife.inject(this);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		mFacade = new UserFacade(getApplicationContext());
-		// infoFacade = new InfoFacade(getApplicationContext(),
-		// InfoFacade.ACTIVELIST);
 		ivPub.setVisibility(View.GONE);
-		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		pwh = new PopupWindows(JiarenActiveSimpleActivity.this);
-		mLoadImage = new LoadImage();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
 		mType = getIntent().getIntExtra("mType", 0);
 		tvTitle.setText(titleIds[mType]);
@@ -105,13 +94,6 @@ public class JiarenActiveSimpleActivity extends Activity implements
 				JiarenActiveSimpleActivity.this.finish();
 			}
 		});
-//		ivPub.setImageResource(R.drawable.iwrite);
-//		ivPub.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				pwh.showPop(findViewById(R.id.layoutJiarenActive));
-//			}
-//		});
 	}
 
 	private void updateItemList(ArrayList<Dynamic> list, boolean refresh,
@@ -149,9 +131,6 @@ public class JiarenActiveSimpleActivity extends Activity implements
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
 						list = nljh.parseDynamicList();
-						if (!list.isEmpty()) {
-							// infoFacade.update(list);
-						}
 					}
 				}
 				mPullDownView.finishLoadData(loadState);
@@ -180,9 +159,6 @@ public class JiarenActiveSimpleActivity extends Activity implements
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
 						list = nljh.parseDynamicList();
-						if (!list.isEmpty()) {
-							// infoFacade.update(list);
-						}
 					}
 				}
 				updateItemList(list, false, true);
@@ -206,13 +182,7 @@ public class JiarenActiveSimpleActivity extends Activity implements
 
 	public void loadData() {
 		if (mPullDownView.startLoadData()) {
-			// mList.clear();
-			// mAdapter.notifyDataSetChanged();
 			if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-				// ArrayList<Dynamic> list = infoFacade.getByPage(mPage);
-				// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-				// msg.obj = list;
-				// msg.sendToTarget();
 			} else {
 				mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_LOAD,
 						mType, null, mPage, pageSize);
@@ -229,10 +199,6 @@ public class JiarenActiveSimpleActivity extends Activity implements
 	@Override
 	public void onMore() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			// ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
-			// msg.obj = list;
-			// msg.sendToTarget();
 		} else {
 			mConnHelper.getDynamicList(mUIHandler, MsgTagVO.DATA_MORE, mType,
 					null, mPage, pageSize);

@@ -10,19 +10,16 @@ import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ImageGridAdapter;
-import com.cpstudio.zhuojiaren.facade.QuanFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
@@ -32,6 +29,12 @@ import com.cpstudio.zhuojiaren.widget.ImageChooseAdapter;
 import com.cpstudio.zhuojiaren.widget.PicChooseActivity;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
+/**
+ * 发布圈话题
+ * 
+ * @author lz
+ * 
+ */
 public class PubTopicActicvity extends BaseActivity {
 
 	@InjectView(R.id.aee_image_layout)
@@ -40,15 +43,15 @@ public class PubTopicActicvity extends BaseActivity {
 	TextView addImage;
 	@InjectView(R.id.editTextContent)
 	EditText etContent;
-	
+
 	private int requestCode = 1;
 	private CommonAdapter<String> imageAdatper;
 	private ArrayList<String> imageDir = new ArrayList<String>();
-	private ArrayList<EditText> phoneList = new ArrayList<EditText>();
 	PopupWindows pwh;
 	String uid;
 	String groupid;
 	private ZhuoConnHelper mConnHelper = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,7 +62,7 @@ public class PubTopicActicvity extends BaseActivity {
 		title.setText(R.string.title_pub_topic);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
-		groupid=getIntent().getStringExtra("groupid");
+		groupid = getIntent().getStringExtra("groupid");
 		function.setText(R.string.label_publish);
 		initClick();
 	}
@@ -139,21 +142,21 @@ public class PubTopicActicvity extends BaseActivity {
 			}
 		});
 	}
+
 	private void publish() {
-		
+
 		String content = etContent.getText().toString();
-		
+
 		if (content.trim().equals("")) {
 			pwh.showPopDlgOne(findViewById(R.id.rootLayout), null,
 					R.string.info24);
 			etContent.requestFocus();
 			return;
 		}
-		mConnHelper.pubQuanTopic(PubTopicActicvity.this, mUIHandler, MsgTagVO.PUB_INFO, groupid, content, imageDir);
-//		mConnHelper.pubZhuoInfo(mIsh.getTags(), mUIHandler, MsgTagVO.PUB_INFO,
-//				PublishActiveActivity.this, content, tag, mLocation, imgCnt,
-//				"daily", true, null, null);
+		mConnHelper.pubQuanTopic(PubTopicActicvity.this, mUIHandler,
+				MsgTagVO.PUB_INFO, groupid, content, imageDir);
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub

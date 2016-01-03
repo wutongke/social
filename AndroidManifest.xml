@@ -111,12 +111,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.FindActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_find"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.cpstudio.zhuojiaren.ui.FieldSelectUserActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_group_type3"
@@ -150,18 +144,7 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.cpstudio.zhuojiaren.QuanListActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_zhuojiaquan"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.cpstudio.zhuojiaren.MsgResourceActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_gong_xu"
-            android:screenOrientation="portrait" >
-        </activity>
+       
         <activity
             android:name="com.cpstudio.zhuojiaren.ZenghuiTypeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -223,18 +206,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.QuanBoardChatActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_group_info"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.cpstudio.zhuojiaren.PublishBoardActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_publish_board"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.cpstudio.zhuojiaren.ui.QuanCreateActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_create_quan"
@@ -271,24 +242,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.MsgQuanListActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_group_chat_list"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.cpstudio.zhuojiaren.MsgSysListActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_sys_msg_list"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.cpstudio.zhuojiaren.MsgRcmdCmtActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_recommand_cmt"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.cpstudio.zhuojiaren.PublishActiveActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_publish_active"
@@ -319,23 +272,12 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.UserCardActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_user_card"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.cpstudio.zhuojiaren.CardAddUserImageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_card_add_user_image"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:name="com.cpstudio.zhuojiaren.CardAddUserFieldsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_card_add_user_fields"
-            android:screenOrientation="portrait" >
-        </activity>
+       
         <activity
             android:name="com.cpstudio.zhuojiaren.CardAddUserWorkActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -470,12 +412,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.MySettingActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_my_setting"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.cpstudio.zhuojiaren.ui.MyChangePwdActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_my_change_pwd"
@@ -523,18 +459,7 @@
             android:label="@string/title_activity_fan_follow"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:name="org.androidpn.client.NotificationDetailsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Notification Details"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="org.androidpn.client.NotificationSettingsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Notification Settings"
-            android:screenOrientation="portrait" >
-        </activity>
+       
         <activity
             android:name="com.cpstudio.zhuojiaren.PhotoViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -542,27 +467,9 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.QuanListMoreActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_quan_list_more"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.cpstudio.zhuojiaren.QuanListDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_quan_list_detail"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.cpstudio.zhuojiaren.QuanMngActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_quan_mng"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.cpstudio.zhuojiaren.UserCityActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_user_city"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -587,18 +494,6 @@
             android:name="com.cpstudio.zhuojiaren.TeacherInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_teacher_info"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.cpstudio.zhuojiaren.MyAboutUsListActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_my_about_us_list"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.cpstudio.zhuojiaren.MyAboutUsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_my_about_us"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -644,12 +539,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.PhotoSingleActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_photo_single"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.cpstudio.zhuojiaren.NormalListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_normal_list"
@@ -668,39 +557,18 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.UplevelDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_uplevel_detail"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.cpstudio.zhuojiaren.CmtListActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_cmt_list"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.cpstudio.zhuojiaren.MsgShareActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_msg_share"
             android:screenOrientation="portrait" >
         </activity>
 
-        <service
-            android:name="org.androidpn.client.NotificationService"
-            android:enabled="true"
-            android:exported="false"
-            android:label="NotificationService" >
-            <intent-filter>
-                <action android:name="org.androidpn.client.NotificationService" />
-            </intent-filter>
-        </service>
+       
         <!--
              <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" />
-        -->
+            android:process=":remote" />        -->
         <service
             android:name="com.cpstudio.zhuojiaren.service.ImService"
             android:exported="false" >
@@ -711,8 +579,6 @@
             </intent-filter>
         </service>
 
-        <receiver android:name="com.cpstudio.zhuojiaren.broadcastreceiver.ContentPoller" />
-        <!--  -->
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.ForgetPasswordActivity"
             android:screenOrientation="portrait"
@@ -858,15 +724,11 @@
             android:label="@string/label_active_quanzi" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.ZhuoMaiActiveActivity"
-            android:label="@string/label_active_zhuomai" >
-        </activity>
-        <activity
             android:name="com.cpstudui.zhuojiaren.lz.LZMyHomeActivity"
             android:label="@string/title_activity_lzmy_home" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.GroupStatusListActivity"
+            android:name="com.cpstudui.zhuojiaren.lz.QuanStatusListActivity"
             android:label="@string/title_activity_lzmy_home" >
         </activity>
         <activity
@@ -908,10 +770,6 @@
         </activity>
         <activity
             android:name="com.cpstudui.zhuojiaren.lz.QuanziActiveActiveActivity"
-            android:label="@string/label_active_quanzi" >
-        </activity>
-        <activity
-            android:name="com.cpstudui.zhuojiaren.lz.QuanziActiveActivity"
             android:label="@string/label_active_quanzi" >
         </activity>
         <activity
@@ -1055,7 +913,7 @@
             android:label="@string/title_activity_order_detail" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.AboutZhuomaoActivity"
+            android:name="com.cpstudio.zhuojiaren.AboutZhuomaiActivity"
             android:label="@string/label_my_about" >
         </activity>
         <activity
@@ -1072,7 +930,7 @@
             android:label="@string/active_my" >
         </activity>
         <activity
-            android:name="com.cpstudio.zhuojiaren.ui.LZUserSameActivity"
+            android:name="com.cpstudui.zhuojiaren.lz.LZUserSameActivity"
             android:label="@string/active_my" >
         </activity>
         <activity

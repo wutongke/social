@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,11 +33,15 @@ import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.ui.QuanCreateActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.util.ImageLoader;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * 圈子简介界面
+ * @author lz
+ *
+ */
 public class QuanBriefActivity extends BaseActivity {
 	@InjectView(R.id.imageViewGroupHeader)
 	ImageView ivGroupHeader;
@@ -77,7 +80,6 @@ public class QuanBriefActivity extends BaseActivity {
 	@InjectView(R.id.activity_function_image)
 	ImageView ivFun;
 	int localCode = -1;
-	private PopupWindows phw = null;
 	private LoadImage mLoadImage = LoadImage.getInstance();
 
 	// 不同身份，功能不同
@@ -98,8 +100,6 @@ public class QuanBriefActivity extends BaseActivity {
 		initTitle();
 		// 是管理员的时候才出现此菜单
 		ivFun.setVisibility(View.GONE);
-		// function.setVisibility(View.GONE);
-		// function.setBackgroundResource(R.drawable.fabu_wdhd_1);
 		ivFun.setImageResource(R.drawable.write);
 
 		title.setText(R.string.label_quan_brief);
@@ -150,7 +150,6 @@ public class QuanBriefActivity extends BaseActivity {
 						detail = nljh.parseQuan();
 						if (null != detail) {
 							// 是否需要保存到本地
-							// mFacade.saveOrUpdate(etail);
 						}
 					}
 					if (null != detail) {

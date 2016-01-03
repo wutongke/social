@@ -1,37 +1,10 @@
 package com.cpstudui.zhuojiaren.lz;
 
-//
-//                       __
-//                      /\ \   _
-//    ____    ____   ___\ \ \_/ \           _____    ___     ___
-//   / _  \  / __ \ / __ \ \    <     __   /\__  \  / __ \  / __ \
-//  /\ \_\ \/\  __//\  __/\ \ \\ \   /\_\  \/_/  / /\ \_\ \/\ \_\ \
-//  \ \____ \ \____\ \____\\ \_\\_\  \/_/   /\____\\ \____/\ \____/
-//   \/____\ \/____/\/____/ \/_//_/         \/____/ \/___/  \/___/
-//     /\____/
-//     \/___/
-//
-//  Powered by BeeFramework
-//
-
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.ui.AudioListActivity;
-import com.cpstudio.zhuojiaren.ui.CrowdFundingActivity;
-import com.cpstudio.zhuojiaren.ui.GrouthActivity;
-import com.cpstudio.zhuojiaren.ui.GrouthChooseActivity;
-import com.cpstudio.zhuojiaren.ui.GrouthListActivity;
-import com.cpstudio.zhuojiaren.ui.MyMoneyActivity;
-import com.cpstudio.zhuojiaren.ui.MyZhuoBiActivity;
-import com.cpstudio.zhuojiaren.ui.UserSameActivity;
-import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
-
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.view.Gravity;
 import android.view.View;
@@ -39,13 +12,25 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.cpstudio.zhuojiaren.helper.ResHelper;
+import com.cpstudio.zhuojiaren.model.BeanCats;
+import com.cpstudio.zhuojiaren.ui.AudioListActivity;
+import com.cpstudio.zhuojiaren.ui.CrowdFundingActivity;
+import com.cpstudio.zhuojiaren.ui.GrouthActivity;
+import com.cpstudio.zhuojiaren.ui.GrouthListActivity;
+import com.cpstudio.zhuojiaren.ui.MyZhuoBiActivity;
+import com.cpstudio.zhuojiaren.ui.UserSameActivity;
+import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
+/**
+ * ��ҳ��ɻ���ViewPage������Adapter����ҳ�����桱�ϲ��Ĳ�ͬģ����������Adapter
+ * @author lz
+ *
+ */
 public class Cats_PageAdapter extends PagerAdapter {
 	public List<BeanCats> mListData;
-	// LoadImage mLoadImage=new LoadImage(5);
 	int pages = 0;
 	public ArrayList<View> mListView = new ArrayList<View>();
 	Context mContext;
@@ -55,12 +40,6 @@ public class Cats_PageAdapter extends PagerAdapter {
 		pages = (int) Math.ceil(mListData.size() / 8.0);
 		mContext = context;
 		int cellWidth = (w - 5 * 5) / 4;
-
-		// for (int i = 0; i < pages; i++) {
-		// ImageView iv = new ImageView(context);
-		// iv.setImageResource(R.drawable.backspace);
-		// mListView.add(iv);
-		// }
 
 		int n = mListData.size();
 		this.mListData = mListData;
@@ -77,12 +56,8 @@ public class Cats_PageAdapter extends PagerAdapter {
 			for (int j = 0; j < 2; j++) {
 				LinearLayout.LayoutParams childllp = new LinearLayout.LayoutParams(
 						LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-//				childllp.setMargins(0, 30, 0, 0);
 				if(j==1)
 					childllp.setMargins(0, 30, 0, 0);
-//					childllp.setMargins(5, 30, 5, 5);
-//				else
-//					childllp.setMargins(5, 10, 5, 5);
 				LinearLayout childlinearLayou = new LinearLayout(context);
 				childlinearLayou.setLayoutParams(childllp);
 				childlinearLayou.setOrientation(LinearLayout.HORIZONTAL);
@@ -112,7 +87,6 @@ public class Cats_PageAdapter extends PagerAdapter {
 						@Override
 						public void onClick(View v) {
 							// TODO Auto-generated method stub
-							// 閿熸枻鎷疯浆椤甸敓鏂ゆ嫹
 							onClicked(index);
 
 						}
@@ -133,9 +107,8 @@ public class Cats_PageAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public Object instantiateItem(ViewGroup container, int position) { // 鏉╂瑤閲滈弬瑙勭《閻€劍娼电�鐐扮伐閸栨牠銆夐敓锟�
-																		// container.addView(mListViews.get(position),
-		container.addView(mListView.get(position), 0); // 0);//濞ｈ濮炴い闈涘幢
+	public Object instantiateItem(ViewGroup container, int position) { 
+		container.addView(mListView.get(position), 0); 
 		return mListView.get(position);
 	}
 
@@ -156,11 +129,11 @@ public class Cats_PageAdapter extends PagerAdapter {
 			i = new Intent(mContext, JiarenActiveNumListActivity.class);
 			mContext.startActivity(i);
 			break;
-		case 1:// 閿熺即绛规嫹閿熸枻鎷烽敓鏂ゆ嫹
+		case 1:
 			mContext.startActivity(new Intent(mContext,
 					GrouthListActivity.class));
 			break;
-		case 2:// 鍊厓閿熸枻鎷烽敓鏂ゆ嫹
+		case 2:
 			i = new Intent(mContext, AudioListActivity.class);
 			mContext.startActivity(i);
 
@@ -177,7 +150,7 @@ public class Cats_PageAdapter extends PagerAdapter {
 			mContext.startActivity(i);
 			break;
 
-		case 5:// 閿熸枻鎷锋簮閿熸枻鎷烽敓鏂ゆ嫹
+		case 5:
 			i = new Intent(mContext, ResourceGXActivity.class);
 			mContext.startActivity(i);
 
@@ -191,13 +164,13 @@ public class Cats_PageAdapter extends PagerAdapter {
 			mContext.startActivity(i);
 			break;
 
-		case 8://閸氬矁顢�
+		case 8:
 			i = new Intent(mContext, UserSameActivity.class);
 			i.putExtra("type", 2);
 			mContext.startActivity(i);
 			break;
 
-		case 9://閸氬苯鐓�
+		case 9:
 			i = new Intent(mContext, UserSameActivity.class);
 			i.putExtra("type", 1);
 			mContext.startActivity(i);
@@ -213,7 +186,7 @@ public class Cats_PageAdapter extends PagerAdapter {
 			i.putExtra("type", 3);
 			mContext.startActivity(i);
 			break;
-		case 12://閺呯儤鍙庣划鎹愮箻
+		case 12://闁哄懐鍎ら崣搴ｅ垝閹规劗绠�
 			i = new Intent(mContext, GrouthActivity.class);
 			mContext.startActivity(i);
 			break;

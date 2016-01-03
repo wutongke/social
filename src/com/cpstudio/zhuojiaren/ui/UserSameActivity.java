@@ -26,7 +26,7 @@ import android.widget.TextView.OnEditorActionListener;
 import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ZhuoNearByUserListAdatper;
-import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter2;
+import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
@@ -90,7 +90,7 @@ public class UserSameActivity extends BaseActivity implements
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
 		if (type != 3)
-			mAdapter = new ZhuoUserListAdapter2(UserSameActivity.this, mList,
+			mAdapter = new ZhuoUserListAdapter(UserSameActivity.this, mList,
 					R.layout.item_zhuouser_list2, mUIHandler);
 		else
 			mAdapter = new ZhuoNearByUserListAdatper(UserSameActivity.this,
@@ -391,7 +391,7 @@ public class UserSameActivity extends BaseActivity implements
 					else
 						function.setText(R.string.label_manage);
 					if (mAdapter != null)
-						((ZhuoUserListAdapter2) mAdapter)
+						((ZhuoUserListAdapter) mAdapter)
 								.setIsManaging(isManaging);
 				}
 			});

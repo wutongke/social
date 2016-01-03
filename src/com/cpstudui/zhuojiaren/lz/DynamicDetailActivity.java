@@ -29,10 +29,7 @@ import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.MsgCmtActivity;
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.UserSelectActivity;
-import com.cpstudio.zhuojiaren.facade.ZhuoInfoFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
@@ -50,6 +47,12 @@ import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
 
+/**
+ * 动态详情页面，与话题详情页面TopicDetailActivity的布局一样
+ * 
+ * @author lz
+ * 
+ */
 public class DynamicDetailActivity extends BaseActivity {
 	private ListView mListView;
 	private TopicCommentListAdapter mAdapter;
@@ -58,13 +61,9 @@ public class DynamicDetailActivity extends BaseActivity {
 	private View mHeadView = null;
 	private PopupWindows pwh;
 	private String msgid = null;
-	private int mPage = 1;
 	private ZhuoConnHelper mConnHelper = null;
 	private String isCollect = "0";
-	// private ListViewFooter mListViewFooter = null;
 	private String uid = null;
-	private ZhuoInfoFacade mFacade = null;
-	private String myid = null;
 	TextView collectBtn;
 	View textViewTip;
 	Dynamic dynamicDetail;
@@ -80,8 +79,6 @@ public class DynamicDetailActivity extends BaseActivity {
 		title.setText(R.string.dynamic_detail);
 
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		mFacade = new ZhuoInfoFacade(getApplicationContext());
-		myid = ResHelper.getInstance(getApplicationContext()).getUserid();
 
 		Intent intent = getIntent();
 		msgid = intent.getStringExtra("msgid");
@@ -101,8 +98,7 @@ public class DynamicDetailActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				// TODO Auto-generated method stub
-				if (mList.size() <= 0||position<1)
+				if (mList.size() <= 0 || position < 1)
 					return;
 				Comment cmt = mList.get(position - 1);
 				startCommentActivity(cmt.getId(), cmt.getUserid());
@@ -116,7 +112,6 @@ public class DynamicDetailActivity extends BaseActivity {
 	public void fillData() {
 		((TextView) (mHeadView.findViewById(R.id.textViewAuthorName)))
 				.setText(dynamicDetail.getName());
-		// 此处还需要从编号获得对应的名称
 
 		String work = "";
 		if (baseDataSet != null) {
@@ -179,7 +174,6 @@ public class DynamicDetailActivity extends BaseActivity {
 			textViewTip.setVisibility(View.GONE);
 		} else {
 			textViewTip.setVisibility(View.VISIBLE);
-			// mListViewFooter.noData(false);
 		}
 	}
 
@@ -248,7 +242,6 @@ public class DynamicDetailActivity extends BaseActivity {
 					dynamicDetail = nljh.parseDynamicDetail();
 					if (null != dynamicDetail) {
 						fillData();
-						// mFacade.saveOrUpdate(topicDetail);
 					}
 				}
 				break;
@@ -268,45 +261,19 @@ public class DynamicDetailActivity extends BaseActivity {
 						getApplicationContext())) {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.info10);
-					// TextView numTV = (TextView)
-					// findViewById(R.id.textViewGongXuZfNum);
-					// numTV.setText(String.valueOf(Integer.valueOf(numTV
-					// .getText().toString()) + 1));
 				}
 				break;
 			case MsgTagVO.MSG_COLLECT:
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-					// TextView collectBtn = (TextView)
-					// findViewById(R.id.buttonTabCollect);
-					// TextView numTV = (TextView)
-					// findViewById(R.id.textViewGongXuCollectNum);
 					if (isCollect != null && isCollect.equals("0")) {
-						// collectBtn.setText(R.string.label_collectCancel);
-						// Drawable drawable = getResources().getDrawable(
-						// R.drawable.tab_collect_on);
-						// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-						// drawable.getMinimumHeight());
-						// collectBtn.setCompoundDrawables(null, drawable, null,
-						// null);
 						isCollect = "1";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_collectSuccess);
-						// numTV.setText(String.valueOf(Integer.valueOf(numTV
-						// .getText().toString()) + 1));
 					} else {
-						// collectBtn.setText(R.string.label_collect);
-						// Drawable drawable = getResources().getDrawable(
-						// R.drawable.tab_collect_off);
-						// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-						// drawable.getMinimumHeight());
-						// collectBtn.setCompoundDrawables(null, drawable, null,
-						// null);
 						isCollect = "0";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_cancelCollect);
-						// numTV.setText(String.valueOf(Integer.valueOf(numTV
-						// .getText().toString()) - 1));
 					}
 				}
 				break;
@@ -316,15 +283,6 @@ public class DynamicDetailActivity extends BaseActivity {
 
 	private void loadData() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			// QuanVO quan = mFacade.getById(groupid);
-			// if (quan == null) {
-			// CommonUtil.displayToast(getApplicationContext(),
-			// R.string.error0);
-			// } else {
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-			// msg.obj = quan;
-			// msg.sendToTarget();
-			// }
 		} else {
 			mConnHelper.getDetailDynamic(mUIHandler, MsgTagVO.DATA_LOAD, msgid);
 		}
@@ -346,8 +304,6 @@ public class DynamicDetailActivity extends BaseActivity {
 
 					@Override
 					public void onClick(View v) {
-						// mConnHelper.goodMsg(topicid, mUIHandler,
-						// MsgTagVO.MSG_LIKE, null, true, null, null);
 						mConnHelper.praiseDynamic(mUIHandler,
 								MsgTagVO.MSG_LIKE, msgid, 1);
 					}
@@ -368,12 +324,6 @@ public class DynamicDetailActivity extends BaseActivity {
 						CustomShareBoard cb = new CustomShareBoard(
 								DynamicDetailActivity.this);
 						cb.showCustomShareContent();
-						// Intent i = new Intent(DynamicDetailActivity.this,
-						// UserSelectActivity.class);
-						// ArrayList<String> tempids = new ArrayList<String>(1);
-						// tempids.add(uid);
-						// i.putStringArrayListExtra("otherids", tempids);
-						// startActivityForResult(i, MsgTagVO.MSG_FOWARD);
 					}
 				});
 		collectBtn = (TextView) findViewById(R.id.buttonTabCollect);
@@ -437,11 +387,7 @@ public class DynamicDetailActivity extends BaseActivity {
 		@Override
 		public void convert(ViewHolder helper, String item) {
 			// TODO Auto-generated method stub
-			// helper.setImageResource(R.id.gridview_image,
-			// R.drawable.ico_chat_pic);
-
 			ImageView iv = helper.getView(R.id.gridview_image);
-			// iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ico_chat_pic));
 			iv.setTag(item);
 			iv.setOnClickListener(new OnClickListener() {
 
@@ -459,7 +405,6 @@ public class DynamicDetailActivity extends BaseActivity {
 			});
 			mLoadImage.addTask(item,
 					(ImageView) helper.getView(R.id.gridview_image));
-			// mLoadImage.doTask();
 		}
 
 	}

@@ -1,19 +1,13 @@
 package com.cpstudui.zhuojiaren.lz;
 
-//haha 
 import io.rong.app.DemoContext;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient.ErrorCode;
-import io.rong.imlib.RongIMClient.SendMessageCallback;
 import io.rong.imlib.model.Group;
-import io.rong.imlib.model.Conversation.ConversationType;
-import io.rong.message.TextMessage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,7 +21,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -54,7 +47,7 @@ import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 
 /**
- * 倬圈主页 acitivity与fragment通信,当fragment选中我圈子时，设置管理，点击管理后，操作fragment
+ * 倬家圈子主页 acitivity与fragment通信,当fragment选中我圈子时，设置管理，点击管理后，操作fragment
  * 
  * @author lz
  * 
@@ -94,8 +87,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 
 	@InjectView(R.id.btnQuanChat)
 	View btnQuanChat;
-	private final static int USER_SELECT = 0;
-	private Context mContext;
 	private int currentPager = 0;
 	// 四个fragment 方便通信
 	List<Fragment> fragments;
@@ -109,8 +100,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	private String owerName = null, owerId = null;
 	private ZhuoConnHelper mConnHelper = null;
 	private boolean isfollow = false;// 是否已经加入该圈子
-	// private QuanFacade mFacade = null;
-	private ArrayList<String> tempids = new ArrayList<String>();
 
 	// 用于在fragment中获得groupid
 	public String getGroupid() {
@@ -122,12 +111,8 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_zhuo_quan_main);
 		ButterKnife.inject(this);
-
-		mContext = this;
 		initTitle();
 		title.setText(R.string.title_activity_zhuojiaquan_main);
-		// function.setTag(0);
-		// function.setBackgroundResource(R.drawable.menu_qht1);
 		ivFunSimply.setTag(0);
 		ivFunSimply.setImageResource(R.drawable.menu_qht1);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
@@ -280,15 +265,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 
 	private void loadData() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			// QuanVO quan = mFacade.getById(groupid);
-			// if (quan == null) {
-			// CommonUtil.displayToast(getApplicationContext(),
-			// R.string.error0);
-			// } else {
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-			// msg.obj = quan;
-			// msg.sendToTarget();
-			// }
 		} else {
 			mConnHelper.getQuanInfo(mUIHandler, MsgTagVO.DATA_LOAD, groupid);
 		}
@@ -352,10 +328,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 
 					@Override
 					public void onClick(View v) {
-						// Intent i = new Intent(ZhuoQuanMainActivity.this,
-						// UserSelectActivity.class);
-						// i.putStringArrayListExtra("otherids", tempids);
-						// startActivityForResult(i, USER_SELECT);
 						Intent i = new Intent(ZhuoQuanMainActivity.this,
 								MyFriendActivity.class);
 						startActivity(i);
@@ -391,7 +363,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				// // 进入圈聊界面
+				//进入圈聊界面
 				RongIM.getInstance().startGroupChat(ZhuoQuanMainActivity.this,
 						groupid, groupName);
 			}

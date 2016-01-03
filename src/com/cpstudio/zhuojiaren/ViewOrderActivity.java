@@ -16,7 +16,11 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.OrderVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-
+/**
+ * ¶©µ¥ÁÐ±í
+ * @author lz
+ *
+ */
 public class ViewOrderActivity extends BaseActivity implements
 		OnPullDownListener {
 	@InjectView(R.id.lvOrders)
@@ -71,18 +75,6 @@ public class ViewOrderActivity extends BaseActivity implements
 				updateItemList(list, true, false);
 				break;
 			}
-			case MsgTagVO.DATA_REFRESH: {
-				// boolean loadState = false;
-				// if (msg.obj != null && !msg.obj.equals("")) {
-				// loadState = true;
-				// JsonHandler nljh = new JsonHandler((String) msg.obj,
-				// getApplicationContext());
-				// ArrayList<Dynamic> list = nljh.parseDynamicList();
-				// updateItemList(list, false, false);
-				// }
-				// mPullDownView.RefreshComplete(loadState);
-				break;
-			}
 			case MsgTagVO.DATA_MORE: {
 				mPullDownView.notifyDidMore();
 				ArrayList<OrderVO> list = new ArrayList<OrderVO>();
@@ -93,9 +85,6 @@ public class ViewOrderActivity extends BaseActivity implements
 						JsonHandler nljh = new JsonHandler((String) msg.obj,
 								getApplicationContext());
 						list = nljh.parseOrderList();
-						if (!list.isEmpty()) {
-							// infoFacade.update(list);
-						}
 					}
 				}
 				updateItemList(list, false, true);
@@ -115,9 +104,6 @@ public class ViewOrderActivity extends BaseActivity implements
 			}
 			mList.addAll(list);
 			mAdapter.notifyDataSetChanged();
-			// if (mList.size() > 0) {
-			// mLastId = mList.get(mList.size() - 1).getStatusid();
-			// }
 			mPage++;
 		} else {
 			mPullDownView.noData(!refresh);
@@ -127,23 +113,12 @@ public class ViewOrderActivity extends BaseActivity implements
 	private void loadData() {
 		// TODO Auto-generated method stub
 		if (mPullDownView.startLoadData()) {
-			// mList.clear();
-			// mAdapter.notifyDataSetChanged();
 			if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-				// ArrayList<Dynamic> list = infoFacade.getByPage(mPage);
-				// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-				// msg.obj = list;
-				// msg.sendToTarget();
 			} else {
 				mConnHelper.getOrdersList(mUIHandler, MsgTagVO.DATA_LOAD,
 						mPage, pageSize);
 			}
 		}
-
-		// for (int i = 0; i < 4; i++)
-		// mList.add(new OrderVO());
-		// mAdapter = new OrderListAdapter(this, mList);
-		// mListView.setAdapter(mAdapter);
 	}
 
 	@Override
@@ -157,10 +132,6 @@ public class ViewOrderActivity extends BaseActivity implements
 	public void onMore() {
 		// TODO Auto-generated method stub
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			// ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
-			// msg.obj = list;
-			// msg.sendToTarget();
 		} else {
 			mConnHelper.getOrdersList(mUIHandler, MsgTagVO.DATA_MORE, mPage,
 					pageSize);

@@ -1,4 +1,4 @@
-package com.cpstudio.zhuojiaren;
+package com.cpstudui.zhuojiaren.lz;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,14 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.facade.UserFacade;
+import com.cpstudio.zhuojiaren.PublishActiveActivity;
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.UserHomeActivity;
+import com.cpstudio.zhuojiaren.R.array;
+import com.cpstudio.zhuojiaren.R.drawable;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
+import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
@@ -33,16 +40,15 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-import com.cpstudui.zhuojiaren.lz.QuanStatusListAdapter;
-import com.cpstudui.zhuojiaren.lz.TopicDetailActivity;
 
 /**
- * 圈活动列表，包括圈话题和圈活动
+ * 圈子动态界面，包括圈子话题和圈子活动
  * 
  * @author lz
  * 
  */
-public class GroupStatusListActivity extends Activity implements
+@SuppressLint("ShowToast")
+public class QuanStatusListActivity extends Activity implements
 		OnPullDownListener, OnItemClickListener {
 	@InjectView(R.id.activity_function_image)
 	ImageView ivPub;
@@ -52,7 +58,6 @@ public class GroupStatusListActivity extends Activity implements
 	TextView tvTitle;
 
 	private ListView mListView;
-	// private ZhuoInfoAdapter mAdapter;
 
 	private QuanStatusListAdapter mAdapter;
 
@@ -64,16 +69,10 @@ public class GroupStatusListActivity extends Activity implements
 	private int mType = GroupStatus.GROUP_STATUS_TYPE_ALL;// 0-全部圈子 1-我创建的圈子
 															// 2-我加入的圈子
 	String[] titleArray;
-	private String mLastId = "0";
 	private ZhuoConnHelper mConnHelper = null;
 	private int mPage = 0;
 	final int pageSize = 10;
 
-	// private InfoFacade infoFacade = null;
-
-	// type==0时所有人动态，就只是动态，不包括需求，话题，活动什么的
-	/*
-	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -82,8 +81,8 @@ public class GroupStatusListActivity extends Activity implements
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 
 		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
-		pwh = new PopupWindows(GroupStatusListActivity.this);
-		mLoadImage = new LoadImage();
+		pwh = new PopupWindows(QuanStatusListActivity.this);
+		mLoadImage =  LoadImage.getInstance();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.listview_header2);
@@ -91,7 +90,7 @@ public class GroupStatusListActivity extends Activity implements
 		mListView = mPullDownView.getListView();
 		mListView.setOnItemClickListener(this);
 		// 是否和圈子话题公用一个数据结构还不一定
-		mAdapter = new QuanStatusListAdapter(GroupStatusListActivity.this,
+		mAdapter = new QuanStatusListAdapter(QuanStatusListActivity.this,
 				mList, 1);
 		mListView.setAdapter(mAdapter);
 		mPullDownView.setShowFooter(false);
@@ -117,7 +116,7 @@ public class GroupStatusListActivity extends Activity implements
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				GroupStatusListActivity.this.finish();
+				QuanStatusListActivity.this.finish();
 			}
 		});
 
@@ -155,8 +154,6 @@ public class GroupStatusListActivity extends Activity implements
 				String name = user.getName();
 				int blogNum = user.getStatusNum();
 				int friendNum = user.getFriendNum();
-				// String families = user.getFamilytotal();//为空
-				// 好友个数不知道从哪里取
 				String families = "" + friendNum;
 
 				String headurl = user.getUheader();
@@ -174,7 +171,7 @@ public class GroupStatusListActivity extends Activity implements
 
 					@Override
 					public void onClick(View v) {
-						Intent i = new Intent(GroupStatusListActivity.this,
+						Intent i = new Intent(QuanStatusListActivity.this,
 								UserHomeActivity.class);
 						i.putExtra("userid", mUid);
 						i.putExtra("from", "home");
@@ -276,10 +273,10 @@ public class GroupStatusListActivity extends Activity implements
 		String msgid = (String) view.getTag(R.id.tag_id);
 		Intent i = new Intent();
 		if (type == 0) {
-			i.setClass(GroupStatusListActivity.this, TopicDetailActivity.class);
+			i.setClass(QuanStatusListActivity.this, TopicDetailActivity.class);
 			i.putExtra("topicid", msgid);
 		} else {
-			i.setClass(GroupStatusListActivity.this, EventDetailActivity.class);
+			i.setClass(QuanStatusListActivity.this, EventDetailActivity.class);
 			i.putExtra("eventId", msgid);
 		}
 		startActivity(i);
@@ -288,13 +285,7 @@ public class GroupStatusListActivity extends Activity implements
 
 	public void loadData() {
 		if (mPullDownView.startLoadData()) {
-			// mList.clear();
-			// mAdapter.notifyDataSetChanged();
 			if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-				// ArrayList<Dynamic> list = infoFacade.getByPage(mPage);
-				// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-				// msg.obj = list;
-				// msg.sendToTarget();
 			} else {
 				mConnHelper.getQuanStatusList(mUIHandler, MsgTagVO.DATA_LOAD,
 						mType, mPage, pageSize);
@@ -311,21 +302,7 @@ public class GroupStatusListActivity extends Activity implements
 	@Override
 	public void onMore() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			// ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
-			// msg.obj = list;
-			// msg.sendToTarget();
 		} else {
-			// String params = ZhuoCommHelper.getUrlMsgList();
-			// params += "?pageflag=" + "1";
-			// params += "&reqnum=" + "10";
-			// params += "&lastid=" + mLastId;
-			// params += "&type=" + mType;
-			// params += "&gongxutype=" + "0";
-			// params += "&from=" + "6";
-			// params += "&uid=" + mUid;
-			// mConnHelper.getFromServer(params, mUIHandler,
-			// MsgTagVO.DATA_MORE);
 			mConnHelper.getQuanStatusList(mUIHandler, MsgTagVO.DATA_MORE,
 					mType, mPage, pageSize);
 		}
@@ -336,52 +313,14 @@ public class GroupStatusListActivity extends Activity implements
 			if (requestCode == MsgTagVO.DATA_REFRESH) {
 				onRefresh();
 			} else if (requestCode == MsgTagVO.MSG_CMT) {
-				Toast.makeText(GroupStatusListActivity.this, "评论成功！", 2000)
+				Toast.makeText(QuanStatusListActivity.this, "评论成功！", 2000)
 						.show();
-				// String forward = data.getStringExtra("forward");
-				// String msgid = data.getStringExtra("msgid");
-				// String outterid = data.getStringExtra("outterid");
-				// if (forward != null && forward.equals("1")) {
-				// onRefresh();
-				// } else {
-				// for (int i = 0; i < mList.size(); i++) {
-				// ZhuoInfoVO item = mList.get(i);
-				// if (msgid != null) {
-				// if (item.getMsgid().equals(msgid)
-				// && outterid == null) {
-				// if (forward != null && forward.equals("1")) {
-				// item.setForwardnum(String.valueOf(Integer
-				// .valueOf(item.getForwardnum()) + 1));
-				// }
-				// item.setCmtnum(String.valueOf(Integer
-				// .valueOf(item.getCmtnum()) + 1));
-				// mList.set(i, item);
-				// break;
-				// } else if (outterid != null
-				// && item.getOrigin() != null
-				// && item.getOrigin().getMsgid()
-				// .equals(msgid)) {
-				// if (forward != null && forward.equals("1")) {
-				// String forwardStr = String.valueOf(Integer
-				// .valueOf(item.getOrigin()
-				// .getForwardnum()) + 1);
-				// item.getOrigin().setForwardnum(forwardStr);
-				// }
-				// item.getOrigin().setCmtnum(
-				// String.valueOf(Integer.valueOf(item
-				// .getOrigin().getCmtnum()) + 1));
-				// mList.set(i, item);
-				// }
-				// }
-				// }
-				// }
-				// mAdapter.notifyDataSetChanged();
 			} else {
 				String filePath = pwh.dealPhotoReturn(requestCode, resultCode,
 						data, false);
 				if (filePath != null) {
 					try {
-						Intent i = new Intent(GroupStatusListActivity.this,
+						Intent i = new Intent(QuanStatusListActivity.this,
 								PublishActiveActivity.class);
 						i.putExtra("filePath", filePath);
 						startActivityForResult(i, MsgTagVO.DATA_REFRESH);

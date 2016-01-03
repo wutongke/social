@@ -1,7 +1,6 @@
 package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -15,9 +14,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.facade.QuanFacade;
@@ -27,12 +23,14 @@ import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.QuanCreateActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
-
+/**
+ * 圈子详情
+ * @author lz
+ *
+ */
 public class QuanDetailActivity extends Activity {
 	private final static int USER_SELECT = 0;
 	private final static int EDIT_GROUP = 1;
@@ -79,7 +77,6 @@ public class QuanDetailActivity extends Activity {
 					}
 					if (null != detail) {
 						String id = detail.getGroupid();
-//						memberType = detail.getMembertype();
 						((TextView) findViewById(R.id.textViewId)).setText(id);
 						String name = detail.getGname();
 						((TextView) findViewById(R.id.textViewName))
@@ -90,113 +87,6 @@ public class QuanDetailActivity extends Activity {
 						mLoadImage.addTask(headUrl, headIv);
 						String jj = detail.getGintro();
 						((TextView) findViewById(R.id.textViewJJ)).setText(jj);
-//						String memberNum = detail.getMembersnum();
-//						String memberAll = detail.getMembersmax();
-//						if (memberNum == null || memberNum.equals("")) {
-//							memberNum = "0";
-//						}
-//						if (memberAll == null || memberAll.equals("")) {
-//							memberAll = "0";
-//						}
-//						((TextView) findViewById(R.id.textViewCy))
-//								.setText(memberNum + "/" + memberAll);
-//						if (memberType != null && !memberType.equals("3")) {
-//							isfollow = true;
-//							((TextView) findViewById(R.id.textViewDate))
-//									.setText(detail.getLastmsgtime());
-//							Button buttonMsgState = (Button) findViewById(R.id.buttonMsgState);
-//							String alertState = detail.getAlert();
-//							buttonMsgState.setTag(alertState);
-//							//是否圈聊消息提醒
-//							if (alertState.equals("1")) {
-//								buttonMsgState
-//										.setBackgroundResource(R.drawable.button_switch_on);
-//							} else {
-//								buttonMsgState
-//										.setBackgroundResource(R.drawable.button_switch_off);
-//							}
-//							buttonMsgState
-//									.setOnClickListener(new OnClickListener() {
-//										@Override
-//										public void onClick(View v) {
-//											if (v.getTag().equals("1")) {
-//												mConnHelper.groupAlert(groupid,
-//														"0", mUIHandler,
-//														MsgTagVO.PUB_INFO,
-//														null, true, null, null);
-//											} else {
-//												mConnHelper.groupAlert(groupid,
-//														"1", mUIHandler,
-//														MsgTagVO.PUB_INFO,
-//														null, true, null, null);
-//											}
-//										}
-//									});
-//							((TextView) findViewById(R.id.textViewGb))
-//									.setText("        "
-//											+ detail.getLastbroadcast());
-//						} else {
-//							isfollow = false;
-//						}
-//						changeType(isfollow);
-//						UserVO founder = detail.getFounder();
-//						if (founder != null) {
-//							String createrUrl = founder.getUheader();
-//							final String createrId = detail.getFounder()
-//									.getUserid();
-//							tempids.add(createrId);
-//							ImageView cjIV = (ImageView) findViewById(R.id.imageViewCj);
-//							cjIV.setTag(createrUrl);
-//							mLoadImage.addTask(createrUrl, cjIV);
-//							cjIV.setOnClickListener(new OnClickListener() {
-//								@Override
-//								public void onClick(View v) {
-//									Intent i = new Intent(
-//											QuanDetailActivity.this,
-//											ZhuoMaiCardActivity.class);
-//									i.putExtra("userid", createrId);
-//									startActivity(i);
-//								}
-//							});
-//						}
-//						List<UserVO> managers = detail.getManagers();
-//						int num = managers.size();
-//						((TextView) findViewById(R.id.textViewGl)).setText(num
-//								+ "");
-//						LinearLayout ll = (LinearLayout) findViewById(R.id.linearLayoutGl);
-//						int height = ll.getLayoutParams().height;
-//						LayoutParams llp = new LayoutParams(height, height);
-//						llp.rightMargin = 5;
-//						RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
-//								LayoutParams.MATCH_PARENT,
-//								LayoutParams.MATCH_PARENT);
-//						for (int i = 0; i < num; i++) {
-//							String managerUrl = managers.get(i).getUheader();
-//							final String managerId = managers.get(i)
-//									.getUserid();
-//							tempids.add(managerId);
-//							RelativeLayout rl = new RelativeLayout(
-//									QuanDetailActivity.this);
-//							rl.setLayoutParams(llp);
-//							ImageView iv = new ImageView(
-//									QuanDetailActivity.this);
-//							iv.setLayoutParams(rlp);
-//							rl.addView(iv);
-//							ll.addView(rl);
-//							iv.setTag(managerUrl);
-//							mLoadImage.addTask(managerUrl, iv);
-//							iv.setOnClickListener(new OnClickListener() {
-//								@Override
-//								public void onClick(View v) {
-//									Intent i = new Intent(
-//											QuanDetailActivity.this,
-//											ZhuoMaiCardActivity.class);
-//									i.putExtra("userid", managerId);
-//									startActivity(i);
-//								}
-//							});
-//						}
-//						mLoadImage.doTask();
 					}
 				}
 				break;
@@ -245,33 +135,6 @@ public class QuanDetailActivity extends Activity {
 		}
 	};
 
-	private void changeType(boolean type) {
-		int viewType = View.GONE;
-		int viewTypeNot = View.VISIBLE;
-		View llgb = findViewById(R.id.linearLayoutGuangbo);
-		View rlql = findViewById(R.id.relativeLayoutQuanLiao);
-		View rlcy = findViewById(R.id.relativeLayoutMembers);
-		if (type) {
-			viewType = View.VISIBLE;
-			viewTypeNot = View.GONE;
-			llgb.setOnClickListener(boardListener);
-			rlql.setOnClickListener(chatListener);
-			rlcy.setOnClickListener(memberListener);
-		} else {
-			rlcy.setOnClickListener(null);
-		}
-		findViewById(R.id.borderQuanLiao).setVisibility(viewType);
-		findViewById(R.id.linearLayoutGroupTab).setVisibility(viewType);
-		findViewById(R.id.borderMsg).setVisibility(viewType);
-		findViewById(R.id.buttonRecommand).setVisibility(viewType);
-		findViewById(R.id.buttonSetting).setVisibility(viewType);
-		findViewById(R.id.relativeLayoutMsg).setVisibility(viewType);
-		findViewById(R.id.imageViewCyMore).setVisibility(viewType);
-		findViewById(R.id.borderGuangbo).setVisibility(viewType);
-		findViewById(R.id.buttonApply).setVisibility(viewTypeNot);
-		llgb.setVisibility(viewType);
-		rlql.setVisibility(viewType);
-	}
 
 	private void loadData() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
@@ -298,29 +161,29 @@ public class QuanDetailActivity extends Activity {
 		}
 	}
 
-	private OnClickListener chatListener = new OnClickListener() {
+//	private OnClickListener chatListener = new OnClickListener() {
+//
+//		@Override
+//		public void onClick(View v) {
+//			Intent i = new Intent(QuanDetailActivity.this,
+//					QuanBoardChatActivity.class);
+//			i.putExtra("groupid", groupid);
+//			i.putExtra("type", "chat");
+//			startActivity(i);
+//		}
+//	};
 
-		@Override
-		public void onClick(View v) {
-			Intent i = new Intent(QuanDetailActivity.this,
-					QuanBoardChatActivity.class);
-			i.putExtra("groupid", groupid);
-			i.putExtra("type", "chat");
-			startActivity(i);
-		}
-	};
-
-	private OnClickListener boardListener = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-			Intent i = new Intent(QuanDetailActivity.this,
-					QuanBoardChatActivity.class);
-			i.putExtra("groupid", groupid);
-			i.putExtra("type", "board");
-			startActivity(i);
-		}
-	};
+//	private OnClickListener boardListener = new OnClickListener() {
+//
+//		@Override
+//		public void onClick(View v) {
+//			Intent i = new Intent(QuanDetailActivity.this,
+//					QuanBoardChatActivity.class);
+//			i.putExtra("groupid", groupid);
+//			i.putExtra("type", "board");
+//			startActivity(i);
+//		}
+//	};
 
 	private OnClickListener memberListener = new OnClickListener() {
 
@@ -393,9 +256,9 @@ public class QuanDetailActivity extends Activity {
 					}
 				});
 
-		findViewById(R.id.tabButtonGb).setOnClickListener(boardListener);
-
-		findViewById(R.id.tabButtonQl).setOnClickListener(chatListener);
+//		findViewById(R.id.tabButtonGb).setOnClickListener(boardListener);
+//
+//		findViewById(R.id.tabButtonQl).setOnClickListener(chatListener);
 
 		findViewById(R.id.tabButtonCy).setOnClickListener(memberListener);
 

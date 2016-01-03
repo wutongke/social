@@ -2,18 +2,13 @@ package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,12 +23,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
@@ -44,12 +38,11 @@ import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudui.zhuojiaren.lz.CompanyDetailActivity;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
-
+/**
+ * 用户名片详细信息
+ * @author lz
+ *
+ */
 public class CardEditActivity extends Activity {
 	@InjectView(R.id.buttonBack)
 	Button buttonBack;
@@ -111,7 +104,6 @@ public class CardEditActivity extends Activity {
 	public final static String EDIT_EMAIL_STR1 = "email";
 	public final static String EDIT_EMAIL_STR2 = "emailopen";
 
-	// lz add
 	public final static int EDIT_QQ = 14;
 	public final static String EDIT_QQ_STR1 = "qq";
 	public final static String EDIT_QQ_STR2 = "qqopen";
@@ -153,11 +145,9 @@ public class CardEditActivity extends Activity {
 	public final static String EDIT_CUSTOMER_STR = "customer";
 	private ArrayList<String> localImages = new ArrayList<String>();
 	private ZhuoConnHelper mConnHelper = null;
-	private ArrayList<String> dreamsList = new ArrayList<String>();
 	public final static String LOCAL_IMAGE = "localImage";
 	public final static String photosStr = "";
 	private PopupWindows pwh = null;
-	private UserFacade mFacade = null;
 	private boolean edit = false;
 	boolean isEditable = true;
 	UserNewVO userInfo;
@@ -170,7 +160,6 @@ public class CardEditActivity extends Activity {
 		setContentView(R.layout.activity_card_edit);
 		ButterKnife.inject(this);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
-		mFacade = new UserFacade(getApplicationContext());
 		pwh = new PopupWindows(CardEditActivity.this);
 		String userid = ResHelper.getInstance(getApplicationContext())
 				.getUserid();
@@ -218,15 +207,6 @@ public class CardEditActivity extends Activity {
 			files.put("uheader", localImages.get(localImages.size() - 1));
 			imgcnt = imgcnt - 1;
 		} else {
-			// List<PicVO> picsNow = mUser.getPics();
-			// if(picsNow.size() > 0){
-			// if(!mUser.getUheader().equals(picsNow.get(picsNow.size()
-			// - 1).getUrl())){
-			// files.put("uheader",
-			// picsNow.get(picsNow.size() - 1).getUrl());
-			// }
-			// }
-			// delete first Image
 		}
 
 		userInfo.setSignature(etSignature.getText().toString());
@@ -340,7 +320,6 @@ public class CardEditActivity extends Activity {
 					}
 				}
 			});
-			// 此处要改为两个选项：对好友公开和对所有人公开。。
 			textViewEditEmailShow.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -357,7 +336,6 @@ public class CardEditActivity extends Activity {
 				}
 			});
 
-			// lz add
 			textViewEditQQShow.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -377,7 +355,6 @@ public class CardEditActivity extends Activity {
 					}
 				}
 			});
-			// lz add
 			textViewEditWeixinShow.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -411,7 +388,6 @@ public class CardEditActivity extends Activity {
 					}
 				}
 			});
-			// 价值观与信念，接口暂时无此字段
 			textViewEditZymShow.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -440,7 +416,6 @@ public class CardEditActivity extends Activity {
 						Intent i = new Intent(CardEditActivity.this,
 								CardAddUserPhoneActivity.class);
 						i.putExtra(EDIT_PHONE_STR1, userInfo.getPhone());
-						// 此处要改为两个选项：对好友公开和对所有人公开。。
 						i.putExtra(EDIT_PHONE_STR2, userInfo.getIsPhoneOpen());
 						startActivity(i);
 					} else {
@@ -485,7 +460,7 @@ public class CardEditActivity extends Activity {
 					}
 					Intent i = new Intent(CardEditActivity.this,
 							CardAddUserImageActivity.class);
-					i.putExtra(EDITABLE, isEditable);// 是否可以编辑
+					i.putExtra(EDITABLE, isEditable);
 					i.putStringArrayListExtra(EDIT_IMAGE_STR1, images);
 					startActivity(i);
 				} else {
@@ -501,7 +476,7 @@ public class CardEditActivity extends Activity {
 				if (userInfo != null) {
 					Intent i = new Intent(CardEditActivity.this,
 							CardAddUserNameActivity.class);
-					i.putExtra(EDITABLE, isEditable);// 是否可以编辑
+					i.putExtra(EDITABLE, isEditable);
 					i.putExtra(EDIT_NAME_STR1, userInfo.getName());
 					i.putExtra(EDIT_NAME_STR2, userInfo.getGender());
 					i.putExtra(EDIT_NAME_STR3, userInfo.getMarried());
@@ -519,8 +494,8 @@ public class CardEditActivity extends Activity {
 				if (userInfo != null) {
 					Intent i = new Intent(CardEditActivity.this,
 							CompanyDetailActivity.class);
-					i.putExtra(EDITABLE, isEditable);// 是否可以编辑
-					i.putExtra(USERID, userInfo.getUserid());// 是否可以编辑
+					i.putExtra(EDITABLE, isEditable);
+					i.putExtra(USERID, userInfo.getUserid());
 					startActivity(i);
 				} else {
 					CommonUtil.displayToast(getApplicationContext(),
@@ -545,10 +520,6 @@ public class CardEditActivity extends Activity {
 	void fillInfo() {
 		if (userInfo == null)
 			return;
-
-		// 生成名片二维码信息图片
-		createQRImage(ivTDCard,
-				userInfo.getUserid() + "," + userInfo.getName(), 100, 100);
 
 		mLoadImage.beginLoad(userInfo.getUheader(), ivHead);
 
@@ -631,15 +602,6 @@ public class CardEditActivity extends Activity {
 
 	private void loadInfo() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			// userInfo = mFacade.getById(userid);
-			// if (userInfo == null) {
-			// CommonUtil.displayToast(getApplicationContext(),
-			// R.string.error0);
-			// } else {
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_LOAD);
-			// msg.obj = "dbdata";
-			// msg.sendToTarget();
-			// }
 		} else {
 			if (mConnHelper != null)
 				mConnHelper
@@ -654,39 +616,5 @@ public class CardEditActivity extends Activity {
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
-	}
-
-	// 要转换的地址或字符串,可以是中文
-	public void createQRImage(ImageView sweepIV, String url, int w, int h) {
-		try {
-			// 判断URL合法性
-			if (url == null || "".equals(url) || url.length() < 1) {
-				return;
-			}
-			Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
-			hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
-			// 图像数据转换，使用了矩阵转换
-			BitMatrix bitMatrix = new QRCodeWriter().encode(url,
-					BarcodeFormat.QR_CODE, w, h, hints);
-			int[] pixels = new int[w * h];
-			// 下面这里按照二维码的算法，逐个生成二维码的图片，
-			// 两个for循环是图片横列扫描的结果
-			for (int y = 0; y < h; y++) {
-				for (int x = 0; x < w; x++) {
-					if (bitMatrix.get(x, y)) {
-						pixels[y * w + x] = 0xff000000;
-					} else {
-						pixels[y * w + x] = 0xffffffff;
-					}
-				}
-			}
-			// 生成二维码图片的格式，使用ARGB_8888
-			Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-			bitmap.setPixels(pixels, 0, w, 0, 0, w, h);
-			// 显示到一个ImageView上面
-			sweepIV.setImageBitmap(bitmap);
-		} catch (WriterException e) {
-			e.printStackTrace();
-		}
 	}
 }

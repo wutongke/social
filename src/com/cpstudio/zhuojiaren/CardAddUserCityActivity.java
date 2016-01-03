@@ -2,8 +2,19 @@ package com.cpstudio.zhuojiaren;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -11,26 +22,9 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.Province;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PlaceChooseDialog;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.text.Editable;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 public class CardAddUserCityActivity extends Activity {
 	@InjectView(R.id.tvPlace)
@@ -40,7 +34,6 @@ public class CardAddUserCityActivity extends Activity {
 	@InjectView(R.id.tvOtherTowns)
 	TextView tvOtherTowns;
 
-	private static int OTHER_TOWN = 0;
 	List<City> cityList;
 	ZhuoConnHelper mConnHelper;
 	ArrayList<String> codes = new ArrayList<String>(3);
@@ -70,7 +63,6 @@ public class CardAddUserCityActivity extends Activity {
 		ButterKnife.inject(this);
 		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		cityList = mConnHelper.getCitys();
-		// 根据provList，从编号获得城市名称
 		Intent i = getIntent();
 		isEditable = i.getBooleanExtra(CardEditActivity.EDITABLE, false);
 		int place = i.getIntExtra(CardEditActivity.EDIT_PLACE_STR1, 0);
@@ -142,14 +134,11 @@ public class CardAddUserCityActivity extends Activity {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Intent intent = new Intent();
-
 						int code1 = 1, code2 = 1;
 						if (!"".equals(codes.get(0)))
 							code1 = Integer.parseInt(codes.get(0));
 						if (!"".equals(codes.get(1)))
 							code2 = Integer.parseInt(codes.get(1));
-
 						UserNewVO userInfo = new UserNewVO();
 						userInfo.setCity(code1);
 						userInfo.setHometown(code2);
@@ -199,27 +188,8 @@ public class CardAddUserCityActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
 						String value = edtView.getText().toString();
-//						if (codeIndex == 2)// 多个地点
-//						{
-//							if (!"".equals(value)) {
-//								value = value
-//										+ ","
-//										+ placeChoose.getPlace().getText()
-//												.toString();
-//								codes.set(codeIndex, codes.get(codeIndex) + ","
-//										+ placeChoose.getCityCode());
-//							}
-//
-//							else {
-//								value = placeChoose.getPlace().getText()
-//										.toString();
-//								codes.set(codeIndex, placeChoose.getCityCode()
-//										+ "");
-//							}
-//						} else {
 							value = placeChoose.getPlace().getText().toString();
 							codes.set(codeIndex, placeChoose.getCityCode() + "");
-//						}
 						edtView.setText(value);
 					}
 				});

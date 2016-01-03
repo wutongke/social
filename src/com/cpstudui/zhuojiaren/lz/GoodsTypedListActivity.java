@@ -62,7 +62,7 @@ public class GoodsTypedListActivity extends BaseActivity implements
 		function.setText(R.string.label_filter2);
 		// 此处需要根据传过来的参数修改
 		if(typeName!=null)
-		title.setText(typeName);
+			title.setText(typeName);
 		initView();
 		mConnHelper = AppClientLef.getInstance(getApplicationContext());
 
@@ -169,24 +169,6 @@ public class GoodsTypedListActivity extends BaseActivity implements
 	@Override
 	public void onMore() {
 		// TODO Auto-generated method stub
-		
-//		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-//			ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-//			Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
-//			msg.obj = list;
-//			msg.sendToTarget();
-//		} else {
-//			String params = ZhuoCommHelper.getUrlMsgList();
-//			params += "?pageflag=" + "1";
-//			params += "&reqnum=" + "10";
-//			params += "&lastid=" + mLastId;
-//			params += "&type=" + mType;
-//			params += "&gongxutype=" + "0";
-//			params += "&from=" + "6";
-//			params += "&uid=" + mUid;
-//			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
-//		}
-//		
 		loadMore();
 	}
 }

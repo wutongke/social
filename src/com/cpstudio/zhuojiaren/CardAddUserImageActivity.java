@@ -6,33 +6,27 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.view.View.OnClickListener;
+
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
 
 public class CardAddUserImageActivity extends Activity {
 
 	private PopupWindows pwh = null;
 	private ImageSelectHelper mIsh = null;
-	private Map<String, String> network = new HashMap<String, String>();
-	// private Map<String, String> localsMap = new HashMap<String, String>();
-	private ArrayList<String> netids = new ArrayList<String>();
-	private ArrayList<String> neturls = new ArrayList<String>();
 	private LoadImage mLoadImage = new LoadImage();
 	private Map<String, View> toDelView = new HashMap<String, View>();
 	private ArrayList<String> local = new ArrayList<String>();
@@ -45,19 +39,9 @@ public class CardAddUserImageActivity extends Activity {
 		Intent intent = getIntent();
 		ArrayList<String> images = intent
 				.getStringArrayListExtra(CardEditActivity.EDIT_IMAGE_STR1);
-		// ArrayList<String> ids = intent
-		// .getStringArrayListExtra(CardEditActivity.EDIT_IMAGE_STR2);
 		isEditable = intent.getBooleanExtra(CardEditActivity.EDITABLE, false);
 		for (int i = 0; i < images.size(); i++) {
-			// if (ids.get(i).equals(CardEditActivity.LOCAL_IMAGE)) {
 			local.add(images.get(i));
-			// localsMap.put(images.get(i), images.get(i));
-			// }
-			// else {
-			// network.put(ids.get(i), images.get(i));
-			// netids.add(ids.get(i));
-			// neturls.add(images.get(i));
-			// }
 		}
 
 		pwh = new PopupWindows(CardAddUserImageActivity.this);
@@ -111,7 +95,6 @@ public class CardAddUserImageActivity extends Activity {
 								mIsh.removeFromContainer(toDelView.get(id));
 							}
 						}, null);
-				// mIsh.insertLocalImage(local);
 				break;
 			default:
 				break;

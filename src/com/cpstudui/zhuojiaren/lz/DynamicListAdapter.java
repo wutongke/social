@@ -27,7 +27,6 @@ import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
-import com.cpstudio.zhuojiaren.model.Praise;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
@@ -36,24 +35,21 @@ import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
 /**
- * 
- * 
+ * 动态列表数据Adapter
  * @author lz
- * 
+ *
  */
 public class DynamicListAdapter extends BaseAdapter {
 	private List<Dynamic> mList = null;
 	private LayoutInflater inflater = null;
 	private LoadImage mLoadImage;
 	private Context mContext = null;
-	private int width = 720;
 	private float times = 2;
 	private ZhuoConnHelper mConnHelper = null;
-	private PopupWindows phw = null, phwChild;
+	private PopupWindows phw = null;
 	String groupId;
 	BaseCodeData baseDataSet;
-	// 娌＄敤
-	int role;// 鈥滄垜鍦ㄥ湀瀛愪腑鐨勮韩浠解�
+	int role;
 
 	public String getGroupId() {
 		return groupId;
@@ -70,7 +66,6 @@ public class DynamicListAdapter extends BaseAdapter {
 		this.mContext = activity;
 		this.mList = list;
 		this.inflater = LayoutInflater.from(mContext);
-		this.width = DeviceInfoUtil.getDeviceCsw(mContext);
 		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
 		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
@@ -85,7 +80,6 @@ public class DynamicListAdapter extends BaseAdapter {
 		this.mContext = activity;
 		this.mList = list;
 		this.inflater = LayoutInflater.from(mContext);
-		this.width = DeviceInfoUtil.getDeviceCsw(mContext);
 		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
 		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
@@ -145,7 +139,6 @@ public class DynamicListAdapter extends BaseAdapter {
 		String time = item.getAddtime();
 
 		time = CommonUtil.calcTime(time);
-		// 鐢ㄤ簬activity鐐瑰嚮鏃惰幏寰梚d
 		convertView.setTag(R.id.tag_id, msgid);
 
 		holder.nameTV.setText(authorName);
@@ -162,12 +155,6 @@ public class DynamicListAdapter extends BaseAdapter {
 
 		holder.resTV.setText(detail.trim());
 
-		// holder.headIV.setImageBitmap(ImageRectUtil.toRoundCorner(BitmapFactory
-		// .decodeResource(mContext.getResources(),
-		// R.drawable.default_userhead), 10));
-
-		// if (holder.headIV.getTag()!=null &&
-		// !holder.headIV.getTag().equals(headUrl)) {
 		holder.headIV.setTag(headUrl);
 		mLoadImage.addTask(headUrl, holder.headIV);
 		holder.headIV.setOnClickListener(new OnClickListener() {
@@ -179,8 +166,6 @@ public class DynamicListAdapter extends BaseAdapter {
 				mContext.startActivity(intent);
 			}
 		});
-		// }
-		// IMAGE_SD_CACHE.get(headUrl, holder.headIV);
 		holder.optionIV.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -203,8 +188,6 @@ public class DynamicListAdapter extends BaseAdapter {
 						i.putExtra("msgid", msgid);
 						i.putExtra("parentid", msgid);
 						i.putExtra("type", 2);
-						// ((Activity)
-						// mContext).startActivityForResult(i,MsgTagVO.MSG_CMT);
 						((Activity) mContext).startActivityForResult(i,
 								MsgTagVO.MSG_CMT);
 					}
@@ -215,9 +198,7 @@ public class DynamicListAdapter extends BaseAdapter {
 
 		final List<PicNewVO> picsinner = item.getStatusPic();
 		holder.gvImages.setVisibility(View.GONE);
-		// 鏄剧ず鍥剧墖
 		if (picsinner != null && picsinner.size() > 0) {
-
 			ArrayList<String> urls = new ArrayList<String>();
 			for (PicNewVO temp : picsinner) {
 				if (temp.getPic() != null && !"".equals(temp.getPic().trim()))
@@ -248,15 +229,6 @@ public class DynamicListAdapter extends BaseAdapter {
 			case MsgTagVO.MSG_DEL: {
 				if (JsonHandler.checkResult((String) msg.obj, mContext)) {
 					CommonUtil.displayToast(mContext, R.string.info12);
-					// Bundle bundle = msg.getData();
-					// String id = bundle.getString("data");
-					// for (ZhuoInfoVO item : mList) {
-					// if (id != null && id.equals(item.getMsgid())) {
-					// mList.remove(item);
-					// break;
-					// }
-					// }
-					// notifyDataSetChanged();
 				}
 			}
 			}
@@ -270,7 +242,6 @@ public class DynamicListAdapter extends BaseAdapter {
 		TextView resTV;
 		ImageView resIV;
 		ImageView headIV;
-		// TextView moreTV;
 		View optionIV;
 		MyGridView gvImages;
 	}
@@ -293,23 +264,18 @@ public class DynamicListAdapter extends BaseAdapter {
 		return holder;
 	}
 
-	// 澶氬紶鍥剧墖
 	class GridViewAdapter extends CommonAdapter<String> {
 
 		public GridViewAdapter(Context context, List<String> mDatas,
 				int itemLayoutId) {
 			super(context, mDatas, itemLayoutId);
-			// TODO Auto-generated constructor stub
 		}
 
 		@Override
 		public void convert(ViewHolder helper, String item) {
 			// TODO Auto-generated method stub
-			// helper.setImageResource(R.id.gridview_image,
-			// R.drawable.ico_chat_pic);
 
 			ImageView iv = helper.getView(R.id.gridview_image);
-			// iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ico_chat_pic));
 			iv.setTag(item);
 			iv.setOnClickListener(new OnClickListener() {
 
@@ -327,7 +293,6 @@ public class DynamicListAdapter extends BaseAdapter {
 			});
 			mLoadImage.addTask(item,
 					(ImageView) helper.getView(R.id.gridview_image));
-			// mLoadImage.doTask();
 		}
 
 	}

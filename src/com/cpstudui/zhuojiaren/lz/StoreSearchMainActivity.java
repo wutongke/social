@@ -2,7 +2,6 @@ package com.cpstudui.zhuojiaren.lz;
 
 import java.util.ArrayList;
 
-import org.androidpn.client.Constants;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -31,8 +30,6 @@ import android.widget.TextView.OnEditorActionListener;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.baidu.mapapi.map.Stroke;
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.TypedStoreGoodsListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -47,7 +44,7 @@ import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
 /**
- * 商城的搜索页面
+ * 商城的搜索页面，未完成,可参考SearchMainActivity
  * 
  * @author lz
  * 

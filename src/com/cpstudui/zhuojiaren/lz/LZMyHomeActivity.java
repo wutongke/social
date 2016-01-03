@@ -13,7 +13,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.AboutZhuomaoActivity;
+import com.cpstudio.zhuojiaren.AboutZhuomaiActivity;
 import com.cpstudio.zhuojiaren.MyAdviceActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.UserHomeActivity;
@@ -29,7 +29,11 @@ import com.cpstudio.zhuojiaren.ui.MyCollectionActivity;
 import com.cpstudio.zhuojiaren.ui.MyZhuoBiActivity;
 import com.cpstudio.zhuojiaren.ui.SettingActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-
+/**
+ * "我的"界面
+ * @author lz
+ *
+ */
 public class LZMyHomeActivity extends Activity {
 	@InjectView(R.id.rlbg)
 	View rlbg;
@@ -95,7 +99,6 @@ public class LZMyHomeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// 我的钱包
-				// Toast.makeText(LZMyHomeActivity.this, "待完善！", 1000).show();
 				startActivity(new Intent(LZMyHomeActivity.this,
 						MyZhuoBiActivity.class));
 			}
@@ -116,10 +119,6 @@ public class LZMyHomeActivity extends Activity {
 		vZMSC.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// 需要重写倬脉商城的Activity
-				// Intent i = new Intent(LZMyHomeActivity.this,
-				// GoodsExchangeActivity.class);
-				// startActivity(i);
 				Intent i = new Intent(LZMyHomeActivity.this,
 						StoreMainActivity.class);
 				startActivity(i);
@@ -134,26 +133,6 @@ public class LZMyHomeActivity extends Activity {
 				startActivity(i);
 			}
 		});
-		// findViewById(R.id.relativeLayoutRecord).setOnClickListener(
-		// new OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// Intent i = new Intent(LZMyHomeActivity.this,
-		// RecordListActivity.class);
-		// startActivity(i);
-		// }
-		// });
-
-		// 调用百度地图定位
-		// findViewById(R.id.relativeLayoutPosition).setOnClickListener(
-		// new OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// Intent i = new Intent(LZMyHomeActivity.this,
-		// MyLocationActivity.class);
-		// startActivity(i);
-		// }
-		// });
 		vCallback.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -167,31 +146,10 @@ public class LZMyHomeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(LZMyHomeActivity.this,
-						AboutZhuomaoActivity.class);
+						AboutZhuomaiActivity.class);
 				startActivity(i);
 			}
 		});
-		// i.putExtra("userid", "00000000000");可用做联系小卓秘书
-		// findViewById(R.id.relativeLayoutServant).setOnClickListener(
-		// new OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// Intent i = new Intent(LZMyHomeActivity.this,
-		// ChatActivity.class);
-		// i.putExtra("userid", "00000000000");
-		// startActivity(i);
-		// }
-		// });
-
-		// findViewById(R.id.relativeLayoutVisit).setOnClickListener(
-		// new OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// Intent i = new Intent(LZMyHomeActivity.this,
-		// MyLastestVisitActivity.class);
-		// startActivity(i);
-		// }
-		// });
 		vSet.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -264,20 +222,6 @@ public class LZMyHomeActivity extends Activity {
 			}
 		}
 	};
-
-	private void loadDb() {
-		// RecordChatFacade mFacade = new
-		// RecordChatFacade(getApplicationContext());
-		// int all = mFacade.getUnread().size();
-		// TextView allNum = (TextView) findViewById(R.id.textViewRecordNum);
-		// allNum.setText(all + "");
-		// if (all == 0) {
-		// allNum.setVisibility(View.GONE);
-		// } else {
-		// allNum.setVisibility(View.VISIBLE);
-		// }
-
-	}
 
 	private void loadInfo() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {

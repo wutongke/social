@@ -10,15 +10,14 @@
         layout="@layout/title_activity" />  
         
     <EditText
-        android:layout_below="@id/quan_bar_title"
         android:id="@+id/editTextContent"
         android:layout_width="match_parent"
         android:layout_height="220dp"
+        android:layout_below="@id/quan_bar_title"
         android:ems="10"
         android:gravity="center_vertical|top"
         android:hint="@string/text_apply_hoin_hint"
         android:inputType="textMultiLine" />
-        
   
         <Button
             android:id="@+id/buttonSend"

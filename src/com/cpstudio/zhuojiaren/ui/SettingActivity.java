@@ -2,7 +2,6 @@ package com.cpstudio.zhuojiaren.ui;
 
 import java.util.HashMap;
 
-import org.androidpn.client.ServiceManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -65,9 +64,6 @@ public class SettingActivity extends BaseActivity {
 				map.put(ResHelper.LOGIN_STATE, 0);
 				ResHelper.getInstance(getApplicationContext())
 						.setPreference(map);
-				ServiceManager serviceManager = new ServiceManager(
-						SettingActivity.this);
-				serviceManager.stopService();
 				Intent i = new Intent(SettingActivity.this,
 						LoginActivity.class);
 				startActivity(i);
