@@ -3,7 +3,6 @@ package com.cpstudio.zhuojiaren.fragment;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,12 +21,10 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.EventListAdapter;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanMainActivity;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
@@ -42,16 +39,10 @@ public class QuanziActiveFra extends Fragment {
 
 	private ConnHelper mConnHelper = null;
 	private int mPage = 0;
-	private int mType = 6;
 	private int mPageSize = 5;
 	private ListViewFooter mListViewFooter = null;
-	private Context mContext;
-	private String mLastId = null;
-	// private PopupWindows pupWindow;
 
-	// 主View
 	View layout;
-	private String uid = null;
 	String groupId = null;
 
 	public interface functionListener {
@@ -67,18 +58,8 @@ public class QuanziActiveFra extends Fragment {
 				false);
 		ButterKnife.inject(this, layout);
 
-		mContext = getActivity();
 		mConnHelper = ConnHelper.getInstance(getActivity()
 				.getApplicationContext());
-
-		uid = ResHelper.getInstance(getActivity().getApplicationContext())
-				.getUserid();
-
-		// 加载的圈子主页类型：圈子话题，圈子互动，圈子成员
-		Bundle intent = getArguments();
-		mType = intent.getInt(QuanVO.QUANZIMAINTYPE);
-
-		mAdapter = new EventListAdapter(getActivity(), mList);
 
 		RelativeLayout mFooterView = (RelativeLayout) inflater.inflate(
 				R.layout.listview_footer, null);
@@ -114,9 +95,6 @@ public class QuanziActiveFra extends Fragment {
 					}
 					mList.addAll(list);
 					mAdapter.notifyDataSetChanged();
-					if (mList.size() > 0) {
-						mLastId = mList.get(mList.size() - 1).getActivityid();
-					}
 					mPage++;
 				} else {
 					mListViewFooter.noData(!refresh);

@@ -17,12 +17,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.R.id;
-import com.cpstudio.zhuojiaren.R.layout;
 import com.cpstudio.zhuojiaren.adapter.BirthUsersListAdapter;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;

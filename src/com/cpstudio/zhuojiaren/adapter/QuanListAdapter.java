@@ -3,10 +3,6 @@ package com.cpstudio.zhuojiaren.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.QuanVO;
-import com.cpstudio.zhuojiaren.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +10,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.QuanVO;
 
 public class QuanListAdapter extends BaseAdapter {
 	private List<QuanVO> mList = null;

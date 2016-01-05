@@ -45,7 +45,7 @@ import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 
 /**
- * 倬家圈子主页 acitivity与fragment通信,当fragment选中我圈子时，设置管理，点击管理后，操作fragment
+ * 倬家圈子主页 acitivity
  * 
  * @author lz
  * 
@@ -86,7 +86,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	@InjectView(R.id.btnQuanChat)
 	View btnQuanChat;
 	private int currentPager = 0;
-	// 四个fragment 方便通信
 	List<Fragment> fragments;
 	QuanVO detail;
 	private PopupWindows phw = null;
@@ -95,9 +94,10 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	private int role = QuanVO.QUAN_ROLE_NOTMEMBER;
 	private PopupWindows pwh = null;
 	private String groupid = null, groupName = null, gheadurl = null;
-	private String owerName = null, owerId = null;
+	private String owerId = null;
 	private ConnHelper mConnHelper = null;
-	private boolean isfollow = false;// 是否已经加入该圈子
+	// 是否已经加入该圈子
+	private boolean isfollow = false;
 
 	// 用于在fragment中获得groupid
 	public String getGroupid() {
@@ -164,7 +164,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						gheadurl = detail.getGheader();
 						ivGroupHeader.setTag(gheadurl);
 						owerId = detail.getUserid();
-						owerName = detail.getName();
 						mLoadImage.addTask(gheadurl, ivGroupHeader);
 						String gType = "未知";
 						int type = detail.getGtype();
@@ -172,7 +171,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 								.getGtype();
 						if (type >= 1 && types != null && type <= types.size())
 							gType = types.get(type - 1).getContent();
-						// 圈子类型，之后要转换为编号对应的名称
 
 						tvTopicType.setText(gType);
 						tvMemNum.setText(detail.getMemberCount() + "");
@@ -267,7 +265,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 
 	private void initOnClick() {
 		// TODO Auto-generated method stub
-		// 选择不同的fragment，function按键不同
 		tabButton.setPageChangeListener(new PageChangeListener() {
 
 			@Override
@@ -312,7 +309,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 
 					@Override
 					public void onClick(View v) {
-						// 通过第三方软件分享，QQ，微信等
 						CustomShareBoard cb = new CustomShareBoard(
 								ZhuoQuanMainActivity.this);
 						cb.showCustomShareContent();
@@ -328,7 +324,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 						startActivity(i);
 					}
 				};
-				// 需要另外设置菜单选项布局及响应事件
 				phw.showQuanOptionsMenue(v, 2, briefListener, shareListener,
 						inviteListener);
 			}

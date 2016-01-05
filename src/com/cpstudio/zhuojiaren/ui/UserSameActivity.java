@@ -26,9 +26,8 @@ import android.widget.TextView.OnEditorActionListener;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ZhuoNearByUserListAdatper;
 import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserAndCollection;
@@ -52,17 +51,13 @@ public class UserSameActivity extends BaseActivity implements
 	private String itemId = "";
 	private String itemName = "";
 
-	private String mLastId = null;
-	private String uid = null;
 	int type;
-	private String mType = "1";
 	private ConnHelper mConnHelper = null;
 	int mPage = 0, pageSize = 5;
 	private int requestCodeCity = 1;
 	private int requestCodeIndustry = 2;
 	private int requestCodeHoppy = 3;
 	private int requestCodeTeacher = 4;
-	// add by lz
 	boolean isManaging = false;
 	TextView tvItem;
 
@@ -74,11 +69,9 @@ public class UserSameActivity extends BaseActivity implements
 
 		Intent intent = getIntent();
 		type = intent.getIntExtra("type", 1);
-		mType = String.valueOf(type);
 		initTitle();
 
 		String sk = intent.getStringExtra("mSearchKey");
-		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.listview_header5);
@@ -103,35 +96,6 @@ public class UserSameActivity extends BaseActivity implements
 		}
 
 		loadData();
-		// test
-		// UserAndCollection a = new UserAndCollection();
-		// a.setIsCollection("1");
-		// a.setDistance("1公里");
-		// UserVO user = new UserVO();
-		// user.setUsername("张来才");
-		// user.setPost("php董事");
-		// user.setUheader("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2222979786,259610352&fm=116&gp=0.jpg");
-		// user.setCompany("php902大集团");
-		// a.setUser(user);
-		// UserAndCollection b = new UserAndCollection();
-		// b.setIsCollection("0");
-		// b.setDistance("1.5公里");
-		// b.setUser(user);
-		// mList.add(a);
-		// mList.add(b);
-		// mList.add(a);
-		// mList.add(b);
-		// mList.add(a);
-		// mList.add(b);
-		// mList.add(a);
-		// mList.add(b);
-		// mList.add(a);
-		// mList.add(b);
-		// mList.add(a);
-		// mList.add(b);
-		// mList.add(a);
-		// mList.add(b);
-		// mAdapter.notifyDataSetChanged();
 	}
 
 	private void loadData() {
@@ -160,18 +124,15 @@ public class UserSameActivity extends BaseActivity implements
 	private void updateItemList(ArrayList<UserAndCollection> list,
 			boolean refresh, boolean append) {
 		if (!list.isEmpty()) {
-			// mPullDownView.hasData();
 			if (!append) {
 				mListAll.clear();
 			}
 			mListAll.addAll(list);
-			// mAdapter.notifyDataSetChanged();
 			if (mListAll.size() > 0) {
 				// mLastId = mList.get(mList.size() - 1).getStatusid();
 			}
 			mPage++;
 		} else {
-			// mPullDownView.noData(!refresh);
 		}
 		filterData(refresh, append);
 	}
@@ -279,10 +240,6 @@ public class UserSameActivity extends BaseActivity implements
 	@Override
 	public void onMore() {
 		if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-			// ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-			// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
-			// msg.obj = list;
-			// msg.sendToTarget();
 		} else {
 			if(type!=8 && type!=9 && type!=10)
 				mConnHelper.getSameUser(mUIHandler, MsgTagVO.DATA_MORE, type,
@@ -484,8 +441,6 @@ public class UserSameActivity extends BaseActivity implements
 					itemName = name;
 				else
 					itemName += "," + name;
-				// function.setText(itemName);
-
 				break;
 			}
 			tvItem.setVisibility(View.VISIBLE);

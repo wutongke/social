@@ -19,10 +19,7 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.QuanziCreateFra;
 import com.cpstudio.zhuojiaren.fragment.QuanziFra;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.model.QuanVO;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 
@@ -71,7 +68,6 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 
 	private void initOnClick() {
 		// TODO Auto-generated method stub
-		// 选择不同的fragment，function按键不同
 		tabButton.setPageChangeListener(new PageChangeListener() {
 
 			@Override
@@ -181,10 +177,6 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 			break;
 		case 1:
 			function.setTag(1);
-			// ImageSpan span = new ImageSpan(mContext, R.drawable.tab_good);
-			// SpannableString spanStr = new SpannableString(" ");
-			// spanStr.setSpan(span, 0, 1,Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-			// function.setText(spanStr);
 			function.setText("");
 			function.setVisibility(View.INVISIBLE);
 			break;
@@ -205,7 +197,6 @@ public class ZhuoQuanActivity extends BaseFragmentActivity {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		// 筛选
 		if (requestCode == 1) {
 			if (resultCode == RESULT_OK) {
 

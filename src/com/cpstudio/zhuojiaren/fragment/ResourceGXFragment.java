@@ -53,10 +53,6 @@ import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 public class ResourceGXFragment extends Fragment {
 	@InjectView(R.id.fcd_pull_down_view)
 	PullDownView pullDownView;
-	// @InjectView(R.id.editTextSearch)
-	// EditText searchView;
-	// @InjectView(R.id.imageViewDelSearch)
-	// View delSearch;
 	EditText searchView;
 	View delSearch;
 	String mSearchKey;
@@ -67,17 +63,12 @@ public class ResourceGXFragment extends Fragment {
 	private ArrayList<ResourceGXVO> mDatas = new ArrayList<ResourceGXVO>();
 	// 用于数据筛选
 	private int type = 0;// 资源还是需求
-	// 网络请求参数
-	// private int getType = 1;
 	private int item = -1;
 
 	int subType = -1;// 过滤子类
 	String location = null;// 区域
-	// 分页
 	private int mPage = 0;
 	private ConnHelper appClientLef;
-	// 基本编码
-	private BaseCodeData baseDataSet;
 	List<gtype> gtypes;
 
 	void getCodedData() {
@@ -109,8 +100,6 @@ public class ResourceGXFragment extends Fragment {
 		type = getArguments().getInt(ResourceGXVO.RESOURCEGXTYPE, 0);
 		ButterKnife.inject(this, view);
 		appClientLef = ConnHelper.getInstance(getActivity());
-		baseDataSet = ConnHelper.getInstance(
-				getActivity().getApplicationContext()).getBaseDataSet();
 		initPullDownView();
 		getCodedData();
 		loadData();
@@ -225,8 +214,6 @@ public class ResourceGXFragment extends Fragment {
 				int i = 0;
 				for (ImageRadioButton temp : list) {
 					if (btnview.equals(temp)) {
-						// Util.toastMessage(getActivity(), btnview.getaImage()
-						// + "");
 						break;
 					}
 					i++;
@@ -249,26 +236,6 @@ public class ResourceGXFragment extends Fragment {
 		});
 
 		gridView.setAdapter(mTitleAdapter);
-		// 跳转到某个类型的list
-		// gridView.setOnItemClickListener(new OnItemClickListener() {
-		//
-		// @Override
-		// public void onItemClick(AdapterView<?> parent, View view,
-		// int position, long id) {
-		// // TODO Auto-generated method stub
-		// // 重新请求数据刷新列表
-		// item = position;
-		// loadData();
-		// // Intent intent = new
-		// // Intent(getActivity(),CrowdFundingListActivity.class);
-		// // if(type==ResourceGXVO.RESOURCE_FIND){
-		// // intent.putExtra("type", CrowdFundingVO.typeStr[position+1]);
-		// // }else if(type==CrowdFundingVO.CROWDFUNDINGQUERY){
-		// // intent.putExtra("type", CrowdFundingVO.typeStr[position+3]);
-		// // }
-		// // startActivity(intent);
-		// }
-		// });
 
 		searchView = (EditText) pullDownView.findViewById(R.id.editTextSearch);
 		searchView.setOnEditorActionListener(new OnEditorActionListener() {

@@ -44,10 +44,6 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 	private ConnHelper mConnHelper = null;
 
 	private Context mContext;
-	private String mLastId = null;
-	// private PopupWindows pupWindow;
-
-	// Ö÷View
 	View layout;
 	private String uid = null;
 	ZMCDCount dataUnit;
@@ -118,9 +114,6 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 						MyFriendActivity.class);
 				i.putExtra("type", 1);
 				startActivity(i);
-//				Intent i = new Intent(mContext, UserSameActivity.class);
-//				i.putExtra("type", 12);
-//				startActivity(i);
 			}
 		});
 		llMyActive.setOnClickListener(new OnClickListener() {

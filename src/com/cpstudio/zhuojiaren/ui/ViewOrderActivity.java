@@ -10,12 +10,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.R.id;
-import com.cpstudio.zhuojiaren.R.layout;
-import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.adapter.OrderListAdapter;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.OrderVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;

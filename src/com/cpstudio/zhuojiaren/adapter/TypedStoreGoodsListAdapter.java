@@ -3,11 +3,6 @@ package com.cpstudio.zhuojiaren.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.GoodsVO;
-import com.cpstudio.zhuojiaren.model.PicVO;
-import com.cpstudio.zhuojiaren.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +11,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-//lz
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.GoodsVO;
+
 public class TypedStoreGoodsListAdapter extends BaseAdapter {
 	private List<GoodsVO> mList = null;
 	private LayoutInflater inflater = null;
@@ -65,15 +63,10 @@ public class TypedStoreGoodsListAdapter extends BaseAdapter {
 		String zhuobi = "无数据";
 		if (user.getZhuoPrice() != null)
 			zhuobi = user.getZhuoPrice();
-		List<String> pics = user.getImgList();
 		convertView.setTag(R.id.tag_id, id);
 		holder.title.setText(title);
 		holder.zhuobimoney.setText(zhuobi + "个");
 		holder.image.setImageResource(R.drawable.default_image);
-//		if (pics != null && pics.size() > 0) {
-//			String pic = pics.get(0);
-//			holder.image.setTag(pic);
-//		}
 		mLoadImage.addTask(user.getGoodsImg(), holder.image);
 		mLoadImage.doTask();
 

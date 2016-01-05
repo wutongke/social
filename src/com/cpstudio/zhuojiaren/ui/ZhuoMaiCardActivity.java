@@ -53,7 +53,7 @@ import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 import com.cpstudio.zhuojiaren.widget.TabButton.TabsButtonOnClickListener;
 
 /**
- * 倬脉名片
+ * پ����Ƭ
  * 
  * @author lz
  * 
@@ -372,9 +372,6 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 		return fragment;
 	}
 
-	/**
-	 * 填充名片基本信息
-	 */
 	void fillHeadInfo() {
 		if (userInfo == null)
 			return;

@@ -83,7 +83,6 @@ public class ActiveListAdapter extends BaseAdapter {
 		List<PicNewVO> Pics = item.getStatusPic();
 		Context context = convertView.getContext();
 		holder.rl.setVisibility(View.GONE);
-		int count=0;
 		if (Pics != null && Pics.size() > 0) {
 			ArrayList<String> urls = new ArrayList<String>();
 			for (PicNewVO temp : Pics) {

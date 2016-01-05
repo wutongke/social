@@ -3,6 +3,11 @@ package com.cpstudio.zhuojiaren.model;
 import java.io.Serializable;
 
 public class constellation implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4026421003272701886L;
+
 	private int id;
 
 	private String content;

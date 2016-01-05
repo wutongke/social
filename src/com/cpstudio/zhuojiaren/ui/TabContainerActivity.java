@@ -36,15 +36,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.R.drawable;
-import com.cpstudio.zhuojiaren.R.id;
-import com.cpstudio.zhuojiaren.R.layout;
-import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.facade.GroupFacade;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.SysApplication;
-import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.CustomerMessageFactory;
 import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
@@ -58,8 +54,6 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 @SuppressWarnings("deprecation")
 public class TabContainerActivity extends TabActivity implements
 		OnTabChangeListener {
-	// 融云接收广播消息类型
-	// 添加好友的广播
 	public static final String ACTION_DMEO_RECEIVE_MESSAGE = "action_demo_receive_message";
 
 	/**
@@ -70,7 +64,6 @@ public class TabContainerActivity extends TabActivity implements
 	 * 同意添加好友
 	 */
 	public static final String ACTION_DMEO_AGREE_REQUEST = "action_demo_agree_request";
-	// 自定义的内容，点赞等
 	public static final String ACTION_SYS_MSG = "action_demo_sys_message";
 	private TextView numTV = null;
 	public final static int MAIN_PAGE = 0;
@@ -94,7 +87,7 @@ public class TabContainerActivity extends TabActivity implements
 	private Class[] mTabClassArray = {
 			com.cpstudio.zhuojiaren.ui.MainActivity.class,
 			JiarenActiveActivity.class, MsgListActivity.class,
-			GrouthActivity.class, LZMyHomeActivity.class };// MyHomeActivity.class
+			GrouthActivity.class, LZMyHomeActivity.class };
 
 	private int[] mImageResourceArray = { R.drawable.indicator_tab_ico_zhuo,
 			R.drawable.indicator_tab_ico_active,
@@ -238,7 +231,6 @@ public class TabContainerActivity extends TabActivity implements
 		tvs.get(0).setTextColor(Color.GREEN);
 		tab.setOnTabChangedListener(this);
 
-		// 有用，监听哪些未读消息
 		final Conversation.ConversationType[] conversationTypes = {
 				Conversation.ConversationType.PRIVATE,
 				Conversation.ConversationType.DISCUSSION,
@@ -413,8 +405,6 @@ public class TabContainerActivity extends TabActivity implements
 			String action = intent.getAction();
 			// 收到好友添加的邀请
 			if (action.equals(ACTION_DMEO_RECEIVE_MESSAGE)) {
-				boolean hasNewFriends = intent.getBooleanExtra("has_message",
-						false);
 				ContactNotificationMessage msg = intent
 						.getParcelableExtra("rongCloud");
 

@@ -210,7 +210,6 @@ public class UserFacade {
 				quans.add(item2);
 			}
 		}
-		// item.setPics(pics);
 		return item;
 	}
 

@@ -10,38 +10,31 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.Util;
-import com.cpstudio.zhuojiaren.widget.CustomShareBoard;
 import com.cpstudio.zhuojiaren.widget.VedioPlayer;
-import com.umeng.socialize.media.UMImage;
 
 public class VedioActivity extends BaseActivity {
 	@InjectView(R.id.avedio_layout)
@@ -138,10 +131,6 @@ public class VedioActivity extends BaseActivity {
 			getWindowManager().getDefaultDisplay().getMetrics(metric);
 			frame.setLayoutParams(VedioPlayer.getLayoutParamsBasedOnParent(
 					frame, metric.widthPixels, metric.heightPixels));
-			// frame.getLayoutParams().height = metric.heightPixels;
-			// frame.getLayoutParams().width = metric.widthPixels;
-			// frame.setLayoutParams(new FrameLayout.LayoutParams(
-			// metric.widthPixels, metric.heightPixels));
 		}
 		final InputMethodManager iMM = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
 		findViewById(R.id.thought_post).setOnClickListener(
@@ -178,12 +167,10 @@ public class VedioActivity extends BaseActivity {
 			load.beginLoad(vedio.getImageAddr(), Image);
 		}
 		if (VedioPlayer.getmCurrentState() != 0) {
-			// 初始化time
 			init = true;
 			length.setText(Util.getTimeString(vedioPlayer.getDuration()));
 			time.setText(Util.getTimeString(vedioPlayer.getCurrentPosition()));
 			startIV.setBackgroundResource(R.drawable.jjst);
-			// 初始化seekbar
 			vedioBar.setMax(vedioPlayer.getDuration());
 			vedioBar.setProgress(vedioPlayer.getCurrentPosition());
 			init = true;
@@ -417,12 +404,6 @@ public class VedioActivity extends BaseActivity {
 									| View.SYSTEM_UI_FLAG_FULLSCREEN);
 			DisplayMetrics metric = new DisplayMetrics();
 			getWindowManager().getDefaultDisplay().getMetrics(metric);
-			// frame.setLayoutParams(VedioPlayer.getLayoutParamsBasedOnParent(frame,
-			// metric.widthPixels,
-			// metric.heightPixels));
-			// frame.setLayoutParams(new
-			// FrameLayout.LayoutParams(metric.widthPixels,
-			// metric.heightPixels));
 			setFullScreen();
 			isFullscreen = true;
 		}

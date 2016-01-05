@@ -44,7 +44,7 @@ import com.cpstudio.zhuojiaren.widget.ViewHolder;
 import com.utils.ImageRectUtil;
 
 /**
- * åœˆå­åŠ¨æ€Adapter,åŠ¨æ€å†…å®¹æœ‰è¯é¢˜å’Œæ´»åŠ¨ä¸¤ç§ã€‚åŒ…æ‹¬å‘å¸ƒçš„åŠ¨æ€å’Œæ´»åŠ¨ å¸ƒå±€å¯ä»¥ç»¼åˆå·²æœ‰çš„ZhuoQuanMainActivityä¸­çš„ä¸¤ç§å¸ƒå±€
+ * È¦×Ó¶¯Ì¬Adapter,¶¯Ì¬ÄÚÈİÓĞ»°ÌâºÍ»î¶¯Á½ÖÖ¡£°üÀ¨·¢²¼µÄ¶¯Ì¬ºÍ»î¶¯ ²¼¾Ö¿ÉÒÔ×ÛºÏÒÑÓĞµÄZhuoQuanMainActivityÖĞµÄÁ½ÖÖ²¼¾Ö
  * 
  * @author lz
  * 
@@ -61,7 +61,7 @@ public class QuanStatusListAdapter extends BaseAdapter {
 	String groupId;
 	BaseCodeData baseDataSet;
 	boolean isManaging = false;
-	int role;// â€œæˆ‘åœ¨åœˆå­ä¸­çš„èº«ä»½â€
+	int role;// ¡°ÎÒÔÚÈ¦×ÓÖĞµÄÉí·İ¡±
 
 	public String getGroupId() {
 		return groupId;
@@ -85,7 +85,7 @@ public class QuanStatusListAdapter extends BaseAdapter {
 
 	public QuanStatusListAdapter(Activity activity,
 			ArrayList<GroupStatus> list, int role) {
-		// å¥½å‹åŠ¨æ€çš„åˆ—è¡¨ï¼Œfragmentä¸ºnull..ä¸åœˆè¯é¢˜çš„å†…å®¹ä¸€è‡´
+		// ºÃÓÑ¶¯Ì¬µÄÁĞ±í£¬fragmentÎªnull..ÓëÈ¦»°ÌâµÄÄÚÈİÒ»ÖÂ
 		this.mContext = activity;
 		this.mList = list;
 		this.inflater = LayoutInflater.from(mContext);
@@ -117,8 +117,8 @@ public class QuanStatusListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewHolderStatus holder = null;// åœˆè¯é¢˜
-		ViewHolderActive holderActive = null;// åœˆæ´»åŠ¨
+		ViewHolderStatus holder = null;// È¦»°Ìâ
+		ViewHolderActive holderActive = null;// È¦»î¶¯
 		int type = getItemViewType(position);
 		if (convertView == null) {
 			if (type == 0) {
@@ -221,7 +221,7 @@ public class QuanStatusListAdapter extends BaseAdapter {
 
 			final List<PicNewVO> picsinner = item.getTopicPic();
 			holder.gvImages.setVisibility(View.GONE);
-			// æ˜¾ç¤ºå›¾ç‰‡
+			// ÏÔÊ¾Í¼Æ¬
 			if (picsinner != null && picsinner.size() > 0) {
 				holder.gvImages.setVisibility(View.VISIBLE);
 				ArrayList<String> urls = new ArrayList<String>();
@@ -243,10 +243,10 @@ public class QuanStatusListAdapter extends BaseAdapter {
 			holderActive.textViewTitle.setText(event.getTitle());
 			holderActive.textViewDateTime.setText(event.getStarttime());
 			if (event.getOutdate() == 1)
-				holderActive.textViewIsOverTime.setText("å·²è¿‡æœŸ");
+				holderActive.textViewIsOverTime.setText("ÒÑ¹ıÆÚ");
 			else
-				holderActive.textViewIsOverTime.setText("æœªè¿‡æœŸ");
-			holderActive.textViewNums.setText(event.getJoinCount() + "äººæŠ¥å");
+				holderActive.textViewIsOverTime.setText("Î´¹ıÆÚ");
+			holderActive.textViewNums.setText(event.getJoinCount() + "ÈË±¨Ãû");
 			convertView.setTag(R.id.tag_id, msgid);
 			holderActive.textViewPlace.setText(event.getAddress());
 			holderActive.textViewDetail
@@ -368,7 +368,7 @@ public class QuanStatusListAdapter extends BaseAdapter {
 		return holder;
 	}
 
-	// å¤šå¼ å›¾ç‰‡
+	// ¶àÕÅÍ¼Æ¬
 	class GridViewAdapter extends CommonAdapter<String> {
 
 		public GridViewAdapter(Context context, List<String> mDatas,

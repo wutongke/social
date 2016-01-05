@@ -1,14 +1,5 @@
 package com.cpstudio.zhuojiaren.model;
 
-import java.io.File;
-
-import org.json.JSONObject;
-
-import android.util.Log;
-
-import com.qiniu.android.http.ResponseInfo;
-import com.qiniu.android.storage.UpCompletionHandler;
-import com.qiniu.android.storage.UploadManager;
 
 /**
  * 评论
@@ -17,15 +8,6 @@ import com.qiniu.android.storage.UploadManager;
  * 
  */
 public class CommentVO {
-	// "content": <string>(评论内容),
-	// "id": <int> (评论id),
-	// "toId":<int>(被回复id)
-	// "addtime": <string>,
-	// "isLike": <boolean> (是否点赞),
-	// "company": <string> (所属公司),
-	// "position":<string> (职位),
-	// "name": <string> (用户名称),
-	// "uheader": <string> (用户头像)
 	public static String praise = "1";
 	public static String nopraise = "-1";
 	private String id;

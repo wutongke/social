@@ -7,7 +7,6 @@ import android.content.Context;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.IncomeVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.ViewHolder;
 
 public class IncomeAdapter extends CommonAdapter<IncomeVO>{

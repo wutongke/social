@@ -19,10 +19,8 @@ public class GroupFacade {
 			"gintro", "gpub", "gtype", "addtime", "memberCount", "topicCount",
 			"lastmsgtime", "alert", "userid", "name", "uheader", "city",
 			"followpms", "accesspms", "role" };
-	private Context mContext;
 
 	public GroupFacade(Context context) {
-		mContext = context;
 		String userid = ResHelper.getInstance(context).getUserid();
 		dbHelper = new DatabaseHelper(context, userid);
 	}

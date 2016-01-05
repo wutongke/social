@@ -18,7 +18,7 @@ import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.Comment;
 import com.cpstudio.zhuojiaren.ui.MsgCmtActivity;
 /**
- * è¯„è®ºåˆ—è¡¨æ•°æ®Adapterï¼ŒåŒ…æ‹¬åœˆå­è¯é¢˜ã€åŠ¨æ€ã€ä¾›éœ€çš„è¯„è®º
+ * ÆÀÂÛÁĞ±íÊı¾İAdapter£¬°üÀ¨È¦×Ó»°Ìâ¡¢¶¯Ì¬¡¢¹©ĞèµÄÆÀÂÛ
  * @author lz
  *
  */

@@ -24,15 +24,11 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.QuanziTopicListAdapter;
-import com.cpstudio.zhuojiaren.facade.UserFacade;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
-import com.cpstudio.zhuojiaren.model.UserNewVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.TopicDetailActivity;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanMainActivity;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
@@ -52,12 +48,7 @@ public class QuanziTopicFra extends Fragment {
 	private int role = QuanVO.QUAN_ROLE_YOUKE;
 	private ListViewFooter mListViewFooter = null;
 	private Context mContext;
-	private String mLastId = null;
-	// private PopupWindows pupWindow;
-
-	// 主View
 	View layout;
-	private String uid = null;
 	String groupId = null;
 
 	public interface functionListener {
@@ -77,19 +68,10 @@ public class QuanziTopicFra extends Fragment {
 		mConnHelper = ConnHelper.getInstance(getActivity()
 				.getApplicationContext());
 
-		uid = ResHelper.getInstance(getActivity().getApplicationContext())
-				.getUserid();
-
-		// 加载的圈子主页类型：圈子话题，圈子互动，圈子成员
 		Bundle intent = getArguments();
 		role = intent.getInt(QuanVO.QUANROLE);
 
-		// if (mType == QuanVO.QUANZIACTIVE)
-		// mAdapter = new ActiveListAdapter(getActivity(), activeList);
-		// else if (mType == QuanVO.QUANZITOPIC)
 		mAdapter = new QuanziTopicListAdapter(this, mList, role);
-		// else
-		// mAdapter = new QuanMemberListAdapter(getActivity(), memberList);
 
 		RelativeLayout mFooterView = (RelativeLayout) inflater.inflate(
 				R.layout.listview_footer, null);
@@ -100,7 +82,6 @@ public class QuanziTopicFra extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// 跳到话题详情页，话题详情内容用活动内容测试通过
 				if(position>mList.size()-1)
 					return;
 				Intent i = new Intent();
@@ -131,9 +112,6 @@ public class QuanziTopicFra extends Fragment {
 					}
 					mList.addAll(list);
 					mAdapter.notifyDataSetChanged();
-					if (mList.size() > 0) {
-						mLastId = mList.get(mList.size() - 1).getTopicid();
-					}
 					mPage++;
 				} else {
 					mListViewFooter.noData(!refresh);
@@ -164,12 +142,6 @@ public class QuanziTopicFra extends Fragment {
 	};
 
 	private void loadData() {
-		// 重要：：：：此处请求的返回结果中还应包含“我”是否在这个圈子之中的标志
-		// String url = ZhuoCommHelper.getUrlUserInfo()
-		// + "?uid="
-		// + ResHelper.getInstance(getActivity().getApplicationContext())
-		// .getUserid();
-		//
 
 		if (mListViewFooter.startLoading()) {
 			mList.clear();
@@ -185,10 +157,6 @@ public class QuanziTopicFra extends Fragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		if (resultCode == Activity.RESULT_OK) {
-			// if (requestCode == MsgTagVO.MSG_CMT) {
-			// String forward = data.getStringExtra("forward");
-			// String msgid = data.getStringExtra("msgid");
-			// String outterid = data.getStringExtra("outterid");
 			Toast.makeText(mContext, "评论成功！", 2000).show();
 		}
 

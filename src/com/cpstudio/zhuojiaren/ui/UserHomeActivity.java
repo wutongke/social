@@ -15,13 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.R.id;
-import com.cpstudio.zhuojiaren.R.layout;
-import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.adapter.ActiveListAdapter;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -134,38 +131,6 @@ public class UserHomeActivity extends Activity implements OnPullDownListener {
 		}
 	}
 
-	private void updateUserInfo(UserVO user) {
-		if (null != user) {
-			String name = user.getUsername();
-			String blog = user.getActivenum();
-			// String families = user.getFamilytotal();//ЮЊПе
-			String families = "" + user.getFamily().size();// ЮЊПе
-
-			String headurl = user.getUheader();
-
-			((TextView) findViewById(R.id.textViewUsername)).setText(name);
-			if (blog != null && families != null) {
-				((TextView) findViewById(R.id.textViewBolgnum))
-						.setText(families
-								+ getString(R.string.p_jiaren_active_families)
-								+ "~" + blog
-								+ getString(R.string.p_jiaren_active_rizhi));
-			}
-			ImageView iv = (ImageView) findViewById(R.id.imageViewUserHead);
-			iv.setTag(headurl);
-			iv.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View paramView) {
-					Intent i = new Intent(UserHomeActivity.this,
-							ZhuoMaiCardActivity.class);
-					i.putExtra("userid", uid);
-					startActivity(i);
-				}
-			});
-			mLoadImage.beginLoad(headurl, iv);
-		}
-	}
 
 	@SuppressLint("HandlerLeak")
 	private Handler mUIHandler = new Handler() {

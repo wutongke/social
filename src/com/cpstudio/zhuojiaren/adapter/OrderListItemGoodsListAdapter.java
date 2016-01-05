@@ -5,7 +5,6 @@ import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -15,7 +14,6 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 
-//lz
 public class OrderListItemGoodsListAdapter extends BaseAdapter {
 	private List<GoodsVO> mList = null;
 	private LayoutInflater inflater = null;
@@ -62,9 +60,6 @@ public class OrderListItemGoodsListAdapter extends BaseAdapter {
 		GoodsVO goods = mList.get(position);
 
 		String picurl = goods.getGoodsImg();
-
-		// 注意，在click事件中要传此参数
-		String id = goods.getGoodsId();
 
 		String info = goods.getGoodsName();
 

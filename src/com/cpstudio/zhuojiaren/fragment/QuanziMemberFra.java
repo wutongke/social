@@ -21,11 +21,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.ui.QuanMemberListAdapter;
 import com.cpstudio.zhuojiaren.ui.ZhuoMaiCardActivity;
@@ -42,19 +40,12 @@ public class QuanziMemberFra extends Fragment {
 	// 需要改
 	// private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
 	private ConnHelper mConnHelper = null;
-	private int mPage = 1;
-	private int mType = 6;
 	private ListViewFooter mListViewFooter = null;
 	private Context mContext;
-	private String mLastId = null;
-	// private PopupWindows pupWindow;
 	String groupId = null;
-	// 主View
 	View layout;
-	private String uid = null;
 
 	public interface functionListener {
-		//
 		public void onTypeChange(int type);
 	}
 
@@ -69,15 +60,6 @@ public class QuanziMemberFra extends Fragment {
 		mContext = getActivity();
 		mConnHelper = ConnHelper.getInstance(getActivity()
 				.getApplicationContext());
-
-		uid = ResHelper.getInstance(getActivity().getApplicationContext())
-				.getUserid();
-
-		// 加载的圈子主页类型：圈子话题，圈子互动，圈子成员
-		Bundle intent = getArguments();
-		mType = intent.getInt(QuanVO.QUANZIMAINTYPE);
-
-		mAdapter = new QuanMemberListAdapter(getActivity(), mList);
 
 		RelativeLayout mFooterView = (RelativeLayout) inflater.inflate(
 				R.layout.listview_footer, null);
@@ -103,12 +85,8 @@ public class QuanziMemberFra extends Fragment {
 
 		});
 
-		// for (int i = 0; i < 8; i++)
-		// mList.add(new UserNewVO());
-		// mAdapter.notifyDataSetChanged();
 
 		groupId = ((ZhuoQuanMainActivity) getActivity()).getGroupid();
-		// 测试，先不用
 		loadData();
 		return layout;
 	}
@@ -127,10 +105,6 @@ public class QuanziMemberFra extends Fragment {
 					}
 					mList.addAll(list);
 					mAdapter.notifyDataSetChanged();
-					if (mList.size() > 0) {
-						// mLastId = mList.get(mList.size() - 1).get;
-					}
-					mPage++;
 				} else {
 					mListViewFooter.noData(!refresh);
 				}
@@ -163,26 +137,14 @@ public class QuanziMemberFra extends Fragment {
 		if (mListViewFooter.startLoading()) {
 			mList.clear();
 			mAdapter.notifyDataSetChanged();
-			mPage = 0;
 			mConnHelper.getQuanMemberList(mUIHandler, MsgTagVO.DATA_LOAD,
 					groupId);
 		}
 	}
 
-	private void loadMore() {
-		// if (mListViewFooter.startLoading()) {
-		// mList.clear();
-		// mAdapter.notifyDataSetChanged();
-		// mPage = 0;
-		// mConnHelper.getQuanMemberList(mUIHandler, MsgTagVO.DATA_LOAD,
-		// groupId);
-		// }
-	}
-
 	private OnClickListener onMoreClick = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			// loadMore();
 		}
 	};
 }

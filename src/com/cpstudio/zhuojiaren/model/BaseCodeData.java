@@ -11,6 +11,11 @@ import java.util.List;
  */
 public class BaseCodeData implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2637852629534005023L;
+
 	private List<zodiac> zodiac;
 
 	private List<constellation> constellation;

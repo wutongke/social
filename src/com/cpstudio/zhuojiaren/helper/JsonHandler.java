@@ -14,14 +14,10 @@ import com.cpstudio.zhuojiaren.model.AboutUsVO;
 import com.cpstudio.zhuojiaren.model.AdVO;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.BusinessInfoVO;
-import com.cpstudio.zhuojiaren.model.CardMsgVO;
 import com.cpstudio.zhuojiaren.model.ChangeBgAVO;
-import com.cpstudio.zhuojiaren.model.CmtRcmdVO;
 import com.cpstudio.zhuojiaren.model.CmtVO;
 import com.cpstudio.zhuojiaren.model.Comment;
 import com.cpstudio.zhuojiaren.model.CompanyNewVO;
-import com.cpstudio.zhuojiaren.model.ContactVO;
-import com.cpstudio.zhuojiaren.model.DownloadVO;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
@@ -35,24 +31,19 @@ import com.cpstudio.zhuojiaren.model.ImQuanVO;
 import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.OrderVO;
-import com.cpstudio.zhuojiaren.model.PagesCmtVO;
 import com.cpstudio.zhuojiaren.model.PlanVO;
 import com.cpstudio.zhuojiaren.model.Praise;
 import com.cpstudio.zhuojiaren.model.ProductNewVO;
 import com.cpstudio.zhuojiaren.model.Province;
-import com.cpstudio.zhuojiaren.model.PushMsgVO;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.QuanUserVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
-import com.cpstudio.zhuojiaren.model.RecentVisitVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.RuleVO;
 import com.cpstudio.zhuojiaren.model.SearchHotKeyWord;
-import com.cpstudio.zhuojiaren.model.SysMsgVO;
 import com.cpstudio.zhuojiaren.model.TeacherVO;
 import com.cpstudio.zhuojiaren.model.TopicDetailVO;
-import com.cpstudio.zhuojiaren.model.TotalUserVO;
 import com.cpstudio.zhuojiaren.model.UserAndCollection;
 import com.cpstudio.zhuojiaren.model.UserEvent;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
@@ -183,27 +174,6 @@ public class JsonHandler {
 		return resultVO;
 	}
 
-	public DownloadVO parseDownload() {
-		DownloadVO item = null;
-		try {
-			Gson gson = new Gson();
-			item = gson.fromJson(jsonData, DownloadVO.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return item;
-	}
-
-	public static PushMsgVO parsePushMsg(String jsonData) {
-		PushMsgVO data = null;
-		try {
-			Gson gson = new Gson();
-			data = gson.fromJson(jsonData, PushMsgVO.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return data;
-	}
 
 	public static GeoVO parseGeo(String jsonData) {
 		GeoVO geoVO = null;
@@ -330,27 +300,6 @@ public class JsonHandler {
 		return goods;
 	}
 
-	public PagesCmtVO parsePagesCmt() {
-		PagesCmtVO data = null;
-		try {
-			Gson gson = new Gson();
-			data = gson.fromJson(jsonData, PagesCmtVO.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return data;
-	}
-
-	public ContactVO parseContact() {
-		ContactVO data = null;
-		try {
-			Gson gson = new Gson();
-			data = gson.fromJson(jsonData, ContactVO.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return data;
-	}
 
 	public RuleVO parseRule() {
 		RuleVO data = null;
@@ -385,16 +334,6 @@ public class JsonHandler {
 		return data;
 	}
 
-	public TotalUserVO parseTotalUser() {
-		TotalUserVO data = null;
-		try {
-			Gson gson = new Gson();
-			data = gson.fromJson(jsonData, TotalUserVO.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return data;
-	}
 
 	public ArrayList<AdVO> parseAdList() {
 		ArrayList<AdVO> list = new ArrayList<AdVO>();
@@ -579,27 +518,6 @@ public class JsonHandler {
 		return list;
 	}
 
-	public ArrayList<RecentVisitVO> parseRecentVisitList() {
-		ArrayList<RecentVisitVO> list = new ArrayList<RecentVisitVO>();
-		try {
-			Type listType = new TypeToken<LinkedList<RecentVisitVO>>() {
-			}.getType();
-			Gson gson = new Gson();
-			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
-				LinkedList<RecentVisitVO> li = gson
-						.fromJson(jsonData, listType);
-
-				for (Iterator<RecentVisitVO> iterator = li.iterator(); iterator
-						.hasNext();) {
-					RecentVisitVO item = (RecentVisitVO) iterator.next();
-					list.add(item);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
 
 	public ArrayList<UserVO> parseUserList() {
 		ArrayList<UserVO> list = new ArrayList<UserVO>();
@@ -664,47 +582,7 @@ public class JsonHandler {
 		return list;
 	}
 
-	public ArrayList<CardMsgVO> parseCardMsgList() {
-		ArrayList<CardMsgVO> list = new ArrayList<CardMsgVO>();
-		try {
-			Type listType = new TypeToken<LinkedList<CardMsgVO>>() {
-			}.getType();
-			Gson gson = new Gson();
-			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
-				LinkedList<CardMsgVO> li = gson.fromJson(jsonData, listType);
 
-				for (Iterator<CardMsgVO> iterator = li.iterator(); iterator
-						.hasNext();) {
-					CardMsgVO item = (CardMsgVO) iterator.next();
-					list.add(item);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	public ArrayList<CmtRcmdVO> parseCmtRecomandList() {
-		ArrayList<CmtRcmdVO> list = new ArrayList<CmtRcmdVO>();
-		try {
-			Type listType = new TypeToken<LinkedList<CmtRcmdVO>>() {
-			}.getType();
-			Gson gson = new Gson();
-			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
-				LinkedList<CmtRcmdVO> li = gson.fromJson(jsonData, listType);
-
-				for (Iterator<CmtRcmdVO> iterator = li.iterator(); iterator
-						.hasNext();) {
-					CmtRcmdVO item = (CmtRcmdVO) iterator.next();
-					list.add(item);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
 
 	public ArrayList<QuanUserVO> parseGroupMemberList() {
 		ArrayList<QuanUserVO> list = new ArrayList<QuanUserVO>();
@@ -811,26 +689,6 @@ public class JsonHandler {
 		return list;
 	}
 
-	public ArrayList<SysMsgVO> parseSysMsgList() {
-		ArrayList<SysMsgVO> list = new ArrayList<SysMsgVO>();
-		try {
-			Type listType = new TypeToken<LinkedList<SysMsgVO>>() {
-			}.getType();
-			Gson gson = new Gson();
-			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
-				LinkedList<SysMsgVO> li = gson.fromJson(jsonData, listType);
-
-				for (Iterator<SysMsgVO> iterator = li.iterator(); iterator
-						.hasNext();) {
-					SysMsgVO item = (SysMsgVO) iterator.next();
-					list.add(item);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
 
 	public ArrayList<QuanVO> parseQuanList() {
 		ArrayList<QuanVO> list = new ArrayList<QuanVO>();

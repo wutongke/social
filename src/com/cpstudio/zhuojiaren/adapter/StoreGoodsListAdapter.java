@@ -3,11 +3,6 @@ package com.cpstudio.zhuojiaren.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.GoodsVO;
-import com.cpstudio.zhuojiaren.model.PicVO;
-import com.cpstudio.zhuojiaren.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.GoodsVO;
 
 public class StoreGoodsListAdapter extends BaseAdapter {
 	private List<GoodsVO> mList = null;
@@ -63,7 +62,6 @@ public class StoreGoodsListAdapter extends BaseAdapter {
 		String zhuobi = "无数据";
 		if (user.getZhuoPrice() != null)
 			zhuobi = user.getZhuoPrice();
-		List<String> pics = user.getImgList();
 		convertView.setTag(R.id.tag_id, id);
 		holder.title.setText(title);
 		holder.money.setText("市场价：" + money);

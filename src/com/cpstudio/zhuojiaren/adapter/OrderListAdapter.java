@@ -17,17 +17,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.OrderVO;
 import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.ui.OrderDetailActivity;
 
-//lz
 public class OrderListAdapter extends BaseAdapter {
 	private List<OrderVO> mList = null;
 	private LayoutInflater inflater = null;
-	private LoadImage mLoadImage = LoadImage.getInstance();
 	Context mContext;
 
 	public OrderListAdapter(Context context, ArrayList<OrderVO> list) {
@@ -98,11 +95,6 @@ public class OrderListAdapter extends BaseAdapter {
 				mContext.startActivity(i);
 			}
 		});
-		//
-		// OrderListItemGoodsListAdapter goodsListAdapter = new
-		// OrderListItemGoodsListAdapter(
-		// mContext, goodsList);
-		// holder.lvGoods.setAdapter(goodsListAdapter);
 
 		OrderListItemGoodsListAdapter goodsListAdapter = new OrderListItemGoodsListAdapter(
 				mContext, goodsList);

@@ -251,26 +251,10 @@ public class TopicDetailActivity extends BaseActivity {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					if (isCollect != null && isCollect.equals("0")) {
-						// collectBtn.setText(R.string.label_collectCancel);
-						// Drawable drawable = getResources().getDrawable(
-						// R.drawable.tab_collect_on);
-						// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-						// drawable.getMinimumHeight());
-						// collectBtn.setCompoundDrawables(null, drawable, null,
-						// null);
 						isCollect = "1";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_collectSuccess);
-						// numTV.setText(String.valueOf(Integer.valueOf(numTV
-						// .getText().toString()) + 1));
 					} else {
-						// collectBtn.setText(R.string.label_collect);
-						// Drawable drawable = getResources().getDrawable(
-						// R.drawable.tab_collect_off);
-						// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-						// drawable.getMinimumHeight());
-						// collectBtn.setCompoundDrawables(null, drawable, null,
-						// null);
 						isCollect = "0";
 						pwh.showPopTip(findViewById(R.id.linearLayoutBottom),
 								null, R.string.label_cancelCollect);
@@ -304,8 +288,6 @@ public class TopicDetailActivity extends BaseActivity {
 
 					@Override
 					public void onClick(View v) {
-						// mConnHelper.goodMsg(topicid, mUIHandler,
-						// MsgTagVO.MSG_LIKE, null, true, null, null);
 						mConnHelper.praiseTopic(mUIHandler, MsgTagVO.MSG_LIKE,
 								topicid, 1);
 					}

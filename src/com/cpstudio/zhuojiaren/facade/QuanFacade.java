@@ -22,10 +22,8 @@ public class QuanFacade {
 			"lastbroadcast", "lastmsgtime", "alert", "founderid", "membertype",
 			"managersids", "membersids", "params1", "params2", "params3",
 			"params4", "params5" };
-	private Context mContext;
 
 	public QuanFacade(Context context) {
-		mContext = context;
 		String userid = ResHelper.getInstance(context).getUserid();
 		dbHelper = new DatabaseHelper(context, userid);
 	}

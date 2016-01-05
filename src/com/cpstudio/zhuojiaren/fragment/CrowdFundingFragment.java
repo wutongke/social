@@ -27,7 +27,6 @@ import com.cpstudio.zhuojiaren.model.ImageRadioButton;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.ui.CrowdFundingDetailActivity;
-import com.cpstudio.zhuojiaren.ui.CrowdFundingListActivity;
 import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
@@ -148,16 +147,6 @@ public class CrowdFundingFragment extends Fragment {
 			}
 		});
 		gridView.setAdapter(mTitleAdapter);
-		// 跳转到某个类型的list
-		// gridView.setOnItemClickListener(new OnItemClickListener() {
-		//
-		// @Override
-		// public void onItemClick(AdapterView<?> parent, View view,
-		// int position, long id) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		// });
 	}
 
 	private void loadData() {
