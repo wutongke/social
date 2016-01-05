@@ -38,7 +38,7 @@ import android.os.Message;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
-import com.cpstudio.zhuojiaren.helper.AsyncConnectHelperLZ.FinishCallback;
+import com.cpstudio.zhuojiaren.helper.AsyncImageConnectHelper.FinishCallback;
 import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.ICompleteCallback;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.City;
@@ -55,12 +55,10 @@ import com.google.gson.reflect.TypeToken;
 import com.qiniu.android.storage.UploadManager;
 
 /**
- * 网络相关
- * 
  * @author lef
  * 
  */
-public class ZhuoConnHelper {
+public class ConnHelper {
 
 	public enum EditMODE {
 		VIEW, EDIT, ADD, DELETE
@@ -69,7 +67,7 @@ public class ZhuoConnHelper {
 	public static final String BASEDATA = "baseCodeDatas";
 	public static final String GXTYPES = "gongxuTypes";
 	public static final String CITYS = "citys";
-	private static ZhuoConnHelper instance;
+	private static ConnHelper instance;
 	private String userid = null;
 	private String password = null;
 	private Handler uiHandler;
@@ -103,9 +101,9 @@ public class ZhuoConnHelper {
 		this.context = context;
 	}
 
-	public static ZhuoConnHelper getInstance(Context mcontext) {
+	public static ConnHelper getInstance(Context mcontext) {
 		if (null == instance) {
-			instance = new ZhuoConnHelper();
+			instance = new ConnHelper();
 		}
 		if (instance.password == null || instance.password.equals("")) {
 			instance.init(mcontext);
@@ -155,7 +153,7 @@ public class ZhuoConnHelper {
 
 	public BaseCodeData getBaseDataSet() {
 		if (baseDataSet == null) {
-			String data = AppClientLef.getInstance(context).readObject(
+			String data = AppClient.getInstance(context).readObject(
 					"BaseSetData");
 			baseDataSet = JsonHandler.parseBaseCodeData(data);
 		}
@@ -779,7 +777,7 @@ public class ZhuoConnHelper {
 				mStartedTag.add(tag);
 			}
 			// 添加的是用户名和密码，其他地方直接用addUserInfoByPost
-			AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+			AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
 					addUserInfoByPost(nameValuePairs), url, getFinishCallback(
 							handler, handlerTag, tag, data), activity);
 			conn.setCancelable(cancelable);
@@ -800,7 +798,7 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-			AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+			AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
 					addUserInfoByPost(nameValuePairs), url, getFinishCallback(
 							handler, handlerTag, tag, data), activity);
 			conn.setCancelable(cancelable);
@@ -820,7 +818,7 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-			AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+			AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
 					addUserInfo(nameValuePairs), url, getFinishCallback(
 							callback, tag), activity);
 			conn.setCancelable(cancelable);
@@ -882,7 +880,7 @@ public class ZhuoConnHelper {
 									nameValuePairs.add(new BasicNameValuePair(
 											key, value));
 								}
-								AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+								AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
 										addUserInfoByPost(nameValuePairs), url,
 										true, getFinishCallback(handler,
 												handlerTag, tag, data),
@@ -985,7 +983,7 @@ public class ZhuoConnHelper {
 								} else
 									nameValuePairs.add(new BasicNameValuePair(
 											"file", extra));
-								AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+								AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
 										addUserInfoByPost(nameValuePairs), url,
 										true, getFinishCallback(handler,
 												handlerTag, tag, data),
@@ -1001,7 +999,7 @@ public class ZhuoConnHelper {
 				helper.execute("test");
 			} else {
 				nameValuePairs.add(new BasicNameValuePair("file", extra));
-				AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+				AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
 						addUserInfoByPost(nameValuePairs), url, true,
 						getFinishCallback(handler, handlerTag, tag, data),
 						activity);
@@ -1025,7 +1023,7 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-			AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+			AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
 					addUserInfo(url), getFinishCallback(handler, handlerTag,
 							tag, data), activity);
 			conn.setCancelable(cancelable);
@@ -1044,7 +1042,7 @@ public class ZhuoConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-			AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+			AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
 					addUserInfo(url), getFinishCallback(callback, tag),
 					activity);
 			conn.setCancelable(cancelable);
@@ -1095,7 +1093,7 @@ public class ZhuoConnHelper {
 	}
 
 	private OnCancelListener getCancelListener(final OnCancelListener cancel,
-			final String tag, final AsyncConnectHelperLZ conn) {
+			final String tag, final AsyncImageConnectHelper conn) {
 		return new OnCancelListener() {
 			@Override
 			public void onCancel(DialogInterface dialog) {
@@ -1175,7 +1173,7 @@ public class ZhuoConnHelper {
 		if (statusnum > 5)
 			params.add(new BasicNameValuePair("statusnum", statusnum + ""));
 
-		return getFromServerByPost(ZhuoCommHelperLz.getMainInfo(), params,
+		return getFromServerByPost(UrlHelper.getMainInfo(), params,
 				mUIHandler, tag);
 	}
 
@@ -1194,7 +1192,7 @@ public class ZhuoConnHelper {
 		if (activityid != null)
 			params.add(new BasicNameValuePair("activityid", activityid));
 
-		return getFromServerByPost(ZhuoCommHelperLz.deleteActives(), params,
+		return getFromServerByPost(UrlHelper.deleteActives(), params,
 				mUIHandler, tag);
 	}
 
@@ -1210,7 +1208,7 @@ public class ZhuoConnHelper {
 	public boolean getAdInfo(Handler mUIHandler, int tag, int type) {
 		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("type", String.valueOf(type)));
-		return getFromServerByPost(ZhuoCommHelperLz.getAdInfo(), params,
+		return getFromServerByPost(UrlHelper.getAdInfo(), params,
 				mUIHandler, tag);
 	}
 
@@ -1232,7 +1230,7 @@ public class ZhuoConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("userid", uid));
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
-		return getFromServerByPost(ZhuoCommHelperLz.getQuanTopicList(),
+		return getFromServerByPost(UrlHelper.getQuanTopicList(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -1255,7 +1253,7 @@ public class ZhuoConnHelper {
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", files);
 		return doPostWithFile(fileMap, nameValuePairs,
-				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
+				UrlHelper.pubQuanTopic(), mUIHandler, tag, activity,
 				"pubQuanTopic", false, null, null);
 	}
 
@@ -1278,7 +1276,7 @@ public class ZhuoConnHelper {
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", files);
 		return doPostWithFile(fileMap, nameValuePairs,
-				ZhuoCommHelperLz.pubAdvice(), mUIHandler, tag, activity,
+				UrlHelper.pubAdvice(), mUIHandler, tag, activity,
 				"pubAdvice", false, null, null);
 	}
 
@@ -1300,7 +1298,7 @@ public class ZhuoConnHelper {
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", files);
 		return doPostWithFile(fileMap, nameValuePairs,
-				ZhuoCommHelperLz.pubQuanTopic(), mUIHandler, tag, activity,
+				UrlHelper.pubQuanTopic(), mUIHandler, tag, activity,
 				"pubQuanTopic", false, null, null);
 	}
 
@@ -1324,7 +1322,7 @@ public class ZhuoConnHelper {
 			fileMap.put("file", files);
 		}
 		return doPostWithFile(fileMap, nameValuePairs,
-				ZhuoCommHelperLz.pubPhoto(), mUIHandler, tag, activity,
+				UrlHelper.pubPhoto(), mUIHandler, tag, activity,
 				"pubQuanTopic", false, null, null, originFilekeys);
 	}
 
@@ -1347,7 +1345,7 @@ public class ZhuoConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("userid", uid));
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
-		return getFromServerByPost(ZhuoCommHelperLz.getQuanEventList(),
+		return getFromServerByPost(UrlHelper.getQuanEventList(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -1359,7 +1357,7 @@ public class ZhuoConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("userid", uid));
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
-		return getFromServerByPost(ZhuoCommHelperLz.getQuaneventcollection(),
+		return getFromServerByPost(UrlHelper.getQuaneventcollection(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -1369,7 +1367,7 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
 		nameValuePairs.add(new BasicNameValuePair("sdflag", "0"));
-		return getFromServerByPost(ZhuoCommHelperLz.getGonglist(),
+		return getFromServerByPost(UrlHelper.getGonglist(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -1378,7 +1376,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
-		return getFromServerByPost(ZhuoCommHelperLz.getPeoplelist(),
+		return getFromServerByPost(UrlHelper.getPeoplelist(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -1388,7 +1386,7 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
 		nameValuePairs.add(new BasicNameValuePair("sdflag", "1"));
-		return getFromServerByPost(ZhuoCommHelperLz.getGonglist(),
+		return getFromServerByPost(UrlHelper.getGonglist(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -1397,7 +1395,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
-		return getFromServerByPost(ZhuoCommHelperLz.getTopiclist(),
+		return getFromServerByPost(UrlHelper.getTopiclist(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -1418,7 +1416,7 @@ public class ZhuoConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
-		return getFromServerByPost(ZhuoCommHelperLz.getUserEvent(),
+		return getFromServerByPost(UrlHelper.getUserEvent(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -1436,7 +1434,7 @@ public class ZhuoConnHelper {
 	public boolean getQuanInfo(Handler mUIHandler, int tag, String groupid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		return getFromServerByPost(ZhuoCommHelperLz.getQuanInfo(),
+		return getFromServerByPost(UrlHelper.getQuanInfo(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -1459,7 +1457,7 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("content", content));
 		if (userid != null)
 			nameValuePairs.add(new BasicNameValuePair("userid", userid));
-		return getFromServerByPost(ZhuoCommHelperLz.manageQuanPermit(),
+		return getFromServerByPost(UrlHelper.manageQuanPermit(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -1495,7 +1493,7 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("gpub", pub));
 		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
 		filesMap.put("gheader", files);
-		return getFromServerByPost(ZhuoCommHelperLz.modifyGroupInfo(),
+		return getFromServerByPost(UrlHelper.modifyGroupInfo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1514,7 +1512,7 @@ public class ZhuoConnHelper {
 		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
 		filesMap.put("file", files);
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		return getFromServerByPost(ZhuoCommHelperLz.setQuanLogo(),
+		return getFromServerByPost(UrlHelper.setQuanLogo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1527,7 +1525,7 @@ public class ZhuoConnHelper {
 			String topicid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("topicid", topicid));
-		return getFromServerByPost(ZhuoCommHelperLz.getTopicDetail(),
+		return getFromServerByPost(UrlHelper.getTopicDetail(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1545,7 +1543,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("topicid", topicid));
 		nameValuePairs.add(new BasicNameValuePair("praise", praise + ""));
-		return getFromServerByPost(ZhuoCommHelperLz.topicPraise(),
+		return getFromServerByPost(UrlHelper.topicPraise(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1554,7 +1552,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("statusid", statusid));
 		nameValuePairs.add(new BasicNameValuePair("praise", praise + ""));
-		return getFromServerByPost(ZhuoCommHelperLz.dynamicPraise(),
+		return getFromServerByPost(UrlHelper.dynamicPraise(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1573,7 +1571,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		nameValuePairs.add(new BasicNameValuePair("praise", praise + ""));
-		return getFromServerByPost(ZhuoCommHelperLz.zanCard(), nameValuePairs,
+		return getFromServerByPost(UrlHelper.zanCard(), nameValuePairs,
 				mUIHandler, handlerTag);
 	}
 
@@ -1599,7 +1597,7 @@ public class ZhuoConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("toId", toId));
 		if (toUserid != null)
 			nameValuePairs.add(new BasicNameValuePair("toUserid", toUserid));
-		return getFromServerByPost(ZhuoCommHelperLz.topicComment(),
+		return getFromServerByPost(UrlHelper.topicComment(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1612,7 +1610,7 @@ public class ZhuoConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("toId", toId));
 		if (toUserid != null)
 			nameValuePairs.add(new BasicNameValuePair("toUserid", toUserid));
-		return getFromServerByPost(ZhuoCommHelperLz.dynamicComment(),
+		return getFromServerByPost(UrlHelper.dynamicComment(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1629,7 +1627,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		if (userid != null)
 			nameValuePairs.add(new BasicNameValuePair("userid", userid));
-		return getFromServerByPost(ZhuoCommHelperLz.getUserInfo(),
+		return getFromServerByPost(UrlHelper.getUserInfo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1638,7 +1636,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		if (id != null)
 			nameValuePairs.add(new BasicNameValuePair("id", id));
-		return getFromServerByPost(ZhuoCommHelperLz.gonggaoDetail(),
+		return getFromServerByPost(UrlHelper.gonggaoDetail(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1726,7 +1724,7 @@ public class ZhuoConnHelper {
 		if (user.getFaith() != null)
 			nameValuePairs
 					.add(new BasicNameValuePair("faith", user.getFaith()));
-		return getFromServerByPost(ZhuoCommHelperLz.modifyUserInfo(),
+		return getFromServerByPost(UrlHelper.modifyUserInfo(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1747,7 +1745,7 @@ public class ZhuoConnHelper {
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", fileList);
 		return doPostWithFile(fileMap, nameValuePairs,
-				ZhuoCommHelperLz.setUserHeadImage(), mUIHandler, tag, activity,
+				UrlHelper.setUserHeadImage(), mUIHandler, tag, activity,
 				"setHeadImage", false, null, null);
 	}
 
@@ -1763,7 +1761,7 @@ public class ZhuoConnHelper {
 			String statusid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("statusid", statusid));
-		return getFromServerByPost(ZhuoCommHelperLz.getDetailDynamic(),
+		return getFromServerByPost(UrlHelper.getDetailDynamic(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1778,7 +1776,7 @@ public class ZhuoConnHelper {
 				.valueOf(pageNo)));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", String
 				.valueOf(pageSize)));
-		return getFromServerByPost(ZhuoCommHelperLz.getDynamicList(),
+		return getFromServerByPost(UrlHelper.getDynamicList(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1799,7 +1797,7 @@ public class ZhuoConnHelper {
 				.valueOf(pageNo)));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", String
 				.valueOf(pageSize)));
-		return getFromServerByPost(ZhuoCommHelperLz.orderList(),
+		return getFromServerByPost(UrlHelper.orderList(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1816,7 +1814,7 @@ public class ZhuoConnHelper {
 			String billNo) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("billNo", billNo));
-		return getFromServerByPost(ZhuoCommHelperLz.orderDetail(),
+		return getFromServerByPost(UrlHelper.orderDetail(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1824,7 +1822,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("version", String
 				.valueOf(version)));
-		return getFromServerByPost(ZhuoCommHelperLz.cardBg(), nameValuePairs,
+		return getFromServerByPost(UrlHelper.cardBg(), nameValuePairs,
 				mUIHandler, handlerTag);
 	}
 
@@ -1832,7 +1830,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs
 				.add(new BasicNameValuePair("bgid", String.valueOf(bgid)));
-		return getFromServerByPost(ZhuoCommHelperLz.setCardBg(),
+		return getFromServerByPost(UrlHelper.setCardBg(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1854,7 +1852,7 @@ public class ZhuoConnHelper {
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", files);
 		return doPostWithFile(fileMap, nameValuePairs,
-				ZhuoCommHelperLz.pubDynamic(), mUIHandler, handlerTag,
+				UrlHelper.pubDynamic(), mUIHandler, handlerTag,
 				activity, "pubDynamic", false, null, null);
 	}
 
@@ -1887,7 +1885,7 @@ public class ZhuoConnHelper {
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", files);
 		return doPostWithFile(fileMap, nameValuePairs,
-				ZhuoCommHelperLz.pubGongxu(), mUIHandler, handlerTag, activity,
+				UrlHelper.pubGongxu(), mUIHandler, handlerTag, activity,
 				"pubDynamic", false, null, null);
 	}
 
@@ -1903,7 +1901,7 @@ public class ZhuoConnHelper {
 			String statusid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("statusid", statusid));
-		return getFromServerByPost(ZhuoCommHelperLz.getDetailDynamic(),
+		return getFromServerByPost(UrlHelper.getDetailDynamic(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1922,7 +1920,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("statusid", statusid));
 		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
-		return getFromServerByPost(ZhuoCommHelperLz.collectStatusFamily(),
+		return getFromServerByPost(UrlHelper.collectStatusFamily(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1940,7 +1938,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("topicid", topicid));
 		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
-		return getFromServerByPost(ZhuoCommHelperLz.collectTopic(),
+		return getFromServerByPost(UrlHelper.collectTopic(),
 				nameValuePairs, mUIHandler, handlerTag);
 	}
 
@@ -1955,7 +1953,7 @@ public class ZhuoConnHelper {
 	public boolean getQuanMemberList(Handler mUIHandler, int tag, String groupid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		return getFromServerByPost(ZhuoCommHelperLz.getGroupMemberList(),
+		return getFromServerByPost(UrlHelper.getGroupMemberList(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -1974,7 +1972,7 @@ public class ZhuoConnHelper {
 				.valueOf(pageNo)));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", String
 				.valueOf(pageSize)));
-		return getFromServerByPost(ZhuoCommHelperLz.getPutList(),
+		return getFromServerByPost(UrlHelper.getPutList(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -1998,13 +1996,13 @@ public class ZhuoConnHelper {
 				.valueOf(pageNo)));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", String
 				.valueOf(pageSize)));
-		return getFromServerByPost(ZhuoCommHelperLz.groupStatus(),
+		return getFromServerByPost(UrlHelper.groupStatus(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
 	public boolean getFollowReqList(Handler mUIHandler, int tag) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		return getFromServerByPost(ZhuoCommHelperLz.getFollowReqList(),
+		return getFromServerByPost(UrlHelper.getFollowReqList(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2020,7 +2018,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs
 				.add(new BasicNameValuePair("type", String.valueOf(type)));
-		return getFromServerByPost(ZhuoCommHelperLz.getMyStatusCard(),
+		return getFromServerByPost(UrlHelper.getMyStatusCard(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2033,7 +2031,7 @@ public class ZhuoConnHelper {
 	 */
 	public boolean getMyRenmai(Handler mUIHandler, int tag) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		return getFromServerByPost(ZhuoCommHelperLz.myRenmai(), nameValuePairs,
+		return getFromServerByPost(UrlHelper.myRenmai(), nameValuePairs,
 				mUIHandler, tag);
 	}
 
@@ -2052,7 +2050,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
-		return getFromServerByPost(ZhuoCommHelperLz.followUser(),
+		return getFromServerByPost(UrlHelper.followUser(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2074,7 +2072,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
-		return getFromServerByPost(ZhuoCommHelperLz.makeFriends(),
+		return getFromServerByPost(UrlHelper.makeFriends(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2091,7 +2089,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		if (groupid != null)
 			nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		return getFromServerByPost(ZhuoCommHelperLz.getReqQuanUsers(),
+		return getFromServerByPost(UrlHelper.getReqQuanUsers(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2106,7 +2104,7 @@ public class ZhuoConnHelper {
 	 */
 	public boolean getMyGroupList(Handler mUIHandler, int tag) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		return getFromServerByPost(ZhuoCommHelperLz.getUrlMyGroupList(),
+		return getFromServerByPost(UrlHelper.getUrlMyGroupList(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2122,7 +2120,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		if (userid != null)
 			nameValuePairs.add(new BasicNameValuePair("userid", userid));
-		return getFromServerByPost(ZhuoCommHelperLz.getUserBusinessInfo(),
+		return getFromServerByPost(UrlHelper.getUserBusinessInfo(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2136,12 +2134,12 @@ public class ZhuoConnHelper {
 	 */
 	public boolean getSameUser(Handler mUIHandler, int tag, int type,
 			int pageNo, int pageSize, String extraStr) {
-		String URLS[] = { ZhuoCommHelperLz.getCityJiaren(),
-				ZhuoCommHelperLz.getIndustryJiaren(),
-				ZhuoCommHelperLz.getNearJiaren(),
-				ZhuoCommHelperLz.getHobbyJiaren(),
-				ZhuoCommHelperLz.getTeatureJiaren(),
-				ZhuoCommHelperLz.getAllJiaren() };
+		String URLS[] = { UrlHelper.getCityJiaren(),
+				UrlHelper.getIndustryJiaren(),
+				UrlHelper.getNearJiaren(),
+				UrlHelper.getHobbyJiaren(),
+				UrlHelper.getTeatureJiaren(),
+				UrlHelper.getAllJiaren() };
 		String keys[] = { "city", "industry", "near(暂无)", "hobby", "tchtype",
 				"xx" };
 		if (type < 1 || type > URLS.length)
@@ -2151,7 +2149,7 @@ public class ZhuoConnHelper {
 		if (extraStr != null && !extraStr.equals(""))
 			nameValuePairs
 					.add(new BasicNameValuePair(keys[type - 1], extraStr));
-		return getFromServerByPost(ZhuoCommHelperLz.SERVER + URLS[type - 1],
+		return getFromServerByPost(UrlHelper.SERVER + URLS[type - 1],
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2164,7 +2162,7 @@ public class ZhuoConnHelper {
 	 */
 	public boolean getFriendReq(Handler mUIHandler, int tag) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		return getFromServerByPost(ZhuoCommHelperLz.getFriendReq(),
+		return getFromServerByPost(UrlHelper.getFriendReq(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2178,7 +2176,7 @@ public class ZhuoConnHelper {
 	public boolean getCompanyProduct(Handler mUIHandler, int tag, String comid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("comid", comid));
-		return getFromServerByPost(ZhuoCommHelperLz.getProduct(),
+		return getFromServerByPost(UrlHelper.getProduct(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2186,7 +2184,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		if (userid != null)
 			nameValuePairs.add(new BasicNameValuePair("userid", userid));
-		return getFromServerByPost(ZhuoCommHelperLz.getZMDT(), nameValuePairs,
+		return getFromServerByPost(UrlHelper.getZMDT(), nameValuePairs,
 				mUIHandler, tag);
 	}
 
@@ -2203,7 +2201,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		if (userid != null)
 			nameValuePairs.add(new BasicNameValuePair("userid", userid));
-		return getFromServerByPost(ZhuoCommHelperLz.getCompany(),
+		return getFromServerByPost(UrlHelper.getCompany(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2218,7 +2216,7 @@ public class ZhuoConnHelper {
 	public boolean deleteProduct(Handler mUIHandler, int tag, String productid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("productid", productid));
-		return getFromServerByPost(ZhuoCommHelperLz.deleteProduct(),
+		return getFromServerByPost(UrlHelper.deleteProduct(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2233,7 +2231,7 @@ public class ZhuoConnHelper {
 	public boolean deleteCompanyInfo(Handler mUIHandler, int tag, String comid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("comid", comid));
-		return getFromServerByPost(ZhuoCommHelperLz.deleteCompany(),
+		return getFromServerByPost(UrlHelper.deleteCompany(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2250,7 +2248,7 @@ public class ZhuoConnHelper {
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", files);
 		return doPostWithFile(fileMap, nameValuePairs,
-				ZhuoCommHelperLz.updateProduct(), mUIHandler, tag, activity,
+				UrlHelper.updateProduct(), mUIHandler, tag, activity,
 				"updateProduct", false, null, null, originFilekeys);
 	}
 
@@ -2266,7 +2264,7 @@ public class ZhuoConnHelper {
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", files);
 		return doPostWithFile(fileMap, nameValuePairs,
-				ZhuoCommHelperLz.addProduct(), mUIHandler, tag, activity,
+				UrlHelper.addProduct(), mUIHandler, tag, activity,
 				"addProduct", false, null, null, originFilekeys);
 	}
 
@@ -2301,7 +2299,7 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("homepage", homepage));
 		nameValuePairs.add(new BasicNameValuePair("status", String
 				.valueOf(status)));
-		return getFromServerByPost(ZhuoCommHelperLz.updateCompany(),
+		return getFromServerByPost(UrlHelper.updateCompany(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2314,7 +2312,7 @@ public class ZhuoConnHelper {
 	 */
 	public boolean getHotKey(Handler mUIHandler, int tag) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		return getFromServerByPost(ZhuoCommHelperLz.getHotKey(),
+		return getFromServerByPost(UrlHelper.getHotKey(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2336,7 +2334,7 @@ public class ZhuoConnHelper {
 				.valueOf(pageNo)));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", String
 				.valueOf(pageSize)));
-		return getFromServerByPost(ZhuoCommHelperLz.getPortalSearch(),
+		return getFromServerByPost(UrlHelper.getPortalSearch(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2350,7 +2348,7 @@ public class ZhuoConnHelper {
 	public boolean getMyFriends(Handler mUIHandler, int tag) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
-		return getFromServerByPost(ZhuoCommHelperLz.getMyFriends(),
+		return getFromServerByPost(UrlHelper.getMyFriends(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2367,7 +2365,7 @@ public class ZhuoConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("homepage", homepage));
 		nameValuePairs.add(new BasicNameValuePair("status", String
 				.valueOf(status)));
-		return getFromServerByPost(ZhuoCommHelperLz.addCompany(),
+		return getFromServerByPost(UrlHelper.addCompany(),
 				nameValuePairs, mUIHandler, tag);
 	}
 
@@ -2396,7 +2394,7 @@ public class ZhuoConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("toId", toId));
 		if (toId != null)
 			nameValuePairs.add(new BasicNameValuePair("toUserid", toUserid));
-		return getFromServerByPost(ZhuoCommHelperLz.cmtGX(), nameValuePairs,
+		return getFromServerByPost(UrlHelper.cmtGX(), nameValuePairs,
 				mUIHandler, tag);
 	}
 
@@ -2427,7 +2425,7 @@ public class ZhuoConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("version", "0"));
-		String url = ZhuoCommHelperLz.getBaseCodeData();
+		String url = UrlHelper.getBaseCodeData();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				cancelable, cancel, data);
 		// }
@@ -2449,7 +2447,7 @@ public class ZhuoConnHelper {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs = addUserInfoByPost(nameValuePairs);
 			nameValuePairs.add(new BasicNameValuePair("version", "0"));
-			String url = ZhuoCommHelperLz.getGXTypes();
+			String url = UrlHelper.getGXTypes();
 			return doPost(nameValuePairs, url, handler, handlerTag, activity,
 					url, cancelable, cancel, data);
 		}

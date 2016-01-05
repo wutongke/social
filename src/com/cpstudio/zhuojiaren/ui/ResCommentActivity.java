@@ -8,25 +8,19 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelperLz;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.GeoVO.ResultVO;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
 public class ResCommentActivity extends Activity {
 
 	private PopupWindows pwh = null;
 	private String msgid = null;
-	private String after = null;
-	private ZhuoConnHelper mConnHelper = null;
 	private String content = null;
 	private String toId = null;
 	private String toUserid = null;
@@ -38,7 +32,6 @@ public class ResCommentActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_msg_cmt);
 		contentEditText = (EditText) findViewById(R.id.editTextContent);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
 		pwh = new PopupWindows(ResCommentActivity.this);
 		Intent i = getIntent();
 		msgid = i.getStringExtra("msgid");
@@ -106,10 +99,10 @@ public class ResCommentActivity extends Activity {
 		}
 		if(type==3)
 		{
-			ZhuoConnHelper.getInstance(getApplicationContext()).cmtGongxu(mUIHandler, MsgTagVO.PUB_INFO, msgid, content, toId, toUserid);
+			ConnHelper.getInstance(getApplicationContext()).cmtGongxu(mUIHandler, MsgTagVO.PUB_INFO, msgid, content, toId, toUserid);
 		}
 		else
-		AppClientLef.getInstance(ResCommentActivity.this).pubComment(
+		AppClient.getInstance(ResCommentActivity.this).pubComment(
 				ResCommentActivity.this, mUIHandler, MsgTagVO.PUB_INFO, msgid,
 				content, toId, toUserid);
 	}

@@ -18,6 +18,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.drawable;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
+import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ProductVO;

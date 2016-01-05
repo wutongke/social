@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -24,7 +23,7 @@ import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.HangYeVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.hobby;
@@ -36,16 +35,15 @@ public class FieldSelectUserActivity extends Activity implements
 	private ListView mListView;
 	private SimpleAdapter mAdapter;
 	List<Map<String, String>> contents = new ArrayList<Map<String, String>>();
-	ZhuoConnHelper mConnHelper;
+	ConnHelper mConnHelper;
 	// 行业，兴趣，导师
 	private int type = 1;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_field_select);
 		type = getIntent().getIntExtra("type", 1);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		initClick();
 		mAdapter = new SimpleAdapter(this, contents, R.layout.item_field_list,
 				new String[] { "id", "name" }, new int[] {

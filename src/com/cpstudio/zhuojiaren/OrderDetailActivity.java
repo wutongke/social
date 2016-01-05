@@ -14,12 +14,18 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.array;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
+import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.adapter.OrderListItemGoodsListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.OrderVO;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.NestedListView;
@@ -51,7 +57,7 @@ public class OrderDetailActivity extends BaseActivity {
 	View rlCmt;
 	String orderId = null;
 	OrderListItemGoodsListAdapter mAdapter;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +66,7 @@ public class OrderDetailActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		initTitle();
 		title.setText(R.string.title_activity_order_detail);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		orderId = getIntent().getStringExtra("orderId");
 
 		loadData();

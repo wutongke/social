@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseFragmentActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.CrowdFundingFragment;

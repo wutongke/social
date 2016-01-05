@@ -21,10 +21,9 @@ import android.widget.SimpleAdapter;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.StoreGoodsListAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
@@ -32,6 +31,7 @@ import com.cpstudio.zhuojiaren.model.BeanBanner;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
@@ -64,7 +64,7 @@ public class StoreMainActivity extends BaseActivity implements
 			R.drawable.travel, R.drawable.city };
 	String[] tags;
 
-	private AppClientLef mConnHelper = null;
+	private AppClient mConnHelper = null;
 	private int mPage = 1;
 	private ListViewFooter mListViewFooter = null;
 	private StoreGoodsListAdapter mAdapter = null;
@@ -80,7 +80,7 @@ public class StoreMainActivity extends BaseActivity implements
 		function.setVisibility(View.VISIBLE);
 		title.setText(R.string.title_activity_store_main);
 		initView();
-		mConnHelper = AppClientLef.getInstance(getApplicationContext());
+		mConnHelper = AppClient.getInstance(getApplicationContext());
 		mAdapter = new StoreGoodsListAdapter(this, mList);
 		gvGoods.setAdapter(mAdapter);
 		gvGoods.setOnItemClickListener(this);
@@ -299,7 +299,7 @@ public class StoreMainActivity extends BaseActivity implements
 	}
 
 	private void loadGoodsCatgory() {
-		AppClientLef.getInstance(this).getGoodsCategory(mUIHandler,
+		AppClient.getInstance(this).getGoodsCategory(mUIHandler,
 				GoodsCategory, this, false, null, null);
 	}
 

@@ -19,18 +19,18 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.facade.QuanFacade;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.Province;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.ui.QuanCreateActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
@@ -87,7 +87,7 @@ public class QuanBriefActivity extends BaseActivity {
 	private PopupWindows pwh = null;
 	private String groupid = null, groupName = null, gheadurl = null;
 	private String owerName = null, owerId = null;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private boolean isfollow = false;// 是否已经加入该圈子
 	private QuanFacade mFacade = null;
 	List<City> citys;
@@ -104,7 +104,7 @@ public class QuanBriefActivity extends BaseActivity {
 
 		title.setText(R.string.label_quan_brief);
 
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 
 		mFacade = new QuanFacade(getApplicationContext());
 		Intent i = getIntent();
@@ -208,7 +208,7 @@ public class QuanBriefActivity extends BaseActivity {
 						QuanBriefActivity.this)) {
 					res = JsonHandler.parseResult((String) msg.obj);
 					// 每次都写文件，没必要，如果是从网络获取则缓存，否则不用再缓存了
-					AppClientLef.getInstance(getApplicationContext())
+					AppClient.getInstance(getApplicationContext())
 							.saveObject((String) msg.obj, "citys");
 				} else {
 					return;

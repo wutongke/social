@@ -21,10 +21,9 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ImageGridAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -234,7 +233,7 @@ public class EditEventActivity extends BaseActivity {
 					CommonUtil.displayToast(mContext, R.string.please_finish);
 					return;
 				} else
-					AppClientLef.getInstance(EditEventActivity.this)
+					AppClient.getInstance(EditEventActivity.this)
 							.createEvent(EditEventActivity.this, uiHandler,
 									MsgTagVO.PUB_INFO, longitude,latitude,groupeId, name, content,
 									contacts.toString(), timeStart, timeEnd,

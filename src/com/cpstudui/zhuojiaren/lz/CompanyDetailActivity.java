@@ -21,18 +21,18 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.CardEditActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper.EditMODE;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper.EditMODE;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.CompanyNewVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.industry;
 import com.cpstudio.zhuojiaren.model.position;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
@@ -65,7 +65,7 @@ public class CompanyDetailActivity extends BaseActivity {
 	@InjectView(R.id.lv_company)
 	ListView lv_company;
 	EditMODE edtMode = EditMODE.VIEW;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	CommonAdapter<CompanyNewVO> mAdapter;
 	List<CompanyNewVO> companyList = new ArrayList<CompanyNewVO>();
 	// BaseCodeData codeDatas;
@@ -88,7 +88,7 @@ public class CompanyDetailActivity extends BaseActivity {
 		function.setBackgroundResource(R.drawable.button_save);
 		title.setText(R.string.title_activity_card_add_user_work);
 
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		isEditable = getIntent().getBooleanExtra(CardEditActivity.EDITABLE,
 				false);
 		userid = getIntent().getStringExtra(CardEditActivity.USERID);

@@ -31,12 +31,11 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.R.color;
 import com.cpstudio.zhuojiaren.adapter.ImageGridAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
@@ -79,7 +78,7 @@ public class PublishCrowdFundingActivity extends BaseActivity {
 	String[] crowdFundingTypeStr;
 	// titleÍ¼Æ¬ÊÇ·ñ¸Ä±ä
 	private boolean mHeadChanged = false;
-	private AppClientLef mConnHelper = null;
+	private AppClient mConnHelper = null;
 	private LoadImage mLoadImage = new LoadImage();
 	private Context mContext;
 	private ImageSelectHelper mIsh2 = null;
@@ -112,7 +111,7 @@ public class PublishCrowdFundingActivity extends BaseActivity {
 		title.setText(R.string.new_crowdfunding_project);
 		function.setText(R.string.finish);
 		mContext = this;
-		mConnHelper = AppClientLef.getInstance(getApplicationContext());
+		mConnHelper = AppClient.getInstance(getApplicationContext());
 		mIsh2 = ImageSelectHelper.getIntance(this,
 				R.id.apcf_linearLayoutPicContainer);
 		pwh = new PopupWindows(this);

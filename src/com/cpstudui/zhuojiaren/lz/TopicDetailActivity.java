@@ -25,18 +25,18 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.MsgCmtActivity;
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.Comment;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.Praise;
 import com.cpstudio.zhuojiaren.model.TopicDetailVO;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
@@ -58,7 +58,7 @@ public class TopicDetailActivity extends BaseActivity {
 	private View mHeadView = null;
 	private PopupWindows pwh;
 	private String topicid = null;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private String isCollect = "0";
 	private String uid = null;
 	TextView collectBtn;
@@ -74,7 +74,7 @@ public class TopicDetailActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		title.setText(R.string.title_activity_topic_detail);
 
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 
 		Intent intent = getIntent();
 		topicid = intent.getStringExtra("topicid");

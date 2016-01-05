@@ -30,15 +30,15 @@ import android.widget.TextView.OnEditorActionListener;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ZhuoUserListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.SearchHotKeyWord;
 import com.cpstudio.zhuojiaren.model.UserAndCollection;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
@@ -74,7 +74,7 @@ public class SearchMainActivity extends BaseActivity implements
 
 	String uid = null;
 	String mSearchKey = null;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private int mPage = 0;
 	private int mPageNum = 5;
 
@@ -86,7 +86,7 @@ public class SearchMainActivity extends BaseActivity implements
 		initTitle();
 		title.setText(R.string.label_searchUserHint);
 
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
 
 		mPullDownView = (PullDownView) findViewById(R.id.search_pull_down_view);

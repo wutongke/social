@@ -14,18 +14,18 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.Optional;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.ViewOrderActivity;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.ui.CartActivity;
 import com.cpstudio.zhuojiaren.ui.GoodsCollectionActivity;
 import com.cpstudio.zhuojiaren.ui.LocateActivity;
@@ -49,7 +49,7 @@ public class StoreMyHomeActivity extends BaseActivity {
 	@InjectView(R.id.imageViewHome)
 	ImageView ivHome;
 
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private String mUid = null;
 
 	@Override
@@ -59,7 +59,7 @@ public class StoreMyHomeActivity extends BaseActivity {
 		initTitle();
 		title.setText(R.string.title_activity_lzmy_home);
 		ButterKnife.inject(this);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		initClick();
 	}
@@ -112,8 +112,6 @@ public class StoreMyHomeActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 
-				// startActivity(new
-				// Intent(StoreMyHomeActivity.this,MyMoneyActivity.class));
 			}
 		});
 		vOrder.setOnClickListener(new OnClickListener() {
@@ -195,7 +193,7 @@ public class StoreMyHomeActivity extends BaseActivity {
 
 	private void loadDb() {
 		// TODO Auto-generated method stub
-		AppClientLef.getInstance(this.getApplicationContext()).getMyZhuoBi(
+		AppClient.getInstance(this.getApplicationContext()).getMyZhuoBi(
 				StoreMyHomeActivity.this, mUIHandler, MsgTagVO.DATA_OTHER);
 	}
 

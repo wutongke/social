@@ -4,7 +4,7 @@
  * Created by xuanzhui on 2015/8/20.
  * Copyright (c) 2015 BeeCloud. All rights reserved.
  */
-package com.cpstudio.zhuojiaren.ui;
+package com.cpstudio.zhuojiaren.adapter;
 
 import com.cpstudio.zhuojiaren.R;
 

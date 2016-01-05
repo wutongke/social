@@ -17,8 +17,8 @@ import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.Dynamic;
@@ -35,7 +35,7 @@ public class ActiveListAdapter extends BaseAdapter {
 		this.mList = list;
 		mcontext = context;
 		this.inflater = LayoutInflater.from(context);
-		cityList = ZhuoConnHelper.getInstance(context.getApplicationContext())
+		cityList = ConnHelper.getInstance(context.getApplicationContext())
 				.getCitys();
 	}
 

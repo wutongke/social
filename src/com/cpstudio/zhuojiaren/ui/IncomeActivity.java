@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.R.layout;
 import com.cpstudio.zhuojiaren.R.menu;
 import com.cpstudio.zhuojiaren.adapter.CrowdFundingAdapter;
 import com.cpstudio.zhuojiaren.adapter.IncomeAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
@@ -40,14 +39,14 @@ public class IncomeActivity extends BaseActivity {
 
 	// ·ÖÒ³
 	private int mPage = 0;
-	private AppClientLef appClientLef;
+	private AppClient appClientLef;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_income);
 		ButterKnife.inject(this);
-		appClientLef = AppClientLef.getInstance(this);
+		appClientLef = AppClient.getInstance(this);
 		initTitle();
 		title.setText(R.string.income_expenditure_details);
 		initPullDownView();

@@ -29,12 +29,11 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelperLz;
+import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -156,9 +155,9 @@ public class VedioActivity extends BaseActivity {
 									R.string.please_finish_share);
 							return;
 						}
-						AppClientLef.getInstance(
+						AppClient.getInstance(
 								VedioActivity.this.getApplicationContext())
-								.shareThought( ZhuoCommHelperLz.getGrouththought(),"goid",vedio.getId(),
+								.shareThought( UrlHelper.getGrouththought(),"goid",vedio.getId(),
 										share.getText().toString(),
 										uiHandler, MsgTagVO.PUB_INFO,
 										VedioActivity.this, true, null, null);
@@ -479,7 +478,7 @@ public class VedioActivity extends BaseActivity {
 	private void submit() {
 		// TODO Auto-generated method stub
 		if (vedio != null && vedio.getId() != null) {
-			AppClientLef.getInstance(this).submitVedio(VedioActivity.this,
+			AppClient.getInstance(this).submitVedio(VedioActivity.this,
 					vedio.getId());
 		}
 	}

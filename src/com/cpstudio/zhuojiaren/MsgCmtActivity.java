@@ -11,8 +11,12 @@ import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
+import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 /**
@@ -25,7 +29,7 @@ public class MsgCmtActivity extends Activity {
 	private PopupWindows pwh = null;
 	private String msgid = null;
 	private String after = null;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private String content = null;
 	private String toId = null;
 	private String toUserid = null;
@@ -35,7 +39,7 @@ public class MsgCmtActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_msg_cmt);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		pwh = new PopupWindows(MsgCmtActivity.this);
 		Intent i = getIntent();
 		msgid = i.getStringExtra("msgid");

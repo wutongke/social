@@ -1,21 +1,17 @@
 package io.rong.app;
 
 import io.rong.app.database.UserInfos;
-import io.rong.app.database.UserInfosDao;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 
 import com.cpstudio.zhuojiaren.facade.GroupFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
@@ -30,10 +26,8 @@ public class DemoContext {
 	private static DemoContext mDemoContext;
 	public Context mContext;
 	private ArrayList<UserInfo> mUserInfos;
-	private ArrayList<UserInfo> mFriendInfos;
 	private SharedPreferences mPreferences;
 	private RongIM.LocationProvider.LocationCallback mLastLocationCallback;
-	// private UserInfosDao mUserInfosDao;
 	private UserFacade mUserInfosDao;
 	private GroupFacade mGroupInfoDao;
 
@@ -89,23 +83,6 @@ public class DemoContext {
 		mUserInfos = userInfos;
 	}
 
-	// /**
-	// * 临时存放用户数据
-	// *
-	// * @param userInfos
-	// */
-	// public void setFriends(ArrayList<UserInfo> userInfos) {
-	//
-	// this.mFriendInfos = userInfos;
-	// }
-	//
-	// public ArrayList<UserInfo> getFriends() {
-	// return mFriendInfos;
-	// }
-
-	// public DemoApi getDemoApi() {
-	// return mDemoApi;
-	// }
 
 	/**
 	 * 删除 userinfos 表
@@ -123,38 +100,11 @@ public class DemoContext {
 	 */
 	public void updateUserInfos(String targetid, String status) {
 
-		// UserInfos userInfos = mUserInfosDao.queryBuilder()
-		// .where(UserInfosDao.Properties.Userid.eq(targetid)).unique();
-		// userInfos.setStatus(status);
-		// userInfos.setUsername(userInfos.getUsername());
-		// userInfos.setPortrait(userInfos.getPortrait());
-		// userInfos.setUserid(userInfos.getUserid());
 		UserNewVO user = mUserInfosDao.getById(targetid);
-		// UserNewVO 需要增加一个字段，表示与我的关系
-		// user.setu
 		mUserInfosDao.update(user);
 
 	}
 
-	/**
-	 * 向数据库插入数据
-	 * 
-	 * @param info
-	 *            用户信息
-	 * @param status
-	 *            状态
-	 */
-	// public void insertOrReplaceUserInfo(UserInfo info, String status) {
-	//
-	// UserNewVO user = new UserNewVO();
-	// // user.setBirthday(birthday)
-	// // UserInfos userInfos = new UserInfos();
-	// // userInfos.setStatus(status);
-	// // userInfos.setUsername(info.getName());
-	// // userInfos.setPortrait(String.valueOf(info.getPortraitUri()));
-	// // userInfos.setUserid(info.getUserId());
-	// mUserInfosDao.saveOrUpdate(user);
-	// }
 
 	public void insertOrReplaceUserInfoList(ArrayList<UserInfo> list,
 			String status) {
@@ -189,7 +139,6 @@ public class DemoContext {
 	public ArrayList<UserInfo> getFriendList() {
 		List<UserInfo> userInfoList = new ArrayList();
 
-		// 不应该是全部的，应该是所有的好友
 		List<UserNewVO> userInfos = mUserInfosDao.getAll();
 
 		if (userInfos == null)

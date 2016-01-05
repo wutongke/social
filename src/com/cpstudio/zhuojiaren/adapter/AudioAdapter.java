@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
@@ -26,12 +26,12 @@ public class AudioAdapter extends CommonAdapter<RecordVO> {
 	private SeekBar seekBar;
 	private View curPlayView;
 	private volatile boolean isPlaying = false;
-	private AppClientLef appClient;
+	private AppClient appClient;
 
 	public AudioAdapter(Context context, List<RecordVO> mDatas, int itemLayoutId) {
 		super(context, mDatas, itemLayoutId);
 		// TODO Auto-generated constructor stub
-		appClient = AppClientLef.getInstance(context);
+		appClient = AppClient.getInstance(context);
 	}
 
 	@Override

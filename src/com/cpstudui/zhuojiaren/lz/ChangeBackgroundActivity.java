@@ -13,14 +13,14 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ChangeBgGridViewAdatper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.ChangeBgAVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.google.gson.JsonElement;
@@ -37,7 +37,7 @@ public class ChangeBackgroundActivity extends BaseActivity implements
 	GridView gvBackGround;
 	CommonAdapter mAdapter;
 	ArrayList<ChangeBgAVO> mList = new ArrayList<ChangeBgAVO>();
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private ResHelper mResHelper = null;
 	int bgVersion = 0;
 	private Handler mUIHandler = new Handler() {
@@ -138,7 +138,7 @@ public class ChangeBackgroundActivity extends BaseActivity implements
 		initTitle();
 		title.setText(R.string.title_activity_change_background);
 		ButterKnife.inject(this);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		mResHelper = ResHelper.getInstance(getApplicationContext());
 		mAdapter = new ChangeBgGridViewAdatper(ChangeBackgroundActivity.this,
 				mList, R.layout.item_imageview);

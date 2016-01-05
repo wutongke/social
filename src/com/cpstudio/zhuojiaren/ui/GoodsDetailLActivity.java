@@ -2,8 +2,6 @@ package com.cpstudio.zhuojiaren.ui;
 
 import java.util.ArrayList;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -21,9 +19,8 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
@@ -69,9 +66,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 	private TextView company;
 	private TextView companyDes;
 	private ImageView companyImage;
-	private RelativeLayout productMoreInfo;
-	private LinearLayout companyMoreInfo;
-	private AppClientLef appClient;
+	private AppClient appClient;
 	private String goodsId;
 	private static final int Collection = 333;
 	LoadImage lImage = LoadImage.getInstance();
@@ -81,7 +76,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_goods_detail_l);
 		ButterKnife.inject(this);
-		appClient = AppClientLef.getInstance(this.getApplicationContext());
+		appClient = AppClient.getInstance(this.getApplicationContext());
 		goodsId = getIntent().getStringExtra("goodsId");
 		if (goodsId == null) {
 			CommonUtil.displayToast(this, R.string.data_error);
@@ -163,7 +158,6 @@ public class GoodsDetailLActivity extends BaseActivity {
 			}
 		};
 		mListView.setAdapter(mAdapter);
-		// 设置不能下拉刷新
 		((ScrollOverListView) mListView).showRefresh = false;
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -188,8 +182,6 @@ public class GoodsDetailLActivity extends BaseActivity {
 		company = (TextView) findViewById(R.id.hgd_company_name);
 		companyDes = (TextView) findViewById(R.id.hgd_company_des);
 		companyImage = (ImageView) findViewById(R.id.hgd_company_image);
-		productMoreInfo = (RelativeLayout) findViewById(R.id.product_layout);
-		companyMoreInfo = (LinearLayout) findViewById(R.id.company_layout);
 	}
 
 	Handler uiHandler = new Handler() {

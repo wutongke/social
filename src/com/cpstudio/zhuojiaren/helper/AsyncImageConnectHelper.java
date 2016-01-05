@@ -18,7 +18,7 @@ import com.cpstudio.zhuojiaren.R;
 import com.utils.CommunicationUtil;
 
 //对于文件只上传对应的key,及一个普通的key,value
-public class AsyncConnectHelperLZ extends AsyncTask<String, Integer, Boolean> {
+public class AsyncImageConnectHelper extends AsyncTask<String, Integer, Boolean> {
 	private ProgressDialog mDialog;
 	private Activity mActivity = null;
 	private String mUrl = null;
@@ -35,7 +35,7 @@ public class AsyncConnectHelperLZ extends AsyncTask<String, Integer, Boolean> {
 	private HttpClient httpClient = null;
 	private int responseCode = -1;
 
-	public AsyncConnectHelperLZ(String url, FinishCallback callback,
+	public AsyncImageConnectHelper(String url, FinishCallback callback,
 			Activity activity) {
 		this.mActivity = activity;
 		mType = HTTP_GET;
@@ -43,7 +43,7 @@ public class AsyncConnectHelperLZ extends AsyncTask<String, Integer, Boolean> {
 		this.mCallback = callback;
 	}
 
-	public AsyncConnectHelperLZ(List<NameValuePair> nameValuePairs, String url,
+	public AsyncImageConnectHelper(List<NameValuePair> nameValuePairs, String url,
 			FinishCallback callback, Activity activity) {
 		Log.i("AsyncConnectHelperLZ", url+"param:"+nameValuePairs.toString());
 		this.mActivity = activity;
@@ -53,7 +53,7 @@ public class AsyncConnectHelperLZ extends AsyncTask<String, Integer, Boolean> {
 		this.mCallback = callback;
 	}
 
-	public AsyncConnectHelperLZ(
+	public AsyncImageConnectHelper(
 			List<NameValuePair> nameValuePairs, String url, boolean thunckMode,
 			FinishCallback callback, Activity activity) {
 		this.mActivity = activity;

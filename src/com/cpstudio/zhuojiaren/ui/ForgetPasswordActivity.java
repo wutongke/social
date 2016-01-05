@@ -15,7 +15,6 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -128,11 +127,6 @@ public class ForgetPasswordActivity extends BaseActivity {
 				ForgetPasswordActivity.this, true);
 	}
 
-	// 注册验证
-	private void submit(final String phone, final String pwd,
-			final String message) {
-		
-	}
 
 	Handler uiHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {

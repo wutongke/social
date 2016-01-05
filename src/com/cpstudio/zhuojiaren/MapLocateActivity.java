@@ -8,6 +8,10 @@ import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.drawable;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class MapLocateActivity extends Activity {

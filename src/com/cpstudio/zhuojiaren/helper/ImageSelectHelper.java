@@ -15,7 +15,6 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
@@ -126,7 +125,7 @@ public class ImageSelectHelper implements OnClickListener {
 			public void onClick(View v) {
 				String path = (String) v.getTag();
 				Intent intent = new Intent(mActivity,
-						PhotoViewMultiActivity.class);
+						com.cpstudio.zhuojiaren.PhotoViewMultiActivity.class);
 				ArrayList<String> orgs = new ArrayList<String>();
 				orgs.add(path);
 				intent.putStringArrayListExtra("pics", orgs);

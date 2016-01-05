@@ -12,13 +12,11 @@ import android.widget.ListView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.AudioAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
-import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -31,9 +29,8 @@ public class AudioListActivity extends BaseActivity {
 	private AudioAdapter mAdapter;
 	private ListView listView;
 	private ArrayList<RecordVO> mDatas = new ArrayList<RecordVO>();
-	// ·ÖÒ³
 	private int mPage = 0;
-	private AppClientLef appClientLef;
+	private AppClient appClientLef;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +39,7 @@ public class AudioListActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		initTitle();
 		title.setText(R.string.zhuo_audio);
-		appClientLef = AppClientLef.getInstance(this);
+		appClientLef = AppClient.getInstance(this);
 		initPullDownView();
 		loadData();
 	}

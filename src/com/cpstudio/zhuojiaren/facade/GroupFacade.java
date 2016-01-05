@@ -3,14 +3,13 @@ package com.cpstudio.zhuojiaren.facade;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cpstudio.zhuojiaren.helper.DatabaseHelper;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.model.QuanVO;
-import com.cpstudio.zhuojiaren.model.UserVO;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+
+import com.cpstudio.zhuojiaren.helper.DatabaseHelper;
+import com.cpstudio.zhuojiaren.helper.ResHelper;
+import com.cpstudio.zhuojiaren.model.QuanVO;
 
 //注释部分都需要修改，为了
 public class GroupFacade {
@@ -128,7 +127,6 @@ public class GroupFacade {
 	 * @return
 	 */
 	private QuanVO getSimpleInfoByCursor(Cursor cursor) {
-		UserFacade userFacade = new UserFacade(mContext);
 		QuanVO item = new QuanVO();
 		item.setGroupid(cursor.getString(cursor
 				.getColumnIndexOrThrow("groupid")));
@@ -140,43 +138,10 @@ public class GroupFacade {
 	}
 
 	private ContentValues getFullValues(QuanVO item) {
-		UserFacade userFacade = new UserFacade(mContext);
 		ContentValues values = new ContentValues();
 		values.put("groupid", item.getGroupid());
 		values.put("gname", item.getGname());
 		values.put("gheader", item.getGheader());
-		// values.put("gproperty", item.getGproperty());
-		// values.put("gintro", item.getGintro());
-		// values.put("createtime", item.getCreatetime());
-		// values.put("membersnum", item.getMembersnum());
-		// values.put("membersmax", item.getMembersmax());
-		// values.put("lastbroadcast", item.getLastbroadcast());
-		// values.put("lastmsgtime", item.getLastmsgtime());
-		// values.put("alert", item.getAlert());
-		// UserVO founder = item.getFounder();
-		// String founderid = userFacade.add(founder);
-		// values.put("founderid", founderid);
-		// values.put("membertype", item.getMembertype());
-		// List<UserVO> managers = item.getManagers();
-		// String managersids = "";
-		// if (managers != null && managers.size() > 0) {
-		// for (UserVO manager : managers) {
-		// String managerid = userFacade.add(manager);
-		// managersids += managerid + ";";
-		// }
-		// managersids = managersids.substring(0, managersids.length() - 1);
-		// }
-		// values.put("managersids", managersids);
-		// List<UserVO> members = item.getManagers();
-		// String membersids = "";
-		// if (members != null && members.size() > 0) {
-		// for (UserVO member : members) {
-		// String memberid = userFacade.add(member);
-		// membersids += memberid + ";";
-		// }
-		// membersids = membersids.substring(0, membersids.length() - 1);
-		// }
-		// values.put("membersids", membersids);
 		return values;
 	}
 }

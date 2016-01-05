@@ -23,7 +23,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
@@ -41,7 +41,7 @@ public class QuanziMemberFra extends Fragment {
 	private ArrayList<UserNewVO> mList = new ArrayList<UserNewVO>();
 	// ÐèÒª¸Ä
 	// private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private int mPage = 1;
 	private int mType = 6;
 	private ListViewFooter mListViewFooter = null;
@@ -67,7 +67,7 @@ public class QuanziMemberFra extends Fragment {
 		ButterKnife.inject(this, layout);
 
 		mContext = getActivity();
-		mConnHelper = ZhuoConnHelper.getInstance(getActivity()
+		mConnHelper = ConnHelper.getInstance(getActivity()
 				.getApplicationContext());
 
 		uid = ResHelper.getInstance(getActivity().getApplicationContext())

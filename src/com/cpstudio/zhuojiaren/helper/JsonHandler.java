@@ -142,7 +142,7 @@ public class JsonHandler {
 				// 处理出错信息，目前只处理session，其他错处直接输出
 				switch (Integer.parseInt(code)) {
 				case ResultVO.SESSIONOUT:
-					AppClientLef.getInstance(context).refreshSession(context);
+					AppClient.getInstance(context).refreshSession(context);
 					return false;
 				}
 				CommonUtil.displayToast(context, result.getMsg());

@@ -24,7 +24,6 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseFragmentActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.facade.GroupFacade;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
@@ -32,12 +31,13 @@ import com.cpstudio.zhuojiaren.fragment.QuanziActiveFra;
 import com.cpstudio.zhuojiaren.fragment.QuanziMemberFra;
 import com.cpstudio.zhuojiaren.fragment.QuanziTopicFra;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.gtype;
+import com.cpstudio.zhuojiaren.ui.BaseFragmentActivity;
 import com.cpstudio.zhuojiaren.ui.EditEventActivity;
 import com.cpstudio.zhuojiaren.ui.MyFriendActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -98,7 +98,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 	private PopupWindows pwh = null;
 	private String groupid = null, groupName = null, gheadurl = null;
 	private String owerName = null, owerId = null;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private boolean isfollow = false;// 是否已经加入该圈子
 
 	// 用于在fragment中获得groupid
@@ -115,7 +115,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		title.setText(R.string.title_activity_zhuojiaquan_main);
 		ivFunSimply.setTag(0);
 		ivFunSimply.setImageResource(R.drawable.menu_qht1);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		// mFacade = new QuanFacade(getApplicationContext());
 		Intent i = getIntent();
 		groupid = i.getStringExtra("groupid");

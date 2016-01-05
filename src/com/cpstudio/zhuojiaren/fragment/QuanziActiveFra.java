@@ -23,7 +23,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
@@ -40,7 +40,7 @@ public class QuanziActiveFra extends Fragment {
 
 	private ArrayList<EventVO> mList = new ArrayList<EventVO>();
 
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private int mPage = 0;
 	private int mType = 6;
 	private int mPageSize = 5;
@@ -68,7 +68,7 @@ public class QuanziActiveFra extends Fragment {
 		ButterKnife.inject(this, layout);
 
 		mContext = getActivity();
-		mConnHelper = ZhuoConnHelper.getInstance(getActivity()
+		mConnHelper = ConnHelper.getInstance(getActivity()
 				.getApplicationContext());
 
 		uid = ResHelper.getInstance(getActivity().getApplicationContext())

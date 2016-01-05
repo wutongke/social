@@ -13,7 +13,6 @@ import android.widget.EditText;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.LoginActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -70,14 +69,6 @@ public class NewPasswordActivity extends BaseActivity {
 			case MsgTagVO.PUB_INFO:
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-//					HashMap<String, Object> map = new HashMap<String, Object>();
-//					map.put(ResHelper.PASSWORD, password1View.getText().toString());
-//					ResHelper.getInstance(getApplicationContext())
-//							.setPreference(map);
-//					ResHelper.getInstance(getApplicationContext()).setPassword(
-//							password1View.getText().toString());
-//					ZhuoConnHelper.getInstance(getApplicationContext())
-//							.setPassword(password1View.getText().toString());
 					startActivity(new Intent(mContext,LoginActivity.class));
 				}
 				break;

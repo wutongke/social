@@ -42,18 +42,18 @@ import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.UploadOptions;
 
-public class AppClientLef {
+public class AppClient {
 	private String userId;
 	private String password;
 	String session;
 	String uploadFileToken;
 	String imToken;
-	private static AppClientLef instance;
+	private static AppClient instance;
 	private Context context;
 
-	public static AppClientLef getInstance(Context context) {
+	public static AppClient getInstance(Context context) {
 		if (null == instance) {
-			instance = new AppClientLef();
+			instance = new AppClient();
 		}
 		if (instance.password == null || instance.password.equals("")) {
 			instance.init(context);
@@ -78,9 +78,9 @@ public class AppClientLef {
 	 */
 	public void refreshSession(final Context context) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		AsyncConnectHelperLZ conn = new AsyncConnectHelperLZ(
+		AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
 				addUserInfo(nameValuePairs), ZhuoCommHelper.getUrlLogin(),
-				new AsyncConnectHelperLZ.FinishCallback() {
+				new AsyncImageConnectHelper.FinishCallback() {
 
 					@Override
 					public boolean onReturn(String rs, int responseCode) {
@@ -119,7 +119,7 @@ public class AppClientLef {
 		mResHelper.setSessionForAPP(res.getSession());
 		mResHelper.setUpLoadTokenForQiniu(res.getQiniuToken());
 		mResHelper.setImTokenForRongyun(res.getRongyunToken());
-		ZhuoConnHelper connHelper = ZhuoConnHelper.getInstance(context);
+		ConnHelper connHelper = ConnHelper.getInstance(context);
 		connHelper.setSession(res.getSession());
 		connHelper.setUploadFileToken(res.getQiniuToken());
 		connHelper.setImToken(res.getRongyunToken());
@@ -675,7 +675,7 @@ public class AppClientLef {
 		nameValuePairs.add(new BasicNameValuePair("gpub", gpub));
 		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
 		filesMap.put("gheader", files);
-		return ZhuoConnHelper.getInstance(context).doPostWithFile(filesMap,
+		return ConnHelper.getInstance(context).doPostWithFile(filesMap,
 				nameValuePairs, ZhuoCommHelper.getCreategroup(), handler,
 				handlerTag, activity, "1", false, null, null);
 	}
@@ -715,7 +715,7 @@ public class AppClientLef {
 		nameValuePairs.add(new BasicNameValuePair("phone", phone));
 		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
 		filesMap.put("file", files);
-		return ZhuoConnHelper.getInstance(context).doPostWithFile(filesMap,
+		return ConnHelper.getInstance(context).doPostWithFile(filesMap,
 				nameValuePairs, ZhuoCommHelper.getAddgroupactivity(), handler,
 				handlerTag, activity, "1", false, null, null);
 	}
@@ -1641,7 +1641,7 @@ public class AppClientLef {
 			boolean cancelable, OnCancelListener cancel, String data) {
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		if (instance == null) {
-			instance = AppClientLef.getInstance(activity);
+			instance = AppClient.getInstance(activity);
 		}
 		if (CommonUtil.getNetworkState(activity) == 2) {
 

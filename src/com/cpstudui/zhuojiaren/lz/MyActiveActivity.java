@@ -17,17 +17,16 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.TabContainerActivity;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserEvent;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
@@ -46,13 +45,11 @@ public class MyActiveActivity extends BaseActivity implements
 	PullDownView pvJoined;// 参加的活动
 
 	boolean isManaging = false;
-	private String mSearchKey = null;
 	private ArrayList<EventVO> mPubList = new ArrayList<EventVO>(),
 			mJoinList = new ArrayList<EventVO>();
 	private ListView mPubListView, mJoinListView;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private int mPage = 0;
-	private int mType = 6;
 	final int pageSize = 5;
 	private EventListAdapter mPubAdapter, mJoinAdapter;
 	private String uid = null;
@@ -69,7 +66,7 @@ public class MyActiveActivity extends BaseActivity implements
 		function.setVisibility(View.VISIBLE);
 		function.setText(R.string.label_manage);
 
-		mConnHelper = ZhuoConnHelper.getInstance(MyActiveActivity.this
+		mConnHelper = ConnHelper.getInstance(MyActiveActivity.this
 				.getApplicationContext());
 
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
@@ -169,12 +166,9 @@ public class MyActiveActivity extends BaseActivity implements
 			}
 			case MsgTagVO.DATA_MORE: {
 				updateItemList((String) msg.obj, false, true);
-				// pvPubed.finishLoadData(loadState);
-				// pvJoined.finishLoadData(loadState);
 				break;
 			}
 			case MsgTagVO.disolve_quan: {
-				// 退出管理，重新下载数据
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					CommonUtil.displayToast(getApplicationContext(),
@@ -191,7 +185,6 @@ public class MyActiveActivity extends BaseActivity implements
 			}
 
 			case MsgTagVO.out_quan: {
-				// 退出管理，重新下载数据
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					CommonUtil.displayToast(getApplicationContext(),
@@ -274,58 +267,6 @@ public class MyActiveActivity extends BaseActivity implements
 			}
 		});
 
-		// final EditText searchView = (EditText)
-		// findViewById(R.id.editTextSearch);
-		// final View delSearch = findViewById(R.id.imageViewDelSearch);
-		// searchView.setOnEditorActionListener(new OnEditorActionListener() {
-		// @Override
-		// public boolean onEditorAction(TextView v, int actionId,
-		// KeyEvent event) {
-		// if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-		// mSearchKey = v.getText().toString();
-		// InputMethodManager imm = (InputMethodManager)
-		// getSystemService(Context.INPUT_METHOD_SERVICE);
-		// imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-		// loadData();
-		// }
-		// return false;
-		// }
-		// });
-		// searchView.addTextChangedListener(new TextWatcher() {
-		//
-		// @Override
-		// public void onTextChanged(CharSequence s, int start, int before,
-		// int count) {
-		//
-		// }
-		//
-		// @Override
-		// public void beforeTextChanged(CharSequence s, int start, int count,
-		// int after) {
-		//
-		// }
-		//
-		// @Override
-		// public void afterTextChanged(Editable s) {
-		// if (searchView.getText().toString().equals("")) {
-		// delSearch.setVisibility(View.GONE);
-		// } else {
-		// delSearch.setVisibility(View.VISIBLE);
-		// }
-		// }
-		// });
-		//
-		// delSearch.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// searchView.setText("");
-		// if (mSearchKey != null && !mSearchKey.equals("")) {
-		// mSearchKey = "";
-		// loadData();
-		// }
-		// }
-		// });
 	}
 
 	@Override

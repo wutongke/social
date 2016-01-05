@@ -35,7 +35,7 @@ import com.cpstudio.zhuojiaren.adapter.TypedStoreGoodsListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
@@ -75,7 +75,7 @@ public class StoreSearchMainActivity extends Activity implements
 
 	String uid = null;
 	String mSearchKey = null;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 
 	private int mPage = 1;
 
@@ -87,7 +87,7 @@ public class StoreSearchMainActivity extends Activity implements
 		// getWindow().setSoftInputMode(
 		// WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
 

@@ -3,8 +3,13 @@ package com.cpstudio.zhuojiaren;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.array;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
+import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -151,7 +156,7 @@ public class CardAddUserHobbyActivity extends Activity {
 						
 						UserNewVO userInfo = new UserNewVO();
 						userInfo.setHobby(hobby);
-						ZhuoConnHelper.getInstance(getApplicationContext())
+						ConnHelper.getInstance(getApplicationContext())
 								.modifyUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,
 										userInfo);
 					}

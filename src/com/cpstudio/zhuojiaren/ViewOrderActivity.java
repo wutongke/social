@@ -11,9 +11,10 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.adapter.OrderListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.OrderVO;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 /**
@@ -27,7 +28,7 @@ public class ViewOrderActivity extends BaseActivity implements
 	com.cpstudio.zhuojiaren.widget.PullDownView mPullDownView;
 	private ListView mListView;
 	OrderListAdapter mAdapter;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	ArrayList<OrderVO> mList = new ArrayList<OrderVO>();
 	private int mPage = 0;
 	final int pageSize = 5;
@@ -36,7 +37,7 @@ public class ViewOrderActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_order);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		initTitle();
 		ButterKnife.inject(this);
 		title.setText(R.string.title_activity_view_order_list);

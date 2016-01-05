@@ -20,11 +20,16 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
+import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudui.zhuojiaren.lz.GongXuDetailActivity;
@@ -44,7 +49,7 @@ public class CardAddUserResourceActivity extends BaseActivity implements
 	private ListView mListView;
 	private MyResListAdapterListAdapter mAdapter;
 	private ArrayList<ResourceGXVO> mList = new ArrayList<ResourceGXVO>();
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private int mType = 0;
 	private int mPage = 0;
 	private String userid = "";
@@ -57,7 +62,7 @@ public class CardAddUserResourceActivity extends BaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_card_add_user_resource);
 		ButterKnife.inject(this);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		Intent i = getIntent();
 		mType = i.getIntExtra(CardEditActivity.EDIT_RES_STR1, 0);
 		userid = i.getStringExtra(CardEditActivity.EDIT_RES_STR2);

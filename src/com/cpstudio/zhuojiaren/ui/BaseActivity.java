@@ -1,4 +1,4 @@
-package com.cpstudio.zhuojiaren;
+package com.cpstudio.zhuojiaren.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,10 +6,12 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 
 public class BaseActivity extends Activity {
-	protected ZhuoConnHelper connHelper = null;
+	protected ConnHelper connHelper = null;
 	protected TextView title;
 	protected TextView function;
 	protected TextView function2;
@@ -18,7 +20,7 @@ public class BaseActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		connHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		connHelper = ConnHelper.getInstance(getApplicationContext());
 	}
 
 	protected void initTitle() {

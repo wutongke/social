@@ -10,10 +10,12 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 
+/**
+ * @author Administrator
+ */
 public class AccountActivity extends BaseActivity {
 	@InjectView(R.id.ac_zhuo_account)
 	LinearLayout zhuoAccount;
@@ -44,7 +46,6 @@ public class AccountActivity extends BaseActivity {
 	private final int phoneR = 2;
 	private final int qqR = 3;
 	private final int emailR = 4;
-	private final int zhuoPwdR = 5;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

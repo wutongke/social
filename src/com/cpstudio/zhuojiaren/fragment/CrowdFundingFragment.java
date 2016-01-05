@@ -19,7 +19,7 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.CrowdFundingAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter.ImageOnclick;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
@@ -51,7 +51,7 @@ public class CrowdFundingFragment extends Fragment {
 	private boolean isInvest = false;
 	// ·ÖÒ³
 	private int mPage = 0;
-	private AppClientLef appClientLef;
+	private AppClient appClientLef;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +61,7 @@ public class CrowdFundingFragment extends Fragment {
 		type = getArguments().getInt(CrowdFundingVO.CROWDFUNDINGTYPE, 1);
 		ButterKnife.inject(this, view);
 		initPullDownView();
-		appClientLef = AppClientLef.getInstance(getActivity());
+		appClientLef = AppClient.getInstance(getActivity());
 		loadData();
 		return view;
 	}

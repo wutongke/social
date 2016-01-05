@@ -14,10 +14,9 @@ import android.widget.ListView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
@@ -28,7 +27,6 @@ import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
 public class GrouthActivity extends BaseActivity {
-	// ≤Ω÷Ë£¨ uihandler load∫Õloadmore
 	@InjectView(R.id.as_pulldown)
 	PullDownView pullDownView;
 	private GrouthAdapter mAdapter;
@@ -36,14 +34,14 @@ public class GrouthActivity extends BaseActivity {
 	private ArrayList<GrouthVedio> mDatas = new ArrayList<GrouthVedio>();
 	// ∑÷“≥
 	private int mPage = 0;
-	private AppClientLef appClientLef;
+	private AppClient appClientLef;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_study);
 		ButterKnife.inject(this);
-		appClientLef = AppClientLef.getInstance(this);
+		appClientLef = AppClient.getInstance(this);
 		initTitle();
 		title.setText(R.string.title_activity_up_level);
 		imageFunction.setBackgroundResource(R.drawable.jjglass);
@@ -124,10 +122,6 @@ public class GrouthActivity extends BaseActivity {
 				R.layout.head_grouth_main);
 		ImageView advertisement = (ImageView) findViewById(R.id.hgm_adv);
 		LoadImage.getInstance().beginLoad("http://7xkb2a.com1.z0.glb.clouddn.com/android-gg.png", advertisement);
-//		new LoadImage()
-//				.beginLoad(
-//						"http://img0.imgtn.bdimg.com/it/u=3317101867,3739965699&fm=11&gp=0.jpg",
-//						advertisement);
 		listView = pullDownView.getListView();
 		mAdapter = new GrouthAdapter(this, mDatas, R.layout.item_growth);
 		listView.setAdapter(mAdapter);
@@ -175,7 +169,7 @@ public class GrouthActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				startActivity(new Intent(GrouthActivity.this,
-						GrouthVisitListctivity.class));
+						GrouthVisitListActivity.class));
 			}
 		});
 		findViewById(R.id.hgm_radio).setOnClickListener(new OnClickListener() {

@@ -3,7 +3,6 @@ package com.cpstudio.zhuojiaren.ui;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -24,20 +23,18 @@ import android.widget.ToggleButton;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.AudioAdapter;
 import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
-import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
@@ -57,11 +54,6 @@ import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 
 /***
- * 思路
- * 
- * 装载不同的数据，可能需要注意回收 设置一个共有url，用于点选不同的选项时加载不同的数据 点选选项时，需要设置url、分页数据、handler等
- * 
- * 返回的数据处理，
  * 
  * @author lef
  * 
@@ -85,10 +77,7 @@ public class MyCollectionActivity extends BaseActivity {
 	private int handlerTag;
 	// 分页
 	private int mPage = 0;
-	private AppClientLef appClientLef;
-	
-	private int type;
-
+	private AppClient appClientLef;
 	private final int vedio = 1;
 	private final int radio = 2;
 	private final int event = 3;
@@ -102,7 +91,7 @@ public class MyCollectionActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_collection);
 		ButterKnife.inject(this);
-		appClientLef = AppClientLef.getInstance(this);
+		appClientLef = AppClient.getInstance(this);
 		mContext = this;
 		initTitle();
 		title.setText(R.string.my_collect);
@@ -249,10 +238,6 @@ public class MyCollectionActivity extends BaseActivity {
 		}
 	}
 
-	private void loadMore() {
-		pullDownView.finishLoadData(true);
-	}
-
 	Handler uiHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			pullDownView.finishLoadData(true);
@@ -385,7 +370,7 @@ public class MyCollectionActivity extends BaseActivity {
 				ArrayList<UserNewVO> mList = nljh.parseUserNewList();
 				final LoadImage mLoad = LoadImage.getInstance();
 				final BaseCodeData baseDataSet = 
-						ZhuoConnHelper.getInstance(getApplicationContext()).getBaseDataSet();
+						ConnHelper.getInstance(getApplicationContext()).getBaseDataSet();
 				mAdapter = new CommonAdapter<UserNewVO>(mContext, mList,
 						R.layout.item_myfriends_list) {
 					@Override

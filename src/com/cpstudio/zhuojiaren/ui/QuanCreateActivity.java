@@ -35,16 +35,15 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.QuanMngActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.facade.GroupFacade;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -59,7 +58,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * 创建圈子和修改圈子
+ * 创建圈子
  * 
  * @author lef
  * 
@@ -87,7 +86,7 @@ public class QuanCreateActivity extends BaseActivity {
 	// 圈子图片
 	private ImageSelectHelper mIsh2 = null;
 	private ArrayList<String> mSelectlist = new ArrayList<String>();
-	private AppClientLef mConnHelper = null;
+	private AppClient mConnHelper = null;
 	private String groupid = null;
 	private String groupname = null;
 	private LoadImage mLoadImage = LoadImage.getInstance();
@@ -113,7 +112,7 @@ public class QuanCreateActivity extends BaseActivity {
 
 		ButterKnife.inject(this);
 		mContext = this;
-		mConnHelper = AppClientLef.getInstance(getApplicationContext());
+		mConnHelper = AppClient.getInstance(getApplicationContext());
 
 		// 圈子类型
 		quanziType = getResources().getStringArray(R.array.quanzi_type);
@@ -365,7 +364,7 @@ public class QuanCreateActivity extends BaseActivity {
 			// msg.sendToTarget();
 			// }
 		} else {
-			ZhuoConnHelper.getInstance(getApplicationContext()).getQuanInfo(
+			ConnHelper.getInstance(getApplicationContext()).getQuanInfo(
 					mUIHandler, MsgTagVO.DATA_LOAD, groupid);
 		}
 	}
@@ -559,14 +558,14 @@ public class QuanCreateActivity extends BaseActivity {
 		// }
 
 		if (null != groupid && !groupid.equals("")) {
-			ZhuoConnHelper.getInstance(getApplicationContext())
+			ConnHelper.getInstance(getApplicationContext())
 					.modifyGroupInfo(mUIHandler, MsgTagVO.DATA_REFRESH,
 							groupid, title, intro, String.valueOf(typeQuanzi),
 							locateCode, addRight, seeRight, pub,
 							mIsh2.getTags());
 			// 修改头像是另外的一个接口
 			if (mIsh2.getTags() != null && mIsh2.getTags().size() > 0)
-				ZhuoConnHelper.getInstance(getApplicationContext())
+				ConnHelper.getInstance(getApplicationContext())
 						.setQuanLogo(mUIHandler, MsgTagVO.UPDATE, groupid,
 								mIsh2.getTags());
 		} else

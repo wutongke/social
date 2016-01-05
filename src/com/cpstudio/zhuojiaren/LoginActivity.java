@@ -24,11 +24,15 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
+import com.cpstudio.zhuojiaren.R.string;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.LoginRes;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.ui.ForgetPasswordActivity;
@@ -42,7 +46,7 @@ public class LoginActivity extends Activity {
 	private String mPassword;
 	private EditText mUidView;
 	private EditText mPwdView;
-	private ZhuoConnHelper connHelper = null;
+	private ConnHelper connHelper = null;
 	private PopupWindows pwh = null;
 	private TextView mFrogetPasswordView;
 
@@ -51,14 +55,10 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		init();
-		//自动登录
-//		mUidView.setText("15106936602");
-//		mPwdView.setText("123456");
-//		login();
 	}
 
 	private void init() {
-		connHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		connHelper = ConnHelper.getInstance(getApplicationContext());
 		mResHelper = ResHelper.getInstance(getApplicationContext());
 		pwh = new PopupWindows(LoginActivity.this);
 		mUid = mResHelper.getUserid();
@@ -158,9 +158,7 @@ public class LoginActivity extends Activity {
 					connHelper.setUploadFileToken(res.getQiniuToken());
 					connHelper.setImToken(res.getRongyunToken());
 					mResHelper.setUserid(mUid);
-					AppClientLef.getInstance(LoginActivity.this.getApplicationContext()).init(LoginActivity.this.getApplicationContext());
-//					// 获取群组信息，TabContainerActivity中进行
-//					connHelper.getMyGroupList(mUIHandler, MsgTagVO.DATA_OTHER);
+					AppClient.getInstance(LoginActivity.this.getApplicationContext()).init(LoginActivity.this.getApplicationContext());
 					if (mPwdView.getText().toString().equals("000000") && first) {
 						OnClickListener ok = new OnClickListener() {
 							@Override
@@ -183,14 +181,6 @@ public class LoginActivity extends Activity {
 					mPwdView.requestFocus();
 				}
 				break;
-//			case MsgTagVO.DATA_OTHER:
-//				if (JsonHandler.checkResult((String) msg.obj,
-//						getApplicationContext())) {
-//					JsonHandler nljh = new JsonHandler((String) msg.obj,
-//							getApplicationContext());
-//					getMyGroupSuccess(nljh.parseGroupsForIM());
-//				}
-//				break;
 			case MsgTagVO.START_SEND:
 				String token = mResHelper.getImTokenForRongyun();
 
@@ -204,8 +194,6 @@ public class LoginActivity extends Activity {
 
 					@Override
 					public void onSuccess(String arg0) {
-//						Toast.makeText(LoginActivity.this, "connect onSuccess",
-//								Toast.LENGTH_SHORT).show();
 					}
 
 					@Override
@@ -215,80 +203,10 @@ public class LoginActivity extends Activity {
 								Toast.LENGTH_SHORT).show();
 					}
 				});
-				// ServiceManager serviceManager = new ServiceManager(
-				// getApplicationContext());
-				//
-				// serviceManager.setNotificationIcon(R.drawable.newmsg);
-				// serviceManager.startService();
 				break;
 			}
 		}
 	};
-//
-//	private void getMyGroupSuccess(GroupsForIM groups) {
-//		if (groups != null) {
-//			List<Group> grouplist = new ArrayList<Group>();
-//			if (groups.getCreateGroups() != null) {
-//				for (int i = 0; i < groups.getCreateGroups().size(); i++) {
-//					String id = groups.getCreateGroups().get(i).getGroupid();
-//					String name = groups.getCreateGroups().get(i).getGname();
-//					if (id == null || name == null)
-//						continue;
-//					if (groups.getCreateGroups().get(i).getGheader() != null) {
-//						Uri uri = Uri.parse(groups.getCreateGroups().get(i)
-//								.getGheader());
-//						grouplist.add(new Group(id, name, uri));
-//					} else {
-//						grouplist.add(new Group(id, name, null));
-//					}
-//				}
-//			}
-//			if (groups.getFollowGroups() != null) {
-//				for (int i = 0; i < groups.getFollowGroups().size(); i++) {
-//					String id = groups.getFollowGroups().get(i).getGroupid();
-//					String name = groups.getFollowGroups().get(i).getGname();
-//					if (id == null || name == null)
-//						continue;
-//					if (groups.getFollowGroups().get(i).getGheader() != null) {
-//						Uri uri = Uri.parse(groups.getFollowGroups().get(i)
-//								.getGheader());
-//						grouplist.add(new Group(id, name, uri));
-//					} else {
-//						grouplist.add(new Group(id, name, null));
-//					}
-//				}
-//			}
-//			HashMap<String, Group> groupM = new HashMap<String, Group>();
-//			for (int i = 0; i < grouplist.size(); i++) {
-//				groupM.put(grouplist.get(i).getId(), grouplist.get(i));
-//			}
-//
-//			if (ZhuoConnHelper.getInstance(getApplicationContext()) != null)
-//				ZhuoConnHelper.getInstance(getApplicationContext())
-//						.setGroupMap(groupM);
-//
-//			if (grouplist.size() > 0)
-//				RongIM.getInstance()
-//						.getRongIMClient()
-//						.syncGroup(grouplist,
-//								new RongIMClient.OperationCallback() {
-//									@Override
-//									public void onSuccess() {
-//										Log.e("login",
-//												"---syncGroup-onSuccess---");
-//									}
-//
-//									@Override
-//									public void onError(
-//											RongIMClient.ErrorCode errorCode) {
-//										Log.e("login",
-//												"---syncGroup-onError---");
-//									}
-//								});
-//		} else {
-//			// WinToast.toast(this, groups.getCode());
-//		}
-//	}
 
 	private void startService() {
 		Message msg = mUIHandler.obtainMessage(MsgTagVO.START_SEND);

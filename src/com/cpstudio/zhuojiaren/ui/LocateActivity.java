@@ -10,9 +10,8 @@ import android.widget.EditText;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -70,7 +69,7 @@ public class LocateActivity extends BaseActivity {
 					editor.commit();
 					setResult(RESULT_OK);
 					LocateActivity.this.finish();
-					AppClientLef.getInstance(
+					AppClient.getInstance(
 							LocateActivity.this.getApplicationContext())
 							.setShippingAddress(
 									LocateActivity.this,

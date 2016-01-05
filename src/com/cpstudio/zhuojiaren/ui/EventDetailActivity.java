@@ -22,7 +22,7 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.MapLocateActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
@@ -80,11 +80,8 @@ public class EventDetailActivity extends Activity {
 	@InjectView(R.id.aed_boss_layout)
 	RelativeLayout bossLayout;
 
-	private AppClientLef mConnHelper = null;
+	private AppClient mConnHelper = null;
 	private LoadImage mLoadImage = new LoadImage();
-	// 不同身份，功能不同
-	private String memberType = "";
-	private PopupWindows pwh = null;
 	private String eventId = null;
 	private Context mContext;
 	private EventVO event;
@@ -101,10 +98,9 @@ public class EventDetailActivity extends Activity {
 		setContentView(R.layout.activity_event_detail);
 		ButterKnife.inject(this);
 		mContext = this;
-		mConnHelper = AppClientLef.getInstance(getApplicationContext());
+		mConnHelper = AppClient.getInstance(getApplicationContext());
 		Intent i = getIntent();
 		eventId = i.getStringExtra("eventId");
-		pwh = new PopupWindows((Activity) mContext);
 		loadData();
 		initOnclick();
 	}

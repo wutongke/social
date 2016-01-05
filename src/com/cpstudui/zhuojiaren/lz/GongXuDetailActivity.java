@@ -31,14 +31,13 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.Comment;
@@ -46,6 +45,7 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.ui.ResCommentActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
@@ -92,8 +92,8 @@ public class GongXuDetailActivity extends BaseActivity {
 	private LoadImage mLoadImage = LoadImage.getInstance();
 	private View mHeadView = null;
 	private String msgid = null;
-	private AppClientLef mConnHelper = null;
-	private ZhuoConnHelper mConnHelperlz = null;
+	private AppClient mConnHelper = null;
+	private ConnHelper mConnHelperlz = null;
 	private String isCollect = "0";
 	private PopupWindows pwh;
 	private String toId;
@@ -108,8 +108,8 @@ public class GongXuDetailActivity extends BaseActivity {
 		setContentView(R.layout.activity_gong_xu_detail);
 		initTitle();
 
-		mConnHelper = AppClientLef.getInstance(getApplicationContext());
-		mConnHelperlz = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = AppClient.getInstance(getApplicationContext());
+		mConnHelperlz = ConnHelper.getInstance(getApplicationContext());
 		Intent i = getIntent();
 		msgid = i.getStringExtra("msgid");
 

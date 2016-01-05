@@ -19,8 +19,12 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
+import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -49,7 +53,7 @@ public class JiarenActiveSimpleActivity extends Activity implements
 	private PopupWindows pwh = null;
 	private int mType = Dynamic.DYNATIC_TYPE_MY_JIAREN;// 类型 0-自己的家人动态
 														// 1-指定用户的家人动态 2-所有家人动态
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private int mPage = 0;
 	final int pageSize = 10;
 	final int titleIds[] = { R.string.title_active, R.string.title_active,
@@ -60,7 +64,7 @@ public class JiarenActiveSimpleActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jiaren_active);
 		ButterKnife.inject(this);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		ivPub.setVisibility(View.GONE);
 		pwh = new PopupWindows(JiarenActiveSimpleActivity.this);
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);

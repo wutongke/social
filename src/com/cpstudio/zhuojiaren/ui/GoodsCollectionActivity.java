@@ -20,9 +20,8 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
@@ -47,7 +46,7 @@ public class GoodsCollectionActivity extends BaseActivity {
 	LoadImage loader = LoadImage.getInstance();
 	private CommonAdapter<GoodsVO> mAdapter;
 	private ArrayList<GoodsVO> mDataList = new ArrayList<GoodsVO>();
-	private AppClientLef appClient;
+	private AppClient appClient;
 	private ListViewFooter mListViewFooter = null;
 	private int mPage = 1;
 	private int type = 1;
@@ -56,7 +55,7 @@ public class GoodsCollectionActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_goods_collection);
 		ButterKnife.inject(this);
-		appClient = AppClientLef.getInstance(getApplicationContext());
+		appClient = AppClient.getInstance(getApplicationContext());
 		initTitle();
 		title.setText(R.string.collection_goods);
 		initView();

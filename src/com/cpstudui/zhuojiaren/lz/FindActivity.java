@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.ui.CrowdFundingActivity;
@@ -46,7 +46,7 @@ public class FindActivity extends Activity {
 			UserSameActivity.class,// ¸½¼þ
 			UserSameActivity.class,// Í¬È¤
 			UserSameActivity.class, UserSameActivity.class };
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private UserFacade mFacade = null;
 	String uid = null;
 
@@ -54,7 +54,7 @@ public class FindActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_find_lz);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 
 		mFacade = new UserFacade(getApplicationContext());
 		uid = mConnHelper.getUserid();
@@ -102,7 +102,7 @@ public class FindActivity extends Activity {
 		});
 		loadInfo();
 		initClick();
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 	}
 
 	@SuppressLint("HandlerLeak")

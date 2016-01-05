@@ -8,7 +8,6 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 
 public class AccountProtectActivity extends BaseActivity {
@@ -33,7 +32,6 @@ public class AccountProtectActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				//ÍøÂç²¿·Ö
 				if(open!=null&&open.equals("1")){
 					open="0";
 					swit.setBackgroundResource(R.drawable.closecheck);
@@ -46,6 +44,4 @@ public class AccountProtectActivity extends BaseActivity {
 			}
 		});
 	}
-
-
 }

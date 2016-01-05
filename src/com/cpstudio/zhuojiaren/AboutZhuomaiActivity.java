@@ -1,5 +1,11 @@
 package com.cpstudio.zhuojiaren;
 
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
+import com.cpstudio.zhuojiaren.R.string;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
+
 import android.os.Bundle;
 import android.widget.TextView;
 import butterknife.InjectView;

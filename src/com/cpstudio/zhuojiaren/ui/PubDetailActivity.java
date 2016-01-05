@@ -10,10 +10,9 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -26,7 +25,7 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
  * 
  */
 public class PubDetailActivity extends BaseActivity {
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	@InjectView(R.id.agvd_image)
 	ImageView image;
 	@InjectView(R.id.agvd_name_and_order)
@@ -48,7 +47,7 @@ public class PubDetailActivity extends BaseActivity {
 		id = getIntent().getStringExtra("id");
 		title.setText(R.string.lab_zhuomaiactive_detail);
 		imageLoader = LoadImage.getInstance();
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		loadData();
 	}
 

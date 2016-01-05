@@ -39,7 +39,7 @@ import com.cpstudio.zhuojiaren.facade.GroupFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.SysApplication;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
 import com.cpstudio.zhuojiaren.model.GroupsForIM;
@@ -113,7 +113,7 @@ public class TabContainerActivity extends TabActivity implements
 			}
 		}
 	};
-	private ZhuoConnHelper connHelper = null;
+	private ConnHelper connHelper = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -252,7 +252,7 @@ public class TabContainerActivity extends TabActivity implements
 						mCountListener, conversationTypes);
 			}
 		}, 500);
-		connHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		connHelper = ConnHelper.getInstance(getApplicationContext());
 		if (connHelper.getGroupMap() == null) {
 			connHelper.getMyGroupList(msgHandler, MsgTagVO.DATA_OTHER);
 		}
@@ -311,7 +311,7 @@ public class TabContainerActivity extends TabActivity implements
 						getApplicationContext())) {
 					res = JsonHandler.parseResult((String) msg.obj);
 					connHelper.saveObject((String) msg.obj,
-							ZhuoConnHelper.CITYS);
+							ConnHelper.CITYS);
 				} else {
 					return;
 				}
@@ -326,9 +326,9 @@ public class TabContainerActivity extends TabActivity implements
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					dataStr = (String) msg.obj;
-					connHelper.saveObject(dataStr, ZhuoConnHelper.BASEDATA);
+					connHelper.saveObject(dataStr, ConnHelper.BASEDATA);
 				} else {
-					dataStr = connHelper.readObject(ZhuoConnHelper.BASEDATA);
+					dataStr = connHelper.readObject(ConnHelper.BASEDATA);
 				}
 				if (dataStr != null)
 					res = JsonHandler.parseResult(dataStr);
@@ -345,9 +345,9 @@ public class TabContainerActivity extends TabActivity implements
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					dataStr = (String) msg.obj;
-					connHelper.saveObject(dataStr, ZhuoConnHelper.GXTYPES);
+					connHelper.saveObject(dataStr, ConnHelper.GXTYPES);
 				} else {
-					dataStr = connHelper.readObject(ZhuoConnHelper.GXTYPES);
+					dataStr = connHelper.readObject(ConnHelper.GXTYPES);
 				}
 				if (dataStr != null)
 					res = JsonHandler.parseResult(dataStr);

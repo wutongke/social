@@ -9,7 +9,7 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.R.layout;
 import com.cpstudio.zhuojiaren.R.menu;
 import com.cpstudio.zhuojiaren.adapter.StoreGoodsListAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
@@ -47,7 +47,7 @@ public class GoodsSearchActivity extends Activity {
 	ListView goodsListView;
 	String mSearchKey = "";
 
-	private AppClientLef mConnHelper = null;
+	private AppClient mConnHelper = null;
 	private int mPage = 1;
 	private StoreGoodsListAdapter mAdapter = null;
 	private ArrayList<GoodsVO> mList = new ArrayList<GoodsVO>();
@@ -71,7 +71,7 @@ public class GoodsSearchActivity extends Activity {
 				return false;
 			}
 		});
-		mConnHelper = AppClientLef.getInstance(getApplicationContext());
+		mConnHelper = AppClient.getInstance(getApplicationContext());
 		mAdapter = new StoreGoodsListAdapter(this, mList);
 		goodsListView.setAdapter(mAdapter);
 		goodsListView.setOnItemClickListener(new OnItemClickListener() {

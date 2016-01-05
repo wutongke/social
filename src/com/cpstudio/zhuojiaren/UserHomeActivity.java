@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.cpstudio.zhuojiaren.adapter.ActiveListAdapter;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -43,7 +43,7 @@ public class UserHomeActivity extends Activity implements OnPullDownListener {
 	private int mPage = 0;
 	final int pageSize = 10;
 	private String uid = null;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	// private UserInfoFacade mFacade = null;
 	private UserFacade userFacade = null;
 	private int mType = Dynamic.DYNATIC_TYPE_MY_JIAREN;
@@ -52,7 +52,7 @@ public class UserHomeActivity extends Activity implements OnPullDownListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_home);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		Intent i = getIntent();
 		uid = i.getStringExtra("userid");
 		String from = i.getStringExtra("from");

@@ -11,13 +11,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 
 /**
  * 申请加入圈子界面
@@ -26,7 +26,7 @@ import com.cpstudio.zhuojiaren.model.QuanVO;
  * 
  */
 public class ApplyToJoinQuanActicvity extends BaseActivity {
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	String groupid;
 	String uid;
 
@@ -38,7 +38,7 @@ public class ApplyToJoinQuanActicvity extends BaseActivity {
 		ButterKnife.inject(this);
 		title.setText(R.string.title_active_join_quan);
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		Intent i = getIntent();
 		groupid = i.getStringExtra("groupid");
 		initClick();

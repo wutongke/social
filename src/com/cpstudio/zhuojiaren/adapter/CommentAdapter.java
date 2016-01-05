@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.CommentVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
@@ -20,7 +20,7 @@ import com.cpstudio.zhuojiaren.util.ViewHolder;
 
 public class CommentAdapter extends CommonAdapter<CommentVO> {
 	private LoadImage mLoadImage = new LoadImage(10);
-	private AppClientLef mConnHelper = null;
+	private AppClient mConnHelper = null;
 	private ReplyInterface reply;
 
 	public interface ReplyInterface {
@@ -31,7 +31,7 @@ public class CommentAdapter extends CommonAdapter<CommentVO> {
 			int itemLayoutId) {
 		super(context, mDatas, itemLayoutId);
 		// TODO Auto-generated constructor stub
-		mConnHelper = AppClientLef.getInstance(context);
+		mConnHelper = AppClient.getInstance(context);
 	}
 
 	@Override

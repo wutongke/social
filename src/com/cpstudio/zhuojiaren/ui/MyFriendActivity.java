@@ -13,11 +13,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -40,7 +39,7 @@ public class MyFriendActivity extends BaseActivity implements
 	private PullDownView mPullDownView;
 	private ArrayList<UserNewVO> mList = new ArrayList<UserNewVO>();
 	private String uid = null;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	BaseCodeData baseDataSet;
 	private LoadImage mLoader = LoadImage.getInstance();
 	// add by lz
@@ -52,7 +51,7 @@ public class MyFriendActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_peoples);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		Intent intent = getIntent();
 		type = intent.getIntExtra("type", 0);
 		initTitle();

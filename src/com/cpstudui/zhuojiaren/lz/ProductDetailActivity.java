@@ -20,17 +20,17 @@ import android.widget.ListView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.CardEditActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper.EditMODE;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper.EditMODE;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.ProductNewVO;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
@@ -68,19 +68,14 @@ public class ProductDetailActivity extends BaseActivity {
 	ArrayList<String> localImages = new ArrayList<String>();
 	ArrayList<String> urlImages = new ArrayList<String>();
 
-	private CommonAdapter<String> imageAdatper;
-
 	EditMODE edtMode = EditMODE.VIEW;
-	private PopupWindows phw = null;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	CommonAdapter<ProductNewVO> mAdapter;
 	LoadImage mLoadImage = LoadImage.getInstance();
 	List<ProductNewVO> productList = new ArrayList<ProductNewVO>();
-	// BaseCodeData codeDatas;
 	ProductNewVO catchProduct = new ProductNewVO();
 	int curIndex = 0;
 	String commpanyId = "";
-	private int requestCode = 1;
 	boolean isEditable;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +88,7 @@ public class ProductDetailActivity extends BaseActivity {
 		function.setBackgroundResource(R.drawable.button_save);
 		title.setText(R.string.title_activity_main_product);
 		commpanyId = getIntent().getStringExtra("commpanyId");
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 
 		pwh = new PopupWindows(ProductDetailActivity.this);
 		mIsh = ImageSelectHelper.getIntance(ProductDetailActivity.this,
@@ -214,7 +209,6 @@ public class ProductDetailActivity extends BaseActivity {
 		editTextTargetClient.setText("");
 		editTextValue.setText("");
 		edtProductName.setText("");
-		// 图片
 	}
 
 	void setEnable(boolean flag) {
@@ -275,7 +269,6 @@ public class ProductDetailActivity extends BaseActivity {
 		}
 
 		initSelecter();
-		// 添加图片效仿增加个人照片的地方
 	}
 
 	void fillNotNullData(EditText tv, String text) {
@@ -304,8 +297,6 @@ public class ProductDetailActivity extends BaseActivity {
 			case MsgTagVO.DATA_LOAD:
 				if (msg.obj instanceof List<?>)// 加载的本地数据
 				{
-					// userInfo = (UserNewVO) msg.obj;
-					// userInfo.setUserid(mUid);
 					productList = (List<ProductNewVO>) msg.obj;
 				} else if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {

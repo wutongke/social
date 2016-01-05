@@ -15,11 +15,8 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.alipay.sdk.pay.ailiyue.AliPayActivity;
-import com.cpstudio.zhuojiaren.BaseActivity;
-import com.cpstudio.zhuojiaren.MsgListActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -92,7 +89,7 @@ public class MyZhuoBiActivity extends BaseActivity {
 													return;
 												price = money.getText()
 														.toString();
-												AppClientLef
+												AppClient
 														.getInstance(
 																MyZhuoBiActivity.this)
 														.getOrderNumber(
@@ -110,7 +107,7 @@ public class MyZhuoBiActivity extends BaseActivity {
 	private static final  int GET_MONEY = 222;
 	private void loadMyZhuobi() {
 		// TODO Auto-generated method stub
-		AppClientLef.getInstance(this.getApplicationContext()).getMyZhuoBi(
+		AppClient.getInstance(this.getApplicationContext()).getMyZhuoBi(
 				MyZhuoBiActivity.this, uiHandler, GET_MONEY);
 	}
 
@@ -131,44 +128,6 @@ public class MyZhuoBiActivity extends BaseActivity {
 										.parseFloat(price)*100));
 				payIntent.putExtra("number", data);
 				startActivity(payIntent);
-//				final Intent i = new Intent();
-//				i.putExtra("tradeNum", data);
-//				View view = getLayoutInflater().inflate(
-//						R.layout.pay_wey_choose, null);
-//				final AlertDialog alert = new AlertDialog.Builder(
-//						MyZhuoBiActivity.this, AlertDialog.THEME_HOLO_LIGHT)
-//						.setTitle("选择支付方式").setView(view).create();
-//				view.findViewById(R.id.pay_weixin).setOnClickListener(
-//						new OnClickListener() {
-//
-//							@Override
-//							public void onClick(View v) {
-//								// TODO Auto-generated method stub
-//								i.setClass(MyZhuoBiActivity.this,
-//										PayActivity.class);
-//								// i.putExtra("money", "5");
-//								i.putExtra("money", String.valueOf((int) (Float
-//										.parseFloat(price) * 100)));
-//								startActivity(i);
-//								alert.dismiss();
-//							}
-//						});
-//				view.findViewById(R.id.pay_ali).setOnClickListener(
-//						new OnClickListener() {
-//
-//							@Override
-//							public void onClick(View v) {
-//								// TODO Auto-generated method stub
-//								i.setClass(MyZhuoBiActivity.this,
-//										AliPayActivity.class);
-//								// i.putExtra("money", "0.5");
-//								i.putExtra("money", String.valueOf((int) (Float
-//										.parseFloat(price))));
-//								startActivity(i);
-//								alert.dismiss();
-//							}
-//						});
-//				alert.show();
 				break;
 			case MsgTagVO.PUB_INFO:
 				if (JsonHandler.checkResult((String) msg.obj,
@@ -223,7 +182,7 @@ public class MyZhuoBiActivity extends BaseActivity {
 									// stub
 									if (money.getText() == null)
 										return;
-									AppClientLef
+									AppClient
 											.getInstance(MyZhuoBiActivity.this)
 											.giveZhuobiToFriend(
 													uiHandler,

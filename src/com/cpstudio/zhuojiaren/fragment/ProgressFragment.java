@@ -21,7 +21,7 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ProgressAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
@@ -49,7 +49,7 @@ public class ProgressFragment extends Fragment implements OverScrollController {
 	private boolean mCanScrollUp = false;
 	private String isCreater;
 	private String id;
-	private AppClientLef appClient;
+	private AppClient appClient;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,7 +59,7 @@ public class ProgressFragment extends Fragment implements OverScrollController {
 		ButterKnife.inject(this, view);
 		id = getArguments().getString("id");
 		isCreater = getArguments().getString("isCreater");
-		appClient = AppClientLef.getInstance(getActivity());
+		appClient = AppClient.getInstance(getActivity());
 		if (!isCreater.equals(CrowdFundingVO.likeOrSupport)) {
 			layout.setVisibility(View.VISIBLE);
 		}

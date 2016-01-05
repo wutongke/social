@@ -16,11 +16,13 @@ import android.os.Message;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.layout;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.LoginRes;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -29,7 +31,7 @@ import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 public class InitActivity extends Activity {
 
 	private String mUserid = null;
-	private ZhuoConnHelper connHelper = null;
+	private ConnHelper connHelper = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +44,12 @@ public class InitActivity extends Activity {
 	}
 
 	private void init() {
-		// 单人聊
-		// ImChatFacade imChatFacade = new
-		// ImChatFacade(getApplicationContext());
-		// imChatFacade.updateSendState();
-		// // 群聊
-		// ImQuanFacade imQuanFacade = new
-		// ImQuanFacade(getApplicationContext());
-		// imQuanFacade.updateSendState();
 		start();
 	}
 
 	private void start() {
 		ResHelper resHelper = ResHelper.getInstance(getApplicationContext());
-		connHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		connHelper = ConnHelper.getInstance(getApplicationContext());
 		mUserid = resHelper.getUserid();
 		String password = resHelper.getLoginPwd();
 		// 未登录判断是否是第一次启动，第一次启动则加载欢迎界面，否则到登录界面
@@ -100,7 +94,7 @@ public class InitActivity extends Activity {
 					LoginRes res = JsonHandler_Lef
 							.parseLoginRes(InitActivity.this, JsonHandler
 									.parseResult((String) msg.obj).getData());
-					AppClientLef.getInstance(InitActivity.this)
+					AppClient.getInstance(InitActivity.this)
 							.refreshUserInfo(res);
 					startService();
 					goActivity(TabContainerActivity.class);
@@ -113,8 +107,6 @@ public class InitActivity extends Activity {
 				ResHelper mResHelper = ResHelper
 						.getInstance(getApplicationContext());
 				String token = mResHelper.getImTokenForRongyun();
-				// 之后需删除，暂测试用
-
 				RongIM.connect(token, new ConnectCallback() {
 
 					@Override
@@ -125,8 +117,6 @@ public class InitActivity extends Activity {
 
 					@Override
 					public void onSuccess(String arg0) {
-//						Toast.makeText(InitActivity.this, "connect onSuccess",
-//								Toast.LENGTH_SHORT).show();
 						RongCloudEvent.getInstance().setOtherListener();
 
 					}
@@ -139,10 +129,6 @@ public class InitActivity extends Activity {
 					}
 				});
 
-				// ServiceManager serviceManager = new ServiceManager(
-				// getApplicationContext());
-				// serviceManager.setNotificationIcon(R.drawable.newmsg);
-				// serviceManager.startService();
 				break;
 			default:
 				break;

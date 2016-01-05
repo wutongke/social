@@ -1,5 +1,9 @@
 package com.cpstudio.zhuojiaren;
 
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;

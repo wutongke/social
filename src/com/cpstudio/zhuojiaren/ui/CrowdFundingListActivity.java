@@ -13,10 +13,9 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.CrowdFundingAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
@@ -34,7 +33,7 @@ public class CrowdFundingListActivity extends BaseActivity {
 	private ArrayList<CrowdFundingVO> mDatas = new ArrayList<CrowdFundingVO>();
 	// ·ÖÒ³
 	private int mPage = 0;
-	private AppClientLef appClientLef;
+	private AppClient appClientLef;
 
 	int typePubOrInv = -1;
 	int typeCrowd = 0;
@@ -52,7 +51,7 @@ public class CrowdFundingListActivity extends BaseActivity {
 			typeCrowd = typeId - 2;
 		}
 		initTitle();
-		appClientLef = AppClientLef.getInstance(this);
+		appClientLef = AppClient.getInstance(this);
 		if (!type.isEmpty()) {
 			title.setText(type);
 		}

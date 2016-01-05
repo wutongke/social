@@ -10,11 +10,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
@@ -22,13 +21,13 @@ import com.cpstudio.zhuojiaren.widget.PopupWindows;
 public class MyChangePwdActivity extends BaseActivity {
 	private PopupWindows pwh = null;
 	private String mPassword = null;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_change_pwd);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		pwh = new PopupWindows(MyChangePwdActivity.this);
 		
 		initTitle();
@@ -92,7 +91,7 @@ public class MyChangePwdActivity extends BaseActivity {
 							.setPreference(map);
 					ResHelper.getInstance(getApplicationContext()).setPassword(
 							mPassword);
-					ZhuoConnHelper.getInstance(getApplicationContext())
+					ConnHelper.getInstance(getApplicationContext())
 							.setPassword(mPassword);
 					pwh.showPopDlgOne(findViewById(R.id.rootLayout),
 							new OnClickListener() {

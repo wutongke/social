@@ -18,9 +18,9 @@ import com.cpstudio.zhuojiaren.MyAdviceActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.UserHomeActivity;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -54,7 +54,7 @@ public class LZMyHomeActivity extends Activity {
 	View vAbout;
 	@InjectView(R.id.imageViewHead)
 	ImageView imageViewHead;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private String mUid = null;
 	private UserFacade userFacade = null;
 	UserNewVO userInfo;
@@ -67,7 +67,7 @@ public class LZMyHomeActivity extends Activity {
 		setContentView(R.layout.activity_lzmy_home);
 		ButterKnife.inject(this);
 		userFacade = new UserFacade(getApplicationContext());
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		baseDataSet = mConnHelper.getBaseDataSet();
 		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		initClick();

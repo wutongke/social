@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.Province;
@@ -106,7 +106,7 @@ public class PlaceChooseDialog extends AlertDialog{
 	}
 	private void loadCity() {
 		// TODO Auto-generated method stub
-		final AppClientLef load = AppClientLef.getInstance(mContext);
+		final AppClient load = AppClient.getInstance(mContext);
 		load.getCitys(new Handler(){
 			@Override
 			public void handleMessage(Message msg) {

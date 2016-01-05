@@ -12,9 +12,8 @@ import android.widget.RelativeLayout;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.GrouthType;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -23,7 +22,6 @@ import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 /**
- * 视频类型选择
  * @author lef
  *
  */
@@ -52,7 +50,7 @@ public class GrouthChooseActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				//下载类型
-				AppClientLef.getInstance(GrouthChooseActivity.this).getGrowthOnlineType(new Handler(){
+				AppClient.getInstance(GrouthChooseActivity.this).getGrowthOnlineType(new Handler(){
 					@Override
 					public void handleMessage(Message msg) {
 						// TODO Auto-generated method stub
@@ -76,16 +74,4 @@ public class GrouthChooseActivity extends BaseActivity {
 			}
 		});
 	}
-//	OnClickListener toActivity = new OnClickListener() {
-//		
-//		@Override
-//		public void onClick(View v) {
-//			// TODO Auto-generated method stub
-//			Intent intent = new Intent(GrouthChooseActivity.this,GrouthListActivity.class);
-//			intent.putExtra("type", 1);
-//			intent.putExtra("teacher", 1);
-//			GrouthChooseActivity.this.startActivity(intent);
-//			GrouthChooseActivity.this.finish();
-//		}
-//	};
 }

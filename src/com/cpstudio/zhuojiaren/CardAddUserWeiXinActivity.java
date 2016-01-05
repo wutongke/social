@@ -14,8 +14,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
+import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -90,7 +94,7 @@ public class CardAddUserWeiXinActivity extends Activity {
 						userInfo.setWeixin(((EditText) findViewById(R.id.edtWeixin))
 								.getText().toString());
 						userInfo.setIsWeixinOpen(isOpen);
-						ZhuoConnHelper.getInstance(getApplicationContext())
+						ConnHelper.getInstance(getApplicationContext())
 								.modifyUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,
 										userInfo);
 					}

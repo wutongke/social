@@ -17,7 +17,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
@@ -25,7 +24,6 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseFragmentActivity;
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.R.color;
@@ -33,7 +31,7 @@ import com.cpstudio.zhuojiaren.fragment.CommentFragment;
 import com.cpstudio.zhuojiaren.fragment.MyPagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.PaybackFragment;
 import com.cpstudio.zhuojiaren.fragment.ProgressFragment;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
@@ -43,18 +41,14 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
-import com.cpstudio.zhuojiaren.util.ImageLoader;
 import com.cpstudio.zhuojiaren.widget.OverScrollableScrollView;
-import com.cpstudio.zhuojiaren.widget.RoundImageView;
 import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 import com.google.gson.Gson;
 
 /***
  * ÖÚ³ïÏêÇé
- * 
  * @author lef
- * 
  */
 public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 	@InjectView(R.id.acfd_state)
@@ -102,7 +96,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 	private MyPagerAdapter mAdapter;
 	private LoadImage mLoadImage ;
 	String[] tabTitles;
-	AppClientLef appClient;
+	AppClient appClient;
 	private String crowdFundingId;
 	private Context mContext;
 	private ArrayList<ImageView> IVList = new ArrayList<ImageView>();
@@ -120,7 +114,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 		crowdFundingId = getIntent().getStringExtra(
 				CrowdFundingVO.CROWDFUNDINGID);
 		title.setText(R.string.crowdfungding_detail);
-		appClient = AppClientLef.getInstance(CrowdFundingDetailActivity.this);
+		appClient = AppClient.getInstance(CrowdFundingDetailActivity.this);
 		loadData();
 
 	}

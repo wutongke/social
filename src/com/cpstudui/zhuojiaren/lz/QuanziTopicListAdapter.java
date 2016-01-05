@@ -23,7 +23,7 @@ import com.cpstudio.zhuojiaren.MsgCmtActivity;
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -49,7 +49,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 	private LoadImage mLoadImage = LoadImage.getInstance();
 	private Context mContext = null;
 	private float times = 2;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private PopupWindows phw = null;
 	String msgid = "11";
 	Fragment fragment;
@@ -73,7 +73,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		this.mList = list;
 		this.inflater = LayoutInflater.from(mContext);
 		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
-		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
+		this.mConnHelper = ConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
 		baseDataSet = mConnHelper.getBaseDataSet();
 		this.role = role;
@@ -86,7 +86,7 @@ public class QuanziTopicListAdapter extends BaseAdapter {
 		this.mList = list;
 		this.inflater = LayoutInflater.from(mContext);
 		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
-		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
+		this.mConnHelper = ConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
 		this.role = role;
 	}

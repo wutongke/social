@@ -7,9 +7,9 @@ import android.view.View.OnClickListener;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.GroupStatus;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 
 public class QuanziActiveNumListActivity extends BaseActivity {
 	@InjectView(R.id.rlICreatedNum)

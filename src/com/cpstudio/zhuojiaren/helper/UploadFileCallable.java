@@ -11,7 +11,6 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;

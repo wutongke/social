@@ -23,13 +23,14 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.helper.BaiduLocationHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
 import com.cpstudio.zhuojiaren.model.GXTypeItemVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.gtype;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.ui.MyFriendActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
@@ -48,7 +49,7 @@ public class PublishResourceActivity extends BaseActivity {
 	private String mType = "demand";
 	private String mCategory = "1";
 	private String mLocation = "";
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private BaiduLocationHelper locationHelper = null;
 	// 供需类型（1-5为资源信息，5-00为需求信息。见 基础-获取基础数据编码 接口文档
 	int typecode;
@@ -64,7 +65,7 @@ public class PublishResourceActivity extends BaseActivity {
 		initTitle();
 		title.setText(R.string.title_pub_gxxq);
 
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		pwh = new PopupWindows(PublishResourceActivity.this);
 		mIsh = ImageSelectHelper.getIntance(PublishResourceActivity.this,
 				R.id.linearLayoutPicContainer);

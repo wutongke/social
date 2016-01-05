@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.Province;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -87,7 +87,7 @@ public class NamePup {
 				LayoutParams.MATCH_PARENT, (int) (view.getHeight()*0.6));
 
 		//ÏÂÔØÊý¾Ý
-		AppClientLef appClient = AppClientLef.getInstance(mContext);
+		AppClient appClient = AppClient.getInstance(mContext);
 		appClient.getTeacherList(new Handler(){
 			@Override
 			public void handleMessage(Message msg) {

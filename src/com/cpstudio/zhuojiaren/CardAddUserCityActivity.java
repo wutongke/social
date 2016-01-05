@@ -18,8 +18,12 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
+import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
@@ -35,7 +39,7 @@ public class CardAddUserCityActivity extends Activity {
 	TextView tvOtherTowns;
 
 	List<City> cityList;
-	ZhuoConnHelper mConnHelper;
+	ConnHelper mConnHelper;
 	ArrayList<String> codes = new ArrayList<String>(3);
 	boolean isEditable = false;
 	private Handler mUIHandler = new Handler() {
@@ -61,7 +65,7 @@ public class CardAddUserCityActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_card_add_user_city);
 		ButterKnife.inject(this);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		cityList = mConnHelper.getCitys();
 		Intent i = getIntent();
 		isEditable = i.getBooleanExtra(CardEditActivity.EDITABLE, false);
@@ -143,7 +147,7 @@ public class CardAddUserCityActivity extends Activity {
 						userInfo.setCity(code1);
 						userInfo.setHometown(code2);
 						userInfo.setTravelCity(codes.get(2));
-						ZhuoConnHelper.getInstance(getApplicationContext())
+						ConnHelper.getInstance(getApplicationContext())
 								.modifyUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,
 										userInfo);
 					}

@@ -23,7 +23,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
@@ -41,7 +41,7 @@ public class ConversationActivity extends FragmentActivity {
 	String targetId;
 	UserNewVO guest = null;
 	private Button followButton;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private Conversation.ConversationType mConversationType;
 	// 需要增加一个接口判断两人是否为好友关系
 	String tofollow = "1";// 0:已经互相关注为好友，1：还不是好友关系
@@ -110,7 +110,7 @@ public class ConversationActivity extends FragmentActivity {
 		setContentView(R.layout.conversation);
 		ButterKnife.inject(this);
 		// getIntent().getData()
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		pwh = new PopupWindows(ConversationActivity.this);
 
 		Intent intent = getIntent();

@@ -30,13 +30,11 @@ import com.cpstudio.zhuojiaren.wxapi.Util;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.umeng.analytics.MobclickAgent;
 
 public class PayActivity extends Activity {
 
 	private static final String TAG = "PayActivity";
 	private String fee;
-	//服务器生成的订单�?
 	private String tradeId ;
 	private int flowerNum;
 	PayReq req;
@@ -56,18 +54,11 @@ public class PayActivity extends Activity {
 		Intent intent = getIntent();
 		fee = intent.getStringExtra("money");
 		tradeId = intent.getStringExtra("tradeNum");
-//		flowerNum = intent.getIntExtra("flowerNum", 0);
 		show =(TextView)findViewById(R.id.editText_prepay_id);
 		req = new PayReq();
 		sb=new StringBuffer();
 
 		msgApi.registerApp(Constants.APP_ID);
-//		try {
-//			Thread.sleep(1000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		GetPrepayIdTask getPrepayId = new GetPrepayIdTask();
 		getPrepayId.execute();
 		//生成prepay_id

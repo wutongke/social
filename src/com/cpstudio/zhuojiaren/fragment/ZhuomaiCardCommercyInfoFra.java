@@ -17,16 +17,13 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.CardAddUserResourceActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BusinessInfoVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
-import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.util.ImageLoader;
 import com.cpstudui.zhuojiaren.lz.GongXuDetailActivity;
 
 public class ZhuomaiCardCommercyInfoFra extends Fragment {
@@ -57,7 +54,7 @@ public class ZhuomaiCardCommercyInfoFra extends Fragment {
 	private LoadImage mLoadImage = LoadImage.getInstance();
 	public final static String EDIT_RES_STR1 = "type";
 	public final static String EDIT_RES_STR2 = "userid";
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 
 	private Context mContext;
 	BusinessInfoVO info;
@@ -141,7 +138,7 @@ public class ZhuomaiCardCommercyInfoFra extends Fragment {
 		ButterKnife.inject(this, layout);
 
 		mContext = getActivity();
-		mConnHelper = ZhuoConnHelper.getInstance(getActivity()
+		mConnHelper = ConnHelper.getInstance(getActivity()
 				.getApplicationContext());
 		uid = getArguments().getString("userid");
 		loadData();

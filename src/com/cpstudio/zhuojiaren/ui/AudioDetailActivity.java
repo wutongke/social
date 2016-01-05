@@ -2,35 +2,27 @@ package com.cpstudio.zhuojiaren.ui;
 
 import java.io.IOException;
 
-import android.app.Activity;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelperLz;
+import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.widget.CustomShareBoard;
-import com.cpstudui.zhuojiaren.lz.MainActivity;
-import com.umeng.socialize.media.UMImage;
 
 public class AudioDetailActivity extends BaseActivity {
 	@InjectView(R.id.aad_duration)
@@ -94,9 +86,9 @@ public class AudioDetailActivity extends BaseActivity {
 									R.string.please_finish_share);
 							return;
 						}
-						AppClientLef.getInstance(
+						AppClient.getInstance(
 								AudioDetailActivity.this.getApplicationContext())
-								.shareThought( ZhuoCommHelperLz.getAudiothought(),"audioid",mId,
+								.shareThought( UrlHelper.getAudiothought(),"audioid",mId,
 										share.getText().toString(),
 										uiHandler, MsgTagVO.PUB_INFO,
 										AudioDetailActivity.this, true, null, null);
@@ -193,9 +185,6 @@ public class AudioDetailActivity extends BaseActivity {
 
 	private void loadData() {
 		// TODO Auto-generated method stub
-//		new LoadImage().beginLoad(
-//				"http://pic6.nipic.com/20100404/4635053_162100094928_2.jpg",
-//				advertisementIamge);
 		ImageView advertisement = (ImageView) findViewById(R.id.hgm_adv);
 		LoadImage.getInstance().beginLoad("http://7xkb2a.com1.z0.glb.clouddn.com/android-gg.png", advertisement);
 	}

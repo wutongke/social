@@ -25,12 +25,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.MsgCmtActivity;
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.Comment;
@@ -38,6 +37,7 @@ import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.Praise;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
@@ -61,7 +61,7 @@ public class DynamicDetailActivity extends BaseActivity {
 	private View mHeadView = null;
 	private PopupWindows pwh;
 	private String msgid = null;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private String isCollect = "0";
 	private String uid = null;
 	TextView collectBtn;
@@ -78,7 +78,7 @@ public class DynamicDetailActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		title.setText(R.string.dynamic_detail);
 
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 
 		Intent intent = getIntent();
 		msgid = intent.getStringExtra("msgid");

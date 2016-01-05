@@ -1,4 +1,4 @@
-package com.cpstudio.zhuojiaren;
+package com.cpstudio.zhuojiaren.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -6,18 +6,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 
 public class BaseFragmentActivity extends FragmentActivity {
 
-	protected ZhuoConnHelper connHelper = null;
+	protected ConnHelper connHelper = null;
 	protected TextView title;
 	protected TextView function,function2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		connHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		connHelper = ConnHelper.getInstance(getApplicationContext());
 	}
 
 	protected void initTitle() {

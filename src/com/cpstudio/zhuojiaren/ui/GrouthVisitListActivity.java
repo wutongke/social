@@ -5,29 +5,25 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.GrouthVisitAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.GrouthVisit;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
-public class GrouthVisitListctivity extends BaseActivity {
+public class GrouthVisitListActivity extends BaseActivity {
 
 	@InjectView(R.id.agv_pulldown)
 	PullDownView pullDownView;
@@ -36,7 +32,7 @@ public class GrouthVisitListctivity extends BaseActivity {
 	private ArrayList<GrouthVisit> mDatas = new ArrayList<GrouthVisit>();
 	// ·ÖÒ³
 	private int mPage = 0;
-	private AppClientLef appClientLef;
+	private AppClient appClientLef;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +40,7 @@ public class GrouthVisitListctivity extends BaseActivity {
 		setContentView(R.layout.activity_grouth_visit_listctivity);
 		ButterKnife.inject(this);
 		initTitle();
-		appClientLef = AppClientLef.getInstance(this);
+		appClientLef = AppClient.getInstance(this);
 		title.setText(R.string.grouth_visite_label);
 		initPullDownView();
 		loadData();
@@ -56,7 +52,7 @@ public class GrouthVisitListctivity extends BaseActivity {
 			mPage = 0;
 			mAdapter.notifyDataSetChanged();
 			appClientLef.getVisiteList(mPage, 5, uiHandler,
-					MsgTagVO.DATA_LOAD, GrouthVisitListctivity.this, true, null,
+					MsgTagVO.DATA_LOAD, GrouthVisitListActivity.this, true, null,
 					null);
 		}
 
@@ -64,14 +60,14 @@ public class GrouthVisitListctivity extends BaseActivity {
 
 	private void loadMore() {
 		appClientLef.getVisiteList(mPage, 5, uiHandler,
-				MsgTagVO.DATA_MORE, GrouthVisitListctivity.this, true, null, null);
+				MsgTagVO.DATA_MORE, GrouthVisitListActivity.this, true, null, null);
 	}
 
-	Handler uiHandler = new Handler() {
+	private Handler uiHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			ResultVO res;
 			if (JsonHandler.checkResult((String) msg.obj,
-					GrouthVisitListctivity.this)) {
+					GrouthVisitListActivity.this)) {
 				res = JsonHandler.parseResult((String) msg.obj);
 			} else {
 				return;
@@ -145,7 +141,7 @@ public class GrouthVisitListctivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(GrouthVisitListctivity.this,
+				Intent intent = new Intent(GrouthVisitListActivity.this,
 						GrouthVisitDetailActivity.class);
 				intent.putExtra("visit", mDatas.get(position-1));
 				startActivity(intent);

@@ -6,7 +6,7 @@ import java.util.HashSet;
 import com.cpstudio.zhuojiaren.adapter.UserSelectListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanUserVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
@@ -42,7 +42,7 @@ public class QuanMngActivity extends Activity implements OnItemClickListener {
 	private int mMax = -1;
 	private LayoutInflater inflater;
 	private ArrayList<String> mSelcted = new ArrayList<String>();
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private String mSearchKey = null;
 	private String groupid = null;
 	private int mPage = 1;
@@ -51,7 +51,7 @@ public class QuanMngActivity extends Activity implements OnItemClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_quan_mng);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		Intent i = getIntent();
 		mMax = i.getIntExtra("max", -1);
 		groupid = i.getStringExtra("groupid");

@@ -17,11 +17,16 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.R.id;
+import com.cpstudio.zhuojiaren.R.layout;
+import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.adapter.ImageGridAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.widget.ImageChooseAdapter;
 import com.cpstudio.zhuojiaren.widget.PicChooseActivity;
@@ -38,11 +43,10 @@ public class MyAdviceActivity extends BaseActivity {
 	private int requestCode = 1;
 	private CommonAdapter<String> imageAdatper;
 	private ArrayList<String> imageDir = new ArrayList<String>();
-	private ArrayList<EditText> phoneList = new ArrayList<EditText>();
 	PopupWindows pwh;
 	String uid;
 	String groupid;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,7 +57,7 @@ public class MyAdviceActivity extends BaseActivity {
 		findViewById(R.id.feedbacktext).setVisibility(View.VISIBLE);
 		title.setText("·´À¡");
 		pwh = new PopupWindows(MyAdviceActivity.this);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		groupid=getIntent().getStringExtra("groupid");
 		function.setText(R.string.label_publish);

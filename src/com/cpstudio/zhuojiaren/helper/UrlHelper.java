@@ -1,6 +1,6 @@
 package com.cpstudio.zhuojiaren.helper;
 
-public class ZhuoCommHelperLz {
+public class UrlHelper {
 
 	private final static String SERVER_PREFIX = "http://";
 	private final static String SERVER_IP = "115.28.167.196";// "115.29.145.63";//

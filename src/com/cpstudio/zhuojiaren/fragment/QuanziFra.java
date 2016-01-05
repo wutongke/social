@@ -35,7 +35,7 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.QuanListAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter.ImageOnclick;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
@@ -70,7 +70,7 @@ public class QuanziFra extends Fragment {
 	TextView dissolve;
 	private QuanListAdapter mAdapter;
 	private ArrayList<QuanVO> mList = new ArrayList<QuanVO>();
-	private AppClientLef mConnHelper = null;
+	private AppClient mConnHelper = null;
 	private int mPage = 0;
 	private int mType = 6;
 	private String url = "";
@@ -102,7 +102,7 @@ public class QuanziFra extends Fragment {
 		ButterKnife.inject(this, layout);
 		pupWindow = new PopupWindows(getActivity());
 		mContext = getActivity();
-		mConnHelper = AppClientLef.getInstance(getActivity());
+		mConnHelper = AppClient.getInstance(getActivity());
 		
 		// 加载的圈子类型
 		Bundle intent = getArguments();

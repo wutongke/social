@@ -20,8 +20,8 @@ import android.widget.TextView;
 import com.cpstudio.zhuojiaren.MsgCmtActivity;
 import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.Dynamic;
@@ -35,8 +35,11 @@ import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
 /**
- * 动态列表数据Adapter
  * @author lz
+ *
+ */
+/**
+ * @author Administrator
  *
  */
 public class DynamicListAdapter extends BaseAdapter {
@@ -45,7 +48,7 @@ public class DynamicListAdapter extends BaseAdapter {
 	private LoadImage mLoadImage;
 	private Context mContext = null;
 	private float times = 2;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private PopupWindows phw = null;
 	String groupId;
 	BaseCodeData baseDataSet;
@@ -61,13 +64,12 @@ public class DynamicListAdapter extends BaseAdapter {
 
 	public DynamicListAdapter(Activity activity, ArrayList<Dynamic> list,
 			int role) {
-		// 濂藉弸鍔ㄦ�鐨勫垪琛紝fragment涓簄ull..涓庡湀璇濋鐨勫唴瀹逛竴鑷�
 		mLoadImage = new LoadImage(0, 100, 100);
 		this.mContext = activity;
 		this.mList = list;
 		this.inflater = LayoutInflater.from(mContext);
 		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
-		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
+		this.mConnHelper = ConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
 		this.role = role;
 		baseDataSet = mConnHelper.getBaseDataSet();
@@ -75,13 +77,12 @@ public class DynamicListAdapter extends BaseAdapter {
 
 	public DynamicListAdapter(Activity activity, LoadImage imageLoad,
 			ArrayList<Dynamic> list, int role) {
-		// 濂藉弸鍔ㄦ�鐨勫垪琛紝fragment涓簄ull..涓庡湀璇濋鐨勫唴瀹逛竴鑷�
 		this.mLoadImage = imageLoad;
 		this.mContext = activity;
 		this.mList = list;
 		this.inflater = LayoutInflater.from(mContext);
 		this.times = DeviceInfoUtil.getDeviceCsd(mContext);
-		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
+		this.mConnHelper = ConnHelper.getInstance(mContext);
 		this.phw = new PopupWindows((Activity) mContext);
 		this.role = role;
 	}

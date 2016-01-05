@@ -34,7 +34,7 @@ import com.cpstudio.zhuojiaren.adapter.TitleAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter.ImageOnclick;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
 import com.cpstudio.zhuojiaren.model.GXTypeItemVO;
@@ -75,13 +75,13 @@ public class ResourceGXFragment extends Fragment {
 	String location = null;// 区域
 	// 分页
 	private int mPage = 0;
-	private ZhuoConnHelper appClientLef;
+	private ConnHelper appClientLef;
 	// 基本编码
 	private BaseCodeData baseDataSet;
 	List<gtype> gtypes;
 
 	void getCodedData() {
-		GXTypeCodeData baseCodeData = ZhuoConnHelper.getInstance(getActivity())
+		GXTypeCodeData baseCodeData = ConnHelper.getInstance(getActivity())
 				.getGxTypeCodeDataSet();
 		gtypes = new ArrayList<gtype>();
 		if (baseCodeData != null) {
@@ -108,8 +108,8 @@ public class ResourceGXFragment extends Fragment {
 		view = inflater.inflate(R.layout.fragment_resource_gx, null);
 		type = getArguments().getInt(ResourceGXVO.RESOURCEGXTYPE, 0);
 		ButterKnife.inject(this, view);
-		appClientLef = ZhuoConnHelper.getInstance(getActivity());
-		baseDataSet = ZhuoConnHelper.getInstance(
+		appClientLef = ConnHelper.getInstance(getActivity());
+		baseDataSet = ConnHelper.getInstance(
 				getActivity().getApplicationContext()).getBaseDataSet();
 		initPullDownView();
 		getCodedData();

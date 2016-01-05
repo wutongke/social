@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 import com.cpstudio.zhuojiaren.adapter.BirthUsersListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
@@ -29,7 +29,7 @@ public class UserBirthActivity extends Activity implements OnItemClickListener {
 	private ListView mListView;
 	private BirthUsersListAdapter mAdapter;
 	private ArrayList<UserVO> mList = new ArrayList<UserVO>();
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private int mPage = 1;
 	private String groupid = null;
 	private ListViewFooter mListViewFooter = null;
@@ -38,7 +38,7 @@ public class UserBirthActivity extends Activity implements OnItemClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_birth_users);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		Intent intent = getIntent();
 		groupid = intent.getStringExtra("groupid");
 		mAdapter = new BirthUsersListAdapter(this, mList);

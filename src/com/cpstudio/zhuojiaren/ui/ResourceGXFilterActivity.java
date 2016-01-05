@@ -16,9 +16,8 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
 import com.cpstudio.zhuojiaren.model.GXTypeItemVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
@@ -39,13 +38,8 @@ public class ResourceGXFilterActivity extends BaseActivity {
 	@InjectView(R.id.filter_ok_btn)
 	Button filterOk;
 	private Context mContext;
-	private int typeQuanzi = 0;
-	// private String[] quanziType;
 
 	int mainTypeIds = R.array.gongxu_main_type;
-	// int[] subTypeIds = {R.array.subtype_fund, R.array.subtype_commercy,
-	// R.array.subtype_people,
-	// R.array.subtype_tec,R.array.subtype_renmai,R.array.subtype_zhihui};
 	int requestType = 0;
 	List<gtype> gtypes;
 
@@ -53,7 +47,7 @@ public class ResourceGXFilterActivity extends BaseActivity {
 	List<List<String>> subStrings;
 
 	void getCodedData() {
-		GXTypeCodeData baseCodeData = ZhuoConnHelper.getInstance(
+		GXTypeCodeData baseCodeData = ConnHelper.getInstance(
 				getApplicationContext()).getGxTypeCodeDataSet();
 		List<String> mainTypes = new ArrayList<String>();
 		subStrings = new ArrayList<List<String>>();

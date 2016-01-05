@@ -7,9 +7,8 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.IncomeVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -57,7 +56,7 @@ public class IncomeDetailsActivity extends BaseActivity {
 
 	private void getleftMoney() {
 		// TODO Auto-generated method stub
-		AppClientLef.getInstance(this.getApplicationContext()).getMyZhuoBi(
+		AppClient.getInstance(this.getApplicationContext()).getMyZhuoBi(
 				IncomeDetailsActivity.this, uiHandler, GET_MONEY);
 	}
 

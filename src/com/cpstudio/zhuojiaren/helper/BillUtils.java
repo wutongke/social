@@ -4,7 +4,7 @@
  * Created by xuanzhui on 2015/10/31.
  * Copyright (c) 2015 BeeCloud. All rights reserved.
  */
-package com.cpstudio.zhuojiaren.ui;
+package com.cpstudio.zhuojiaren.helper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

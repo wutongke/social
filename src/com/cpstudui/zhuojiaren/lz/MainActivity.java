@@ -25,10 +25,8 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.facade.InfoFacade;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BeanCats;
 import com.cpstudio.zhuojiaren.model.Dynamic;
@@ -84,7 +82,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	private PullDownView mPullDownView;
 	private ArrayList<Dynamic> mList = new ArrayList<Dynamic>();
 	private String mSearchKey = null;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	boolean isContinue = true;
 	LoadImage imageLoader = LoadImage.getInstance();
 	MainHeadInfo adInfo = new MainHeadInfo();
@@ -97,7 +95,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		mPullDownView = (PullDownView) findViewById(R.id.main_pull_down_view);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.main_header);

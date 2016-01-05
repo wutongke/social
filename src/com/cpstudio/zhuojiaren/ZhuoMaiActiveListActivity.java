@@ -18,9 +18,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.ui.PubDetailActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -37,7 +38,7 @@ public class ZhuoMaiActiveListActivity extends BaseActivity implements
 	private ListView mListView;
 	private CommonAdapter mAdapter;
 	private ArrayList<MessagePubVO> mList = new ArrayList<MessagePubVO>();
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private ListViewFooter mListViewFooter = null;
 	int pageNum = 0, pageSize = 5;
 	@Override
@@ -47,7 +48,7 @@ public class ZhuoMaiActiveListActivity extends BaseActivity implements
 		initTitle();
 		title.setText(R.string.label_active_zhuomai);
 
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		mAdapter = new CommonAdapter<MessagePubVO>(
 				ZhuoMaiActiveListActivity.this, mList,
 				R.layout.item_zhuomai_list) {

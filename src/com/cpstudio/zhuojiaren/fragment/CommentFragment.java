@@ -22,7 +22,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.CommentAdapter;
 import com.cpstudio.zhuojiaren.adapter.CommentAdapter.ReplyInterface;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.CommentVO;
@@ -50,7 +50,7 @@ public class CommentFragment extends Fragment implements OverScrollController {
 	String replyId = "-1";
 	String toUserId = "-1";
 	String crowdFundingId = "1";
-	AppClientLef appClient;
+	AppClient appClient;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,7 +58,7 @@ public class CommentFragment extends Fragment implements OverScrollController {
 		// TODO Auto-generated method stub
 
 		view = inflater.inflate(R.layout.fragment_comment, null);
-		appClient = AppClientLef.getInstance(getActivity());
+		appClient = AppClient.getInstance(getActivity());
 		crowdFundingId = getArguments().getString("id");
 		ButterKnife.inject(this, view);
 		mContext = getActivity();

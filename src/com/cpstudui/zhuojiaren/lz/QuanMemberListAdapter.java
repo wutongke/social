@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.QuanVO;
@@ -27,13 +27,13 @@ public class QuanMemberListAdapter extends BaseAdapter {
 	private LayoutInflater inflater = null;
 	private LoadImage mLoadImage = LoadImage.getInstance();
 	BaseCodeData baseDataSet;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	Context mContext;
 	public QuanMemberListAdapter(Context context, ArrayList<UserNewVO> list) {
 		this.mList = list;
 		this.inflater = LayoutInflater.from(context);
 		this.mContext = context;
-		this.mConnHelper = ZhuoConnHelper.getInstance(mContext);
+		this.mConnHelper = ConnHelper.getInstance(mContext);
 		baseDataSet = mConnHelper.getBaseDataSet();
 	}
 

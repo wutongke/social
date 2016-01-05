@@ -40,7 +40,7 @@ import com.cpstudio.zhuojiaren.fragment.ZhuomaiCardCommercyInfoFra;
 import com.cpstudio.zhuojiaren.fragment.ZhuomaiMoreInfoFra;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -116,7 +116,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 	private LoadImage mLoadImage = new LoadImage();
 	private PopupWindows pwh = null;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 
 	String userid, myid, ismy;
 	UserNewVO userInfo;
@@ -134,7 +134,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 
 		tabButton.setViewPager(viewPager);
 
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		pwh = new PopupWindows(ZhuoMaiCardActivity.this);
 		Intent i = getIntent();
 		userid = i.getStringExtra("userid");

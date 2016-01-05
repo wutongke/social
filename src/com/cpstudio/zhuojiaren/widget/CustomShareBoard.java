@@ -21,7 +21,7 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.ZhuoShareContent;
@@ -136,7 +136,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 				Toast.makeText(mActivity, "没有分享内容", Toast.LENGTH_SHORT).show();	
 				return;
 			}
-			AppClientLef.getInstance(mActivity).shareToZhuo(mActivity, new Handler(){
+			AppClient.getInstance(mActivity).shareToZhuo(mActivity, new Handler(){
 				@Override
 				public void handleMessage(Message msg) {
 					// TODO Auto-generated method stub

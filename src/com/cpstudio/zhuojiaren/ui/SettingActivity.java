@@ -13,13 +13,12 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.LoginActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.DatabaseHelper;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.SysApplication;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 
 public class SettingActivity extends BaseActivity {
 	@InjectView(R.id.as_account)
@@ -56,7 +55,7 @@ public class SettingActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				String userid = ResHelper.getInstance(
 						getApplicationContext()).getUserid();
-				ZhuoConnHelper mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+				ConnHelper mConnHelper = ConnHelper.getInstance(getApplicationContext());
 				mConnHelper.androidName(null, 0, null, "", false, null,
 						null);
 				HashMap<String, Object> map = new HashMap<String, Object>();

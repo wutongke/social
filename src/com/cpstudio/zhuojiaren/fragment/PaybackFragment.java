@@ -17,7 +17,7 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.PayBackAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -35,7 +35,7 @@ public class PaybackFragment extends Fragment implements OverScrollController{
 	private Context mContext;
 	private boolean mCanScrollUp = false;
 	String crowdFundingId;
-	AppClientLef appClient;
+	AppClient appClient;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class PaybackFragment extends Fragment implements OverScrollController{
 		view = inflater.inflate(R.layout.fragment_payback, null);
 		ButterKnife.inject(this, view);
 		crowdFundingId = getArguments().getString("id");
-		appClient = AppClientLef.getInstance(getActivity());
+		appClient = AppClient.getInstance(getActivity());
 		mContext = getActivity();
 		mAdapter = new PayBackAdapter(mContext, mDataList,
 				R.layout.item_payback);

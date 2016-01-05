@@ -2,7 +2,6 @@ package com.cpstudio.zhuojiaren.ui;
 
 import java.util.ArrayList;
 
-import android.app.ApplicationErrorReport.CrashInfo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,18 +15,14 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.OrderAdapter;
 import com.cpstudio.zhuojiaren.adapter.OrderAdapter.SelectGoodsChangeListener;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.CartVO;
-import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.PicVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.google.gson.Gson;
@@ -46,7 +41,7 @@ public class CartActivity extends BaseActivity {
 	OrderAdapter mAdapter;
 	ArrayList<GoodsVO> mDatas = new ArrayList<GoodsVO>();
 	// 分页
-	private AppClientLef appClientLef;
+	private AppClient appClientLef;
 	private float sumPrice;
 
 	@Override
@@ -55,9 +50,9 @@ public class CartActivity extends BaseActivity {
 		setContentView(R.layout.activity_cart);
 		ButterKnife.inject(this);
 		initTitle();
-		appClientLef = AppClientLef.getInstance(this);
+		appClientLef = AppClient.getInstance(this);
 		title.setText(R.string.cart2);
-		// 1管理2删除 比较重要
+		// 1管理2删除 
 		function.setText(R.string.label_manage);
 		function.setTag(1);
 		function.setBackgroundResource(R.drawable.button_bg);
@@ -147,7 +142,7 @@ public class CartActivity extends BaseActivity {
 						sb.append(goods.getGoodsId()+";");
 					}
 					
-					AppClientLef.getInstance(CartActivity.this).removeGoods(
+					AppClient.getInstance(CartActivity.this).removeGoods(
 							sb.toString(), null, 0, CartActivity.this);
 
 					mDatas.removeAll(mAdapter.getSelectList());

@@ -9,7 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -18,24 +18,23 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 
 /**
- * 鍊浜篴dapter 鍚屽煄銆佺瓒ｏ拷?鍚岃锟�
  * 
  * @author lef
  * 
  */
 public class ZhuoUserListAdapter extends CommonAdapter<UserAndCollection> {
 	// addByLz
-	boolean isManageing = false;// 锟斤拷锟揭碉拷锟斤拷锟斤拷锟斤拷-> 锟角凤拷删锟斤拷
+	boolean isManageing = false;
 
 	LoadImage loadImage = LoadImage.getInstance();
 	Handler handler;
 	BaseCodeData baseData;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 
 	public ZhuoUserListAdapter(Context context,
 			List<UserAndCollection> mDatas, int itemLayoutId, Handler handler) {
 		super(context, mDatas, itemLayoutId);
-		mConnHelper = ZhuoConnHelper.getInstance(context
+		mConnHelper = ConnHelper.getInstance(context
 				.getApplicationContext());
 		baseData = mConnHelper.getBaseDataSet();
 		this.handler = handler;
@@ -61,7 +60,7 @@ public class ZhuoUserListAdapter extends CommonAdapter<UserAndCollection> {
 		if (item.getIsCollect() == 1) {
 			helper.setImageResource(R.id.izul_collect, R.drawable.zcollect2);
 		}
-		// 鏀惰棌
+		// 閺�儼妫�
 		helper.getView(R.id.izul_collect).setOnClickListener(
 				new OnClickListener() {
 					@Override
@@ -69,14 +68,14 @@ public class ZhuoUserListAdapter extends CommonAdapter<UserAndCollection> {
 						// TODO Auto-generated method stub
 						if (item.getIsCollect() == 1) {
 							mConnHelper.followUser(handler,
-									MsgTagVO.MSG_FOWARD, item.getUserid(), 0);// 取消点赞
+									MsgTagVO.MSG_FOWARD, item.getUserid(), 0);// 鍙栨秷鐐硅禐
 							helper.setImageResource(R.id.izul_collect,
 									R.drawable.zuncollect2);
 						} else {
 							helper.setImageResource(R.id.izul_collect,
 									R.drawable.zcollect2);
 							mConnHelper.followUser(handler,
-									MsgTagVO.MSG_FOWARD, item.getUserid(), 1);// 点赞
+									MsgTagVO.MSG_FOWARD, item.getUserid(), 1);// 鐐硅禐
 						}
 
 					}

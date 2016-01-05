@@ -14,15 +14,12 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.MsgListActivity;
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ZMCDCount;
 import com.cpstudio.zhuojiaren.ui.MyFriendActivity;
-import com.cpstudio.zhuojiaren.ui.UserSameActivity;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudui.zhuojiaren.lz.MyActiveActivity;
@@ -44,7 +41,7 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 	@InjectView(R.id.llMyQuanzi)
 	View llMyQuanzi;
 
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 
 	private Context mContext;
 	private String mLastId = null;
@@ -101,7 +98,7 @@ public class ZhuomaiActiveInfoFra extends Fragment {
 		ButterKnife.inject(this, layout);
 
 		mContext = getActivity();
-		mConnHelper = ZhuoConnHelper.getInstance(getActivity()
+		mConnHelper = ConnHelper.getInstance(getActivity()
 				.getApplicationContext());
 		uid = getArguments().getString("userid");
 		initclick();

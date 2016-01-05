@@ -20,9 +20,8 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
@@ -85,7 +84,7 @@ public class OrderSubmitActivity extends BaseActivity {
 
 	private void getleftMoney() {
 		// TODO Auto-generated method stub
-		AppClientLef.getInstance(this.getApplicationContext()).getMyZhuoBi(
+		AppClient.getInstance(this.getApplicationContext()).getMyZhuoBi(
 				OrderSubmitActivity.this, uiHandler, GET_MONEY);
 	}
 
@@ -106,7 +105,7 @@ public class OrderSubmitActivity extends BaseActivity {
 			} else if (msg.what == GET_ORDER_NUMBER) {
 				int price = (int) Float.parseFloat(goodsPrice.getText()
 						.toString());
-				AppClientLef.getInstance(
+				AppClient.getInstance(
 						OrderSubmitActivity.this.getApplicationContext())
 						.payWithZhuobi(OrderSubmitActivity.this, uiHandler,
 								PAYFOR, price + "", res.getData());
@@ -221,7 +220,7 @@ public class OrderSubmitActivity extends BaseActivity {
 																.getInstance(
 																		OrderSubmitActivity.this)
 																.getPassword())) {
-											AppClientLef.getInstance(
+											AppClient.getInstance(
 													OrderSubmitActivity.this.getApplicationContext())
 													.getOrderNumber(invoice.getText().toString(),
 															leftMessage.getText().toString(),

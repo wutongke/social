@@ -29,7 +29,7 @@ import com.cpstudio.zhuojiaren.R.layout;
 import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GroupStatus;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -69,7 +69,7 @@ public class QuanStatusListActivity extends Activity implements
 	private int mType = GroupStatus.GROUP_STATUS_TYPE_ALL;// 0-全部圈子 1-我创建的圈子
 															// 2-我加入的圈子
 	String[] titleArray;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private int mPage = 0;
 	final int pageSize = 10;
 
@@ -78,7 +78,7 @@ public class QuanStatusListActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jiaren_active);
 		ButterKnife.inject(this);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 
 		mUid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		pwh = new PopupWindows(QuanStatusListActivity.this);

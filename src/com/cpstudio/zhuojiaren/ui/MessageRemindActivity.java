@@ -14,11 +14,10 @@ import android.widget.ToggleButton;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 /**
@@ -33,7 +32,7 @@ public class MessageRemindActivity extends BaseActivity {
 	ImageView sound;
 	@InjectView(R.id.amr_vibrate)
 	ImageView vibrate;
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private String isAlert = "1";
 	int soundStatus = 1;
 	int vibrateStatus = 1;
@@ -44,7 +43,7 @@ public class MessageRemindActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_messaeg_remind);
 		ButterKnife.inject(this);
-		mConnHelper = ZhuoConnHelper.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		sp=getSharedPreferences("remind", Context.MODE_PRIVATE);
 		editor = sp.edit();
 		soundStatus = sp.getInt("sound", 1);

@@ -15,13 +15,13 @@ import android.widget.RadioGroup;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.TypedStoreGoodsListAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
+import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
@@ -38,7 +38,7 @@ public class GoodsTypedListActivity extends BaseActivity implements
 	RadioGroup rgSex;
 	PullDownView mPullDownView;
 	ListView mListView;
-	private AppClientLef mConnHelper = null;
+	private AppClient mConnHelper = null;
 	private int mPage = 1;
 	//商品类别
 	private int type = 1;
@@ -64,7 +64,7 @@ public class GoodsTypedListActivity extends BaseActivity implements
 		if(typeName!=null)
 			title.setText(typeName);
 		initView();
-		mConnHelper = AppClientLef.getInstance(getApplicationContext());
+		mConnHelper = AppClient.getInstance(getApplicationContext());
 
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,

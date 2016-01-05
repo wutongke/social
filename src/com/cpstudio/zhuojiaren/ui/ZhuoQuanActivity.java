@@ -15,7 +15,6 @@ import android.view.View.OnClickListener;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseFragmentActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.QuanziCreateFra;
@@ -28,8 +27,6 @@ import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 
 /**
- * acitivity与fragment通信,当fragment选中我圈子时，设置管理，点击管理后，操作fragment
- * 
  * @author lef
  * 
  */

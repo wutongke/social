@@ -8,22 +8,19 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.RelativeLayout;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.BaseActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClientLef;
+import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
-import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
 
@@ -35,7 +32,7 @@ public class GrouthListActivity extends BaseActivity {
 	private ArrayList<GrouthVedio> mDatas = new ArrayList<GrouthVedio>();
 	// ·ÖÒ³
 	private int mPage = 0;
-	private AppClientLef appClientLef;
+	private AppClient appClientLef;
 	private String tutorId;
 	private String typeId;
 
@@ -51,7 +48,7 @@ public class GrouthListActivity extends BaseActivity {
 		typeId = getIntent().getStringExtra("typeId");
 		title.setText(R.string.title_activity_up_level);
 		initPullDownView();
-		appClientLef = AppClientLef.getInstance(this);
+		appClientLef = AppClient.getInstance(this);
 		loadData();
 	}
 
@@ -99,7 +96,6 @@ public class GrouthListActivity extends BaseActivity {
 		});
 		pullDownView.setShowHeader();
 		pullDownView.setShowFooter(false);
-//		pullDownView.setHideFooter(true);
 	}
 
 	private void loadData() {

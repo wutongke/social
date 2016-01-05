@@ -12,8 +12,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoConnHelper;
 
 public class ZhuomaiMoreInfoFra extends Fragment {
 	@InjectView(R.id.tvMoreResource)
@@ -21,7 +21,7 @@ public class ZhuomaiMoreInfoFra extends Fragment {
 	@InjectView(R.id.tvMoreNeed)
 	TextView tvMoreNeed;
 
-	private ZhuoConnHelper mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 
 	private Context mContext;
 	private String mLastId = null;
@@ -46,7 +46,7 @@ public class ZhuomaiMoreInfoFra extends Fragment {
 		ButterKnife.inject(this, layout);
 
 		mContext = getActivity();
-		mConnHelper = ZhuoConnHelper.getInstance(getActivity()
+		mConnHelper = ConnHelper.getInstance(getActivity()
 				.getApplicationContext());
 
 		uid = ResHelper.getInstance(getActivity().getApplicationContext())
