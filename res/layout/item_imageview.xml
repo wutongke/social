@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
 
-    <com.cpstudui.zhuojiaren.lz.ResizeFrameLayout
+    <com.cpstudio.zhuojiaren.widget.ResizeFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:ratioXY="0.73" >
@@ -15,6 +15,6 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:scaleType="centerCrop" />
-    </com.cpstudui.zhuojiaren.lz.ResizeFrameLayout>
+    </com.cpstudio.zhuojiaren.widget.ResizeFrameLayout>
 
 </RelativeLayout>

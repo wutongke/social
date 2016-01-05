@@ -7,7 +7,7 @@ import android.content.Context;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.ProgressVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 
 public class ProgressAdapter extends CommonAdapter<ProgressVO>{
 

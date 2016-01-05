@@ -19,7 +19,7 @@ import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 
 public class AudioAdapter extends CommonAdapter<RecordVO> {
 	private MediaPlayer mediaPlayer;

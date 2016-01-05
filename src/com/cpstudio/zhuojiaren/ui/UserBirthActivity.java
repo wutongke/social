@@ -26,7 +26,6 @@ import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 public class UserBirthActivity extends Activity implements OnItemClickListener {
 	private ListView mListView;

@@ -22,9 +22,8 @@ import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 
 /**
  * 我的好友，类似于请求交换名片的家人

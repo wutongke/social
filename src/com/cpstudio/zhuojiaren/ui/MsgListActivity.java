@@ -35,11 +35,9 @@ import com.cpstudio.zhuojiaren.R.layout;
 import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.adapter.MsgUserListAdapter;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
+import com.cpstudio.zhuojiaren.model.CustomerMessageFactory;
 import com.cpstudio.zhuojiaren.model.ImMsgVO;
 import com.cpstudio.zhuojiaren.model.ReqQuanVO;
-import com.cpstudui.zhuojiaren.lz.CustomerMessageFactory;
-import com.cpstudui.zhuojiaren.lz.LZUserSameActivity;
-import com.cpstudui.zhuojiaren.lz.QuanChatListActivity;
 import com.umeng.socialize.utils.Log;
 /**
  * Ù¾ÐÅ½çÃæ

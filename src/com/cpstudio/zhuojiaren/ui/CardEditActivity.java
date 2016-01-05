@@ -41,7 +41,6 @@ import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
-import com.cpstudui.zhuojiaren.lz.CompanyDetailActivity;
 /**
  * 用户名片详细信息
  * @author lz

@@ -11,7 +11,7 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.UserAndCollection;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 
 public class ZhuoNearByUserListAdatper extends CommonAdapter<UserAndCollection> {
 

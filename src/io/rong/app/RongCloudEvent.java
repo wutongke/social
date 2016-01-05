@@ -34,7 +34,7 @@ import android.view.View;
 import com.cpstudio.zhuojiaren.facade.GroupFacade;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.ui.TabContainerActivity;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
+import com.cpstudio.zhuojiaren.ui.ZhuoMaiCardActivity;
 import com.sea_monster.exception.BaseException;
 import com.sea_monster.network.AbstractHttpRequest;
 import com.sea_monster.network.ApiCallback;

@@ -310,10 +310,9 @@
             android:name="com.cpstudio.zhuojiaren.ui.ViewOrderActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <!-- lzlz -->
 
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.FindActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.FindActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_msg_share"
             android:screenOrientation="portrait" >
@@ -339,7 +338,7 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.ZhuoQuanMainActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
@@ -369,19 +368,19 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.TopicDetailActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.TopicDetailActivity"
             android:label="@string/title_activity_topic_detail" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.ApplyToJoinQuanActicvity"
+            android:name="com.cpstudio.zhuojiaren.ui.ApplyToJoinQuanActicvity"
             android:label="@string/title_active_join_quan" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.PubTopicActicvity"
+            android:name="com.cpstudio.zhuojiaren.ui.PubTopicActicvity"
             android:label="@string/title_pub_topic" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.ResourceGXActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.ResourceGXActivity"
             android:label="@string/mp_gongxu" >
         </activity>
         <activity
@@ -390,7 +389,7 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.GongXuDetailActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.GongXuDetailActivity"
             android:label="@string/title_activity_gong_xu_detail" >
         </activity>
         <activity
@@ -419,23 +418,23 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.JiarenActiveNumListActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.JiarenActiveNumListActivity"
             android:label="@string/label_active_jiaren" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.CardActiveNumListActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.CardActiveNumListActivity"
             android:label="@string/label_active_card" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.QuanziActiveNumListActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.QuanziActiveNumListActivity"
             android:label="@string/label_active_quanzi" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.LZMyHomeActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.LZMyHomeActivity"
             android:label="@string/title_activity_lzmy_home" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.QuanStatusListActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.QuanStatusListActivity"
             android:label="@string/title_activity_lzmy_home" >
         </activity>
         <activity
@@ -468,14 +467,14 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        <activity android:name="com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity" >
+        <activity android:name="com.cpstudio.zhuojiaren.ui.ZhuoMaiCardActivity" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.QuanBriefActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.QuanBriefActivity"
             android:label="@string/label_quan_brief" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.ChangeBackgroundActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.ChangeBackgroundActivity"
             android:label="@string/title_activity_change_background" >
         </activity>
         <activity
@@ -527,27 +526,33 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.SearchMainActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.SearchMainActivity"
             android:label="@string/label_active_quanzi" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.StoreMainActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.StoreMainActivity"
+            android:label="@string/title_activity_store_main" >
+        </activity>
+        
+        <activity
+            android:name="com.cpstudio.zhuojiaren.ui.GoodsTypedListActivity"
             android:label="@string/title_activity_store_main" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.GoodsTypedListActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.StoreSearchMainActivity"
             android:label="@string/title_activity_store_main" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.StoreSearchMainActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.StoreMyHomeActivity"
             android:label="@string/title_activity_store_main" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.StoreMyHomeActivity"
-            android:label="@string/title_activity_store_main" >
-        </activity>
-        <activity
-            android:name="com.cpstudui.zhuojiaren.lz.QuanChatListActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.QuanChatListActivity"
             android:label="@string/title_activity_store_main" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -612,23 +617,23 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.DynamicDetailActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.DynamicDetailActivity"
             android:label="@string/dynamic_detail" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.MyActiveActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.MyActiveActivity"
             android:label="@string/active_my" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.LZUserSameActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.LZUserSameActivity"
             android:label="@string/active_my" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.CompanyDetailActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.CompanyDetailActivity"
             android:label="@string/active_my" >
         </activity>
         <activity
-            android:name="com.cpstudui.zhuojiaren.lz.ProductDetailActivity"
+            android:name="com.cpstudio.zhuojiaren.ui.ProductDetailActivity"
             android:label="@string/active_my" >
         </activity>
         <activity
@@ -838,11 +843,6 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" >
-        </activity>
-        <activity
-            android:name="com.alipay.sdk.pay.ailiyue.AliPayActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.PayActivity"

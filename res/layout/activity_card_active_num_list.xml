@@ -83,7 +83,6 @@
             style="@style/active_font_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/textCollectedMeNum"
             android:ellipsize="end"
             android:maxLines="1"
             android:drawableRight="@drawable/ico_arrow_big"

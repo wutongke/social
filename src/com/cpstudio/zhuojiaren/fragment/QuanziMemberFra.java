@@ -27,10 +27,10 @@ import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.ui.QuanMemberListAdapter;
+import com.cpstudio.zhuojiaren.ui.ZhuoMaiCardActivity;
+import com.cpstudio.zhuojiaren.ui.ZhuoQuanMainActivity;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
-import com.cpstudui.zhuojiaren.lz.QuanMemberListAdapter;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
-import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
 
 public class QuanziMemberFra extends Fragment {
 	@InjectView(R.id.fqtl_list)

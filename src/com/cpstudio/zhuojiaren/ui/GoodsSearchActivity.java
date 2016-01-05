@@ -17,9 +17,8 @@ import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
-import com.cpstudui.zhuojiaren.lz.StoreMainActivity;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 
 import android.os.Bundle;
 import android.os.Handler;

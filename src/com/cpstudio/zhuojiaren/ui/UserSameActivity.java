@@ -36,7 +36,6 @@ import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 public class UserSameActivity extends BaseActivity implements
 		OnPullDownListener, OnItemClickListener {

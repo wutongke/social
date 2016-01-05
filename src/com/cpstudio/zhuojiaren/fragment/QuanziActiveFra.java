@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.adapter.EventListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
@@ -28,9 +29,8 @@ import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
+import com.cpstudio.zhuojiaren.ui.ZhuoQuanMainActivity;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
-import com.cpstudui.zhuojiaren.lz.EventListAdapter;
-import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
 
 public class QuanziActiveFra extends Fragment {
 	@InjectView(R.id.fqtl_list)

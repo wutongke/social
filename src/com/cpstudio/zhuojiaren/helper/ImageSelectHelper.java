@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
+import com.cpstudio.zhuojiaren.ui.ZhuoMaiCardActivity;
 import com.utils.ImageRectUtil;
 
 public class ImageSelectHelper implements OnClickListener {

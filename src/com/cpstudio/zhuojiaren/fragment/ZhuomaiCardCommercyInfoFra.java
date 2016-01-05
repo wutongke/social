@@ -23,8 +23,8 @@ import com.cpstudio.zhuojiaren.model.BusinessInfoVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.ui.CardAddUserResourceActivity;
+import com.cpstudio.zhuojiaren.ui.GongXuDetailActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudui.zhuojiaren.lz.GongXuDetailActivity;
 
 public class ZhuomaiCardCommercyInfoFra extends Fragment {
 	@InjectView(R.id.tvMoreResource)

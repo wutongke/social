@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
 
 
 

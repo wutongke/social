@@ -23,6 +23,7 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.R.id;
 import com.cpstudio.zhuojiaren.R.layout;
 import com.cpstudio.zhuojiaren.R.string;
+import com.cpstudio.zhuojiaren.adapter.DynamicListAdapter;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.Dynamic;
@@ -31,8 +32,6 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-import com.cpstudui.zhuojiaren.lz.DynamicDetailActivity;
-import com.cpstudui.zhuojiaren.lz.DynamicListAdapter;
 /**
  * º“»À∂ØÃ¨
  * @author lz

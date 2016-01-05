@@ -32,9 +32,8 @@ import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
-import com.cpstudui.zhuojiaren.lz.StoreMainActivity;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 
 public class GoodsCollectionActivity extends BaseActivity {
 	@InjectView(R.id.agc_categary)

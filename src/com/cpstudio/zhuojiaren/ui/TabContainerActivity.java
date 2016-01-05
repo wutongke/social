@@ -46,6 +46,7 @@ import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.SysApplication;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
+import com.cpstudio.zhuojiaren.model.CustomerMessageFactory;
 import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
 import com.cpstudio.zhuojiaren.model.GroupsForIM;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -53,8 +54,6 @@ import com.cpstudio.zhuojiaren.model.Province;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudui.zhuojiaren.lz.CustomerMessageFactory;
-import com.cpstudui.zhuojiaren.lz.LZMyHomeActivity;
 
 @SuppressWarnings("deprecation")
 public class TabContainerActivity extends TabActivity implements
@@ -93,7 +92,7 @@ public class TabContainerActivity extends TabActivity implements
 	ArrayList<TextView> tvs = new ArrayList<TextView>();
 	@SuppressWarnings("rawtypes")
 	private Class[] mTabClassArray = {
-			com.cpstudui.zhuojiaren.lz.MainActivity.class,
+			com.cpstudio.zhuojiaren.ui.MainActivity.class,
 			JiarenActiveActivity.class, MsgListActivity.class,
 			GrouthActivity.class, LZMyHomeActivity.class };// MyHomeActivity.class
 

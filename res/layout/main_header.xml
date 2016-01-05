@@ -126,7 +126,7 @@
                 android:src="@drawable/news" >
             </ImageView>
 
-            <com.cpstudui.zhuojiaren.lz.AutoTextView
+            <com.cpstudio.zhuojiaren.widget.AutoTextView
                 android:id="@+id/at_notices"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

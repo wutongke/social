@@ -31,7 +31,6 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 /**
  * 我的成长界面
  * @author lz

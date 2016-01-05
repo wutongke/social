@@ -27,8 +27,8 @@ import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 /**
  * Ù¾Âö¶¯Ì¬
  * @author lz

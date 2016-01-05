@@ -32,7 +32,6 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.Util;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 import com.google.gson.Gson;
 
 public class EventDetailActivity extends Activity {

@@ -15,7 +15,7 @@ import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserAndCollection;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 
 /**
  * 

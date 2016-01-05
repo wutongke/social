@@ -45,9 +45,9 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
+import com.cpstudio.zhuojiaren.ui.ZhuoQuanMainActivity;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
-import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
 
 public class QuanziFra extends Fragment {
 	@InjectView(R.id.hgm_adv)

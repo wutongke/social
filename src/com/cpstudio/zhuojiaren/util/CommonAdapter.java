@@ -2,6 +2,8 @@ package com.cpstudio.zhuojiaren.util;
 
 import java.util.List;
 
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

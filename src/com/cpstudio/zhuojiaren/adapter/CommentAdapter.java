@@ -16,7 +16,7 @@ import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.CommentVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 
 public class CommentAdapter extends CommonAdapter<CommentVO> {
 	private LoadImage mLoadImage = new LoadImage(10);

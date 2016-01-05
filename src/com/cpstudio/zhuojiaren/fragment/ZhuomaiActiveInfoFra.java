@@ -19,10 +19,10 @@ import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ZMCDCount;
+import com.cpstudio.zhuojiaren.ui.MyActiveActivity;
 import com.cpstudio.zhuojiaren.ui.MyFriendActivity;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudui.zhuojiaren.lz.MyActiveActivity;
 
 public class ZhuomaiActiveInfoFra extends Fragment {
 

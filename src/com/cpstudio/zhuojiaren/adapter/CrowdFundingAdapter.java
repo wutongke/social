@@ -11,7 +11,7 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 import com.utils.ImageRectUtil;
 
 public class CrowdFundingAdapter extends CommonAdapter<CrowdFundingVO>{

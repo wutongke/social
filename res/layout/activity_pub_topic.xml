@@ -3,7 +3,7 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cpstudui.zhuojiaren.lz.ApplyToJoinQuanActicvity" >
+    tools:context="com.cpstudio.zhuojiaren.ui.ApplyToJoinQuanActicvity" >
 
     <include
         android:id="@+id/quan_bar_title"

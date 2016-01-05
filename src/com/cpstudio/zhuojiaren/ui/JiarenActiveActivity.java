@@ -25,6 +25,7 @@ import com.cpstudio.zhuojiaren.R.drawable;
 import com.cpstudio.zhuojiaren.R.id;
 import com.cpstudio.zhuojiaren.R.layout;
 import com.cpstudio.zhuojiaren.R.string;
+import com.cpstudio.zhuojiaren.adapter.DynamicListAdapter;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
@@ -37,11 +38,6 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-import com.cpstudui.zhuojiaren.lz.CardActiveNumListActivity;
-import com.cpstudui.zhuojiaren.lz.DynamicDetailActivity;
-import com.cpstudui.zhuojiaren.lz.DynamicListAdapter;
-import com.cpstudui.zhuojiaren.lz.JiarenActiveNumListActivity;
-import com.cpstudui.zhuojiaren.lz.QuanziActiveNumListActivity;
 /**
  * 动态主界面
  * @author lz

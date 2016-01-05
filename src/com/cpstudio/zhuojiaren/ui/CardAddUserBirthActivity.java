@@ -29,7 +29,7 @@ import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudui.zhuojiaren.lz.Lunar;
+import com.cpstudio.zhuojiaren.util.Lunar;
 import com.utils.LundarToSolar;
 import com.utils.SolarToLundar;
 

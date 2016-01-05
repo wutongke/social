@@ -31,8 +31,6 @@ import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
-import com.cpstudui.zhuojiaren.lz.GongXuDetailActivity;
-import com.cpstudui.zhuojiaren.lz.MyResListAdapterListAdapter;
 
 public class CardAddUserResourceActivity extends BaseActivity implements
 		OnItemClickListener {

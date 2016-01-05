@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.cpstudui.zhuojiaren.lz.ChangeBackgroundActivity" >
+    tools:context="com.cpstudio.zhuojiaren.ui.ChangeBackgroundActivity" >
 
     <include layout="@layout/title_activity" />
 

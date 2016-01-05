@@ -52,7 +52,6 @@ import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PlaceChooseDialog;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
-import com.cpstudui.zhuojiaren.lz.ChangeBackgroundActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

@@ -26,9 +26,9 @@ import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.ui.ZhuoMaiCardActivity;
+import com.cpstudio.zhuojiaren.ui.ZhuoQuanMainActivity;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
-import com.cpstudui.zhuojiaren.lz.ZhuoQuanMainActivity;
 
 public class ConversationActivity extends FragmentActivity {
 	@InjectView(R.id.buttonManage)

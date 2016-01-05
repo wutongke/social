@@ -9,7 +9,6 @@ import android.widget.ListView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
 
 
 public class ListImageDirPopupWindow extends BasePopupWindowForListView<ImageFloder>

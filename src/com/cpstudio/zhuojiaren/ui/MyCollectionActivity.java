@@ -25,7 +25,9 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.AudioAdapter;
+import com.cpstudio.zhuojiaren.adapter.EventListAdapter;
 import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
+import com.cpstudio.zhuojiaren.adapter.QuanziTopicListAdapter;
 import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
@@ -42,15 +44,9 @@ import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-import com.cpstudui.zhuojiaren.lz.EventListAdapter;
-import com.cpstudui.zhuojiaren.lz.GongXuDetailActivity;
-import com.cpstudui.zhuojiaren.lz.MyResListAdapterListAdapter;
-import com.cpstudui.zhuojiaren.lz.QuanziTopicListAdapter;
-import com.cpstudui.zhuojiaren.lz.TopicDetailActivity;
-import com.cpstudui.zhuojiaren.lz.ZhuoMaiCardActivity;
 
 
 /***

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.ImageRadioButton;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 
 /**
  * 众筹及供需项目中的使用gridView显示各个子选项：科技、出版、娱乐

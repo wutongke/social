@@ -7,7 +7,7 @@ public class Constants {
 	public static final String APP_SECRET = "427537e09cb92d0a51c45cf10091b080";// yum
 	public static final String APP_GRANT_TYPE = "authorization_code";// yum
 
-	// 商户�?
+	// 商户
 	public static final String MCH_ID = "1260675601";// yum
 
 	// API密钥，在商户平台设置

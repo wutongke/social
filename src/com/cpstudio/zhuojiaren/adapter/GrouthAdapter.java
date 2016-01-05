@@ -10,7 +10,7 @@ import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.Util;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 
 public class GrouthAdapter extends CommonAdapter<GrouthVedio>{
 	LoadImage imageLoader =LoadImage.getInstance();

@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.adapter.Bee_PageAdapter;
 import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
@@ -31,10 +32,9 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.ScrollOverListView;
-import com.cpstudui.zhuojiaren.lz.Bee_PageAdapter;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 import com.external.viewpagerindicator.PageIndicator;
 import com.google.gson.Gson;
 

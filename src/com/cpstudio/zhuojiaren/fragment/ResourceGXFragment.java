@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.adapter.ResourceGXAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter.ImageOnclick;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -43,12 +44,11 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.gtype;
+import com.cpstudio.zhuojiaren.ui.GongXuDetailActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.MyGridView;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
-import com.cpstudui.zhuojiaren.lz.GongXuDetailActivity;
-import com.cpstudui.zhuojiaren.lz.ResourceGXAdapter;
 
 public class ResourceGXFragment extends Fragment {
 	@InjectView(R.id.fcd_pull_down_view)

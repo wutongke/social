@@ -11,14 +11,8 @@ import android.widget.PopupWindow;
 
 public abstract class BasePopupWindowForListView<T> extends PopupWindow
 {
-	/**
-	 * 布局文件的最外层View
-	 */
 	protected View mContentView;
 	protected Context context;
-	/**
-	 * ListView的数据集
-	 */
 	protected List<T> mDatas;
 
 	public BasePopupWindowForListView(View contentView, int width, int height,
