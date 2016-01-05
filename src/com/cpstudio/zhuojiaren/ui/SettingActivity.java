@@ -13,7 +13,6 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.LoginActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.DatabaseHelper;
 import com.cpstudio.zhuojiaren.helper.ResHelper;

@@ -23,7 +23,6 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -36,6 +35,7 @@ import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicAdVO;
 import com.cpstudio.zhuojiaren.ui.PubDetailActivity;
+import com.cpstudio.zhuojiaren.ui.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.CustomShareBoard;

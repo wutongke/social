@@ -20,7 +20,6 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.MapLocateActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;

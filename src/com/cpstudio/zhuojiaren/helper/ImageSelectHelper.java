@@ -125,7 +125,7 @@ public class ImageSelectHelper implements OnClickListener {
 			public void onClick(View v) {
 				String path = (String) v.getTag();
 				Intent intent = new Intent(mActivity,
-						com.cpstudio.zhuojiaren.PhotoViewMultiActivity.class);
+						com.cpstudio.zhuojiaren.ui.PhotoViewMultiActivity.class);
 				ArrayList<String> orgs = new ArrayList<String>();
 				orgs.add(path);
 				intent.putStringArrayListExtra("pics", orgs);

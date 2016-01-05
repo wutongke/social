@@ -16,13 +16,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.cpstudio.zhuojiaren.OrderDetailActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.OrderVO;
-import com.cpstudio.zhuojiaren.ui.CartActivity;
 import com.cpstudio.zhuojiaren.ui.GoodsDetailLActivity;
+import com.cpstudio.zhuojiaren.ui.OrderDetailActivity;
 
 //lz
 public class OrderListAdapter extends BaseAdapter {
@@ -119,23 +118,6 @@ public class OrderListAdapter extends BaseAdapter {
 				mContext.startActivity(intent);
 			}
 		});
-		// 固定子listview的高度
-
-		// int totalHeight = 0;
-		// for (int i = 0, len = goodsListAdapter.getCount(); i < len; i++) { //
-		// listAdapter.getCount()返回数据项的数目
-		// View listItem = goodsListAdapter.getView(i, null, holder.lvGoods);
-		// listItem.measure(0, 0); // 计算子项View 的宽高
-		// totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
-		// }
-		//
-		// ViewGroup.LayoutParams params = holder.lvGoods.getLayoutParams();
-		// params.height = totalHeight
-		// + (holder.lvGoods.getDividerHeight() * (holder.lvGoods
-		// .getCount() - 1));
-		// // listView.getDividerHeight()获取子项间分隔符占用的高度
-		// // params.height最后得到整个ListView完整显示需要的高度
-		// holder.lvGoods.setLayoutParams(params);
 		return convertView;
 	}
 

@@ -10,10 +10,10 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.PayBackVO;
+import com.cpstudio.zhuojiaren.ui.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.MyGridView;

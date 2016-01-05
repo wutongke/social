@@ -21,7 +21,6 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.CardEditActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.ConnHelper.EditMODE;
@@ -33,6 +32,7 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.industry;
 import com.cpstudio.zhuojiaren.model.position;
 import com.cpstudio.zhuojiaren.ui.BaseActivity;
+import com.cpstudio.zhuojiaren.ui.CardEditActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;

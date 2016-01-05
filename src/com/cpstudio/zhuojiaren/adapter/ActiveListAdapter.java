@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
@@ -23,6 +22,7 @@ import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
+import com.cpstudio.zhuojiaren.ui.PhotoViewMultiActivity;
 
 public class ActiveListAdapter extends BaseAdapter {
 	private List<Dynamic> mList = null;

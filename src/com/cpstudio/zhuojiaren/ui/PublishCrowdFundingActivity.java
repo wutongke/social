@@ -31,7 +31,6 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.R.color;
 import com.cpstudio.zhuojiaren.adapter.ImageGridAdapter;

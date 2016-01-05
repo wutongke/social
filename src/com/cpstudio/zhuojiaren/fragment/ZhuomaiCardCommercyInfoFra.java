@@ -15,7 +15,6 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.CardAddUserResourceActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -23,6 +22,7 @@ import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BusinessInfoVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
+import com.cpstudio.zhuojiaren.ui.CardAddUserResourceActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudui.zhuojiaren.lz.GongXuDetailActivity;
 

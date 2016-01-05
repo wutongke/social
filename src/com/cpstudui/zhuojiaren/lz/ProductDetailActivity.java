@@ -20,7 +20,6 @@ import android.widget.ListView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.CardEditActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -31,6 +30,7 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.ProductNewVO;
 import com.cpstudio.zhuojiaren.ui.BaseActivity;
+import com.cpstudio.zhuojiaren.ui.CardEditActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.ViewHolder;

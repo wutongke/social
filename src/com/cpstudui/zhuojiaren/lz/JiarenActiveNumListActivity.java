@@ -7,10 +7,10 @@ import android.view.View.OnClickListener;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.JiarenActiveSimpleActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.ui.BaseActivity;
+import com.cpstudio.zhuojiaren.ui.JiarenActiveSimpleActivity;
 
 public class JiarenActiveNumListActivity extends BaseActivity {
 	@InjectView(R.id.rlIFocusedNum)

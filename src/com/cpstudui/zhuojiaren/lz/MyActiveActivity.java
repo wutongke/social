@@ -17,7 +17,6 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -28,6 +27,7 @@ import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserEvent;
 import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
+import com.cpstudio.zhuojiaren.ui.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;

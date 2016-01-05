@@ -21,8 +21,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cpstudio.zhuojiaren.MsgCmtActivity;
-import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
@@ -34,6 +32,8 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
+import com.cpstudio.zhuojiaren.ui.MsgCmtActivity;
+import com.cpstudio.zhuojiaren.ui.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;

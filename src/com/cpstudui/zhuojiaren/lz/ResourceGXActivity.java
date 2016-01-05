@@ -14,12 +14,12 @@ import android.view.View.OnClickListener;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.PublishResourceActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.ResourceGXFragment;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.ui.BaseFragmentActivity;
+import com.cpstudio.zhuojiaren.ui.PublishResourceActivity;
 import com.cpstudio.zhuojiaren.ui.ResourceGXFilterActivity;
 import com.cpstudio.zhuojiaren.widget.TabButton;
 import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;

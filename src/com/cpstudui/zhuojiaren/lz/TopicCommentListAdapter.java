@@ -13,10 +13,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cpstudio.zhuojiaren.MsgCmtActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.Comment;
+import com.cpstudio.zhuojiaren.ui.MsgCmtActivity;
 /**
  * 评论列表数据Adapter，包括圈子话题、动态、供需的评论
  * @author lz

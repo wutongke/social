@@ -31,7 +31,6 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
@@ -46,6 +45,7 @@ import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.ui.BaseActivity;
+import com.cpstudio.zhuojiaren.ui.PhotoViewMultiActivity;
 import com.cpstudio.zhuojiaren.ui.ResCommentActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;

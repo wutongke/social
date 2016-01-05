@@ -15,7 +15,6 @@ import butterknife.OnClick;
 import butterknife.Optional;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.ViewOrderActivity;
 import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
@@ -29,6 +28,7 @@ import com.cpstudio.zhuojiaren.ui.BaseActivity;
 import com.cpstudio.zhuojiaren.ui.CartActivity;
 import com.cpstudio.zhuojiaren.ui.GoodsCollectionActivity;
 import com.cpstudio.zhuojiaren.ui.LocateActivity;
+import com.cpstudio.zhuojiaren.ui.ViewOrderActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 /**
  * 倬脉商场中的“我的”界面

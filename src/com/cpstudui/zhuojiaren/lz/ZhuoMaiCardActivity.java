@@ -32,7 +32,6 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.CardEditActivity;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.fragment.ActivePagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.ZhuomaiActiveInfoFra;
@@ -46,6 +45,7 @@ import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.ui.CardEditActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.CustomShareBoard;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;

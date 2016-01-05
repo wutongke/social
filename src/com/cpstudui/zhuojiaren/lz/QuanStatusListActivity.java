@@ -19,9 +19,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.PublishActiveActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.UserHomeActivity;
 import com.cpstudio.zhuojiaren.R.array;
 import com.cpstudio.zhuojiaren.R.drawable;
 import com.cpstudio.zhuojiaren.R.id;
@@ -36,6 +34,8 @@ import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.ui.EventDetailActivity;
+import com.cpstudio.zhuojiaren.ui.PublishActiveActivity;
+import com.cpstudio.zhuojiaren.ui.UserHomeActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.PullDownView;

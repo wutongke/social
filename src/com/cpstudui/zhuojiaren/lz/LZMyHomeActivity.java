@@ -13,10 +13,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.cpstudio.zhuojiaren.AboutZhuomaiActivity;
-import com.cpstudio.zhuojiaren.MyAdviceActivity;
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.UserHomeActivity;
 import com.cpstudio.zhuojiaren.facade.UserFacade;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
@@ -25,9 +22,12 @@ import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
+import com.cpstudio.zhuojiaren.ui.AboutZhuomaiActivity;
+import com.cpstudio.zhuojiaren.ui.MyAdviceActivity;
 import com.cpstudio.zhuojiaren.ui.MyCollectionActivity;
 import com.cpstudio.zhuojiaren.ui.MyZhuoBiActivity;
 import com.cpstudio.zhuojiaren.ui.SettingActivity;
+import com.cpstudio.zhuojiaren.ui.UserHomeActivity;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 /**
  * "我的"界面
