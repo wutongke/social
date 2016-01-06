@@ -60,7 +60,7 @@ public class QuanziActiveFra extends Fragment {
 
 		mConnHelper = ConnHelper.getInstance(getActivity()
 				.getApplicationContext());
-
+		mAdapter = new EventListAdapter(getActivity(), mList);
 		RelativeLayout mFooterView = (RelativeLayout) inflater.inflate(
 				R.layout.listview_footer, null);
 		mListView.addFooterView(mFooterView);

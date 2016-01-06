@@ -35,10 +35,7 @@ public class QuanziMemberFra extends Fragment {
 	ListView mListView;
 
 	private QuanMemberListAdapter mAdapter;
-	// private ArrayList<UserVO> mList = new ArrayList<UserVO>();
 	private ArrayList<UserNewVO> mList = new ArrayList<UserNewVO>();
-	// ÐèÒª¸Ä
-	// private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
 	private ConnHelper mConnHelper = null;
 	private ListViewFooter mListViewFooter = null;
 	private Context mContext;
@@ -60,7 +57,7 @@ public class QuanziMemberFra extends Fragment {
 		mContext = getActivity();
 		mConnHelper = ConnHelper.getInstance(getActivity()
 				.getApplicationContext());
-
+		mAdapter = new QuanMemberListAdapter(getActivity(), mList);
 		RelativeLayout mFooterView = (RelativeLayout) inflater.inflate(
 				R.layout.listview_footer, null);
 		mListView.addFooterView(mFooterView);

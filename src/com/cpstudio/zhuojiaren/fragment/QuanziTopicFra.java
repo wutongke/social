@@ -38,8 +38,6 @@ public class QuanziTopicFra extends Fragment {
 	ListView mListView;
 
 	private QuanziTopicListAdapter mAdapter;
-	// private ArrayList<UserVO> mList = new ArrayList<UserVO>();
-	// private ArrayList<ZhuoInfoVO> mList = new ArrayList<ZhuoInfoVO>();
 	private ArrayList<QuanTopicVO> mList = new ArrayList<QuanTopicVO>();
 
 	private ConnHelper mConnHelper = null;
@@ -52,7 +50,6 @@ public class QuanziTopicFra extends Fragment {
 	String groupId = null;
 
 	public interface functionListener {
-		//
 		public void onTypeChange(int type);
 	}
 
