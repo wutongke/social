@@ -10,7 +10,11 @@ import com.cpstudio.zhuojiaren.helper.DatabaseHelper;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
-
+/**
+ * 用户信息缓存类，部分字段未用
+ * @author lz
+ *
+ */
 public class UserFacade {
 	private final DatabaseHelper dbHelper;
 	private static final String SQL_TABLE = "NEWUSERLIST";

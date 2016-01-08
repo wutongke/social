@@ -25,14 +25,9 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.R.id;
-import com.cpstudio.zhuojiaren.R.layout;
-import com.cpstudio.zhuojiaren.R.string;
-import com.cpstudio.zhuojiaren.helper.AppClient;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.model.LoginRes;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -132,7 +127,7 @@ public class LoginActivity extends Activity {
 				String rs = (String) msg.obj;
 				if (JsonHandler.checkResult(rs, getApplicationContext())) {
 					// ªÒ»°session
-					LoginRes res = JsonHandler_Lef.parseLoginRes(
+					LoginRes res = JsonHandler.parseLoginRes(
 							LoginActivity.this, JsonHandler.parseResult(rs)
 									.getData());
 					boolean first = mResHelper.getFirstUse();
@@ -157,7 +152,7 @@ public class LoginActivity extends Activity {
 					connHelper.setUploadFileToken(res.getQiniuToken());
 					connHelper.setImToken(res.getRongyunToken());
 					mResHelper.setUserid(mUid);
-					AppClient.getInstance(LoginActivity.this.getApplicationContext()).init(LoginActivity.this.getApplicationContext());
+					connHelper.init(LoginActivity.this.getApplicationContext());
 					if (mPwdView.getText().toString().equals("000000") && first) {
 						OnClickListener ok = new OnClickListener() {
 							@Override

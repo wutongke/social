@@ -16,9 +16,8 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -34,14 +33,14 @@ public class GrouthActivity extends BaseActivity {
 	private ArrayList<GrouthVedio> mDatas = new ArrayList<GrouthVedio>();
 	// ·ÖÒ³
 	private int mPage = 0;
-	private AppClient appClientLef;
+	private ConnHelper appClientLef;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_study);
 		ButterKnife.inject(this);
-		appClientLef = AppClient.getInstance(this);
+		appClientLef = ConnHelper.getInstance(this);
 		initTitle();
 		title.setText(R.string.title_activity_up_level);
 		imageFunction.setBackgroundResource(R.drawable.jjglass);
@@ -97,7 +96,7 @@ public class GrouthActivity extends BaseActivity {
 		try {
 			pullDownView.finishLoadData(true);
 			if (data != null && !data.equals("")) {
-				ArrayList<GrouthVedio> list = JsonHandler_Lef
+				ArrayList<GrouthVedio> list = JsonHandler
 						.parseGrouthVedioList(data);
 				if (!list.isEmpty()) {
 					if (!append) {

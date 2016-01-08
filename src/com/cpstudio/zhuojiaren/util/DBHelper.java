@@ -13,6 +13,9 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
+ * 数据库帮助类
+ * @author lz
+ *
  */
 public class DBHelper extends SQLiteOpenHelper {
 	// 用户数据库文件的版本

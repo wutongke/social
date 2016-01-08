@@ -16,12 +16,12 @@ import android.graphics.BitmapFactory;
 import android.net.http.AndroidHttpClient;
 import android.util.Log;
 
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 
 public class ImageGetForHttp {
 	private static final String LOG_TAG = "ImageGetForHttp";
-	private static final String DEFAULT_SERVER = ZhuoCommHelper.SERVER + "/";
+	private static final String DEFAULT_SERVER = UrlHelper.SERVER + "/";
 
 	public static Bitmap downloadBitmap(String url, ImageFileCache ifc) {
 		// final int IO_BUFFER_SIZE = 4 * 1024;

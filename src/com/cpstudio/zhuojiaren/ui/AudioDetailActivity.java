@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -86,7 +86,7 @@ public class AudioDetailActivity extends BaseActivity {
 									R.string.please_finish_share);
 							return;
 						}
-						AppClient.getInstance(
+						ConnHelper.getInstance(
 								AudioDetailActivity.this.getApplicationContext())
 								.shareThought( UrlHelper.getAudiothought(),"audioid",mId,
 										share.getText().toString(),

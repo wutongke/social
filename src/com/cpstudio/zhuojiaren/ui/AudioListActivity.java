@@ -14,9 +14,8 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.AudioAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -30,7 +29,7 @@ public class AudioListActivity extends BaseActivity {
 	private ListView listView;
 	private ArrayList<RecordVO> mDatas = new ArrayList<RecordVO>();
 	private int mPage = 0;
-	private AppClient appClientLef;
+	private ConnHelper appClientLef;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,7 @@ public class AudioListActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		initTitle();
 		title.setText(R.string.zhuo_audio);
-		appClientLef = AppClient.getInstance(this);
+		appClientLef = ConnHelper.getInstance(this);
 		initPullDownView();
 		loadData();
 	}
@@ -100,7 +99,7 @@ public class AudioListActivity extends BaseActivity {
 			data = res.getData();
 			pullDownView.finishLoadData(true);
 			if (data != null && !data.equals("")) {
-				ArrayList<RecordVO> list = JsonHandler_Lef
+				ArrayList<RecordVO> list = JsonHandler
 						.parseAudioList(data);
 				if (!list.isEmpty()) {
 					if (!append) {

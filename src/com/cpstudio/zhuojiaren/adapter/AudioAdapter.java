@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClient;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -26,12 +26,12 @@ public class AudioAdapter extends CommonAdapter<RecordVO> {
 	private SeekBar seekBar;
 	private View curPlayView;
 	private volatile boolean isPlaying = false;
-	private AppClient appClient;
+	private ConnHelper appClient;
 
 	public AudioAdapter(Context context, List<RecordVO> mDatas, int itemLayoutId) {
 		super(context, mDatas, itemLayoutId);
 		// TODO Auto-generated constructor stub
-		appClient = AppClient.getInstance(context);
+		appClient = ConnHelper.getInstance(context);
 	}
 
 	@Override
@@ -60,13 +60,13 @@ public class AudioAdapter extends CommonAdapter<RecordVO> {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (!item.getPraise().equals(RecordVO.PRAISED)) {
-					appClient.collection((Activity)mContext,ZhuoCommHelper.getAudioColl(),
+					appClient.collection((Activity)mContext,UrlHelper.getAudioColl(),
 							"audioid", item.getId(), "praise", RecordVO.PRAISED);
 					praise.setBackgroundResource(R.drawable.jjsc2);
 					item.setPraise(RecordVO.PRAISED);
 				} else {
 					praise.setBackgroundResource(R.drawable.jjsc1);
-					appClient.collection((Activity)mContext,ZhuoCommHelper.getAudioColl(),
+					appClient.collection((Activity)mContext,UrlHelper.getAudioColl(),
 							"audioid", item.getId(), "praise", RecordVO.NOPRAISED);
 					item.setPraise(RecordVO.NOPRAISED);
 				}

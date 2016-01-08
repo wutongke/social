@@ -19,7 +19,11 @@ import android.util.Log;
 
 import com.cpstudio.zhuojiaren.R;
 import com.utils.CommunicationUtil;
-
+/**
+ * 网络请求公共类,包括图片Key的上传
+ * @author lz
+ *
+ */
 public class AsyncConnectHelper extends AsyncTask<String, Integer, Boolean> {
 	private ProgressDialog mDialog;
 	private Activity mActivity = null;

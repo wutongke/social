@@ -9,18 +9,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.CrowdFundingAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
@@ -33,7 +30,7 @@ public class CrowdFundingListActivity extends BaseActivity {
 	private ArrayList<CrowdFundingVO> mDatas = new ArrayList<CrowdFundingVO>();
 	// ·ÖÒ³
 	private int mPage = 0;
-	private AppClient appClientLef;
+	private ConnHelper appClientLef;
 
 	int typePubOrInv = -1;
 	int typeCrowd = 0;
@@ -51,7 +48,7 @@ public class CrowdFundingListActivity extends BaseActivity {
 			typeCrowd = typeId - 2;
 		}
 		initTitle();
-		appClientLef = AppClient.getInstance(this);
+		appClientLef = ConnHelper.getInstance(this);
 		if (!type.isEmpty()) {
 			title.setText(type);
 		}
@@ -147,7 +144,7 @@ public class CrowdFundingListActivity extends BaseActivity {
 		try {
 			pullDownView.finishLoadData(true);
 			if (data != null && !data.equals("")) {
-				ArrayList<CrowdFundingVO> list = JsonHandler_Lef
+				ArrayList<CrowdFundingVO> list = JsonHandler
 						.parseFundingList(data);
 				if (!list.isEmpty()) {
 					if (!append) {

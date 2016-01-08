@@ -17,7 +17,11 @@ import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.UploadOptions;
-
+/**
+ * 七牛云图片上传核心类，保证多张图片上传完成
+ * @author lz
+ *
+ */
 public class UploadFileCallable implements Callable<Map<String, StringBuilder>> {
 	UploadManager uploadManager;
 	ArrayList<String> keysList = new ArrayList<String>();

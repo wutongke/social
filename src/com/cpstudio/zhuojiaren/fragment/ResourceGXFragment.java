@@ -33,10 +33,8 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.ResourceGXAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter.ImageOnclick;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
-import com.cpstudio.zhuojiaren.model.BaseCodeData;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
 import com.cpstudio.zhuojiaren.model.GXTypeItemVO;
 import com.cpstudio.zhuojiaren.model.ImageRadioButton;
@@ -364,7 +362,7 @@ public class ResourceGXFragment extends Fragment {
 		try {
 			pullDownView.finishLoadData(true);
 			if (data != null && !data.equals("")) {
-				ArrayList<ResourceGXVO> list = JsonHandler_Lef
+				ArrayList<ResourceGXVO> list = JsonHandler
 						.parseResourceGXVOList(data);
 				if (!list.isEmpty()) {
 					if (!append) {

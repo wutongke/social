@@ -1,6 +1,11 @@
 package io.rong.app;
 
 import io.rong.imkit.RongIM;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
@@ -11,7 +16,6 @@ import com.baidu.mapapi.SDKInitializer;
  * Created by Bob on 2015/1/30.
  */
 public class App extends Application {
-
 	@Override
 	public void onCreate() {
 
@@ -23,31 +27,6 @@ public class App extends Application {
 
 		initRong();
 
-		// /**
-		// * IMKit SDK调用第一步 初始化 context上下文
-		// */
-		// RongIM.init(this);
-		// /**
-		// * d 融云SDK事件监听处理
-		// */
-		// RongCloudEvent.init(this);
-		//
-		// // DemoContext.init(this);
-		//
-		// // 注册消息类型的时候判断当前的进程是否在主进程
-		// if ("com.cpstudio.zhuojiaren"
-		// .equals(getCurProcessName(getApplicationContext()))) {
-		// try {
-		// // 注册自定义消息,注册完消息后可以收到自定义消息
-		// RongIM.registerMessageType(DeAgreedFriendRequestMessage.class);
-		// // //注册消息模板，注册完消息模板可以在会话列表上展示
-		// // RongIM.registerMessageTemplate(new
-		// // DeContactNotificationMessageProvider());
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// }
-		// Crash 日志
 		Thread.setDefaultUncaughtExceptionHandler(new DefaultExceptionHandler(
 				this));
 
@@ -74,18 +53,6 @@ public class App extends Application {
 			if ("io.rong.app"
 					.equals(getCurProcessName(getApplicationContext()))) {
 				RongCloudEvent.init(this);
-				// DemoContext.init(this);
-				// 可以使得程序不会异常终止，但不好调试
-				// Thread.setDefaultUncaughtExceptionHandler(new
-				// RongExceptionHandler(this));
-				// try{
-				// RongIM.registerMessageType(CustomMessage.class);
-				// RongIM.registerMessageType(DeAgreeeFriendRequestMessage.class);
-				// RongIM.registerMessageTemplate(new
-				// DeContectNotificationMessageProvider());
-				// }
-				// catch(ExecutionException exception)
-				// exception.printStackTrace;
 			}
 		}
 	}

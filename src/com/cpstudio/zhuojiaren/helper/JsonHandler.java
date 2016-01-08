@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -17,27 +20,37 @@ import com.cpstudio.zhuojiaren.model.BusinessInfoVO;
 import com.cpstudio.zhuojiaren.model.ChangeBgAVO;
 import com.cpstudio.zhuojiaren.model.CmtVO;
 import com.cpstudio.zhuojiaren.model.Comment;
+import com.cpstudio.zhuojiaren.model.CommentVO;
 import com.cpstudio.zhuojiaren.model.CompanyNewVO;
+import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
 import com.cpstudio.zhuojiaren.model.GeoVO;
+import com.cpstudio.zhuojiaren.model.GoodsCategory;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.GroupStatus;
 import com.cpstudio.zhuojiaren.model.GroupsForIM;
+import com.cpstudio.zhuojiaren.model.GrouthVedio;
+import com.cpstudio.zhuojiaren.model.GrouthVisit;
 import com.cpstudio.zhuojiaren.model.HangYeVO;
 import com.cpstudio.zhuojiaren.model.ImMsgVO;
 import com.cpstudio.zhuojiaren.model.ImQuanVO;
+import com.cpstudio.zhuojiaren.model.IncomeVO;
+import com.cpstudio.zhuojiaren.model.LoginRes;
 import com.cpstudio.zhuojiaren.model.MainHeadInfo;
 import com.cpstudio.zhuojiaren.model.MessagePubVO;
 import com.cpstudio.zhuojiaren.model.OrderVO;
+import com.cpstudio.zhuojiaren.model.PayBackVO;
 import com.cpstudio.zhuojiaren.model.PlanVO;
 import com.cpstudio.zhuojiaren.model.Praise;
 import com.cpstudio.zhuojiaren.model.ProductNewVO;
+import com.cpstudio.zhuojiaren.model.ProgressVO;
 import com.cpstudio.zhuojiaren.model.Province;
 import com.cpstudio.zhuojiaren.model.QuanTopicVO;
 import com.cpstudio.zhuojiaren.model.QuanUserVO;
 import com.cpstudio.zhuojiaren.model.QuanVO;
+import com.cpstudio.zhuojiaren.model.RecordVO;
 import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.model.RuleVO;
@@ -58,7 +71,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-
+/**
+ * 服务器返回数据json解析类
+ * @author lz
+ *
+ */
 public class JsonHandler {
 	private String jsonData = null;
 	private ResultVO resultVO = null;
@@ -133,7 +150,7 @@ public class JsonHandler {
 				// 处理出错信息，目前只处理session，其他错处直接输出
 				switch (Integer.parseInt(code)) {
 				case ResultVO.SESSIONOUT:
-					AppClient.getInstance(context).refreshSession(context);
+					ConnHelper.getInstance(context).refreshSession(context);
 					return false;
 				}
 				CommonUtil.displayToast(context, result.getMsg());
@@ -1135,5 +1152,349 @@ public class JsonHandler {
 		}
 		return list;
 	}
+	/**
+	 * 登录时获取session
+	 */
+	public static LoginRes parseLoginRes(Context context,String data){
+		if (data==null){
+			Log.w("Debug", "登录没有返回session");
+		}
+		try {
+			JSONObject obj = new JSONObject(data);
+			String session = obj.optString("session");
+			if(session ==null||session.isEmpty()){
+				Log.w("Debug", "session为空");
+			}
+			String qiniuToken = obj.optString("qiniuToken");
+			if(qiniuToken ==null||qiniuToken.isEmpty()){
+				Log.w("Debug", "qiniuToken为空");
+			}
+			String rongyunToken = obj.optString("rongyunToken");
+			if(rongyunToken ==null||rongyunToken.isEmpty()){
+				Log.w("Debug", "rongyunToken为空");
+			}
+			String userId = obj.optString("userid");
+			//保存信息
+			LoginRes res = new LoginRes();
+			res.setQiniuToken(qiniuToken);
+			res.setRongyunToken(rongyunToken);
+			res.setUserid(userId);
+			res.setSession(session);
+			//如果是session过期导致的重新登录，则在这里处理
+			return res;
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Log.w("Debug", "登录信息解析失败");
+			return null;
+		}
+	}
+	/**
+	 * 圈子列表
+	 */
+	public static ArrayList<QuanVO> parseQuanList(String jsonData) {
+		ArrayList<QuanVO> list = new ArrayList<QuanVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<QuanVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<QuanVO> li = gson.fromJson(jsonData, listType);
 
+				for (Iterator<QuanVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					QuanVO item = (QuanVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * 解析列表
+	 * @param <T>
+	 * @param <T>
+	 */
+	public static   ArrayList<GrouthVedio> parseGrouthVedioList(String jsonData) {
+		ArrayList<GrouthVedio> list = new ArrayList<GrouthVedio>();
+		try {
+			Type listType = new TypeToken<ArrayList<GrouthVedio>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<GrouthVedio> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<GrouthVedio> iterator = li.iterator(); iterator
+						.hasNext();) {
+					GrouthVedio item = (GrouthVedio) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * 解析列表
+	 * @param <T>
+	 * @param <T>
+	 */
+	public static   ArrayList<RecordVO> parseAudioList(String jsonData) {
+		ArrayList<RecordVO> list = new ArrayList<RecordVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<RecordVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<RecordVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<RecordVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					RecordVO item = (RecordVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public static   ArrayList<GoodsCategory> parseGoodsCategory(String jsonData) {
+		ArrayList<GoodsCategory> list = new ArrayList<GoodsCategory>();
+		try {
+			Type listType = new TypeToken<ArrayList<GoodsCategory>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<GoodsCategory> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<GoodsCategory> iterator = li.iterator(); iterator
+						.hasNext();) {
+					GoodsCategory item = (GoodsCategory) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * 解析评论列表
+	 * @param <T>
+	 * @param <T>
+	 */
+	public static   ArrayList<Comment> parseCommentLZList(String jsonData) {
+		ArrayList<Comment> list = new ArrayList<Comment>();
+		try {
+			Type listType = new TypeToken<ArrayList<Comment>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<Comment> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<Comment> iterator = li.iterator(); iterator
+						.hasNext();) {
+					Comment item = (Comment) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * 解析列表
+	 * @param <T>
+	 * @param <T>
+	 */
+	public static   ArrayList<ResourceGXVO> parseResourceGXVOList(String jsonData) {
+		ArrayList<ResourceGXVO> list = new ArrayList<ResourceGXVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<ResourceGXVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<ResourceGXVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<ResourceGXVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					ResourceGXVO item = (ResourceGXVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * 解析评论列表
+	 * @param <T>
+	 * @param <T>
+	 */
+	public static   ArrayList<CommentVO> parseCommentList(String jsonData) {
+		ArrayList<CommentVO> list = new ArrayList<CommentVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<CommentVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<CommentVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<CommentVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					CommentVO item = (CommentVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * 解析进展列表
+	 * @param <T>
+	 * @param <T>
+	 */
+	public static   ArrayList<ProgressVO> parseProgressVOList(String jsonData) {
+		ArrayList<ProgressVO> list = new ArrayList<ProgressVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<ProgressVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<ProgressVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<ProgressVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					ProgressVO item = (ProgressVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * 回报
+	 * @param jsonData
+	 * @return
+	 */
+	public static   ArrayList<PayBackVO> parsePayBackVOList(String jsonData) {
+		ArrayList<PayBackVO> list = new ArrayList<PayBackVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<PayBackVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<PayBackVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<PayBackVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					PayBackVO item = (PayBackVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * 解析采访列表
+	 * @param jsonData
+	 * @return
+	 */
+	public static   ArrayList<GrouthVisit> parseVisitList(String jsonData) {
+		ArrayList<GrouthVisit> list = new ArrayList<GrouthVisit>();
+		try {
+			Type listType = new TypeToken<ArrayList<GrouthVisit>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<GrouthVisit> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<GrouthVisit> iterator = li.iterator(); iterator
+						.hasNext();) {
+					GrouthVisit item = (GrouthVisit) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public static ArrayList<CrowdFundingVO> parseFundingList(String jsonData) {
+		// TODO Auto-generated method stub
+		ArrayList<CrowdFundingVO> list = new ArrayList<CrowdFundingVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<CrowdFundingVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<CrowdFundingVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<CrowdFundingVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					CrowdFundingVO item = (CrowdFundingVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public static ArrayList<GoodsVO> parseGoodsVOList(String jsonData) {
+		// TODO Auto-generated method stub
+		ArrayList<GoodsVO> list = new ArrayList<GoodsVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<GoodsVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<GoodsVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<GoodsVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					GoodsVO item = (GoodsVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public static ArrayList<IncomeVO> parseIncomeVOList(String jsonData) {
+		// TODO Auto-generated method stub
+		ArrayList<IncomeVO> list = new ArrayList<IncomeVO>();
+		try {
+			Type listType = new TypeToken<ArrayList<IncomeVO>>() {
+			}.getType();
+			Gson gson = new Gson();
+			if (!jsonData.equals("") && !jsonData.equals("\"\"")) {
+				ArrayList<IncomeVO> li = gson.fromJson(jsonData, listType);
+
+				for (Iterator<IncomeVO> iterator = li.iterator(); iterator
+						.hasNext();) {
+					IncomeVO item = (IncomeVO) iterator.next();
+					list.add(item);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

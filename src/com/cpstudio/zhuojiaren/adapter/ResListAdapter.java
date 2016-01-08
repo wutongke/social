@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.PicVO;
 import com.cpstudio.zhuojiaren.model.ZhuoInfoVO;
@@ -83,8 +82,8 @@ public class ResListAdapter extends BaseAdapter {
 		String detail = zhuoinfo.getText();
 		String msgType = "";
 		if (type != null && !type.equals("")) {
-			msgType = ZhuoCommHelper.transferMsgTypeToString(type, context);
-			category = ZhuoCommHelper.transferMsgCategoryToString(category,
+			msgType = CommonUtil.transferMsgTypeToString(type, context);
+			category = CommonUtil.transferMsgCategoryToString(category,
 					context);
 			holder.textViewTitle.setText("【" + category + "】" + title + "//"
 					+ detail);

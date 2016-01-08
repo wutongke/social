@@ -13,15 +13,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -39,12 +36,11 @@ import com.umeng.socialize.utils.Log;
  * @author lz
  * 
  */
-public class LZUserSameActivity extends BaseActivity {
+public class UsersListActivity extends BaseActivity {
 	private ListView mListView;
 	private CommonAdapter mAdapter;
 	private PullDownView mPullDownView;
 	private ArrayList<UserNewVO> mList = new ArrayList<UserNewVO>();
-	private String uid = null;
 	private ConnHelper mConnHelper = null;
 	BaseCodeData baseDataSet;
 	private LoadImage mLoader = LoadImage.getInstance();
@@ -76,12 +72,11 @@ public class LZUserSameActivity extends BaseActivity {
 		else
 			title.setText(R.string.label_active_reuqest_card); // 还需要显示人数
 		baseDataSet = mConnHelper.getBaseDataSet();
-		uid = ResHelper.getInstance(getApplicationContext()).getUserid();
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,
 				R.layout.listview_header);
 		mListView = mPullDownView.getListView();
-		mAdapter = new CommonAdapter<UserNewVO>(LZUserSameActivity.this, mList,
+		mAdapter = new CommonAdapter<UserNewVO>(UsersListActivity.this, mList,
 				R.layout.item_carduser_list) {
 			@Override
 			public void convert(ViewHolder helper, final UserNewVO item) {
@@ -111,7 +106,7 @@ public class LZUserSameActivity extends BaseActivity {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						Intent i = new Intent(LZUserSameActivity.this,
+						Intent i = new Intent(UsersListActivity.this,
 								ZhuoMaiCardActivity.class);
 						i.putExtra("userid", item.getUserid());
 						startActivity(i);
@@ -210,7 +205,7 @@ public class LZUserSameActivity extends BaseActivity {
 											item.getUserid(), "agree");
 									Log.i("lzasd", item.getGroupid()+","+item.getGname()+","+item.getUserid());
 									CommonUtil.displayToast(
-											LZUserSameActivity.this,
+											UsersListActivity.this,
 											"向融云，加入圈子成功");
 									if (v != null)
 										v.setVisibility(View.GONE);
@@ -219,7 +214,7 @@ public class LZUserSameActivity extends BaseActivity {
 								@Override
 								public void onError(ErrorCode errorCode) {
 									CommonUtil.displayToast(
-											LZUserSameActivity.this,
+											UsersListActivity.this,
 											"向融云，加入圈子失败");
 								}
 							});

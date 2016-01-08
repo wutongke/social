@@ -35,10 +35,9 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.QuanListAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter.ImageOnclick;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.ImageRadioButton;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -70,7 +69,7 @@ public class QuanziFra extends Fragment {
 	TextView dissolve;
 	private QuanListAdapter mAdapter;
 	private ArrayList<QuanVO> mList = new ArrayList<QuanVO>();
-	private AppClient mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private int mPage = 0;
 	private int mType = 6;
 	private String url = "";
@@ -102,7 +101,7 @@ public class QuanziFra extends Fragment {
 		ButterKnife.inject(this, layout);
 		pupWindow = new PopupWindows(getActivity());
 		mContext = getActivity();
-		mConnHelper = AppClient.getInstance(getActivity());
+		mConnHelper = ConnHelper.getInstance(getActivity());
 		
 		// 加载的圈子类型
 		Bundle intent = getArguments();
@@ -225,7 +224,7 @@ public class QuanziFra extends Fragment {
 
 		// 如果是我的圈子，则展示我的圈子
 		if (mType == QuanVO.QUANZIMYCTEATE || mType == QuanVO.QUANZIMYADD) {
-			url = ZhuoCommHelper.getUrlMyGroupList();
+			url = UrlHelper.getUrlMyGroupList();
 
 			quanziRecommend.setVisibility(View.GONE);
 			myQuanziLayout.setVisibility(View.VISIBLE);
@@ -257,7 +256,7 @@ public class QuanziFra extends Fragment {
 			// url = ZhuoCommHelper.getUrlReGroupList();
 			myQuanziLayout.setVisibility(View.GONE);
 			quanziRecommend.setVisibility(View.VISIBLE);
-			url = ZhuoCommHelper.getServiceSearchQuan();
+			url = UrlHelper.getServiceSearchQuan();
 			gtype = "1";
 			titleList.clear();
 			titleList.add(new ImageRadioButton(R.drawable.resourceu_quan,
@@ -292,7 +291,7 @@ public class QuanziFra extends Fragment {
 			});
 			quanziRecommend.setAdapter(mTitleAdapter);
 		} else if (mType == QuanVO.QUANZIRECOMMEND) {
-			url = ZhuoCommHelper.getUrlReGroupList();
+			url = UrlHelper.getUrlReGroupList();
 		}
 
 	}
@@ -324,7 +323,7 @@ public class QuanziFra extends Fragment {
 	private void updateItemList(String data, boolean refresh, boolean append) {
 		try {
 			if (data != null && !data.equals("")) {
-				ArrayList<QuanVO> list = JsonHandler_Lef.parseQuanList(data);
+				ArrayList<QuanVO> list = JsonHandler.parseQuanList(data);
 				if (!list.isEmpty()) {
 					mListViewFooter.hasData();
 					if (!append) {
@@ -440,7 +439,7 @@ public class QuanziFra extends Fragment {
 
 	public void onResult(Intent data) {
 		// TODO Auto-generated method stub
-		url = ZhuoCommHelper.getServiceSearchQuan();
+		url = UrlHelper.getServiceSearchQuan();
 		// 先设置为空
 		gtype = null;
 		city = null;

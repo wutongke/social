@@ -1,6 +1,6 @@
 package com.cpstudio.zhuojiaren.ui;
 
-import io.rong.app.DemoContext;
+import io.rong.app.IMChatDataHelper;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -40,7 +40,7 @@ import com.cpstudio.zhuojiaren.facade.GroupFacade;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.SysApplication;
+import com.cpstudio.zhuojiaren.helper.ActivityManager;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.CustomerMessageFactory;
 import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
@@ -87,14 +87,13 @@ public class TabContainerActivity extends TabActivity implements
 	private Class[] mTabClassArray = {
 			com.cpstudio.zhuojiaren.ui.MainActivity.class,
 			JiarenActiveActivity.class, MsgListActivity.class,
-			GrouthActivity.class, LZMyHomeActivity.class };
+			GrouthActivity.class, MyMainActivity.class };
 
 	private int[] mImageResourceArray = { R.drawable.indicator_tab_ico_zhuo,
 			R.drawable.indicator_tab_ico_active,
 			R.drawable.indicator_tab_ico_im, R.drawable.indicator_tab_ico_up,
 			R.drawable.indicator_tab_ico_my };
 	private String[] mTextArray = null;
-	// 有用，在主activity中来监听显示未读消息
 	public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.OnReceiveUnreadCountChangedListener() {
 		@Override
 		public void onMessageIncreased(int count) {
@@ -102,10 +101,8 @@ public class TabContainerActivity extends TabActivity implements
 				numTV.setVisibility(View.GONE);
 			} else if (count > 0 && count < 100) {
 				numTV.setVisibility(View.VISIBLE);
-				// 不用显示数目 numTV.setText(count + "");
 			} else {
 				numTV.setVisibility(View.VISIBLE);
-				// 不用显示数目 numTV.setText(R.string.no_read_message);
 			}
 		}
 	};
@@ -199,20 +196,18 @@ public class TabContainerActivity extends TabActivity implements
 				@Override
 				public void run() {
 					// TODO Auto-genrated method stub
-					GroupFacade mgfcade = DemoContext.getInstance(
+					GroupFacade mgfcade = IMChatDataHelper.getInstance(
 							getApplicationContext()).getmGroupInfoDao();
 					mgfcade.saveOrUpdateAll(quanlist);
 				}
 			}).start();
 
-		} else {
-			// WinToast.toast(this, groups.getCode());
 		}
 	}
 
 	private void init() {
 		ResHelper.getInstance(getApplicationContext()).setAppShow(true);
-		SysApplication.getInstance().addActivity(TabContainerActivity.this);
+		ActivityManager.getInstance().addActivity(TabContainerActivity.this);
 		mTextArray = new String[] { getString(R.string.tab_item1),
 				getString(R.string.tab_item2), getString(R.string.tab_item3),
 				getString(R.string.tab_item4), getString(R.string.tab_item5) };
@@ -500,7 +495,6 @@ public class TabContainerActivity extends TabActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		// getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -512,7 +506,7 @@ public class TabContainerActivity extends TabActivity implements
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
 		case R.id.exit:
-			SysApplication.getInstance().exit(true, getApplicationContext());
+			ActivityManager.getInstance().exit(true, getApplicationContext());
 			break;
 		}
 		return true;

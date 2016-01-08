@@ -5,13 +5,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.UserVO;
-import com.cpstudio.zhuojiaren.R;
-import com.utils.LundarToSolar;
-import com.utils.SolarToLundar;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -20,6 +13,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.imageloader.LoadImage;
+import com.cpstudio.zhuojiaren.model.UserVO;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.utils.LundarToSolar;
+import com.utils.SolarToLundar;
 
 public class BirthUsersListAdapter extends BaseAdapter {
 	private List<UserVO> mList = null;
@@ -97,7 +97,7 @@ public class BirthUsersListAdapter extends BaseAdapter {
 					int birthDateInt = 1;
 					String birthYear = "";
 					if (birthday != null && birthday.indexOf("-") != -1) {
-						String[] bd = ZhuoCommHelper.getBirthday(birthday);
+						String[] bd = CommonUtil.getBirthday(birthday);
 						String y = bd[0];
 						String m = bd[1];
 						String d = bd[2];
@@ -128,7 +128,7 @@ public class BirthUsersListAdapter extends BaseAdapter {
 					String birthDate = "1";
 					String birthday = user.getBirthday();
 					if (birthday != null && birthday.indexOf("-") != -1) {
-						String[] bd = ZhuoCommHelper.getBirthday(birthday);
+						String[] bd = CommonUtil.getBirthday(birthday);
 						birthYear = bd[0];
 						birthMonth = bd[1];
 						birthDate = bd[2];

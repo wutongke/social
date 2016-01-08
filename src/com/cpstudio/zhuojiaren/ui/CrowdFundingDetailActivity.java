@@ -30,9 +30,9 @@ import com.cpstudio.zhuojiaren.fragment.CommentFragment;
 import com.cpstudio.zhuojiaren.fragment.MyPagerAdapter;
 import com.cpstudio.zhuojiaren.fragment.PaybackFragment;
 import com.cpstudio.zhuojiaren.fragment.ProgressFragment;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.CrowdFundingDes;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
@@ -95,7 +95,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 	private MyPagerAdapter mAdapter;
 	private LoadImage mLoadImage ;
 	String[] tabTitles;
-	AppClient appClient;
+	ConnHelper appClient;
 	private String crowdFundingId;
 	private Context mContext;
 	private ArrayList<ImageView> IVList = new ArrayList<ImageView>();
@@ -113,7 +113,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 		crowdFundingId = getIntent().getStringExtra(
 				CrowdFundingVO.CROWDFUNDINGID);
 		title.setText(R.string.crowdfungding_detail);
-		appClient = AppClient.getInstance(CrowdFundingDetailActivity.this);
+		appClient = ConnHelper.getInstance(CrowdFundingDetailActivity.this);
 		loadData();
 
 	}
@@ -293,7 +293,7 @@ public class CrowdFundingDetailActivity extends BaseFragmentActivity {
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
 						appClient.collection((Activity)mContext,
-								ZhuoCommHelper.getLikecrowdfunding(), "id",
+								UrlHelper.getLikecrowdfunding(), "id",
 								crowdFunding.getId(), "", "");
 						if (crowdFunding.getIsLike().equals(
 								CrowdFundingVO.likeOrSupport)) {

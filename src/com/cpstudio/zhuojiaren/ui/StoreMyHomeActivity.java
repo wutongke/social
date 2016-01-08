@@ -15,10 +15,9 @@ import butterknife.OnClick;
 import butterknife.Optional;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -188,7 +187,7 @@ public class StoreMyHomeActivity extends BaseActivity {
 
 	private void loadDb() {
 		// TODO Auto-generated method stub
-		AppClient.getInstance(this.getApplicationContext()).getMyZhuoBi(
+		mConnHelper.getInstance(this.getApplicationContext()).getMyZhuoBi(
 				StoreMyHomeActivity.this, mUIHandler, MsgTagVO.DATA_OTHER);
 	}
 

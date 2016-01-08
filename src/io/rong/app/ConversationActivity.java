@@ -29,7 +29,11 @@ import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.ui.ZhuoMaiCardActivity;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanMainActivity;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
-
+/**
+ * 会话界面
+ * @author lz
+ *
+ */
 public class ConversationActivity extends FragmentActivity {
 	@InjectView(R.id.buttonManage)
 	Button btnManage;
@@ -40,7 +44,6 @@ public class ConversationActivity extends FragmentActivity {
 	String myid;
 	String targetId;
 	UserNewVO guest = null;
-	private Button followButton;
 	private ConnHelper mConnHelper = null;
 	private Conversation.ConversationType mConversationType;
 	// 需要增加一个接口判断两人是否为好友关系
@@ -71,33 +74,8 @@ public class ConversationActivity extends FragmentActivity {
 				break;
 			}
 			case MsgTagVO.ADD_BACK: {// 拉入黑名单
-				// if (JsonHandler.checkResult((String) msg.obj,
-				// getApplicationContext())) {
-				// if (toBlack.equals("0")) {
-				// blackButton.setText(R.string.label_unblack);
-				// toBlack = "1";
-				// } else {
-				// blackButton.setText(R.string.label_black);
-				// toBlack = "0";
-				// }
-				// CommonUtil.displayToast(getApplicationContext(),
-				// R.string.label_success);
-				// }
-				// break;
 			}
 			case MsgTagVO.MSG_FOWARD: {// 递送名片，加好友
-				// if (JsonHandler.checkResult((String) msg.obj,
-				// getApplicationContext())) {
-				// if (tofollow.equals("0")) {
-				// followButton.setText(R.string.label_follow);
-				// tofollow = "1";
-				// } else {
-				// tofollow = "0";
-				// followButton.setText(R.string.label_unfollow);
-				// }
-				// CommonUtil.displayToast(getApplicationContext(),
-				// R.string.label_success);
-				// }
 				break;
 			}
 			}
@@ -115,19 +93,6 @@ public class ConversationActivity extends FragmentActivity {
 
 		Intent intent = getIntent();
 
-		// // push或通知过来
-		// if (intent != null && intent.getData() != null
-		// && intent.getData().getScheme().equals("rong")
-		// && intent.getData().getQueryParameter("push") != null) {
-		// // 通过intent.getData().getQueryParameter("push") 为true，判断是否是push消息
-		// if (ZhuoConnHelper.getInstance(getApplicationContext()) != null
-		// && intent.getData().getQueryParameter("push")
-		// .equals("true")) {
-		// // enterActivity(intent);
-		// } else {
-		// enterFragment(intent);
-		// }
-		// }
 
 		// push或通知过来
 		if (intent != null && intent.getData() != null
@@ -148,20 +113,6 @@ public class ConversationActivity extends FragmentActivity {
 			}
 		}
 
-		// else if (intent != null) {
-		// // 程序切到后台，收到消息后点击进入,会执行这里
-		// if (RongIM.getInstance() == null
-		// || RongIM.getInstance().getRongIMClient() == null) {
-		// if (DemoContext.getInstance() != null) {
-		// String token = DemoContext.getInstance()
-		// .getSharedPreferences()
-		// .getString("DEMO_TOKEN", "defult");
-		// reconnect(token);
-		// }
-		// } else {
-		// enterFragment(intent);
-		// }
-		// }
 		initClick();
 	}
 
@@ -171,63 +122,11 @@ public class ConversationActivity extends FragmentActivity {
 	 * @param intent
 	 */
 	private void enterFragment(Intent intent) {
-		String tag = null;
 		if (intent != null) {
 			// Fragment fragment = null;
 			if (intent.getExtras() != null
 					&& intent.getExtras().containsKey(RongConst.EXTRA.CONTENT)) {
-				String fragmentName = intent.getExtras().getString(
-						RongConst.EXTRA.CONTENT);
-				// fragment = Fragment.instantiate(this, fragmentName);
 			} else if (intent.getData() != null) {
-				// if
-				// (intent.getData().getPathSegments().get(0).equals("conversation"))
-				// {
-				// tag = "conversation";
-				// if (intent.getData().getLastPathSegment().equals("system")) {
-				// //注释掉的代码为不加输入框的聊天页面（此处作为示例）
-				// // String fragmentName =
-				// MessageListFragment.class.getCanonicalName();
-				// // fragment = Fragment.instantiate(this, fragmentName);
-				// // lz startActivity(new Intent(DemoActivity.this,
-				// NewFriendListActivity.class));
-				// // finish();
-				// // List<Conversation> conversations =
-				// RongIM.getInstance().getRongIMClient().getConversationList(Conversation.ConversationType.SYSTEM);
-				// // for (int i = 0; i < conversations.size(); i++) {
-				// //
-				// RongIM.getInstance().getRongIMClient().clearMessagesUnreadStatus(Conversation.ConversationType.SYSTEM,
-				// conversations.get(i).getSenderUserId());
-				// // }
-				// } else {
-				// String fragmentName =
-				// ConversationFragment.class.getCanonicalName();
-				// // fragment = Fragment.instantiate(this, fragmentName);
-				// }
-				// } else if
-				// (intent.getData().getLastPathSegment().equals("conversationlist"))
-				// {
-				// tag = "conversationlist";
-				// String fragmentName =
-				// ConversationListFragment.class.getCanonicalName();
-				// fragment = Fragment.instantiate(this, fragmentName);
-				// } else if
-				// (intent.getData().getLastPathSegment().equals("subconversationlist"))
-				// {
-				// tag = "subconversationlist";
-				// String fragmentName =
-				// SubConversationListFragment.class.getCanonicalName();
-				// fragment = Fragment.instantiate(this, fragmentName);
-				// } else if
-				// (intent.getData().getPathSegments().get(0).equals("friend"))
-				// {
-				// tag = "friend";
-				// String fragmentName =
-				// FriendMultiChoiceFragment.class.getCanonicalName();
-				// fragment = Fragment.instantiate(this, fragmentName);
-				// ActionBar actionBar = getSupportActionBar();
-				// actionBar.hide();//隐藏ActionBar
-				// }
 
 				targetId = intent.getData().getQueryParameter("targetId");
 				mConversationType = Conversation.ConversationType
@@ -236,100 +135,10 @@ public class ConversationActivity extends FragmentActivity {
 				if (mConversationType == ConversationType.PRIVATE)
 					mConnHelper.getUserInfo(mUIHandler, MsgTagVO.DATA_LOAD,
 							targetId);
-				// else {
-				// group = mConnHelper.getGroupMap().get("targetId");
-				// if (group != null) {
-				// tvTitle.setText(group.getName());
-				// }
-				// }
 			}
 		}
 	}
 
-	//
-	// /**
-	// * 收到 push 消息后，选择进入哪个 Activity 如果程序缓存未被清理，进入 MainActivity 程序缓存被清理，进入
-	// * LoginActivity，重新获取token
-	// * <p/>
-	// * 作用：由于在 manifest 中 intent-filter 是配置在 DemoActivity
-	// * 下面，所以收到消息后点击notifacition 会跳转到 DemoActivity。 以跳到 MainActivity 为例： 在
-	// * DemoActivity 收到消息后，选择进入 MainActivity，这样就把 MainActivity 激活了，当你读完收到的消息点击
-	// * 返回键 时，程序会退到 MainActivity 页面，而不是直接退回到 桌面。
-	// */
-	// private void enterActivity(Intent intent) {
-	//
-	// if (ZhuoConnHelper.getInstance(getApplicationContext()) != null) {
-	// String userid = ZhuoConnHelper.getInstance(getApplicationContext())
-	// .getUserid();
-	// Intent in = new Intent();
-	// if (userid != null) {
-	// in.setClass(ConversationActivity.this,
-	// TabContainerActivity.class);
-	// // in.putExtra("PUSH_TOKEN", token);
-	// // in.putExtra("PUSH_INTENT", intent.getData());
-	// } else {
-	// in.setClass(ConversationActivity.this, LoginActivity.class);
-	// // in.putExtra("PUSH_CONTEXT", "push");
-	// }
-	// startActivity(in);
-	// finish();
-	// }
-	// }
-	// if (intent.getExtras() != null &&
-	// intent.getExtras().containsKey(RongConst.EXTRA.CONTENT)) {
-	// String fragmentName =
-	// intent.getExtras().getString(RongConst.EXTRA.CONTENT);
-	// fragment = Fragment.instantiate(this, fragmentName);
-	// } else if (intent.getData() != null) {
-	// if (intent.getData().getPathSegments().get(0).equals("conversation")) {
-	// tag = "conversation";
-	// if (intent.getData().getLastPathSegment().equals("system")) {
-	// //注释掉的代码为不加输入框的聊天页面（此处作为示例）
-	// // String fragmentName = MessageListFragment.class.getCanonicalName();
-	// // fragment = Fragment.instantiate(this, fragmentName);
-	// startActivity(new Intent(DemoActivity.this,
-	// NewFriendListActivity.class));
-	// finish();
-	// List<Conversation> conversations =
-	// RongIM.getInstance().getRongIMClient().getConversationList(Conversation.ConversationType.SYSTEM);
-	// for (int i = 0; i < conversations.size(); i++) {
-	// RongIM.getInstance().getRongIMClient().clearMessagesUnreadStatus(Conversation.ConversationType.SYSTEM,
-	// conversations.get(i).getSenderUserId());
-	// }
-	// } else {
-	// String fragmentName = ConversationFragment.class.getCanonicalName();
-	// fragment = Fragment.instantiate(this, fragmentName);
-	// }
-	// } else if
-	// (intent.getData().getLastPathSegment().equals("conversationlist")) {
-	// tag = "conversationlist";
-	// String fragmentName = ConversationListFragment.class.getCanonicalName();
-	// fragment = Fragment.instantiate(this, fragmentName);
-	// } else if
-	// (intent.getData().getLastPathSegment().equals("subconversationlist")) {
-	// tag = "subconversationlist";
-	// String fragmentName =
-	// SubConversationListFragment.class.getCanonicalName();
-	// fragment = Fragment.instantiate(this, fragmentName);
-	// } else if (intent.getData().getPathSegments().get(0).equals("friend")) {
-	// tag = "friend";
-	// String fragmentName = FriendMultiChoiceFragment.class.getCanonicalName();
-	// fragment = Fragment.instantiate(this, fragmentName);
-	// ActionBar actionBar = getSupportActionBar();
-	// actionBar.hide();//隐藏ActionBar
-	// }
-	// targetId = intent.getData().getQueryParameter("targetId");
-	// targetIds = intent.getData().getQueryParameter("targetIds");
-	// mDiscussionId = intent.getData().getQueryParameter("discussionId");
-	// if (targetId != null) {
-	// // intent.getData().getLastPathSegment();//获得当前会话类型
-	// mConversationType =
-	// Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
-	// } else if (targetIds != null)
-	// mConversationType =
-	// Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
-	// }
-	// }
 
 	private void initClick() {
 		// TODO Auto-generated method stub
@@ -364,10 +173,6 @@ public class ConversationActivity extends FragmentActivity {
 						startActivity(i);
 					}
 				};
-				int followInt = R.string.label_unfollow;
-				if (tofollow.equals("1")) {
-					followInt = R.string.label_follow;
-				}
 				if (mConversationType == ConversationType.PRIVATE) {
 					pwh.showBottomPop(view,
 							new OnClickListener[] { onClickListenerViewCard },

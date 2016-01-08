@@ -16,19 +16,15 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.PicVO;
-import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
@@ -45,7 +41,7 @@ public class GoodsCollectionActivity extends BaseActivity {
 	LoadImage loader = LoadImage.getInstance();
 	private CommonAdapter<GoodsVO> mAdapter;
 	private ArrayList<GoodsVO> mDataList = new ArrayList<GoodsVO>();
-	private AppClient appClient;
+	private ConnHelper appClient;
 	private ListViewFooter mListViewFooter = null;
 	private int mPage = 1;
 	private int type = 1;
@@ -54,7 +50,7 @@ public class GoodsCollectionActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_goods_collection);
 		ButterKnife.inject(this);
-		appClient = AppClient.getInstance(getApplicationContext());
+		appClient = ConnHelper.getInstance(getApplicationContext());
 		initTitle();
 		title.setText(R.string.collection_goods);
 		initView();
@@ -210,7 +206,7 @@ public class GoodsCollectionActivity extends BaseActivity {
 		try {
 			mListViewFooter.finishLoading();
 			if (data != null && !data.equals("")) {
-				ArrayList<GoodsVO> list = JsonHandler_Lef.parseGoodsVOList(data);
+				ArrayList<GoodsVO> list = JsonHandler.parseGoodsVOList(data);
 				if (!list.isEmpty()) {
 					mListViewFooter.hasData();
 					if (!append) {

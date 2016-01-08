@@ -28,7 +28,7 @@ import com.cpstudio.zhuojiaren.util.CommonUtil;
  * @author lz
  *
  */
-public class LZMyHomeActivity extends Activity {
+public class MyMainActivity extends Activity {
 	@InjectView(R.id.rlbg)
 	View rlbg;
 	@InjectView(R.id.llMyCZ)
@@ -83,7 +83,7 @@ public class LZMyHomeActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent i = new Intent(LZMyHomeActivity.this,
+				Intent i = new Intent(MyMainActivity.this,
 						ZhuoMaiCardActivity.class);
 				i.putExtra("userid", mUid);
 				startActivity(i);
@@ -93,7 +93,7 @@ public class LZMyHomeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// ÎÒµÄÇ®°ü
-				startActivity(new Intent(LZMyHomeActivity.this,
+				startActivity(new Intent(MyMainActivity.this,
 						MyZhuoBiActivity.class));
 			}
 		});
@@ -102,7 +102,7 @@ public class LZMyHomeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				Intent i = new Intent(LZMyHomeActivity.this,
+				Intent i = new Intent(MyMainActivity.this,
 						UserHomeActivity.class);
 				i.putExtra("userid", mUid);
 				i.putExtra("from", "home");
@@ -113,7 +113,7 @@ public class LZMyHomeActivity extends Activity {
 		vZMSC.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(LZMyHomeActivity.this,
+				Intent i = new Intent(MyMainActivity.this,
 						StoreMainActivity.class);
 				startActivity(i);
 			}
@@ -122,7 +122,7 @@ public class LZMyHomeActivity extends Activity {
 		vCollect.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(LZMyHomeActivity.this,
+				Intent i = new Intent(MyMainActivity.this,
 						MyCollectionActivity.class);
 				startActivity(i);
 			}
@@ -130,7 +130,7 @@ public class LZMyHomeActivity extends Activity {
 		vCallback.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(LZMyHomeActivity.this,
+				Intent i = new Intent(MyMainActivity.this,
 						MyAdviceActivity.class);
 				startActivity(i);
 			}
@@ -139,7 +139,7 @@ public class LZMyHomeActivity extends Activity {
 		vAbout.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(LZMyHomeActivity.this,
+				Intent i = new Intent(MyMainActivity.this,
 						AboutZhuomaiActivity.class);
 				startActivity(i);
 			}
@@ -147,7 +147,7 @@ public class LZMyHomeActivity extends Activity {
 		vSet.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(LZMyHomeActivity.this,
+				Intent i = new Intent(MyMainActivity.this,
 						SettingActivity.class);
 				startActivity(i);
 			}

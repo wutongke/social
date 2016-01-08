@@ -5,23 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClient;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.model.Province;
-import com.cpstudio.zhuojiaren.model.ResultVO;
-import com.cpstudio.zhuojiaren.model.Teacher;
-import com.cpstudio.zhuojiaren.ui.GrouthListActivity;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.zhuojiaren.sortlistview.SideBar.OnTouchingLetterChangedListener;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
@@ -30,16 +17,25 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.model.ResultVO;
+import com.cpstudio.zhuojiaren.model.Teacher;
+import com.cpstudio.zhuojiaren.ui.GrouthListActivity;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.zhuojiaren.sortlistview.SideBar.OnTouchingLetterChangedListener;
 
 
 public class NamePup {
@@ -87,7 +83,7 @@ public class NamePup {
 				LayoutParams.MATCH_PARENT, (int) (view.getHeight()*0.6));
 
 		//ÏÂÔØÊý¾Ý
-		AppClient appClient = AppClient.getInstance(mContext);
+		ConnHelper appClient = ConnHelper.getInstance(mContext);
 		appClient.getTeacherList(new Handler(){
 			@Override
 			public void handleMessage(Message msg) {

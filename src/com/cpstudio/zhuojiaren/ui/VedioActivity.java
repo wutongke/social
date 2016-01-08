@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
@@ -144,7 +144,7 @@ public class VedioActivity extends BaseActivity {
 									R.string.please_finish_share);
 							return;
 						}
-						AppClient.getInstance(
+						ConnHelper.getInstance(
 								VedioActivity.this.getApplicationContext())
 								.shareThought( UrlHelper.getGrouththought(),"goid",vedio.getId(),
 										share.getText().toString(),
@@ -459,7 +459,7 @@ public class VedioActivity extends BaseActivity {
 	private void submit() {
 		// TODO Auto-generated method stub
 		if (vedio != null && vedio.getId() != null) {
-			AppClient.getInstance(this).submitVedio(VedioActivity.this,
+			ConnHelper.getInstance(this).submitVedio(VedioActivity.this,
 					vedio.getId());
 		}
 	}

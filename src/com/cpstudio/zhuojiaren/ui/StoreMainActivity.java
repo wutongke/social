@@ -24,9 +24,8 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.Bee_PageAdapter;
 import com.cpstudio.zhuojiaren.adapter.StoreGoodsListAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BeanBanner;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
@@ -63,7 +62,7 @@ public class StoreMainActivity extends BaseActivity implements
 			R.drawable.travel, R.drawable.city };
 	String[] tags;
 
-	private AppClient mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private int mPage = 1;
 	private ListViewFooter mListViewFooter = null;
 	private StoreGoodsListAdapter mAdapter = null;
@@ -79,7 +78,7 @@ public class StoreMainActivity extends BaseActivity implements
 		function.setVisibility(View.VISIBLE);
 		title.setText(R.string.title_activity_store_main);
 		initView();
-		mConnHelper = AppClient.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		mAdapter = new StoreGoodsListAdapter(this, mList);
 		gvGoods.setAdapter(mAdapter);
 		gvGoods.setOnItemClickListener(this);
@@ -239,7 +238,7 @@ public class StoreMainActivity extends BaseActivity implements
 					}
 					String data = res.getData();
 					if (data != null && !data.equals("")) {
-						final ArrayList<com.cpstudio.zhuojiaren.model.GoodsCategory> list = JsonHandler_Lef
+						final ArrayList<com.cpstudio.zhuojiaren.model.GoodsCategory> list = JsonHandler
 								.parseGoodsCategory(data);
 						gvCats.setAdapter(new CommonAdapter<com.cpstudio.zhuojiaren.model.GoodsCategory>(
 								StoreMainActivity.this, list,
@@ -298,7 +297,7 @@ public class StoreMainActivity extends BaseActivity implements
 	}
 
 	private void loadGoodsCatgory() {
-		AppClient.getInstance(this).getGoodsCategory(mUIHandler,
+		mConnHelper.getGoodsCategory(mUIHandler,
 				GoodsCategory, this, false, null, null);
 	}
 

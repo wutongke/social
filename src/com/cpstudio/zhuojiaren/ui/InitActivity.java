@@ -17,17 +17,18 @@ import android.util.DisplayMetrics;
 import android.widget.Toast;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.R.layout;
-import com.cpstudio.zhuojiaren.helper.AppClient;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
-import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.model.LoginRes;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
-
+/**
+ * 启动界面，完成一些基本token等信息的获取
+ * @author lz
+ *
+ */
 public class InitActivity extends Activity {
 
 	private String mUserid = null;
@@ -91,10 +92,10 @@ public class InitActivity extends Activity {
 			case MsgTagVO.PUB_INFO:
 				// 登陆是否成功
 				if (JsonHandler.checkResult((String) msg.obj)) {
-					LoginRes res = JsonHandler_Lef
+					LoginRes res = JsonHandler
 							.parseLoginRes(InitActivity.this, JsonHandler
 									.parseResult((String) msg.obj).getData());
-					AppClient.getInstance(InitActivity.this)
+					ConnHelper.getInstance(InitActivity.this)
 							.refreshUserInfo(res);
 					startService();
 					goActivity(TabContainerActivity.class);

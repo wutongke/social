@@ -19,16 +19,20 @@ import com.cpstudio.zhuojiaren.model.QuanVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
 
 /**
- * Created by Bob on 2015/1/30.
+ * 聊天相关的缓存信息帮助类
+ * @author lz
+ *
  */
-public class DemoContext {
+public class IMChatDataHelper {
 
-	private static DemoContext mDemoContext;
+	private static IMChatDataHelper mDemoContext;
 	public Context mContext;
 	private ArrayList<UserInfo> mUserInfos;
 	private SharedPreferences mPreferences;
 	private RongIM.LocationProvider.LocationCallback mLastLocationCallback;
+	//用户信息缓存类
 	private UserFacade mUserInfosDao;
+	//群组信息缓存类
 	private GroupFacade mGroupInfoDao;
 
 	public UserFacade getmUserInfosDao() {
@@ -39,15 +43,15 @@ public class DemoContext {
 		this.mUserInfosDao = mUserInfosDao;
 	}
 
-	public synchronized static DemoContext getInstance(Context context) {
+	public synchronized static IMChatDataHelper getInstance(Context context) {
 
 		if (mDemoContext == null) {
-			mDemoContext = new DemoContext(context);
+			mDemoContext = new IMChatDataHelper(context);
 		}
 		return mDemoContext;
 	}
 
-	private DemoContext(Context context) {
+	private IMChatDataHelper(Context context) {
 		mContext = context;
 		mDemoContext = this;
 		// http初始化 用于登录、注册使用
@@ -64,7 +68,7 @@ public class DemoContext {
 	}
 
 	public static void init(Context context) {
-		mDemoContext = new DemoContext(context);
+		mDemoContext = new IMChatDataHelper(context);
 	}
 
 	public SharedPreferences getSharedPreferences() {

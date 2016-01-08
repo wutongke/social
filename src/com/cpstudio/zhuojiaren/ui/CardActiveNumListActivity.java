@@ -39,7 +39,7 @@ public class CardActiveNumListActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(CardActiveNumListActivity.this,
-						LZUserSameActivity.class);
+						UsersListActivity.class);
 				startActivity(i);
 			}
 		});

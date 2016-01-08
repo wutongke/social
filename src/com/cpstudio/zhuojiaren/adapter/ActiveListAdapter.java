@@ -17,12 +17,12 @@ import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.PicNewVO;
 import com.cpstudio.zhuojiaren.ui.PhotoViewMultiActivity;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 public class ActiveListAdapter extends BaseAdapter {
 	private List<Dynamic> mList = null;
@@ -159,8 +159,8 @@ public class ActiveListAdapter extends BaseAdapter {
 			place = cityList.get(item.getPosition() - 1).getCityName();
 		String time = item.getAddtime();
 		if (null != time && !time.equals("") && time.indexOf("-") != -1) {
-			String month = ZhuoCommHelper.getMonthFromTime(time);
-			String date = ZhuoCommHelper.getDateFromTime(time);
+			String month = CommonUtil.getMonthFromTime(time);
+			String date = CommonUtil.getDateFromTime(time);
 			holder.monthTV.setText(month
 					+ context.getString(R.string.label_month));
 			holder.dateTV.setText(date);

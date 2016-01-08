@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
@@ -53,7 +53,7 @@ public class GrouthVisitDetailActivity extends BaseActivity {
 									R.string.please_finish_share);
 							return;
 						}
-						AppClient.getInstance(
+						ConnHelper.getInstance(
 								GrouthVisitDetailActivity.this.getApplicationContext())
 								.shareThought( UrlHelper.getVisitthought(),"videoid",visit.getId(),
 										share.getText().toString(),

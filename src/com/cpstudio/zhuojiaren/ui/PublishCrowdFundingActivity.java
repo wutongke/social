@@ -1,12 +1,10 @@
 package com.cpstudio.zhuojiaren.ui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,7 +32,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.R.color;
 import com.cpstudio.zhuojiaren.adapter.ImageGridAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
@@ -77,7 +75,7 @@ public class PublishCrowdFundingActivity extends BaseActivity {
 	String[] crowdFundingTypeStr;
 	// titleÍ¼Æ¬ÊÇ·ñ¸Ä±ä
 	private boolean mHeadChanged = false;
-	private AppClient mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private LoadImage mLoadImage = new LoadImage();
 	private Context mContext;
 	private ImageSelectHelper mIsh2 = null;
@@ -110,7 +108,7 @@ public class PublishCrowdFundingActivity extends BaseActivity {
 		title.setText(R.string.new_crowdfunding_project);
 		function.setText(R.string.finish);
 		mContext = this;
-		mConnHelper = AppClient.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		mIsh2 = ImageSelectHelper.getIntance(this,
 				R.id.apcf_linearLayoutPicContainer);
 		pwh = new PopupWindows(this);

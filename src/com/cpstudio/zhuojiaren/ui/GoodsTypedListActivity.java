@@ -17,7 +17,7 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.TypedStoreGoodsListAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -36,7 +36,7 @@ public class GoodsTypedListActivity extends BaseActivity implements
 	RadioGroup rgSex;
 	PullDownView mPullDownView;
 	ListView mListView;
-	private AppClient mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private int mPage = 1;
 	//商品类别
 	private int type = 1;
@@ -62,7 +62,7 @@ public class GoodsTypedListActivity extends BaseActivity implements
 		if(typeName!=null)
 			title.setText(typeName);
 		initView();
-		mConnHelper = AppClient.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
 		mPullDownView.initHeaderViewAndFooterViewAndListView(this,

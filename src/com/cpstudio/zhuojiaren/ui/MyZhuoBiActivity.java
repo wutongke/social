@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -89,7 +89,7 @@ public class MyZhuoBiActivity extends BaseActivity {
 													return;
 												price = money.getText()
 														.toString();
-												AppClient
+												ConnHelper
 														.getInstance(
 																MyZhuoBiActivity.this)
 														.getOrderNumber(
@@ -107,7 +107,7 @@ public class MyZhuoBiActivity extends BaseActivity {
 	private static final  int GET_MONEY = 222;
 	private void loadMyZhuobi() {
 		// TODO Auto-generated method stub
-		AppClient.getInstance(this.getApplicationContext()).getMyZhuoBi(
+		ConnHelper.getInstance(this.getApplicationContext()).getMyZhuoBi(
 				MyZhuoBiActivity.this, uiHandler, GET_MONEY);
 	}
 
@@ -182,7 +182,7 @@ public class MyZhuoBiActivity extends BaseActivity {
 									// stub
 									if (money.getText() == null)
 										return;
-									AppClient
+									ConnHelper
 											.getInstance(MyZhuoBiActivity.this)
 											.giveZhuobiToFriend(
 													uiHandler,

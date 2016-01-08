@@ -33,11 +33,9 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.TopicCommentListAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClient;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.Comment;
@@ -90,7 +88,7 @@ public class GongXuDetailActivity extends BaseActivity {
 	private LoadImage mLoadImage = LoadImage.getInstance();
 	private View mHeadView = null;
 	private String msgid = null;
-	private AppClient mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private ConnHelper mConnHelperlz = null;
 	private String isCollect = "0";
 	private PopupWindows pwh;
@@ -106,7 +104,7 @@ public class GongXuDetailActivity extends BaseActivity {
 		setContentView(R.layout.activity_gong_xu_detail);
 		initTitle();
 
-		mConnHelper = AppClient.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		mConnHelperlz = ConnHelper.getInstance(getApplicationContext());
 		Intent i = getIntent();
 		msgid = i.getStringExtra("msgid");
@@ -336,7 +334,7 @@ public class GongXuDetailActivity extends BaseActivity {
 				}
 				mConnHelper.collection(GongXuDetailActivity.this, mUIHandler,
 						MsgTagVO.MSG_COLLECT,
-						ZhuoCommHelper.getCOMMONCOLLECTION(), "sdid", msgid,
+						UrlHelper.getCOMMONCOLLECTION(), "sdid", msgid,
 						"type", type);
 			}
 		});
@@ -413,7 +411,7 @@ public class GongXuDetailActivity extends BaseActivity {
 							MsgTagVO.MSG_FOWARD, null, true, null, null);
 				}
 			} else if (requestCode == MsgTagVO.MSG_CMT) {
-				ArrayList<Comment> list = JsonHandler_Lef
+				ArrayList<Comment> list = JsonHandler
 						.parseCommentLZList(data.getStringExtra("data"));
 				mList.clear();
 				mList.addAll(list);

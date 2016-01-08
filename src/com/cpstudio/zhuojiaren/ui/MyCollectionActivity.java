@@ -28,11 +28,8 @@ import com.cpstudio.zhuojiaren.adapter.AudioAdapter;
 import com.cpstudio.zhuojiaren.adapter.EventListAdapter;
 import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
 import com.cpstudio.zhuojiaren.adapter.QuanziTopicListAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClient;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.EventVO;
@@ -45,8 +42,8 @@ import com.cpstudio.zhuojiaren.model.UserNewVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
 import com.cpstudio.zhuojiaren.util.DeviceInfoUtil;
 import com.cpstudio.zhuojiaren.widget.PullDownView;
-import com.cpstudio.zhuojiaren.widget.ViewHolder;
 import com.cpstudio.zhuojiaren.widget.PullDownView.OnPullDownListener;
+import com.cpstudio.zhuojiaren.widget.ViewHolder;
 
 
 /***
@@ -69,11 +66,9 @@ public class MyCollectionActivity extends BaseActivity {
 	private int baseMargin = 19;
 	private Activity mContext;
 
-	private String url;
 	private int handlerTag;
-	// ·ÖÒ³
 	private int mPage = 0;
-	private AppClient appClientLef;
+	private ConnHelper appClientLef;
 	private final int vedio = 1;
 	private final int radio = 2;
 	private final int event = 3;
@@ -87,7 +82,7 @@ public class MyCollectionActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_collection);
 		ButterKnife.inject(this);
-		appClientLef = AppClient.getInstance(this);
+		appClientLef = ConnHelper.getInstance(this);
 		mContext = this;
 		initTitle();
 		title.setText(R.string.my_collect);
@@ -172,7 +167,6 @@ public class MyCollectionActivity extends BaseActivity {
 					// TODO Auto-generated method stub
 					tb.setChecked(true);
 					handlerTag = (Integer) (v.getTag()) + 1;
-					url = ZhuoCommHelper.collectionUrls[handlerTag - 1];
 					loadData();
 				}
 			});
@@ -249,7 +243,7 @@ public class MyCollectionActivity extends BaseActivity {
 					.getApplicationContext());
 			switch (msg.what) {
 			case radio:
-				mDatas = JsonHandler_Lef
+				mDatas = JsonHandler
 						.parseAudioList(data);
 				mAdapter = new AudioAdapter(mContext, mDatas,
 						R.layout.item_radio);
@@ -271,7 +265,7 @@ public class MyCollectionActivity extends BaseActivity {
 				});
 				break;
 			case vedio:
-				final ArrayList<GrouthVedio> list = JsonHandler_Lef
+				final ArrayList<GrouthVedio> list = JsonHandler
 						.parseGrouthVedioList(data);
 				mAdapter = new GrouthAdapter(mContext, list,
 						R.layout.item_growth);

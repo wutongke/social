@@ -221,7 +221,7 @@ public class MsgListActivity extends FragmentActivity  {
 						findViewById(R.id.textViewMsgCardAll).setVisibility(
 								View.GONE);
 						Intent i = new Intent(MsgListActivity.this,
-								LZUserSameActivity.class);
+								UsersListActivity.class);
 						startActivity(i);
 					}
 				});
@@ -233,7 +233,7 @@ public class MsgListActivity extends FragmentActivity  {
 						findViewById(R.id.textViewMsgReqQuanAll).setVisibility(
 								View.GONE);
 						Intent i = new Intent(MsgListActivity.this,
-								LZUserSameActivity.class);
+								UsersListActivity.class);
 						i.putExtra("type", 1);
 						startActivity(i);
 					}

@@ -35,7 +35,11 @@ import android.webkit.WebView;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.GeoVO;
 import com.utils.CommunicationUtil;
-
+/**
+ * 设备信息工具类
+ * @author lz
+ *
+ */
 public class DeviceInfoUtil {
 	private static String networkOperatorName;
 	private static String deviceId;

@@ -11,9 +11,8 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClient;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
 
@@ -102,7 +101,7 @@ public class ResCommentActivity extends Activity {
 			ConnHelper.getInstance(getApplicationContext()).cmtGongxu(mUIHandler, MsgTagVO.PUB_INFO, msgid, content, toId, toUserid);
 		}
 		else
-		AppClient.getInstance(ResCommentActivity.this).pubComment(
+			ConnHelper.getInstance(ResCommentActivity.this).pubComment(
 				ResCommentActivity.this, mUIHandler, MsgTagVO.PUB_INFO, msgid,
 				content, toId, toUserid);
 	}

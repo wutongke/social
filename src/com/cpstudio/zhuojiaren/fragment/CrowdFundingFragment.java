@@ -19,9 +19,8 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.CrowdFundingAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter;
 import com.cpstudio.zhuojiaren.adapter.TitleAdapter.ImageOnclick;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.CrowdFundingVO;
 import com.cpstudio.zhuojiaren.model.ImageRadioButton;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -50,7 +49,7 @@ public class CrowdFundingFragment extends Fragment {
 	private boolean isInvest = false;
 	// ·ÖÒ³
 	private int mPage = 0;
-	private AppClient appClientLef;
+	private ConnHelper appClientLef;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +59,7 @@ public class CrowdFundingFragment extends Fragment {
 		type = getArguments().getInt(CrowdFundingVO.CROWDFUNDINGTYPE, 1);
 		ButterKnife.inject(this, view);
 		initPullDownView();
-		appClientLef = AppClient.getInstance(getActivity());
+		appClientLef = ConnHelper.getInstance(getActivity());
 		loadData();
 		return view;
 	}
@@ -213,7 +212,7 @@ public class CrowdFundingFragment extends Fragment {
 		try {
 			pullDownView.finishLoadData(true);
 			if (data != null && !data.equals("")) {
-				ArrayList<CrowdFundingVO> list = JsonHandler_Lef
+				ArrayList<CrowdFundingVO> list = JsonHandler
 						.parseFundingList(data);
 				if (!list.isEmpty()) {
 					if (!append) {

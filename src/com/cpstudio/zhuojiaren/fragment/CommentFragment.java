@@ -22,9 +22,8 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.CommentAdapter;
 import com.cpstudio.zhuojiaren.adapter.CommentAdapter.ReplyInterface;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.CommentVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -47,7 +46,7 @@ public class CommentFragment extends Fragment implements OverScrollController {
 	String replyId = "-1";
 	String toUserId = "-1";
 	String crowdFundingId = "1";
-	AppClient appClient;
+	ConnHelper appClient;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,7 +54,7 @@ public class CommentFragment extends Fragment implements OverScrollController {
 		// TODO Auto-generated method stub
 
 		view = inflater.inflate(R.layout.fragment_comment, null);
-		appClient = AppClient.getInstance(getActivity());
+		appClient = ConnHelper.getInstance(getActivity());
 		crowdFundingId = getArguments().getString("id");
 		ButterKnife.inject(this, view);
 		mContext = getActivity();
@@ -145,7 +144,7 @@ public class CommentFragment extends Fragment implements OverScrollController {
 					res = JsonHandler.parseResult((String) msg.obj);
 
 					mDataList.clear();
-					mDataList.addAll(JsonHandler_Lef.parseCommentList(res
+					mDataList.addAll(JsonHandler.parseCommentList(res
 							.getData()));
 					mAdapter.notifyDataSetChanged();
 				} else {

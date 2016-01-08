@@ -55,7 +55,7 @@ import com.utils.CipherUtil;
  * 判断字符串是否纯数字、AES加密解密、提示并引导打开wifi或手机网络、获得制定格式系统时间、各种时间显示、获得SD卡状态
  * 
  * @author lz
- *
+ * 
  */
 public class CommonUtil {
 
@@ -65,8 +65,9 @@ public class CommonUtil {
 		}
 		return true;
 	}
+
 	public static String getAlpha(String str) {
-		
+
 		if (str == null) {
 			return "#";
 		}
@@ -174,15 +175,15 @@ public class CommonUtil {
 	public static void displayToast(Context context, int resid) {
 		Toast.makeText(context, resid, Toast.LENGTH_SHORT).show();
 	}
-/**
- * 网络判断 0已连接
- * 1正在连接
- * 2未联网及其他
- * @param context
- * @return
- */
+
+	/**
+	 * 网络判断 0已连接 1正在连接 2未联网及其他
+	 * 
+	 * @param context
+	 * @return
+	 */
 	public static int getNetworkState(Context context) {
-		if(context==null)
+		if (context == null)
 			return 2;
 		ConnectivityManager conMan = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -471,8 +472,7 @@ public class CommonUtil {
 		return totalSpaceStr;
 	}
 
-	public static String calcTime(String time, boolean showSec,
-			boolean showFull) {
+	public static String calcTime(String time, boolean showSec, boolean showFull) {
 		if (time != null && !time.equals("")) {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd",
 					Locale.getDefault());
@@ -485,20 +485,21 @@ public class CommonUtil {
 				String HHmmss = time.split(" ")[1];
 				String[] str = HHmmss.split(":");
 				if (showSec) {
-					showTime = getDaySplit(str[0]) + str[0] + ":" + str[1] + ":" + str[2];
+					showTime = getDaySplit(str[0]) + str[0] + ":" + str[1]
+							+ ":" + str[2];
 				} else {
-					showTime = getDaySplit(str[0]) + str[0] + ":" + str[1];				
+					showTime = getDaySplit(str[0]) + str[0] + ":" + str[1];
 				}
 				if (day == today) {
 					return showTime;
 				} else if (day > today - 24 * 3600 * 1000) {
-					if(showFull){
-						return "昨天 " + showTime;						
-					}else{
-						return "昨天 " + getDaySplit(str[0]);	
+					if (showFull) {
+						return "昨天 " + showTime;
+					} else {
+						return "昨天 " + getDaySplit(str[0]);
 					}
 				} else {
-					if(!showFull){
+					if (!showFull) {
 						showTime = "";
 					}
 					String yyMMdd = time.split(" ")[0];
@@ -523,7 +524,6 @@ public class CommonUtil {
 			return "";
 		}
 	}
-
 
 	public static String getDaySplit(String hourStr) {
 		String time = "";
@@ -624,4 +624,89 @@ public class CommonUtil {
 			}
 		}
 	}
+
+	public static String[] getBirthday(String birthday) {
+		String[] birth = new String[] { "1900", "1", "1" };
+		if (birthday != null && birthday.indexOf("-") != -1) {
+			birthday = birthday.trim();
+			birth[0] = birthday.substring(0, birthday.indexOf("-"));
+			birth[1] = birthday.substring(birthday.indexOf("-") + 1,
+					birthday.lastIndexOf("-"));
+			if (birthday.indexOf(" ") != -1) {
+				birth[2] = birthday.substring(birthday.lastIndexOf("-") + 1,
+						birthday.indexOf(" "));
+			} else {
+				birth[2] = birthday.substring(birthday.lastIndexOf("-") + 1);
+			}
+		}
+		return birth;
+	}
+
+	public static String subLast(String orgin) {
+		if (orgin.length() > 0) {
+			orgin = orgin.substring(0, orgin.length() - 1);
+		}
+		return orgin;
+	}
+
+	public static String transferMsgCategoryToString(String category,
+			Context context) {
+		String str = "";
+		try {
+			String[] reses = context.getResources().getStringArray(
+					R.array.array_res_type);
+			str = reses[Integer.valueOf(category)];
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return str;
+	}
+	public static String transferMsgTypeToString(String type, Context context) {
+		String str = "";
+		if (type.equals(context.getString(R.string.type_xu_type))) {
+			str = context.getString(R.string.type_xu);
+		} else if (type.equals(context.getString(R.string.type_gong_type))) {
+			str = context.getString(R.string.type_gong);
+		}
+		return str;
+	}
+	public static String getMonthFromTime(String time) {
+	try {
+		time = time.trim();
+		if (time.indexOf("-") != -1) {
+			time = time.substring(time.indexOf("-") + 1).trim();
+			if (time.indexOf("-") != -1) {
+				String month = time.substring(0, time.indexOf("-")).trim();
+				if (month.length() <= 2) {
+					return month;
+				}
+			}
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return "";
+}
+
+public static String getDateFromTime(String time) {
+	try {
+		time = time.trim();
+		if (time.indexOf("-") != -1) {
+			time = time.substring(time.indexOf("-") + 1).trim();
+			if (time.indexOf("-") != -1) {
+				time = time.substring(time.indexOf("-") + 1).trim();
+				String date = time;
+				if (time.indexOf(" ") != -1) {
+					date = time.substring(0, time.indexOf(" ")).trim();
+				}
+				if (date.length() <= 2) {
+					return date;
+				}
+			}
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return "";
+}
 }

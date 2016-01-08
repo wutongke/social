@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClient;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.CommentVO;
 import com.cpstudio.zhuojiaren.util.CommonAdapter;
@@ -19,7 +19,7 @@ import com.cpstudio.zhuojiaren.widget.ViewHolder;
 
 public class CommentAdapter extends CommonAdapter<CommentVO> {
 	private LoadImage mLoadImage = new LoadImage(10);
-	private AppClient mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private ReplyInterface reply;
 
 	public interface ReplyInterface {
@@ -30,7 +30,7 @@ public class CommentAdapter extends CommonAdapter<CommentVO> {
 			int itemLayoutId) {
 		super(context, mDatas, itemLayoutId);
 		// TODO Auto-generated constructor stub
-		mConnHelper = AppClient.getInstance(context);
+		mConnHelper = ConnHelper.getInstance(context);
 	}
 
 	@Override
@@ -70,13 +70,13 @@ public class CommentAdapter extends CommonAdapter<CommentVO> {
 						if (item.getIsPraise() != null
 								&& !item.getIsPraise().equals(CommentVO.praise)){
 							mConnHelper.collection((Activity)mContext,
-									ZhuoCommHelper.getLikeincomment(), "id",
+									UrlHelper.getLikeincomment(), "id",
 									item.getId(), "isLike", CommentVO.praise);
 							item.setIsPraise(CommentVO.nopraise);
 							helper.setImageResource(R.id.ic_praise, R.drawable.zhan2_crowd_cmt);
 						}else{
 							mConnHelper.collection((Activity)mContext,
-									ZhuoCommHelper.getLikeincomment(), "id",
+									UrlHelper.getLikeincomment(), "id",
 									item.getId(), "isLike", CommentVO.nopraise);
 							item.setIsPraise(CommentVO.praise);
 							helper.setImageResource(R.id.ic_praise, R.drawable.zhan_crowd_cmt);

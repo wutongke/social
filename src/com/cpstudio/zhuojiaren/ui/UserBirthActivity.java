@@ -20,7 +20,7 @@ import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.BirthUsersListAdapter;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.UserVO;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
@@ -101,7 +101,7 @@ public class UserBirthActivity extends Activity implements OnItemClickListener {
 			mList.clear();
 			mAdapter.notifyDataSetChanged();
 			mPage = 1;
-			String params = ZhuoCommHelper.getUrlBirthdayUsers() + "?page="
+			String params = UrlHelper.getUrlBirthdayUsers() + "?page="
 					+ mPage;
 			if (groupid != null && !groupid.equals("")) {
 				params += "&groupid=" + groupid;
@@ -112,7 +112,7 @@ public class UserBirthActivity extends Activity implements OnItemClickListener {
 
 	private void loadMore() {
 		if (mListViewFooter.startLoading()) {
-			String params = ZhuoCommHelper.getUrlBirthdayUsers() + "?page="
+			String params = UrlHelper.getUrlBirthdayUsers() + "?page="
 					+ mPage;
 			if (groupid != null && !groupid.equals("")) {
 				params += "&groupid=" + groupid;

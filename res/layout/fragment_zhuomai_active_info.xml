@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
-    tools:context="com.cpstudio.zhuojiaren.ui.LZMyHomeActivity" >
+    tools:context="com.cpstudio.zhuojiaren.ui.MyMainActivity" >
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -21,16 +21,15 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.EventVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
 import com.cpstudio.zhuojiaren.util.CommonUtil;
 import com.cpstudio.zhuojiaren.util.Util;
-import com.cpstudio.zhuojiaren.widget.PopupWindows;
 import com.cpstudio.zhuojiaren.widget.RoundImageView;
 import com.google.gson.Gson;
 
@@ -78,7 +77,7 @@ public class EventDetailActivity extends Activity {
 	@InjectView(R.id.aed_boss_layout)
 	RelativeLayout bossLayout;
 
-	private AppClient mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private LoadImage mLoadImage = new LoadImage();
 	private String eventId = null;
 	private Context mContext;
@@ -96,7 +95,7 @@ public class EventDetailActivity extends Activity {
 		setContentView(R.layout.activity_event_detail);
 		ButterKnife.inject(this);
 		mContext = this;
-		mConnHelper = AppClient.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		Intent i = getIntent();
 		eventId = i.getStringExtra("eventId");
 		loadData();
@@ -180,7 +179,7 @@ public class EventDetailActivity extends Activity {
 							if (event.getIsjoined().equals("1")) {
 								// 退出
 								mConnHelper.quitEvent(
-										ZhuoCommHelper.getEventadd(),
+										UrlHelper.getEventadd(),
 										"activityid", eventId, "type", "0",
 										mUIHandler, quit,
 										EventDetailActivity.this);
@@ -197,7 +196,7 @@ public class EventDetailActivity extends Activity {
 								event.setJoinCount(count+"");
 								applyCount.setText(event.getJoinCount());
 								mConnHelper.quitEvent(
-										ZhuoCommHelper.getEventadd(),
+										UrlHelper.getEventadd(),
 										"activityid", eventId, "type", "1",
 										mUIHandler, quit,
 										EventDetailActivity.this);
@@ -271,13 +270,13 @@ public class EventDetailActivity extends Activity {
 									// 取消收藏
 									collect.setBackgroundResource(R.drawable.qhdcollect);
 									mConnHelper.collection((Activity)mContext,
-											ZhuoCommHelper.getEventcollection(),
+											UrlHelper.getEventcollection(),
 											"activityid", eventId, "type", "0");
 									event.setIscollected("0");
 									CommonUtil.displayToast(mContext, "取消收藏");
 								} else {
 									mConnHelper.collection((Activity)mContext,
-											ZhuoCommHelper.getEventcollection(),
+											UrlHelper.getEventcollection(),
 											"activityid", eventId, "type", "1");
 									event.setIscollected("1");
 									collect.setBackgroundResource(R.drawable.zcollect2);

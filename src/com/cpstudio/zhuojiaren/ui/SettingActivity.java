@@ -16,7 +16,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.helper.DatabaseHelper;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.SysApplication;
+import com.cpstudio.zhuojiaren.helper.ActivityManager;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
 
 public class SettingActivity extends BaseActivity {
@@ -68,7 +68,7 @@ public class SettingActivity extends BaseActivity {
 				DatabaseHelper dbHelper = new DatabaseHelper(
 						getApplicationContext(), userid);
 				dbHelper.close();
-				SysApplication.getInstance().exit(false,
+				ActivityManager.getInstance().exit(false,
 						getApplicationContext());
 				SettingActivity.this.finish();
 			}

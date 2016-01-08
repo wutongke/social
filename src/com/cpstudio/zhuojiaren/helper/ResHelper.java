@@ -23,20 +23,11 @@ public class ResHelper {
 	private Context mContext;
 	private float times = 1;
 
-	// add by lz20150725
 	private String upLoadTokenForQiniu;// 上传文件token,七牛
 	private String sessionForAPP;
 	private String imTokenForRongyun;// 聊天与融云服务器的token
 
-	/**
-	 * 当前正在聊天的对象
-	 */
-	private String chatuser = null;
 	private boolean isMsgList = false;
-	/**
-	 * 当前正在圈聊的圈子
-	 */
-	private String chatgroup = null;
 	/**
 	 * 是否前台运行
 	 */
@@ -67,7 +58,6 @@ public class ResHelper {
 	public final static String DEFAULT_HEAD_PATH = "zhuojiaren/userhead/";
 
 	// add by lz
-
 	public final static String SESSION = "zhuojiaren/session/";
 	public final static String UPLIOAD_TOKEN = "zhuojiaren/uploadtoken/";
 	public final static String IM_TOKEN = "zhuojiaren/imtoken/";
@@ -144,22 +134,6 @@ public class ResHelper {
 
 	public void setMsgList(boolean isMsgList) {
 		this.isMsgList = isMsgList;
-	}
-
-	public String getChatuser() {
-		return chatuser;
-	}
-
-	public void setChatuser(String chatuser) {
-		this.chatuser = chatuser;
-	}
-
-	public String getChatgroup() {
-		return chatgroup;
-	}
-
-	public void setChatgroup(String chatgroup) {
-		this.chatgroup = chatgroup;
 	}
 
 	public String getCookie() {

@@ -18,7 +18,7 @@ import butterknife.InjectView;
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.OrderAdapter;
 import com.cpstudio.zhuojiaren.adapter.OrderAdapter.SelectGoodsChangeListener;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.CartVO;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
@@ -41,7 +41,7 @@ public class CartActivity extends BaseActivity {
 	OrderAdapter mAdapter;
 	ArrayList<GoodsVO> mDatas = new ArrayList<GoodsVO>();
 	// ∑÷“≥
-	private AppClient appClientLef;
+	private ConnHelper appClientLef;
 	private float sumPrice;
 
 	@Override
@@ -50,7 +50,7 @@ public class CartActivity extends BaseActivity {
 		setContentView(R.layout.activity_cart);
 		ButterKnife.inject(this);
 		initTitle();
-		appClientLef = AppClient.getInstance(this);
+		appClientLef = ConnHelper.getInstance(this);
 		title.setText(R.string.cart2);
 		// 1π‹¿Ì2…æ≥˝ 
 		function.setText(R.string.label_manage);
@@ -142,7 +142,7 @@ public class CartActivity extends BaseActivity {
 						sb.append(goods.getGoodsId()+";");
 					}
 					
-					AppClient.getInstance(CartActivity.this).removeGoods(
+					ConnHelper.getInstance(CartActivity.this).removeGoods(
 							sb.toString(), null, 0, CartActivity.this);
 
 					mDatas.removeAll(mAdapter.getSelectList());

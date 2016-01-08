@@ -15,9 +15,8 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.GrouthAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.GrouthVedio;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -32,7 +31,7 @@ public class GrouthListActivity extends BaseActivity {
 	private ArrayList<GrouthVedio> mDatas = new ArrayList<GrouthVedio>();
 	// ·ÖÒ³
 	private int mPage = 0;
-	private AppClient appClientLef;
+	private ConnHelper appClientLef;
 	private String tutorId;
 	private String typeId;
 
@@ -48,7 +47,7 @@ public class GrouthListActivity extends BaseActivity {
 		typeId = getIntent().getStringExtra("typeId");
 		title.setText(R.string.title_activity_up_level);
 		initPullDownView();
-		appClientLef = AppClient.getInstance(this);
+		appClientLef = ConnHelper.getInstance(this);
 		loadData();
 	}
 
@@ -146,7 +145,7 @@ public class GrouthListActivity extends BaseActivity {
 		try {
 			pullDownView.finishLoadData(true);
 			if (data != null && !data.equals("")) {
-				ArrayList<GrouthVedio> list = JsonHandler_Lef
+				ArrayList<GrouthVedio> list = JsonHandler
 						.parseGrouthVedioList(data);
 				if (!list.isEmpty()) {
 					if (!append) {

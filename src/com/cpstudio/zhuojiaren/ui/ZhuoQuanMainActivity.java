@@ -1,6 +1,6 @@
 package com.cpstudio.zhuojiaren.ui;
 
-import io.rong.app.DemoContext;
+import io.rong.app.IMChatDataHelper;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Group;
 
@@ -114,7 +114,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 		ivFunSimply.setTag(0);
 		ivFunSimply.setImageResource(R.drawable.menu_qht1);
 		mConnHelper = ConnHelper.getInstance(getApplicationContext());
-		// mFacade = new QuanFacade(getApplicationContext());
 		Intent i = getIntent();
 		groupid = i.getStringExtra("groupid");
 		pwh = new PopupWindows(ZhuoQuanMainActivity.this);
@@ -151,7 +150,7 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 								getApplicationContext());
 						detail = nljh.parseQuan();
 						if (null != detail) {
-							GroupFacade mgfcade = DemoContext.getInstance(
+							GroupFacade mgfcade = IMChatDataHelper.getInstance(
 									getApplicationContext()).getmGroupInfoDao();
 							mgfcade.saveOrUpdate(detail);
 						}

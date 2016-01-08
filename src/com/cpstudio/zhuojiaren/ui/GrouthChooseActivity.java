@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.model.GrouthType;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -50,7 +50,7 @@ public class GrouthChooseActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				//œ¬‘ÿ¿‡–Õ
-				AppClient.getInstance(GrouthChooseActivity.this).getGrowthOnlineType(new Handler(){
+				ConnHelper.getInstance(GrouthChooseActivity.this).getGrowthOnlineType(new Handler(){
 					@Override
 					public void handleMessage(Message msg) {
 						// TODO Auto-generated method stub

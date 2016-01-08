@@ -21,9 +21,8 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.facade.QuanFacade;
-import com.cpstudio.zhuojiaren.helper.AppClient;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -206,7 +205,7 @@ public class QuanBriefActivity extends BaseActivity {
 						QuanBriefActivity.this)) {
 					res = JsonHandler.parseResult((String) msg.obj);
 					// 每次都写文件，没必要，如果是从网络获取则缓存，否则不用再缓存了
-					AppClient.getInstance(getApplicationContext())
+					ConnHelper.getInstance(getApplicationContext())
 							.saveObject((String) msg.obj, "citys");
 				} else {
 					return;

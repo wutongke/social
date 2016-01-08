@@ -384,14 +384,14 @@ public final class RongCloudEvent implements
 	 */
 	@Override
 	public UserInfo getUserInfo(String userId) {
-		UserFacade mUserInfosDao = DemoContext.getInstance(mContext)
+		UserFacade mUserInfosDao = IMChatDataHelper.getInstance(mContext)
 				.getmUserInfosDao();
 		if (mUserInfosDao == null
 				|| mUserInfosDao.getSimpleInfoById(userId) == null) {
 			// 数据库中不存在，网络请求
 			Log.i("cloudevent", (mUserInfosDao == null) + "," + "好友不存在");
 		}
-		UserInfo info = DemoContext.getInstance(mContext).getUserInfoById(
+		UserInfo info = IMChatDataHelper.getInstance(mContext).getUserInfoById(
 				userId);
 		if (info != null)
 			Log.i("cloudevent",
@@ -409,14 +409,14 @@ public final class RongCloudEvent implements
 	 */
 	@Override
 	public Group getGroupInfo(String groupId) {
-		GroupFacade mGroupInfosDao = DemoContext.getInstance(mContext)
+		GroupFacade mGroupInfosDao = IMChatDataHelper.getInstance(mContext)
 				.getmGroupInfoDao();
 		if (mGroupInfosDao == null
 				|| mGroupInfosDao.getSimpleInfoById(groupId) == null) {
 			// 数据库中不存在，网络请求
 			return null;
 		}
-		Group info = DemoContext.getInstance(mContext)
+		Group info = IMChatDataHelper.getInstance(mContext)
 				.getGroupInfoById(groupId);
 		if (info != null)
 			Log.i("cloudevent", "group" + info.getId() + "," + info.getName()

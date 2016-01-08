@@ -2,7 +2,6 @@ package com.cpstudio.zhuojiaren.ui;
 
 import java.util.ArrayList;
 
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -32,10 +31,10 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.TypedStoreGoodsListAdapter;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.model.Constants;
 import com.cpstudio.zhuojiaren.model.GoodsVO;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -183,6 +182,7 @@ public class StoreSearchMainActivity extends Activity implements
 									Context.MODE_PRIVATE);
 						Editor editor = sharedPrefs.edit();
 						editor.remove(Constants.STORE_SEARCH_HISTORY);
+						editor.commit();
 						historyList.clear();
 						historyAdapter.notifyDataSetChanged();
 					}
@@ -302,25 +302,8 @@ public class StoreSearchMainActivity extends Activity implements
 	public void onMore() {
 		// TODO Auto-generated method stub
 
-		// if (CommonUtil.getNetworkState(getApplicationContext()) == 2) {
-		// ArrayList<ZhuoInfoVO> list = infoFacade.getByPage(mPage);
-		// Message msg = mUIHandler.obtainMessage(MsgTagVO.DATA_MORE);
-		// msg.obj = list;
-		// msg.sendToTarget();
-		// } else {
-		// String params = ZhuoCommHelper.getUrlMsgList();
-		// params += "?pageflag=" + "1";
-		// params += "&reqnum=" + "10";
-		// params += "&lastid=" + mLastId;
-		// params += "&type=" + mType;
-		// params += "&gongxutype=" + "0";
-		// params += "&from=" + "6";
-		// params += "&uid=" + mUid;
-		// mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
-		// }
-		//
 		if (mPullDownView.startLoadData()) {
-			String params = ZhuoCommHelper.getUrlGetGoodsList();
+			String params = UrlHelper.getUrlGetGoodsList();
 			params += "?page=" + mPage;
 			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_MORE);
 		}
@@ -339,7 +322,7 @@ public class StoreSearchMainActivity extends Activity implements
 			mList.clear();
 			mAdapter.notifyDataSetChanged();
 			mPage = 1;
-			String params = ZhuoCommHelper.getUrlGetGoodsList();
+			String params = UrlHelper.getUrlGetGoodsList();
 			params += "?page=" + mPage;
 			mConnHelper.getFromServer(params, mUIHandler, MsgTagVO.DATA_LOAD);
 		}

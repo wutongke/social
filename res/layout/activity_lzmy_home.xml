@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="#efefef"
     android:orientation="vertical"
-    tools:context="com.cpstudio.zhuojiaren.ui.LZMyHomeActivity" >
+    tools:context="com.cpstudio.zhuojiaren.ui.MyMainActivity" >
 
     <RelativeLayout
         android:id="@+id/userNameShowParent"

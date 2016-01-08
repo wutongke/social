@@ -11,7 +11,7 @@ import com.cpstudio.zhuojiaren.helper.DatabaseHelper;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 
-//注释部分都需要修改，为了
+//群组基本信息，主要用于ＩＭ聊天相关，。某些字段未用
 public class GroupFacade {
 	private final DatabaseHelper dbHelper;
 	private static final String SQL_TABLE = "GROUPLIST";

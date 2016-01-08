@@ -14,9 +14,8 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.GrouthVisitAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
 import com.cpstudio.zhuojiaren.model.GrouthVisit;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
 import com.cpstudio.zhuojiaren.model.ResultVO;
@@ -32,7 +31,7 @@ public class GrouthVisitListActivity extends BaseActivity {
 	private ArrayList<GrouthVisit> mDatas = new ArrayList<GrouthVisit>();
 	// ·ÖÒ³
 	private int mPage = 0;
-	private AppClient appClientLef;
+	private ConnHelper appClientLef;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,7 @@ public class GrouthVisitListActivity extends BaseActivity {
 		setContentView(R.layout.activity_grouth_visit_listctivity);
 		ButterKnife.inject(this);
 		initTitle();
-		appClientLef = AppClient.getInstance(this);
+		appClientLef = ConnHelper.getInstance(this);
 		title.setText(R.string.grouth_visite_label);
 		initPullDownView();
 		loadData();
@@ -93,7 +92,7 @@ public class GrouthVisitListActivity extends BaseActivity {
 		try {
 			pullDownView.finishLoadData(true);
 			if (data != null && !data.equals("")) {
-				ArrayList<GrouthVisit> list = JsonHandler_Lef
+				ArrayList<GrouthVisit> list = JsonHandler
 						.parseVisitList(data);
 				if (!list.isEmpty()) {
 					if (!append) {

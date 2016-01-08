@@ -13,9 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.R.id;
-import com.cpstudio.zhuojiaren.R.layout;
-import com.cpstudio.zhuojiaren.R.string;
 import com.cpstudio.zhuojiaren.helper.BaiduLocationHelper;
 import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
@@ -28,7 +25,6 @@ public class PublishActiveActivity extends Activity {
 
 	private PopupWindows pwh = null;
 	private ImageSelectHelper mIsh = null;
-	private String mLocation = "";
 	private ConnHelper mConnHelper = null;
 	private BaiduLocationHelper locationHelper = null;
 
@@ -99,7 +95,6 @@ public class PublishActiveActivity extends Activity {
 			case MsgTagVO.UPDATE_LOCAL: {
 				String locationinfo = (String) msg.obj;
 				if (null != locationinfo && !locationinfo.trim().equals("")) {
-					mLocation = locationinfo;
 					((TextView) findViewById(R.id.textViewPosInfo))
 							.setText(locationinfo);
 				} else {
@@ -170,17 +165,11 @@ public class PublishActiveActivity extends Activity {
 	private void publish() {
 		EditText contentEditText = (EditText) findViewById(R.id.editTextchoiceContent);
 		String content = contentEditText.getText().toString();
-		String tag = ((TextView) findViewById(R.id.editTextchoiceTag))
-				.getText().toString();
 		if (content.trim().equals("")) {
 			pwh.showPopDlgOne(findViewById(R.id.rootLayout), null,
 					R.string.info24);
 			contentEditText.requestFocus();
 			return;
-		}
-		String imgCnt = "0";
-		if (mIsh.getTags() != null) {
-			imgCnt = mIsh.getTags().size() + "";
 		}
 		mConnHelper.pubDynamic(PublishActiveActivity.this, mUIHandler,
 				MsgTagVO.PUB_INFO, content, mIsh.getTags());

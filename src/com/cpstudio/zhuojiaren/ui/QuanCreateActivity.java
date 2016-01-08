@@ -1,6 +1,6 @@
 package com.cpstudio.zhuojiaren.ui;
 
-import io.rong.app.DemoContext;
+import io.rong.app.IMChatDataHelper;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.RongIMClient.OperationCallback;
@@ -37,12 +37,10 @@ import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.facade.GroupFacade;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.ImageSelectHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
-import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.City;
 import com.cpstudio.zhuojiaren.model.MsgTagVO;
@@ -84,7 +82,7 @@ public class QuanCreateActivity extends BaseActivity {
 	// 圈子图片
 	private ImageSelectHelper mIsh2 = null;
 	private ArrayList<String> mSelectlist = new ArrayList<String>();
-	private AppClient mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private String groupid = null;
 	private String groupname = null;
 	private LoadImage mLoadImage = LoadImage.getInstance();
@@ -110,7 +108,7 @@ public class QuanCreateActivity extends BaseActivity {
 
 		ButterKnife.inject(this);
 		mContext = this;
-		mConnHelper = AppClient.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 
 		// 圈子类型
 		quanziType = getResources().getStringArray(R.array.quanzi_type);
@@ -530,9 +528,6 @@ public class QuanCreateActivity extends BaseActivity {
 		String intro = introTextTitle.getText().toString();
 		String pub = ((EditText) findViewById(R.id.editTextQuanPub)).getText()
 				.toString().trim();
-		RadioButton radio = (RadioButton) findViewById(radios
-				.getCheckedRadioButtonId());
-		String gproperty = radio.getText().toString();
 		if (title.trim().equals("")) {
 			pwh.showPopDlgOne(findViewById(R.id.rootLayout), null,
 					R.string.info25);
@@ -544,16 +539,8 @@ public class QuanCreateActivity extends BaseActivity {
 			for (String id : mSelectlist) {
 				ids += id + ";";
 			}
-			ids = ZhuoCommHelper.subLast(ids);
+			ids = CommonUtil.subLast(ids);
 		}
-
-		// Map<String, String> files = new HashMap<String, String>();
-		// if (mHeadChanged) {
-		// ArrayList<String> temp = mIsh2.getTags();
-		// for (String path : temp) {
-		// files.put("gheader", path);
-		// }
-		// }
 
 		if (null != groupid && !groupid.equals("")) {
 			ConnHelper.getInstance(getApplicationContext())
@@ -608,7 +595,7 @@ public class QuanCreateActivity extends BaseActivity {
 								@Override
 								public void run() {
 									// TODO Auto-genrated method stub
-									GroupFacade mgfcade = DemoContext
+									GroupFacade mgfcade = IMChatDataHelper
 											.getInstance(
 													getApplicationContext())
 											.getmGroupInfoDao();

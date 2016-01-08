@@ -1,10 +1,13 @@
 package com.cpstudio.zhuojiaren.helper;
-
+/**
+ * 网络请求常量
+ * @author lz
+ *
+ */
 public class UrlHelper {
 
 	private final static String SERVER_PREFIX = "http://";
-	private final static String SERVER_IP = "115.28.167.196";// "115.29.145.63";//
-																// "zjr.ci77.com";//
+	private final static String SERVER_IP = "115.28.167.196";
 
 	private final static String SERVER_PORT = ":9001";
 	private final static String SERVER_APP = "/zhuo-api";
@@ -108,6 +111,129 @@ public class UrlHelper {
 	private final static String audioThought  = "/audioCmt.do";
 	private final static String visitThought  = "/interviewCmt.do";
 	private final static String gxtyles  = "/getSupplyDemandType.do";
+	/**
+	 * 用户加入的或创建的活动
+	 */
+	private final static String USER_ACTIVITY = "/getUserActivityList.do";
+
+	private final static String PUB_GONGXU = "/addSupplyDemand.do";
+	private final static String USER_BUSINESS = "/getUserBusiness.do";
+
+	private final static String SERVICE_GET_ADINFO = "/getadinfo.do";
+	
+	
+	private final static String SERVICE_RESOURCE_GONGXU_DETAIL = "/resource_gongxu_detail";
+
+	private final static String DISOLVE_QUAN = "/grouprelease.do";
+	private final static String QUIT_QUAN = "//followgroup.do";
+	private final static String SERVICE_LOGIN = "/login.do";
+	private final static String SERVICE_MODIFYPWD = "/modifypwd";
+	private final static String SERVICE_MSGLIST = "/msglist";
+	private final static String SERVICE_PUBINFO = "/pubzhuoinfo";
+	private final static String SERVICE_USERINFO = "/usersimple";
+	private final static String SERVICE_CMT = "/pubcmt";
+	private final static String SERVICE_GOOD = "/good";
+	private final static String SERVICE_MSGDETAIL = "/msgdetail";
+	private final static String SERVICE_CMTLIST = "/cmtlist";
+	private final static String SERVICE_COLLECT = "/collect";
+	private final static String SERVICE_FOLLOWGROUP = "/followgroup";
+	private final static String SERVICE_GROUPMEMBERS = "/groupmembers";
+	private final static String SERVICE_GROUPDETAIL = "/groupdetail";
+	private final static String SERVICE_GROUPCHAT = "/groupchat";
+	private final static String SERVICE_CHATMSGLIST = "/chatmsglist";
+	private final static String SERVICE_CHAT = "/chat";
+	private final static String SERVICE_CHATLIST = "/chatlist";
+	private final static String SERVICE_LASTVISITUSERLIST = "/lastvisituserlist";
+	private final static String SERVICE_CARD = "/card";
+	private final static String SERVICE_CMTRECOMMANDMSGLIST = "/cmtrecommandmsglist";
+	private final static String SERVICE_RECOMMANDMSG = "/recommandmsg";
+	private final static String SERVICE_SYSMSGLIST = "/sysmsglist";
+	private final static String SERVICE_USERLIST = "/userlist";
+	private final static String SERVICE_CARDCHANGELIST = "/cardchangelist";
+	private final static String SERVICE_PLANLIST = "/planlist";
+	private final static String SERVICE_HOTGROUPLIST = "/hotgrouplist";
+	private final static String SERVICE_REGROUPLIST = "/grouprecommend.do";
+	private final static String SERVICE_MYGROUPLIST = "/getmygroup.do";
+	private final static String SERVICE_COLLECTLIST = "/collectlist";
+	private final static String SERVICE_GETMSGCOUNT = "/getmsgcount";
+	private final static String SERVICE_CONTACT = "/contact";
+	private final static String SERVICE_GETFOLLOWS = "/getfollows";
+	private final static String SERVICE_LASTCHATLIST = "/lastchatlist";
+	private final static String SERVICE_BIRTHDAYUSERS = "/birthdayusers";
+	private final static String SERVICE_MYRESOURCE = "/myresource";
+	private final static String SERVICE_USERCONFIG = "/userconfig";
+	private final static String SERVICE_ZENGHUITITLELIST = "/zenghuititlelist";
+	private final static String SERVICE_FAMILY = "/family";
+	private final static String SERVICE_USERFOLLOWSGROUPS = "/userfollowsgroups";
+	private final static String SERVICE_ANDROIDNAME = "/androidname";
+	private final static String SERVICE_GETABOUTLIST = "/getaboutlist";
+	private final static String SERVICE_GETABOUTDETAIL = "/getaboutdetail";
+	private final static String SERVICE_GETLASTRECORD = "/getlastrecord";
+	private final static String SERVICE_GETCLOUDVOICE = "/getcloundvoice";
+	private final static String SERVICE_GETGOODSLIST = "/getgoodslist";
+	private final static String SERVICE_GETGOODSDETAIL = "/getgoodsdetail";
+	private final static String SERVICE_GETGOODSRULE = "/getgoodsrule";
+	private final static String SERVICE_APPLYFOREXCH = "/applyforexch";
+	private final static String SERVICE_GETZHUORMB = "/getzhuormb";
+	private final static String SERVICE_GETMYCLOUDCHAT = "/getmycloudchat";
+	private final static String SERVICE_ZHUONOTICE = "/zhuonotice";
+	private final static String SERVICE_TEACHERLIST = "/teacherlist";
+	private final static String SERVICE_TEACHER = "/teacher";
+	private final static String SERVICE_CMT_LIKE = "/cmt_like";
+	private final static String SERVICE_SHARECLOUD = "/sharecloud";
+	private final static String SERVICE_SEARCH_QUAN = "/groupsearch.do";
+	private final static String SERVICE_CITY_LIST = "/getcitylist.do";
+	private final static String SERVICE_VEDIO_LIST = "/getGrowthOnlineList.do";
+	private static String SERVICE_VEDIO_LIST_Collection = "/myCollectGrouthOnline.do";
+	private final static String SERVICE_AUDIO_LIST = "/getAudio.do";
+	private final static String SERVICE_Visit_LIST = "/getInterviewList.do";
+	private final static String SUBMIT_VISIT= "/getGrowthOnlineType.do";
+
+	private final static String SERVICE_Teacher_LIST = "/getTutor.do";
+	private final static String SERVICE_Funding_LIST = "/crowdfunding/list.do";
+	private static String SERVICE_Funding_LIST_Invest = "/crowdfunding/investList.do";
+	private final static String AUDIO_COLL = "/praiseAudio.do";
+	private final static String GrowthOnlineType = "/getGrowthOnlineType.do";
+	private final static String CREATEGROUP = "/creategroup.do";
+	private final static String ADDGROUPACTIVITY = "/addGroupActivity.do";
+	private final static String CREATECROWDFUNDING = "/crowdfunding/insert.do";
+	private final static String GETCROWDFUNDING = "/crowdfunding/detail.do";
+	private final static String GETEVENTDETAIL = "/groupActivity.do";
+	private final static String EVENTCOLLECTION = "/collectActivity.do";
+	private final static String EVENTADD = "/joinActivity.do";
+	private final static String COMMENT = "/crowdfunding/createComment.do";
+	private final static String LIKEINCOMMENT = "/crowdfunding/commentLike.do";
+	private final static String LIKECrowdFunding = "/crowdfunding/like.do";
+	private final static String getCrowdFundingComment = "/crowdfunding/commentList.do";
+	private final static String GETCROWDFUNDINGPROGRESS = "/crowdfunding/progressList.do";
+	private final static String TIME = "/crowdfunding/progressList.do";
+	private final static String PUBCROWDFUNDINGCOMMENT = "/crowdfunding/createProgress.do";
+	private final static String GONGXULIST = "/supplyDemandList.do";
+	private final static String GONGXUDETAIL = "/getSupplyDemand.do";
+	private static String COMMONCOLLECTION = "/collectSupplyDemand.do";
+	private static String SHARETOZHUO = "/shareSupplyDemand.do";
+	private static String DELETEGONGXU = "/deleteSupplyDemand.do";
+	private static String GOODSDETAIL = "/goods/goodsDetail.do";
+	private static String GOODSLIST = "/goods/goodsList.do";
+	private static String GOODSCOLLECTION = "/goods/collectList.do";
+	private static String CARTGOODSLIST = "/goods/goodCart.do";
+	private static String GoodsCollection = "/goods/collect.do";
+	private static String GoodsAddToCart = "/goods/addGoodsCart.do";
+	private static String PaybackList = "/crowdfunding/supportList.do";
+	private static String GOODSCATEGORY = "/goods/topCategory.do";
+	private static String GOODSNUMBER = "/genZhuobiOrder.do";
+	private static String GIVEMONEYTOFRIEND = "/presentZhuobi.do";
+	private static String MYZHUOBI = "/getMyZhuobi.do";
+	private static String MALLPAY = "/mallPay.do";
+	private static String GENERATEORDER = "/goods/generateOrder.do";
+	private static String POSTPAYSTATUS = "/goods/setOrderStatus.do";
+	private static String SHIPPINGADDRESS = "/goods/setOrderAddress.do";
+	private static String INCOME = "/getMyZhuobiRecord.do";
+	private static String REMOVEGOODS = "/goods/delGoodsCart.do";
+	private static String AudioCollection = "/myAudio.do";
+	
+	
+	
 	
 	public static String getVisitthought() {
 		return SERVER + visitThought;
@@ -162,18 +288,7 @@ public class UrlHelper {
 		return TEATURE_JIAREN;
 	}
 
-	/**
-	 * 用户加入的或创建的活动
-	 */
-	private final static String USER_ACTIVITY = "/getUserActivityList.do";
 
-	// lef的
-	private final static String SERVICE_MYGROUPLIST = "/getmygroup.do";
-	private final static String PUB_GONGXU = "/addSupplyDemand.do";
-	private final static String USER_BUSINESS = "/getUserBusiness.do";
-
-	// 未用
-	private final static String SERVICE_GET_ADINFO = "/getadinfo.do";
 
 	/**
 	 * 获取主页界面的广告信息
@@ -310,7 +425,7 @@ public class UrlHelper {
 	}
 
 	/**
-	 * 未用 获得广告信息
+	 * 
 	 * 
 	 * @return
 	 */
@@ -623,5 +738,455 @@ public class UrlHelper {
 	public static String getGXTypes() {
 		return SERVER + gxtyles;
 	}
+	public static String getAudioCollection() {
+		return SERVER + AudioCollection;
+	}
+	public static String getServiceVedioListCollection() {
+		return SERVER + SERVICE_VEDIO_LIST_Collection;
+	}
+	public static String getServiceFundingListInvest() {
+		return SERVER +SERVICE_Funding_LIST_Invest;
+	}
+
+
+	public static String getREMOVEGOODS() {
+		return SERVER +  REMOVEGOODS;
+	}
+
+	public static String getINCOME() {
+		return SERVER +  INCOME;
+	}
+
+	public static String getSHIPPINGADDRESS() {
+		return SERVER + SHIPPINGADDRESS;
+	}
+
+	public static String getPOSTPAYSTATUS() {
+		return SERVER + POSTPAYSTATUS;
+	}
+
+	public static String getGENERATEORDER() {
+		return SERVER + GENERATEORDER;
+	}
+
+	public static String getMALLPAY() {
+		return SERVER + MALLPAY;
+	}
+
+	public static String getMYZHUOBI() {
+		return SERVER + MYZHUOBI;
+	}
+
+	public static String getGIVEMONEYTOFRIEND() {
+		return SERVER + GIVEMONEYTOFRIEND;
+	}
+
+	public static String getGOODSNUMBER() {
+		return SERVER + GOODSNUMBER;
+	}
+
+	public static String getGOODSCATEGORY() {
+		return SERVER + GOODSCATEGORY;
+	}
+
+	public static String getPaybackList() {
+		return SERVER +  PaybackList;
+	}
+
+	public static String getGoodsAddToCart() {
+		return SERVER + GoodsAddToCart;
+	}
+
+	public static String getGoodsCollection() {
+		return SERVER + GoodsCollection;
+	}
+
+	public static String getCARTGOODSLIST() {
+		return SERVER + CARTGOODSLIST;
+	}
+
+	public static String getGOODSCOLLECTION() {
+		return SERVER + GOODSCOLLECTION;
+	}
+
+	public static String getGOODSLIST() {
+		return SERVER + GOODSLIST;
+	}
+
+	public static String getGOODSDETAIL() {
+		return SERVER + GOODSDETAIL;
+	}
+
+	public static String getDELETEGONGXU() {
+		return SERVER + DELETEGONGXU;
+	}
+
+	public static String getSHARETOZHUO() {
+		return SERVER + SHARETOZHUO;
+	}
+
+	public static String getCOMMONCOLLECTION() {
+		return SERVER + COMMONCOLLECTION;
+	}
+
+
+	public static String getGongxudetail() {
+		return SERVER + GONGXUDETAIL;
+	}
+
+	public static String getGongxulist() {
+		return SERVER + GONGXULIST;
+	}
+
+	public static String getTime() {
+		return SERVER + TIME;
+	}
+
+	//收藏列表urls
+	public static final String[] collectionUrls = {
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST,
+		SERVER + SERVICE_VEDIO_LIST
+	};
 	
+	public static String getGetcrowdfundingprogress() {
+		return SERVER +GETCROWDFUNDINGPROGRESS;
+	}
+
+	public static String getPubcrowdfundingcomment() {
+		return SERVER +PUBCROWDFUNDINGCOMMENT;
+	}
+	public static String getGetcrowdfundingcomment() {
+		return SERVER + getCrowdFundingComment;
+	}
+	public static String getLikecrowdfunding() {
+		return SERVER + LIKECrowdFunding;
+	}
+	public static String getLikeincomment() {
+		return SERVER +LIKEINCOMMENT;
+	}
+	public static String getComment() {
+		return SERVER +COMMENT;
+	}
+	public static String getEventadd() {
+		return SERVER + EVENTADD;
+	}
+	public static String getEventcollection() {
+		return SERVER +EVENTCOLLECTION;
+	}
+	public static String getGeteventdetail() {
+		return SERVER +GETEVENTDETAIL;
+	}
+	public static String getGetcrowdfunding() {
+		return SERVER + GETCROWDFUNDING;
+	}
+	public static String getCreatecrowdfunding() {
+		return SERVER + CREATECROWDFUNDING;
+	}
+	public static String getAddgroupactivity() {
+		return SERVER + ADDGROUPACTIVITY;
+	}
+	public static String getCreategroup() {
+		return SERVER + CREATEGROUP;
+	}
+	public static String getGrowthonlinetype() {
+		return SERVER + GrowthOnlineType;
+	}
+	public static String getAudioColl() {
+		return SERVER + AUDIO_COLL;
+	}
+	public static String getSubmitVisit() {
+		return SERVER + SUBMIT_VISIT;
+	}
+	public static String getServiceFundingList() {
+		return SERVER + SERVICE_Funding_LIST;
+	}
+
+	public static String getServiceTeacherList() {
+		return SERVER + SERVICE_Teacher_LIST;
+	}
+
+	public static String getServiceVisitList() {
+		return SERVER + SERVICE_Visit_LIST;
+	}
+
+	public static String getServiceAudioList() {
+		return SERVER + SERVICE_AUDIO_LIST;
+	}
+
+	public static String getServiceVedioList() {
+		return SERVER + SERVICE_VEDIO_LIST;
+	}
+
+	public static String getServiceCityList() {
+		return SERVER + SERVICE_CITY_LIST;
+	}
+
+	public static String getServiceSearchQuan() {
+		return SERVER + SERVICE_SEARCH_QUAN;
+	}
+
+	public static String getUrlShareCloud() {
+		return SERVER + SERVICE_SHARECLOUD;
+	}
+
+	public static String getUrlCmtLike() {
+		return SERVER + SERVICE_CMT_LIKE;
+	}
+
+	public static String getUrlTeacher() {
+		return SERVER + SERVICE_TEACHER;
+	}
+
+	public static String getUrlTeacherList() {
+		return SERVER + SERVICE_TEACHERLIST;
+	}
+
+	public static String getUrlZhuoNotice() {
+		return SERVER + SERVICE_ZHUONOTICE;
+	}
+
+	public static String getUrlGetZhuoRMB() {
+		return SERVER + SERVICE_GETZHUORMB;
+	}
+
+	public static String getUrlGetMyCloudChat() {
+		return SERVER + SERVICE_GETMYCLOUDCHAT;
+	}
+
+	public static String getUrlGetAboutList() {
+		return SERVER + SERVICE_GETABOUTLIST;
+	}
+
+	public static String getUrlGetAboutDetail() {
+		return SERVER + SERVICE_GETABOUTDETAIL;
+	}
+
+	public static String getUrlGetLastRecord() {
+		return SERVER + SERVICE_GETLASTRECORD;
+	}
+
+	public static String getUrlGetClodVoice() {
+		return SERVER + SERVICE_GETCLOUDVOICE;
+	}
+
+	public static String getUrlGetGoodsList() {
+		return SERVER + SERVICE_GETGOODSLIST;
+	}
+
+	public static String getUrlGetGoodsDetail() {
+		return SERVER + SERVICE_GETGOODSDETAIL;
+	}
+
+	public static String getUrlGetGoodsRule() {
+		return SERVER + SERVICE_GETGOODSRULE;
+	}
+
+	public static String getUrlApplyForExch() {
+		return SERVER + SERVICE_APPLYFOREXCH;
+	}
+
+	public static String getUrlLogin() {
+		return SERVER + SERVICE_LOGIN;
+	}
+
+	public static String getUrlChangPwd() {
+		return SERVER + SERVICE_MODIFYPWD;
+	}
+
+	public static String getUrlMsgList() {
+		return SERVER + SERVICE_MSGLIST;
+	}
+
+	public static String getUrlUserInfo() {
+		return SERVER + SERVICE_USERINFO;
+	}
+
+	public static String getUrlPubinfo() {
+		return SERVER + SERVICE_PUBINFO;
+	}
+
+	public static String getUrlCmt() {
+		return SERVER + SERVICE_CMT;
+	}
+
+	public static String getUrlGood() {
+		return SERVER + SERVICE_GOOD;
+	}
+
+	public static String getUrlMsgDetail() {
+		return SERVER + SERVICE_MSGDETAIL;
+	}
+
+	public static String getUrlCmtList() {
+		return SERVER + SERVICE_CMTLIST;
+	}
+
+	public static String getUrlCollect() {
+		return SERVER + SERVICE_COLLECT;
+	}
+
+//	public static String getUrlFollow() {
+//		return SERVER + SERVICE_FOLLOW;
+//	}
+
+
+
+	public static String getUrlFollowGroup() {
+		return SERVER + SERVICE_FOLLOWGROUP;
+	}
+
+	public static String getUrlGroupMembers() {
+		return SERVER + SERVICE_GROUPMEMBERS;
+	}
+
+	public static String getUrlGroupDetail() {
+		return SERVER + SERVICE_GROUPDETAIL;
+	}
+
+
+
+	public static String getUrlGroupChat() {
+		return SERVER + SERVICE_GROUPCHAT;
+	}
+
+	public static String getUrlChatMsgList() {
+		return SERVER + SERVICE_CHATMSGLIST;
+	}
+
+	public static String getUrlChat() {
+		return SERVER + SERVICE_CHAT;
+	}
+
+	public static String getUrlChatList() {
+		return SERVER + SERVICE_CHATLIST;
+	}
+
+
+	public static String getUrlLastVisitUserList() {
+		return SERVER + SERVICE_LASTVISITUSERLIST;
+	}
+
+	public static String getUrlCmtRecommandMsgList() {
+		return SERVER + SERVICE_CMTRECOMMANDMSGLIST;
+	}
+
+	public static String getUrlCard() {
+		return SERVER + SERVICE_CARD;
+	}
+
+	public static String getUrlRecommandMsg() {
+		return SERVER + SERVICE_RECOMMANDMSG;
+	}
+
+	public static String getUrlSysMsgList() {
+		return SERVER + SERVICE_SYSMSGLIST;
+	}
+
+	public static String getUrlUserList() {
+		return SERVER + SERVICE_USERLIST;
+	}
+
+	public static String getUrlCardChangeList() {
+		return SERVER + SERVICE_CARDCHANGELIST;
+	}
+
+
+	public static String getUrlPlanList() {
+		return SERVER + SERVICE_PLANLIST;
+	}
+
+	public static String getUrlHotGroupList() {
+		return SERVER + SERVICE_HOTGROUPLIST;
+	}
+
+	public static String getUrlReGroupList() {
+		return SERVER + SERVICE_REGROUPLIST;
+	}
+	public static String getUrlCollectList() {
+		return SERVER + SERVICE_COLLECTLIST;
+	}
+
+	public static String getUrlGetMsgCount() {
+		return SERVER + SERVICE_GETMSGCOUNT;
+	}
+
+	public static String getUrlContact() {
+		return SERVER + SERVICE_CONTACT;
+	}
+
+	public static String getUrlGetFollows() {
+		return SERVER + SERVICE_GETFOLLOWS;
+	}
+
+	public static String getUrlLastChatList() {
+		return SERVER + SERVICE_LASTCHATLIST;
+	}
+
+
+	public static String getUrlBirthdayUsers() {
+		return SERVER + SERVICE_BIRTHDAYUSERS;
+	}
+
+	public static String getUrlMyResource() {
+		return SERVER + SERVICE_MYRESOURCE;
+	}
+
+
+	public static String getUrlUserConfig() {
+		return SERVER + SERVICE_USERCONFIG;
+	}
+
+	public static String getUrlZenghuiTitleList() {
+		return SERVER + SERVICE_ZENGHUITITLELIST;
+	}
+
+
+	public static String getUrlFamily() {
+		return SERVER + SERVICE_FAMILY;
+	}
+
+	public static String getUrlUserFollowsGroups() {
+		return SERVER + SERVICE_USERFOLLOWSGROUPS;
+	}
+
+	public static String getUrlAndroidName() {
+		return SERVER + SERVICE_ANDROIDNAME;
+	}
+
+
+	public static String getResourceGongxuDetail() {
+		return SERVER + SERVICE_RESOURCE_GONGXU_DETAIL;
+	}
+	public static String getDisolveQuan() {
+		return SERVER + DISOLVE_QUAN;
+	}
+	public static String getQuitQuan() {
+		return SERVER + QUIT_QUAN;
+	}
+
 }

@@ -14,9 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.R.drawable;
-import com.cpstudio.zhuojiaren.R.id;
-import com.cpstudio.zhuojiaren.R.layout;
 import com.cpstudio.zhuojiaren.adapter.PhotoPagerAdapter;
 import com.cpstudio.zhuojiaren.widget.HackyViewPager;
 

@@ -1,12 +1,6 @@
 package com.cpstudio.zhuojiaren.helper;
 
-import io.rong.app.model.ApiResult;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient.ErrorCode;
-import io.rong.imlib.RongIMClient.SendMessageCallback;
-import io.rong.imlib.model.Conversation.ConversationType;
 import io.rong.imlib.model.Group;
-import io.rong.message.TextMessage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +10,6 @@ import java.io.IOException;
 import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,31 +24,29 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.SurfaceView;
 import android.widget.Toast;
 
-import com.cpstudio.zhuojiaren.helper.AsyncImageConnectHelper.FinishCallback;
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.helper.AsyncConnectHelper.FinishCallback;
 import com.cpstudio.zhuojiaren.helper.AsyncUploadHelper.ICompleteCallback;
 import com.cpstudio.zhuojiaren.model.BaseCodeData;
 import com.cpstudio.zhuojiaren.model.City;
-import com.cpstudio.zhuojiaren.model.CustomerMessageFactory;
 import com.cpstudio.zhuojiaren.model.Dynamic;
 import com.cpstudio.zhuojiaren.model.GXTypeCodeData;
-import com.cpstudio.zhuojiaren.model.GXTypeItemVO;
+import com.cpstudio.zhuojiaren.model.LoginRes;
 import com.cpstudio.zhuojiaren.model.Province;
-import com.cpstudio.zhuojiaren.model.ResourceGXVO;
 import com.cpstudio.zhuojiaren.model.UserNewVO;
-import com.cpstudio.zhuojiaren.model.gtype;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.qiniu.android.storage.UploadManager;
+import com.cpstudio.zhuojiaren.model.ZhuoShareContent;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
 
 /**
- * @author lef
+ * 网络请求工具类，单例
+ * 
+ * @author lz
  * 
  */
 public class ConnHelper {
@@ -64,39 +55,36 @@ public class ConnHelper {
 		VIEW, EDIT, ADD, DELETE
 	};
 
-	public static final String BASEDATA = "baseCodeDatas";
-	public static final String GXTYPES = "gongxuTypes";
-	public static final String CITYS = "citys";
+	// SharedPreferences缓存数据key
+	public static final String BASEDATA = "baseCodeDatas";// 基本编码数据
+	public static final String GXTYPES = "gongxuTypes";// 供需类型
+	public static final String CITYS = "citys";// 城市编号等
+
 	private static ConnHelper instance;
 	private String userid = null;
 	private String password = null;
-	private Handler uiHandler;
+
+	String session;// 应用服务器token
+	String uploadFileToken;// 七牛云上传图片token
+	String imToken; // 融云聊天token
+	Context context;
+
 	// 标识每一次请求，请求开始后不重复请求
 	private Set<String> mStartedTag = new HashSet<String>();
-
-	UploadManager uploadManager;
-
-	String session;
-	String uploadFileToken;
-	String imToken;
-	Context context;
 
 	private BaseCodeData baseDataSet;
 	private GXTypeCodeData gxTypeCodeDataSet;
 	private List<Province> citysOfProvince;
 	private List<City> citys;
+	// 群组信息
+	private HashMap<String, Group> groupMap;
 
-	private HashMap<String, Group> groupMap;// 群组信息
-
-	private void init(Context context) {
+	public void init(Context context) {
 		ResHelper resHelper = ResHelper.getInstance(context);
 		this.userid = resHelper.getUserid();
 		this.password = resHelper.getPassword();
-		this.session = resHelper.getSessionForAPP();
 		this.imToken = resHelper.getImTokenForRongyun();
-		this.uploadFileToken = resHelper.getUpLoadTokenForQiniu();
 		this.session = resHelper.getSessionForAPP();
-		this.imToken = resHelper.getImTokenForRongyun();
 		this.uploadFileToken = resHelper.getUpLoadTokenForQiniu();
 		this.context = context;
 	}
@@ -111,657 +99,16 @@ public class ConnHelper {
 		return instance;
 	}
 
-
-	public HashMap<String, Group> getGroupMap() {
-		return groupMap;
-	}
-
-	public GXTypeCodeData getGxTypeCodeDataSet() {
-		return gxTypeCodeDataSet;
-	}
-
-	public void setGxTypeCodeDataSet(GXTypeCodeData gxTypeCodeDataSet) {
-		this.gxTypeCodeDataSet = gxTypeCodeDataSet;
-	}
-
-	public void setGroupMap(HashMap<String, Group> groupMap) {
-		this.groupMap = groupMap;
-	}
-
-	public List<City> getCitys() {
-		if (citys == null) {
-
-		}
-		return citys;
-	}
-
-	public void setCitys(List<City> citys) {
-		this.citys = citys;
-	}
-
-	public List<Province> getCitysOfPrince() {
-		return citysOfProvince;
-	}
-
-	public void setCitysOfPrince(List<Province> citysOfPrince) {
-		this.citysOfProvince = citysOfPrince;
-		citys = new ArrayList<City>();
-		for (Province temp : citysOfProvince) {
-			citys.addAll(temp.getCitys());
-		}
-	}
-
-	public BaseCodeData getBaseDataSet() {
-		if (baseDataSet == null) {
-			String data = AppClient.getInstance(context).readObject(
-					"BaseSetData");
-			baseDataSet = JsonHandler.parseBaseCodeData(data);
-		}
-		return baseDataSet;
-	}
-
-	public void setBaseDataSet(BaseCodeData baseDataSet) {
-		this.baseDataSet = baseDataSet;
-	}
-
-	public String getUserid() {
-		return userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public boolean getFromServer(String url, Handler handler, int tag) {
-		return getFromServer(url, handler, tag, null, false, null, null);
-	}
-
-	// lz0713
-	private boolean getFromServerByPost(String url,
-			List<NameValuePair> pamNameValuePairs, Handler handler, int tag) {
-		if (pamNameValuePairs == null)
-			pamNameValuePairs = new ArrayList<NameValuePair>();
-		return getFromServerByPost(url, pamNameValuePairs, handler, tag, null,
-				false, null, null);
-	}
-
-	public boolean getFromServer(String url, Handler handler, int tag,
-			String data) {
-		return getFromServer(url, handler, tag, null, false, null, data);
-	}
-
-	public boolean getFromServer(String url, Handler handler, int tag,
-			Activity activity, boolean cancelable, OnCancelListener cancel) {
-		return getFromServer(url, handler, tag, activity, cancelable, cancel,
-				null);
-	}
-
 	/**
-	 * <b><i>public boolean getDataFromServer(String url, Handler handler, int
-	 * tag,Activity activity, boolean cancelable, OnCancelListener cancel,String
-	 * data)</i></b> <br>
-	 * Added in <a href="#">v 1.0.8</a> <br>
-	 * <br>
-	 * Get Data From server by HTTP_GET.
-	 * 
-	 * @author sofia
-	 * @param url
-	 *            request url+param
-	 * @param handler
-	 *            do HTTP request complete
-	 * @param tag
-	 *            handlertag
-	 * @param activity
-	 *            request processbar
-	 * @param cancelable
-	 *            request cancelable
-	 * @param cancel
-	 *            on request cancel
-	 * @param data
-	 *            ex String data
-	 * @return true if start HTTP request success otherwise return false
-	 * */
-	public boolean getFromServer(String url, Handler handler, int tag,
-			Activity activity, boolean cancelable, OnCancelListener cancel,
-			String data) {
-		return doGet(url, handler, tag, url, activity, cancelable, cancel, data);
-	}
-
-	// lz0713
-	public boolean getFromServerByPost(String url,
-			List<NameValuePair> pamNameValuePairs, Handler handler, int tag,
-			Activity activity, boolean cancelable, OnCancelListener cancel,
-			String data) {
-		pamNameValuePairs.add(new BasicNameValuePair("pubnum", "5"));
-		return doPostByPost(pamNameValuePairs, url, handler, tag, activity,
-				url, cancelable, cancel, data);
-	}
-
-	public boolean getFromServer(String url, FinishCallback callback) {
-		return getFromServer(url, callback, null, false, null);
-	}
-
-	public boolean getFromServer(String url, FinishCallback callback,
-			Activity activity, boolean cancelable, OnCancelListener cancel) {
-		return doGet(url, callback, url, activity, cancelable, cancel);
-	}
-
-	public boolean pubCmt(String msgid, String parentid, String content,
-			String forward, Handler handler, int handlerTag, Activity activity,
-			boolean cancelable, OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("msgid", msgid));
-		nameValuePairs.add(new BasicNameValuePair("parentid", parentid));
-		nameValuePairs.add(new BasicNameValuePair("content", content));
-		nameValuePairs.add(new BasicNameValuePair("forward", forward));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlCmt(), handler,
-				handlerTag, activity, "pubCmt", cancelable, cancel, data);
-	}
-
-	public boolean goodMsg(String msgid, Handler handler, int handlerTag,
-			Activity activity, boolean cancelable, OnCancelListener cancel,
-			String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("msgid", msgid));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlGood(), handler,
-				handlerTag, activity, "goodMsg", cancelable, cancel, data);
-	}
-
-	public boolean shareCloud(String msgid, String receivers,
-			FinishCallback callback, Activity activity, boolean cancelable,
-			OnCancelListener cancel) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("msgid", msgid));
-		nameValuePairs.add(new BasicNameValuePair("receivers", receivers));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlShareCloud(),
-				callback, activity, "shareCloud", cancelable, cancel);
-	}
-
-	public boolean applyForExch(String gid, String type, String myphone,
-			String friphone, String addr, Handler handler, int handlerTag,
-			Activity activity, boolean cancelable, OnCancelListener cancel,
-			String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("gid", gid));
-		nameValuePairs.add(new BasicNameValuePair("type", type));
-		nameValuePairs.add(new BasicNameValuePair("myphone", myphone));
-		nameValuePairs.add(new BasicNameValuePair("friphone", friphone));
-		nameValuePairs.add(new BasicNameValuePair("addr", addr));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlApplyForExch(),
-				handler, handlerTag, activity, "applyForExch", cancelable,
-				cancel, data);
-	}
-
-	public boolean collectMsg(String msgid, String iscollect,
-			final Handler handler, int handlerTag, Activity activity,
-			boolean cancelable, OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("msgid", msgid));
-		nameValuePairs.add(new BasicNameValuePair("iscollect", iscollect));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlCollect(), handler,
-				handlerTag, activity, "collectMsg", cancelable, cancel, data);
-	}
-
-	public boolean followUser(String uid, String type, Handler handler,
-			int handlerTag, Activity activity, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("uid", uid));
-		nameValuePairs.add(new BasicNameValuePair("type", type));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlFollow(), handler,
-				handlerTag, activity, "followUser", cancelable, cancel, data);
-	}
-
-	public boolean followGroup(String groupid, String type, Handler handler,
-			int handlerTag, Activity activity, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		nameValuePairs.add(new BasicNameValuePair("type", type));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlFollowGroup(),
-				handler, handlerTag, activity, "followGroup", cancelable,
-				cancel, data);
-	}
-
-	public boolean groupAlert(String groupid, String isalert, Handler handler,
-			int handlerTag, Activity activity, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		nameValuePairs.add(new BasicNameValuePair("isalert", isalert));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlGroupAlert(),
-				handler, handlerTag, activity, "groupAlert", cancelable,
-				cancel, data);
-	}
-
-	public boolean groupRelease(String groupid, Handler handler,
-			int handlerTag, Activity activity, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlGroupRelease(),
-				handler, handlerTag, activity, "groupRelease", cancelable,
-				cancel, data);
-	}
-
-	public boolean advice(String text, Handler handler, int handlerTag,
-			Activity activity, boolean cancelable, OnCancelListener cancel,
-			String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("content", text));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlAdvice(), handler,
-				handlerTag, activity, "advice", cancelable, cancel, data);
-	}
-
-	public boolean black(String uid, String type, Handler handler,
-			int handlerTag, Activity activity, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("uid", uid));
-		nameValuePairs.add(new BasicNameValuePair("type", type));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlBlack(), handler,
-				handlerTag, activity, "black", cancelable, cancel, data);
-	}
-
-	public boolean recommandMsg(String msgid, String useridlist,
-			Handler handler, int handlerTag, Activity activity,
-			boolean cancelable, OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("msgid", msgid));
-		nameValuePairs.add(new BasicNameValuePair("useridlist", useridlist));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlRecommandMsg(),
-				handler, handlerTag, activity, "recommandMsg", cancelable,
-				cancel, data);
-	}
-
-	public boolean recommandGroup(String groupid, String useridlist,
-			Handler handler, int handlerTag, Activity activity,
-			boolean cancelable, OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		nameValuePairs.add(new BasicNameValuePair("useridlist", useridlist));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlRecommandGroup(),
-				handler, handlerTag, activity, "recommandGroup", cancelable,
-				cancel, data);
-	}
-
-	public boolean recommandUser(String uid, String useridlist,
-			Handler handler, int handlerTag, Activity activity,
-			boolean cancelable, OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("uid", uid));
-		nameValuePairs.add(new BasicNameValuePair("useridlist", useridlist));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlRecommandUser(),
-				handler, handlerTag, activity, "recommandUser", cancelable,
-				cancel, data);
-	}
-
-	public boolean prosecute(String uid, Handler handler, int handlerTag,
-			Activity activity, boolean cancelable, OnCancelListener cancel,
-			String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("uid", uid));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlProsecute(),
-				handler, handlerTag, activity, "prosecute", cancelable, cancel,
-				data);
-	}
-
-	public boolean sendCard(String uid, String leavemsg, Handler handler,
-			int handlerTag, Activity activity, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("uid", uid));
-		nameValuePairs.add(new BasicNameValuePair("leavemsg", leavemsg));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlSendCard(), handler,
-				handlerTag, activity, "sendCard", cancelable, cancel, data);
-	}
-
-	public boolean plan(String text, Handler handler, int handlerTag,
-			Activity activity, boolean cancelable, OnCancelListener cancel,
-			String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("text", text));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlPlan(), handler,
-				handlerTag, activity, "plan", cancelable, cancel, data);
-	}
-
-	public boolean delheaderimg(String id, Handler handler, int handlerTag,
-			Activity activity, boolean cancelable, OnCancelListener cancel,
-			String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("id", id));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlDelHeaderImg(),
-				handler, handlerTag, activity, "delheaderimg", cancelable,
-				cancel, data);
-	}
-
-	// public boolean addProduct(String products, Handler handler, int
-	// handlerTag,
-	// Activity activity, boolean cancelable, OnCancelListener cancel,
-	// String data) {
-	// List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-	// nameValuePairs.add(new BasicNameValuePair("products", products));
-	// return doPost(nameValuePairs, ZhuoCommHelper.getUrlAddProduct(),
-	// handler, handlerTag, activity, "addProduct", cancelable,
-	// cancel, data);
-	// }
-
-	public boolean addDream(String dreams, Handler handler, int handlerTag,
-			Activity activity, boolean cancelable, OnCancelListener cancel,
-			String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("dreams", dreams));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlAddDream(), handler,
-				handlerTag, activity, "addDream", cancelable, cancel, data);
-	}
-
-	public boolean updateUserDetail(Map<String, String> files, Handler handler,
-			int handlerTag, Activity activity, String userid, String username,
-			String imgcnt, String sex, String company, String post,
-			String industry, String city, String hometown,
-			String travel_cities, String birthday, String birthday_type,
-			String constellation, String maxim, String hobby, String email,
-			String learn_exp, String website, String ismarry, String isworking,
-			String isphoneopen, String isisentrepreneurship,
-			String isemailopen, String isbirthopen, String mycustomer,
-			boolean cancelable, OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("userid", userid));
-		nameValuePairs.add(new BasicNameValuePair("username", username));
-		nameValuePairs.add(new BasicNameValuePair("imgcnt", imgcnt));
-		nameValuePairs.add(new BasicNameValuePair("sex", sex));
-		nameValuePairs.add(new BasicNameValuePair("company", company));
-		nameValuePairs.add(new BasicNameValuePair("post", post));
-		nameValuePairs.add(new BasicNameValuePair("industry", industry));
-		nameValuePairs.add(new BasicNameValuePair("city", city));
-		nameValuePairs.add(new BasicNameValuePair("hometown", hometown));
-		nameValuePairs.add(new BasicNameValuePair("travel_cities",
-				travel_cities));
-		nameValuePairs.add(new BasicNameValuePair("birthday", birthday));
-		nameValuePairs.add(new BasicNameValuePair("birthday_type",
-				birthday_type));
-		nameValuePairs.add(new BasicNameValuePair("constellation",
-				constellation));
-		nameValuePairs.add(new BasicNameValuePair("maxim", maxim));
-		nameValuePairs.add(new BasicNameValuePair("hobby", hobby));
-		nameValuePairs.add(new BasicNameValuePair("email", email));
-		nameValuePairs.add(new BasicNameValuePair("learn_exp", ""));
-		nameValuePairs.add(new BasicNameValuePair("website", website));
-		nameValuePairs.add(new BasicNameValuePair("ismarry", ismarry));
-		nameValuePairs.add(new BasicNameValuePair("isworking", isworking));
-		nameValuePairs.add(new BasicNameValuePair("isphoneopen", isphoneopen));
-		nameValuePairs.add(new BasicNameValuePair("isisentrepreneurship",
-				isisentrepreneurship));
-		nameValuePairs.add(new BasicNameValuePair("isemailopen", isemailopen));
-		nameValuePairs.add(new BasicNameValuePair("isbirthopen", isbirthopen));
-		nameValuePairs.add(new BasicNameValuePair("mycustomer", mycustomer));
-
-		// return doFormPost(files, addUserInfo(nameValuePairs),
-		// ZhuoCommHelper.getUrlUpdateUserDetail(), handler, handlerTag,
-		// activity, "updateUserDetail", cancelable, cancel, data);
-		return doPostWithFile(new HashMap<String, ArrayList<String>>(),
-				addUserInfo(nameValuePairs),
-				ZhuoCommHelper.getUrlUpdateUserDetail(), handler, handlerTag,
-				activity, "updateUserDetail", cancelable, cancel, data);
-	}
-
-	public boolean pubZhuoInfo(ArrayList<String> files, Handler handler,
-			int handlerTag, Activity activity, String content, String tag,
-			String mLocation, String imgCnt, String type, String category,
-			String title, boolean cancelable, OnCancelListener cancel,
-			String data) {
-		return pubZhuoInfo(files, handler, handlerTag, activity, content, tag,
-				mLocation, imgCnt, type, category, title, null, cancelable,
-				cancel, data);
-	}
-
-	public boolean pubZhuoInfo(ArrayList<String> files, Handler handler,
-			int handlerTag, Activity activity, String content, String tag,
-			String mLocation, String imgCnt, String type, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		return pubZhuoInfo(files, handler, handlerTag, activity, content, tag,
-				mLocation, imgCnt, type, null, null, null, cancelable, cancel,
-				data);
-	}
-
-	public boolean pubZhuoInfo(ArrayList<String> files, Handler handler,
-			int handlerTag, Activity activity, String content, String tag,
-			String mLocation, String imgCnt, String type, String category,
-			String title, String groupid, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("text", content));
-		nameValuePairs.add(new BasicNameValuePair("tags", tag.replaceAll(" ",
-				";")));
-		nameValuePairs.add(new BasicNameValuePair("position", mLocation));
-		nameValuePairs.add(new BasicNameValuePair("imgcnt", imgCnt));
-		nameValuePairs.add(new BasicNameValuePair("type", type));
-		if (null != category) {
-			nameValuePairs.add(new BasicNameValuePair("category", category));
-		}
-		if (null != title) {
-			nameValuePairs.add(new BasicNameValuePair("title", title));
-		}
-
-		if (null != groupid) {
-			nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		}
-		return doFormPost(files, nameValuePairs,
-				ZhuoCommHelper.getUrlPubinfo(), handler, handlerTag, activity,
-				"pubZhuoInfo", cancelable, cancel, data);
-	}
-
-	public boolean createGroup(Map<String, String> files, Handler handler,
-			int handlerTag, Activity activity, String gintro, String gproperty,
-			String gname, String imgCnt, String groupid, String managers,
-			boolean cancelable, OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("gintro", gintro));
-		nameValuePairs.add(new BasicNameValuePair("gproperty", gproperty));
-		nameValuePairs.add(new BasicNameValuePair("gname", gname));
-		nameValuePairs.add(new BasicNameValuePair("imgcnt", imgCnt));
-		if (null != groupid) {
-			nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		}
-		if (null != managers) {
-			nameValuePairs.add(new BasicNameValuePair("managers", managers));
-		}
-		// return doFormPost(files, nameValuePairs,
-		// ZhuoCommHelper.getUrlCreateGroup(), handler, handlerTag,
-		// activity, "createGroup", cancelable, cancel, data);
-		return doPostWithFile(new HashMap<String, ArrayList<String>>(),
-				nameValuePairs, ZhuoCommHelper.getUrlCreateGroup(), handler,
-				handlerTag, activity, "createGroup", cancelable, cancel, data);
-	}
-
-	public boolean groupRemoveUser(Handler handler, int handlerTag,
-			Activity activity, String groupid, String uid, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		nameValuePairs.add(new BasicNameValuePair("uid", uid));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlGroupRemoveUser(),
-				handler, handlerTag, activity, "groupRemoveUser", cancelable,
-				cancel, data);
-	}
-
-	public boolean acceptUser(Handler handler, int handlerTag,
-			Activity activity, String groupid, String uid, String type,
-			boolean cancelable, OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		nameValuePairs.add(new BasicNameValuePair("uid", uid));
-		nameValuePairs.add(new BasicNameValuePair("type", type));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlAcceptUser(),
-				handler, handlerTag, activity, "acceptUser", cancelable,
-				cancel, data);
-	}
-
-	public boolean frowardInfo(Handler handler, int handlerTag,
-			Activity activity, String msgid, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("msgid", msgid));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlForwardInfo(),
-				handler, handlerTag, activity, "frowardInfo", cancelable,
-				cancel, data);
-	}
-
-	public boolean delResource(Handler handler, int handlerTag,
-			Activity activity, String msgid, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("msgid", msgid));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlDelResource(),
-				handler, handlerTag, activity, "delResource", cancelable,
-				cancel, data);
-	}
-
-	public boolean updateConfig(Handler handler, int handlerTag,
-			Activity activity, String isalert, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("isalert", isalert));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlUpdateConfig(),
-				handler, handlerTag, activity, "updateConfig", cancelable,
-				cancel, data);
-	}
-
-	public boolean msgRead(Handler handler, int handlerTag, Activity activity,
-			String msgid, String type, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("msgid", msgid));
-		nameValuePairs.add(new BasicNameValuePair("type", type));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlMsgRead(), handler,
-				handlerTag, activity, null, cancelable, cancel, data);
-	}
-
-	public boolean androidName(Handler handler, int handlerTag,
-			Activity activity, String info, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("info", info));
-		if (info.equals("")) {
-			instance = null;
-		}
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlAndroidName(),
-				handler, handlerTag, activity, "androidName", cancelable,
-				cancel, data);
-	}
-
-	// 登陆
-	public boolean login(String userid, String password, Handler handler,
-			int handlerTag, Activity activity, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		this.userid = userid;
-		this.password = password;
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("from", "android"));
-		// 登陆时需要添加额外的账号和密码信息
-		return doPost(addUserInfo(nameValuePairs),
-				ZhuoCommHelper.getUrlLogin(), handler, handlerTag, activity,
-				"login", cancelable, cancel, data);
-	}
-
-	/**
-	 * 获取验证码
-	 * 
-	 * @param code
-	 *            电话号
-	 * @param code
-	 *            电话号
-	 * @param handler
-	 * @param handlerTag
-	 *            回调时候的msg.what
-	 * @param handlerTag
-	 *            回调时候的msg.what
-	 * @param activity
-	 * @param cancelalbe
-	 * @return
-	 */
-	public boolean getVerificationcode(String code, Handler handler,
-			int handlerTag, Activity activity, boolean cancelalbe) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("verificationcode", code));
-		return doPost(nameValuePairs, "", handler, handlerTag, activity, "",
-				cancelalbe, null, null);
-	}
-
-	public boolean modifyPwd(String password, String newpassword,
-			Handler handler, int handlerTag, Activity activity,
-			boolean cancelable, OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("newpassword", newpassword));
-		return doPost(nameValuePairs, ZhuoCommHelper.getUrlChangPwd(), handler,
-				handlerTag, activity, "modifyPwd", cancelable, cancel, data);
-	}
-
-	public boolean groupChat(String filePath, final Handler handler,
-			final int handlerTag, Activity activity, String content,
-			String type, String groupid, String secs, boolean cancelable,
-			OnCancelListener cancel, final String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("content", content));
-		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		nameValuePairs.add(new BasicNameValuePair("type", type));
-		nameValuePairs.add(new BasicNameValuePair("from", "android"));
-		nameValuePairs.add(new BasicNameValuePair("secs", secs));
-		Map<String, ArrayList<String>> files = new HashMap<String, ArrayList<String>>();
-		if (filePath != null && !filePath.equals("")) {
-			ArrayList<String> list = new ArrayList<String>();
-			list.add(filePath);
-			files.put("file", list);
-		}
-		return doPostWithFile(files, nameValuePairs,
-				ZhuoCommHelper.getUrlGroupChat(), handler, handlerTag,
-				activity, null, cancelable, cancel, data);
-	}
-
-	public boolean chat(String filePath, final Handler handler,
-			final int handlerTag, Activity activity, String content,
-			String type, String otheruid, String secs, boolean cancelable,
-			OnCancelListener cancel, String data) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("content", content));
-		nameValuePairs.add(new BasicNameValuePair("otheruid", otheruid));
-		nameValuePairs.add(new BasicNameValuePair("type", type));
-		nameValuePairs.add(new BasicNameValuePair("from", "android"));
-		nameValuePairs.add(new BasicNameValuePair("secs", secs));
-		Map<String, ArrayList<String>> files = new HashMap<String, ArrayList<String>>();
-		if (filePath != null && !filePath.equals("")) {
-			ArrayList<String> list = new ArrayList<String>();
-			list.add(filePath);
-			files.put("file", list);
-
-			// files.put("file", filePath);
-			nameValuePairs.add(new BasicNameValuePair("file", filePath));
-		}
-
-		return doPostWithFile(files, nameValuePairs,
-				ZhuoCommHelper.getUrlChat(), handler, handlerTag, activity,
-				null, cancelable, cancel, data);
-	}
-
-	/**
+	 * http post
 	 * 
 	 * @param nameValuePairs
-	 *            参数
 	 * @param url
 	 * @param handler
 	 * @param handlerTag
 	 * @param activity
 	 * @param tag
 	 * @param cancelable
-	 *            是否可取消
 	 * @param cancel
 	 * @param data
 	 * @return
@@ -777,7 +124,7 @@ public class ConnHelper {
 				mStartedTag.add(tag);
 			}
 			// 添加的是用户名和密码，其他地方直接用addUserInfoByPost
-			AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
+			AsyncConnectHelper conn = new AsyncConnectHelper(
 					addUserInfoByPost(nameValuePairs), url, getFinishCallback(
 							handler, handlerTag, tag, data), activity);
 			conn.setCancelable(cancelable);
@@ -785,116 +132,6 @@ public class ConnHelper {
 				conn.setCancel(getCancelListener(cancel, tag, conn));
 			}
 			conn.execute();
-			return true;
-		}
-		return false;
-	}
-
-	// lz0713
-	private boolean doPostByPost(List<NameValuePair> nameValuePairs,
-			String url, Handler handler, int handlerTag, Activity activity,
-			String tag, boolean cancelable, OnCancelListener cancel, String data) {
-		if (!mStartedTag.contains(tag) || tag == null) {
-			if (tag != null) {
-				mStartedTag.add(tag);
-			}
-			AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
-					addUserInfoByPost(nameValuePairs), url, getFinishCallback(
-							handler, handlerTag, tag, data), activity);
-			conn.setCancelable(cancelable);
-			if (cancelable) {
-				conn.setCancel(getCancelListener(cancel, tag, conn));
-			}
-			conn.execute();
-			return true;
-		}
-		return false;
-	}
-
-	private boolean doPost(List<NameValuePair> nameValuePairs, String url,
-			FinishCallback callback, Activity activity, String tag,
-			boolean cancelable, OnCancelListener cancel) {
-		if (!mStartedTag.contains(tag) || tag == null) {
-			if (tag != null) {
-				mStartedTag.add(tag);
-			}
-			AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
-					addUserInfo(nameValuePairs), url, getFinishCallback(
-							callback, tag), activity);
-			conn.setCancelable(cancelable);
-			if (cancelable) {
-				conn.setCancel(getCancelListener(cancel, tag, conn));
-			}
-			conn.execute();
-			return true;
-		}
-		return false;
-	}
-
-	// private boolean doFormPost(Map<String, String> files,
-	// List<NameValuePair> nameValuePairs, String url, Handler handler,
-	// int handlerTag, Activity activity, String tag, boolean cancelable,
-	// OnCancelListener cancel, String data) {
-	//
-	// ArrayList<String> pathList = new ArrayList<String>();
-	// if (files != null)
-	// for (Map.Entry<String, String> entry : files.entrySet()) {
-	// // System.out.println("key= " + entry.getKey() + " and value= "
-	// // + entry.getValue());
-	// pathList.add(entry.getValue());
-	// }
-	//
-	// return doFormPost(pathList, nameValuePairs, url, handler, handlerTag,
-	// activity, tag, cancelable, cancel, data);
-	//
-	// }
-
-	/**
-	 * 之后废弃,不要用
-	 */
-	public boolean doFormPost(ArrayList<String> files,
-			final List<NameValuePair> nameValuePairs, final String url,
-			final Handler handler, final int handlerTag,
-			final Activity activity, final String tag,
-			final boolean cancelable, final OnCancelListener cancel,
-			final String data) {
-
-		if (!mStartedTag.contains(tag) || tag == null) {
-			if (tag != null) {
-				mStartedTag.add(tag);
-			}
-			AsyncUploadHelper helper = new AsyncUploadHelper(activity,
-					uploadFileToken, null, new ICompleteCallback() {
-
-						@Override
-						public void onReturn(Map<String, StringBuilder> map) {
-							// TODO Auto-generated method stub
-							if (map == null)
-								Toast.makeText(activity, "上传到七牛云失败", 1000)
-										.show();
-							else if (map.size() > 0) {
-								for (Map.Entry<String, StringBuilder> entry : map
-										.entrySet()) {
-									String key = entry.getKey();
-									String value = entry.getValue().toString();
-									nameValuePairs.add(new BasicNameValuePair(
-											key, value));
-								}
-								AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
-										addUserInfoByPost(nameValuePairs), url,
-										true, getFinishCallback(handler,
-												handlerTag, tag, data),
-										activity);
-								conn.setCancelable(cancelable);
-								if (cancelable) {
-									conn.setCancel(getCancelListener(cancel,
-											tag, conn));
-								}
-								conn.execute();
-							}
-						}
-					});
-			helper.execute("test");
 			return true;
 		}
 		return false;
@@ -964,9 +201,11 @@ public class ConnHelper {
 							@Override
 							public void onReturn(Map<String, StringBuilder> map) {
 								// TODO Auto-generated method stub
-								if (map == null)
+								if (map == null) {
 									Toast.makeText(activity, "上传到七牛云失败", 1000)
 											.show();
+									return;
+								}
 								if (map.size() > 0) {
 									for (Map.Entry<String, StringBuilder> entry : map
 											.entrySet()) {
@@ -983,11 +222,10 @@ public class ConnHelper {
 								} else
 									nameValuePairs.add(new BasicNameValuePair(
 											"file", extra));
-								AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
+								AsyncConnectHelper conn = new AsyncConnectHelper(
 										addUserInfoByPost(nameValuePairs), url,
-										true, getFinishCallback(handler,
-												handlerTag, tag, data),
-										activity);
+										getFinishCallback(handler, handlerTag,
+												tag, data), activity);
 								conn.setCancelable(cancelable);
 								if (cancelable) {
 									conn.setCancel(getCancelListener(cancel,
@@ -999,8 +237,8 @@ public class ConnHelper {
 				helper.execute("test");
 			} else {
 				nameValuePairs.add(new BasicNameValuePair("file", extra));
-				AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
-						addUserInfoByPost(nameValuePairs), url, true,
+				AsyncConnectHelper conn = new AsyncConnectHelper(
+						addUserInfoByPost(nameValuePairs), url,
 						getFinishCallback(handler, handlerTag, tag, data),
 						activity);
 				conn.setCancelable(cancelable);
@@ -1013,7 +251,6 @@ public class ConnHelper {
 			return true;
 		}
 		return false;
-
 	}
 
 	private boolean doGet(String url, Handler handler, int handlerTag,
@@ -1023,9 +260,8 @@ public class ConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-			AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
-					addUserInfo(url), getFinishCallback(handler, handlerTag,
-							tag, data), activity);
+			AsyncConnectHelper conn = new AsyncConnectHelper(addUserInfo(url),
+					getFinishCallback(handler, handlerTag, tag, data), activity);
 			conn.setCancelable(cancelable);
 			if (cancelable) {
 				conn.setCancel(getCancelListener(cancel, tag, conn));
@@ -1042,9 +278,8 @@ public class ConnHelper {
 			if (tag != null) {
 				mStartedTag.add(tag);
 			}
-			AsyncImageConnectHelper conn = new AsyncImageConnectHelper(
-					addUserInfo(url), getFinishCallback(callback, tag),
-					activity);
+			AsyncConnectHelper conn = new AsyncConnectHelper(addUserInfo(url),
+					getFinishCallback(callback, tag), activity);
 			conn.setCancelable(cancelable);
 			if (cancelable) {
 				conn.setCancel(getCancelListener(cancel, tag, conn));
@@ -1093,7 +328,7 @@ public class ConnHelper {
 	}
 
 	private OnCancelListener getCancelListener(final OnCancelListener cancel,
-			final String tag, final AsyncImageConnectHelper conn) {
+			final String tag, final AsyncConnectHelper conn) {
 		return new OnCancelListener() {
 			@Override
 			public void onCancel(DialogInterface dialog) {
@@ -1110,9 +345,11 @@ public class ConnHelper {
 
 	private String addUserInfo(String params) {
 		if (params.contains("?")) {
-			return params + "&username=" + userid + "&password=" + password;
+			return params + "&username=" + userid + "&password=" + password
+					+ "&session=" + session;
 		} else {
-			return params + "?username=" + userid + "&password=" + password;
+			return params + "?username=" + userid + "&password=" + password
+					+ "&session=" + session;
 		}
 	}
 
@@ -1122,14 +359,57 @@ public class ConnHelper {
 		return nameValuePairs;
 	}
 
-	// lz0713
 	private List<NameValuePair> addUserInfoByPost(
 			List<NameValuePair> nameValuePairs) {
-		// nameValuePairs.add(new BasicNameValuePair("session",
-		// "e72d664f93de40e7aa08b28f15444f5b"));
 		nameValuePairs.add(new BasicNameValuePair("session", session));
 		nameValuePairs.add(new BasicNameValuePair("apptype", "0"));
 		return nameValuePairs;
+	}
+	/**
+	 * 增加页信息
+	 * 
+	 * @param nameValuePairs
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	private List<NameValuePair> addPageInfo(List<NameValuePair> nameValuePairs,
+			int pageNo, int pageSize) {
+		nameValuePairs.add(new BasicNameValuePair("pageNo", String
+				.valueOf(pageNo)));
+		nameValuePairs.add(new BasicNameValuePair("pageSize", String
+				.valueOf(pageSize)));
+		return nameValuePairs;
+	}
+	public HashMap<String, Group> getGroupMap() {
+		return groupMap;
+	}
+
+	public GXTypeCodeData getGxTypeCodeDataSet() {
+		return gxTypeCodeDataSet;
+	}
+
+	public void setGxTypeCodeDataSet(GXTypeCodeData gxTypeCodeDataSet) {
+		this.gxTypeCodeDataSet = gxTypeCodeDataSet;
+	}
+
+	public void setGroupMap(HashMap<String, Group> groupMap) {
+		this.groupMap = groupMap;
+	}
+
+	public List<City> getCitys() {
+		if (citys == null) {
+
+		}
+		return citys;
+	}
+
+	public void setCitys(List<City> citys) {
+		this.citys = citys;
+	}
+
+	public List<Province> getCitysOfPrince() {
+		return citysOfProvince;
 	}
 
 	public String getSession() {
@@ -1156,6 +436,215 @@ public class ConnHelper {
 		this.imToken = imToken;
 	}
 
+	public void setCitysOfPrince(List<Province> citysOfPrince) {
+		this.citysOfProvince = citysOfPrince;
+		citys = new ArrayList<City>();
+		for (Province temp : citysOfProvince) {
+			citys.addAll(temp.getCitys());
+		}
+	}
+
+	public BaseCodeData getBaseDataSet() {
+		if (baseDataSet == null) {
+			String data = readObject("BaseSetData");
+			baseDataSet = JsonHandler.parseBaseCodeData(data);
+		}
+		return baseDataSet;
+	}
+
+	public void setBaseDataSet(BaseCodeData baseDataSet) {
+		this.baseDataSet = baseDataSet;
+	}
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public boolean getFromServer(String url, Handler handler, int tag) {
+		return getFromServer(url, handler, tag, null, false, null, null);
+	}
+
+	private boolean getFromServerByPost(String url,
+			List<NameValuePair> pamNameValuePairs, Handler handler, int tag) {
+		if (pamNameValuePairs == null)
+			pamNameValuePairs = new ArrayList<NameValuePair>();
+		return getFromServerByPost(url, pamNameValuePairs, handler, tag, null,
+				false, null, null);
+	}
+
+	public boolean getFromServer(String url, Handler handler, int tag,
+			String data) {
+		return getFromServer(url, handler, tag, null, false, null, data);
+	}
+
+	public boolean getFromServer(String url, Handler handler, int tag,
+			Activity activity, boolean cancelable, OnCancelListener cancel) {
+		return getFromServer(url, handler, tag, activity, cancelable, cancel,
+				null);
+	}
+
+	/**
+	 * <b><i>public boolean getDataFromServer(String url, Handler handler, int
+	 * tag,Activity activity, boolean cancelable, OnCancelListener cancel,String
+	 * data)</i></b> <br>
+	 * Added in <a href="#">v 1.0.8</a> <br>
+	 * <br>
+	 * Get Data From server by HTTP_GET.
+	 * 
+	 * @author sofia
+	 * @param url
+	 *            request url+param
+	 * @param handler
+	 *            do HTTP request complete
+	 * @param tag
+	 *            handlertag
+	 * @param activity
+	 *            request processbar
+	 * @param cancelable
+	 *            request cancelable
+	 * @param cancel
+	 *            on request cancel
+	 * @param data
+	 *            ex String data
+	 * @return true if start HTTP request success otherwise return false
+	 * */
+	public boolean getFromServer(String url, Handler handler, int tag,
+			Activity activity, boolean cancelable, OnCancelListener cancel,
+			String data) {
+		return doGet(url, handler, tag, url, activity, cancelable, cancel, data);
+	}
+
+	// lz0713
+	public boolean getFromServerByPost(String url,
+			List<NameValuePair> pamNameValuePairs, Handler handler, int tag,
+			Activity activity, boolean cancelable, OnCancelListener cancel,
+			String data) {
+		pamNameValuePairs.add(new BasicNameValuePair("pubnum", "5"));
+		return doPost(pamNameValuePairs, url, handler, tag, activity, url,
+				cancelable, cancel, data);
+	}
+
+	public boolean getFromServer(String url, FinishCallback callback) {
+		return getFromServer(url, callback, null, false, null);
+	}
+
+	/**
+	 * heep Get方法与服务器交互
+	 * 
+	 * @param url
+	 * @param callback
+	 * @param activity
+	 * @param cancelable
+	 * @param cancel
+	 * @return
+	 */
+	public boolean getFromServer(String url, FinishCallback callback,
+			Activity activity, boolean cancelable, OnCancelListener cancel) {
+		return doGet(url, callback, url, activity, cancelable, cancel);
+	}
+
+	public boolean pubCmt(String msgid, String parentid, String content,
+			String forward, Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("msgid", msgid));
+		nameValuePairs.add(new BasicNameValuePair("parentid", parentid));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		nameValuePairs.add(new BasicNameValuePair("forward", forward));
+		return doPost(nameValuePairs, UrlHelper.getUrlCmt(), handler,
+				handlerTag, activity, "pubCmt", cancelable, cancel, data);
+	}
+
+	public boolean goodMsg(String msgid, Handler handler, int handlerTag,
+			Activity activity, boolean cancelable, OnCancelListener cancel,
+			String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("msgid", msgid));
+		return doPost(nameValuePairs, UrlHelper.getUrlGood(), handler,
+				handlerTag, activity, "goodMsg", cancelable, cancel, data);
+	}
+
+	public boolean followGroup(String groupid, String type, Handler handler,
+			int handlerTag, Activity activity, boolean cancelable,
+			OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		nameValuePairs.add(new BasicNameValuePair("type", type));
+		return doPost(nameValuePairs, UrlHelper.getUrlFollowGroup(), handler,
+				handlerTag, activity, "followGroup", cancelable, cancel, data);
+	}
+
+	public boolean androidName(Handler handler, int handlerTag,
+			Activity activity, String info, boolean cancelable,
+			OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("info", info));
+		if (info.equals("")) {
+			instance = null;
+		}
+		return doPost(nameValuePairs, UrlHelper.getUrlAndroidName(), handler,
+				handlerTag, activity, "androidName", cancelable, cancel, data);
+	}
+
+	// 登陆
+	public boolean login(String userid, String password, Handler handler,
+			int handlerTag, Activity activity, boolean cancelable,
+			OnCancelListener cancel, String data) {
+		this.userid = userid;
+		this.password = password;
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("from", "android"));
+		// 登陆时需要添加额外的账号和密码信息
+		return doPost(addUserInfo(nameValuePairs), UrlHelper.getUrlLogin(),
+				handler, handlerTag, activity, "login", cancelable, cancel,
+				data);
+	}
+
+	/**
+	 * 获取验证码
+	 * 
+	 * @param code
+	 *            电话号
+	 * @param code
+	 *            电话号
+	 * @param handler
+	 * @param handlerTag
+	 *            回调时候的msg.what
+	 * @param handlerTag
+	 *            回调时候的msg.what
+	 * @param activity
+	 * @param cancelalbe
+	 * @return
+	 */
+	public boolean getVerificationcode(String code, Handler handler,
+			int handlerTag, Activity activity, boolean cancelalbe) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("verificationcode", code));
+		return doPost(nameValuePairs, "", handler, handlerTag, activity, "",
+				cancelalbe, null, null);
+	}
+
+	public boolean modifyPwd(String password, String newpassword,
+			Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("newpassword", newpassword));
+		return doPost(nameValuePairs, UrlHelper.getUrlChangPwd(), handler,
+				handlerTag, activity, "modifyPwd", cancelable, cancel, data);
+	}
+
 	/**
 	 * 获取首页广告信息
 	 * 
@@ -1173,8 +662,8 @@ public class ConnHelper {
 		if (statusnum > 5)
 			params.add(new BasicNameValuePair("statusnum", statusnum + ""));
 
-		return getFromServerByPost(UrlHelper.getMainInfo(), params,
-				mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getMainInfo(), params, mUIHandler,
+				tag);
 	}
 
 	/**
@@ -1208,8 +697,8 @@ public class ConnHelper {
 	public boolean getAdInfo(Handler mUIHandler, int tag, int type) {
 		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("type", String.valueOf(type)));
-		return getFromServerByPost(UrlHelper.getAdInfo(), params,
-				mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getAdInfo(), params, mUIHandler,
+				tag);
 	}
 
 	/**
@@ -1275,9 +764,8 @@ public class ConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("content", content));
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", files);
-		return doPostWithFile(fileMap, nameValuePairs,
-				UrlHelper.pubAdvice(), mUIHandler, tag, activity,
-				"pubAdvice", false, null, null);
+		return doPostWithFile(fileMap, nameValuePairs, UrlHelper.pubAdvice(),
+				mUIHandler, tag, activity, "pubAdvice", false, null, null);
 	}
 
 	/**
@@ -1321,9 +809,9 @@ public class ConnHelper {
 			fileMap = new HashMap<String, ArrayList<String>>();
 			fileMap.put("file", files);
 		}
-		return doPostWithFile(fileMap, nameValuePairs,
-				UrlHelper.pubPhoto(), mUIHandler, tag, activity,
-				"pubQuanTopic", false, null, null, originFilekeys);
+		return doPostWithFile(fileMap, nameValuePairs, UrlHelper.pubPhoto(),
+				mUIHandler, tag, activity, "pubinfo", false, null, null,
+				originFilekeys);
 	}
 
 	/**
@@ -1367,8 +855,8 @@ public class ConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
 		nameValuePairs.add(new BasicNameValuePair("sdflag", "0"));
-		return getFromServerByPost(UrlHelper.getGonglist(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getGonglist(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	public boolean getPeopleListCollection(Handler mUIHandler, int tag,
@@ -1376,8 +864,8 @@ public class ConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
-		return getFromServerByPost(UrlHelper.getPeoplelist(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getPeoplelist(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	public boolean getXuListCollection(Handler mUIHandler, int tag, int pageNo,
@@ -1386,8 +874,8 @@ public class ConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
 		nameValuePairs.add(new BasicNameValuePair("sdflag", "1"));
-		return getFromServerByPost(UrlHelper.getGonglist(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getGonglist(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	public boolean getTopicListCollection(Handler mUIHandler, int tag,
@@ -1395,8 +883,8 @@ public class ConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
-		return getFromServerByPost(UrlHelper.getTopiclist(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getTopiclist(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -1416,8 +904,8 @@ public class ConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		nameValuePairs.add(new BasicNameValuePair("pageNo", "" + pageNo));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", "" + pageSize));
-		return getFromServerByPost(UrlHelper.getUserEvent(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getUserEvent(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -1434,8 +922,8 @@ public class ConnHelper {
 	public boolean getQuanInfo(Handler mUIHandler, int tag, String groupid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		return getFromServerByPost(UrlHelper.getQuanInfo(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getQuanInfo(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -1493,8 +981,8 @@ public class ConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("gpub", pub));
 		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
 		filesMap.put("gheader", files);
-		return getFromServerByPost(UrlHelper.modifyGroupInfo(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.modifyGroupInfo(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	/**
@@ -1512,8 +1000,8 @@ public class ConnHelper {
 		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
 		filesMap.put("file", files);
 		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		return getFromServerByPost(UrlHelper.setQuanLogo(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.setQuanLogo(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	/**
@@ -1525,8 +1013,8 @@ public class ConnHelper {
 			String topicid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("topicid", topicid));
-		return getFromServerByPost(UrlHelper.getTopicDetail(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.getTopicDetail(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	/**
@@ -1543,8 +1031,8 @@ public class ConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("topicid", topicid));
 		nameValuePairs.add(new BasicNameValuePair("praise", praise + ""));
-		return getFromServerByPost(UrlHelper.topicPraise(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.topicPraise(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	public boolean praiseDynamic(Handler mUIHandler, int handlerTag,
@@ -1552,8 +1040,8 @@ public class ConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("statusid", statusid));
 		nameValuePairs.add(new BasicNameValuePair("praise", praise + ""));
-		return getFromServerByPost(UrlHelper.dynamicPraise(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.dynamicPraise(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	/**
@@ -1597,8 +1085,8 @@ public class ConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("toId", toId));
 		if (toUserid != null)
 			nameValuePairs.add(new BasicNameValuePair("toUserid", toUserid));
-		return getFromServerByPost(UrlHelper.topicComment(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.topicComment(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	public boolean CommentDynamic(Handler mUIHandler, int handlerTag,
@@ -1610,8 +1098,8 @@ public class ConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("toId", toId));
 		if (toUserid != null)
 			nameValuePairs.add(new BasicNameValuePair("toUserid", toUserid));
-		return getFromServerByPost(UrlHelper.dynamicComment(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.dynamicComment(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	/**
@@ -1627,8 +1115,8 @@ public class ConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		if (userid != null)
 			nameValuePairs.add(new BasicNameValuePair("userid", userid));
-		return getFromServerByPost(UrlHelper.getUserInfo(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.getUserInfo(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	public boolean getGonggaoDetail(Handler mUIHandler, int handlerTag,
@@ -1636,8 +1124,8 @@ public class ConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		if (id != null)
 			nameValuePairs.add(new BasicNameValuePair("id", id));
-		return getFromServerByPost(UrlHelper.gonggaoDetail(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.gonggaoDetail(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	/**
@@ -1724,8 +1212,8 @@ public class ConnHelper {
 		if (user.getFaith() != null)
 			nameValuePairs
 					.add(new BasicNameValuePair("faith", user.getFaith()));
-		return getFromServerByPost(UrlHelper.modifyUserInfo(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.modifyUserInfo(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	/**
@@ -1776,8 +1264,8 @@ public class ConnHelper {
 				.valueOf(pageNo)));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", String
 				.valueOf(pageSize)));
-		return getFromServerByPost(UrlHelper.getDynamicList(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.getDynamicList(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	/**
@@ -1797,8 +1285,8 @@ public class ConnHelper {
 				.valueOf(pageNo)));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", String
 				.valueOf(pageSize)));
-		return getFromServerByPost(UrlHelper.orderList(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.orderList(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	/**
@@ -1814,8 +1302,8 @@ public class ConnHelper {
 			String billNo) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("billNo", billNo));
-		return getFromServerByPost(UrlHelper.orderDetail(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.orderDetail(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	public boolean getCardBg(Handler mUIHandler, int handlerTag, int version) {
@@ -1830,8 +1318,8 @@ public class ConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs
 				.add(new BasicNameValuePair("bgid", String.valueOf(bgid)));
-		return getFromServerByPost(UrlHelper.setCardBg(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.setCardBg(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	/**
@@ -1851,9 +1339,9 @@ public class ConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("content", content));
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", files);
-		return doPostWithFile(fileMap, nameValuePairs,
-				UrlHelper.pubDynamic(), mUIHandler, handlerTag,
-				activity, "pubDynamic", false, null, null);
+		return doPostWithFile(fileMap, nameValuePairs, UrlHelper.pubDynamic(),
+				mUIHandler, handlerTag, activity, "pubDynamic", false, null,
+				null);
 	}
 
 	/**
@@ -1884,9 +1372,9 @@ public class ConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("phone", phone));
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", files);
-		return doPostWithFile(fileMap, nameValuePairs,
-				UrlHelper.pubGongxu(), mUIHandler, handlerTag, activity,
-				"pubDynamic", false, null, null);
+		return doPostWithFile(fileMap, nameValuePairs, UrlHelper.pubGongxu(),
+				mUIHandler, handlerTag, activity, "pubDynamic", false, null,
+				null);
 	}
 
 	/**
@@ -1938,8 +1426,8 @@ public class ConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("topicid", topicid));
 		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
-		return getFromServerByPost(UrlHelper.collectTopic(),
-				nameValuePairs, mUIHandler, handlerTag);
+		return getFromServerByPost(UrlHelper.collectTopic(), nameValuePairs,
+				mUIHandler, handlerTag);
 	}
 
 	/**
@@ -1972,8 +1460,8 @@ public class ConnHelper {
 				.valueOf(pageNo)));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", String
 				.valueOf(pageSize)));
-		return getFromServerByPost(UrlHelper.getPutList(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getPutList(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -1996,8 +1484,8 @@ public class ConnHelper {
 				.valueOf(pageNo)));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", String
 				.valueOf(pageSize)));
-		return getFromServerByPost(UrlHelper.groupStatus(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.groupStatus(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	public boolean getFollowReqList(Handler mUIHandler, int tag) {
@@ -2018,8 +1506,8 @@ public class ConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs
 				.add(new BasicNameValuePair("type", String.valueOf(type)));
-		return getFromServerByPost(UrlHelper.getMyStatusCard(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getMyStatusCard(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -2050,8 +1538,8 @@ public class ConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
-		return getFromServerByPost(UrlHelper.followUser(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.followUser(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -2072,8 +1560,8 @@ public class ConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("userid", userid));
 		nameValuePairs.add(new BasicNameValuePair("type", type + ""));
-		return getFromServerByPost(UrlHelper.makeFriends(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.makeFriends(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -2089,8 +1577,8 @@ public class ConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		if (groupid != null)
 			nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
-		return getFromServerByPost(UrlHelper.getReqQuanUsers(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getReqQuanUsers(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -2135,10 +1623,8 @@ public class ConnHelper {
 	public boolean getSameUser(Handler mUIHandler, int tag, int type,
 			int pageNo, int pageSize, String extraStr) {
 		String URLS[] = { UrlHelper.getCityJiaren(),
-				UrlHelper.getIndustryJiaren(),
-				UrlHelper.getNearJiaren(),
-				UrlHelper.getHobbyJiaren(),
-				UrlHelper.getTeatureJiaren(),
+				UrlHelper.getIndustryJiaren(), UrlHelper.getNearJiaren(),
+				UrlHelper.getHobbyJiaren(), UrlHelper.getTeatureJiaren(),
 				UrlHelper.getAllJiaren() };
 		String keys[] = { "city", "industry", "near(暂无)", "hobby", "tchtype",
 				"xx" };
@@ -2162,8 +1648,8 @@ public class ConnHelper {
 	 */
 	public boolean getFriendReq(Handler mUIHandler, int tag) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		return getFromServerByPost(UrlHelper.getFriendReq(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getFriendReq(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -2176,8 +1662,8 @@ public class ConnHelper {
 	public boolean getCompanyProduct(Handler mUIHandler, int tag, String comid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("comid", comid));
-		return getFromServerByPost(UrlHelper.getProduct(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getProduct(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	public boolean getZMDTCount(Handler mUIHandler, int tag, String userid) {
@@ -2201,8 +1687,8 @@ public class ConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		if (userid != null)
 			nameValuePairs.add(new BasicNameValuePair("userid", userid));
-		return getFromServerByPost(UrlHelper.getCompany(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getCompany(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -2216,8 +1702,8 @@ public class ConnHelper {
 	public boolean deleteProduct(Handler mUIHandler, int tag, String productid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("productid", productid));
-		return getFromServerByPost(UrlHelper.deleteProduct(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.deleteProduct(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -2231,8 +1717,8 @@ public class ConnHelper {
 	public boolean deleteCompanyInfo(Handler mUIHandler, int tag, String comid) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("comid", comid));
-		return getFromServerByPost(UrlHelper.deleteCompany(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.deleteCompany(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	public boolean updateProduct(Activity activity, Handler mUIHandler,
@@ -2263,9 +1749,9 @@ public class ConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("value", value));
 		Map<String, ArrayList<String>> fileMap = new HashMap<String, ArrayList<String>>();
 		fileMap.put("file", files);
-		return doPostWithFile(fileMap, nameValuePairs,
-				UrlHelper.addProduct(), mUIHandler, tag, activity,
-				"addProduct", false, null, null, originFilekeys);
+		return doPostWithFile(fileMap, nameValuePairs, UrlHelper.addProduct(),
+				mUIHandler, tag, activity, "addProduct", false, null, null,
+				originFilekeys);
 	}
 
 	/**
@@ -2299,8 +1785,8 @@ public class ConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("homepage", homepage));
 		nameValuePairs.add(new BasicNameValuePair("status", String
 				.valueOf(status)));
-		return getFromServerByPost(UrlHelper.updateCompany(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.updateCompany(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -2312,8 +1798,8 @@ public class ConnHelper {
 	 */
 	public boolean getHotKey(Handler mUIHandler, int tag) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		return getFromServerByPost(UrlHelper.getHotKey(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getHotKey(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -2334,8 +1820,8 @@ public class ConnHelper {
 				.valueOf(pageNo)));
 		nameValuePairs.add(new BasicNameValuePair("pageSize", String
 				.valueOf(pageSize)));
-		return getFromServerByPost(UrlHelper.getPortalSearch(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getPortalSearch(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -2348,8 +1834,8 @@ public class ConnHelper {
 	public boolean getMyFriends(Handler mUIHandler, int tag) {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
-		return getFromServerByPost(UrlHelper.getMyFriends(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.getMyFriends(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	public boolean addCompany(Handler mUIHandler, int tag, String company,
@@ -2365,8 +1851,8 @@ public class ConnHelper {
 		nameValuePairs.add(new BasicNameValuePair("homepage", homepage));
 		nameValuePairs.add(new BasicNameValuePair("status", String
 				.valueOf(status)));
-		return getFromServerByPost(UrlHelper.addCompany(),
-				nameValuePairs, mUIHandler, tag);
+		return getFromServerByPost(UrlHelper.addCompany(), nameValuePairs,
+				mUIHandler, tag);
 	}
 
 	/**
@@ -2412,25 +1898,23 @@ public class ConnHelper {
 	public boolean getBaseCodeData(Handler handler, int handlerTag,
 			Activity activity, boolean cancelable, OnCancelListener cancel,
 			String data) {
-		// String res = readObject(BASEDATA);
-		// if (res != null) {
-		// Message msg = handler.obtainMessage(handlerTag);
-		// Bundle bundle = new Bundle();
-		// bundle.putString("data", data);
-		// msg.setData(bundle);
-		// msg.obj = res;
-		// msg.sendToTarget();
-		// return true;
-		// } else {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("version", "0"));
 		String url = UrlHelper.getBaseCodeData();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				cancelable, cancel, data);
-		// }
 	}
-
+/**
+ * 获得供需类型列表
+ * @param handler
+ * @param handlerTag
+ * @param activity
+ * @param cancelable
+ * @param cancel
+ * @param data
+ * @return
+ */
 	public boolean getGXTypes(Handler handler, int handlerTag,
 			Activity activity, boolean cancelable, OnCancelListener cancel,
 			String data) {
@@ -2471,27 +1955,10 @@ public class ConnHelper {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs = addUserInfoByPost(nameValuePairs);
 			nameValuePairs.add(new BasicNameValuePair("version", "0"));
-			String url = ZhuoCommHelper.getServiceCityList();
+			String url = UrlHelper.getServiceCityList();
 			return doPost(nameValuePairs, url, handler, handlerTag, activity,
 					url, cancelable, cancel, data);
 		}
-	}
-
-	/**
-	 * 增加页信息
-	 * 
-	 * @param nameValuePairs
-	 * @param pageNo
-	 * @param pageSize
-	 * @return
-	 */
-	private List<NameValuePair> addPageInfo(List<NameValuePair> nameValuePairs,
-			int pageNo, int pageSize) {
-		nameValuePairs.add(new BasicNameValuePair("pageNo", String
-				.valueOf(pageNo)));
-		nameValuePairs.add(new BasicNameValuePair("pageSize", String
-				.valueOf(pageSize)));
-		return nameValuePairs;
 	}
 
 	/**
@@ -2527,7 +1994,7 @@ public class ConnHelper {
 			nameValuePairs.add(new BasicNameValuePair("title", title));
 		if (userid != null)
 			nameValuePairs.add(new BasicNameValuePair("userid", userid));
-		String url = ZhuoCommHelper.getGongxulist();
+		String url = UrlHelper.getGongxulist();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				cancelable, cancel, data);
 	}
@@ -2540,8 +2007,7 @@ public class ConnHelper {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs = addUserInfoByPost(nameValuePairs);
 		nameValuePairs.add(new BasicNameValuePair("sdid", sdid));
-		String url = ZhuoCommHelper.getDELETEGONGXU();
-		// String url = ZhuoCommHelper.getDisolveQuan();
+		String url = UrlHelper.getDELETEGONGXU();
 		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
 				true, null, null);
 	}
@@ -2644,43 +2110,923 @@ public class ConnHelper {
 			int type) {
 		HashMap<String, Group> groupHashMap = getGroupMap();
 		// reqMsg已实现， quitMsg需要重新自定义
-		TextMessage reqMsg = null, quitMsg = null;
-		String pushReqMs = "", pushQuitMs = "";
 		if (type == 1) {// 加入群
 			groupHashMap.put(group.getId(), group);
-			// reqMsg = CustomerMessageFactory.getInstance().getReqQuanMsg(
-			// getUserid(), "XX", group.getId(), group.getName());
-			// pushReqMs = getUserid() + "请求加入圈子：" + group.getName() + "(+"
-			// + group.getId() + ")";
 		} else if (type == 0) {
 			groupHashMap.remove(group.getId());
-			// quitMsg=
 		}
 		setGroupMap(groupHashMap);
+	}
 
-		// if (RongIM.getInstance().getRongIMClient() == null)
-		// return;
-		// if (getUserid() == null)
-		// return;
-		// ios 暂时没做
-		// RongIM.getInstance()
-		// .getRongIMClient()
-		// .sendMessage(ConversationType.PRIVATE, targetId, reqMsg,
-		// pushReqMs, new SendMessageCallback() {
-		// @Override
-		// public void onSuccess(Integer arg0) {
-		// // TODO Auto-generated method stub
-		// Toast.makeText(context, "发送到对方成功", 1000).show();
-		//
-		// }
-		//
-		// @Override
-		// public void onError(Integer arg0, ErrorCode arg1) {
-		// // TODO Auto-generated method stub
-		// Toast.makeText(context,
-		// "申请发送失败ErrorCode：" + arg1, 1000).show();
-		// }
-		// });
+	// appclient
+	/**
+	 * 刷新session
+	 * 
+	 * @param context
+	 */
+	public void refreshSession(final Context context) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		AsyncConnectHelper conn = new AsyncConnectHelper(
+				addUserInfo(nameValuePairs), UrlHelper.getUrlLogin(),
+				new AsyncConnectHelper.FinishCallback() {
+
+					@Override
+					public boolean onReturn(String rs, int responseCode) {
+						// TODO Auto-generated method stub
+						if (JsonHandler.checkResult(rs,
+								context.getApplicationContext())) {
+							// 获取session
+							LoginRes res = JsonHandler.parseLoginRes(context,
+									JsonHandler.parseResult(rs).getData());
+							refreshUserInfo(res);
+						}
+						return false;
+					}
+				}, null);
+		conn.execute();
+	}
+
+	public void refreshUserInfo(LoginRes res) {
+		SharedPreferences sp = context.getSharedPreferences("cpzhuojiaren",
+				Activity.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sp.edit();
+		editor.putString(ResHelper.SESSION, res.getSession());
+		editor.putString(ResHelper.UPLIOAD_TOKEN, res.getQiniuToken());
+		editor.putString(ResHelper.IM_TOKEN, res.getRongyunToken());
+		editor.commit();
+
+		// 保存到两个单例中
+		ResHelper mResHelper = ResHelper.getInstance(context);
+		mResHelper.setSessionForAPP(res.getSession());
+		mResHelper.setUpLoadTokenForQiniu(res.getQiniuToken());
+		mResHelper.setImTokenForRongyun(res.getRongyunToken());
+		setSession(res.getSession());
+		setUploadFileToken(res.getQiniuToken());
+		setImToken(res.getRongyunToken());
+		if (context != null)
+			init(context);
+	}
+
+	/**
+	 * 获取圈子,根据url区分类别
+	 */
+	public boolean getQuanzi(String url, String gtype, String city, int pageNo,
+			int pageSize, Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data,
+			String userid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		if (gtype != null)
+			nameValuePairs.add(new BasicNameValuePair("gtype", gtype));
+		if (city != null)
+			nameValuePairs.add(new BasicNameValuePair("city", city));
+		if (userid != null)
+			nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+	}
+
+	/**
+	 * 获取商品大类
+	 * 
+	 * @param url
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
+	public boolean getGoodsCategory(Handler handler, int handlerTag,
+			Activity activity, boolean cancelable, OnCancelListener cancel,
+			String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		return doPost(nameValuePairs, UrlHelper.getGOODSCATEGORY(), handler,
+				handlerTag, activity, UrlHelper.getGOODSCATEGORY(), cancelable,
+				cancel, data);
+	}
+
+	/**
+	 * 送倬币给朋友
+	 * 
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
+	public boolean giveZhuobiToFriend(Handler handler, int handlerTag,
+			Activity activity, boolean cancelable, OnCancelListener cancel,
+			String userid, String zhuobi) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("userid", userid));
+		nameValuePairs.add(new BasicNameValuePair("zhuobi", zhuobi));
+		return doPost(nameValuePairs, UrlHelper.getGIVEMONEYTOFRIEND(),
+				handler, handlerTag, activity,
+				UrlHelper.getGIVEMONEYTOFRIEND(), cancelable, cancel, null);
+	}
+
+
+
+	/***
+	 * 解散圈子
+	 */
+	public boolean disolveQuan(String groupId, String content, Handler handler,
+			int handlerTag, Activity activity, boolean cancelable,
+			OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupId));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		String url = UrlHelper.getDisolveQuan();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+	}
+
+	/**
+	 * 退出圈子
+	 */
+	public boolean quitQuan(String groupId, String type, String content,
+			Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		// type int 0取消关注 1申请关注 2接受关注
+		nameValuePairs.add(new BasicNameValuePair("type", type));
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupId));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		String url = UrlHelper.getQuitQuan();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+	}
+
+	/**
+	 * 获取视频在线
+	 */
+	public boolean getVedioList(String tutorId, String typeId, int pageNo,
+			int pageSize, Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		if (tutorId != null)
+			nameValuePairs.add(new BasicNameValuePair("tutorId", tutorId));
+		if (typeId != null)
+			nameValuePairs.add(new BasicNameValuePair("typeId", typeId));
+		String url = UrlHelper.getServiceVedioList();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+	}
+
+	/**
+	 * 获取视频在线收藏
+	 */
+	public boolean getVedioCollectionList(String tutorId, String typeId,
+			int pageNo, int pageSize, Handler handler, int handlerTag,
+			Activity activity, boolean cancelable, OnCancelListener cancel,
+			String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		if (tutorId != null)
+			nameValuePairs.add(new BasicNameValuePair("tutorId", tutorId));
+		if (typeId != null)
+			nameValuePairs.add(new BasicNameValuePair("typeId", typeId));
+		String url = UrlHelper.getServiceVedioListCollection();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+	}
+
+	/**
+	 * 提交视频统计
+	 */
+	public boolean submitVedio(Activity activity, String Id) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("onlineid", Id));
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		String url = UrlHelper.getSubmitVisit();
+		return doPost(nameValuePairs, url, null, 0, activity, url, false, null,
+				null);
+	}
+
+	/**
+	 * 获取音频在线
+	 */
+	public boolean getAudioList(int pageNo, int pageSize, Handler handler,
+			int handlerTag, Activity activity, boolean cancelable,
+			OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		String url = UrlHelper.getServiceAudioList();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+	}
+
+	/**
+	 * 获取音频在线
+	 */
+	public boolean getAudioListCollection(int pageNo, int pageSize,
+			Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		String url = UrlHelper.getAudioCollection();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+	}
+
+	/**
+	 * 获取商品列表 参数 类型 说明 categoryid ： 商品类别id（可选） keyword ： 搜索商品关键字（可选） providerid
+	 * ： 供应商id（可选） （以上参数均不传，获取商城首页默认商品） pageNo ： 页码 pageSize ： 显示数
+	 */
+	public boolean getGoodsList(int pageNo, int pageSize, Handler handler,
+			int handlerTag, Activity activity, String categoryid,
+			String keyword, String providerid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		if (categoryid != null)
+			nameValuePairs
+					.add(new BasicNameValuePair("categoryid", categoryid));
+		if (keyword != null)
+			nameValuePairs.add(new BasicNameValuePair("keyword", keyword));
+		if (providerid != null)
+			nameValuePairs
+					.add(new BasicNameValuePair("providerid", providerid));
+		String url = UrlHelper.getGOODSLIST();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 获取众筹
+	 */
+	public boolean getFundingList(int catid, int ismy, int pageNo,
+			int pageSize, Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		if (ismy >= 0)
+			nameValuePairs.add(new BasicNameValuePair("ismy", ismy + ""));
+		nameValuePairs.add(new BasicNameValuePair("catid", catid + ""));
+		String url = UrlHelper.getServiceFundingList();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+	}
+
+	/**
+	 * 获取众筹投资
+	 */
+	public boolean getFundingListInvest(int pageNo, int pageSize,
+			Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		String url = UrlHelper.getServiceFundingListInvest();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+	}
+
+	/**
+	 * 获取明细
+	 */
+	public boolean getIncomeList(int pageNo, int pageSize, Handler handler,
+			int handlerTag, Activity activity) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		String url = UrlHelper.getINCOME();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 移除购物车goods
+	 */
+	public boolean removeGoods(String goodsid, Handler handler, int handlerTag,
+			Activity activity) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		if (goodsid != null && goodsid.length() > 0) {
+			goodsid = goodsid.substring(0, goodsid.length() - 1);
+		}
+		nameValuePairs.add(new BasicNameValuePair("goodsid", goodsid));
+		String url = UrlHelper.getREMOVEGOODS();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 获取采访
+	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
+	public boolean getVisiteList(int pageNo, int pageSize, Handler handler,
+			int handlerTag, Activity activity, boolean cancelable,
+			OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		String url = UrlHelper.getServiceVisitList();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+	}
+
+	/**
+	 * 获取成长在线类型
+	 * 
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
+	public boolean getGrowthOnlineType(Handler handler, int handlerTag,
+			Activity activity) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		String url = UrlHelper.getGrowthonlinetype();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @return
+	 */
+	public boolean getTeacherList(Handler handler, int handlerTag,
+			Activity activity) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		String url = UrlHelper.getServiceTeacherList();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 收藏
+	 */
+	public boolean collection(Activity acitivity, String url, String idKey,
+			String id, String stateKey, String state) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair(idKey, id));
+		if (stateKey != null && !stateKey.equals(""))
+			nameValuePairs.add(new BasicNameValuePair(stateKey, state));
+		return doPost(nameValuePairs, url, null, 0, acitivity, url, false,
+				null, null);
+	}
+
+	public boolean collection(Activity acitivity, Handler handler,
+			int handlerTag, String url, String idKey, String id,
+			String stateKey, String state) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair(idKey, id));
+		nameValuePairs.add(new BasicNameValuePair(stateKey, state));
+		return doPost(nameValuePairs, url, handler, handlerTag, acitivity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 获取我倬币
+	 */
+	public boolean getMyZhuoBi(Activity acitivity, Handler handler,
+			int handlerTag) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		return doPost(nameValuePairs, UrlHelper.getMYZHUOBI(), handler,
+				handlerTag, acitivity, UrlHelper.getMYZHUOBI(), false, null,
+				null);
+	}
+
+	/**
+	 * 用倬币支付
+	 * 
+	 * @param acitivity
+	 * @param handler
+	 * @param handlerTag
+	 * @param url
+	 * @param idKey
+	 * @param id
+	 * @param stateKey
+	 * @param state
+	 * @return
+	 */
+	public boolean payWithZhuobi(Activity acitivity, Handler handler,
+			int handlerTag, String money, String number) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("zhuobi", money));
+		nameValuePairs.add(new BasicNameValuePair("billNo", number));
+		String url = UrlHelper.getMALLPAY();
+		return doPost(nameValuePairs, url, handler, handlerTag, acitivity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 支付状态
+	 * 
+	 * @param acitivity
+	 * @param handler
+	 * @param handlerTag
+	 * @param url
+	 * @param idKey
+	 * @param id
+	 * @param stateKey
+	 * @param state
+	 * @return
+	 */
+	public boolean postPayStatus(Activity acitivity, Handler handler,
+			int handlerTag, String billNo, String status) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("billNo", billNo));
+		nameValuePairs.add(new BasicNameValuePair("status", status));
+		String url = UrlHelper.getPOSTPAYSTATUS();
+		return doPost(nameValuePairs, url, handler, handlerTag, acitivity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 设置收货地址
+	 * 
+	 * @param acitivity
+	 * @param handler
+	 * @param handlerTag
+	 * @param url
+	 * @param idKey
+	 * @param id
+	 * @param stateKey
+	 * @param state
+	 * @return
+	 */
+	public boolean setShippingAddress(Activity acitivity, Handler handler,
+			int handlerTag, String street, String detail, String receiptor,
+			String phone, String zip) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("street", street));
+		nameValuePairs.add(new BasicNameValuePair("detail", detail));
+		nameValuePairs.add(new BasicNameValuePair("receiptor", receiptor));
+		nameValuePairs.add(new BasicNameValuePair("phone", phone));
+		nameValuePairs.add(new BasicNameValuePair("zip", zip));
+		String url = UrlHelper.getSHIPPINGADDRESS();
+		return doPost(nameValuePairs, url, handler, handlerTag, acitivity, url,
+				false, null, null);
+	}
+
+	public boolean GoodsAddToCart(Activity acitivity, Handler handler,
+			int handlerTag, String id) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("goodsid", id));
+		String url = UrlHelper.getGoodsAddToCart();
+		return doPost(nameValuePairs, url, handler, handlerTag, acitivity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 发布进展
+	 */
+	public boolean pubProgress(Activity activity, Handler handler,
+			int handlerTag, String id, String content) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("id", id));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		String url = UrlHelper.getPubcrowdfundingcomment();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 获取进展列表
+	 */
+	public boolean getProgress(Activity activity, Handler handler,
+			int handlerTag, String id) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("id", id));
+		String url = UrlHelper.getGetcrowdfundingprogress();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 回报
+	 * 
+	 * @param activity
+	 * @param handler
+	 * @param handlerTag
+	 * @param id
+	 * @return
+	 */
+	public boolean getPayback(Activity activity, Handler handler,
+			int handlerTag, String id) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("id", id));
+		String url = UrlHelper.getPaybackList();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 创建圈子
+	 */
+	// session string(32) 账号session 登陆返回
+	// gname string(32) 圈子名称
+	// gheader string(200) 圈子logo图片名(七牛云key)
+	// gintro string(150) 圈子简介
+	// gpub string(150) 圈子公告
+	// gtype int 圈子类别 0:未知，1:资源整合圈，2:金融投资圈，3:兴趣爱好圈，4:精进成长圈，5:同城家人圈，6:公益活动圈
+	// city int 地区 城市编码
+	// followpms int 加入权限 0:允许任何人加入，1:需要申请才能加入
+	// accesspms int 访问权限 0:所有人都可以访问，1:加入圈子才可以访问
+	public boolean createQuan(Activity activity, Handler handler,
+			int handlerTag, String gname, String gintro, String gtype,
+			String city, String followpms, String accesspms, String gpub,
+			ArrayList<String> files) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("gname", gname));
+		nameValuePairs.add(new BasicNameValuePair("gintro", gintro));
+		nameValuePairs.add(new BasicNameValuePair("gtype", gtype));
+		nameValuePairs.add(new BasicNameValuePair("city", city));
+		nameValuePairs.add(new BasicNameValuePair("followpms", followpms));
+		nameValuePairs.add(new BasicNameValuePair("accesspms", accesspms));
+		nameValuePairs.add(new BasicNameValuePair("gpub", gpub));
+		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
+		filesMap.put("gheader", files);
+		return doPostWithFile(filesMap, nameValuePairs,
+				UrlHelper.getCreategroup(), handler, handlerTag, activity, "1",
+				false, null, null);
+	}
+
+	/**
+	 * 发布活动
+	 */
+	public boolean createEvent(Activity activity, Handler handler,
+			int handlerTag, String longitude, String latitude, String groupid,
+			String title, String content, String contacts, String starttime,
+			String endtime, String address, String phone,
+			ArrayList<String> files) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("groupid", groupid));
+		nameValuePairs.add(new BasicNameValuePair("title", title));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		nameValuePairs.add(new BasicNameValuePair("contacts", contacts));
+		nameValuePairs.add(new BasicNameValuePair("starttime", starttime));
+		nameValuePairs.add(new BasicNameValuePair("endtime", endtime));
+		nameValuePairs.add(new BasicNameValuePair("address", address));
+		nameValuePairs.add(new BasicNameValuePair("phone", phone));
+		nameValuePairs.add(new BasicNameValuePair("longtitude", longitude));
+		nameValuePairs.add(new BasicNameValuePair("latitude", latitude));
+		nameValuePairs.add(new BasicNameValuePair("phone", phone));
+		Map<String, ArrayList<String>> filesMap = new HashMap<String, ArrayList<String>>();
+		filesMap.put("file", files);
+		return doPostWithFile(filesMap, nameValuePairs,
+				UrlHelper.getAddgroupactivity(), handler, handlerTag, activity,
+				"1", false, null, null);
+	}
+
+	/**
+	 * 退出活动
+	 */
+	public boolean quitEvent(String url, String idKey, String id,
+			String stateKey, String state, Handler handler, int handlerTag,
+			Activity activity) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair(idKey, id));
+		nameValuePairs.add(new BasicNameValuePair(stateKey, state));
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	public boolean updateFilesForCrowdFunding(
+			final Map<String, ArrayList<String>> filesMap,
+			final Handler handler, final int handlerTag,
+			final Activity activity, final String tag) {
+		if (CommonUtil.getNetworkState(activity) == 2) {
+
+			CommonUtil.displayToast(activity, R.string.error0);
+			return false;
+		}
+		if (!mStartedTag.contains(tag) || tag == null) {
+			if (tag != null) {
+				mStartedTag.add(tag);
+			}
+			AsyncUploadHelper helper = new AsyncUploadHelper(activity,
+					uploadFileToken, filesMap, new ICompleteCallback() {
+
+						@Override
+						public void onReturn(Map<String, StringBuilder> map) {
+							// TODO Auto-generated method stub
+							if (tag != null)
+								mStartedTag.remove(tag);
+							if (map == null || map.size() == 0)
+								Toast.makeText(activity, "图片上传失败，请重新登录提交",
+										Toast.LENGTH_LONG).show();
+							else if (map.size() > 0) {
+								if (handler != null) {
+									Message msg = handler
+											.obtainMessage(handlerTag);
+									msg.obj = map;
+									msg.sendToTarget();
+								}
+							}
+						}
+					});
+			helper.execute("test");
+			return true;
+		} else {
+			CommonUtil.displayToast(activity, "不要重复提交");
+		}
+		return false;
+	}
+
+	/**
+	 * 创建众筹
+	 */
+	public boolean createCrowdFunding(Activity activity, Handler handler,
+			int handlerTag, String title, String catid, String targetZb,
+			String thumbPic, String support, String description) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("title", title));
+		nameValuePairs.add(new BasicNameValuePair("catid", catid));
+		nameValuePairs.add(new BasicNameValuePair("targetZb", targetZb));
+		nameValuePairs.add(new BasicNameValuePair("thumbPic", thumbPic));
+		nameValuePairs.add(new BasicNameValuePair("support", support));
+		nameValuePairs.add(new BasicNameValuePair("description", description));
+		String url = UrlHelper.getCreatecrowdfunding();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 获取众筹详情
+	 */
+	public boolean getCrowdFunding(Activity activity, Handler handler,
+			int handlerTag, String id) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("id", id));
+		String url = UrlHelper.getGetcrowdfunding();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 获取商品流水号
+	 */
+	public boolean getOrderNumber(Activity activity, Handler handler,
+			int handlerTag, String channel, String totalFee) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("channel", channel));
+		nameValuePairs.add(new BasicNameValuePair("totalFee", totalFee));
+		String url = UrlHelper.getGOODSNUMBER();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 获取众筹评论列表
+	 */
+	public boolean getCrowdFundingComment(Activity activity, Handler handler,
+			int handlerTag, String id) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("id", id));
+		String url = UrlHelper.getGetcrowdfundingcomment();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 商品收藏列表
+	 * 
+	 * @param activity
+	 * @param handler
+	 * @param handlerTag
+	 * @param id
+	 * @return
+	 */
+	public boolean getGoodsCollectionList(int pageNo, int pageSize,
+			Handler handler, int handlerTag, Activity activity, String type) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		if (type != null) {
+			nameValuePairs.add(new BasicNameValuePair("type", type));
+		}
+		String url = UrlHelper.getGOODSCOLLECTION();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 发布评论
+	 * 
+	 */
+	public boolean pubComment(Activity activity, Handler handler,
+			int handlerTag, String id, String content, String toId,
+			String toUserid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("id", id));
+		nameValuePairs.add(new BasicNameValuePair("content", content));
+		if (toId != null && !toId.equals("-1")) {
+			nameValuePairs.add(new BasicNameValuePair("toUserid", toUserid));
+			nameValuePairs.add(new BasicNameValuePair("toId", toId));
+		}
+		String url = UrlHelper.getComment();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/***
+	 * 获取活动详情
+	 * 
+	 * @param activity
+	 * @param handler
+	 * @param handlerTag
+	 * @param activityid
+	 * @return
+	 */
+	public boolean getEventDetail(Activity activity, Handler handler,
+			int handlerTag, String activityid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("activityid", activityid));
+		String url = UrlHelper.getGeteventdetail();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				true, null, null);
+	}
+
+	/**
+	 * 获取购物车信息
+	 * 
+	 * @param activity
+	 * @param handler
+	 * @param handlerTag
+	 * @return
+	 */
+	public boolean getCartGoodsList(Activity activity, Handler handler,
+			int handlerTag, int pageNo, int pageSize) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs = addPageInfo(nameValuePairs, pageNo, pageSize);
+		String url = UrlHelper.getCARTGOODSLIST();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				true, null, null);
+	}
+
+	/***
+	 * 供需
+	 * 
+	 * @param activity
+	 * @param handler
+	 * @param handlerTag
+	 * @param activityid
+	 * @return
+	 */
+	public boolean getGongxuDetail(Activity activity, Handler handler,
+			int handlerTag, String sdid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("sdid", sdid));
+		String url = UrlHelper.getGongxudetail();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				true, null, null);
+	}
+
+	/**
+	 * 获取商品详情
+	 */
+	public boolean getGoodsDetail(Activity activity, Handler handler,
+			int handlerTag, String goodsid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("goodsid", goodsid));
+		String url = UrlHelper.getGOODSDETAIL();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				true, null, null);
+	}
+
+	/**
+	 * 分享到倬脉
+	 * 
+	 * @param activity
+	 * @param handler
+	 * @param handlerTag
+	 * @param zhuoShareContent
+	 * @return
+	 */
+	public boolean shareToZhuo(Activity activity, Handler handler,
+			int handlerTag, ZhuoShareContent zhuoShareContent) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair(zhuoShareContent.getIdName(),
+				zhuoShareContent.getId()));
+		String url = zhuoShareContent.getUrl();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	public boolean shareRESToZhuo(Activity activity, Handler handler,
+			int handlerTag, String sdid) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("sdid", sdid));
+		String url = UrlHelper.getSHARETOZHUO();
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				false, null, null);
+	}
+
+	/**
+	 * 获取服务器 时间
+	 */
+	public boolean getTime(Activity activity, Handler handler, int handlerTag) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		return doPost(nameValuePairs, UrlHelper.getAddgroupactivity(), handler,
+				handlerTag, activity, null, false, null, null);
+	}
+
+	/**
+	 * 获取商城订单
+	 * 
+	 * @param msgid
+	 * @param iscollect
+	 * @param handler
+	 * @param handlerTag
+	 * @param activity
+	 * @param cancelable
+	 * @param cancel
+	 * @param data
+	 * @return
+	 */
+	public boolean getOrderNumber(String invoice, String message,
+			String totalZhuobi, String buyGoods, final Handler handler,
+			int handlerTag, Activity activity) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		nameValuePairs.add(new BasicNameValuePair("invoice", invoice));
+		nameValuePairs.add(new BasicNameValuePair("message", message));
+		nameValuePairs.add(new BasicNameValuePair("totalZhuobi", totalZhuobi));
+		nameValuePairs.add(new BasicNameValuePair("buyGoods", buyGoods));
+		return doPost(nameValuePairs, UrlHelper.getGENERATEORDER(), handler,
+				handlerTag, activity, UrlHelper.getGENERATEORDER(), false,
+				null, null);
+	}
+
+	public boolean shareThought(String url, String idName, String id,
+			String text, Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair(idName, id));
+		nameValuePairs.add(new BasicNameValuePair("comment", text));
+		nameValuePairs = addUserInfoByPost(nameValuePairs);
+		return doPost(nameValuePairs, url, handler, handlerTag, activity, url,
+				cancelable, cancel, data);
+	}
+
+	public boolean recommandMsg(String msgid, String useridlist,
+			Handler handler, int handlerTag, Activity activity,
+			boolean cancelable, OnCancelListener cancel, String data) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("msgid", msgid));
+		nameValuePairs.add(new BasicNameValuePair("useridlist", useridlist));
+		return doPost(nameValuePairs, UrlHelper.getUrlRecommandMsg(), handler,
+				handlerTag, activity, "recommandMsg", cancelable, cancel, data);
 	}
 
 }

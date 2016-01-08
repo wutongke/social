@@ -4,23 +4,22 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 /***
  * activityջ
  * @author lef
  *
  */
-public class SysApplication extends Application{
+public class ActivityManager {
 	private List<Activity> activities = new LinkedList<Activity>();
-	private static SysApplication instance;
-	private SysApplication(){
+	private static ActivityManager instance;
+	private ActivityManager(){
 		
 	}
 	
-	public static SysApplication getInstance() {
+	public static ActivityManager getInstance() {
 		if(null == instance){
-			instance = new SysApplication();
+			instance = new ActivityManager();
 		}
 		return instance;
 	}

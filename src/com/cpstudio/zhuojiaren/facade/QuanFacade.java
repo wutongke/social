@@ -10,7 +10,7 @@ import com.cpstudio.zhuojiaren.helper.DatabaseHelper;
 import com.cpstudio.zhuojiaren.helper.ResHelper;
 import com.cpstudio.zhuojiaren.model.QuanVO;
 /**
- * 圈子信息本地缓存管理类
+ * 圈子信息本地缓存管理类，主要用于圈子的详细信息。某些字段未用
  * @author lz
  *
  */

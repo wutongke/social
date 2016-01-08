@@ -1,25 +1,25 @@
 package com.cpstudio.zhuojiaren.ui;
 
-import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.R.anim;
-import com.cpstudio.zhuojiaren.R.drawable;
-import com.cpstudio.zhuojiaren.R.id;
-import com.cpstudio.zhuojiaren.R.layout;
-import com.cpstudio.zhuojiaren.util.CommonUtil;
-
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.GestureDetector;
-import android.view.View;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
-import android.app.Activity;
-import android.content.Intent;
 
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.util.CommonUtil;
+/**
+ * Õº∆¨ΩÈ…‹APPΩÁ√Ê
+ * @author lz
+ *
+ */
 public class PosterActivity extends Activity implements OnGestureListener {
 	private ViewFlipper mViewFlipper;
 	private GestureDetector mDetector;

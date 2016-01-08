@@ -2,42 +2,31 @@ package com.cpstudio.zhuojiaren.ui;
 
 import java.util.ArrayList;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-
-import com.cpstudio.zhuojiaren.R;
-import com.cpstudio.zhuojiaren.R.layout;
-import com.cpstudio.zhuojiaren.R.menu;
-import com.cpstudio.zhuojiaren.adapter.StoreGoodsListAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClient;
-import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.JsonHandler_Lef;
-import com.cpstudio.zhuojiaren.imageloader.LoadImage;
-import com.cpstudio.zhuojiaren.model.GoodsVO;
-import com.cpstudio.zhuojiaren.model.MsgTagVO;
-import com.cpstudio.zhuojiaren.model.ResultVO;
-import com.cpstudio.zhuojiaren.util.CommonAdapter;
-import com.cpstudio.zhuojiaren.widget.ListViewFooter;
-import com.cpstudio.zhuojiaren.widget.ViewHolder;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+import com.cpstudio.zhuojiaren.R;
+import com.cpstudio.zhuojiaren.adapter.StoreGoodsListAdapter;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
+import com.cpstudio.zhuojiaren.helper.JsonHandler;
+import com.cpstudio.zhuojiaren.model.GoodsVO;
+import com.cpstudio.zhuojiaren.model.MsgTagVO;
 
 public class GoodsSearchActivity extends Activity {
 	@InjectView(R.id.search_input)
@@ -46,7 +35,7 @@ public class GoodsSearchActivity extends Activity {
 	ListView goodsListView;
 	String mSearchKey = "";
 
-	private AppClient mConnHelper = null;
+	private ConnHelper mConnHelper = null;
 	private int mPage = 1;
 	private StoreGoodsListAdapter mAdapter = null;
 	private ArrayList<GoodsVO> mList = new ArrayList<GoodsVO>();
@@ -70,7 +59,7 @@ public class GoodsSearchActivity extends Activity {
 				return false;
 			}
 		});
-		mConnHelper = AppClient.getInstance(getApplicationContext());
+		mConnHelper = ConnHelper.getInstance(getApplicationContext());
 		mAdapter = new StoreGoodsListAdapter(this, mList);
 		goodsListView.setAdapter(mAdapter);
 		goodsListView.setOnItemClickListener(new OnItemClickListener() {

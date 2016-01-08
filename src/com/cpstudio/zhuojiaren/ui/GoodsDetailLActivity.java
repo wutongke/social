@@ -12,18 +12,16 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.Bee_PageAdapter;
-import com.cpstudio.zhuojiaren.helper.AppClient;
+import com.cpstudio.zhuojiaren.helper.ConnHelper;
 import com.cpstudio.zhuojiaren.helper.JsonHandler;
-import com.cpstudio.zhuojiaren.helper.ZhuoCommHelper;
+import com.cpstudio.zhuojiaren.helper.UrlHelper;
 import com.cpstudio.zhuojiaren.imageloader.LoadImage;
 import com.cpstudio.zhuojiaren.model.BeanBanner;
 import com.cpstudio.zhuojiaren.model.GoodsComment;
@@ -66,7 +64,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 	private TextView company;
 	private TextView companyDes;
 	private ImageView companyImage;
-	private AppClient appClient;
+	private ConnHelper appClient;
 	private String goodsId;
 	private static final int Collection = 333;
 	LoadImage lImage = LoadImage.getInstance();
@@ -76,7 +74,7 @@ public class GoodsDetailLActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_goods_detail_l);
 		ButterKnife.inject(this);
-		appClient = AppClient.getInstance(this.getApplicationContext());
+		appClient = ConnHelper.getInstance(this.getApplicationContext());
 		goodsId = getIntent().getStringExtra("goodsId");
 		if (goodsId == null) {
 			CommonUtil.displayToast(this, R.string.data_error);
@@ -97,28 +95,8 @@ public class GoodsDetailLActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				String type = "1";
-//				if (goods.getIsCollection() != null
-//						&& goods.getIsCollection().equals(GoodsVO.collected)) {
-//					Drawable drawable = getResources().getDrawable(
-//							R.drawable.dongt2);
-//					// / 这一步必须要做,否则不会显示.
-//					drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-//							drawable.getMinimumHeight());
-//					collection.setCompoundDrawables(drawable, null, null, null);
-//					goods.setIsCollection("1");
-//					type = "1";
-//				} else {
-//					Drawable drawable = getResources().getDrawable(
-//							R.drawable.dongt);
-//					// / 这一步必须要做,否则不会显示.
-//					drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-//							drawable.getMinimumHeight());
-//					collection.setCompoundDrawables(drawable, null, null, null);
-//					goods.setIsCollection("0");
-//					type = "0";
-//				}
 				appClient.collection(GoodsDetailLActivity.this,uiHandler,Collection,
-						ZhuoCommHelper.getGoodsCollection(), "goodsid",
+						UrlHelper.getGoodsCollection(), "goodsid",
 						goodsId, "type", type);
 			}
 		});

@@ -1,7 +1,9 @@
 package com.cpstudio.zhuojiaren.ui;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import android.app.Activity;
@@ -27,7 +29,6 @@ import cn.beecloud.entity.BCReqParams;
 
 import com.cpstudio.zhuojiaren.R;
 import com.cpstudio.zhuojiaren.adapter.PayMethodListItem;
-import com.cpstudio.zhuojiaren.helper.BillUtils;
 
 public class ShoppingCartActivity extends Activity {
 	private static final String TAG = "ShoppingCartActivity";
@@ -224,7 +225,7 @@ public class ShoppingCartActivity extends Activity {
 					payParam.billTotalFee = 1;
 
 					// 商户自定义订单号
-					payParam.billNum = BillUtils.genBillNum();
+					payParam.billNum = genBillNum();
 
 					BCPay.getInstance(ShoppingCartActivity.this)
 							.reqPaymentAsync(payParam, bcCallback);
@@ -259,7 +260,7 @@ public class ShoppingCartActivity extends Activity {
 					payParam.billTotalFee = 1;
 
 					// 商户自定义订单号
-					payParam.billNum = BillUtils.genBillNum();
+					payParam.billNum = genBillNum();
 
 					// 订单超时时间，以秒为单位，建议不小于360，可以不设置
 					payParam.billTimeout = 360;
@@ -384,7 +385,13 @@ public class ShoppingCartActivity extends Activity {
 			}
 		});
 	}
+	
+	
 
+	    public  String genBillNum() {
+	    	  SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.CHINA);
+	        return simpleDateFormat.format(new Date());
+	    }
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
