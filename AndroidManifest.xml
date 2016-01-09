@@ -291,17 +291,7 @@
             android:label="@string/title_activity_up_level"
             android:screenOrientation="portrait" >
         </activity>
-        <service
-            android:name="com.cpstudio.zhuojiaren.service.ImService"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.cpstudio.zhuojiaren.SERVICE_IM" />
-
-                <category android:name="android.intent.category.default" />
-            </intent-filter>
-        </service>
-
-        <activity
+        <activity
             android:name="com.cpstudio.zhuojiaren.ui.ForgetPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
@@ -842,12 +832,6 @@
         <!-- 支付相关 -->
 
         <activity
-            android:name="com.cpstudio.zhuojiaren.wxapi.WXPayEntryActivity"
-            android:exported="true"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" />
-        <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
@@ -865,13 +849,6 @@
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
 
-        <receiver
-            android:name="com.cpstudio.zhuojiaren.AppRegister"
-            android:permission="com.tencent.mm.plugin.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
-            </intent-filter>
-        </receiver>
         <!-- 支付相关结束 -->
         <activity
             android:name="com.cpstudio.zhuojiaren.ui.ResCommentActivity"

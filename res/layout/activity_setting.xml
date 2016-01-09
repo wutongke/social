@@ -10,7 +10,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="1dp"
 	    android:layout_marginTop="20dp"
-	    android:background="@color/graywhitem"/>"
+	    android:background="@color/graywhitem"/>
 	<TextView 
 	    android:id="@+id/as_account"
 	    android:text="@string/account_and_security"

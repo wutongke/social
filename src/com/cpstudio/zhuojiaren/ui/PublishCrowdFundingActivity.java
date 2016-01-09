@@ -388,7 +388,7 @@ public class PublishCrowdFundingActivity extends BaseActivity {
 			} else if (msg.what == MsgTagVO.UPLOAD_FILE) {
 				Map<String, StringBuilder> map = (Map<String, StringBuilder>) msg.obj;
 				if (map == null)
-					Toast.makeText(mContext, "ÉÏ´«µ½ÆßÅ£ÔÆÊ§°Ü", 1000).show();
+					Toast.makeText(mContext, "ÉÏ´«µ½ÆßÅ£ÔÆÊ§°Ü", Toast.LENGTH_SHORT).show();
 				else if (map.size() > 0) {
 
 					for (int i = 0; i < payBackViewList.size(); i++) {

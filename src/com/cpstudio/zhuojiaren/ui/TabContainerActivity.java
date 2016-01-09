@@ -420,7 +420,7 @@ public class TabContainerActivity extends TabActivity implements
 
 			} else {
 				String data = intent.getStringExtra("json");
-				Toast.makeText(getApplicationContext(), data, 1000).show();
+				Toast.makeText(getApplicationContext(), data, Toast.LENGTH_SHORT).show();
 				int type = intent.getIntExtra("type", -1);
 				if (type == -1)
 					return;

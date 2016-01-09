@@ -154,7 +154,7 @@ public class QuanziTopicFra extends Fragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		if (resultCode == Activity.RESULT_OK) {
-			Toast.makeText(mContext, "评论成功！", 2000).show();
+			Toast.makeText(mContext, "评论成功！", Toast.LENGTH_SHORT).show();
 		}
 
 		super.onActivityResult(requestCode, resultCode, data);

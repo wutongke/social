@@ -25,7 +25,6 @@
                 android:id="@+id/zhuo_share"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerInParent="true"
                 android:background="@drawable/share_zhuoicon" />
 
             <TextView
@@ -48,7 +47,6 @@
                 android:id="@+id/qzone"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerInParent="true"
                 android:background="@drawable/share_qzoneicon" />
 
             <TextView
@@ -71,7 +69,6 @@
                 android:id="@+id/wechat"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerInParent="true"
                 android:background="@drawable/share_weiicon" />
 
             <TextView
@@ -94,7 +91,6 @@
                 android:id="@+id/wechat_circle"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerInParent="true"
                 android:background="@drawable/share_pengicon" />
 
             <TextView
@@ -131,7 +127,6 @@
                 android:id="@+id/qq"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerInParent="true"
                 android:background="@drawable/share_qqicon" />
 
             <TextView
@@ -156,7 +151,6 @@
                 android:id="@+id/copy"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerInParent="true"
                 android:background="@drawable/share_copyicon" />
 
             <TextView
@@ -180,7 +174,6 @@
                 android:id="@+id/xinlang"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerInParent="true"
                 android:background="@drawable/share_sinaicon" />
 
             <TextView
@@ -204,7 +197,6 @@
                 android:id="@+id/message"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerInParent="true"
                 android:background="@drawable/share_messicon" />
 
             <TextView

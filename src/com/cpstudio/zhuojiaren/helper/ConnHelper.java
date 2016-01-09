@@ -202,7 +202,7 @@ public class ConnHelper {
 							public void onReturn(Map<String, StringBuilder> map) {
 								// TODO Auto-generated method stub
 								if (map == null) {
-									Toast.makeText(activity, "上传到七牛云失败", 1000)
+									Toast.makeText(activity, "上传到七牛云失败", Toast.LENGTH_SHORT)
 											.show();
 									return;
 								}

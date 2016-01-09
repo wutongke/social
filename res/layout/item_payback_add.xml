@@ -81,7 +81,6 @@
             android:minWidth="52dp"
             android:layout_weight="1"
             android:background="@drawable/edit_corners"
-            android:numeric="integer"
             android:textSize="18dp" />
 
         <TextView

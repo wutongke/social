@@ -53,7 +53,7 @@ import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 import com.cpstudio.zhuojiaren.widget.TabButton.TabsButtonOnClickListener;
 
 /**
- * Ù¾ÂöÃûÆ¬
+ * Ù¾ï¿½ï¿½ï¿½ï¿½Æ¬
  * 
  * @author lz
  * 
@@ -328,7 +328,7 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 								// TODO Auto-generated method stub
 								Toast.makeText(ZhuoMaiCardActivity.this,
 										getString(R.string.rongyun_failed),
-										1000).show();
+										Toast.LENGTH_SHORT).show();
 							}
 						});
 	}

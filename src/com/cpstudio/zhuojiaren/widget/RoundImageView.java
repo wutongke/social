@@ -19,9 +19,6 @@ import com.cpstudio.zhuojiaren.R;
 
 /**
  * 
- * 圆形ImageView，可设置两个宽度不同且颜色不同的圆形边框
- * 
- * 设置颜色在xml布局文件中由自定义属性配置参数指
  */
 
 public class RoundImageView extends ImageView {
@@ -33,13 +30,11 @@ public class RoundImageView extends ImageView {
 
 	private int defaultColor = 0xFFFFFFFF;
 
-	// 如果只有其中�?��有�?，则只画�?��圆形边框
 
 	private int mBorderOutsideColor = 0;
 
 	private int mBorderInsideColor = 0;
 
-	// 控件默认长�?�?
 
 	private int defaultWidth = 0;
 
@@ -87,7 +82,7 @@ public class RoundImageView extends ImageView {
 
 		mBorderInsideColor = a.getColor(
 				R.styleable.roundedimageview_border_inside_color, defaultColor);
-
+		a.recycle();
 	}
 
 	@Override
@@ -132,23 +127,21 @@ public class RoundImageView extends ImageView {
 		int radius = 0;
 
 		if (mBorderInsideColor != defaultColor
-				&& mBorderOutsideColor != defaultColor) {// 定义画两个边框，分别为外圆边框和内圆边框
+				&& mBorderOutsideColor != defaultColor) {
 
 			radius = (defaultWidth < defaultHeight ? defaultWidth
 					: defaultHeight) / 2 - 2 * mBorderThickness;
 
-			// 画内�?
 
 			drawCircleBorder(canvas, radius + mBorderThickness / 2,
 					mBorderInsideColor);
 
-			// 画外�?
 
 			drawCircleBorder(canvas, radius + mBorderThickness
 					+ mBorderThickness / 2, mBorderOutsideColor);
 
 		} else if (mBorderInsideColor != defaultColor
-				&& mBorderOutsideColor == defaultColor) {// 定义画一个边�?
+				&& mBorderOutsideColor == defaultColor) {
 
 			radius = (defaultWidth < defaultHeight ? defaultWidth
 					: defaultHeight) / 2 - mBorderThickness;
@@ -157,7 +150,7 @@ public class RoundImageView extends ImageView {
 					mBorderInsideColor);
 
 		} else if (mBorderInsideColor == defaultColor
-				&& mBorderOutsideColor != defaultColor) {// 定义画一个边�?
+				&& mBorderOutsideColor != defaultColor) {
 
 			radius = (defaultWidth < defaultHeight ? defaultWidth
 					: defaultHeight) / 2 - mBorderThickness;
@@ -165,7 +158,7 @@ public class RoundImageView extends ImageView {
 			drawCircleBorder(canvas, radius + mBorderThickness / 2,
 					mBorderOutsideColor);
 
-		} else {// 没有边框
+		} else {
 
 			radius = (defaultWidth < defaultHeight ? defaultWidth
 					: defaultHeight) / 2;
@@ -179,20 +172,12 @@ public class RoundImageView extends ImageView {
 
 	}
 
-	/**
-	 * 
-	 * 获取裁剪后的圆形图片
-	 * 
-	 * @param radius半径
-	 */
 
 	public Bitmap getCroppedRoundBitmap(Bitmap bmp, int radius) {
 
 		Bitmap scaledSrcBmp;
 
 		int diameter = radius * 2;
-
-		// 为了防止宽高不相等，造成圆形图片变形，因此截取长方形中处于中间位置最大的正方形图�?
 
 		int bmpWidth = bmp.getWidth();
 
@@ -204,7 +189,7 @@ public class RoundImageView extends ImageView {
 
 		Bitmap squareBitmap;
 
-		if (bmpHeight > bmpWidth) {// 高大于宽
+		if (bmpHeight > bmpWidth) {
 
 			squareWidth = squareHeight = bmpWidth;
 
@@ -212,12 +197,11 @@ public class RoundImageView extends ImageView {
 
 			y = (bmpHeight - bmpWidth) / 2;
 
-			// 截取正方形图�?
 
 			squareBitmap = Bitmap.createBitmap(bmp, x, y, squareWidth,
 					squareHeight);
 
-		} else if (bmpHeight < bmpWidth) {// 宽大于高
+		} else if (bmpHeight < bmpWidth) {
 
 			squareWidth = squareHeight = bmpHeight;
 
@@ -289,16 +273,10 @@ public class RoundImageView extends ImageView {
 
 	}
 
-	/**
-	 * 
-	 * 边缘画圆
-	 */
 
 	private void drawCircleBorder(Canvas canvas, int radius, int color) {
 
 		Paint paint = new Paint();
-
-		/* 去锯�?*/
 
 		paint.setAntiAlias(true);
 
@@ -308,11 +286,9 @@ public class RoundImageView extends ImageView {
 
 		paint.setColor(color);
 
-		/* 设置paint的�?style�?��STROKE：空�?*/
 
 		paint.setStyle(Paint.Style.STROKE);
 
-		/* 设置paint的外框宽�?*/
 
 		paint.setStrokeWidth(mBorderThickness);
 

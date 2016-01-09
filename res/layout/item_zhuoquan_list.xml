@@ -6,7 +6,7 @@
     android:layout_height="88dp"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
-    android:orientation="horizontal" xmlns:app="http://schemas.android.com/apk/res/com.cpstudio.zhuojiaren">
+    android:orientation="horizontal" >
 
     <CheckBox
         android:id="@+id/izl_select"

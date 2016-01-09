@@ -277,7 +277,7 @@ public class MainActivity extends Activity implements OnPullDownListener,
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK) {
 			if (requestCode == MsgTagVO.MSG_CMT) {
-				Toast.makeText(MainActivity.this, "评论成功！", 2000).show();
+				Toast.makeText(MainActivity.this, "评论成功！", Toast.LENGTH_SHORT).show();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

@@ -213,7 +213,7 @@ public class JiarenActiveSimpleActivity extends Activity implements
 			if (requestCode == MsgTagVO.DATA_REFRESH) {
 				onRefresh();
 			} else if (requestCode == MsgTagVO.MSG_CMT) {
-				Toast.makeText(JiarenActiveSimpleActivity.this, "评论成功！", 2000)
+				Toast.makeText(JiarenActiveSimpleActivity.this, "评论成功！", Toast.LENGTH_SHORT)
 						.show();
 			} else {
 				String filePath = pwh.dealPhotoReturn(requestCode, resultCode,

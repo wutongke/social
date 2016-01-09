@@ -372,7 +372,7 @@ public class GongXuDetailActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				// 用intent启动拨打电话
 				if (sharer == null || sharer.getPhone() == null) {
-					Toast.makeText(GongXuDetailActivity.this, "号码为空", 1100)
+					Toast.makeText(GongXuDetailActivity.this, "号码为空", Toast.LENGTH_SHORT)
 							.show();
 					return;
 				}

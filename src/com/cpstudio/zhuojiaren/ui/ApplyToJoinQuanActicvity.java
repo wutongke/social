@@ -52,7 +52,7 @@ public class ApplyToJoinQuanActicvity extends BaseActivity {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					Toast.makeText(ApplyToJoinQuanActicvity.this,
-							"申请已发送，请耐心等待", 1000).show();
+							"申请已发送，请耐心等待", Toast.LENGTH_SHORT).show();
 				}
 				break;
 			}
