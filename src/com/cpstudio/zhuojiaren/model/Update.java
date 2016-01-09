@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * 应用程序更新实体类
  * 
  * @author liux (http://my.oschina.net/liux)
  * @version 1.0
@@ -59,10 +58,6 @@ public class Update implements Serializable {
 	public static Update parse(String jsonStr) throws IOException {
 		Update update = new Update();
 		JSONObject obj = null;
-		// codecode 0 ：有更新
-		// code 1： 当前为最新
-		// code 2： 参数错误。
-		// code -1 解析错误
 		try {
 			obj = new JSONObject(jsonStr);
 			update.code = obj.getInt("code");

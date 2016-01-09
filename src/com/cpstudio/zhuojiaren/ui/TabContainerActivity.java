@@ -491,24 +491,4 @@ public class TabContainerActivity extends TabActivity implements
 		}
 		return super.dispatchKeyEvent(event);
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		return true;
-	}
-
-	/***
-	 * ÍË³öÓ¦ÓÃ
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		super.onOptionsItemSelected(item);
-		switch (item.getItemId()) {
-		case R.id.exit:
-			ActivityManager.getInstance().exit(true, getApplicationContext());
-			break;
-		}
-		return true;
-	}
 }

@@ -163,7 +163,7 @@ public class ResHelper {
 		map.put(BG_PICS, pics);
 		setPreference(map);
 	}
-	
+
 	public String getRootPath() {
 		String path = SDPATH + mPu.getPreference(ROOT_PATH, DEFAULT_ROOT_PATH);
 		File dir = new File(path);

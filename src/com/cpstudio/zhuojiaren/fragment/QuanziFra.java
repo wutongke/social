@@ -47,7 +47,9 @@ import com.cpstudio.zhuojiaren.ui.ZhuoQuanActivity;
 import com.cpstudio.zhuojiaren.ui.ZhuoQuanMainActivity;
 import com.cpstudio.zhuojiaren.widget.ListViewFooter;
 import com.cpstudio.zhuojiaren.widget.PopupWindows;
-
+/**
+ * х╕всап╠М
+ */
 public class QuanziFra extends Fragment {
 	@InjectView(R.id.hgm_adv)
 	ImageView advImage;

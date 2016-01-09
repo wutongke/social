@@ -203,23 +203,6 @@ public class ZhuoQuanMainActivity extends BaseFragmentActivity {
 				}
 				break;
 			}
-			case MsgTagVO.PUB_INFO: {
-				if (JsonHandler.checkResult((String) msg.obj,
-						getApplicationContext())) {
-					Button buttonMsgState = (Button) findViewById(R.id.buttonMsgState);
-					String alertState = (String) buttonMsgState.getTag();
-					if (alertState.equals("1")) {
-						buttonMsgState
-								.setBackgroundResource(R.drawable.button_switch_off);
-						buttonMsgState.setTag("0");
-					} else {
-						buttonMsgState
-								.setBackgroundResource(R.drawable.button_switch_on);
-						buttonMsgState.setTag("1");
-					}
-				}
-				break;
-			}
 			case MsgTagVO.FOLLOW_QUAN: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {

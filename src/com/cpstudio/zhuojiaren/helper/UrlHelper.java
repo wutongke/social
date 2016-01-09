@@ -1,8 +1,10 @@
 package com.cpstudio.zhuojiaren.helper;
+
 /**
  * 网络请求常量
+ * 
  * @author lz
- *
+ * 
  */
 public class UrlHelper {
 
@@ -23,7 +25,7 @@ public class UrlHelper {
 	private final static String SERVICE_GET_UPLOADTOKEN = "/qiniu/getUploadToken.do";
 
 	private final static String SERVICE_PUB_GROUP_TOPIC = "/addgrouptopic.do";
-	
+
 	private final static String SERVICE_ADVICE = "/addFeedback.do";
 
 	private final static String SERVICE_GET_QUANEVENTLIST = "/groupActivityList.do";
@@ -64,53 +66,51 @@ public class UrlHelper {
 	private final static String GET_MY_STATUS_CARD = "/getMyStatusCard.do";
 	private final static String SET_PHOTO = "/setPhoto.do";
 
-	 private final static String ALL_JIAREN = "/getJiaren.do";
+	private final static String ALL_JIAREN = "/getJiaren.do";
 	private final static String CITY_JIAREN = "/getJiarenByCity.do";
 	private final static String HOBBY_JIAREN = "/getJiarenByHobby.do";
-	//服务器暂未提供
+	// 服务器暂未提供
 	private final static String NEAR_JIAREN = "/fujin.do";
 	private final static String INDUSTRY_JIAREN = "/getJiarenByIndustry.do";
 	private final static String TEATURE_JIAREN = "/getTeacher.do";
 
-	//此接口已在FOLLOEW_REQ_LIST中
+	// 此接口已在FOLLOEW_REQ_LIST中
 	private final static String GET_REQ_FRIEND = "/getFriendReq.do";
-	
-	
-	
+
 	private final static String ADD_PRODUCT = "/addProduct.do";
 	private final static String ADD_COMPANY = "/addCompany.do";
-	
+
 	private final static String DELETE_PRODUCT = "/deleteProduct.do";
 	private final static String DELETE_COMPANY = "/deleteCompany.do";
-	
+
 	private final static String UPDATE_PRODUCT = "/updateProduct.do";
 	private final static String UPDATE_COMPANY = "/updateCompany.do";
-	
+
 	private final static String GET_PRODUCT = "/getComProduct.do";
 	private final static String GET_COMPANY = "/getUserCompany.do";
 	private final static String STATUS_CARD = "/viewStatusCard.do";
-	
+
 	private final static String GET_HOT_KEY = "/hotKeyword.do";
 	private final static String PORTAL_SEARCH = "/portalSearch.do";
 	private final static String FRIENDS_LIST = "/getFriend.do";
-	
+
 	private final static String QUAN_REQ_USER_LIST = "/groupFollowReqUser.do";
-	
+
 	private final static String MAKE_FRIENDS = "/makeFriend.do";
 	private final static String MY_RENMAI = "/getFollowUser.do";
 	private final static String CMT_GONGXU = "/supplyDemandCmt.do";
 	private final static String ORDERS_LIST = "/goods/getOrderList.do";
 	private final static String ORDER_DETAIL = "/goods/getOrder.do";
 	private final static String CARD_BG = "/getBackground.do";
-	private final static String SET_CARD_BG  = "/setUserBackground.do";
-	private final static String QuanEventCollection  = "/getCollectActivity.do";
-	private final static String gongList  = "/getCollectSupplyDemand.do";
-	private final static String TopicList  = "/getCollectTopic.do";
-	private final static String peopleList  = "/getFollowUser.do";
-	private final static String grouthThought  = "/growthOnlineCmt.do";
-	private final static String audioThought  = "/audioCmt.do";
-	private final static String visitThought  = "/interviewCmt.do";
-	private final static String gxtyles  = "/getSupplyDemandType.do";
+	private final static String SET_CARD_BG = "/setUserBackground.do";
+	private final static String QuanEventCollection = "/getCollectActivity.do";
+	private final static String gongList = "/getCollectSupplyDemand.do";
+	private final static String TopicList = "/getCollectTopic.do";
+	private final static String peopleList = "/getFollowUser.do";
+	private final static String grouthThought = "/growthOnlineCmt.do";
+	private final static String audioThought = "/audioCmt.do";
+	private final static String visitThought = "/interviewCmt.do";
+	private final static String gxtyles = "/getSupplyDemandType.do";
 	/**
 	 * 用户加入的或创建的活动
 	 */
@@ -120,8 +120,7 @@ public class UrlHelper {
 	private final static String USER_BUSINESS = "/getUserBusiness.do";
 
 	private final static String SERVICE_GET_ADINFO = "/getadinfo.do";
-	
-	
+
 	private final static String SERVICE_RESOURCE_GONGXU_DETAIL = "/resource_gongxu_detail";
 
 	private final static String DISOLVE_QUAN = "/grouprelease.do";
@@ -187,7 +186,7 @@ public class UrlHelper {
 	private static String SERVICE_VEDIO_LIST_Collection = "/myCollectGrouthOnline.do";
 	private final static String SERVICE_AUDIO_LIST = "/getAudio.do";
 	private final static String SERVICE_Visit_LIST = "/getInterviewList.do";
-	private final static String SUBMIT_VISIT= "/getGrowthOnlineType.do";
+	private final static String SUBMIT_VISIT = "/getGrowthOnlineType.do";
 
 	private final static String SERVICE_Teacher_LIST = "/getTutor.do";
 	private final static String SERVICE_Funding_LIST = "/crowdfunding/list.do";
@@ -231,10 +230,7 @@ public class UrlHelper {
 	private static String INCOME = "/getMyZhuobiRecord.do";
 	private static String REMOVEGOODS = "/goods/delGoodsCart.do";
 	private static String AudioCollection = "/myAudio.do";
-	
-	
-	
-	
+
 	public static String getVisitthought() {
 		return SERVER + visitThought;
 	}
@@ -256,14 +252,15 @@ public class UrlHelper {
 	}
 
 	public static String getGonglist() {
-		return SERVER +  gongList;
+		return SERVER + gongList;
 	}
 
 	public static String getQuaneventcollection() {
 		return SERVER + QuanEventCollection;
 	}
 
-	private final static String SET_QUAN_LOG  = "/setgheader.do";
+	private final static String SET_QUAN_LOG = "/setgheader.do";
+
 	public static String getAllJiaren() {
 		return ALL_JIAREN;
 	}
@@ -287,8 +284,6 @@ public class UrlHelper {
 	public static String getTeatureJiaren() {
 		return TEATURE_JIAREN;
 	}
-
-
 
 	/**
 	 * 获取主页界面的广告信息
@@ -325,7 +320,7 @@ public class UrlHelper {
 	public static String pubQuanTopic() {
 		return SERVER + SERVICE_PUB_GROUP_TOPIC;
 	}
-	
+
 	/**
 	 * 发布反馈意见
 	 * 
@@ -627,134 +622,164 @@ public class UrlHelper {
 	public static String pubPhoto() {
 		return SERVER + SET_PHOTO;
 	}
+
 	/**
 	 * 请求交换名片的家人
+	 * 
 	 * @return
 	 */
 	public static String getFriendReq() {
 		return SERVER + GET_REQ_FRIEND;
 	}
-	
-	//我的企业中的公司及其产品的增删改查
-	
+
+	// 我的企业中的公司及其产品的增删改查
+
 	public static String addCompany() {
 		return SERVER + ADD_COMPANY;
 	}
+
 	public static String addProduct() {
 		return SERVER + ADD_PRODUCT;
 	}
+
 	public static String deleteCompany() {
 		return SERVER + DELETE_COMPANY;
 	}
+
 	public static String deleteProduct() {
 		return SERVER + DELETE_PRODUCT;
 	}
-	
+
 	public static String updateProduct() {
 		return SERVER + UPDATE_PRODUCT;
 	}
-	
+
 	public static String updateCompany() {
 		return SERVER + UPDATE_COMPANY;
 	}
+
 	public static String getProduct() {
 		return SERVER + GET_PRODUCT;
 	}
-	
+
 	public static String getCompany() {
 		return SERVER + GET_COMPANY;
 	}
+
 	/**
 	 * 倬脉动态的数量(被浏览等)
+	 * 
 	 * @return
 	 */
 	public static String getZMDT() {
 		return SERVER + STATUS_CARD;
 	}
+
 	public static String getHotKey() {
 		return SERVER + GET_HOT_KEY;
 	}
+
 	public static String getPortalSearch() {
 		return SERVER + PORTAL_SEARCH;
 	}
+
 	public static String getMyFriends() {
 		return SERVER + FRIENDS_LIST;
 	}
+
 	/**
 	 * 请求加入圈子的人
+	 * 
 	 * @return
 	 */
 	public static String getReqQuanUsers() {
 		return SERVER + QUAN_REQ_USER_LIST;
 	}
+
 	/**
 	 * 与好友关系相关
+	 * 
 	 * @return
 	 */
 	public static String makeFriends() {
 		return SERVER + MAKE_FRIENDS;
 	}
+
 	/**
 	 * 我的人脉
+	 * 
 	 * @return
 	 */
 	public static String myRenmai() {
 		return SERVER + MY_RENMAI;
 	}
+
 	/**
 	 * 评论和回复供需
+	 * 
 	 * @return
 	 */
 	public static String cmtGX() {
 		return SERVER + CMT_GONGXU;
 	}
+
 	/**
 	 * 订单列表
+	 * 
 	 * @return
 	 */
 	public static String orderList() {
 		return SERVER + ORDERS_LIST;
 	}
+
 	/**
 	 * 订单详情
+	 * 
 	 * @return
 	 */
 	public static String orderDetail() {
 		return SERVER + ORDER_DETAIL;
 	}
+
 	/**
 	 * 名片背景图片
+	 * 
 	 * @return
 	 */
 	public static String cardBg() {
 		return SERVER + CARD_BG;
 	}
+
 	public static String setCardBg() {
 		return SERVER + SET_CARD_BG;
 	}
+
 	public static String setQuanLogo() {
 		return SERVER + SET_QUAN_LOG;
 	}
+
 	public static String getGXTypes() {
 		return SERVER + gxtyles;
 	}
+
 	public static String getAudioCollection() {
 		return SERVER + AudioCollection;
 	}
+
 	public static String getServiceVedioListCollection() {
 		return SERVER + SERVICE_VEDIO_LIST_Collection;
 	}
+
 	public static String getServiceFundingListInvest() {
-		return SERVER +SERVICE_Funding_LIST_Invest;
+		return SERVER + SERVICE_Funding_LIST_Invest;
 	}
 
-
 	public static String getREMOVEGOODS() {
-		return SERVER +  REMOVEGOODS;
+		return SERVER + REMOVEGOODS;
 	}
 
 	public static String getINCOME() {
-		return SERVER +  INCOME;
+		return SERVER + INCOME;
 	}
 
 	public static String getSHIPPINGADDRESS() {
@@ -790,7 +815,7 @@ public class UrlHelper {
 	}
 
 	public static String getPaybackList() {
-		return SERVER +  PaybackList;
+		return SERVER + PaybackList;
 	}
 
 	public static String getGoodsAddToCart() {
@@ -829,7 +854,6 @@ public class UrlHelper {
 		return SERVER + COMMONCOLLECTION;
 	}
 
-
 	public static String getGongxudetail() {
 		return SERVER + GONGXUDETAIL;
 	}
@@ -842,86 +866,87 @@ public class UrlHelper {
 		return SERVER + TIME;
 	}
 
-	//收藏列表urls
+	// 收藏列表urls
 	public static final String[] collectionUrls = {
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST,
-		SERVER + SERVICE_VEDIO_LIST
-	};
-	
+			SERVER + SERVICE_VEDIO_LIST, SERVER + SERVICE_VEDIO_LIST,
+			SERVER + SERVICE_VEDIO_LIST, SERVER + SERVICE_VEDIO_LIST,
+			SERVER + SERVICE_VEDIO_LIST, SERVER + SERVICE_VEDIO_LIST,
+			SERVER + SERVICE_VEDIO_LIST, SERVER + SERVICE_VEDIO_LIST,
+			SERVER + SERVICE_VEDIO_LIST, SERVER + SERVICE_VEDIO_LIST,
+			SERVER + SERVICE_VEDIO_LIST, SERVER + SERVICE_VEDIO_LIST,
+			SERVER + SERVICE_VEDIO_LIST, SERVER + SERVICE_VEDIO_LIST,
+			SERVER + SERVICE_VEDIO_LIST, SERVER + SERVICE_VEDIO_LIST,
+			SERVER + SERVICE_VEDIO_LIST, SERVER + SERVICE_VEDIO_LIST,
+			SERVER + SERVICE_VEDIO_LIST, SERVER + SERVICE_VEDIO_LIST,
+			SERVER + SERVICE_VEDIO_LIST, SERVER + SERVICE_VEDIO_LIST,
+			SERVER + SERVICE_VEDIO_LIST, SERVER + SERVICE_VEDIO_LIST,
+			SERVER + SERVICE_VEDIO_LIST, SERVER + SERVICE_VEDIO_LIST,
+			SERVER + SERVICE_VEDIO_LIST };
+
 	public static String getGetcrowdfundingprogress() {
-		return SERVER +GETCROWDFUNDINGPROGRESS;
+		return SERVER + GETCROWDFUNDINGPROGRESS;
 	}
 
 	public static String getPubcrowdfundingcomment() {
-		return SERVER +PUBCROWDFUNDINGCOMMENT;
+		return SERVER + PUBCROWDFUNDINGCOMMENT;
 	}
+
 	public static String getGetcrowdfundingcomment() {
 		return SERVER + getCrowdFundingComment;
 	}
+
 	public static String getLikecrowdfunding() {
 		return SERVER + LIKECrowdFunding;
 	}
+
 	public static String getLikeincomment() {
-		return SERVER +LIKEINCOMMENT;
+		return SERVER + LIKEINCOMMENT;
 	}
+
 	public static String getComment() {
-		return SERVER +COMMENT;
+		return SERVER + COMMENT;
 	}
+
 	public static String getEventadd() {
 		return SERVER + EVENTADD;
 	}
+
 	public static String getEventcollection() {
-		return SERVER +EVENTCOLLECTION;
+		return SERVER + EVENTCOLLECTION;
 	}
+
 	public static String getGeteventdetail() {
-		return SERVER +GETEVENTDETAIL;
+		return SERVER + GETEVENTDETAIL;
 	}
+
 	public static String getGetcrowdfunding() {
 		return SERVER + GETCROWDFUNDING;
 	}
+
 	public static String getCreatecrowdfunding() {
 		return SERVER + CREATECROWDFUNDING;
 	}
+
 	public static String getAddgroupactivity() {
 		return SERVER + ADDGROUPACTIVITY;
 	}
+
 	public static String getCreategroup() {
 		return SERVER + CREATEGROUP;
 	}
+
 	public static String getGrowthonlinetype() {
 		return SERVER + GrowthOnlineType;
 	}
+
 	public static String getAudioColl() {
 		return SERVER + AUDIO_COLL;
 	}
+
 	public static String getSubmitVisit() {
 		return SERVER + SUBMIT_VISIT;
 	}
+
 	public static String getServiceFundingList() {
 		return SERVER + SERVICE_Funding_LIST;
 	}
@@ -1050,11 +1075,9 @@ public class UrlHelper {
 		return SERVER + SERVICE_COLLECT;
 	}
 
-//	public static String getUrlFollow() {
-//		return SERVER + SERVICE_FOLLOW;
-//	}
-
-
+	// public static String getUrlFollow() {
+	// return SERVER + SERVICE_FOLLOW;
+	// }
 
 	public static String getUrlFollowGroup() {
 		return SERVER + SERVICE_FOLLOWGROUP;
@@ -1067,8 +1090,6 @@ public class UrlHelper {
 	public static String getUrlGroupDetail() {
 		return SERVER + SERVICE_GROUPDETAIL;
 	}
-
-
 
 	public static String getUrlGroupChat() {
 		return SERVER + SERVICE_GROUPCHAT;
@@ -1085,7 +1106,6 @@ public class UrlHelper {
 	public static String getUrlChatList() {
 		return SERVER + SERVICE_CHATLIST;
 	}
-
 
 	public static String getUrlLastVisitUserList() {
 		return SERVER + SERVICE_LASTVISITUSERLIST;
@@ -1115,7 +1135,6 @@ public class UrlHelper {
 		return SERVER + SERVICE_CARDCHANGELIST;
 	}
 
-
 	public static String getUrlPlanList() {
 		return SERVER + SERVICE_PLANLIST;
 	}
@@ -1127,6 +1146,7 @@ public class UrlHelper {
 	public static String getUrlReGroupList() {
 		return SERVER + SERVICE_REGROUPLIST;
 	}
+
 	public static String getUrlCollectList() {
 		return SERVER + SERVICE_COLLECTLIST;
 	}
@@ -1147,7 +1167,6 @@ public class UrlHelper {
 		return SERVER + SERVICE_LASTCHATLIST;
 	}
 
-
 	public static String getUrlBirthdayUsers() {
 		return SERVER + SERVICE_BIRTHDAYUSERS;
 	}
@@ -1156,7 +1175,6 @@ public class UrlHelper {
 		return SERVER + SERVICE_MYRESOURCE;
 	}
 
-
 	public static String getUrlUserConfig() {
 		return SERVER + SERVICE_USERCONFIG;
 	}
@@ -1164,7 +1182,6 @@ public class UrlHelper {
 	public static String getUrlZenghuiTitleList() {
 		return SERVER + SERVICE_ZENGHUITITLELIST;
 	}
-
 
 	public static String getUrlFamily() {
 		return SERVER + SERVICE_FAMILY;
@@ -1178,13 +1195,14 @@ public class UrlHelper {
 		return SERVER + SERVICE_ANDROIDNAME;
 	}
 
-
 	public static String getResourceGongxuDetail() {
 		return SERVER + SERVICE_RESOURCE_GONGXU_DETAIL;
 	}
+
 	public static String getDisolveQuan() {
 		return SERVER + DISOLVE_QUAN;
 	}
+
 	public static String getQuitQuan() {
 		return SERVER + QUIT_QUAN;
 	}

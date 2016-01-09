@@ -53,7 +53,6 @@ import com.cpstudio.zhuojiaren.widget.TabButton.PageChangeListener;
 import com.cpstudio.zhuojiaren.widget.TabButton.TabsButtonOnClickListener;
 
 /**
- * پ����Ƭ
  * 
  * @author lz
  * 
@@ -438,38 +437,18 @@ public class ZhuoMaiCardActivity extends FragmentActivity {
 				}
 				break;
 			}
-			case MsgTagVO.PUB_INFO: {
-				if (JsonHandler.checkResult((String) msg.obj,
-						getApplicationContext())) {
-					Button buttonMsgState = (Button) findViewById(R.id.buttonMsgState);
-					String alertState = (String) buttonMsgState.getTag();
-					if (alertState.equals("1")) {
-						buttonMsgState
-								.setBackgroundResource(R.drawable.button_switch_off);
-						buttonMsgState.setTag("0");
-					} else {
-						buttonMsgState
-								.setBackgroundResource(R.drawable.button_switch_on);
-						buttonMsgState.setTag("1");
-					}
-				}
-				break;
-			}
 			case MsgTagVO.MSG_LIKE: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
 					CommonUtil.displayToast(getApplicationContext(),
 							R.string.label_zanSuccess);
 				} else {
-					// CommonUtil.displayToast(getApplicationContext(),
-					// R.string.FAILED);
 				}
 				break;
 			}
 			case MsgTagVO.MSG_FOWARD: {
 				if (JsonHandler.checkResult((String) msg.obj,
 						getApplicationContext())) {
-//					sendCard();
 				} else {
 				}
 				break;
